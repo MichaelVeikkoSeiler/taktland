@@ -1,21 +1,51 @@
 /**
  * Service Worker für Taktland.
  *
- * Ziel: Wer einen Bahnhof einmal geöffnet hat, kommt auch ohne Empfang an die
- * Inhalte. Im Bahnhofsuntergeschoss ist das der Normalfall.
+ * Ziel: Wer die App einmal geöffnet hat, kommt auch ohne Empfang an die Inhalte.
+ * Im Bahnhofsuntergeschoss oder im Tunnel ist das der Normalfall.
+ *
+ * Beim Installieren wird die Startseite geholt, die darin verlinkten Dateien
+ * werden mitgenommen und ebenso die Profile der Bahnhöfe. Sonst fehlte beim
+ * ersten Besuch ausgerechnet das Programm, und die App bliebe offline leer.
  *
  * Es wird nichts an einen Server gemeldet. Der Cache liegt auf dem Gerät.
  */
-const VERSION = 'taktland-v1'
+const VERSION = 'taktland-v2'
 const SHELL = './'
 
+/** So viele Profile werden im Voraus gespeichert. Bei vielen Bahnhöfen ist
+ *  das nicht mehr sinnvoll, dann zählt nur noch, was besucht wurde. */
+const PROFILE_IM_VORAUS = 20
+
+async function vorratAnlegen() {
+  const cache = await caches.open(VERSION)
+  const antwort = await fetch(SHELL, { cache: 'reload' })
+  await cache.put(SHELL, antwort.clone())
+
+  // Alles, was die Startseite verlinkt: Programm, Gestaltung, Symbole, Manifest
+  const html = await antwort.text()
+  const verlinkt = [...html.matchAll(/(?:src|href)="\.\/([^"]+)"/g)].map((m) => `./${m[1]}`)
+
+  const dateien = new Set([...verlinkt, './data/index.json'])
+
+  // Die Profile dazu, damit auch ein noch nicht geöffneter Bahnhof funktioniert
+  try {
+    const index = await (await fetch('./data/index.json')).json()
+    const mitProfil = (index.bahnhoefe ?? []).filter((b) => b.sprachen?.length)
+    for (const b of mitProfil.slice(0, PROFILE_IM_VORAUS)) {
+      for (const sprache of b.sprachen) dateien.add(`./data/profile/${b.uic}.${sprache}.json`)
+    }
+  } catch {
+    // ohne Index gibt es eben keine Profile im Voraus
+  }
+
+  // einzeln, damit eine fehlende Datei nicht alles scheitern lässt
+  await Promise.all([...dateien].map((pfad) =>
+    cache.add(pfad).catch(() => undefined)))
+}
+
 self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(VERSION)
-      .then((c) => c.addAll([SHELL, './manifest.webmanifest', './data/index.json']))
-      .then(() => self.skipWaiting())
-      .catch(() => self.skipWaiting()),   // ohne Netz trotzdem installieren
-  )
+  e.waitUntil(vorratAnlegen().catch(() => undefined).then(() => self.skipWaiting()))
 })
 
 self.addEventListener('activate', (e) => {
