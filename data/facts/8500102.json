@@ -1,0 +1,244 @@
+{
+  "uic": 8500102,
+  "name": "Malleray-Bévilard",
+  "kanton": "BE",
+  "bps": "MB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Malleray-Bévilard",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.275946,
+    "lat": 47.238714,
+    "dwv": 760,
+    "dtv": 610,
+    "dnwv": 280,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 850
+      },
+      {
+        "jahr": 2022,
+        "dwv": 730
+      },
+      {
+        "jahr": 2023,
+        "dwv": 780
+      },
+      {
+        "jahr": 2024,
+        "dwv": 570
+      },
+      {
+        "jahr": 2025,
+        "dwv": 760
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Malleray-Bévilard",
+    "abkuerzung": "MB",
+    "hoehe_m_ue_m": 698.18,
+    "gemeinde": "Valbirse",
+    "ortschaft": "Malleray",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 169,
+    "kuerzeste_m": 116,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Zwischenperron",
+        "laenge_m": 169,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 226
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 116,
+        "flaeche_netto_m2": 144.09,
+        "niveaufreier_zugang": "ja",
+        "linie": 226
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 148,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 117,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 297,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 294,
+      "55": 3
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Pontenet",
+      "bis": "Malleray-Bévilard",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 19956,
+      "zuege_pro_tag": 55
+    },
+    "staerkster_personenverkehr": {
+      "von": "Pontenet",
+      "bis": "Malleray-Bévilard",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 19956,
+      "zuege_pro_tag": 55
+    },
+    "abschnitte": [
+      {
+        "von": "Pontenet",
+        "bis": "Malleray-Bévilard",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19956,
+        "zuege_pro_tag": 55
+      },
+      {
+        "von": "Malleray-Bévilard",
+        "bis": "Sorvilier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15401,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Malleray-Bévilard",
+        "bis": "Sorvilier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Pontenet",
+        "bis": "Malleray-Bévilard",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 226,
+        "name": "Sonceboz-Sombeval - Moutier - Delemont",
+        "km": 61.78915
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/cafdbc8ba1f148049f16e94a8c44140a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

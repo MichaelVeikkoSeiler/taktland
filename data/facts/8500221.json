@@ -1,0 +1,159 @@
+{
+  "uic": 8500221,
+  "name": "Büren an der Aare",
+  "kanton": "BE",
+  "bps": "BUER",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Büren an der Aare",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.371243,
+    "lat": 47.138157,
+    "dwv": 1000,
+    "dtv": 880,
+    "dnwv": 550,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Büren an der Aare",
+    "abkuerzung": "BUER",
+    "hoehe_m_ue_m": 443,
+    "gemeinde": "Büren an der Aare",
+    "ortschaft": "Büren an der Aare",
+    "bezirk": "Seeland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 122,
+    "kuerzeste_m": 80,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 122,
+        "flaeche_netto_m2": 283.55,
+        "niveaufreier_zugang": "ja",
+        "linie": 415
+      },
+      {
+        "nr": "93",
+        "typ": "Dienstperron",
+        "laenge_m": 80,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 415
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dotzigen",
+      "bis": "Büren an der Aare",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 16856,
+      "zuege_pro_tag": 46
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dotzigen",
+      "bis": "Büren an der Aare",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 16856,
+      "zuege_pro_tag": 46
+    },
+    "abschnitte": [
+      {
+        "von": "Dotzigen",
+        "bis": "Büren an der Aare",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16856,
+        "zuege_pro_tag": 46
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 415,
+        "name": "Wanzwil (Abzw) - Solothurn - Busswil",
+        "km": 95.71034
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/31620e67cbdacc21f0e50fa970b7c741"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

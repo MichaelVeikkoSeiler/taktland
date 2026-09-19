@@ -1,0 +1,285 @@
+{
+  "uic": 8506131,
+  "name": "Kreuzlingen",
+  "kanton": "TG",
+  "bps": "KR",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Kreuzlingen",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 9.16908,
+    "lat": 47.652553,
+    "dwv": 8100,
+    "dtv": 7500,
+    "dnwv": 6100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 8100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 6800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 7900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 8200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 8100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Kreuzlingen",
+    "abkuerzung": "KR",
+    "hoehe_m_ue_m": 403.3,
+    "gemeinde": "Kreuzlingen",
+    "ortschaft": "Kreuzlingen",
+    "bezirk": "Kreuzlingen",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 261,
+    "kuerzeste_m": 261,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 261,
+        "flaeche_netto_m2": 1641.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 822
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 261,
+        "flaeche_netto_m2": 506.93,
+        "niveaufreier_zugang": "ja",
+        "linie": 822
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 261,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 261,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 261,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 11,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Tägermoos (Abzw)",
+      "bis": "Kreuzlingen",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 71735,
+      "zuege_pro_tag": 197
+    },
+    "staerkster_personenverkehr": {
+      "von": "Tägermoos (Abzw)",
+      "bis": "Kreuzlingen",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 71735,
+      "zuege_pro_tag": 197
+    },
+    "abschnitte": [
+      {
+        "von": "Tägermoos (Abzw)",
+        "bis": "Kreuzlingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 71735,
+        "zuege_pro_tag": 197
+      },
+      {
+        "von": "Konstanz Grenze (Abzw)",
+        "bis": "Kreuzlingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 64008,
+        "zuege_pro_tag": 175
+      },
+      {
+        "von": "Kreuzlingen",
+        "bis": "Kreuzlingen Hafen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30755,
+        "zuege_pro_tag": 84
+      },
+      {
+        "von": "Kreuzlingen",
+        "bis": "Kreuzlingen Hafen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 246,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Konstanz Grenze (Abzw)",
+        "bis": "Kreuzlingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 194,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Tägermoos (Abzw)",
+        "bis": "Kreuzlingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 823,
+        "name": "Kreuzlingen - Kreuzlingen Hafen",
+        "km": 60.68801
+      },
+      {
+        "nummer": 822,
+        "name": "Etzwilen - Konstanz",
+        "km": 60.68801
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a5112149607408089fb53e09c905b135"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-kreuzlingen-konstanz-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-kreuzlingen-konstanz-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

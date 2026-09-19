@@ -1,0 +1,241 @@
+{
+  "uic": 8505306,
+  "name": "Balerna",
+  "kanton": "TI",
+  "bps": "BAL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Balerna",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 9.005036,
+    "lat": 45.846745,
+    "dwv": 880,
+    "dtv": 730,
+    "dnwv": 400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 950
+      },
+      {
+        "jahr": 2022,
+        "dwv": 800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 790
+      },
+      {
+        "jahr": 2024,
+        "dwv": 860
+      },
+      {
+        "jahr": 2025,
+        "dwv": 880
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Balerna",
+    "abkuerzung": "BAL",
+    "hoehe_m_ue_m": 269,
+    "gemeinde": "Balerna",
+    "ortschaft": "Balerna",
+    "bezirk": "Mendrisio",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 222,
+    "kuerzeste_m": 222,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Mittelperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": 623.9,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": 536.68,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 222,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 222,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Balerna",
+      "bis": "Chiasso",
+      "strecke_nr": 111,
+      "strecke": "Chiasso PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80505,
+      "zuege_pro_tag": 221
+    },
+    "staerkster_personenverkehr": {
+      "von": "Balerna",
+      "bis": "Chiasso",
+      "strecke_nr": 111,
+      "strecke": "Chiasso PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80505,
+      "zuege_pro_tag": 221
+    },
+    "abschnitte": [
+      {
+        "von": "Balerna",
+        "bis": "Chiasso",
+        "strecke_nr": 111,
+        "strecke": "Chiasso PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80505,
+        "zuege_pro_tag": 221
+      },
+      {
+        "von": "Balerna per Smistamento (bif)",
+        "bis": "Balerna",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80498,
+        "zuege_pro_tag": 221
+      },
+      {
+        "von": "Balerna per Smistamento (bif)",
+        "bis": "Balerna",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4455,
+        "zuege_pro_tag": 12
+      },
+      {
+        "von": "Balerna",
+        "bis": "Chiasso",
+        "strecke_nr": 111,
+        "strecke": "Chiasso PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4446,
+        "zuege_pro_tag": 12
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 203.53433
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/108816b8d1d952c083ab5e8dda4469a0"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

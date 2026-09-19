@@ -1,0 +1,241 @@
+{
+  "uic": 8508003,
+  "name": "Hindelbank",
+  "kanton": "BE",
+  "bps": "HBK",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Hindelbank",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.545411,
+    "lat": 47.049564,
+    "dwv": 1400,
+    "dtv": 1200,
+    "dnwv": 780,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Hindelbank",
+    "abkuerzung": "HBK",
+    "hoehe_m_ue_m": 516.478,
+    "gemeinde": "Hindelbank",
+    "ortschaft": "Hindelbank",
+    "bezirk": "Emmental",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 222,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": 739.99,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 501.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 222,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Hardfeld (Spw)",
+      "bis": "Hindelbank",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 63669,
+      "zuege_pro_tag": 174
+    },
+    "staerkster_personenverkehr": {
+      "von": "Hardfeld (Spw)",
+      "bis": "Hindelbank",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 63669,
+      "zuege_pro_tag": 174
+    },
+    "abschnitte": [
+      {
+        "von": "Hardfeld (Spw)",
+        "bis": "Hindelbank",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 63669,
+        "zuege_pro_tag": 174
+      },
+      {
+        "von": "Hindelbank",
+        "bis": "Sandacher (Spw)",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 63658,
+        "zuege_pro_tag": 174
+      },
+      {
+        "von": "Hindelbank",
+        "bis": "Sandacher (Spw)",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12249,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Hardfeld (Spw)",
+        "bis": "Hindelbank",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12243,
+        "zuege_pro_tag": 34
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 450,
+        "name": "Olten Sud - Bern",
+        "km": 89.725
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BLS IAT"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c4ce1cb139f35d358f51a13e30737e6e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

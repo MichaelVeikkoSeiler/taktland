@@ -1,0 +1,212 @@
+{
+  "uic": 8506196,
+  "name": "Lengwil",
+  "kanton": "TG",
+  "bps": "LENG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Lengwil",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.190283,
+    "lat": 47.625598,
+    "dwv": 230,
+    "dtv": 210,
+    "dnwv": 150,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 260
+      },
+      {
+        "jahr": 2022,
+        "dwv": 200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 220
+      },
+      {
+        "jahr": 2024,
+        "dwv": 230
+      },
+      {
+        "jahr": 2025,
+        "dwv": 230
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Lengwil",
+    "abkuerzung": "LENG",
+    "hoehe_m_ue_m": 508.47,
+    "gemeinde": "Lengwil",
+    "ortschaft": "Lengwil",
+    "bezirk": "Kreuzlingen",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 346.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 831
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 120,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Kreuzlingen Bernrain",
+      "bis": "Lengwil",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42825,
+      "zuege_pro_tag": 117
+    },
+    "staerkster_personenverkehr": {
+      "von": "Kreuzlingen Bernrain",
+      "bis": "Lengwil",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42825,
+      "zuege_pro_tag": 117
+    },
+    "abschnitte": [
+      {
+        "von": "Kreuzlingen Bernrain",
+        "bis": "Lengwil",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42825,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Lengwil",
+        "bis": "Siegershausen",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42824,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Kreuzlingen Bernrain",
+        "bis": "Lengwil",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Lengwil",
+        "bis": "Siegershausen",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 831,
+        "name": "Weinfelden - Tagermoos",
+        "km": 33.44794
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8735b5658207c2c92b164a4fab2bd780"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "uic": 8504013,
+  "name": "Chexbres-Village",
+  "kanton": "VD",
+  "bps": "CHX",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Chexbres-Village",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.778538,
+    "lat": 46.481057,
+    "dwv": 630,
+    "dtv": 580,
+    "dnwv": 470,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 410
+      },
+      {
+        "jahr": 2022,
+        "dwv": 520
+      },
+      {
+        "jahr": 2023,
+        "dwv": 540
+      },
+      {
+        "jahr": 2024,
+        "dwv": 590
+      },
+      {
+        "jahr": 2025,
+        "dwv": 630
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Chexbres-Village",
+    "abkuerzung": "CHX",
+    "hoehe_m_ue_m": 559.646,
+    "gemeinde": "Chexbres",
+    "ortschaft": "Chexbres",
+    "bezirk": "Lavaux-Oron",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 82,
+    "kuerzeste_m": 5,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 82,
+        "flaeche_netto_m2": 181.4,
+        "niveaufreier_zugang": "ja",
+        "linie": 111
+      },
+      {
+        "nr": "2",
+        "typ": "Dienstperron",
+        "laenge_m": 5,
+        "flaeche_netto_m2": 8.46,
+        "niveaufreier_zugang": "ja",
+        "linie": 111
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Le Verney (embr)",
+      "bis": "Chexbres-Village",
+      "strecke_nr": 84,
+      "strecke": "Vevey - Puidoux-Chexbres",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14145,
+      "zuege_pro_tag": 39
+    },
+    "staerkster_personenverkehr": {
+      "von": "Le Verney (embr)",
+      "bis": "Chexbres-Village",
+      "strecke_nr": 84,
+      "strecke": "Vevey - Puidoux-Chexbres",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14145,
+      "zuege_pro_tag": 39
+    },
+    "abschnitte": [
+      {
+        "von": "Le Verney (embr)",
+        "bis": "Chexbres-Village",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14145,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Chexbres-Village",
+        "bis": "Corseaux-Cornalles",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14143,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Chexbres-Village",
+        "bis": "Corseaux-Cornalles",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 255,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Le Verney (embr)",
+        "bis": "Chexbres-Village",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 255,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 111,
+        "name": "Vevey Ouest - Puidoux-Chexbres",
+        "km": 5.60631
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3f1a6c7668f1e72f96b38b02e00c3548"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

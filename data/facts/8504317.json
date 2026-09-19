@@ -1,0 +1,202 @@
+{
+  "uic": 8504317,
+  "name": "Le Locle-Col-des-Roches",
+  "kanton": "NE",
+  "bps": "COL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Le Locle-Col-des-Roches",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.726071,
+    "lat": 47.049886,
+    "dwv": 50,
+    "dtv": 60,
+    "dnwv": 70,
+    "bemerkung": "Durchschnittswert 2025 durch Streckensperrung beeinträchtigt.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 190
+      },
+      {
+        "jahr": 2022,
+        "dwv": 310
+      },
+      {
+        "jahr": 2023,
+        "dwv": 430
+      },
+      {
+        "jahr": 2024,
+        "dwv": 49
+      },
+      {
+        "jahr": 2025,
+        "dwv": 50
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Le Locle-Col-des-Roches",
+    "abkuerzung": "COL",
+    "hoehe_m_ue_m": 915.43,
+    "gemeinde": "Le Locle",
+    "ortschaft": "Le Locle",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 149,
+    "kuerzeste_m": 149,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 265.62,
+        "niveaufreier_zugang": "ja",
+        "linie": 224
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      20
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 149,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 3,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 3
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Le Locle-Col-des-Roches",
+      "bis": "Le Locle-Frontière",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 4477,
+      "zuege_pro_tag": 12
+    },
+    "staerkster_personenverkehr": {
+      "von": "Le Locle-Col-des-Roches",
+      "bis": "Le Locle-Frontière",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 4477,
+      "zuege_pro_tag": 12
+    },
+    "abschnitte": [
+      {
+        "von": "Le Locle-Col-des-Roches",
+        "bis": "Le Locle-Frontière",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4477,
+        "zuege_pro_tag": 12
+      },
+      {
+        "von": "Le Locle-Col-des-Roches",
+        "bis": "Le Locle",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4433,
+        "zuege_pro_tag": 12
+      },
+      {
+        "von": "Le Locle-Col-des-Roches",
+        "bis": "Le Locle",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 536,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 224,
+        "name": "Chambrelien Nord - Le Locle (Frontiere)",
+        "km": 38.86171
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ba61e5dc353dcedc21f095dc45133c12"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

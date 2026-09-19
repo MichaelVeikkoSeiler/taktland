@@ -1,0 +1,282 @@
+{
+  "uic": 8508215,
+  "name": "Wolhusen",
+  "kanton": "LU",
+  "bps": "WH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Wolhusen",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 8.079754,
+    "lat": 47.055488,
+    "dwv": 3600,
+    "dtv": 3200,
+    "dnwv": 2500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Wolhusen",
+    "abkuerzung": "WH",
+    "hoehe_m_ue_m": 565,
+    "gemeinde": "Wolhusen",
+    "ortschaft": "Wolhusen",
+    "bezirk": "Entlebuch",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 273,
+    "kuerzeste_m": 175,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 273,
+        "flaeche_netto_m2": 1074.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 445
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 175,
+        "flaeche_netto_m2": 347.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 445
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      30,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          30,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 139,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 267,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 269,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 4,
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Wolhusen",
+      "bis": "Werthenstein",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 31114,
+      "zuege_pro_tag": 85
+    },
+    "staerkster_personenverkehr": {
+      "von": "Wolhusen",
+      "bis": "Werthenstein",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 31114,
+      "zuege_pro_tag": 85
+    },
+    "abschnitte": [
+      {
+        "von": "Wolhusen",
+        "bis": "Werthenstein",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31114,
+        "zuege_pro_tag": 85
+      },
+      {
+        "von": "Wolhusen Weid",
+        "bis": "Wolhusen",
+        "strecke_nr": 406,
+        "strecke": "Langenthal - Wolhusen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29729,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Doppleschwand-Romoos",
+        "bis": "Wolhusen",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28040,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Wolhusen Weid",
+        "bis": "Wolhusen",
+        "strecke_nr": 406,
+        "strecke": "Langenthal - Wolhusen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 460,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Wolhusen",
+        "bis": "Werthenstein",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 358,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Doppleschwand-Romoos",
+        "bis": "Wolhusen",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 135,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 445,
+        "name": "Huttwil - Wolhusen",
+        "km": 25.2598
+      },
+      {
+        "nummer": 460,
+        "name": "Gumligen Sud - Fluhmuhle",
+        "km": 74.35719
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BLS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/bd350923641af3ae4cedf16d1145b0cb"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

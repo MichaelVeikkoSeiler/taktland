@@ -1,0 +1,268 @@
+{
+  "uic": 8503011,
+  "name": "Zürich Wiedikon",
+  "kanton": "ZH",
+  "bps": "ZWIE",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zürich Wiedikon",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.523485,
+    "lat": 47.371477,
+    "dwv": 14600,
+    "dtv": 12700,
+    "dnwv": 8300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 13800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 12000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 13900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 14500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 14600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zürich Wiedikon",
+    "abkuerzung": "ZWIE",
+    "hoehe_m_ue_m": 405.5,
+    "gemeinde": "Zürich",
+    "ortschaft": "Zürich",
+    "bezirk": "Zürich",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 354,
+    "kuerzeste_m": 341,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 354,
+        "flaeche_netto_m2": 1730.42,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 341,
+        "flaeche_netto_m2": 2264.8,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 306,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 324,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 324,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zürich Aussersihl (Abzw)",
+      "bis": "Zürich Wiedikon",
+      "strecke_nr": 113,
+      "strecke": "Zürich PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 91220,
+      "zuege_pro_tag": 250
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zürich Aussersihl (Abzw)",
+      "bis": "Zürich Wiedikon",
+      "strecke_nr": 113,
+      "strecke": "Zürich PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 91220,
+      "zuege_pro_tag": 250
+    },
+    "abschnitte": [
+      {
+        "von": "Zürich Aussersihl (Abzw)",
+        "bis": "Zürich Wiedikon",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 91220,
+        "zuege_pro_tag": 250
+      },
+      {
+        "von": "Zürich Wiedikon",
+        "bis": "Zürich Enge",
+        "strecke_nr": 51,
+        "strecke": "Zürich Wiedikon - Kilchberg - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 89079,
+        "zuege_pro_tag": 244
+      },
+      {
+        "von": "Zürich Aussersihl (Abzw)",
+        "bis": "Zürich Wiedikon",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1220,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Zürich Wiedikon",
+        "bis": "Zürich Enge",
+        "strecke_nr": 51,
+        "strecke": "Zürich Wiedikon - Kilchberg - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 679,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 717,
+        "name": "Zurich Giesshubel - Zurich Wiedikon",
+        "km": 1.06916
+      },
+      {
+        "nummer": 720,
+        "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
+        "km": 2.93357
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/1cb69ab3a5893f5b2549ed47e9c77470"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

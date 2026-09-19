@@ -1,0 +1,242 @@
+{
+  "uic": 8509416,
+  "name": "Unterterzen",
+  "kanton": "SG",
+  "bps": "UNT",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Unterterzen",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.255018,
+    "lat": 47.113857,
+    "dwv": 1200,
+    "dtv": 1400,
+    "dnwv": 1800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 490
+      },
+      {
+        "jahr": 2022,
+        "dwv": 480
+      },
+      {
+        "jahr": 2023,
+        "dwv": 460
+      },
+      {
+        "jahr": 2024,
+        "dwv": 630
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Unterterzen",
+    "abkuerzung": "UNT",
+    "hoehe_m_ue_m": 426.1,
+    "gemeinde": "Quarten",
+    "ortschaft": "Unterterzen",
+    "bezirk": "Sarganserland",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 322,
+    "kuerzeste_m": 322,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 322,
+        "flaeche_netto_m2": 1744.85,
+        "niveaufreier_zugang": "ja",
+        "linie": 890
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      20,
+      42
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 155,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20,
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 155,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 6,
+      "42": 2
+    },
+    "segmente_mit_hilfstritt": 2,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Murg",
+      "bis": "Unterterzen",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54464,
+      "zuege_pro_tag": 149
+    },
+    "staerkster_personenverkehr": {
+      "von": "Murg",
+      "bis": "Unterterzen",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54464,
+      "zuege_pro_tag": 149
+    },
+    "abschnitte": [
+      {
+        "von": "Murg",
+        "bis": "Unterterzen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54464,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Walenstadt",
+        "bis": "Unterterzen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54345,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Walenstadt",
+        "bis": "Unterterzen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7857,
+        "zuege_pro_tag": 22
+      },
+      {
+        "von": "Murg",
+        "bis": "Unterterzen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7855,
+        "zuege_pro_tag": 22
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 890,
+        "name": "Sargans Ost - Ziegelbrucke",
+        "km": 18.10677
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d00dcd6618f0dc94cc9138f86df13c33"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

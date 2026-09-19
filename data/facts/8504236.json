@@ -1,0 +1,237 @@
+{
+  "uic": 8504236,
+  "name": "Les Geneveys-sur-Coffrane",
+  "kanton": "NE",
+  "bps": "GEC",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Les Geneveys-sur-Coffrane",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "BLS, SBB",
+    "lon": 6.853218,
+    "lat": 47.015096,
+    "dwv": 1100,
+    "dtv": 940,
+    "dnwv": 690,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 780
+      },
+      {
+        "jahr": 2022,
+        "dwv": 820
+      },
+      {
+        "jahr": 2023,
+        "dwv": 920
+      },
+      {
+        "jahr": 2024,
+        "dwv": 970
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Les Geneveys-sur-Coffrane",
+    "abkuerzung": "GEC",
+    "hoehe_m_ue_m": 849.52,
+    "gemeinde": "Val-de-Ruz",
+    "ortschaft": "Les Geneveys-sur-Coffrane",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 172,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Zwischenperron",
+        "laenge_m": 172,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 224
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 685.66,
+        "niveaufreier_zugang": "ja",
+        "linie": 224
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      20,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          35,
+          55
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 84,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 173,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 11,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 6,
+      "35": 3,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 3,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Chambrelien",
+      "bis": "Les Geneveys-sur-Coffrane",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27683,
+      "zuege_pro_tag": 76
+    },
+    "staerkster_personenverkehr": {
+      "von": "Chambrelien",
+      "bis": "Les Geneveys-sur-Coffrane",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27683,
+      "zuege_pro_tag": 76
+    },
+    "abschnitte": [
+      {
+        "von": "Chambrelien",
+        "bis": "Les Geneveys-sur-Coffrane",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27683,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Les Hauts-Geneveys",
+        "bis": "Les Geneveys-sur-Coffrane",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27644,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Chambrelien",
+        "bis": "Les Geneveys-sur-Coffrane",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Les Hauts-Geneveys",
+        "bis": "Les Geneveys-sur-Coffrane",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 224,
+        "name": "Chambrelien Nord - Le Locle (Frontiere)",
+        "km": 16.8975
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/905221699150f5066351d28495dff3b4"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

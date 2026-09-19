@@ -1,0 +1,231 @@
+{
+  "uic": 8500217,
+  "name": "Olten Hammer",
+  "kanton": "SO",
+  "bps": "OLH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Olten Hammer",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.897724,
+    "lat": 47.348555,
+    "dwv": 480,
+    "dtv": 420,
+    "dnwv": 290,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 530
+      },
+      {
+        "jahr": 2022,
+        "dwv": 500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 490
+      },
+      {
+        "jahr": 2024,
+        "dwv": 510
+      },
+      {
+        "jahr": 2025,
+        "dwv": 480
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Olten Hammer",
+    "abkuerzung": "OLH",
+    "hoehe_m_ue_m": 403,
+    "gemeinde": "Olten",
+    "ortschaft": "Olten",
+    "bezirk": "Olten",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 168,
+    "kuerzeste_m": 58,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 168,
+        "flaeche_netto_m2": 330.21,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 167,
+        "flaeche_netto_m2": 664.7,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 58,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 160,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 1,
+      "55": 3
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Olten Hammer",
+      "bis": "Olten",
+      "strecke_nr": 8,
+      "strecke": "Solothurn - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 44164,
+      "zuege_pro_tag": 121
+    },
+    "staerkster_personenverkehr": {
+      "von": "Olten Hammer",
+      "bis": "Olten",
+      "strecke_nr": 8,
+      "strecke": "Solothurn - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 44164,
+      "zuege_pro_tag": 121
+    },
+    "abschnitte": [
+      {
+        "von": "Olten Hammer",
+        "bis": "Olten",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44164,
+        "zuege_pro_tag": 121
+      },
+      {
+        "von": "Wangen bei Olten",
+        "bis": "Olten Hammer",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44005,
+        "zuege_pro_tag": 121
+      },
+      {
+        "von": "Wangen bei Olten",
+        "bis": "Olten Hammer",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 37098,
+        "zuege_pro_tag": 102
+      },
+      {
+        "von": "Olten Hammer",
+        "bis": "Olten",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35557,
+        "zuege_pro_tag": 97
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 40.6274
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e65f83980b3f5f8ad7293e47d14b0650"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

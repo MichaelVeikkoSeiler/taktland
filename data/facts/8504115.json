@@ -1,0 +1,189 @@
+{
+  "uic": 8504115,
+  "name": "Thörishaus Dorf",
+  "kanton": "BE",
+  "bps": "THOD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Thörishaus Dorf",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.351867,
+    "lat": 46.893569,
+    "dwv": 1900,
+    "dtv": 1600,
+    "dnwv": 920,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Thörishaus Dorf",
+    "abkuerzung": "THOD",
+    "hoehe_m_ue_m": 575.34,
+    "gemeinde": "Köniz",
+    "ortschaft": "Thörishaus",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 219,
+    "kuerzeste_m": 178,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 576.84,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 178,
+        "flaeche_netto_m2": 592.15,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Flamatt",
+      "bis": "Thörishaus Dorf",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80983,
+      "zuege_pro_tag": 222
+    },
+    "staerkster_personenverkehr": {
+      "von": "Flamatt",
+      "bis": "Thörishaus Dorf",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80983,
+      "zuege_pro_tag": 222
+    },
+    "abschnitte": [
+      {
+        "von": "Flamatt",
+        "bis": "Thörishaus Dorf",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80983,
+        "zuege_pro_tag": 222
+      },
+      {
+        "von": "Thörishaus Dorf",
+        "bis": "Thörishaus Station",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80983,
+        "zuege_pro_tag": 222
+      },
+      {
+        "von": "Flamatt",
+        "bis": "Thörishaus Dorf",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3085,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Thörishaus Dorf",
+        "bis": "Thörishaus Station",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3085,
+        "zuege_pro_tag": 8
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 86.88105
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6fa25f9651fe057d32f2bb9e6d4ecaf2"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "uic": 8508101,
+  "name": "Roggwil-Wynau",
+  "kanton": "BE",
+  "bps": "ROG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Roggwil-Wynau",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 7.814916,
+    "lat": 47.25164,
+    "dwv": 400,
+    "dtv": 350,
+    "dnwv": 250,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 320
+      },
+      {
+        "jahr": 2022,
+        "dwv": 340
+      },
+      {
+        "jahr": 2023,
+        "dwv": 340
+      },
+      {
+        "jahr": 2024,
+        "dwv": 370
+      },
+      {
+        "jahr": 2025,
+        "dwv": 400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Roggwil-Wynau",
+    "abkuerzung": "ROG",
+    "hoehe_m_ue_m": 432,
+    "gemeinde": "Roggwil (BE)",
+    "ortschaft": "Roggwil BE",
+    "bezirk": "Oberaargau",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 280,
+    "kuerzeste_m": 206,
+    "items": [
+      {
+        "nr": "4",
+        "typ": "Aussenperron",
+        "laenge_m": 280,
+        "flaeche_netto_m2": 536.08,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      },
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 206,
+        "flaeche_netto_m2": 524.39,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Roggwil-Wynau",
+      "bis": "Murgenthal",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57554,
+      "zuege_pro_tag": 158
+    },
+    "staerkster_personenverkehr": {
+      "von": "Roggwil-Wynau",
+      "bis": "Murgenthal",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57554,
+      "zuege_pro_tag": 158
+    },
+    "abschnitte": [
+      {
+        "von": "Roggwil-Wynau",
+        "bis": "Murgenthal",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57554,
+        "zuege_pro_tag": 158
+      },
+      {
+        "von": "Langenthal",
+        "bis": "Roggwil-Wynau",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57548,
+        "zuege_pro_tag": 158
+      },
+      {
+        "von": "Langenthal",
+        "bis": "Roggwil-Wynau",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15454,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Roggwil-Wynau",
+        "bis": "Murgenthal",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15454,
+        "zuege_pro_tag": 42
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 450,
+        "name": "Olten Sud - Bern",
+        "km": 54.48945
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/348dd7788db414ecc619f0baebd83842"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

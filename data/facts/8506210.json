@@ -1,0 +1,288 @@
+{
+  "uic": 8506210,
+  "name": "Gossau SG",
+  "kanton": "SG",
+  "bps": "GSS",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Gossau SG",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 9.253051,
+    "lat": 47.411832,
+    "dwv": 8100,
+    "dtv": 7700,
+    "dnwv": 6600,
+    "bemerkung": "Ohne AB.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 9100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 6900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 7600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 7800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 8100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Gossau SG",
+    "abkuerzung": "GSS",
+    "hoehe_m_ue_m": 637.9,
+    "gemeinde": "Gossau (SG)",
+    "ortschaft": "Gossau SG",
+    "bezirk": "St. Gallen",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 432,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 432,
+        "flaeche_netto_m2": 1945.93,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 401.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 852
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 120,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 420,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 420,
+        "sektoren": [
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Gossau SG",
+      "bis": "St. Gallen Winkeln",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 100327,
+      "zuege_pro_tag": 275
+    },
+    "staerkster_personenverkehr": {
+      "von": "Gossau SG",
+      "bis": "St. Gallen Winkeln",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 100327,
+      "zuege_pro_tag": 275
+    },
+    "abschnitte": [
+      {
+        "von": "Gossau SG",
+        "bis": "St. Gallen Winkeln",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 100327,
+        "zuege_pro_tag": 275
+      },
+      {
+        "von": "Burgau Deponie ZAB (Agl)",
+        "bis": "Gossau SG",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78608,
+        "zuege_pro_tag": 215
+      },
+      {
+        "von": "Gossau-Sommerau (Agl)",
+        "bis": "Gossau SG",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22173,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Burgau Deponie ZAB (Agl)",
+        "bis": "Gossau SG",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6290,
+        "zuege_pro_tag": 17
+      },
+      {
+        "von": "Gossau SG",
+        "bis": "St. Gallen Winkeln",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6117,
+        "zuege_pro_tag": 17
+      },
+      {
+        "von": "Gossau-Sommerau (Agl)",
+        "bis": "Gossau SG",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1518,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 852,
+        "name": "Sulgen - Gossau SG",
+        "km": 22.94553
+      },
+      {
+        "nummer": 850,
+        "name": "St.Gallen - Winterthur Nord",
+        "km": 90.1274
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/41e9d73717ec1e77759997f07537acb0"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "uic": 8503307,
+  "name": "Bassersdorf",
+  "kanton": "ZH",
+  "bps": "BSD",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bassersdorf",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.626221,
+    "lat": 47.438571,
+    "dwv": 6300,
+    "dtv": 5800,
+    "dnwv": 4900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 5300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 6300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bassersdorf",
+    "abkuerzung": "BSD",
+    "hoehe_m_ue_m": 454.8,
+    "gemeinde": "Bassersdorf",
+    "ortschaft": "Bassersdorf",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 315,
+    "kuerzeste_m": 238,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 315,
+        "flaeche_netto_m2": 1419.23,
+        "niveaufreier_zugang": "ja",
+        "linie": 752
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 238,
+        "flaeche_netto_m2": 746.45,
+        "niveaufreier_zugang": "ja",
+        "linie": 752
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      25,
+      30,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 239,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          30,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 216,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          30,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 216,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 11,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 3,
+      "30": 6,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dorfnest (Abzw)",
+      "bis": "Bassersdorf",
+      "strecke_nr": 62,
+      "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 138863,
+      "zuege_pro_tag": 380
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dorfnest (Abzw)",
+      "bis": "Bassersdorf",
+      "strecke_nr": 62,
+      "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 138863,
+      "zuege_pro_tag": 380
+    },
+    "abschnitte": [
+      {
+        "von": "Dorfnest (Abzw)",
+        "bis": "Bassersdorf",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 138863,
+        "zuege_pro_tag": 380
+      },
+      {
+        "von": "Bassersdorf",
+        "bis": "Hürlistein (Abzw)",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 127561,
+        "zuege_pro_tag": 349
+      },
+      {
+        "von": "Dorfnest (Abzw)",
+        "bis": "Bassersdorf",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13878,
+        "zuege_pro_tag": 38
+      },
+      {
+        "von": "Bassersdorf",
+        "bis": "Hürlistein (Abzw)",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13857,
+        "zuege_pro_tag": 38
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 752,
+        "name": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
+        "km": 14.75314
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/5bc8016fd05a4ad25502504af2f0ac71"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

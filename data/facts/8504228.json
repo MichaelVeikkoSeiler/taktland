@@ -1,0 +1,247 @@
+{
+  "uic": 8504228,
+  "name": "Twann",
+  "kanton": "BE",
+  "bps": "TWN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Twann",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.156498,
+    "lat": 47.093664,
+    "dwv": 950,
+    "dtv": 970,
+    "dnwv": 990,
+    "bemerkung": "Zunahme infolge Schliessung von Ligerz.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 470
+      },
+      {
+        "jahr": 2022,
+        "dwv": 420
+      },
+      {
+        "jahr": 2023,
+        "dwv": 420
+      },
+      {
+        "jahr": 2024,
+        "dwv": 240
+      },
+      {
+        "jahr": 2025,
+        "dwv": 950
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Twann",
+    "abkuerzung": "TWN",
+    "hoehe_m_ue_m": 433.8,
+    "gemeinde": "Twann-Tüscherz",
+    "ortschaft": "Twann",
+    "bezirk": "Biel/Bienne",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 575.43,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 794.85,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      30
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 240,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 239,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Twann",
+      "bis": "Tüscherz",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50986,
+      "zuege_pro_tag": 140
+    },
+    "staerkster_personenverkehr": {
+      "von": "Twann",
+      "bis": "Tüscherz",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50986,
+      "zuege_pro_tag": 140
+    },
+    "abschnitte": [
+      {
+        "von": "Twann",
+        "bis": "Tüscherz",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50986,
+        "zuege_pro_tag": 140
+      },
+      {
+        "von": "Ligerz",
+        "bis": "Twann",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50897,
+        "zuege_pro_tag": 139
+      },
+      {
+        "von": "Twann",
+        "bis": "Tüscherz",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24518,
+        "zuege_pro_tag": 67
+      },
+      {
+        "von": "Ligerz",
+        "bis": "Twann",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24515,
+        "zuege_pro_tag": 67
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 9210,
+        "name": "La Neuveville - Tuscherz",
+        "km": 95.9766
+      },
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 95.976
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e9398cc73c238cf5bdd1c6dd79a14dfb"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "uic": 8503526,
+  "name": "Regensdorf-Watt",
+  "kanton": "ZH",
+  "bps": "REG",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Regensdorf-Watt",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.472085,
+    "lat": 47.436564,
+    "dwv": 8500,
+    "dtv": 7300,
+    "dnwv": 4600,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 8100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 6700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 7600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 8000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 8500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Regensdorf-Watt",
+    "abkuerzung": "REG",
+    "hoehe_m_ue_m": 441.2,
+    "gemeinde": "Regensdorf",
+    "ortschaft": "Regensdorf",
+    "bezirk": "Dielsdorf",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 228,
+    "kuerzeste_m": 228,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 228,
+        "flaeche_netto_m2": 1004.46,
+        "niveaufreier_zugang": "ja",
+        "linie": 703
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 225,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 226,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 228,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 228,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Regensdorf-Watt",
+      "bis": "Zürich Affoltern",
+      "strecke_nr": 57,
+      "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 34528,
+      "zuege_pro_tag": 95
+    },
+    "staerkster_personenverkehr": {
+      "von": "Regensdorf-Watt",
+      "bis": "Zürich Affoltern",
+      "strecke_nr": 57,
+      "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 34528,
+      "zuege_pro_tag": 95
+    },
+    "abschnitte": [
+      {
+        "von": "Regensdorf-Watt",
+        "bis": "Zürich Affoltern",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 34528,
+        "zuege_pro_tag": 95
+      },
+      {
+        "von": "Buchs-Dällikon",
+        "bis": "Regensdorf-Watt",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29658,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Regensdorf-Watt",
+        "bis": "Zürich Affoltern",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11858,
+        "zuege_pro_tag": 32
+      },
+      {
+        "von": "Buchs-Dällikon",
+        "bis": "Regensdorf-Watt",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11763,
+        "zuege_pro_tag": 32
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 703,
+        "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
+        "km": 29.49171
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/edcef1d62173bf67fff16cfd9499f7e0"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

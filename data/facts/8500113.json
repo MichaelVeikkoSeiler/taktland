@@ -1,0 +1,254 @@
+{
+  "uic": 8500113,
+  "name": "Laufen",
+  "kanton": "BL",
+  "bps": "LFN",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Laufen",
+    "kanton": "BL",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.502636,
+    "lat": 47.419346,
+    "dwv": 7100,
+    "dtv": 6300,
+    "dnwv": 4400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 6600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 5700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 6300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 6400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 7100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Laufen",
+    "abkuerzung": "LFN",
+    "hoehe_m_ue_m": 355.15,
+    "gemeinde": "Laufen",
+    "ortschaft": "Laufen",
+    "bezirk": "Laufen",
+    "kanton": "Basel-Landschaft",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 421,
+    "kuerzeste_m": 403,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 421,
+        "flaeche_netto_m2": 1766.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      },
+      {
+        "nr": "1/2",
+        "typ": "Hausperron",
+        "laenge_m": 403,
+        "flaeche_netto_m2": 1883.74,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 233,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 421,
+        "sektoren": []
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 375,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 13,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 8,
+      "55": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bärschwil",
+      "bis": "Laufen",
+      "strecke_nr": 14,
+      "strecke": "Moutier - Delémont - Ruchfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29146,
+      "zuege_pro_tag": 80
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bärschwil",
+      "bis": "Laufen",
+      "strecke_nr": 14,
+      "strecke": "Moutier - Delémont - Ruchfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29146,
+      "zuege_pro_tag": 80
+    },
+    "abschnitte": [
+      {
+        "von": "Bärschwil",
+        "bis": "Laufen",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29146,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Zwingen",
+        "bis": "Laufen",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26281,
+        "zuege_pro_tag": 72
+      },
+      {
+        "von": "Bärschwil",
+        "bis": "Laufen",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 326,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Zwingen",
+        "bis": "Laufen",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 326,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 230,
+        "name": "Delemont Est - Basel SBB Ost",
+        "km": 100.60738
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4f28ff2004d57eb53aa6e8ccf04a79a1"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

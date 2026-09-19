@@ -1,0 +1,287 @@
+{
+  "uic": 8502001,
+  "name": "Zofingen",
+  "kanton": "AG",
+  "bps": "ZF",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zofingen",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 7.943118,
+    "lat": 47.288053,
+    "dwv": 11400,
+    "dtv": 10100,
+    "dnwv": 7100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 10300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 9700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 10900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 11300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 11400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zofingen",
+    "abkuerzung": "ZF",
+    "hoehe_m_ue_m": 431,
+    "gemeinde": "Zofingen",
+    "ortschaft": "Zofingen",
+    "bezirk": "Zofingen",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 422,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 422,
+        "flaeche_netto_m2": 1876.35,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 238,
+        "flaeche_netto_m2": 774.72,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "40",
+        "typ": "Aussenperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 325.78,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 183,
+        "sektoren": [
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 423,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 423,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Aarburg-Oftringen Süd (Abzw)",
+      "bis": "Zofingen",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 88137,
+      "zuege_pro_tag": 241
+    },
+    "staerkster_personenverkehr": {
+      "von": "Aarburg-Oftringen Süd (Abzw)",
+      "bis": "Zofingen",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 88137,
+      "zuege_pro_tag": 241
+    },
+    "abschnitte": [
+      {
+        "von": "Aarburg-Oftringen Süd (Abzw)",
+        "bis": "Zofingen",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 88137,
+        "zuege_pro_tag": 241
+      },
+      {
+        "von": "Zofingen",
+        "bis": "Brittnau-Wikon",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72662,
+        "zuege_pro_tag": 199
+      },
+      {
+        "von": "Zofingen",
+        "bis": "Küngoldingen",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23942,
+        "zuege_pro_tag": 66
+      },
+      {
+        "von": "Zofingen",
+        "bis": "Brittnau-Wikon",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8713,
+        "zuege_pro_tag": 24
+      },
+      {
+        "von": "Aarburg-Oftringen Süd (Abzw)",
+        "bis": "Zofingen",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5577,
+        "zuege_pro_tag": 15
+      },
+      {
+        "von": "Zofingen",
+        "bis": "Küngoldingen",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1025,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 47.46243
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 0,
+    "billettentwerter": 8,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7169df3f1ef44047cfbea6b86fceee99"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

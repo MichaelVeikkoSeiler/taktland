@@ -1,0 +1,189 @@
+{
+  "uic": 8501111,
+  "name": "Essert-Pittet",
+  "kanton": "VD",
+  "bps": "ESP",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Essert-Pittet",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.580656,
+    "lat": 46.727673,
+    "dwv": 90,
+    "dtv": 80,
+    "dnwv": 49,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 50
+      },
+      {
+        "jahr": 2022,
+        "dwv": 70
+      },
+      {
+        "jahr": 2023,
+        "dwv": 80
+      },
+      {
+        "jahr": 2024,
+        "dwv": 80
+      },
+      {
+        "jahr": 2025,
+        "dwv": 90
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Essert-Pittet",
+    "abkuerzung": "ESP",
+    "hoehe_m_ue_m": 438.19,
+    "gemeinde": "Chavornay",
+    "ortschaft": "Essert-Pittet",
+    "bezirk": "Jura-Nord vaudois",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 170,
+    "kuerzeste_m": 165,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 260.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 165,
+        "flaeche_netto_m2": 340.52,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Chavornay",
+      "bis": "Essert-Pittet",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 61242,
+      "zuege_pro_tag": 168
+    },
+    "staerkster_personenverkehr": {
+      "von": "Chavornay",
+      "bis": "Essert-Pittet",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 61242,
+      "zuege_pro_tag": 168
+    },
+    "abschnitte": [
+      {
+        "von": "Chavornay",
+        "bis": "Essert-Pittet",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 61242,
+        "zuege_pro_tag": 168
+      },
+      {
+        "von": "Essert-Pittet",
+        "bis": "Ependes VD",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 61242,
+        "zuege_pro_tag": 168
+      },
+      {
+        "von": "Chavornay",
+        "bis": "Essert-Pittet",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23498,
+        "zuege_pro_tag": 64
+      },
+      {
+        "von": "Essert-Pittet",
+        "bis": "Ependes VD",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23498,
+        "zuege_pro_tag": 64
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 29.67427
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/da63b8402bcb7c5dc40ec79152e0e495"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

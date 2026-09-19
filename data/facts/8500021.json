@@ -1,0 +1,292 @@
+{
+  "uic": 8500021,
+  "name": "Pratteln",
+  "kanton": "BL",
+  "bps": "PR",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Pratteln",
+    "kanton": "BL",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.690817,
+    "lat": 47.522669,
+    "dwv": 10200,
+    "dtv": 8700,
+    "dnwv": 5200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 10100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 9000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 9900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 10500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 10200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Pratteln",
+    "abkuerzung": "PR",
+    "hoehe_m_ue_m": 289.6,
+    "gemeinde": "Pratteln",
+    "ortschaft": "Pratteln",
+    "bezirk": "Liestal",
+    "kanton": "Basel-Landschaft",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 324,
+    "kuerzeste_m": 228,
+    "items": [
+      {
+        "nr": "2/4",
+        "typ": "Mittelperron",
+        "laenge_m": 324,
+        "flaeche_netto_m2": 1147.02,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "5/7",
+        "typ": "Mittelperron",
+        "laenge_m": 252,
+        "flaeche_netto_m2": 893.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 228,
+        "flaeche_netto_m2": 620.23,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "4",
+      "5",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 229,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 238,
+        "sektoren": []
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 236,
+        "sektoren": []
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 236,
+        "sektoren": []
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 236,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Pratteln Ueberwerfung",
+      "bis": "Pratteln",
+      "strecke_nr": 27,
+      "strecke": "Muttenz - HBT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 106642,
+      "zuege_pro_tag": 292
+    },
+    "staerkster_personenverkehr": {
+      "von": "Pratteln Ueberwerfung",
+      "bis": "Pratteln",
+      "strecke_nr": 27,
+      "strecke": "Muttenz - HBT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 106642,
+      "zuege_pro_tag": 292
+    },
+    "abschnitte": [
+      {
+        "von": "Pratteln Ueberwerfung",
+        "bis": "Pratteln",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 106642,
+        "zuege_pro_tag": 292
+      },
+      {
+        "von": "Pratteln Ueberwerfung",
+        "bis": "Pratteln",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67531,
+        "zuege_pro_tag": 185
+      },
+      {
+        "von": "Pratteln",
+        "bis": "Pratteln Salina Raurica",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 63061,
+        "zuege_pro_tag": 173
+      },
+      {
+        "von": "Pratteln",
+        "bis": "Pratteln Salina Raurica",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 43006,
+        "zuege_pro_tag": 118
+      },
+      {
+        "von": "Pratteln",
+        "bis": "Frenkendorf-Füllinsdorf",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 43003,
+        "zuege_pro_tag": 118
+      },
+      {
+        "von": "Pratteln",
+        "bis": "Frenkendorf-Füllinsdorf",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24386,
+        "zuege_pro_tag": 67
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 8.33813
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/973833541d8e38ef2baae7aa05fe0d6f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

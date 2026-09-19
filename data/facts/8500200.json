@@ -1,0 +1,189 @@
+{
+  "uic": 8500200,
+  "name": "Pieterlen",
+  "kanton": "BE",
+  "bps": "PIE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Pieterlen",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.340194,
+    "lat": 47.171441,
+    "dwv": 1200,
+    "dtv": 1100,
+    "dnwv": 740,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Pieterlen",
+    "abkuerzung": "PIE",
+    "hoehe_m_ue_m": 435.63,
+    "gemeinde": "Pieterlen",
+    "ortschaft": "Pieterlen",
+    "bezirk": "Biel/Bienne",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 150,
+    "kuerzeste_m": 149,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 434.33,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 428.09,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Pieterlen",
+      "bis": "Biel/Bienne Bözingenfeld/Champ",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84824,
+      "zuege_pro_tag": 232
+    },
+    "staerkster_personenverkehr": {
+      "von": "Pieterlen",
+      "bis": "Biel/Bienne Bözingenfeld/Champ",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84824,
+      "zuege_pro_tag": 232
+    },
+    "abschnitte": [
+      {
+        "von": "Pieterlen",
+        "bis": "Biel/Bienne Bözingenfeld/Champ",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84824,
+        "zuege_pro_tag": 232
+      },
+      {
+        "von": "Pieterlen",
+        "bis": "Lengnau BE",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84824,
+        "zuege_pro_tag": 232
+      },
+      {
+        "von": "Pieterlen",
+        "bis": "Biel/Bienne Bözingenfeld/Champ",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25037,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Pieterlen",
+        "bis": "Lengnau BE",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25037,
+        "zuege_pro_tag": 69
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 90.21118
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8b7496310c477111d265628434a3a390"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

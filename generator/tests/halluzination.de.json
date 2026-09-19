@@ -1,0 +1,47 @@
+{
+  "uic": 8508001,
+  "name": "Schönbühl SBB",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-19",
+  "sources": ["passagierfrequenz"],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Der Bahnhof wurde 1857 eröffnet und zählt 12400 Reisende pro Tag. Alle 2 Gleise sind überdacht.",
+      "facts": [
+        {"label": "Ein- und Aussteigende pro Werktag", "value": 12400, "unit": "Personen",
+         "source": "passagierfrequenz", "factRef": "steckbrief.dwv"},
+        {"label": "Eröffnungsjahr", "value": 1857, "unit": null,
+         "source": "passagierfrequenz", "factRef": "steckbrief.eroeffnung"},
+        {"label": "Ohne Beleg", "value": 5, "unit": null, "source": "erfunden"}
+      ],
+      "questions": [
+        {"type": "single_choice",
+         "prompt": "Wie viele Personen steigen pro Werktag ein und aus?",
+         "options": ["410", "810", "12400"],
+         "correct": 2,
+         "explanation": "Es sind 12400 Personen.",
+         "factRef": "steckbrief.dwv", "difficulty": 1},
+        {"type": "zuordnen_neu",
+         "prompt": "Ordne die Gleise zu.",
+         "factRef": "gleise.nummern", "difficulty": 1},
+        {"type": "single_choice",
+         "prompt": "Wie hoch ist das Perron?",
+         "options": ["35 cm", "55 cm"],
+         "correct": 0,
+         "explanation": "Das Perron misst 35 cm, was für Straßenbahnen üblich ist.",
+         "factRef": "gleise.perronhoehen_cm[0]", "difficulty": 1}
+      ]
+    },
+    {
+      "id": "gastronomie",
+      "title": "Essen und Trinken",
+      "body": "Im Bahnhof gibt es ein Café und einen Kiosk.",
+      "facts": [],
+      "questions": []
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "uic": 8503121,
+  "name": "Rüti ZH",
+  "kanton": "ZH",
+  "bps": "RUE",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rüti ZH",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.854079,
+    "lat": 47.260484,
+    "dwv": 13600,
+    "dtv": 12000,
+    "dnwv": 8300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 11400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 11500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 12800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 13100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 13600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rüti ZH",
+    "abkuerzung": "RUE",
+    "hoehe_m_ue_m": 481.8,
+    "gemeinde": "Rüti (ZH)",
+    "ortschaft": "Rüti ZH",
+    "bezirk": "Hinwil",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 345,
+    "kuerzeste_m": 322,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 345,
+        "flaeche_netto_m2": 1091.69,
+        "niveaufreier_zugang": "ja",
+        "linie": 740
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 322,
+        "flaeche_netto_m2": 1668.24,
+        "niveaufreier_zugang": "ja",
+        "linie": 740
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 348,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 325,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bubikon",
+      "bis": "Rüti ZH",
+      "strecke_nr": 64,
+      "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57070,
+      "zuege_pro_tag": 156
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bubikon",
+      "bis": "Rüti ZH",
+      "strecke_nr": 64,
+      "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57070,
+      "zuege_pro_tag": 156
+    },
+    "abschnitte": [
+      {
+        "von": "Bubikon",
+        "bis": "Rüti ZH",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57070,
+        "zuege_pro_tag": 156
+      },
+      {
+        "von": "Rüti ZH",
+        "bis": "Jona",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57049,
+        "zuege_pro_tag": 156
+      },
+      {
+        "von": "Tann-Dürnten",
+        "bis": "Rüti ZH",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21873,
+        "zuege_pro_tag": 60
+      },
+      {
+        "von": "Rüti ZH",
+        "bis": "Jona",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 122,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Bubikon",
+        "bis": "Rüti ZH",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 120,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Tann-Dürnten",
+        "bis": "Rüti ZH",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 740,
+        "name": "Rapperswil - Uster - Wallisellen Ost",
+        "km": 65.93582
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 7,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9570ba97d8b3b7d76f4eb2e1f513c1f7"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

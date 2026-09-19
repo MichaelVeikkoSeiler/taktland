@@ -1,0 +1,236 @@
+{
+  "uic": 8509413,
+  "name": "Flums",
+  "kanton": "SG",
+  "bps": "FMS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Flums",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.347929,
+    "lat": 47.096617,
+    "dwv": 680,
+    "dtv": 620,
+    "dnwv": 500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 610
+      },
+      {
+        "jahr": 2022,
+        "dwv": 560
+      },
+      {
+        "jahr": 2023,
+        "dwv": 630
+      },
+      {
+        "jahr": 2024,
+        "dwv": 710
+      },
+      {
+        "jahr": 2025,
+        "dwv": 680
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Flums",
+    "abkuerzung": "FMS",
+    "hoehe_m_ue_m": 441,
+    "gemeinde": "Flums",
+    "ortschaft": "Flums",
+    "bezirk": "Sarganserland",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 322,
+    "kuerzeste_m": 87,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 322,
+        "flaeche_netto_m2": 1471.16,
+        "niveaufreier_zugang": "ja",
+        "linie": 890
+      },
+      {
+        "nr": "2",
+        "typ": "Dienstperron",
+        "laenge_m": 87,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 890
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      25
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 344,
+        "sektoren": [
+          "F"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 345,
+        "sektoren": [
+          "A",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Walenstadt",
+      "bis": "Flums",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54323,
+      "zuege_pro_tag": 149
+    },
+    "staerkster_personenverkehr": {
+      "von": "Walenstadt",
+      "bis": "Flums",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54323,
+      "zuege_pro_tag": 149
+    },
+    "abschnitte": [
+      {
+        "von": "Walenstadt",
+        "bis": "Flums",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54323,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Flums",
+        "bis": "Mels",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54318,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Flums",
+        "bis": "Mels",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7927,
+        "zuege_pro_tag": 22
+      },
+      {
+        "von": "Walenstadt",
+        "bis": "Flums",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7816,
+        "zuege_pro_tag": 21
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 890,
+        "name": "Sargans Ost - Ziegelbrucke",
+        "km": 9.7298
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7ab3c225547e6bf01dba290fa572186e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

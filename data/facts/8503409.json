@@ -1,0 +1,239 @@
+{
+  "uic": 8503409,
+  "name": "Bad Zurzach",
+  "kanton": "AG",
+  "bps": "ZZ",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bad Zurzach",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.295588,
+    "lat": 47.588313,
+    "dwv": 1700,
+    "dtv": 1500,
+    "dnwv": 1000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bad Zurzach",
+    "abkuerzung": "ZZ",
+    "hoehe_m_ue_m": 338,
+    "gemeinde": "Zurzach",
+    "ortschaft": "Bad Zurzach",
+    "bezirk": "Zurzach",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 542.14,
+        "niveaufreier_zugang": "ja",
+        "linie": 701
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 530.16,
+        "niveaufreier_zugang": "ja",
+        "linie": 701
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rietheim",
+      "bis": "Bad Zurzach",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29011,
+      "zuege_pro_tag": 79
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rietheim",
+      "bis": "Bad Zurzach",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29011,
+      "zuege_pro_tag": 79
+    },
+    "abschnitte": [
+      {
+        "von": "Rietheim",
+        "bis": "Bad Zurzach",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29011,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Bad Zurzach",
+        "bis": "Rekingen AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13404,
+        "zuege_pro_tag": 37
+      },
+      {
+        "von": "Bad Zurzach",
+        "bis": "Rekingen AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2360,
+        "zuege_pro_tag": 6
+      },
+      {
+        "von": "Rietheim",
+        "bis": "Bad Zurzach",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2360,
+        "zuege_pro_tag": 6
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 701,
+        "name": "Eglisau - Koblenz - Stein Sackingen Ost",
+        "km": 41.40169
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/40880be974fa3ce71730bb9054031abc"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

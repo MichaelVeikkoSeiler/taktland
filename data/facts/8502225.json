@@ -1,0 +1,214 @@
+{
+  "uic": 8502225,
+  "name": "Mettmenstetten",
+  "kanton": "ZH",
+  "bps": "MTM",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Mettmenstetten",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.457382,
+    "lat": 47.244071,
+    "dwv": 2200,
+    "dtv": 1900,
+    "dnwv": 1300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mettmenstetten",
+    "abkuerzung": "MTM",
+    "hoehe_m_ue_m": 461,
+    "gemeinde": "Mettmenstetten",
+    "ortschaft": "Mettmenstetten",
+    "bezirk": "Affoltern",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 324,
+    "kuerzeste_m": 313,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Dienstperron",
+        "laenge_m": 324,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 711
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 313,
+        "flaeche_netto_m2": 714.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 711
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Mettmenstetten",
+      "bis": "Knonau",
+      "strecke_nr": 61,
+      "strecke": "Zürich Altstetten - Kollermühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29460,
+      "zuege_pro_tag": 81
+    },
+    "staerkster_personenverkehr": {
+      "von": "Mettmenstetten",
+      "bis": "Knonau",
+      "strecke_nr": 61,
+      "strecke": "Zürich Altstetten - Kollermühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29460,
+      "zuege_pro_tag": 81
+    },
+    "abschnitte": [
+      {
+        "von": "Mettmenstetten",
+        "bis": "Knonau",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29460,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Affoltern am Albis",
+        "bis": "Mettmenstetten",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29458,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Affoltern am Albis",
+        "bis": "Mettmenstetten",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Mettmenstetten",
+        "bis": "Knonau",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 711,
+        "name": "ZH Hardbrucke - Kollermuhle",
+        "km": 28.91015
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/cca535eacdba2f0aa2125d65cf00484b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

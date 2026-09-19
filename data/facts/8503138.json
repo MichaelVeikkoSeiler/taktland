@@ -1,0 +1,215 @@
+{
+  "uic": 8503138,
+  "name": "Wald ZH",
+  "kanton": "ZH",
+  "bps": "WL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Wald ZH",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.914,
+    "lat": 47.272691,
+    "dwv": 1500,
+    "dtv": 1300,
+    "dnwv": 990,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 830
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Wald ZH",
+    "abkuerzung": "WL",
+    "hoehe_m_ue_m": 617.4,
+    "gemeinde": "Wald (ZH)",
+    "ortschaft": "Wald ZH",
+    "bezirk": "Hinwil",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 177,
+    "kuerzeste_m": 177,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 177,
+        "flaeche_netto_m2": 373.79,
+        "niveaufreier_zugang": "ja",
+        "linie": 754
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 101,
+        "sektoren": [
+          "A",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Wald ZH",
+      "bis": "Tann-Dürnten",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 21879,
+      "zuege_pro_tag": 60
+    },
+    "staerkster_personenverkehr": {
+      "von": "Wald ZH",
+      "bis": "Tann-Dürnten",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 21879,
+      "zuege_pro_tag": 60
+    },
+    "abschnitte": [
+      {
+        "von": "Wald ZH",
+        "bis": "Tann-Dürnten",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21879,
+        "zuege_pro_tag": 60
+      },
+      {
+        "von": "Gibswil",
+        "bis": "Wald ZH",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21877,
+        "zuege_pro_tag": 60
+      },
+      {
+        "von": "Gibswil",
+        "bis": "Wald ZH",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Wald ZH",
+        "bis": "Tann-Dürnten",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 754,
+        "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+        "km": 39.61664
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/cc5c91fed8f6e08a6fc44c2882b8ae31"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

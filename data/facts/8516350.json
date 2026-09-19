@@ -1,0 +1,189 @@
+{
+  "uic": 8516350,
+  "name": "Buchrain",
+  "kanton": "LU",
+  "bps": "BURN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Buchrain",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.356659,
+    "lat": 47.09365,
+    "dwv": 3000,
+    "dtv": 2600,
+    "dnwv": 1800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Buchrain",
+    "abkuerzung": "BURN",
+    "hoehe_m_ue_m": 419,
+    "gemeinde": "Ebikon",
+    "ortschaft": "Ebikon",
+    "bezirk": "Luzern-Land",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 149,
+    "kuerzeste_m": 149,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 275.09,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 285.95,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Ebikon",
+      "bis": "Buchrain",
+      "strecke_nr": 42,
+      "strecke": "Fluhmühle - Rotkreuz",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 72585,
+      "zuege_pro_tag": 199
+    },
+    "staerkster_personenverkehr": {
+      "von": "Ebikon",
+      "bis": "Buchrain",
+      "strecke_nr": 42,
+      "strecke": "Fluhmühle - Rotkreuz",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 72585,
+      "zuege_pro_tag": 199
+    },
+    "abschnitte": [
+      {
+        "von": "Ebikon",
+        "bis": "Buchrain",
+        "strecke_nr": 42,
+        "strecke": "Fluhmühle - Rotkreuz",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72585,
+        "zuege_pro_tag": 199
+      },
+      {
+        "von": "Buchrain",
+        "bis": "Root D4",
+        "strecke_nr": 42,
+        "strecke": "Fluhmühle - Rotkreuz",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72583,
+        "zuege_pro_tag": 199
+      },
+      {
+        "von": "Buchrain",
+        "bis": "Root D4",
+        "strecke_nr": 42,
+        "strecke": "Fluhmühle - Rotkreuz",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2799,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Ebikon",
+        "bis": "Buchrain",
+        "strecke_nr": 42,
+        "strecke": "Fluhmühle - Rotkreuz",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2799,
+        "zuege_pro_tag": 8
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 660,
+        "name": "Thalwil - Zug - Fluhmuhle",
+        "km": 57.065
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6ab6eb99ca2481b2b9af25cadcb0ca25"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

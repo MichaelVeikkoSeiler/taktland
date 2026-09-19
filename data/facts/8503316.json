@@ -1,0 +1,186 @@
+{
+  "uic": 8503316,
+  "name": "Steinmaur",
+  "kanton": "ZH",
+  "bps": "STMR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Steinmaur",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.446858,
+    "lat": 47.489987,
+    "dwv": 1600,
+    "dtv": 1300,
+    "dnwv": 870,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Steinmaur",
+    "abkuerzung": "STMR",
+    "hoehe_m_ue_m": 450.7,
+    "gemeinde": "Steinmaur",
+    "ortschaft": "Steinmaur",
+    "bezirk": "Dielsdorf",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 318,
+    "kuerzeste_m": 318,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 318,
+        "flaeche_netto_m2": 724.72,
+        "niveaufreier_zugang": "ja",
+        "linie": 761
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Steinmaur",
+      "bis": "Dielsdorf",
+      "strecke_nr": 58,
+      "strecke": "Oberglatt - Niederweningen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28962,
+      "zuege_pro_tag": 79
+    },
+    "staerkster_personenverkehr": {
+      "von": "Steinmaur",
+      "bis": "Dielsdorf",
+      "strecke_nr": 58,
+      "strecke": "Oberglatt - Niederweningen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28962,
+      "zuege_pro_tag": 79
+    },
+    "abschnitte": [
+      {
+        "von": "Steinmaur",
+        "bis": "Dielsdorf",
+        "strecke_nr": 58,
+        "strecke": "Oberglatt - Niederweningen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28962,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Schöfflisdorf-Oberweningen",
+        "bis": "Steinmaur",
+        "strecke_nr": 58,
+        "strecke": "Oberglatt - Niederweningen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28901,
+        "zuege_pro_tag": 79
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 761,
+        "name": "Oberglatt - Niederweningen Gleisende",
+        "km": 18.79256
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d4c833ed921a35522af1c8875fc61133"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

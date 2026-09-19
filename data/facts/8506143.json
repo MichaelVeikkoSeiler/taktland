@@ -1,0 +1,181 @@
+{
+  "uic": 8506143,
+  "name": "Münsterlingen Spital",
+  "kanton": "TG",
+  "bps": "MSPI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Münsterlingen Spital",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.236117,
+    "lat": 47.632046,
+    "dwv": 710,
+    "dtv": 600,
+    "dnwv": 340,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 590
+      },
+      {
+        "jahr": 2022,
+        "dwv": 640
+      },
+      {
+        "jahr": 2023,
+        "dwv": 730
+      },
+      {
+        "jahr": 2024,
+        "dwv": 750
+      },
+      {
+        "jahr": 2025,
+        "dwv": 710
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Münsterlingen Spital",
+    "abkuerzung": "MSPI",
+    "hoehe_m_ue_m": 404.9,
+    "gemeinde": "Münsterlingen",
+    "ortschaft": "Münsterlingen",
+    "bezirk": "Kreuzlingen",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 231.43,
+        "niveaufreier_zugang": "ja",
+        "linie": 824
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Münsterlingen Spital",
+      "bis": "Landschlacht",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42699,
+      "zuege_pro_tag": 117
+    },
+    "staerkster_personenverkehr": {
+      "von": "Münsterlingen Spital",
+      "bis": "Landschlacht",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42699,
+      "zuege_pro_tag": 117
+    },
+    "abschnitte": [
+      {
+        "von": "Münsterlingen Spital",
+        "bis": "Landschlacht",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42699,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Münsterlingen-Scherzingen",
+        "bis": "Münsterlingen Spital",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42699,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Münsterlingen Spital",
+        "bis": "Landschlacht",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 903,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Münsterlingen-Scherzingen",
+        "bis": "Münsterlingen Spital",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 903,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 824,
+        "name": "Romanshorn - Konstanz",
+        "km": 95.46374
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e9cef79d40a79d4e1f73374da7ede9a8"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

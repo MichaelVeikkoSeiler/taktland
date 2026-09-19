@@ -1,0 +1,189 @@
+{
+  "uic": 8519133,
+  "name": "Fribourg/Freiburg Poya",
+  "kanton": "FR",
+  "bps": "FRPO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Fribourg/Freiburg Poya",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.156486,
+    "lat": 46.81558,
+    "dwv": 920,
+    "dtv": 900,
+    "dnwv": 870,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 530
+      },
+      {
+        "jahr": 2022,
+        "dwv": 630
+      },
+      {
+        "jahr": 2023,
+        "dwv": 700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 790
+      },
+      {
+        "jahr": 2025,
+        "dwv": 920
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Fribourg/Freiburg Poya",
+    "abkuerzung": "FRPO",
+    "hoehe_m_ue_m": 614,
+    "gemeinde": "Fribourg",
+    "ortschaft": "Fribourg",
+    "bezirk": "La Sarine",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 643.46,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 640.29,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Fribourg/Freiburg Poya",
+      "bis": "Düdingen",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 62223,
+      "zuege_pro_tag": 170
+    },
+    "staerkster_personenverkehr": {
+      "von": "Fribourg/Freiburg Poya",
+      "bis": "Düdingen",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 62223,
+      "zuege_pro_tag": 170
+    },
+    "abschnitte": [
+      {
+        "von": "Fribourg/Freiburg Poya",
+        "bis": "Düdingen",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 62223,
+        "zuege_pro_tag": 170
+      },
+      {
+        "von": "Fribourg/Freiburg Poya",
+        "bis": "Fribourg Nord",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 62223,
+        "zuege_pro_tag": 170
+      },
+      {
+        "von": "Fribourg/Freiburg Poya",
+        "bis": "Düdingen",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3717,
+        "zuege_pro_tag": 10
+      },
+      {
+        "von": "Fribourg/Freiburg Poya",
+        "bis": "Fribourg Nord",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3717,
+        "zuege_pro_tag": 10
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 67.477
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "altri"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d2ee39e0629632d0a63702c426a60771"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

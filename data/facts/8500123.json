@@ -1,0 +1,260 @@
+{
+  "uic": 8500123,
+  "name": "Glovelier",
+  "kanton": "JU",
+  "bps": "GLO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Glovelier",
+    "kanton": "JU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.209313,
+    "lat": 47.33521,
+    "dwv": 1100,
+    "dtv": 1000,
+    "dnwv": 700,
+    "bemerkung": "Ohne CJ.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Glovelier",
+    "abkuerzung": "GLO",
+    "hoehe_m_ue_m": 504.99,
+    "gemeinde": "Haute-Sorne",
+    "ortschaft": "Glovelier",
+    "bezirk": "Delémont",
+    "kanton": "Jura",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 170,
+    "kuerzeste_m": 111,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Zwischenperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 1093.7,
+        "niveaufreier_zugang": "nein",
+        "linie": 240
+      },
+      {
+        "nr": "12/13",
+        "typ": "Mittelperron",
+        "laenge_m": 111,
+        "flaeche_netto_m2": 405.03,
+        "niveaufreier_zugang": "ja",
+        "linie": 240
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "2",
+      "12",
+      "13"
+    ],
+    "perronhoehen_cm": [
+      30,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 171,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 171,
+        "sektoren": []
+      },
+      {
+        "nr": "12",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 97,
+        "sektoren": []
+      },
+      {
+        "nr": "13",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 112,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 6,
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bassecourt",
+      "bis": "Glovelier",
+      "strecke_nr": 15,
+      "strecke": "Delémont - Porrentruy - Delle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30179,
+      "zuege_pro_tag": 83
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bassecourt",
+      "bis": "Glovelier",
+      "strecke_nr": 15,
+      "strecke": "Delémont - Porrentruy - Delle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30179,
+      "zuege_pro_tag": 83
+    },
+    "abschnitte": [
+      {
+        "von": "Bassecourt",
+        "bis": "Glovelier",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30179,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Glovelier",
+        "bis": "St-Ursanne",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30061,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Bassecourt",
+        "bis": "Glovelier",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1410,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Glovelier",
+        "bis": "St-Ursanne",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 447,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 240,
+        "name": "Delemont - Delle",
+        "km": 96.39549
+      },
+      {
+        "nummer": 237,
+        "name": "Combe-Tabeillon - Glovelier",
+        "km": 30.283
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/060950d00c755af801261e7507f3e85b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

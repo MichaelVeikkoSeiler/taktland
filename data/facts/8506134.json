@@ -1,0 +1,181 @@
+{
+  "uic": 8506134,
+  "name": "Mannenbach-Salenstein",
+  "kanton": "TG",
+  "bps": "MANN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Mannenbach-Salenstein",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.052804,
+    "lat": 47.673649,
+    "dwv": 230,
+    "dtv": 220,
+    "dnwv": 210,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 210
+      },
+      {
+        "jahr": 2022,
+        "dwv": 190
+      },
+      {
+        "jahr": 2023,
+        "dwv": 220
+      },
+      {
+        "jahr": 2024,
+        "dwv": 240
+      },
+      {
+        "jahr": 2025,
+        "dwv": 230
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mannenbach-Salenstein",
+    "abkuerzung": "MANN",
+    "hoehe_m_ue_m": 399.4,
+    "gemeinde": "Salenstein",
+    "ortschaft": "Mannenbach-Salenstein",
+    "bezirk": "Kreuzlingen",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 295,
+        "niveaufreier_zugang": "ja",
+        "linie": 822
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Berlingen",
+      "bis": "Mannenbach-Salenstein",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28907,
+      "zuege_pro_tag": 79
+    },
+    "staerkster_personenverkehr": {
+      "von": "Berlingen",
+      "bis": "Mannenbach-Salenstein",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28907,
+      "zuege_pro_tag": 79
+    },
+    "abschnitte": [
+      {
+        "von": "Berlingen",
+        "bis": "Mannenbach-Salenstein",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28907,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Mannenbach-Salenstein",
+        "bis": "Ermatingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28907,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Berlingen",
+        "bis": "Mannenbach-Salenstein",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Mannenbach-Salenstein",
+        "bis": "Ermatingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 822,
+        "name": "Etzwilen - Konstanz",
+        "km": 51.33097
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/1b75577ac6b989fcb922e58dcfc9f11e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

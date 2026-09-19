@@ -1,0 +1,202 @@
+{
+  "uic": 8502034,
+  "name": "Beinwil am See",
+  "kanton": "AG",
+  "bps": "BW",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Beinwil am See",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.202236,
+    "lat": 47.26722,
+    "dwv": 1600,
+    "dtv": 1400,
+    "dnwv": 1200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Beinwil am See",
+    "abkuerzung": "BW",
+    "hoehe_m_ue_m": 520,
+    "gemeinde": "Beinwil am See",
+    "ortschaft": "Beinwil am See",
+    "bezirk": "Kulm",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 118,
+    "kuerzeste_m": 118,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Zwischenperron",
+        "laenge_m": 118,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 651
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      35
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 111,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 111,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 11,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Birrwil",
+      "bis": "Beinwil am See",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26546,
+      "zuege_pro_tag": 73
+    },
+    "staerkster_personenverkehr": {
+      "von": "Birrwil",
+      "bis": "Beinwil am See",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26546,
+      "zuege_pro_tag": 73
+    },
+    "abschnitte": [
+      {
+        "von": "Birrwil",
+        "bis": "Beinwil am See",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26546,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Beinwil am See",
+        "bis": "Mosen",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25237,
+        "zuege_pro_tag": 69
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 651,
+        "name": "Hubeli - Beinwil - Lenzburg",
+        "km": 27.20359
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d88f586fd606bcb94df7368ab9555f3c"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "uic": 8501600,
+  "name": "Salgesch",
+  "kanton": "VS",
+  "bps": "SAL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Salgesch",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "RegionAlps",
+    "lon": 7.578194,
+    "lat": 46.309195,
+    "dwv": 470,
+    "dtv": 440,
+    "dnwv": 350,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 350
+      },
+      {
+        "jahr": 2022,
+        "dwv": 380
+      },
+      {
+        "jahr": 2023,
+        "dwv": 440
+      },
+      {
+        "jahr": 2024,
+        "dwv": 450
+      },
+      {
+        "jahr": 2025,
+        "dwv": 470
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Salgesch",
+    "abkuerzung": "SAL",
+    "hoehe_m_ue_m": 575.9,
+    "gemeinde": "Salgesch",
+    "ortschaft": "Salgesch",
+    "bezirk": "Leuk",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 321,
+    "kuerzeste_m": 310,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 321,
+        "flaeche_netto_m2": 404.55,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 310,
+        "flaeche_netto_m2": 321.44,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sierre/Siders",
+      "bis": "Salgesch",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54972,
+      "zuege_pro_tag": 151
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sierre/Siders",
+      "bis": "Salgesch",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54972,
+      "zuege_pro_tag": 151
+    },
+    "abschnitte": [
+      {
+        "von": "Sierre/Siders",
+        "bis": "Salgesch",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54972,
+        "zuege_pro_tag": 151
+      },
+      {
+        "von": "Salgesch",
+        "bis": "Leuk",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54968,
+        "zuege_pro_tag": 151
+      },
+      {
+        "von": "Salgesch",
+        "bis": "Leuk",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3380,
+        "zuege_pro_tag": 9
+      },
+      {
+        "von": "Sierre/Siders",
+        "bis": "Salgesch",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3380,
+        "zuege_pro_tag": 9
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 112.253
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a7e0ff4db35d142cae2466e199ad9664"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

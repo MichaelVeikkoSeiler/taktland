@@ -1,0 +1,234 @@
+{
+  "uic": 8502116,
+  "name": "Schinznach Bad",
+  "kanton": "AG",
+  "bps": "SBAD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Schinznach Bad",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.166949,
+    "lat": 47.451785,
+    "dwv": 700,
+    "dtv": 620,
+    "dnwv": 440,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 570
+      },
+      {
+        "jahr": 2022,
+        "dwv": 520
+      },
+      {
+        "jahr": 2023,
+        "dwv": 600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 630
+      },
+      {
+        "jahr": 2025,
+        "dwv": 700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Schinznach Bad",
+    "abkuerzung": "SBAD",
+    "hoehe_m_ue_m": 351.8,
+    "gemeinde": "Brugg",
+    "ortschaft": "Schinznach Bad",
+    "bezirk": "Brugg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 244,
+    "kuerzeste_m": 178,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 244,
+        "flaeche_netto_m2": 319.29,
+        "niveaufreier_zugang": "ja",
+        "linie": 640
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 178,
+        "flaeche_netto_m2": 285.23,
+        "niveaufreier_zugang": "ja",
+        "linie": 640
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      25,
+      35
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          25,
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 153,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 179,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 13,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 1,
+      "35": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Brugg AG West",
+      "bis": "Schinznach Bad",
+      "strecke_nr": 36,
+      "strecke": "Rupperswil - Brugg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 58394,
+      "zuege_pro_tag": 160
+    },
+    "staerkster_personenverkehr": {
+      "von": "Brugg AG West",
+      "bis": "Schinznach Bad",
+      "strecke_nr": 36,
+      "strecke": "Rupperswil - Brugg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 58394,
+      "zuege_pro_tag": 160
+    },
+    "abschnitte": [
+      {
+        "von": "Brugg AG West",
+        "bis": "Schinznach Bad",
+        "strecke_nr": 36,
+        "strecke": "Rupperswil - Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58394,
+        "zuege_pro_tag": 160
+      },
+      {
+        "von": "Holderbank AG",
+        "bis": "Schinznach Bad",
+        "strecke_nr": 36,
+        "strecke": "Rupperswil - Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58394,
+        "zuege_pro_tag": 160
+      },
+      {
+        "von": "Brugg AG West",
+        "bis": "Schinznach Bad",
+        "strecke_nr": 36,
+        "strecke": "Rupperswil - Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8334,
+        "zuege_pro_tag": 23
+      },
+      {
+        "von": "Holderbank AG",
+        "bis": "Schinznach Bad",
+        "strecke_nr": 36,
+        "strecke": "Rupperswil - Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8333,
+        "zuege_pro_tag": 23
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 640,
+        "name": "Brugg - Rupperswil",
+        "km": 36.14095
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/618d89f94b6f59856c5c5a7eebbf5037"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

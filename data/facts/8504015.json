@@ -1,0 +1,170 @@
+{
+  "uic": 8504015,
+  "name": "Vevey-Funi",
+  "kanton": "VD",
+  "bps": "VVFU",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2024,
+    "name": "Vevey-Funi",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.835443,
+    "lat": 46.468277,
+    "dwv": 100,
+    "dtv": 90,
+    "dnwv": 70,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 70
+      },
+      {
+        "jahr": 2022,
+        "dwv": 100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Vevey-Funi",
+    "abkuerzung": "VVFU",
+    "hoehe_m_ue_m": 387.784,
+    "gemeinde": "Vevey",
+    "ortschaft": "Vevey",
+    "bezirk": "Riviera-Pays-d'Enhaut",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 68,
+    "kuerzeste_m": 68,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 68,
+        "flaeche_netto_m2": 105.09,
+        "niveaufreier_zugang": "ja",
+        "linie": 111
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Corseaux-Cornalles",
+      "bis": "Vevey-Funi",
+      "strecke_nr": 84,
+      "strecke": "Vevey - Puidoux-Chexbres",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14143,
+      "zuege_pro_tag": 39
+    },
+    "staerkster_personenverkehr": {
+      "von": "Corseaux-Cornalles",
+      "bis": "Vevey-Funi",
+      "strecke_nr": 84,
+      "strecke": "Vevey - Puidoux-Chexbres",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14143,
+      "zuege_pro_tag": 39
+    },
+    "abschnitte": [
+      {
+        "von": "Corseaux-Cornalles",
+        "bis": "Vevey-Funi",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14143,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Vevey-Funi",
+        "bis": "Vevey",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14141,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Corseaux-Cornalles",
+        "bis": "Vevey-Funi",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 255,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Vevey-Funi",
+        "bis": "Vevey",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 255,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 111,
+        "name": "Vevey Ouest - Puidoux-Chexbres",
+        "km": 0.85
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a411f95fae3ad5b9196500c3fcd4a1f9"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

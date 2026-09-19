@@ -1,0 +1,212 @@
+{
+  "uic": 8503227,
+  "name": "Näfels-Mollis",
+  "kanton": "GL",
+  "bps": "NAEF",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Näfels-Mollis",
+    "kanton": "GL",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.069957,
+    "lat": 47.098719,
+    "dwv": 2100,
+    "dtv": 2100,
+    "dnwv": 2000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Näfels-Mollis",
+    "abkuerzung": "NAEF",
+    "hoehe_m_ue_m": 437.6,
+    "gemeinde": "Glarus Nord",
+    "ortschaft": "Näfels",
+    "bezirk": null,
+    "kanton": "Glarus",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 612.99,
+        "niveaufreier_zugang": "ja",
+        "linie": 736
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Nieder- und Oberurnen",
+      "bis": "Näfels-Mollis",
+      "strecke_nr": 55,
+      "strecke": "Ziegelbrücke - Glarus - Linthal",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27381,
+      "zuege_pro_tag": 75
+    },
+    "staerkster_personenverkehr": {
+      "von": "Nieder- und Oberurnen",
+      "bis": "Näfels-Mollis",
+      "strecke_nr": 55,
+      "strecke": "Ziegelbrücke - Glarus - Linthal",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27381,
+      "zuege_pro_tag": 75
+    },
+    "abschnitte": [
+      {
+        "von": "Nieder- und Oberurnen",
+        "bis": "Näfels-Mollis",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27381,
+        "zuege_pro_tag": 75
+      },
+      {
+        "von": "Näfels-Mollis",
+        "bis": "Netstal",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26840,
+        "zuege_pro_tag": 74
+      },
+      {
+        "von": "Nieder- und Oberurnen",
+        "bis": "Näfels-Mollis",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 508,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Näfels-Mollis",
+        "bis": "Netstal",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 508,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 736,
+        "name": "Ziegelbrucke Ost - Linthal Gleisende",
+        "km": 61.65353
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f980cf0bc5e60c1d991103dd863f0b84"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

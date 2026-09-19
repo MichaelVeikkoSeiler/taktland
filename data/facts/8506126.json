@@ -1,0 +1,212 @@
+{
+  "uic": 8506126,
+  "name": "Münsterlingen-Scherzingen",
+  "kanton": "TG",
+  "bps": "MSCH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Münsterlingen-Scherzingen",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.227012,
+    "lat": 47.633427,
+    "dwv": 320,
+    "dtv": 300,
+    "dnwv": 260,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 350
+      },
+      {
+        "jahr": 2022,
+        "dwv": 310
+      },
+      {
+        "jahr": 2023,
+        "dwv": 330
+      },
+      {
+        "jahr": 2024,
+        "dwv": 310
+      },
+      {
+        "jahr": 2025,
+        "dwv": 320
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Münsterlingen-Scherzingen",
+    "abkuerzung": "MSCH",
+    "hoehe_m_ue_m": 404.8,
+    "gemeinde": "Münsterlingen",
+    "ortschaft": "Scherzingen",
+    "bezirk": "Kreuzlingen",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 121,
+    "kuerzeste_m": 121,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 121,
+        "flaeche_netto_m2": 242.35,
+        "niveaufreier_zugang": "ja",
+        "linie": 824
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 121,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Münsterlingen-Scherzingen",
+      "bis": "Münsterlingen Spital",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42699,
+      "zuege_pro_tag": 117
+    },
+    "staerkster_personenverkehr": {
+      "von": "Münsterlingen-Scherzingen",
+      "bis": "Münsterlingen Spital",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42699,
+      "zuege_pro_tag": 117
+    },
+    "abschnitte": [
+      {
+        "von": "Münsterlingen-Scherzingen",
+        "bis": "Münsterlingen Spital",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42699,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Bottighofen",
+        "bis": "Münsterlingen-Scherzingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42697,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Bottighofen",
+        "bis": "Münsterlingen-Scherzingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 903,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Münsterlingen-Scherzingen",
+        "bis": "Münsterlingen Spital",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 903,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 824,
+        "name": "Romanshorn - Konstanz",
+        "km": 96.16578
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/52ef796ed0d947e91967464796f31353"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

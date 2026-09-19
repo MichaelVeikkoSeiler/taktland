@@ -1,0 +1,958 @@
+{
+  "uic": 8500010,
+  "name": "Basel SBB",
+  "kanton": "BS",
+  "bps": "BS",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Basel SBB",
+    "kanton": "BS",
+    "isb": "SBB",
+    "evu": "SBB, SBB GmbH, SOB",
+    "lon": 7.589563,
+    "lat": 47.547412,
+    "dwv": 112100,
+    "dtv": 103800,
+    "dnwv": 85600,
+    "bemerkung": "Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 111000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 90900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 105900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 109000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 112100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Basel SBB",
+    "abkuerzung": "BS",
+    "hoehe_m_ue_m": 276.75,
+    "gemeinde": "Basel",
+    "ortschaft": "Basel",
+    "bezirk": null,
+    "kanton": "Basel-Stadt",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 136200,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": 134000
+      },
+      {
+        "jahr": 2014,
+        "anzahl": 135000
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 126400
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 134500
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 135400
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 126400
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 132900
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 124200
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 134000
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 125800
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 136200
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 128400
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 86100
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 92400
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 91700
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 95700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 119800
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 124000
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 134900
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 140400
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 135500
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 140900
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 141800
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 136200
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.4
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.3
+      },
+      {
+        "stunde": 6,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 7,
+        "prozent": 7.4
+      },
+      {
+        "stunde": 8,
+        "prozent": 6.4
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.7
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.8
+      },
+      {
+        "stunde": 11,
+        "prozent": 5.2
+      },
+      {
+        "stunde": 12,
+        "prozent": 6.3
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.6
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.5
+      },
+      {
+        "stunde": 15,
+        "prozent": 6.3
+      },
+      {
+        "stunde": 16,
+        "prozent": 8.7
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.0
+      },
+      {
+        "stunde": 18,
+        "prozent": 7.6
+      },
+      {
+        "stunde": 19,
+        "prozent": 5.0
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.7
+      },
+      {
+        "stunde": 21,
+        "prozent": 3.0
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.1
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.3
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 10.0,
+    "wochentage": [
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 13.6
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.1
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 14.8
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.4
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 14.6
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 12.3
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.2
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 14,
+    "laengste_m": 572,
+    "kuerzeste_m": 197,
+    "items": [
+      {
+        "nr": "30/31",
+        "typ": "Mittelperron",
+        "laenge_m": 572,
+        "flaeche_netto_m2": 1888.38,
+        "niveaufreier_zugang": "ja",
+        "linie": 510
+      },
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 558,
+        "flaeche_netto_m2": 4033.26,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "7/8",
+        "typ": "Mittelperron",
+        "laenge_m": 556,
+        "flaeche_netto_m2": 3147.14,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "9/10",
+        "typ": "Mittelperron",
+        "laenge_m": 505,
+        "flaeche_netto_m2": 3193.44,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "19/20",
+        "typ": "Mittelperron",
+        "laenge_m": 460,
+        "flaeche_netto_m2": 4198.73,
+        "niveaufreier_zugang": "ja",
+        "linie": 514
+      },
+      {
+        "nr": "11/12",
+        "typ": "Mittelperron",
+        "laenge_m": 444,
+        "flaeche_netto_m2": 2837.21,
+        "niveaufreier_zugang": "ja",
+        "linie": 514
+      },
+      {
+        "nr": "33/35",
+        "typ": "Mittelperron",
+        "laenge_m": 425,
+        "flaeche_netto_m2": 4103,
+        "niveaufreier_zugang": "ja",
+        "linie": 510
+      },
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 414,
+        "flaeche_netto_m2": 2201.48,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "14/15",
+        "typ": "Mittelperron",
+        "laenge_m": 413,
+        "flaeche_netto_m2": 3696.94,
+        "niveaufreier_zugang": "ja",
+        "linie": 514
+      },
+      {
+        "nr": "18",
+        "typ": "Aussenperron",
+        "laenge_m": 343,
+        "flaeche_netto_m2": 1527.58,
+        "niveaufreier_zugang": "ja",
+        "linie": 514
+      },
+      {
+        "nr": "16/17",
+        "typ": "Aussenperron",
+        "laenge_m": 331,
+        "flaeche_netto_m2": 3213.55,
+        "niveaufreier_zugang": "ja",
+        "linie": 514
+      },
+      {
+        "nr": "31",
+        "typ": "Dienstperron",
+        "laenge_m": 235,
+        "flaeche_netto_m2": 6846.96,
+        "niveaufreier_zugang": "ja",
+        "linie": 510
+      },
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 230,
+        "flaeche_netto_m2": 1214.91,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "0",
+        "typ": "Dienstperron",
+        "laenge_m": 197,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 23,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "30",
+      "31",
+      "33",
+      "35"
+    ],
+    "perronhoehen_cm": [
+      30,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 212,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 322,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 377,
+        "sektoren": []
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 327,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 280,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 431,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "9",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 296,
+        "sektoren": [
+          "A"
+        ]
+      },
+      {
+        "nr": "10",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 297,
+        "sektoren": [
+          "A"
+        ]
+      },
+      {
+        "nr": "11",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 202,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "12",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 341,
+        "sektoren": []
+      },
+      {
+        "nr": "14",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 227,
+        "sektoren": [
+          "A",
+          "F"
+        ]
+      },
+      {
+        "nr": "15",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 276,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "F"
+        ]
+      },
+      {
+        "nr": "16",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 334,
+        "sektoren": [
+          "A",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "17",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 336,
+        "sektoren": []
+      },
+      {
+        "nr": "18",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "19",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "H"
+        ]
+      },
+      {
+        "nr": "20",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "H"
+        ]
+      },
+      {
+        "nr": "30",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "31",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "D"
+        ]
+      },
+      {
+        "nr": "33",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 423,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "35",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 65,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 20,
+      "55": 45
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 16,
+    "gleise_mit_daten": 23
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Basel SBB",
+      "bis": "Basel SBB Nordost (Abzw)",
+      "strecke_nr": 106,
+      "strecke": "Basel SBB PB / GB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 215543,
+      "zuege_pro_tag": 591
+    },
+    "staerkster_personenverkehr": {
+      "von": "Basel SBB",
+      "bis": "Basel SBB Nordost (Abzw)",
+      "strecke_nr": 106,
+      "strecke": "Basel SBB PB / GB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 215543,
+      "zuege_pro_tag": 591
+    },
+    "abschnitte": [
+      {
+        "von": "Basel SBB",
+        "bis": "Basel SBB Nordost (Abzw)",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 215543,
+        "zuege_pro_tag": 591
+      },
+      {
+        "von": "Basel Dreispitz",
+        "bis": "Basel SBB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 49238,
+        "zuege_pro_tag": 135
+      },
+      {
+        "von": "Basel St. Johann",
+        "bis": "Basel SBB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31587,
+        "zuege_pro_tag": 87
+      },
+      {
+        "von": "Basel SBB",
+        "bis": "Basel SBB GB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17001,
+        "zuege_pro_tag": 47
+      },
+      {
+        "von": "Basel SBB",
+        "bis": "Basel SBB GB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8410,
+        "zuege_pro_tag": 23
+      },
+      {
+        "von": "Basel St. Johann",
+        "bis": "Basel SBB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8146,
+        "zuege_pro_tag": 22
+      },
+      {
+        "von": "Basel SBB",
+        "bis": "Morgartenring (Spw)",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1384,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Basel SBB",
+        "bis": "Morgartenring (Spw)",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 287,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Basel SBB",
+        "bis": "Basel SBB Nordost (Abzw)",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 227,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Basel Dreispitz",
+        "bis": "Basel SBB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 1,
+        "zuege_pro_jahr": 5,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 0
+      },
+      {
+        "nummer": 510,
+        "name": "Mulhouse-Ville - Basel SBB",
+        "km": 142.20294
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 19,
+    "automat_typen": [
+      "Andere",
+      "BVB",
+      "DB",
+      "S-POS",
+      "andere",
+      "ePOS"
+    ],
+    "billettentwerter": 37,
+    "wartehallen": 14,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/883cc827c7533ba48309a642481097ee"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-basel-sbb-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-basel-sbb-plakat.pdf",
+    "shopping_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-basel-sbb-shopping.pdf",
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "uic": 8502025,
+  "name": "Baldegg",
+  "kanton": "LU",
+  "bps": "BLG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Baldegg",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.280232,
+    "lat": 47.185689,
+    "dwv": 310,
+    "dtv": 280,
+    "dnwv": 200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 260
+      },
+      {
+        "jahr": 2022,
+        "dwv": 240
+      },
+      {
+        "jahr": 2023,
+        "dwv": 250
+      },
+      {
+        "jahr": 2024,
+        "dwv": 290
+      },
+      {
+        "jahr": 2025,
+        "dwv": 310
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Baldegg",
+    "abkuerzung": "BLG",
+    "hoehe_m_ue_m": 470,
+    "gemeinde": "Hochdorf",
+    "ortschaft": "Baldegg",
+    "bezirk": "Hochdorf",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 119,
+    "kuerzeste_m": 119,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Zwischenperron",
+        "laenge_m": 119,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 651
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      20,
+      35
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 110,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 119,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 6,
+      "35": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Baldegg",
+      "bis": "Baldegg Kloster",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25230,
+      "zuege_pro_tag": 69
+    },
+    "staerkster_personenverkehr": {
+      "von": "Baldegg",
+      "bis": "Baldegg Kloster",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25230,
+      "zuege_pro_tag": 69
+    },
+    "abschnitte": [
+      {
+        "von": "Baldegg",
+        "bis": "Baldegg Kloster",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25230,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Gelfingen",
+        "bis": "Baldegg",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25226,
+        "zuege_pro_tag": 69
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 651,
+        "name": "Hubeli - Beinwil - Lenzburg",
+        "km": 15.92736
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ef05031f4f5e89ef296e124335851383"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

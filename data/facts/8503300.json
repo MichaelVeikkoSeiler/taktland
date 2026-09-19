@@ -1,0 +1,212 @@
+{
+  "uic": 8503300,
+  "name": "Kempten",
+  "kanton": "ZH",
+  "bps": "KN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Kempten",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.804721,
+    "lat": 47.332043,
+    "dwv": 2000,
+    "dtv": 1700,
+    "dnwv": 1100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Kempten",
+    "abkuerzung": "KN",
+    "hoehe_m_ue_m": 552.5,
+    "gemeinde": "Wetzikon (ZH)",
+    "ortschaft": "Wetzikon ZH",
+    "bezirk": "Hinwil",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 708.36,
+        "niveaufreier_zugang": "ja",
+        "linie": 753
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Pfäffikon ZH",
+      "bis": "Kempten",
+      "strecke_nr": 66,
+      "strecke": "Effretikon - Wetzikon - Hinwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28074,
+      "zuege_pro_tag": 77
+    },
+    "staerkster_personenverkehr": {
+      "von": "Pfäffikon ZH",
+      "bis": "Kempten",
+      "strecke_nr": 66,
+      "strecke": "Effretikon - Wetzikon - Hinwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28074,
+      "zuege_pro_tag": 77
+    },
+    "abschnitte": [
+      {
+        "von": "Pfäffikon ZH",
+        "bis": "Kempten",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28074,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Kempten",
+        "bis": "Wetzikon ZH",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28012,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Kempten",
+        "bis": "Wetzikon ZH",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 517,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Pfäffikon ZH",
+        "bis": "Kempten",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 517,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 753,
+        "name": "Effretikon - Wetzikon - Hinwil",
+        "km": 15.75999
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e669b2bdb578a789a64c441831712475"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

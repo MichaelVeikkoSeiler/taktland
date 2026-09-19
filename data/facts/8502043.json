@@ -1,0 +1,176 @@
+{
+  "uic": 8502043,
+  "name": "Seon Nord",
+  "kanton": "AG",
+  "bps": "SENO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Seon Nord",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.160253,
+    "lat": 47.353157,
+    "dwv": 620,
+    "dtv": 520,
+    "dnwv": 300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2023,
+        "dwv": 420
+      },
+      {
+        "jahr": 2024,
+        "dwv": 570
+      },
+      {
+        "jahr": 2025,
+        "dwv": 620
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Seon Nord",
+    "abkuerzung": "SENO",
+    "hoehe_m_ue_m": 447.635,
+    "gemeinde": "Seon",
+    "ortschaft": "Seon",
+    "bezirk": "Lenzburg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 115,
+    "kuerzeste_m": 115,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 115,
+        "flaeche_netto_m2": 250.63,
+        "niveaufreier_zugang": "ja",
+        "linie": 651
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Seon",
+      "bis": "Seon Nord",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26531,
+      "zuege_pro_tag": 73
+    },
+    "staerkster_personenverkehr": {
+      "von": "Seon",
+      "bis": "Seon Nord",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26531,
+      "zuege_pro_tag": 73
+    },
+    "abschnitte": [
+      {
+        "von": "Seon",
+        "bis": "Seon Nord",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26531,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Seon Nord",
+        "bis": "Lenzburg",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26530,
+        "zuege_pro_tag": 73
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 651,
+        "name": "Hubeli - Beinwil - Lenzburg",
+        "km": 37.65
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/48a42e37ec231baff31f8ad3c2b37004"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

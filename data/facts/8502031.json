@@ -1,0 +1,161 @@
+{
+  "uic": 8502031,
+  "name": "Hallwil",
+  "kanton": "AG",
+  "bps": "HD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Hallwil",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.175949,
+    "lat": 47.328639,
+    "dwv": 350,
+    "dtv": 300,
+    "dnwv": 180,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 260
+      },
+      {
+        "jahr": 2023,
+        "dwv": 290
+      },
+      {
+        "jahr": 2024,
+        "dwv": 320
+      },
+      {
+        "jahr": 2025,
+        "dwv": 350
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Hallwil",
+    "abkuerzung": "HD",
+    "hoehe_m_ue_m": 472,
+    "gemeinde": "Hallwil",
+    "ortschaft": "Hallwil",
+    "bezirk": "Lenzburg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 108,
+    "kuerzeste_m": 108,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 108,
+        "flaeche_netto_m2": 266.53,
+        "niveaufreier_zugang": "nein",
+        "linie": 651
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Hallwil",
+      "bis": "Boniswil",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26539,
+      "zuege_pro_tag": 73
+    },
+    "staerkster_personenverkehr": {
+      "von": "Hallwil",
+      "bis": "Boniswil",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26539,
+      "zuege_pro_tag": 73
+    },
+    "abschnitte": [
+      {
+        "von": "Hallwil",
+        "bis": "Boniswil",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26539,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Seon",
+        "bis": "Hallwil",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26539,
+        "zuege_pro_tag": 73
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 651,
+        "name": "Hubeli - Beinwil - Lenzburg",
+        "km": 34.487
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d26700129f83f98c3f7083b9bedd00a6"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

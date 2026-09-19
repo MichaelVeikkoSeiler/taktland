@@ -1,0 +1,197 @@
+{
+  "uic": 8504194,
+  "name": "Laupen BE",
+  "kanton": "BE",
+  "bps": "LPN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Laupen BE",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.242015,
+    "lat": 46.901292,
+    "dwv": 1400,
+    "dtv": 1300,
+    "dnwv": 960,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Laupen BE",
+    "abkuerzung": "LPN",
+    "hoehe_m_ue_m": 491.142,
+    "gemeinde": "Laupen",
+    "ortschaft": "Laupen BE",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 634.78,
+        "niveaufreier_zugang": "ja",
+        "linie": 257
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Neuenegg",
+      "bis": "Laupen BE",
+      "strecke_nr": 19,
+      "strecke": "Flamatt - Laupen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 23096,
+      "zuege_pro_tag": 63
+    },
+    "staerkster_personenverkehr": {
+      "von": "Neuenegg",
+      "bis": "Laupen BE",
+      "strecke_nr": 19,
+      "strecke": "Flamatt - Laupen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 23096,
+      "zuege_pro_tag": 63
+    },
+    "abschnitte": [
+      {
+        "von": "Neuenegg",
+        "bis": "Laupen BE",
+        "strecke_nr": 19,
+        "strecke": "Flamatt - Laupen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23096,
+        "zuege_pro_tag": 63
+      },
+      {
+        "von": "Laupen BE",
+        "bis": "Laupen Ost (Ausw)",
+        "strecke_nr": 19,
+        "strecke": "Flamatt - Laupen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3539,
+        "zuege_pro_tag": 10
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 257,
+        "name": "Flamatt - Laupen - Gummenen",
+        "km": 6.456
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8ce49607be1d5320cfbc81d8d157d8fe"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

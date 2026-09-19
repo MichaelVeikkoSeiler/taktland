@@ -1,0 +1,177 @@
+{
+  "uic": 8504127,
+  "name": "Faoug",
+  "kanton": "VD",
+  "bps": "FG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Faoug",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "BLS, SBB",
+    "lon": 7.074546,
+    "lat": 46.90831,
+    "dwv": 220,
+    "dtv": 210,
+    "dnwv": 170,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 170
+      },
+      {
+        "jahr": 2022,
+        "dwv": 210
+      },
+      {
+        "jahr": 2023,
+        "dwv": 220
+      },
+      {
+        "jahr": 2024,
+        "dwv": 200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 220
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Faoug",
+    "abkuerzung": "FG",
+    "hoehe_m_ue_m": 433.567,
+    "gemeinde": "Faoug",
+    "ortschaft": "Faoug",
+    "bezirk": "Broye-Vully",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 165,
+    "kuerzeste_m": 165,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 165,
+        "flaeche_netto_m2": 315.91,
+        "niveaufreier_zugang": "ja",
+        "linie": 251
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Avenches",
+      "bis": "Faoug",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32716,
+      "zuege_pro_tag": 90
+    },
+    "staerkster_personenverkehr": {
+      "von": "Avenches",
+      "bis": "Faoug",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32716,
+      "zuege_pro_tag": 90
+    },
+    "abschnitte": [
+      {
+        "von": "Avenches",
+        "bis": "Faoug",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32716,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Faoug",
+        "bis": "Murten/Morat",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32716,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Avenches",
+        "bis": "Faoug",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1355,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Faoug",
+        "bis": "Murten/Morat",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1355,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 251,
+        "name": "Palezieux Est - Lyss Nord",
+        "km": 72.80486
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9d5de36651a8699033461bd9895b3dd4"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

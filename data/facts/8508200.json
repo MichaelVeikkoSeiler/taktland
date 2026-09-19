@@ -1,0 +1,247 @@
+{
+  "uic": 8508200,
+  "name": "Worb SBB",
+  "kanton": "BE",
+  "bps": "WB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Worb SBB",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.564852,
+    "lat": 46.91523,
+    "dwv": 590,
+    "dtv": 530,
+    "dnwv": 370,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 480
+      },
+      {
+        "jahr": 2023,
+        "dwv": 570
+      },
+      {
+        "jahr": 2024,
+        "dwv": 530
+      },
+      {
+        "jahr": 2025,
+        "dwv": 590
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Worb SBB",
+    "abkuerzung": "WB",
+    "hoehe_m_ue_m": 607.37,
+    "gemeinde": "Worb",
+    "ortschaft": "Worb",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 232,
+    "kuerzeste_m": 232,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 232,
+        "flaeche_netto_m2": 541.55,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 232,
+        "flaeche_netto_m2": 551.91,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20,
+          35,
+          55
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 104,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 154,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 246,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 207,
+      "35": 4,
+      "55": 35
+    },
+    "segmente_mit_hilfstritt": 103,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Worb SBB",
+      "bis": "Bachtele (Trimstein)",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 41215,
+      "zuege_pro_tag": 113
+    },
+    "staerkster_personenverkehr": {
+      "von": "Worb SBB",
+      "bis": "Bachtele (Trimstein)",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 41215,
+      "zuege_pro_tag": 113
+    },
+    "abschnitte": [
+      {
+        "von": "Worb SBB",
+        "bis": "Bachtele (Trimstein)",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41215,
+        "zuege_pro_tag": 113
+      },
+      {
+        "von": "Gümligen Süd (Abzw)",
+        "bis": "Worb SBB",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41182,
+        "zuege_pro_tag": 113
+      },
+      {
+        "von": "Gümligen Süd (Abzw)",
+        "bis": "Worb SBB",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 135,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Worb SBB",
+        "bis": "Bachtele (Trimstein)",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 135,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 460,
+        "name": "Gumligen Sud - Fluhmuhle",
+        "km": 12.98805
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BLS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/07050ef61a0e27a7f96e35b4fab1e066"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

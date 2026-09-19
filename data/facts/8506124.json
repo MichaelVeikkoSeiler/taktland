@@ -1,0 +1,214 @@
+{
+  "uic": 8506124,
+  "name": "Güttingen",
+  "kanton": "TG",
+  "bps": "GUET",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Güttingen",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.292243,
+    "lat": 47.608753,
+    "dwv": 430,
+    "dtv": 410,
+    "dnwv": 350,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 340
+      },
+      {
+        "jahr": 2022,
+        "dwv": 290
+      },
+      {
+        "jahr": 2023,
+        "dwv": 420
+      },
+      {
+        "jahr": 2024,
+        "dwv": 440
+      },
+      {
+        "jahr": 2025,
+        "dwv": 430
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Güttingen",
+    "abkuerzung": "GUET",
+    "hoehe_m_ue_m": 409.7,
+    "gemeinde": "Güttingen",
+    "ortschaft": "Güttingen",
+    "bezirk": "Kreuzlingen",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 124,
+    "kuerzeste_m": 124,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 124,
+        "flaeche_netto_m2": 288.32,
+        "niveaufreier_zugang": "nein",
+        "linie": 824
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 124,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Altnau",
+      "bis": "Güttingen",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42703,
+      "zuege_pro_tag": 117
+    },
+    "staerkster_personenverkehr": {
+      "von": "Altnau",
+      "bis": "Güttingen",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42703,
+      "zuege_pro_tag": 117
+    },
+    "abschnitte": [
+      {
+        "von": "Altnau",
+        "bis": "Güttingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42703,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Güttingen",
+        "bis": "Kesswil",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42703,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Altnau",
+        "bis": "Güttingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 903,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Güttingen",
+        "bis": "Kesswil",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 903,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 824,
+        "name": "Romanshorn - Konstanz",
+        "km": 90.48996
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3a27b460d8cbe18d0cac759cbb905c29"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

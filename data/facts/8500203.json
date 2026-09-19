@@ -1,0 +1,189 @@
+{
+  "uic": 8500203,
+  "name": "Bettlach",
+  "kanton": "SO",
+  "bps": "BET",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bettlach",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.428373,
+    "lat": 47.194949,
+    "dwv": 680,
+    "dtv": 560,
+    "dnwv": 300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 670
+      },
+      {
+        "jahr": 2023,
+        "dwv": 730
+      },
+      {
+        "jahr": 2024,
+        "dwv": 740
+      },
+      {
+        "jahr": 2025,
+        "dwv": 680
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bettlach",
+    "abkuerzung": "BET",
+    "hoehe_m_ue_m": 441,
+    "gemeinde": "Bettlach",
+    "ortschaft": "Bettlach",
+    "bezirk": "Lebern",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 160,
+    "kuerzeste_m": 160,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 328.74,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 329.75,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bettlach",
+      "bis": "Selzach",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57217,
+      "zuege_pro_tag": 157
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bettlach",
+      "bis": "Selzach",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57217,
+      "zuege_pro_tag": 157
+    },
+    "abschnitte": [
+      {
+        "von": "Bettlach",
+        "bis": "Selzach",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57217,
+        "zuege_pro_tag": 157
+      },
+      {
+        "von": "Grenchen Süd",
+        "bis": "Bettlach",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57217,
+        "zuege_pro_tag": 157
+      },
+      {
+        "von": "Bettlach",
+        "bis": "Selzach",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25007,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Grenchen Süd",
+        "bis": "Bettlach",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25007,
+        "zuege_pro_tag": 69
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 82.92457
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e46c1aab4e9f0152946a4114af22780b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "uic": 8502023,
+  "name": "Ballwil",
+  "kanton": "LU",
+  "bps": "BLL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Ballwil",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.316899,
+    "lat": 47.153768,
+    "dwv": 890,
+    "dtv": 790,
+    "dnwv": 560,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 710
+      },
+      {
+        "jahr": 2022,
+        "dwv": 630
+      },
+      {
+        "jahr": 2023,
+        "dwv": 710
+      },
+      {
+        "jahr": 2024,
+        "dwv": 890
+      },
+      {
+        "jahr": 2025,
+        "dwv": 890
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Ballwil",
+    "abkuerzung": "BLL",
+    "hoehe_m_ue_m": 515,
+    "gemeinde": "Ballwil",
+    "ortschaft": "Ballwil",
+    "bezirk": "Hochdorf",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 110,
+    "kuerzeste_m": 110,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 110,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 651
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Ballwil",
+      "bis": "Eschenbach LU",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28622,
+      "zuege_pro_tag": 78
+    },
+    "staerkster_personenverkehr": {
+      "von": "Ballwil",
+      "bis": "Eschenbach LU",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28622,
+      "zuege_pro_tag": 78
+    },
+    "abschnitte": [
+      {
+        "von": "Ballwil",
+        "bis": "Eschenbach LU",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28622,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Hochdorf Schönau",
+        "bis": "Ballwil",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28615,
+        "zuege_pro_tag": 78
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 651,
+        "name": "Hubeli - Beinwil - Lenzburg",
+        "km": 10.99329
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3cbacb007b5e415ef020440e25c656bc"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

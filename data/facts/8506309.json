@@ -1,0 +1,212 @@
+{
+  "uic": 8506309,
+  "name": "Egnach",
+  "kanton": "TG",
+  "bps": "EGN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Egnach",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.383017,
+    "lat": 47.543991,
+    "dwv": 410,
+    "dtv": 380,
+    "dnwv": 320,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 320
+      },
+      {
+        "jahr": 2023,
+        "dwv": 350
+      },
+      {
+        "jahr": 2024,
+        "dwv": 390
+      },
+      {
+        "jahr": 2025,
+        "dwv": 410
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Egnach",
+    "abkuerzung": "EGN",
+    "hoehe_m_ue_m": 400.9,
+    "gemeinde": "Egnach",
+    "ortschaft": "Egnach",
+    "bezirk": "Arbon",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hilfskante",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 196.32,
+        "niveaufreier_zugang": "nein",
+        "linie": 825
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 120,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Egnach",
+      "bis": "Romanshorn Seewiesen",
+      "strecke_nr": 74,
+      "strecke": "Romanshorn - Rorschach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29821,
+      "zuege_pro_tag": 82
+    },
+    "staerkster_personenverkehr": {
+      "von": "Egnach",
+      "bis": "Romanshorn Seewiesen",
+      "strecke_nr": 74,
+      "strecke": "Romanshorn - Rorschach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29821,
+      "zuege_pro_tag": 82
+    },
+    "abschnitte": [
+      {
+        "von": "Egnach",
+        "bis": "Romanshorn Seewiesen",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29821,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Egnach",
+        "bis": "Arbon Seemoosriet",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29817,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Egnach",
+        "bis": "Arbon Seemoosriet",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1789,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Egnach",
+        "bis": "Romanshorn Seewiesen",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1789,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 825,
+        "name": "Romanshorn Feld H - Rorschach",
+        "km": 84.72236
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f8610fcee0f88ac4898ca88e3901d1b3"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

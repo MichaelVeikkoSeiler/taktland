@@ -1,0 +1,292 @@
+{
+  "uic": 8509404,
+  "name": "Buchs SG",
+  "kanton": "SG",
+  "bps": "BU",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Buchs SG",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB, Thurbo",
+    "lon": 9.478637,
+    "lat": 47.168412,
+    "dwv": 6200,
+    "dtv": 5600,
+    "dnwv": 4300,
+    "bemerkung": "Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 5300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 6200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 6200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Buchs SG",
+    "abkuerzung": "BU",
+    "hoehe_m_ue_m": 447.2,
+    "gemeinde": "Buchs (SG)",
+    "ortschaft": "Buchs SG",
+    "bezirk": "Werdenberg",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 422,
+    "kuerzeste_m": 312,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 422,
+        "flaeche_netto_m2": 3789.81,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 321,
+        "flaeche_netto_m2": 1239.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 312,
+        "flaeche_netto_m2": 1357.28,
+        "niveaufreier_zugang": "ja",
+        "linie": 882
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 322,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 312,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 421,
+        "sektoren": [
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 422,
+        "sektoren": [
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Buchs SG",
+      "bis": "Sevelen",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46978,
+      "zuege_pro_tag": 129
+    },
+    "staerkster_personenverkehr": {
+      "von": "Buchs SG",
+      "bis": "Sevelen",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46978,
+      "zuege_pro_tag": 129
+    },
+    "abschnitte": [
+      {
+        "von": "Buchs SG",
+        "bis": "Sevelen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46978,
+        "zuege_pro_tag": 129
+      },
+      {
+        "von": "Buchs SG Nord (Abzw)",
+        "bis": "Buchs SG",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40585,
+        "zuege_pro_tag": 111
+      },
+      {
+        "von": "Buchs SG",
+        "bis": "Sevelen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4213,
+        "zuege_pro_tag": 12
+      },
+      {
+        "von": "Buchs SG Nord (Abzw)",
+        "bis": "Buchs SG",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4042,
+        "zuege_pro_tag": 11
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 882,
+        "name": "Feldkirch - Buchs SG",
+        "km": 18.526
+      },
+      {
+        "nummer": 880,
+        "name": "Sargans Ost - St.Gallen",
+        "km": 15.86893
+      },
+      {
+        "nummer": 884,
+        "name": "Buchs - Buchs RB",
+        "km": 18.526
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "OBB",
+      "ePOS"
+    ],
+    "billettentwerter": 8,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/2ad9205928544e12c471c4eaf16a10c1"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

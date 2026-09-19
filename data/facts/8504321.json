@@ -1,0 +1,202 @@
+{
+  "uic": 8504321,
+  "name": "La Chaux-de-Fonds Les Forges",
+  "kanton": "NE",
+  "bps": "CFO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "La Chaux-de-Fonds Les Forges",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.81278,
+    "lat": 47.091335,
+    "dwv": 640,
+    "dtv": 530,
+    "dnwv": 300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2022,
+        "dwv": 180
+      },
+      {
+        "jahr": 2023,
+        "dwv": 260
+      },
+      {
+        "jahr": 2024,
+        "dwv": 330
+      },
+      {
+        "jahr": 2025,
+        "dwv": 640
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "La Chaux-de-Fonds Les Forges",
+    "abkuerzung": "CFO",
+    "hoehe_m_ue_m": 1001.164,
+    "gemeinde": "La Chaux-de-Fonds",
+    "ortschaft": "La Chaux-de-Fonds",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 230,
+    "kuerzeste_m": 230,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 230,
+        "flaeche_netto_m2": 361.92,
+        "niveaufreier_zugang": "ja",
+        "linie": 224
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "La Chaux-de-Fonds Les Forges",
+      "bis": "La Chaux-de-Fonds",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33053,
+      "zuege_pro_tag": 91
+    },
+    "staerkster_personenverkehr": {
+      "von": "La Chaux-de-Fonds Les Forges",
+      "bis": "La Chaux-de-Fonds",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33053,
+      "zuege_pro_tag": 91
+    },
+    "abschnitte": [
+      {
+        "von": "La Chaux-de-Fonds Les Forges",
+        "bis": "La Chaux-de-Fonds",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33053,
+        "zuege_pro_tag": 91
+      },
+      {
+        "von": "Le Crêt-du-Locle",
+        "bis": "La Chaux-de-Fonds Les Forges",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33053,
+        "zuege_pro_tag": 91
+      },
+      {
+        "von": "La Chaux-de-Fonds Les Forges",
+        "bis": "La Chaux-de-Fonds",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 536,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Le Crêt-du-Locle",
+        "bis": "La Chaux-de-Fonds Les Forges",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 536,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 224,
+        "name": "Chambrelien Nord - Le Locle (Frontiere)",
+        "km": 30.73
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BATS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/cdea59d6b1b0b9d8a70321afb7a60eba"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

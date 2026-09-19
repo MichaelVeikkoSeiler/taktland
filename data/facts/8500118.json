@@ -1,0 +1,232 @@
+{
+  "uic": 8500118,
+  "name": "Dornach-Arlesheim",
+  "kanton": "SO",
+  "bps": "DOR",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Dornach-Arlesheim",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.611119,
+    "lat": 47.48862,
+    "dwv": 5100,
+    "dtv": 4500,
+    "dnwv": 3100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 5600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 5100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Dornach-Arlesheim",
+    "abkuerzung": "DOR",
+    "hoehe_m_ue_m": 294.17,
+    "gemeinde": "Dornach",
+    "ortschaft": "Dornach",
+    "bezirk": "Dorneck",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 222,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": 995.11,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      },
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 467.52,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 226,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Aesch BL",
+      "bis": "Dornach-Arlesheim",
+      "strecke_nr": 14,
+      "strecke": "Moutier - Delémont - Ruchfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50217,
+      "zuege_pro_tag": 138
+    },
+    "staerkster_personenverkehr": {
+      "von": "Aesch BL",
+      "bis": "Dornach-Arlesheim",
+      "strecke_nr": 14,
+      "strecke": "Moutier - Delémont - Ruchfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50217,
+      "zuege_pro_tag": 138
+    },
+    "abschnitte": [
+      {
+        "von": "Aesch BL",
+        "bis": "Dornach-Arlesheim",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50217,
+        "zuege_pro_tag": 138
+      },
+      {
+        "von": "Dornach-Arlesheim",
+        "bis": "Münchenstein",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50217,
+        "zuege_pro_tag": 138
+      },
+      {
+        "von": "Aesch BL",
+        "bis": "Dornach-Arlesheim",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 331,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Dornach-Arlesheim",
+        "bis": "Münchenstein",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 331,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 230,
+        "name": "Delemont Est - Basel SBB Ost",
+        "km": 115.45125
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "TNW",
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/baa31d6070e2004240c5d7f4c029e82e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

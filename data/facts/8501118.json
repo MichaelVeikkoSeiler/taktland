@@ -1,0 +1,346 @@
+{
+  "uic": 8501118,
+  "name": "Renens VD",
+  "kanton": "VD",
+  "bps": "REN",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Renens VD",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.578935,
+    "lat": 46.537042,
+    "dwv": 51800,
+    "dtv": 47400,
+    "dnwv": 37800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 22500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 23200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 26700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 29800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 51800
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Renens VD",
+    "abkuerzung": "REN",
+    "hoehe_m_ue_m": 415.887,
+    "gemeinde": "Renens (VD)",
+    "ortschaft": "Renens VD",
+    "bezirk": "Ouest lausannois",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 5,
+    "laengste_m": 420,
+    "kuerzeste_m": 252,
+    "items": [
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 420,
+        "flaeche_netto_m2": 2573.09,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 420,
+        "flaeche_netto_m2": 2480.51,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 326,
+        "flaeche_netto_m2": 1638.49,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "7",
+        "typ": "Aussenperron",
+        "laenge_m": 252,
+        "flaeche_netto_m2": 1035.93,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "41/42",
+        "typ": "Hausperron",
+        "laenge_m": null,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": null,
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 327,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 421,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 421,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 420,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 420,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 17,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 17
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Renens VD Est (bif)",
+      "bis": "Renens VD",
+      "strecke_nr": 134,
+      "strecke": "Renens",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 204892,
+      "zuege_pro_tag": 561
+    },
+    "staerkster_personenverkehr": {
+      "von": "Renens VD Est (bif)",
+      "bis": "Renens VD",
+      "strecke_nr": 134,
+      "strecke": "Renens",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 204892,
+      "zuege_pro_tag": 561
+    },
+    "abschnitte": [
+      {
+        "von": "Renens VD Est (bif)",
+        "bis": "Renens VD",
+        "strecke_nr": 134,
+        "strecke": "Renens",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 204892,
+        "zuege_pro_tag": 561
+      },
+      {
+        "von": "Renens VD",
+        "bis": "Renens VD Ouest (bif)",
+        "strecke_nr": 134,
+        "strecke": "Renens",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 203475,
+        "zuege_pro_tag": 557
+      },
+      {
+        "von": "Renens VD",
+        "bis": "Renens VD Ouest (bif)",
+        "strecke_nr": 134,
+        "strecke": "Renens",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 18015,
+        "zuege_pro_tag": 49
+      },
+      {
+        "von": "Renens VD Est (bif)",
+        "bis": "Renens VD",
+        "strecke_nr": 134,
+        "strecke": "Renens",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14182,
+        "zuege_pro_tag": 39
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 4.51005
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 5,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 14,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7d9488ff640ad17d0fcea47c68863e6d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

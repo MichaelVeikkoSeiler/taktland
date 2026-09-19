@@ -1,0 +1,177 @@
+{
+  "uic": 8501015,
+  "name": "Tannay",
+  "kanton": "VD",
+  "bps": "TAN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Tannay",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.18112,
+    "lat": 46.307645,
+    "dwv": 650,
+    "dtv": 560,
+    "dnwv": 350,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 530
+      },
+      {
+        "jahr": 2022,
+        "dwv": 540
+      },
+      {
+        "jahr": 2023,
+        "dwv": 600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 830
+      },
+      {
+        "jahr": 2025,
+        "dwv": 650
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Tannay",
+    "abkuerzung": "TAN",
+    "hoehe_m_ue_m": 392.291,
+    "gemeinde": "Tannay",
+    "ortschaft": "Tannay",
+    "bezirk": "Nyon",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 154,
+    "kuerzeste_m": 154,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 154,
+        "flaeche_netto_m2": 294.51,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Mies",
+      "bis": "Tannay",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 150630,
+      "zuege_pro_tag": 413
+    },
+    "staerkster_personenverkehr": {
+      "von": "Mies",
+      "bis": "Tannay",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 150630,
+      "zuege_pro_tag": 413
+    },
+    "abschnitte": [
+      {
+        "von": "Mies",
+        "bis": "Tannay",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 150630,
+        "zuege_pro_tag": 413
+      },
+      {
+        "von": "Tannay",
+        "bis": "Coppet",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 150628,
+        "zuege_pro_tag": 413
+      },
+      {
+        "von": "Mies",
+        "bis": "Tannay",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10781,
+        "zuege_pro_tag": 30
+      },
+      {
+        "von": "Tannay",
+        "bis": "Coppet",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10781,
+        "zuege_pro_tag": 30
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 48.2246
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3e9e155e1946963c383243d227356f82"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

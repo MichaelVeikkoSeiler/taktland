@@ -1,0 +1,189 @@
+{
+  "uic": 8508205,
+  "name": "Signau",
+  "kanton": "BE",
+  "bps": "SIGN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Signau",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.725463,
+    "lat": 46.919635,
+    "dwv": 880,
+    "dtv": 770,
+    "dnwv": 540,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 960
+      },
+      {
+        "jahr": 2022,
+        "dwv": 790
+      },
+      {
+        "jahr": 2023,
+        "dwv": 810
+      },
+      {
+        "jahr": 2024,
+        "dwv": 830
+      },
+      {
+        "jahr": 2025,
+        "dwv": 880
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Signau",
+    "abkuerzung": "SIGN",
+    "hoehe_m_ue_m": 684,
+    "gemeinde": "Signau",
+    "ortschaft": "Signau",
+    "bezirk": "Emmental",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 355.73,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 274.46,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Schlossberg (Signau)",
+      "bis": "Signau",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 41344,
+      "zuege_pro_tag": 113
+    },
+    "staerkster_personenverkehr": {
+      "von": "Schlossberg (Signau)",
+      "bis": "Signau",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 41344,
+      "zuege_pro_tag": 113
+    },
+    "abschnitte": [
+      {
+        "von": "Schlossberg (Signau)",
+        "bis": "Signau",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41344,
+        "zuege_pro_tag": 113
+      },
+      {
+        "von": "Signau",
+        "bis": "Schüpbach (Signau)",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41344,
+        "zuege_pro_tag": 113
+      },
+      {
+        "von": "Schlossberg (Signau)",
+        "bis": "Signau",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 120,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Signau",
+        "bis": "Schüpbach (Signau)",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 120,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 460,
+        "name": "Gumligen Sud - Fluhmuhle",
+        "km": 30.3682
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BLS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3a00f4fbb67899f4699f69252145460f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "uic": 8503311,
+  "name": "Rümlang",
+  "kanton": "ZH",
+  "bps": "RUEM",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rümlang",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.532767,
+    "lat": 47.454066,
+    "dwv": 5500,
+    "dtv": 4900,
+    "dnwv": 3400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 5500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rümlang",
+    "abkuerzung": "RUEM",
+    "hoehe_m_ue_m": 429.6,
+    "gemeinde": "Rümlang",
+    "ortschaft": "Rümlang",
+    "bezirk": "Dielsdorf",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 334,
+    "kuerzeste_m": 334,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 334,
+        "flaeche_netto_m2": 1694.7,
+        "niveaufreier_zugang": "ja",
+        "linie": 760
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 327,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 328,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rümlang",
+      "bis": "Tankanlage Rümlang",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 85251,
+      "zuege_pro_tag": 234
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rümlang",
+      "bis": "Tankanlage Rümlang",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 85251,
+      "zuege_pro_tag": 234
+    },
+    "abschnitte": [
+      {
+        "von": "Rümlang",
+        "bis": "Tankanlage Rümlang",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 85251,
+        "zuege_pro_tag": 234
+      },
+      {
+        "von": "Oberglatt ZH",
+        "bis": "Rümlang",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 85249,
+        "zuege_pro_tag": 234
+      },
+      {
+        "von": "Rümlang",
+        "bis": "Tankanlage Rümlang",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12491,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Oberglatt ZH",
+        "bis": "Rümlang",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12179,
+        "zuege_pro_tag": 33
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 760,
+        "name": "Zurich Hardbrucke  - Bulach",
+        "km": 10.53706
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4238cca8448005ad5b061045df0b4151"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

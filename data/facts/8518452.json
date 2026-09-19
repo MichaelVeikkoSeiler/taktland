@@ -1,0 +1,197 @@
+{
+  "uic": 8518452,
+  "name": "Prilly-Malley",
+  "kanton": "VD",
+  "bps": "PRMA",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Prilly-Malley",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.602629,
+    "lat": 46.526692,
+    "dwv": 8000,
+    "dtv": 7000,
+    "dnwv": 4700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 6900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 8000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Prilly-Malley",
+    "abkuerzung": "PRMA",
+    "hoehe_m_ue_m": 430.4,
+    "gemeinde": "Prilly",
+    "ortschaft": "Prilly",
+    "bezirk": "Ouest lausannois",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 1781.42,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "4",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 851.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 785.99,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Prilly-Malley",
+      "bis": "Renens VD Est (bif)",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 204214,
+      "zuege_pro_tag": 559
+    },
+    "staerkster_personenverkehr": {
+      "von": "Prilly-Malley",
+      "bis": "Renens VD Est (bif)",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 204214,
+      "zuege_pro_tag": 559
+    },
+    "abschnitte": [
+      {
+        "von": "Prilly-Malley",
+        "bis": "Renens VD Est (bif)",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 204214,
+        "zuege_pro_tag": 559
+      },
+      {
+        "von": "Lausanne (bif)",
+        "bis": "Prilly-Malley",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 204212,
+        "zuege_pro_tag": 559
+      },
+      {
+        "von": "Lausanne (bif)",
+        "bis": "Prilly-Malley",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12548,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Prilly-Malley",
+        "bis": "Renens VD Est (bif)",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12548,
+        "zuege_pro_tag": 34
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 2.354
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/1795dfffbf34fdc2b33f9e8792f23ed3"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

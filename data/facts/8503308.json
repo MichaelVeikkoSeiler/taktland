@@ -1,0 +1,234 @@
+{
+  "uic": 8503308,
+  "name": "Kloten",
+  "kanton": "ZH",
+  "bps": "KL",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Kloten",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.58381,
+    "lat": 47.448607,
+    "dwv": 6000,
+    "dtv": 5400,
+    "dnwv": 3900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 5700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 5100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 6000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Kloten",
+    "abkuerzung": "KL",
+    "hoehe_m_ue_m": 446.6,
+    "gemeinde": "Kloten",
+    "ortschaft": "Kloten",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 351,
+    "kuerzeste_m": 351,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 351,
+        "flaeche_netto_m2": 1450.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 752
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 300,
+        "sektoren": [
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 300,
+        "sektoren": [
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 7
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Kloten Balsberg",
+      "bis": "Kloten",
+      "strecke_nr": 62,
+      "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30537,
+      "zuege_pro_tag": 84
+    },
+    "staerkster_personenverkehr": {
+      "von": "Kloten Balsberg",
+      "bis": "Kloten",
+      "strecke_nr": 62,
+      "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30537,
+      "zuege_pro_tag": 84
+    },
+    "abschnitte": [
+      {
+        "von": "Kloten Balsberg",
+        "bis": "Kloten",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30537,
+        "zuege_pro_tag": 84
+      },
+      {
+        "von": "Kloten",
+        "bis": "Dorfnest (Abzw)",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30456,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Kloten Balsberg",
+        "bis": "Kloten",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12937,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Kloten",
+        "bis": "Dorfnest (Abzw)",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12338,
+        "zuege_pro_tag": 34
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 752,
+        "name": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
+        "km": 11.29461
+      },
+      {
+        "nummer": 757,
+        "name": "Kloten - Dorfnest (Uberwerfung)",
+        "km": 11.29957
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e5f86391480341e0762d4c92f493acf0"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

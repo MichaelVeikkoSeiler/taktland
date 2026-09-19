@@ -1,0 +1,177 @@
+{
+  "uic": 8506136,
+  "name": "Steckborn",
+  "kanton": "TG",
+  "bps": "STK",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Steckborn",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.981033,
+    "lat": 47.664505,
+    "dwv": 920,
+    "dtv": 860,
+    "dnwv": 720,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 990
+      },
+      {
+        "jahr": 2022,
+        "dwv": 850
+      },
+      {
+        "jahr": 2023,
+        "dwv": 960
+      },
+      {
+        "jahr": 2024,
+        "dwv": 950
+      },
+      {
+        "jahr": 2025,
+        "dwv": 920
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Steckborn",
+    "abkuerzung": "STK",
+    "hoehe_m_ue_m": 403.7,
+    "gemeinde": "Steckborn",
+    "ortschaft": "Steckborn",
+    "bezirk": "Frauenfeld",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 132,
+    "kuerzeste_m": 132,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 132,
+        "flaeche_netto_m2": 452.46,
+        "niveaufreier_zugang": "ja",
+        "linie": 822
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Steckborn",
+      "bis": "Berlingen",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28901,
+      "zuege_pro_tag": 79
+    },
+    "staerkster_personenverkehr": {
+      "von": "Steckborn",
+      "bis": "Berlingen",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28901,
+      "zuege_pro_tag": 79
+    },
+    "abschnitte": [
+      {
+        "von": "Steckborn",
+        "bis": "Berlingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28901,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Steckborn",
+        "bis": "Steckborn Ausweiche (Dsta)",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28896,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Steckborn",
+        "bis": "Berlingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Steckborn",
+        "bis": "Steckborn Ausweiche (Dsta)",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 822,
+        "name": "Etzwilen - Konstanz",
+        "km": 45.59265
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e8b4076a886aef6da80a1d903ee5ed17"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

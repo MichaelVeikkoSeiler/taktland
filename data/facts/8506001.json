@@ -1,0 +1,305 @@
+{
+  "uic": 8506001,
+  "name": "Winterthur Grüze",
+  "kanton": "ZH",
+  "bps": "WGR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Winterthur Grüze",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.751055,
+    "lat": 47.498755,
+    "dwv": 2300,
+    "dtv": 1900,
+    "dnwv": 1000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Winterthur Grüze",
+    "abkuerzung": "WGR",
+    "hoehe_m_ue_m": 452.1,
+    "gemeinde": "Winterthur",
+    "ortschaft": "Winterthur",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 320,
+    "kuerzeste_m": 308,
+    "items": [
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 1014.76,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 308,
+        "flaeche_netto_m2": 1694.56,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 288,
+        "sektoren": [
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 289,
+        "sektoren": [
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 272,
+        "sektoren": [
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          20,
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 168,
+        "sektoren": [
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 5,
+      "25": 4,
+      "35": 3,
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 3,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Teilweise",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Schwalmenacker (Spw)",
+      "bis": "Winterthur Grüze",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 125055,
+      "zuege_pro_tag": 343
+    },
+    "staerkster_personenverkehr": {
+      "von": "Schwalmenacker (Spw)",
+      "bis": "Winterthur Grüze",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 125055,
+      "zuege_pro_tag": 343
+    },
+    "abschnitte": [
+      {
+        "von": "Schwalmenacker (Spw)",
+        "bis": "Winterthur Grüze",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 125055,
+        "zuege_pro_tag": 343
+      },
+      {
+        "von": "Winterthur Grüze",
+        "bis": "Winterthur Hegi",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78887,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Winterthur Grüze",
+        "bis": "Winterthur Seen",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46296,
+        "zuege_pro_tag": 127
+      },
+      {
+        "von": "Schwalmenacker (Spw)",
+        "bis": "Winterthur Grüze",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8048,
+        "zuege_pro_tag": 22
+      },
+      {
+        "von": "Winterthur Grüze",
+        "bis": "Winterthur Hegi",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7125,
+        "zuege_pro_tag": 20
+      },
+      {
+        "von": "Winterthur Grüze",
+        "bis": "Winterthur Seen",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 850,
+        "name": "St.Gallen - Winterthur Nord",
+        "km": 135.2914
+      },
+      {
+        "nummer": 754,
+        "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+        "km": 2.51899
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BATS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/218440f9d6d312bb98d7729d1e7bdeda"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

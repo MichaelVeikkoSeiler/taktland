@@ -1,0 +1,251 @@
+{
+  "uic": 8502020,
+  "name": "Rothenburg Station",
+  "kanton": "LU",
+  "bps": "RBG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rothenburg Station",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.247561,
+    "lat": 47.089184,
+    "dwv": 1500,
+    "dtv": 1300,
+    "dnwv": 820,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rothenburg Station",
+    "abkuerzung": "RBG",
+    "hoehe_m_ue_m": 522,
+    "gemeinde": "Rothenburg",
+    "ortschaft": "Rothenburg",
+    "bezirk": "Hochdorf",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 162,
+    "kuerzeste_m": 161,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 162,
+        "flaeche_netto_m2": 668.36,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 161,
+        "flaeche_netto_m2": 477.67,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 162,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 162,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 77,
+        "sektoren": [
+          "A"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rothenburg Station",
+      "bis": "Emmenbrücke Kapf",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86326,
+      "zuege_pro_tag": 237
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rothenburg Station",
+      "bis": "Emmenbrücke Kapf",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86326,
+      "zuege_pro_tag": 237
+    },
+    "abschnitte": [
+      {
+        "von": "Rothenburg Station",
+        "bis": "Emmenbrücke Kapf",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86326,
+        "zuege_pro_tag": 237
+      },
+      {
+        "von": "Sempach-Neuenkirch",
+        "bis": "Rothenburg Station",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86249,
+        "zuege_pro_tag": 236
+      },
+      {
+        "von": "Sempach-Neuenkirch",
+        "bis": "Rothenburg Station",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5233,
+        "zuege_pro_tag": 14
+      },
+      {
+        "von": "Rothenburg Station",
+        "bis": "Emmenbrücke Kapf",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1867,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 84.54878
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/45427cffb0ea3d526b591eadfe8a937a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

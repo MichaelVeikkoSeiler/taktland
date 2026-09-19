@@ -1,0 +1,286 @@
+{
+  "uic": 8503129,
+  "name": "Wallisellen",
+  "kanton": "ZH",
+  "bps": "WS",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Wallisellen",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.591928,
+    "lat": 47.412723,
+    "dwv": 16200,
+    "dtv": 13300,
+    "dnwv": 7000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 17100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 13200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 15200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 15900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 16200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Wallisellen",
+    "abkuerzung": "WS",
+    "hoehe_m_ue_m": 430.9,
+    "gemeinde": "Wallisellen",
+    "ortschaft": "Wallisellen",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 369,
+    "kuerzeste_m": 232,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 369,
+        "flaeche_netto_m2": 1838.31,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      },
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 232,
+        "flaeche_netto_m2": 1191.54,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      25,
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 315,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 315,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 232,
+        "sektoren": []
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 233,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 17,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 14,
+      "55": 3
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zürich Oerlikon",
+      "bis": "Wallisellen",
+      "strecke_nr": 63,
+      "strecke": "Zürich Oerlikon - Wallisellen - Hürlistein",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 79583,
+      "zuege_pro_tag": 218
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zürich Oerlikon",
+      "bis": "Wallisellen",
+      "strecke_nr": 63,
+      "strecke": "Zürich Oerlikon - Wallisellen - Hürlistein",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 79583,
+      "zuege_pro_tag": 218
+    },
+    "abschnitte": [
+      {
+        "von": "Zürich Oerlikon",
+        "bis": "Wallisellen",
+        "strecke_nr": 63,
+        "strecke": "Zürich Oerlikon - Wallisellen - Hürlistein",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 79583,
+        "zuege_pro_tag": 218
+      },
+      {
+        "von": "Wallisellen",
+        "bis": "Dietlikon",
+        "strecke_nr": 63,
+        "strecke": "Zürich Oerlikon - Wallisellen - Hürlistein",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50926,
+        "zuege_pro_tag": 140
+      },
+      {
+        "von": "Wallisellen",
+        "bis": "Chriesbach (Abzw)",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31013,
+        "zuege_pro_tag": 85
+      },
+      {
+        "von": "Zürich Oerlikon",
+        "bis": "Wallisellen",
+        "strecke_nr": 63,
+        "strecke": "Zürich Oerlikon - Wallisellen - Hürlistein",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 377,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Wallisellen",
+        "bis": "Chriesbach (Abzw)",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 320,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Wallisellen",
+        "bis": "Dietlikon",
+        "strecke_nr": 63,
+        "strecke": "Zürich Oerlikon - Wallisellen - Hürlistein",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 61,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 751,
+        "name": "ZH Langstr. - Wallisellen - Winterthur",
+        "km": 8.36727
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b1d07a50985cb7d0e27cef705e160f58"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

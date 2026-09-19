@@ -1,0 +1,185 @@
+{
+  "uic": 8501127,
+  "name": "St-Saphorin",
+  "kanton": "VD",
+  "bps": "STSA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "St-Saphorin",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.797034,
+    "lat": 46.472594,
+    "dwv": 190,
+    "dtv": 240,
+    "dnwv": 360,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 170
+      },
+      {
+        "jahr": 2022,
+        "dwv": 180
+      },
+      {
+        "jahr": 2023,
+        "dwv": 210
+      },
+      {
+        "jahr": 2024,
+        "dwv": 230
+      },
+      {
+        "jahr": 2025,
+        "dwv": 190
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "St-Saphorin",
+    "abkuerzung": "STSA",
+    "hoehe_m_ue_m": 376.93,
+    "gemeinde": "Saint-Saphorin (Lavaux)",
+    "ortschaft": "St-Saphorin (Lavaux)",
+    "bezirk": "Lavaux-Oron",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 153,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 153,
+        "flaeche_netto_m2": 301.44,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 269.72,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rivaz",
+      "bis": "St-Saphorin",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86546,
+      "zuege_pro_tag": 237
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rivaz",
+      "bis": "St-Saphorin",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86546,
+      "zuege_pro_tag": 237
+    },
+    "abschnitte": [
+      {
+        "von": "Rivaz",
+        "bis": "St-Saphorin",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86546,
+        "zuege_pro_tag": 237
+      },
+      {
+        "von": "St-Saphorin",
+        "bis": "Vevey",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86544,
+        "zuege_pro_tag": 237
+      },
+      {
+        "von": "Rivaz",
+        "bis": "St-Saphorin",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9370,
+        "zuege_pro_tag": 26
+      },
+      {
+        "von": "St-Saphorin",
+        "bis": "Vevey",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9370,
+        "zuege_pro_tag": 26
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 14.54959
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/cadb886e4f402dc4c2d2e7a72ad5e01e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

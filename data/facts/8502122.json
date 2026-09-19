@@ -1,0 +1,181 @@
+{
+  "uic": 8502122,
+  "name": "Kölliken Oberdorf",
+  "kanton": "AG",
+  "bps": "KKO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Kölliken Oberdorf",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.019091,
+    "lat": 47.324683,
+    "dwv": 260,
+    "dtv": 220,
+    "dnwv": 130,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 250
+      },
+      {
+        "jahr": 2022,
+        "dwv": 250
+      },
+      {
+        "jahr": 2023,
+        "dwv": 260
+      },
+      {
+        "jahr": 2024,
+        "dwv": 260
+      },
+      {
+        "jahr": 2025,
+        "dwv": 260
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Kölliken Oberdorf",
+    "abkuerzung": "KKO",
+    "hoehe_m_ue_m": 444,
+    "gemeinde": "Kölliken",
+    "ortschaft": "Kölliken",
+    "bezirk": "Zofingen",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 121,
+    "kuerzeste_m": 121,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 121,
+        "flaeche_netto_m2": 264.47,
+        "niveaufreier_zugang": "ja",
+        "linie": 504
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Kölliken Oberdorf",
+      "bis": "Kölliken",
+      "strecke_nr": 39,
+      "strecke": "Zofingen - Suhr - Lenzburg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 24000,
+      "zuege_pro_tag": 66
+    },
+    "staerkster_personenverkehr": {
+      "von": "Kölliken Oberdorf",
+      "bis": "Kölliken",
+      "strecke_nr": 39,
+      "strecke": "Zofingen - Suhr - Lenzburg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 24000,
+      "zuege_pro_tag": 66
+    },
+    "abschnitte": [
+      {
+        "von": "Kölliken Oberdorf",
+        "bis": "Kölliken",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24000,
+        "zuege_pro_tag": 66
+      },
+      {
+        "von": "Kölliken Oberdorf",
+        "bis": "Safenwil",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24000,
+        "zuege_pro_tag": 66
+      },
+      {
+        "von": "Kölliken Oberdorf",
+        "bis": "Kölliken",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 913,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Kölliken Oberdorf",
+        "bis": "Safenwil",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 913,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 504,
+        "name": "Zofingen - Suhr",
+        "km": 9.28246
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c84fa3cee24d7cd4261c15e19ac62a75"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

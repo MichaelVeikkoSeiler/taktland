@@ -1,0 +1,177 @@
+{
+  "uic": 8503119,
+  "name": "Schänis",
+  "kanton": "SG",
+  "bps": "SCAE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Schänis",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SOB",
+    "lon": 9.043976,
+    "lat": 47.157657,
+    "dwv": 820,
+    "dtv": 740,
+    "dnwv": 560,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 720
+      },
+      {
+        "jahr": 2022,
+        "dwv": 710
+      },
+      {
+        "jahr": 2023,
+        "dwv": 650
+      },
+      {
+        "jahr": 2024,
+        "dwv": 750
+      },
+      {
+        "jahr": 2025,
+        "dwv": 820
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Schänis",
+    "abkuerzung": "SCAE",
+    "hoehe_m_ue_m": 420.8,
+    "gemeinde": "Schänis",
+    "ortschaft": "Schänis",
+    "bezirk": "See-Gaster",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 160,
+    "kuerzeste_m": 160,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 395.14,
+        "niveaufreier_zugang": "ja",
+        "linie": 735
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Benken SG",
+      "bis": "Schänis",
+      "strecke_nr": 78,
+      "strecke": "Uznach - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27941,
+      "zuege_pro_tag": 77
+    },
+    "staerkster_personenverkehr": {
+      "von": "Benken SG",
+      "bis": "Schänis",
+      "strecke_nr": 78,
+      "strecke": "Uznach - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27941,
+      "zuege_pro_tag": 77
+    },
+    "abschnitte": [
+      {
+        "von": "Benken SG",
+        "bis": "Schänis",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27941,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Schänis",
+        "bis": "Ziegelbrücke",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27941,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Benken SG",
+        "bis": "Schänis",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 112,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Schänis",
+        "bis": "Ziegelbrücke",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 112,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 735,
+        "name": "Ziegelbrucke West - Rapperswil Ost",
+        "km": 37.09457
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/96567a04c2e2e64f2196321c50c6fea6"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

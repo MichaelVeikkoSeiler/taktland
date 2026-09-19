@@ -1,0 +1,244 @@
+{
+  "uic": 8503128,
+  "name": "Dübendorf",
+  "kanton": "ZH",
+  "bps": "DUE",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Dübendorf",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.623422,
+    "lat": 47.40008,
+    "dwv": 9800,
+    "dtv": 8500,
+    "dnwv": 5400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 9300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 8100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 9200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 9400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 9800
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Dübendorf",
+    "abkuerzung": "DUE",
+    "hoehe_m_ue_m": 439.9,
+    "gemeinde": "Dübendorf",
+    "ortschaft": "Dübendorf",
+    "bezirk": "Uster",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 344,
+    "kuerzeste_m": 89,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 344,
+        "flaeche_netto_m2": 1597.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 740
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 89,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 740
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dübendorf",
+      "bis": "Schwerzenbach ZH",
+      "strecke_nr": 64,
+      "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 116125,
+      "zuege_pro_tag": 318
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dübendorf",
+      "bis": "Schwerzenbach ZH",
+      "strecke_nr": 64,
+      "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 116125,
+      "zuege_pro_tag": 318
+    },
+    "abschnitte": [
+      {
+        "von": "Dübendorf",
+        "bis": "Schwerzenbach ZH",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 116125,
+        "zuege_pro_tag": 318
+      },
+      {
+        "von": "Chriesbach (Abzw)",
+        "bis": "Dübendorf",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 116113,
+        "zuege_pro_tag": 318
+      },
+      {
+        "von": "Dübendorf",
+        "bis": "Schwerzenbach ZH",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1882,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Chriesbach (Abzw)",
+        "bis": "Dübendorf",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1428,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 740,
+        "name": "Rapperswil - Uster - Wallisellen Ost",
+        "km": 90.4432
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ecdf748a4b01cdc0c79be960fb089360"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

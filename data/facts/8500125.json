@@ -1,0 +1,223 @@
+{
+  "uic": 8500125,
+  "name": "Courgenay",
+  "kanton": "JU",
+  "bps": "CG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Courgenay",
+    "kanton": "JU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.124205,
+    "lat": 47.405226,
+    "dwv": 770,
+    "dtv": 700,
+    "dnwv": 530,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 620
+      },
+      {
+        "jahr": 2022,
+        "dwv": 730
+      },
+      {
+        "jahr": 2023,
+        "dwv": 830
+      },
+      {
+        "jahr": 2024,
+        "dwv": 840
+      },
+      {
+        "jahr": 2025,
+        "dwv": 770
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Courgenay",
+    "abkuerzung": "CG",
+    "hoehe_m_ue_m": 488.09,
+    "gemeinde": "Courgenay",
+    "ortschaft": "Courgenay",
+    "bezirk": "Porrentruy",
+    "kanton": "Jura",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 161,
+    "kuerzeste_m": 161,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Zwischenperron",
+        "laenge_m": 161,
+        "flaeche_netto_m2": 600.58,
+        "niveaufreier_zugang": "ja",
+        "linie": 240
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 161,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 161,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "St-Ursanne",
+      "bis": "Courgenay",
+      "strecke_nr": 15,
+      "strecke": "Delémont - Porrentruy - Delle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30059,
+      "zuege_pro_tag": 82
+    },
+    "staerkster_personenverkehr": {
+      "von": "St-Ursanne",
+      "bis": "Courgenay",
+      "strecke_nr": 15,
+      "strecke": "Delémont - Porrentruy - Delle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30059,
+      "zuege_pro_tag": 82
+    },
+    "abschnitte": [
+      {
+        "von": "St-Ursanne",
+        "bis": "Courgenay",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30059,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Courgenay",
+        "bis": "Porrentruy",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30008,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Courgenay",
+        "bis": "Porrentruy",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 448,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "St-Ursanne",
+        "bis": "Courgenay",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 447,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 240,
+        "name": "Delemont - Delle",
+        "km": 107.81941
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9826e5edc6d2523bc66039317f560ca1"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

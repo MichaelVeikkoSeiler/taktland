@@ -1,0 +1,181 @@
+{
+  "uic": 8516283,
+  "name": "Genève-Sécheron",
+  "kanton": "GE",
+  "bps": "GESE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Genève-Sécheron",
+    "kanton": "GE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.144561,
+    "lat": 46.22244,
+    "dwv": 3500,
+    "dtv": 2700,
+    "dnwv": 920,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Genève-Sécheron",
+    "abkuerzung": "GESE",
+    "hoehe_m_ue_m": 390.4,
+    "gemeinde": "Genève",
+    "ortschaft": "Genève",
+    "bezirk": null,
+    "kanton": "Genève",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 207,
+    "kuerzeste_m": 207,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 207,
+        "flaeche_netto_m2": 866.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Genève-Sécheron",
+      "bis": "Chambésy",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 150893,
+      "zuege_pro_tag": 413
+    },
+    "staerkster_personenverkehr": {
+      "von": "Genève-Sécheron",
+      "bis": "Chambésy",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 150893,
+      "zuege_pro_tag": 413
+    },
+    "abschnitte": [
+      {
+        "von": "Genève-Sécheron",
+        "bis": "Chambésy",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 150893,
+        "zuege_pro_tag": 413
+      },
+      {
+        "von": "Genève-Sécheron",
+        "bis": "Genève Voie-Creuse",
+        "strecke_nr": 118,
+        "strecke": "Genf",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 150860,
+        "zuege_pro_tag": 413
+      },
+      {
+        "von": "Genève-Sécheron",
+        "bis": "Chambésy",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10781,
+        "zuege_pro_tag": 30
+      },
+      {
+        "von": "Genève-Sécheron",
+        "bis": "Genève Voie-Creuse",
+        "strecke_nr": 118,
+        "strecke": "Genf",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10781,
+        "zuege_pro_tag": 30
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 58.86
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/fea57fbd25160435ecd0716038ed3512"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

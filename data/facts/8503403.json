@@ -1,0 +1,231 @@
+{
+  "uic": 8503403,
+  "name": "Hüntwangen-Wil",
+  "kanton": "ZH",
+  "bps": "HUEW",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Hüntwangen-Wil",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.512848,
+    "lat": 47.581269,
+    "dwv": 2000,
+    "dtv": 1700,
+    "dnwv": 1100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Hüntwangen-Wil",
+    "abkuerzung": "HUEW",
+    "hoehe_m_ue_m": 393.2,
+    "gemeinde": "Hüntwangen",
+    "ortschaft": "Hüntwangen",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 324,
+    "kuerzeste_m": 324,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 324,
+        "flaeche_netto_m2": 1388.12,
+        "niveaufreier_zugang": "ja",
+        "linie": 770
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rafz",
+      "bis": "Hüntwangen-Wil",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54321,
+      "zuege_pro_tag": 149
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rafz",
+      "bis": "Hüntwangen-Wil",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54321,
+      "zuege_pro_tag": 149
+    },
+    "abschnitte": [
+      {
+        "von": "Rafz",
+        "bis": "Hüntwangen-Wil",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54321,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Hüntwangen-Wil",
+        "bis": "Eglisau",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54320,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Hüntwangen-Wil",
+        "bis": "Eglisau",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8555,
+        "zuege_pro_tag": 23
+      },
+      {
+        "von": "Rafz",
+        "bis": "Hüntwangen-Wil",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3874,
+        "zuege_pro_tag": 11
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 770,
+        "name": "Bulach - Eglisau - Neuhausen",
+        "km": 23.60162
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/40b9aa04ac4b6193fa24f846bcbd7db0"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

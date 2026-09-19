@@ -1,0 +1,255 @@
+{
+  "uic": 8509004,
+  "name": "Bad Ragaz",
+  "kanton": "SG",
+  "bps": "BRAG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bad Ragaz",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB, Thurbo",
+    "lon": 9.505225,
+    "lat": 47.010309,
+    "dwv": 3000,
+    "dtv": 2800,
+    "dnwv": 2200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bad Ragaz",
+    "abkuerzung": "BRAG",
+    "hoehe_m_ue_m": 502.1,
+    "gemeinde": "Bad Ragaz",
+    "ortschaft": "Bad Ragaz",
+    "bezirk": "Sarganserland",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 393,
+    "kuerzeste_m": 393,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 393,
+        "flaeche_netto_m2": 1804.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 900
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 320,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 319,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 395,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 393,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 11,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sargans",
+      "bis": "Bad Ragaz",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 73476,
+      "zuege_pro_tag": 201
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sargans",
+      "bis": "Bad Ragaz",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 73476,
+      "zuege_pro_tag": 201
+    },
+    "abschnitte": [
+      {
+        "von": "Sargans",
+        "bis": "Bad Ragaz",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 73476,
+        "zuege_pro_tag": 201
+      },
+      {
+        "von": "Bad Ragaz",
+        "bis": "Maienfeld",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 73464,
+        "zuege_pro_tag": 201
+      },
+      {
+        "von": "Sargans",
+        "bis": "Bad Ragaz",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6846,
+        "zuege_pro_tag": 19
+      },
+      {
+        "von": "Bad Ragaz",
+        "bis": "Maienfeld",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6844,
+        "zuege_pro_tag": 19
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 900,
+        "name": "Sargans Ost - Chur West (Gleisende)",
+        "km": 5.74004
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7a3a40093d0ec3f35d77b7f4f52a3a8d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

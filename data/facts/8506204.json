@@ -1,0 +1,181 @@
+{
+  "uic": 8506204,
+  "name": "Lütisburg",
+  "kanton": "SG",
+  "bps": "LUET",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Lütisburg",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.0711,
+    "lat": 47.384826,
+    "dwv": 230,
+    "dtv": 210,
+    "dnwv": 160,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 230
+      },
+      {
+        "jahr": 2022,
+        "dwv": 190
+      },
+      {
+        "jahr": 2023,
+        "dwv": 220
+      },
+      {
+        "jahr": 2024,
+        "dwv": 210
+      },
+      {
+        "jahr": 2025,
+        "dwv": 230
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Lütisburg",
+    "abkuerzung": "LUET",
+    "hoehe_m_ue_m": 599.207,
+    "gemeinde": "Lütisburg",
+    "ortschaft": "Lütisburg Station",
+    "bezirk": "Toggenburg",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 165,
+    "kuerzeste_m": 165,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 165,
+        "flaeche_netto_m2": 262.99,
+        "niveaufreier_zugang": "ja",
+        "linie": 853
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bazenheid",
+      "bis": "Lütisburg",
+      "strecke_nr": 77,
+      "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29321,
+      "zuege_pro_tag": 80
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bazenheid",
+      "bis": "Lütisburg",
+      "strecke_nr": 77,
+      "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29321,
+      "zuege_pro_tag": 80
+    },
+    "abschnitte": [
+      {
+        "von": "Bazenheid",
+        "bis": "Lütisburg",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29321,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Lütisburg",
+        "bis": "Bütschwil",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29311,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Bazenheid",
+        "bis": "Lütisburg",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 247,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Lütisburg",
+        "bis": "Bütschwil",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 247,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 853,
+        "name": "Wil Sud - Wattwil - Uznach",
+        "km": 10.034
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/2b7116ef631649638785b059cceb090f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

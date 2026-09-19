@@ -1,0 +1,247 @@
+{
+  "uic": 8503528,
+  "name": "Otelfingen",
+  "kanton": "ZH",
+  "bps": "OF",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Otelfingen",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.387532,
+    "lat": 47.454936,
+    "dwv": 1600,
+    "dtv": 1400,
+    "dnwv": 890,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Otelfingen",
+    "abkuerzung": "OF",
+    "hoehe_m_ue_m": 427,
+    "gemeinde": "Otelfingen",
+    "ortschaft": "Otelfingen",
+    "bezirk": "Dielsdorf",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 636.93,
+        "niveaufreier_zugang": "ja",
+        "linie": 703
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 518.13,
+        "niveaufreier_zugang": "ja",
+        "linie": 703
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Würenlos",
+      "bis": "Otelfingen",
+      "strecke_nr": 57,
+      "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29662,
+      "zuege_pro_tag": 81
+    },
+    "staerkster_personenverkehr": {
+      "von": "Würenlos",
+      "bis": "Otelfingen",
+      "strecke_nr": 57,
+      "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29662,
+      "zuege_pro_tag": 81
+    },
+    "abschnitte": [
+      {
+        "von": "Würenlos",
+        "bis": "Otelfingen",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29662,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Otelfingen",
+        "bis": "Otelfingen Industrie",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29654,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Otelfingen",
+        "bis": "Otelfingen Industrie",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12584,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Würenlos",
+        "bis": "Otelfingen",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12584,
+        "zuege_pro_tag": 34
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 703,
+        "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
+        "km": 36.52178
+      },
+      {
+        "nummer": 7705,
+        "name": "Tanklager O'fingen - O'fingen(abgebr.)",
+        "km": 33.83588
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3a713fe3a038779bfc6b8fe67aac1f9e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

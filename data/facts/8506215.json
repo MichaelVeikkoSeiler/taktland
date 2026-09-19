@@ -1,0 +1,236 @@
+{
+  "uic": 8506215,
+  "name": "Bischofszell Nord",
+  "kanton": "TG",
+  "bps": "BZN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bischofszell Nord",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.234035,
+    "lat": 47.500415,
+    "dwv": 330,
+    "dtv": 270,
+    "dnwv": 150,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 270
+      },
+      {
+        "jahr": 2022,
+        "dwv": 260
+      },
+      {
+        "jahr": 2023,
+        "dwv": 300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 320
+      },
+      {
+        "jahr": 2025,
+        "dwv": 330
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bischofszell Nord",
+    "abkuerzung": "BZN",
+    "hoehe_m_ue_m": 476.3,
+    "gemeinde": "Bischofszell",
+    "ortschaft": "Bischofszell",
+    "bezirk": "Weinfelden",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 122,
+    "kuerzeste_m": 60,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 122,
+        "flaeche_netto_m2": 272.73,
+        "niveaufreier_zugang": "ja",
+        "linie": 852
+      },
+      {
+        "nr": "1",
+        "typ": "Dienstperron",
+        "laenge_m": 60,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 852
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      42,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 105,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          42
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 117,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "42": 2,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bischofszell Nord",
+      "bis": "Sitterdorf",
+      "strecke_nr": 76,
+      "strecke": "Gossau - Sulgen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28372,
+      "zuege_pro_tag": 78
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bischofszell Nord",
+      "bis": "Sitterdorf",
+      "strecke_nr": 76,
+      "strecke": "Gossau - Sulgen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28372,
+      "zuege_pro_tag": 78
+    },
+    "abschnitte": [
+      {
+        "von": "Bischofszell Nord",
+        "bis": "Sitterdorf",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28372,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Kradolf",
+        "bis": "Bischofszell Nord",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28343,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Kradolf",
+        "bis": "Bischofszell Nord",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3037,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Bischofszell Nord",
+        "bis": "Sitterdorf",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1301,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 852,
+        "name": "Sulgen - Gossau SG",
+        "km": 6.78324
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/309ae610db7f29c39ca9f990c7244767"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

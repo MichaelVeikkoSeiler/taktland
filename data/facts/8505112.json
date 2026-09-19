@@ -1,0 +1,256 @@
+{
+  "uic": 8505112,
+  "name": "Flüelen",
+  "kanton": "UR",
+  "bps": "FL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Flüelen",
+    "kanton": "UR",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.624303,
+    "lat": 46.90173,
+    "dwv": 1100,
+    "dtv": 1200,
+    "dnwv": 1300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 850
+      },
+      {
+        "jahr": 2023,
+        "dwv": 920
+      },
+      {
+        "jahr": 2024,
+        "dwv": 950
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Flüelen",
+    "abkuerzung": "FL",
+    "hoehe_m_ue_m": 436,
+    "gemeinde": "Flüelen",
+    "ortschaft": "Flüelen",
+    "bezirk": null,
+    "kanton": "Uri",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 449,
+    "kuerzeste_m": 267,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 449,
+        "flaeche_netto_m2": 1854.5,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 267,
+        "flaeche_netto_m2": 609.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      25,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 267,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 450,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 449,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 4,
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Flüelen",
+      "bis": "Altdorf UR",
+      "strecke_nr": 45,
+      "strecke": "Arth-Goldau - Erstfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 52397,
+      "zuege_pro_tag": 144
+    },
+    "staerkster_personenverkehr": {
+      "von": "Flüelen",
+      "bis": "Altdorf UR",
+      "strecke_nr": 45,
+      "strecke": "Arth-Goldau - Erstfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 52397,
+      "zuege_pro_tag": 144
+    },
+    "abschnitte": [
+      {
+        "von": "Flüelen",
+        "bis": "Altdorf UR",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52397,
+        "zuege_pro_tag": 144
+      },
+      {
+        "von": "Gruonbach (Spw)",
+        "bis": "Flüelen",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52375,
+        "zuege_pro_tag": 143
+      },
+      {
+        "von": "Flüelen",
+        "bis": "Altdorf UR",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36341,
+        "zuege_pro_tag": 100
+      },
+      {
+        "von": "Gruonbach (Spw)",
+        "bis": "Flüelen",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35094,
+        "zuege_pro_tag": 96
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 32.30055
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/18ae8778cb2ad156e62fa66718c50abd"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

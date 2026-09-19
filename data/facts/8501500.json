@@ -1,0 +1,336 @@
+{
+  "uic": 8501500,
+  "name": "Martigny",
+  "kanton": "VS",
+  "bps": "MA",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Martigny",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "RegionAlps, SBB",
+    "lon": 7.079124,
+    "lat": 46.105831,
+    "dwv": 12600,
+    "dtv": 12200,
+    "dnwv": 11300,
+    "bemerkung": "Ohne TMR.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 9300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 9500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 10800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 11600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 12600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Martigny",
+    "abkuerzung": "MA",
+    "hoehe_m_ue_m": 466.989,
+    "gemeinde": "Martigny",
+    "ortschaft": "Martigny",
+    "bezirk": "Martigny",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 5,
+    "laengste_m": 441,
+    "kuerzeste_m": 52,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 441,
+        "flaeche_netto_m2": 2170.56,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 420,
+        "flaeche_netto_m2": 1435.75,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "50",
+        "typ": "Aussenperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 336.46,
+        "niveaufreier_zugang": "ja",
+        "linie": 133
+      },
+      {
+        "nr": "20",
+        "typ": "Hilfskante",
+        "laenge_m": 100,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "21",
+        "typ": "Hilfskante",
+        "laenge_m": 52,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "50",
+      "57"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 420,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 444,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 441,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "50",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "57",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 161,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 15,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 15
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Vernayaz",
+      "bis": "Martigny",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 66657,
+      "zuege_pro_tag": 183
+    },
+    "staerkster_personenverkehr": {
+      "von": "Vernayaz",
+      "bis": "Martigny",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 66657,
+      "zuege_pro_tag": 183
+    },
+    "abschnitte": [
+      {
+        "von": "Vernayaz",
+        "bis": "Martigny",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 66657,
+        "zuege_pro_tag": 183
+      },
+      {
+        "von": "Ranconnex",
+        "bis": "Martigny",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 56705,
+        "zuege_pro_tag": 155
+      },
+      {
+        "von": "Vernayaz",
+        "bis": "Martigny",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5644,
+        "zuege_pro_tag": 15
+      },
+      {
+        "von": "Ranconnex",
+        "bis": "Martigny",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5404,
+        "zuege_pro_tag": 15
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 132,
+        "name": "Martigny - Le Chatelard-Frontiere",
+        "km": 0
+      },
+      {
+        "nummer": 133,
+        "name": "Martigny - Orsieres",
+        "km": 0.01728
+      },
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 66.49553
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 8,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/08388e3bf30a3001cbbaed5582bdfa0a"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-martigny-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-martigny-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

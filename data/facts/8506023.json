@@ -1,0 +1,230 @@
+{
+  "uic": 8506023,
+  "name": "Ossingen",
+  "kanton": "ZH",
+  "bps": "OSS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Ossingen",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.724117,
+    "lat": 47.614614,
+    "dwv": 540,
+    "dtv": 490,
+    "dnwv": 370,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 570
+      },
+      {
+        "jahr": 2022,
+        "dwv": 470
+      },
+      {
+        "jahr": 2023,
+        "dwv": 430
+      },
+      {
+        "jahr": 2024,
+        "dwv": 470
+      },
+      {
+        "jahr": 2025,
+        "dwv": 540
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Ossingen",
+    "abkuerzung": "OSS",
+    "hoehe_m_ue_m": 427.5,
+    "gemeinde": "Ossingen",
+    "ortschaft": "Ossingen",
+    "bezirk": "Andelfingen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 153,
+    "kuerzeste_m": 111,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Hilfskante",
+        "laenge_m": 153,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 821
+      },
+      {
+        "nr": "2",
+        "typ": "Hilfskante",
+        "laenge_m": 111,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 821
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      25
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 112,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 153,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Stammheim",
+      "bis": "Ossingen",
+      "strecke_nr": 70,
+      "strecke": "Oberwinterthur - Etzwilen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26500,
+      "zuege_pro_tag": 73
+    },
+    "staerkster_personenverkehr": {
+      "von": "Stammheim",
+      "bis": "Ossingen",
+      "strecke_nr": 70,
+      "strecke": "Oberwinterthur - Etzwilen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26500,
+      "zuege_pro_tag": 73
+    },
+    "abschnitte": [
+      {
+        "von": "Stammheim",
+        "bis": "Ossingen",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26500,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Ossingen",
+        "bis": "Thalheim-Altikon",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26492,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Ossingen",
+        "bis": "Thalheim-Altikon",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Stammheim",
+        "bis": "Ossingen",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 821,
+        "name": "Oberwinterthur - Etzwilen West (Abzw)",
+        "km": 19.47161
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BATS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/90a07b8639f498ff8508aa6985f83a04"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

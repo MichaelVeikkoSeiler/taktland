@@ -1,0 +1,216 @@
+{
+  "uic": 8504232,
+  "name": "Corcelles-Peseux",
+  "kanton": "NE",
+  "bps": "CP",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Corcelles-Peseux",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "BLS, SBB",
+    "lon": 6.883814,
+    "lat": 46.983351,
+    "dwv": 720,
+    "dtv": 630,
+    "dnwv": 430,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 690
+      },
+      {
+        "jahr": 2022,
+        "dwv": 660
+      },
+      {
+        "jahr": 2023,
+        "dwv": 810
+      },
+      {
+        "jahr": 2024,
+        "dwv": 890
+      },
+      {
+        "jahr": 2025,
+        "dwv": 720
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Corcelles-Peseux",
+    "abkuerzung": "CP",
+    "hoehe_m_ue_m": 530.49,
+    "gemeinde": "Neuchâtel",
+    "ortschaft": "Corcelles NE",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 160,
+    "kuerzeste_m": 160,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 579.55,
+        "niveaufreier_zugang": "ja",
+        "linie": 223
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 160,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Corcelles-Peseux",
+      "bis": "Les Deurres",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50648,
+      "zuege_pro_tag": 139
+    },
+    "staerkster_personenverkehr": {
+      "von": "Corcelles-Peseux",
+      "bis": "Les Deurres",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50648,
+      "zuege_pro_tag": 139
+    },
+    "abschnitte": [
+      {
+        "von": "Corcelles-Peseux",
+        "bis": "Les Deurres",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50648,
+        "zuege_pro_tag": 139
+      },
+      {
+        "von": "Chambrelien",
+        "bis": "Corcelles-Peseux",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27152,
+        "zuege_pro_tag": 74
+      },
+      {
+        "von": "Chambrelien",
+        "bis": "Corcelles-Peseux",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Corcelles-Peseux",
+        "bis": "Les Deurres",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 223,
+        "name": "Neuchatel-Vauseyon - Chambrelien",
+        "km": 4.32248
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BATS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/bfd6e68fb3e10e76580ef204f6132680"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

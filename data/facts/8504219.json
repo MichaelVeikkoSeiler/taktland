@@ -1,0 +1,266 @@
+{
+  "uic": 8504219,
+  "name": "Auvernier",
+  "kanton": "NE",
+  "bps": "AUV",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Auvernier",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "SBB, transN",
+    "lon": 6.877708,
+    "lat": 46.979642,
+    "dwv": 580,
+    "dtv": 530,
+    "dnwv": 410,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 620
+      },
+      {
+        "jahr": 2023,
+        "dwv": 610
+      },
+      {
+        "jahr": 2024,
+        "dwv": 580
+      },
+      {
+        "jahr": 2025,
+        "dwv": 580
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Auvernier",
+    "abkuerzung": "AUV",
+    "hoehe_m_ue_m": 492.23,
+    "gemeinde": "Milvignes",
+    "ortschaft": "Auvernier",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 195,
+    "kuerzeste_m": 180,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 195,
+        "flaeche_netto_m2": 529.61,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 180,
+        "flaeche_netto_m2": 507.34,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      25
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 180,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 196,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 197,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Auvernier",
+      "bis": "Neuchâtel-Serrières",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67133,
+      "zuege_pro_tag": 184
+    },
+    "staerkster_personenverkehr": {
+      "von": "Auvernier",
+      "bis": "Neuchâtel-Serrières",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67133,
+      "zuege_pro_tag": 184
+    },
+    "abschnitte": [
+      {
+        "von": "Auvernier",
+        "bis": "Neuchâtel-Serrières",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67133,
+        "zuege_pro_tag": 184
+      },
+      {
+        "von": "Colombier NE",
+        "bis": "Auvernier",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46032,
+        "zuege_pro_tag": 126
+      },
+      {
+        "von": "Cottendart (embr)",
+        "bis": "Auvernier",
+        "strecke_nr": 10,
+        "strecke": "Auvernier - Les Verrières Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21139,
+        "zuege_pro_tag": 58
+      },
+      {
+        "von": "Auvernier",
+        "bis": "Neuchâtel-Serrières",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20761,
+        "zuege_pro_tag": 57
+      },
+      {
+        "von": "Colombier NE",
+        "bis": "Auvernier",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20586,
+        "zuege_pro_tag": 56
+      },
+      {
+        "von": "Cottendart (embr)",
+        "bis": "Auvernier",
+        "strecke_nr": 10,
+        "strecke": "Auvernier - Les Verrières Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 177,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 219,
+        "name": "Auvernier - Les Verrieres frontiere",
+        "km": 4.9791
+      },
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 70.34416
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/90d0c6fe3f22b0324b774f43c93b05e3"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

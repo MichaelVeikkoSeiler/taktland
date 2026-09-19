@@ -1,0 +1,181 @@
+{
+  "uic": 8504137,
+  "name": "Léchelles",
+  "kanton": "FR",
+  "bps": "LECH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Léchelles",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.011627,
+    "lat": 46.82846,
+    "dwv": 380,
+    "dtv": 320,
+    "dnwv": 180,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 290
+      },
+      {
+        "jahr": 2022,
+        "dwv": 330
+      },
+      {
+        "jahr": 2023,
+        "dwv": 360
+      },
+      {
+        "jahr": 2024,
+        "dwv": 360
+      },
+      {
+        "jahr": 2025,
+        "dwv": 380
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Léchelles",
+    "abkuerzung": "LECH",
+    "hoehe_m_ue_m": 551.723,
+    "gemeinde": "Belmont-Broye",
+    "ortschaft": "Léchelles",
+    "bezirk": "La Broye",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 417,
+        "niveaufreier_zugang": "ja",
+        "linie": 253
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Cousset",
+      "bis": "Léchelles",
+      "strecke_nr": 16,
+      "strecke": "Yverdon - Payerne - Fribourg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26956,
+      "zuege_pro_tag": 74
+    },
+    "staerkster_personenverkehr": {
+      "von": "Cousset",
+      "bis": "Léchelles",
+      "strecke_nr": 16,
+      "strecke": "Yverdon - Payerne - Fribourg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26956,
+      "zuege_pro_tag": 74
+    },
+    "abschnitte": [
+      {
+        "von": "Cousset",
+        "bis": "Léchelles",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26956,
+        "zuege_pro_tag": 74
+      },
+      {
+        "von": "Léchelles",
+        "bis": "Léchelles Tanklager (embr)",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26956,
+        "zuege_pro_tag": 74
+      },
+      {
+        "von": "Cousset",
+        "bis": "Léchelles",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 125,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Léchelles",
+        "bis": "Léchelles Tanklager (embr)",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 125,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 253,
+        "name": "Payerne Est - Fribourg Nord",
+        "km": 35.47849
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d066ee8a9deab0b1b903b888e47ba66f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

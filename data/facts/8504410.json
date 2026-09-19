@@ -1,0 +1,278 @@
+{
+  "uic": 8504410,
+  "name": "Zollikofen",
+  "kanton": "BE",
+  "bps": "ZOL",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zollikofen",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS, SBB",
+    "lon": 7.462911,
+    "lat": 47.001826,
+    "dwv": 5100,
+    "dtv": 4200,
+    "dnwv": 2200,
+    "bemerkung": "Ohne RBS.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 5100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zollikofen",
+    "abkuerzung": "ZOL",
+    "hoehe_m_ue_m": 559.999,
+    "gemeinde": "Münchenbuchsee",
+    "ortschaft": "Zollikofen",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 334,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 334,
+        "flaeche_netto_m2": 1934.82,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 250,
+        "flaeche_netto_m2": 1054.36,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      },
+      {
+        "nr": "22",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 149,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 251,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 251,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 1,
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zollikofen",
+      "bis": "Zollikofen West (Spw)",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 89912,
+      "zuege_pro_tag": 246
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zollikofen",
+      "bis": "Zollikofen West (Spw)",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 89912,
+      "zuege_pro_tag": 246
+    },
+    "abschnitte": [
+      {
+        "von": "Zollikofen",
+        "bis": "Zollikofen West (Spw)",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 89912,
+        "zuege_pro_tag": 246
+      },
+      {
+        "von": "Münchenbuchsee",
+        "bis": "Zollikofen",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 69564,
+        "zuege_pro_tag": 191
+      },
+      {
+        "von": "Zollikofen",
+        "bis": "Schönbühl SBB",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20610,
+        "zuege_pro_tag": 56
+      },
+      {
+        "von": "Zollikofen",
+        "bis": "Zollikofen West (Spw)",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15881,
+        "zuege_pro_tag": 44
+      },
+      {
+        "von": "Zollikofen",
+        "bis": "Schönbühl SBB",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11750,
+        "zuege_pro_tag": 32
+      },
+      {
+        "von": "Münchenbuchsee",
+        "bis": "Zollikofen",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4771,
+        "zuege_pro_tag": 13
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 292,
+        "name": "Solothurn - Bern RBS",
+        "km": 26.85
+      },
+      {
+        "nummer": 450,
+        "name": "Olten Sud - Bern",
+        "km": 98.806
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6621cf91e8167d04385ad4d93f5a9946"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "uic": 8501507,
+  "name": "St-Léonard",
+  "kanton": "VS",
+  "bps": "SL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "St-Léonard",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "RegionAlps",
+    "lon": 7.419568,
+    "lat": 46.251489,
+    "dwv": 980,
+    "dtv": 830,
+    "dnwv": 510,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 840
+      },
+      {
+        "jahr": 2023,
+        "dwv": 970
+      },
+      {
+        "jahr": 2024,
+        "dwv": 990
+      },
+      {
+        "jahr": 2025,
+        "dwv": 980
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "St-Léonard",
+    "abkuerzung": "SL",
+    "hoehe_m_ue_m": 504.946,
+    "gemeinde": "Saint-Léonard",
+    "ortschaft": "St-Léonard",
+    "bezirk": "Sierre",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 233,
+    "kuerzeste_m": 216,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 233,
+        "flaeche_netto_m2": 358.77,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 216,
+        "flaeche_netto_m2": 328.84,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Pramont",
+      "bis": "St-Léonard",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55122,
+      "zuege_pro_tag": 151
+    },
+    "staerkster_personenverkehr": {
+      "von": "Pramont",
+      "bis": "St-Léonard",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55122,
+      "zuege_pro_tag": 151
+    },
+    "abschnitte": [
+      {
+        "von": "Pramont",
+        "bis": "St-Léonard",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55122,
+        "zuege_pro_tag": 151
+      },
+      {
+        "von": "Sion",
+        "bis": "St-Léonard",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55121,
+        "zuege_pro_tag": 151
+      },
+      {
+        "von": "Pramont",
+        "bis": "St-Léonard",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5365,
+        "zuege_pro_tag": 15
+      },
+      {
+        "von": "Sion",
+        "bis": "St-Léonard",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5365,
+        "zuege_pro_tag": 15
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 98.15345
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f29c2331bd6a9297b2effa3221f97475"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

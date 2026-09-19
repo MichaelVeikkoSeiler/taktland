@@ -1,0 +1,190 @@
+{
+  "uic": 8502306,
+  "name": "Hünenberg Chämleten",
+  "kanton": "ZG",
+  "bps": "HUCH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Hünenberg Chämleten",
+    "kanton": "ZG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.449909,
+    "lat": 47.169159,
+    "dwv": 260,
+    "dtv": 250,
+    "dnwv": 220,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 270
+      },
+      {
+        "jahr": 2022,
+        "dwv": 220
+      },
+      {
+        "jahr": 2023,
+        "dwv": 240
+      },
+      {
+        "jahr": 2024,
+        "dwv": 260
+      },
+      {
+        "jahr": 2025,
+        "dwv": 260
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Hünenberg Chämleten",
+    "abkuerzung": "HUCH",
+    "hoehe_m_ue_m": 423.249,
+    "gemeinde": "Hünenberg",
+    "ortschaft": "Hünenberg See",
+    "bezirk": null,
+    "kanton": "Zug",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 334.83,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 360.37,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Hünenberg Chämleten",
+      "bis": "Hünenberg Zythus",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78721,
+      "zuege_pro_tag": 216
+    },
+    "staerkster_personenverkehr": {
+      "von": "Hünenberg Chämleten",
+      "bis": "Hünenberg Zythus",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78721,
+      "zuege_pro_tag": 216
+    },
+    "abschnitte": [
+      {
+        "von": "Hünenberg Chämleten",
+        "bis": "Hünenberg Zythus",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78721,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Rotkreuz Nordost",
+        "bis": "Hünenberg Chämleten",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78721,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Hünenberg Chämleten",
+        "bis": "Hünenberg Zythus",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 519,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Rotkreuz Nordost",
+        "bis": "Hünenberg Chämleten",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 519,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 660,
+        "name": "Thalwil - Zug - Fluhmuhle",
+        "km": 44.855
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7e9dd1bf85da58d5a7aa1f18954df75a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

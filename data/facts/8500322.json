@@ -1,0 +1,182 @@
+{
+  "uic": 8500322,
+  "name": "Laufenburg",
+  "kanton": "AG",
+  "bps": "LFG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Laufenburg",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.061296,
+    "lat": 47.559768,
+    "dwv": 830,
+    "dtv": 750,
+    "dnwv": 580,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 770
+      },
+      {
+        "jahr": 2023,
+        "dwv": 910
+      },
+      {
+        "jahr": 2024,
+        "dwv": 710
+      },
+      {
+        "jahr": 2025,
+        "dwv": 830
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Laufenburg",
+    "abkuerzung": "LFG",
+    "hoehe_m_ue_m": 317.9,
+    "gemeinde": "Laufenburg",
+    "ortschaft": "Laufenburg",
+    "bezirk": "Laufenburg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 269,
+    "kuerzeste_m": 269,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 269,
+        "flaeche_netto_m2": 934.49,
+        "niveaufreier_zugang": "ja",
+        "linie": 701
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sisseln",
+      "bis": "Laufenburg",
+      "strecke_nr": 30,
+      "strecke": "Stein-Säckingen - Laufenburg - Koblenz",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14340,
+      "zuege_pro_tag": 39
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sisseln",
+      "bis": "Laufenburg",
+      "strecke_nr": 30,
+      "strecke": "Stein-Säckingen - Laufenburg - Koblenz",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14340,
+      "zuege_pro_tag": 39
+    },
+    "abschnitte": [
+      {
+        "von": "Sisseln",
+        "bis": "Laufenburg",
+        "strecke_nr": 30,
+        "strecke": "Stein-Säckingen - Laufenburg - Koblenz",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14340,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Sisseln",
+        "bis": "Laufenburg",
+        "strecke_nr": 30,
+        "strecke": "Stein-Säckingen - Laufenburg - Koblenz",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2912,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Laufenburg",
+        "bis": "Leibstadt",
+        "strecke_nr": 30,
+        "strecke": "Stein-Säckingen - Laufenburg - Koblenz",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1920,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Laufenburg",
+        "bis": "Leibstadt",
+        "strecke_nr": 30,
+        "strecke": "Stein-Säckingen - Laufenburg - Koblenz",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 701,
+        "name": "Eglisau - Koblenz - Stein Sackingen Ost",
+        "km": 65.511
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "TNW",
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a63be2f06e4abad1a041c92c1c6bafbb"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

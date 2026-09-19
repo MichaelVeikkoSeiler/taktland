@@ -1,0 +1,219 @@
+{
+  "uic": 8503401,
+  "name": "Glattfelden",
+  "kanton": "ZH",
+  "bps": "GF",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Glattfelden",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.524055,
+    "lat": 47.548558,
+    "dwv": 1400,
+    "dtv": 1200,
+    "dnwv": 760,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Glattfelden",
+    "abkuerzung": "GF",
+    "hoehe_m_ue_m": 410,
+    "gemeinde": "Bülach",
+    "ortschaft": "Glattfelden",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 297,
+    "kuerzeste_m": 297,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 297,
+        "flaeche_netto_m2": 1313.5,
+        "niveaufreier_zugang": "ja",
+        "linie": 770
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Eglisau",
+      "bis": "Glattfelden",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67235,
+      "zuege_pro_tag": 184
+    },
+    "staerkster_personenverkehr": {
+      "von": "Eglisau",
+      "bis": "Glattfelden",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67235,
+      "zuege_pro_tag": 184
+    },
+    "abschnitte": [
+      {
+        "von": "Eglisau",
+        "bis": "Glattfelden",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67235,
+        "zuege_pro_tag": 184
+      },
+      {
+        "von": "Glattfelden",
+        "bis": "Bülach",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67234,
+        "zuege_pro_tag": 184
+      },
+      {
+        "von": "Eglisau",
+        "bis": "Glattfelden",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12380,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Glattfelden",
+        "bis": "Bülach",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12377,
+        "zuege_pro_tag": 34
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 770,
+        "name": "Bulach - Eglisau - Neuhausen",
+        "km": 19.39512
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/226261fd7ea073d463fcc6ad61f8c97d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

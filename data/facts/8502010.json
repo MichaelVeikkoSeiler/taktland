@@ -1,0 +1,185 @@
+{
+  "uic": 8502010,
+  "name": "St. Erhard-Knutwil",
+  "kanton": "LU",
+  "bps": "STER",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "St. Erhard-Knutwil",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.074582,
+    "lat": 47.180082,
+    "dwv": 160,
+    "dtv": 140,
+    "dnwv": 100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 140
+      },
+      {
+        "jahr": 2022,
+        "dwv": 130
+      },
+      {
+        "jahr": 2023,
+        "dwv": 160
+      },
+      {
+        "jahr": 2024,
+        "dwv": 200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 160
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "St. Erhard-Knutwil",
+    "abkuerzung": "STER",
+    "hoehe_m_ue_m": 516,
+    "gemeinde": "Knutwil",
+    "ortschaft": "St. Erhard",
+    "bezirk": "Sursee",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 200,
+    "kuerzeste_m": 199,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 200,
+        "flaeche_netto_m2": 258.86,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 199,
+        "flaeche_netto_m2": 231.23,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "St. Erhard-Knutwil",
+      "bis": "Sursee",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 72134,
+      "zuege_pro_tag": 198
+    },
+    "staerkster_personenverkehr": {
+      "von": "St. Erhard-Knutwil",
+      "bis": "Sursee",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 72134,
+      "zuege_pro_tag": 198
+    },
+    "abschnitte": [
+      {
+        "von": "St. Erhard-Knutwil",
+        "bis": "Sursee",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72134,
+        "zuege_pro_tag": 198
+      },
+      {
+        "von": "Wauwil",
+        "bis": "St. Erhard-Knutwil",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72129,
+        "zuege_pro_tag": 198
+      },
+      {
+        "von": "Wauwil",
+        "bis": "St. Erhard-Knutwil",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7075,
+        "zuege_pro_tag": 19
+      },
+      {
+        "von": "St. Erhard-Knutwil",
+        "bis": "Sursee",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7074,
+        "zuege_pro_tag": 19
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 66.80377
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a53f632b7f1e2f41af480411e4405db6"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

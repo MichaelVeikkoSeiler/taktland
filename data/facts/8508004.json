@@ -1,0 +1,231 @@
+{
+  "uic": 8508004,
+  "name": "Lyssach",
+  "kanton": "BE",
+  "bps": "LYS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Lyssach",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.581324,
+    "lat": 47.063761,
+    "dwv": 650,
+    "dtv": 570,
+    "dnwv": 410,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 430
+      },
+      {
+        "jahr": 2022,
+        "dwv": 550
+      },
+      {
+        "jahr": 2023,
+        "dwv": 630
+      },
+      {
+        "jahr": 2024,
+        "dwv": 660
+      },
+      {
+        "jahr": 2025,
+        "dwv": 650
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Lyssach",
+    "abkuerzung": "LYS",
+    "hoehe_m_ue_m": 517.366,
+    "gemeinde": "Lyssach",
+    "ortschaft": "Lyssach",
+    "bezirk": "Emmental",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 201,
+    "kuerzeste_m": 181,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 201,
+        "flaeche_netto_m2": 418.75,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 181,
+        "flaeche_netto_m2": 343.63,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 202,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 182,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sandacher (Spw)",
+      "bis": "Lyssach",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 63658,
+      "zuege_pro_tag": 174
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sandacher (Spw)",
+      "bis": "Lyssach",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 63658,
+      "zuege_pro_tag": 174
+    },
+    "abschnitte": [
+      {
+        "von": "Sandacher (Spw)",
+        "bis": "Lyssach",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 63658,
+        "zuege_pro_tag": 174
+      },
+      {
+        "von": "Lyssach",
+        "bis": "Burgdorf",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 63657,
+        "zuege_pro_tag": 174
+      },
+      {
+        "von": "Lyssach",
+        "bis": "Burgdorf",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12249,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Sandacher (Spw)",
+        "bis": "Lyssach",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12249,
+        "zuege_pro_tag": 34
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 450,
+        "name": "Olten Sud - Bern",
+        "km": 86.54243
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/705f68be4b576e6f0a5ad9901357a432"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

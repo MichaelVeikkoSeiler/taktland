@@ -1,0 +1,569 @@
+{
+  "uic": 8505213,
+  "name": "Bellinzona",
+  "kanton": "TI",
+  "bps": "BEL",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bellinzona",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.029519,
+    "lat": 46.195432,
+    "dwv": 21900,
+    "dtv": 20700,
+    "dnwv": 17900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 16900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 19200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 20300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 19900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 21900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bellinzona",
+    "abkuerzung": "BEL",
+    "hoehe_m_ue_m": 241,
+    "gemeinde": "Bellinzona",
+    "ortschaft": "Bellinzona",
+    "bezirk": "Bellinzona",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 16200,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": null
+      },
+      {
+        "jahr": 2016,
+        "anzahl": null
+      },
+      {
+        "jahr": 2016,
+        "anzahl": null
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 14600
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 13600
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 14600
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 13700
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 15400
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 14500
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 11000
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 11800
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 12600
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 11700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 13600
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 14400
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 15700
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 14900
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 16100
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 15200
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 17100
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 16200
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 5,
+        "prozent": 0.6
+      },
+      {
+        "stunde": 6,
+        "prozent": 3.9
+      },
+      {
+        "stunde": 7,
+        "prozent": 10.2
+      },
+      {
+        "stunde": 8,
+        "prozent": 6.3
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.4
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.2
+      },
+      {
+        "stunde": 11,
+        "prozent": 4.7
+      },
+      {
+        "stunde": 12,
+        "prozent": 5.5
+      },
+      {
+        "stunde": 13,
+        "prozent": 4.7
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.0
+      },
+      {
+        "stunde": 15,
+        "prozent": 7.3
+      },
+      {
+        "stunde": 16,
+        "prozent": 10.9
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.4
+      },
+      {
+        "stunde": 18,
+        "prozent": 6.7
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.8
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.9
+      },
+      {
+        "stunde": 21,
+        "prozent": 3.2
+      },
+      {
+        "stunde": 22,
+        "prozent": 1.5
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.0
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 16,
+    "spitzenanteil": 10.9,
+    "wochentage": [
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.4
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.0
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.0
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.2
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 12.3
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 14.7
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 12.3
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 551,
+    "kuerzeste_m": 273,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 551,
+        "flaeche_netto_m2": 3129.57,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 478,
+        "flaeche_netto_m2": 3511.67,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "4/6",
+        "typ": "Mittelperron",
+        "laenge_m": 273,
+        "flaeche_netto_m2": 1073.99,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 195,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 297,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 301,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 176,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 14,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bellinzona",
+      "bis": "Bellinzona Sud",
+      "strecke_nr": 122,
+      "strecke": "Bellinzona",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 103786,
+      "zuege_pro_tag": 284
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bellinzona",
+      "bis": "Bellinzona Sud",
+      "strecke_nr": 122,
+      "strecke": "Bellinzona",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 103786,
+      "zuege_pro_tag": 284
+    },
+    "abschnitte": [
+      {
+        "von": "Bellinzona",
+        "bis": "Bellinzona Sud",
+        "strecke_nr": 122,
+        "strecke": "Bellinzona",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 103786,
+        "zuege_pro_tag": 284
+      },
+      {
+        "von": "Bellinzona",
+        "bis": "Bellinzona S. Paolo",
+        "strecke_nr": 122,
+        "strecke": "Bellinzona",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 100211,
+        "zuege_pro_tag": 275
+      },
+      {
+        "von": "Bellinzona",
+        "bis": "Bellinzona Sud",
+        "strecke_nr": 122,
+        "strecke": "Bellinzona",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 38490,
+        "zuege_pro_tag": 105
+      },
+      {
+        "von": "Bellinzona",
+        "bis": "Bellinzona S. Paolo",
+        "strecke_nr": 122,
+        "strecke": "Bellinzona",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 38206,
+        "zuege_pro_tag": 105
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 150.89101
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 5,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 11,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/eb5d50b8be0c6407fcafca378065246e"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-bellinzona-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-bellinzona-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

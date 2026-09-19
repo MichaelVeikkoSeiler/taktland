@@ -1,0 +1,212 @@
+{
+  "uic": 8504208,
+  "name": "Boudry",
+  "kanton": "NE",
+  "bps": "BDR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Boudry",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.835048,
+    "lat": 46.959457,
+    "dwv": 530,
+    "dtv": 470,
+    "dnwv": 340,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 320
+      },
+      {
+        "jahr": 2022,
+        "dwv": 400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 470
+      },
+      {
+        "jahr": 2024,
+        "dwv": 420
+      },
+      {
+        "jahr": 2025,
+        "dwv": 530
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Boudry",
+    "abkuerzung": "BDR",
+    "hoehe_m_ue_m": 491.37,
+    "gemeinde": "Boudry",
+    "ortschaft": "Boudry",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 198,
+    "kuerzeste_m": 198,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 198,
+        "flaeche_netto_m2": 626.59,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "2"
+    ],
+    "perronhoehen_cm": [
+      20
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 143,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bevaix",
+      "bis": "Boudry",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46124,
+      "zuege_pro_tag": 126
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bevaix",
+      "bis": "Boudry",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46124,
+      "zuege_pro_tag": 126
+    },
+    "abschnitte": [
+      {
+        "von": "Bevaix",
+        "bis": "Boudry",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46124,
+        "zuege_pro_tag": 126
+      },
+      {
+        "von": "Boudry",
+        "bis": "Colombier NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46124,
+        "zuege_pro_tag": 126
+      },
+      {
+        "von": "Boudry",
+        "bis": "Colombier NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20484,
+        "zuege_pro_tag": 56
+      },
+      {
+        "von": "Bevaix",
+        "bis": "Boudry",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20480,
+        "zuege_pro_tag": 56
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 66.25347
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/47a3384d4e7a9ddaf56aa15a22a73a75"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

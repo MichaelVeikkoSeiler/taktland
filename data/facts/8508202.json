@@ -1,0 +1,358 @@
+{
+  "uic": 8508202,
+  "name": "Konolfingen",
+  "kanton": "BE",
+  "bps": "KF",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Konolfingen",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.621367,
+    "lat": 46.880702,
+    "dwv": 8600,
+    "dtv": 7600,
+    "dnwv": 5400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 8700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 7400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 8300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 8200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 8600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Konolfingen",
+    "abkuerzung": "KF",
+    "hoehe_m_ue_m": 663,
+    "gemeinde": "Konolfingen",
+    "ortschaft": "Konolfingen",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 259,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 259,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 249,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      },
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 430
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 110,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 253,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 260,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 260,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 150,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 151,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 6,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Konolfingen",
+      "bis": "Zäziwil",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 41342,
+      "zuege_pro_tag": 113
+    },
+    "staerkster_personenverkehr": {
+      "von": "Konolfingen",
+      "bis": "Zäziwil",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 41342,
+      "zuege_pro_tag": 113
+    },
+    "abschnitte": [
+      {
+        "von": "Konolfingen",
+        "bis": "Zäziwil",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41342,
+        "zuege_pro_tag": 113
+      },
+      {
+        "von": "Tägertschi",
+        "bis": "Konolfingen",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41215,
+        "zuege_pro_tag": 113
+      },
+      {
+        "von": "Konolfingen",
+        "bis": "Stalden i.E.",
+        "strecke_nr": 405,
+        "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 37111,
+        "zuege_pro_tag": 102
+      },
+      {
+        "von": "Grosshöchstetten",
+        "bis": "Konolfingen",
+        "strecke_nr": 405,
+        "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27509,
+        "zuege_pro_tag": 75
+      },
+      {
+        "von": "Tägertschi",
+        "bis": "Konolfingen",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 135,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Konolfingen",
+        "bis": "Zäziwil",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 120,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Konolfingen",
+        "bis": "Stalden i.E.",
+        "strecke_nr": 405,
+        "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Grosshöchstetten",
+        "bis": "Konolfingen",
+        "strecke_nr": 405,
+        "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 460,
+        "name": "Gumligen Sud - Fluhmuhle",
+        "km": 20.51824
+      },
+      {
+        "nummer": 430,
+        "name": "Hasle Ruegsau - Thun",
+        "km": 18.74137
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "BATS",
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8f70f1ca814ad732eee0265a1d72f198"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

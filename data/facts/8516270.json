@@ -1,0 +1,181 @@
+{
+  "uic": 8516270,
+  "name": "Arbon Seemoosriet",
+  "kanton": "TG",
+  "bps": "ARBS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Arbon Seemoosriet",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.42502,
+    "lat": 47.521195,
+    "dwv": 650,
+    "dtv": 590,
+    "dnwv": 450,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 470
+      },
+      {
+        "jahr": 2022,
+        "dwv": 470
+      },
+      {
+        "jahr": 2023,
+        "dwv": 580
+      },
+      {
+        "jahr": 2024,
+        "dwv": 610
+      },
+      {
+        "jahr": 2025,
+        "dwv": 650
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Arbon Seemoosriet",
+    "abkuerzung": "ARBS",
+    "hoehe_m_ue_m": 399.889,
+    "gemeinde": "Arbon",
+    "ortschaft": "Arbon",
+    "bezirk": "Arbon",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 244.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 825
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Arbon Seemoosriet",
+      "bis": "Arbon",
+      "strecke_nr": 74,
+      "strecke": "Romanshorn - Rorschach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29817,
+      "zuege_pro_tag": 82
+    },
+    "staerkster_personenverkehr": {
+      "von": "Arbon Seemoosriet",
+      "bis": "Arbon",
+      "strecke_nr": 74,
+      "strecke": "Romanshorn - Rorschach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29817,
+      "zuege_pro_tag": 82
+    },
+    "abschnitte": [
+      {
+        "von": "Arbon Seemoosriet",
+        "bis": "Arbon",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29817,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Egnach",
+        "bis": "Arbon Seemoosriet",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29817,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Arbon Seemoosriet",
+        "bis": "Arbon",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1789,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Egnach",
+        "bis": "Arbon Seemoosriet",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1789,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 825,
+        "name": "Romanshorn Feld H - Rorschach",
+        "km": 88.8155
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/063fa4eadc256d64cb595787b3f7c291"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

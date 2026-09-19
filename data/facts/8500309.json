@@ -1,0 +1,368 @@
+{
+  "uic": 8500309,
+  "name": "Brugg AG",
+  "kanton": "AG",
+  "bps": "BG",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Brugg AG",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.208845,
+    "lat": 47.48086,
+    "dwv": 26400,
+    "dtv": 22800,
+    "dnwv": 14800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 24500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 21600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 25200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 25700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 26400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Brugg AG",
+    "abkuerzung": "BG",
+    "hoehe_m_ue_m": 352.1,
+    "gemeinde": "Brugg",
+    "ortschaft": "Brugg AG",
+    "bezirk": "Brugg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 425,
+    "kuerzeste_m": 339,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 425,
+        "flaeche_netto_m2": 1933.38,
+        "niveaufreier_zugang": "ja",
+        "linie": 710
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 414,
+        "flaeche_netto_m2": 1547.53,
+        "niveaufreier_zugang": "ja",
+        "linie": 710
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 339,
+        "flaeche_netto_m2": 1282.37,
+        "niveaufreier_zugang": "ja",
+        "linie": 710
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      25,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 256,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 317,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 314,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 316,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 315,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 28,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 7,
+      "35": 2,
+      "55": 19
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Brugg AG Ost",
+      "bis": "Brugg AG",
+      "strecke_nr": 109,
+      "strecke": "Brugg AG",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 132113,
+      "zuege_pro_tag": 362
+    },
+    "staerkster_personenverkehr": {
+      "von": "Brugg AG Ost",
+      "bis": "Brugg AG",
+      "strecke_nr": 109,
+      "strecke": "Brugg AG",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 132113,
+      "zuege_pro_tag": 362
+    },
+    "abschnitte": [
+      {
+        "von": "Brugg AG Ost",
+        "bis": "Brugg AG",
+        "strecke_nr": 109,
+        "strecke": "Brugg AG",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 132113,
+        "zuege_pro_tag": 362
+      },
+      {
+        "von": "Brugg AG",
+        "bis": "Brugg AG West",
+        "strecke_nr": 109,
+        "strecke": "Brugg AG",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58394,
+        "zuege_pro_tag": 160
+      },
+      {
+        "von": "Brugg AG",
+        "bis": "Brugg AG Süd (Abzw)",
+        "strecke_nr": 109,
+        "strecke": "Brugg AG",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28857,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Brugg AG Nord (Abzw)",
+        "bis": "Brugg AG",
+        "strecke_nr": 109,
+        "strecke": "Brugg AG",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28459,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Brugg AG Ost",
+        "bis": "Brugg AG",
+        "strecke_nr": 109,
+        "strecke": "Brugg AG",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 18793,
+        "zuege_pro_tag": 51
+      },
+      {
+        "von": "Brugg AG",
+        "bis": "Brugg AG West",
+        "strecke_nr": 109,
+        "strecke": "Brugg AG",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8334,
+        "zuege_pro_tag": 23
+      },
+      {
+        "von": "Brugg AG Nord (Abzw)",
+        "bis": "Brugg AG",
+        "strecke_nr": 109,
+        "strecke": "Brugg AG",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6802,
+        "zuege_pro_tag": 19
+      },
+      {
+        "von": "Brugg AG",
+        "bis": "Brugg AG Süd (Abzw)",
+        "strecke_nr": 109,
+        "strecke": "Brugg AG",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4792,
+        "zuege_pro_tag": 13
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 4,
+    "items": [
+      {
+        "nummer": 647,
+        "name": "Brugg - Hendschiken Nord",
+        "km": -0.00105
+      },
+      {
+        "nummer": 700,
+        "name": "Brugg - Pratteln Ost",
+        "km": 31.27262
+      },
+      {
+        "nummer": 640,
+        "name": "Brugg - Rupperswil",
+        "km": 31.27592
+      },
+      {
+        "nummer": 710,
+        "name": "Zurich HB - Brugg AG",
+        "km": 31.26561
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "Andere",
+      "ePOS"
+    ],
+    "billettentwerter": 9,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/97a246412a9af01b29da3c1f2473a9dc"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-brugg-ag-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-brugg-ag-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "uic": 8503421,
+  "name": "Jestetten",
+  "kanton": "Ausland",
+  "bps": null,
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Jestetten",
+    "kanton": "Ausland",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": null,
+    "lat": null,
+    "dwv": 1700,
+    "dtv": 1500,
+    "dnwv": 980,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1700
+      }
+    ]
+  },
+  "stammdaten": null,
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 320,
+    "kuerzeste_m": 320,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 1015.04,
+        "niveaufreier_zugang": "nein",
+        "linie": 770
+      },
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 629.16,
+        "niveaufreier_zugang": "ja",
+        "linie": 770
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": null,
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "wartehallen": 0
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "services"
+  ]
+}

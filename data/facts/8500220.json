@@ -1,0 +1,161 @@
+{
+  "uic": 8500220,
+  "name": "Dotzigen",
+  "kanton": "BE",
+  "bps": "DON",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Dotzigen",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.337754,
+    "lat": 47.118672,
+    "dwv": 460,
+    "dtv": 380,
+    "dnwv": 220,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 370
+      },
+      {
+        "jahr": 2023,
+        "dwv": 410
+      },
+      {
+        "jahr": 2024,
+        "dwv": 440
+      },
+      {
+        "jahr": 2025,
+        "dwv": 460
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Dotzigen",
+    "abkuerzung": "DON",
+    "hoehe_m_ue_m": 433.53,
+    "gemeinde": "Dotzigen",
+    "ortschaft": "Dotzigen",
+    "bezirk": "Seeland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 119,
+    "kuerzeste_m": 119,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 119,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 415
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Busswil BE",
+      "bis": "Dotzigen",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 16856,
+      "zuege_pro_tag": 46
+    },
+    "staerkster_personenverkehr": {
+      "von": "Busswil BE",
+      "bis": "Dotzigen",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 16856,
+      "zuege_pro_tag": 46
+    },
+    "abschnitte": [
+      {
+        "von": "Busswil BE",
+        "bis": "Dotzigen",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16856,
+        "zuege_pro_tag": 46
+      },
+      {
+        "von": "Dotzigen",
+        "bis": "Büren an der Aare",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16856,
+        "zuege_pro_tag": 46
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 415,
+        "name": "Wanzwil (Abzw) - Solothurn - Busswil",
+        "km": 99.18793
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/0f6e599281b4cdcebfec2628645b4710"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

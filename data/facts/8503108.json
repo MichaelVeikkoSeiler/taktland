@@ -1,0 +1,232 @@
+{
+  "uic": 8503108,
+  "name": "Uerikon",
+  "kanton": "ZH",
+  "bps": "UER",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Uerikon",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.752625,
+    "lat": 47.235861,
+    "dwv": 2300,
+    "dtv": 1900,
+    "dnwv": 1100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Uerikon",
+    "abkuerzung": "UER",
+    "hoehe_m_ue_m": 425.8,
+    "gemeinde": "Stäfa",
+    "ortschaft": "Uerikon",
+    "bezirk": "Meilen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 341,
+    "kuerzeste_m": 341,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 341,
+        "flaeche_netto_m2": 1678.78,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 342,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 343,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Stäfa",
+      "bis": "Uerikon",
+      "strecke_nr": 65,
+      "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27639,
+      "zuege_pro_tag": 76
+    },
+    "staerkster_personenverkehr": {
+      "von": "Stäfa",
+      "bis": "Uerikon",
+      "strecke_nr": 65,
+      "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27639,
+      "zuege_pro_tag": 76
+    },
+    "abschnitte": [
+      {
+        "von": "Stäfa",
+        "bis": "Uerikon",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27639,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Uerikon",
+        "bis": "Feldbach",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27634,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Stäfa",
+        "bis": "Uerikon",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 934,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Uerikon",
+        "bis": "Feldbach",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 934,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 730,
+        "name": "Zurich Stadelhofen - Rapperswil",
+        "km": 28.96939
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/fbcfcab2f96aaf6aa3f56ab61d4388fa"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

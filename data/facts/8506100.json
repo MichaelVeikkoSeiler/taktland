@@ -1,0 +1,301 @@
+{
+  "uic": 8506100,
+  "name": "Frauenfeld",
+  "kanton": "TG",
+  "bps": "FF",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Frauenfeld",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.89656,
+    "lat": 47.558163,
+    "dwv": 11900,
+    "dtv": 10600,
+    "dnwv": 7800,
+    "bemerkung": "Ohne FW.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 11800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 10000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 11300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 11700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 11900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Frauenfeld",
+    "abkuerzung": "FF",
+    "hoehe_m_ue_m": 404.6,
+    "gemeinde": "Frauenfeld",
+    "ortschaft": "Frauenfeld",
+    "bezirk": "Frauenfeld",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 421,
+    "kuerzeste_m": 421,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 421,
+        "flaeche_netto_m2": 2132.5,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 421,
+        "flaeche_netto_m2": 1412.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 374,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 375,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 375,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Frauenfeld",
+      "bis": "Felben-Wellhausen",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 60917,
+      "zuege_pro_tag": 167
+    },
+    "staerkster_personenverkehr": {
+      "von": "Frauenfeld",
+      "bis": "Felben-Wellhausen",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 60917,
+      "zuege_pro_tag": 167
+    },
+    "abschnitte": [
+      {
+        "von": "Frauenfeld",
+        "bis": "Felben-Wellhausen",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 60917,
+        "zuege_pro_tag": 167
+      },
+      {
+        "von": "Islikon",
+        "bis": "Frauenfeld",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 60873,
+        "zuege_pro_tag": 167
+      },
+      {
+        "von": "Islikon",
+        "bis": "Frauenfeld",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9640,
+        "zuege_pro_tag": 26
+      },
+      {
+        "von": "Frauenfeld",
+        "bis": "Felben-Wellhausen",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7766,
+        "zuege_pro_tag": 21
+      },
+      {
+        "von": "Frauenfeld",
+        "bis": "Frauenfeld Paketpost",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5577,
+        "zuege_pro_tag": 15
+      },
+      {
+        "von": "Frauenfeld",
+        "bis": "Frauenfeld Paketpost",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 1,
+        "zuege_pro_jahr": 1,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 843,
+        "name": "Frauenfeld - Frauenfeld Paketpost",
+        "km": 42.05133
+      },
+      {
+        "nummer": 840,
+        "name": "Winterthur Nord - Romanshorn",
+        "km": 42.05133
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 9,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/2793b30a092e2dbb26911fba59f25bbb"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-frauenfeld-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-frauenfeld-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "uic": 8500034,
+  "name": "Buckten",
+  "kanton": "BL",
+  "bps": "BUC",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Buckten",
+    "kanton": "BL",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.847801,
+    "lat": 47.408991,
+    "dwv": 250,
+    "dtv": 210,
+    "dnwv": 130,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 190
+      },
+      {
+        "jahr": 2022,
+        "dwv": 210
+      },
+      {
+        "jahr": 2023,
+        "dwv": 250
+      },
+      {
+        "jahr": 2024,
+        "dwv": 300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 250
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Buckten",
+    "abkuerzung": "BUC",
+    "hoehe_m_ue_m": 520.49,
+    "gemeinde": "Buckten",
+    "ortschaft": "Buckten",
+    "bezirk": "Sissach",
+    "kanton": "Basel-Landschaft",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 75,
+    "kuerzeste_m": 75,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 75,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 503
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Buckten",
+      "bis": "Läufelfingen",
+      "strecke_nr": 28,
+      "strecke": "Sissach - AHT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14420,
+      "zuege_pro_tag": 40
+    },
+    "staerkster_personenverkehr": {
+      "von": "Buckten",
+      "bis": "Läufelfingen",
+      "strecke_nr": 28,
+      "strecke": "Sissach - AHT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14420,
+      "zuege_pro_tag": 40
+    },
+    "abschnitte": [
+      {
+        "von": "Buckten",
+        "bis": "Läufelfingen",
+        "strecke_nr": 28,
+        "strecke": "Sissach - AHT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14420,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Rümlingen",
+        "bis": "Buckten",
+        "strecke_nr": 28,
+        "strecke": "Sissach - AHT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14419,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Buckten",
+        "bis": "Läufelfingen",
+        "strecke_nr": 28,
+        "strecke": "Sissach - AHT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 597,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Rümlingen",
+        "bis": "Buckten",
+        "strecke_nr": 28,
+        "strecke": "Sissach - AHT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 597,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 503,
+        "name": "Sissach - Laufelfingen - Olten",
+        "km": 28.815
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/44ebff9a73fb44a749a59ee8edfb3775"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

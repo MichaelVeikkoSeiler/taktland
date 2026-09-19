@@ -1,0 +1,220 @@
+{
+  "uic": 8507008,
+  "name": "Kiesen",
+  "kanton": "BE",
+  "bps": "KI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Kiesen",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.575501,
+    "lat": 46.818944,
+    "dwv": 750,
+    "dtv": 670,
+    "dnwv": 500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 780
+      },
+      {
+        "jahr": 2022,
+        "dwv": 660
+      },
+      {
+        "jahr": 2023,
+        "dwv": 730
+      },
+      {
+        "jahr": 2024,
+        "dwv": 720
+      },
+      {
+        "jahr": 2025,
+        "dwv": 750
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Kiesen",
+    "abkuerzung": "KI",
+    "hoehe_m_ue_m": 539.03,
+    "gemeinde": "Kiesen",
+    "ortschaft": "Kiesen",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 518.39,
+        "niveaufreier_zugang": "ja",
+        "linie": 290
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 552.92,
+        "niveaufreier_zugang": "ja",
+        "linie": 290
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 33,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Wichtrach",
+      "bis": "Kiesen",
+      "strecke_nr": 24,
+      "strecke": "Wankdorf - Uttigen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78704,
+      "zuege_pro_tag": 216
+    },
+    "staerkster_personenverkehr": {
+      "von": "Wichtrach",
+      "bis": "Kiesen",
+      "strecke_nr": 24,
+      "strecke": "Wankdorf - Uttigen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78704,
+      "zuege_pro_tag": 216
+    },
+    "abschnitte": [
+      {
+        "von": "Wichtrach",
+        "bis": "Kiesen",
+        "strecke_nr": 24,
+        "strecke": "Wankdorf - Uttigen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78704,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Kiesen",
+        "bis": "Uttigen",
+        "strecke_nr": 24,
+        "strecke": "Wankdorf - Uttigen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78703,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Kiesen",
+        "bis": "Uttigen",
+        "strecke_nr": 24,
+        "strecke": "Wankdorf - Uttigen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17319,
+        "zuege_pro_tag": 47
+      },
+      {
+        "von": "Wichtrach",
+        "bis": "Kiesen",
+        "strecke_nr": 24,
+        "strecke": "Wankdorf - Uttigen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17319,
+        "zuege_pro_tag": 47
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 290,
+        "name": "Bern Wylerfeld - Thun",
+        "km": 128.303
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/757bae80ed2892dce7915deb0362978b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,336 @@
+{
+  "uic": 8503123,
+  "name": "Wetzikon ZH",
+  "kanton": "ZH",
+  "bps": "WZ",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Wetzikon ZH",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.79229,
+    "lat": 47.318032,
+    "dwv": 30100,
+    "dtv": 26000,
+    "dnwv": 16800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 28700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 25800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 28300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 29200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 30100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Wetzikon ZH",
+    "abkuerzung": "WZ",
+    "hoehe_m_ue_m": 531.6,
+    "gemeinde": "Wetzikon (ZH)",
+    "ortschaft": "Wetzikon ZH",
+    "bezirk": "Hinwil",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 329,
+    "kuerzeste_m": 217,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 329,
+        "flaeche_netto_m2": 1705.01,
+        "niveaufreier_zugang": "ja",
+        "linie": 740
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 329,
+        "flaeche_netto_m2": 1583.19,
+        "niveaufreier_zugang": "ja",
+        "linie": 740
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 217,
+        "flaeche_netto_m2": 799.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 753
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 218,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 329,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 329,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 329,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 329,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Aathal",
+      "bis": "Wetzikon ZH",
+      "strecke_nr": 64,
+      "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86125,
+      "zuege_pro_tag": 236
+    },
+    "staerkster_personenverkehr": {
+      "von": "Aathal",
+      "bis": "Wetzikon ZH",
+      "strecke_nr": 64,
+      "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86125,
+      "zuege_pro_tag": 236
+    },
+    "abschnitte": [
+      {
+        "von": "Aathal",
+        "bis": "Wetzikon ZH",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86125,
+        "zuege_pro_tag": 236
+      },
+      {
+        "von": "Wetzikon ZH",
+        "bis": "Bubikon",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57052,
+        "zuege_pro_tag": 156
+      },
+      {
+        "von": "Wetzikon ZH",
+        "bis": "Hinwil",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30173,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Kempten",
+        "bis": "Wetzikon ZH",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28012,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Aathal",
+        "bis": "Wetzikon ZH",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1838,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Wetzikon ZH",
+        "bis": "Hinwil",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1719,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Kempten",
+        "bis": "Wetzikon ZH",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 517,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Wetzikon ZH",
+        "bis": "Bubikon",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 120,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 740,
+        "name": "Rapperswil - Uster - Wallisellen Ost",
+        "km": 74.52207
+      },
+      {
+        "nummer": 753,
+        "name": "Effretikon - Wetzikon - Hinwil",
+        "km": 18.10051
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 9,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f1c0f2d0b1b80f147b5e8a4bd2822c08"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

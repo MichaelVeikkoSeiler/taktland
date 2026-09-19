@@ -1,0 +1,241 @@
+{
+  "uic": 8500114,
+  "name": "Zwingen",
+  "kanton": "BL",
+  "bps": "ZWG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zwingen",
+    "kanton": "BL",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.530463,
+    "lat": 47.433799,
+    "dwv": 2400,
+    "dtv": 2100,
+    "dnwv": 1300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zwingen",
+    "abkuerzung": "ZWG",
+    "hoehe_m_ue_m": 346.65,
+    "gemeinde": "Zwingen",
+    "ortschaft": "Zwingen",
+    "bezirk": "Laufen",
+    "kanton": "Basel-Landschaft",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 221,
+    "kuerzeste_m": 221,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 221,
+        "flaeche_netto_m2": 948.42,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": null,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 223,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zwingen",
+      "bis": "Laufen",
+      "strecke_nr": 14,
+      "strecke": "Moutier - Delémont - Ruchfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26281,
+      "zuege_pro_tag": 72
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zwingen",
+      "bis": "Laufen",
+      "strecke_nr": 14,
+      "strecke": "Moutier - Delémont - Ruchfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26281,
+      "zuege_pro_tag": 72
+    },
+    "abschnitte": [
+      {
+        "von": "Zwingen",
+        "bis": "Laufen",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26281,
+        "zuege_pro_tag": 72
+      },
+      {
+        "von": "Zwingen",
+        "bis": "Grellingen West (Spw)",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26188,
+        "zuege_pro_tag": 72
+      },
+      {
+        "von": "Zwingen",
+        "bis": "Laufen",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 326,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Zwingen",
+        "bis": "Grellingen West (Spw)",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 322,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 230,
+        "name": "Delemont Est - Basel SBB Ost",
+        "km": 103.43933
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "TNW",
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/10948edd3b21fc15480cad019a760b67"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

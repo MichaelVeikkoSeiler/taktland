@@ -1,0 +1,223 @@
+{
+  "uic": 8504025,
+  "name": "Chénens",
+  "kanton": "FR",
+  "bps": "CHE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Chénens",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.00043,
+    "lat": 46.749211,
+    "dwv": 380,
+    "dtv": 320,
+    "dnwv": 180,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 270
+      },
+      {
+        "jahr": 2025,
+        "dwv": 380
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Chénens",
+    "abkuerzung": "CHE",
+    "hoehe_m_ue_m": 722.02,
+    "gemeinde": "Chénens",
+    "ortschaft": "Chénens",
+    "bezirk": "La Sarine",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 172,
+    "kuerzeste_m": 53,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 172,
+        "flaeche_netto_m2": 571.34,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 53,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 173,
+        "sektoren": []
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          20,
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 174,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 6,
+      "25": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Chénens",
+      "bis": "Cottens FR",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83913,
+      "zuege_pro_tag": 230
+    },
+    "staerkster_personenverkehr": {
+      "von": "Chénens",
+      "bis": "Cottens FR",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83913,
+      "zuege_pro_tag": 230
+    },
+    "abschnitte": [
+      {
+        "von": "Chénens",
+        "bis": "Cottens FR",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83913,
+        "zuege_pro_tag": 230
+      },
+      {
+        "von": "Villaz-St-Pierre",
+        "bis": "Chénens",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83905,
+        "zuege_pro_tag": 230
+      },
+      {
+        "von": "Chénens",
+        "bis": "Cottens FR",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2847,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Villaz-St-Pierre",
+        "bis": "Chénens",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2847,
+        "zuege_pro_tag": 8
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 49.622
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/5ffb142fcfe331c1114345841148b6d3"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

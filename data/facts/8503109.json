@@ -1,0 +1,250 @@
+{
+  "uic": 8503109,
+  "name": "Feldbach",
+  "kanton": "ZH",
+  "bps": "FB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Feldbach",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.783498,
+    "lat": 47.239204,
+    "dwv": 1300,
+    "dtv": 1100,
+    "dnwv": 710,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Feldbach",
+    "abkuerzung": "FB",
+    "hoehe_m_ue_m": 426,
+    "gemeinde": "Hombrechtikon",
+    "ortschaft": "Feldbach",
+    "bezirk": "Meilen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 329,
+    "kuerzeste_m": 322,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 329,
+        "flaeche_netto_m2": 904.78,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      },
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 322,
+        "flaeche_netto_m2": 786.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 311,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 322,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 9,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 9
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Uerikon",
+      "bis": "Feldbach",
+      "strecke_nr": 65,
+      "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27634,
+      "zuege_pro_tag": 76
+    },
+    "staerkster_personenverkehr": {
+      "von": "Uerikon",
+      "bis": "Feldbach",
+      "strecke_nr": 65,
+      "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27634,
+      "zuege_pro_tag": 76
+    },
+    "abschnitte": [
+      {
+        "von": "Uerikon",
+        "bis": "Feldbach",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27634,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Feldbach",
+        "bis": "Kempraten",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27632,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Feldbach",
+        "bis": "Kempraten",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 934,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Uerikon",
+        "bis": "Feldbach",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 934,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 730,
+        "name": "Zurich Stadelhofen - Rapperswil",
+        "km": 31.40364
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/df7eb3f2da258bd74407e7cea0de6848"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

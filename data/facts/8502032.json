@@ -1,0 +1,161 @@
+{
+  "uic": 8502032,
+  "name": "Boniswil",
+  "kanton": "AG",
+  "bps": "BONI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Boniswil",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.184561,
+    "lat": 47.315039,
+    "dwv": 500,
+    "dtv": 450,
+    "dnwv": 350,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 330
+      },
+      {
+        "jahr": 2022,
+        "dwv": 370
+      },
+      {
+        "jahr": 2023,
+        "dwv": 420
+      },
+      {
+        "jahr": 2024,
+        "dwv": 480
+      },
+      {
+        "jahr": 2025,
+        "dwv": 500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Boniswil",
+    "abkuerzung": "BONI",
+    "hoehe_m_ue_m": 482,
+    "gemeinde": "Boniswil",
+    "ortschaft": "Boniswil",
+    "bezirk": "Lenzburg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 110,
+    "kuerzeste_m": 110,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 110,
+        "flaeche_netto_m2": 543.13,
+        "niveaufreier_zugang": "ja",
+        "linie": 651
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Boniswil",
+      "bis": "Birrwil",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26541,
+      "zuege_pro_tag": 73
+    },
+    "staerkster_personenverkehr": {
+      "von": "Boniswil",
+      "bis": "Birrwil",
+      "strecke_nr": 40,
+      "strecke": "Lenzburg - Hochdorf - Hübeli",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26541,
+      "zuege_pro_tag": 73
+    },
+    "abschnitte": [
+      {
+        "von": "Boniswil",
+        "bis": "Birrwil",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26541,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Hallwil",
+        "bis": "Boniswil",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26539,
+        "zuege_pro_tag": 73
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 651,
+        "name": "Hubeli - Beinwil - Lenzburg",
+        "km": 32.85
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c339fbb7f8c8e19b736704d03c7fc6f3"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

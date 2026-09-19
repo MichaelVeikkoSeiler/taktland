@@ -1,0 +1,247 @@
+{
+  "uic": 8505302,
+  "name": "Melide",
+  "kanton": "TI",
+  "bps": "MDE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Melide",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.948359,
+    "lat": 45.955714,
+    "dwv": 1200,
+    "dtv": 1200,
+    "dnwv": 990,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 810
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Melide",
+    "abkuerzung": "MDE",
+    "hoehe_m_ue_m": 274,
+    "gemeinde": "Melide",
+    "ortschaft": "Melide",
+    "bezirk": "Lugano",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 244,
+    "kuerzeste_m": 111,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 244,
+        "flaeche_netto_m2": 1325.28,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "2",
+        "typ": "Dienstperron",
+        "laenge_m": 138,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 600
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 111,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      20,
+      42
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 244,
+        "sektoren": [
+          "-",
+          "A"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          20,
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 150,
+        "sektoren": [
+          "-",
+          "A"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 5,
+      "42": 1
+    },
+    "segmente_mit_hilfstritt": 1,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Paradiso (c bin)",
+      "bis": "Melide",
+      "strecke_nr": 48,
+      "strecke": "Lugano - Chiasso",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 88980,
+      "zuege_pro_tag": 244
+    },
+    "staerkster_personenverkehr": {
+      "von": "Paradiso (c bin)",
+      "bis": "Melide",
+      "strecke_nr": 48,
+      "strecke": "Lugano - Chiasso",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 88980,
+      "zuege_pro_tag": 244
+    },
+    "abschnitte": [
+      {
+        "von": "Paradiso (c bin)",
+        "bis": "Melide",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 88980,
+        "zuege_pro_tag": 244
+      },
+      {
+        "von": "Melide",
+        "bis": "Maroggia-Melano",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83835,
+        "zuege_pro_tag": 230
+      },
+      {
+        "von": "Melide",
+        "bis": "Maroggia-Melano",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20820,
+        "zuege_pro_tag": 57
+      },
+      {
+        "von": "Paradiso (c bin)",
+        "bis": "Melide",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20789,
+        "zuege_pro_tag": 57
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 187.2297
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/060b32fd974da12d1186d04800c2cc86"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

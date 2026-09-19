@@ -1,0 +1,177 @@
+{
+  "uic": 8504030,
+  "name": "Villars-sur-Glâne",
+  "kanton": "FR",
+  "bps": "VG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Villars-sur-Glâne",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.116386,
+    "lat": 46.78983,
+    "dwv": 370,
+    "dtv": 320,
+    "dnwv": 220,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 260
+      },
+      {
+        "jahr": 2025,
+        "dwv": 370
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Villars-sur-Glâne",
+    "abkuerzung": "VG",
+    "hoehe_m_ue_m": 639.72,
+    "gemeinde": "Villars-sur-Glâne",
+    "ortschaft": "Villars-sur-Glâne",
+    "bezirk": "La Sarine",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 136,
+    "kuerzeste_m": 132,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 136,
+        "flaeche_netto_m2": 232.4,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 132,
+        "flaeche_netto_m2": 234.63,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Villars-sur-Glâne",
+      "bis": "Fribourg/Freiburg",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83474,
+      "zuege_pro_tag": 229
+    },
+    "staerkster_personenverkehr": {
+      "von": "Villars-sur-Glâne",
+      "bis": "Fribourg/Freiburg",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83474,
+      "zuege_pro_tag": 229
+    },
+    "abschnitte": [
+      {
+        "von": "Villars-sur-Glâne",
+        "bis": "Fribourg/Freiburg",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83474,
+        "zuege_pro_tag": 229
+      },
+      {
+        "von": "Matran",
+        "bis": "Villars-sur-Glâne",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83473,
+        "zuege_pro_tag": 229
+      },
+      {
+        "von": "Matran",
+        "bis": "Villars-sur-Glâne",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2843,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Villars-sur-Glâne",
+        "bis": "Fribourg/Freiburg",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2843,
+        "zuege_pro_tag": 8
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 62.1187
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/2140a99da886e0d74597b314908382ee"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

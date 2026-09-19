@@ -1,0 +1,258 @@
+{
+  "uic": 8508207,
+  "name": "Langnau i.E.",
+  "kanton": "BE",
+  "bps": "LN",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Langnau i.E.",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.784197,
+    "lat": 46.939242,
+    "dwv": 5500,
+    "dtv": 5000,
+    "dnwv": 4000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 5400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 5500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Langnau i.E.",
+    "abkuerzung": "LN",
+    "hoehe_m_ue_m": 673,
+    "gemeinde": "Langnau im Emmental",
+    "ortschaft": "Langnau im Emmental",
+    "bezirk": "Emmental",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 264,
+    "kuerzeste_m": 245,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 264,
+        "flaeche_netto_m2": 998.78,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 245,
+        "flaeche_netto_m2": 885.56,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 243,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 243,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 1,
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Obermatt",
+      "bis": "Langnau i.E.",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55786,
+      "zuege_pro_tag": 153
+    },
+    "staerkster_personenverkehr": {
+      "von": "Obermatt",
+      "bis": "Langnau i.E.",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55786,
+      "zuege_pro_tag": 153
+    },
+    "abschnitte": [
+      {
+        "von": "Obermatt",
+        "bis": "Langnau i.E.",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55786,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "Langnau i.E.",
+        "bis": "Trubschachen",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 18139,
+        "zuege_pro_tag": 50
+      },
+      {
+        "von": "Obermatt",
+        "bis": "Langnau i.E.",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 245,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Langnau i.E.",
+        "bis": "Trubschachen",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 112,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 460,
+        "name": "Gumligen Sud - Fluhmuhle",
+        "km": 37.4672
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "BLS",
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/719d52bd804fc337748613df2b1171df"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

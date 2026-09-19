@@ -1,0 +1,230 @@
+{
+  "uic": 8503427,
+  "name": "Schlatt TG",
+  "kanton": "TG",
+  "bps": "SCHT",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Schlatt TG",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.687511,
+    "lat": 47.6795,
+    "dwv": 270,
+    "dtv": 250,
+    "dnwv": 190,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 320
+      },
+      {
+        "jahr": 2022,
+        "dwv": 300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 340
+      },
+      {
+        "jahr": 2024,
+        "dwv": 270
+      },
+      {
+        "jahr": 2025,
+        "dwv": 270
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Schlatt TG",
+    "abkuerzung": "SCHT",
+    "hoehe_m_ue_m": 404.2,
+    "gemeinde": "Schlatt (TG)",
+    "ortschaft": "Schlatt TG",
+    "bezirk": "Frauenfeld",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Hilfskante",
+        "laenge_m": 120,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 820
+      },
+      {
+        "nr": "2",
+        "typ": "Hilfskante",
+        "laenge_m": 120,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 820
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      35
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 121,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 121,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Schlatt TG",
+      "bis": "St. Katharinental West",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30308,
+      "zuege_pro_tag": 83
+    },
+    "staerkster_personenverkehr": {
+      "von": "Schlatt TG",
+      "bis": "St. Katharinental West",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30308,
+      "zuege_pro_tag": 83
+    },
+    "abschnitte": [
+      {
+        "von": "Schlatt TG",
+        "bis": "St. Katharinental West",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30308,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Langwiesen",
+        "bis": "Schlatt TG",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30303,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Langwiesen",
+        "bis": "Schlatt TG",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 143,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Schlatt TG",
+        "bis": "St. Katharinental West",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 113,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 820,
+        "name": "Etzwilen - Schaffhausen",
+        "km": 43.28408
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e2d2eb705f82fe55d6e82f1decb2e2ba"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

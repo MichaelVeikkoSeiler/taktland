@@ -1,0 +1,233 @@
+{
+  "uic": 8503405,
+  "name": "Zweidlen",
+  "kanton": "ZH",
+  "bps": "ZWD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zweidlen",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.467919,
+    "lat": 47.570448,
+    "dwv": 120,
+    "dtv": 100,
+    "dnwv": 70,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 110
+      },
+      {
+        "jahr": 2022,
+        "dwv": 100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 120
+      },
+      {
+        "jahr": 2024,
+        "dwv": 110
+      },
+      {
+        "jahr": 2025,
+        "dwv": 120
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zweidlen",
+    "abkuerzung": "ZWD",
+    "hoehe_m_ue_m": 368.2,
+    "gemeinde": "Glattfelden",
+    "ortschaft": "Zweidlen",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 128,
+    "kuerzeste_m": 122,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Zwischenperron",
+        "laenge_m": 128,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 701
+      },
+      {
+        "nr": "2",
+        "typ": "Zwischenperron",
+        "laenge_m": 122,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 701
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      42
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 122,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 82,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 69,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 68,
+      "42": 1
+    },
+    "segmente_mit_hilfstritt": 1,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Weiach-Kaiserstuhl",
+      "bis": "Zweidlen",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 12868,
+      "zuege_pro_tag": 35
+    },
+    "staerkster_personenverkehr": {
+      "von": "Weiach-Kaiserstuhl",
+      "bis": "Zweidlen",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 12868,
+      "zuege_pro_tag": 35
+    },
+    "abschnitte": [
+      {
+        "von": "Weiach-Kaiserstuhl",
+        "bis": "Zweidlen",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12868,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Zweidlen",
+        "bis": "Eglisau",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12868,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Zweidlen",
+        "bis": "Eglisau",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3690,
+        "zuege_pro_tag": 10
+      },
+      {
+        "von": "Weiach-Kaiserstuhl",
+        "bis": "Zweidlen",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1998,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 701,
+        "name": "Eglisau - Koblenz - Stein Sackingen Ost",
+        "km": 26.16243
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b5352acf803ef7061208ac3d3327b556"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "uic": 8505400,
+  "name": "Locarno",
+  "kanton": "TI",
+  "bps": "LO",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Locarno",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.801361,
+    "lat": 46.17242,
+    "dwv": 11500,
+    "dtv": 10800,
+    "dnwv": 9300,
+    "bemerkung": "Ohne FART.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 6600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 9400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 9900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 11400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 11500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Locarno",
+    "abkuerzung": "LO",
+    "hoehe_m_ue_m": 205,
+    "gemeinde": "Muralto",
+    "ortschaft": "Muralto",
+    "bezirk": "Locarno",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 329,
+    "kuerzeste_m": 239,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 329,
+        "flaeche_netto_m2": 1384,
+        "niveaufreier_zugang": "ja",
+        "linie": 630
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 239,
+        "flaeche_netto_m2": 1129.78,
+        "niveaufreier_zugang": "ja",
+        "linie": 630
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 151,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 198,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 173,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Minusio",
+      "bis": "Locarno",
+      "strecke_nr": 47,
+      "strecke": "Cadenazzo Ovest - Locarno",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67097,
+      "zuege_pro_tag": 184
+    },
+    "staerkster_personenverkehr": {
+      "von": "Minusio",
+      "bis": "Locarno",
+      "strecke_nr": 47,
+      "strecke": "Cadenazzo Ovest - Locarno",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67097,
+      "zuege_pro_tag": 184
+    },
+    "abschnitte": [
+      {
+        "von": "Minusio",
+        "bis": "Locarno",
+        "strecke_nr": 47,
+        "strecke": "Cadenazzo Ovest - Locarno",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67097,
+        "zuege_pro_tag": 184
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 630,
+        "name": "Giubiasco - Locarno",
+        "km": 171.94048
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "Altri",
+      "ePOS"
+    ],
+    "billettentwerter": 7,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ed61b830ac4a091b20bae67445ac41e1"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-locarno-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-locarno-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "uic": 8518963,
+  "name": "Solothurn Allmend",
+  "kanton": "SO",
+  "bps": "SOAD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Solothurn Allmend",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.521427,
+    "lat": 47.208886,
+    "dwv": 530,
+    "dtv": 470,
+    "dnwv": 330,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 490
+      },
+      {
+        "jahr": 2022,
+        "dwv": 490
+      },
+      {
+        "jahr": 2023,
+        "dwv": 530
+      },
+      {
+        "jahr": 2024,
+        "dwv": 520
+      },
+      {
+        "jahr": 2025,
+        "dwv": 530
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Solothurn Allmend",
+    "abkuerzung": "SOAD",
+    "hoehe_m_ue_m": 433,
+    "gemeinde": "Solothurn",
+    "ortschaft": "Solothurn",
+    "bezirk": "Solothurn",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 170,
+    "kuerzeste_m": 160,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 314.11,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 313.13,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Solothurn Allmend",
+      "bis": "Bellach",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57215,
+      "zuege_pro_tag": 157
+    },
+    "staerkster_personenverkehr": {
+      "von": "Solothurn Allmend",
+      "bis": "Bellach",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57215,
+      "zuege_pro_tag": 157
+    },
+    "abschnitte": [
+      {
+        "von": "Solothurn Allmend",
+        "bis": "Bellach",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57215,
+        "zuege_pro_tag": 157
+      },
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn Allmend",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57215,
+        "zuege_pro_tag": 157
+      },
+      {
+        "von": "Solothurn Allmend",
+        "bis": "Bellach",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25007,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn Allmend",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25007,
+        "zuege_pro_tag": 69
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 75.65197
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6cd0b028073b3b9414b4cde43e17f956"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "uic": 8500100,
+  "name": "Tavannes",
+  "kanton": "BE",
+  "bps": "TA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Tavannes",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.201645,
+    "lat": 47.219845,
+    "dwv": 1700,
+    "dtv": 1400,
+    "dnwv": 890,
+    "bemerkung": "Ohne CJ.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Tavannes",
+    "abkuerzung": "TA",
+    "hoehe_m_ue_m": 754.17,
+    "gemeinde": "Tavannes",
+    "ortschaft": "Tavannes",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 171,
+    "kuerzeste_m": 57,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Zwischenperron",
+        "laenge_m": 171,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 226
+      },
+      {
+        "nr": "2",
+        "typ": "Zwischenperron",
+        "laenge_m": 155,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 226
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 57,
+        "flaeche_netto_m2": 169.72,
+        "niveaufreier_zugang": "ja",
+        "linie": 226
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      35
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20,
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 77,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 176,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 236,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 159,
+      "35": 77
+    },
+    "segmente_mit_hilfstritt": 77,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sonceboz-Sombeval",
+      "bis": "Tavannes",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 20018,
+      "zuege_pro_tag": 55
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sonceboz-Sombeval",
+      "bis": "Tavannes",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 20018,
+      "zuege_pro_tag": 55
+    },
+    "abschnitte": [
+      {
+        "von": "Sonceboz-Sombeval",
+        "bis": "Tavannes",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20018,
+        "zuege_pro_tag": 55
+      },
+      {
+        "von": "Tavannes",
+        "bis": "Reconvilier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19962,
+        "zuege_pro_tag": 55
+      },
+      {
+        "von": "Sonceboz-Sombeval",
+        "bis": "Tavannes",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Tavannes",
+        "bis": "Reconvilier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 226,
+        "name": "Sonceboz-Sombeval - Moutier - Delemont",
+        "km": 55.17409
+      },
+      {
+        "nummer": 235,
+        "name": "Tavannes - Le Noirmont",
+        "km": 0
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/09e9531459e369846f62e46ea51f6a61"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

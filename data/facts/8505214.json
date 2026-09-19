@@ -1,0 +1,329 @@
+{
+  "uic": 8505214,
+  "name": "Giubiasco",
+  "kanton": "TI",
+  "bps": "GIU",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Giubiasco",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.0036,
+    "lat": 46.173813,
+    "dwv": 6800,
+    "dtv": 5700,
+    "dnwv": 3400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 8100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 5500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 6100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 6500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 6800
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Giubiasco",
+    "abkuerzung": "GIU",
+    "hoehe_m_ue_m": 230,
+    "gemeinde": "Bellinzona",
+    "ortschaft": "Giubiasco",
+    "bezirk": "Bellinzona",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 343,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 343,
+        "flaeche_netto_m2": 1646.3,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 335,
+        "flaeche_netto_m2": 1472.3,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 666.49,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      30,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "-",
+          "A"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 299,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 299,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 323,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 323,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 11,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 4,
+      "55": 7
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Giubiasco",
+      "bis": "Giubiasco Nord",
+      "strecke_nr": 89,
+      "strecke": "Giubiasco - CBT - Lugano",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 103787,
+      "zuege_pro_tag": 284
+    },
+    "staerkster_personenverkehr": {
+      "von": "Giubiasco",
+      "bis": "Giubiasco Nord",
+      "strecke_nr": 89,
+      "strecke": "Giubiasco - CBT - Lugano",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 103787,
+      "zuege_pro_tag": 284
+    },
+    "abschnitte": [
+      {
+        "von": "Giubiasco",
+        "bis": "Giubiasco Nord",
+        "strecke_nr": 89,
+        "strecke": "Giubiasco - CBT - Lugano",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 103787,
+        "zuege_pro_tag": 284
+      },
+      {
+        "von": "Giubiasco",
+        "bis": "Giubiasco Ovest",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 96457,
+        "zuege_pro_tag": 264
+      },
+      {
+        "von": "Giubiasco",
+        "bis": "Giubiasco Nord",
+        "strecke_nr": 89,
+        "strecke": "Giubiasco - CBT - Lugano",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 38490,
+        "zuege_pro_tag": 105
+      },
+      {
+        "von": "Giubiasco",
+        "bis": "Giubiasco Ovest",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 34828,
+        "zuege_pro_tag": 95
+      },
+      {
+        "von": "Giubiasco Est (c bin)",
+        "bis": "Giubiasco",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31655,
+        "zuege_pro_tag": 87
+      },
+      {
+        "von": "Giubiasco Est (c bin)",
+        "bis": "Giubiasco",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3460,
+        "zuege_pro_tag": 9
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 154.04336
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 7,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d4120b80e60acf12ed9e721e99f75689"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

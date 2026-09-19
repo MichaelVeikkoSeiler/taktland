@@ -1,0 +1,229 @@
+{
+  "uic": 8506109,
+  "name": "Amriswil",
+  "kanton": "TG",
+  "bps": "AW",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Amriswil",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 9.302227,
+    "lat": 47.55045,
+    "dwv": 3600,
+    "dtv": 3200,
+    "dnwv": 2400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Amriswil",
+    "abkuerzung": "AW",
+    "hoehe_m_ue_m": 437.2,
+    "gemeinde": "Amriswil",
+    "ortschaft": "Amriswil",
+    "bezirk": "Arbon",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 420,
+    "kuerzeste_m": 420,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 420,
+        "flaeche_netto_m2": 882.43,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 420,
+        "flaeche_netto_m2": 1050.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Oberaach",
+      "bis": "Amriswil",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54670,
+      "zuege_pro_tag": 150
+    },
+    "staerkster_personenverkehr": {
+      "von": "Oberaach",
+      "bis": "Amriswil",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54670,
+      "zuege_pro_tag": 150
+    },
+    "abschnitte": [
+      {
+        "von": "Oberaach",
+        "bis": "Amriswil",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54670,
+        "zuege_pro_tag": 150
+      },
+      {
+        "von": "Amriswil",
+        "bis": "Romanshorn West (Abzw)",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54606,
+        "zuege_pro_tag": 150
+      },
+      {
+        "von": "Oberaach",
+        "bis": "Amriswil",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4406,
+        "zuege_pro_tag": 12
+      },
+      {
+        "von": "Amriswil",
+        "bis": "Romanshorn West (Abzw)",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4405,
+        "zuege_pro_tag": 12
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 840,
+        "name": "Winterthur Nord - Romanshorn",
+        "km": 75.57473
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/421ace609fdea415b5c663213e88a919"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

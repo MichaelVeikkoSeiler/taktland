@@ -1,0 +1,264 @@
+{
+  "uic": 8502007,
+  "name": "Sursee",
+  "kanton": "LU",
+  "bps": "SS",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Sursee",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.097894,
+    "lat": 47.170795,
+    "dwv": 15100,
+    "dtv": 13400,
+    "dnwv": 9700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 13900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 12700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 14400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 15200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 15100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Sursee",
+    "abkuerzung": "SS",
+    "hoehe_m_ue_m": 504,
+    "gemeinde": "Sursee",
+    "ortschaft": "Sursee",
+    "bezirk": "Sursee",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 320,
+    "kuerzeste_m": 310,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 1133.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 310,
+        "flaeche_netto_m2": 1001.95,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 308,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20,
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 20,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2,
+      "25": 4,
+      "35": 2,
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sursee",
+      "bis": "Sursee Süd (Spw)",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86244,
+      "zuege_pro_tag": 236
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sursee",
+      "bis": "Sursee Süd (Spw)",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86244,
+      "zuege_pro_tag": 236
+    },
+    "abschnitte": [
+      {
+        "von": "Sursee",
+        "bis": "Sursee Süd (Spw)",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86244,
+        "zuege_pro_tag": 236
+      },
+      {
+        "von": "St. Erhard-Knutwil",
+        "bis": "Sursee",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72134,
+        "zuege_pro_tag": 198
+      },
+      {
+        "von": "St. Erhard-Knutwil",
+        "bis": "Sursee",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7074,
+        "zuege_pro_tag": 19
+      },
+      {
+        "von": "Sursee",
+        "bis": "Sursee Süd (Spw)",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5237,
+        "zuege_pro_tag": 14
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 69.0362
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 7,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a80ec1cedc4e98bd3239892ad4d1eef9"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

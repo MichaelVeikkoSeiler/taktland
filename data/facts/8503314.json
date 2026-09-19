@@ -1,0 +1,186 @@
+{
+  "uic": 8503314,
+  "name": "Niederhasli",
+  "kanton": "ZH",
+  "bps": "NIE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Niederhasli",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.488707,
+    "lat": 47.478331,
+    "dwv": 2400,
+    "dtv": 2000,
+    "dnwv": 1200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Niederhasli",
+    "abkuerzung": "NIE",
+    "hoehe_m_ue_m": 423.6,
+    "gemeinde": "Niederhasli",
+    "ortschaft": "Niederhasli",
+    "bezirk": "Dielsdorf",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 320,
+    "kuerzeste_m": 320,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 673.75,
+        "niveaufreier_zugang": "ja",
+        "linie": 761
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dielsdorf",
+      "bis": "Niederhasli",
+      "strecke_nr": 58,
+      "strecke": "Oberglatt - Niederweningen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28989,
+      "zuege_pro_tag": 79
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dielsdorf",
+      "bis": "Niederhasli",
+      "strecke_nr": 58,
+      "strecke": "Oberglatt - Niederweningen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28989,
+      "zuege_pro_tag": 79
+    },
+    "abschnitte": [
+      {
+        "von": "Dielsdorf",
+        "bis": "Niederhasli",
+        "strecke_nr": 58,
+        "strecke": "Oberglatt - Niederweningen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28989,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Niederhasli",
+        "bis": "Oberglatt ZH",
+        "strecke_nr": 58,
+        "strecke": "Oberglatt - Niederweningen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28989,
+        "zuege_pro_tag": 79
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 761,
+        "name": "Oberglatt - Niederweningen Gleisende",
+        "km": 15.06684
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/dd157a16875e02c90e69a518cdef96ed"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

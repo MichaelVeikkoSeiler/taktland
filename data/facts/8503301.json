@@ -1,0 +1,238 @@
+{
+  "uic": 8503301,
+  "name": "Pfäffikon ZH",
+  "kanton": "ZH",
+  "bps": "PFZ",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Pfäffikon ZH",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.7848,
+    "lat": 47.367086,
+    "dwv": 6700,
+    "dtv": 5800,
+    "dnwv": 3700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 6400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 5600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 6300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 6500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 6700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Pfäffikon ZH",
+    "abkuerzung": "PFZ",
+    "hoehe_m_ue_m": 547.5,
+    "gemeinde": "Pfäffikon",
+    "ortschaft": "Pfäffikon ZH",
+    "bezirk": "Pfäffikon",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 263,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 263,
+        "flaeche_netto_m2": 1124.84,
+        "niveaufreier_zugang": "ja",
+        "linie": 753
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 526.76,
+        "niveaufreier_zugang": "ja",
+        "linie": 753
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Witzberg (Agl)",
+      "bis": "Pfäffikon ZH",
+      "strecke_nr": 66,
+      "strecke": "Effretikon - Wetzikon - Hinwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33708,
+      "zuege_pro_tag": 92
+    },
+    "staerkster_personenverkehr": {
+      "von": "Witzberg (Agl)",
+      "bis": "Pfäffikon ZH",
+      "strecke_nr": 66,
+      "strecke": "Effretikon - Wetzikon - Hinwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33708,
+      "zuege_pro_tag": 92
+    },
+    "abschnitte": [
+      {
+        "von": "Witzberg (Agl)",
+        "bis": "Pfäffikon ZH",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33708,
+        "zuege_pro_tag": 92
+      },
+      {
+        "von": "Pfäffikon ZH",
+        "bis": "Kempten",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28074,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Pfäffikon ZH",
+        "bis": "Kempten",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 517,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Witzberg (Agl)",
+        "bis": "Pfäffikon ZH",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 517,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 753,
+        "name": "Effretikon - Wetzikon - Hinwil",
+        "km": 11.33125
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4e26956c5a0e07d06dda4c68ba5215d6"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

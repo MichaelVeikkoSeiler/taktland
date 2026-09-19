@@ -1,0 +1,257 @@
+{
+  "uic": 8505201,
+  "name": "Airolo",
+  "kanton": "TI",
+  "bps": "AI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Airolo",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.60862,
+    "lat": 46.527526,
+    "dwv": 540,
+    "dtv": 580,
+    "dnwv": 670,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 370
+      },
+      {
+        "jahr": 2022,
+        "dwv": 480
+      },
+      {
+        "jahr": 2023,
+        "dwv": 500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 540
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Airolo",
+    "abkuerzung": "AI",
+    "hoehe_m_ue_m": 1142,
+    "gemeinde": "Airolo",
+    "ortschaft": "Airolo",
+    "bezirk": "Leventina",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 391,
+    "kuerzeste_m": 67,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 391,
+        "flaeche_netto_m2": 1592.88,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "50/61",
+        "typ": "Hausperron",
+        "laenge_m": 163,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "1",
+        "typ": "Dienstperron",
+        "laenge_m": 67,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 163,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 392,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 392,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 6,
+      "25": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Airolo",
+      "bis": "Ambrì-Piotta",
+      "strecke_nr": 86,
+      "strecke": "Erstfeld - Airolo - Bodio",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14636,
+      "zuege_pro_tag": 40
+    },
+    "staerkster_personenverkehr": {
+      "von": "Airolo",
+      "bis": "Ambrì-Piotta",
+      "strecke_nr": 86,
+      "strecke": "Erstfeld - Airolo - Bodio",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14636,
+      "zuege_pro_tag": 40
+    },
+    "abschnitte": [
+      {
+        "von": "Airolo",
+        "bis": "Ambrì-Piotta",
+        "strecke_nr": 86,
+        "strecke": "Erstfeld - Airolo - Bodio",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14636,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Gotthard Nord (Spw)",
+        "bis": "Airolo",
+        "strecke_nr": 86,
+        "strecke": "Erstfeld - Airolo - Bodio",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12993,
+        "zuege_pro_tag": 36
+      },
+      {
+        "von": "Gotthard Nord (Spw)",
+        "bis": "Airolo",
+        "strecke_nr": 86,
+        "strecke": "Erstfeld - Airolo - Bodio",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2822,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Airolo",
+        "bis": "Ambrì-Piotta",
+        "strecke_nr": 86,
+        "strecke": "Erstfeld - Airolo - Bodio",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 549,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 86.20893
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9a801eb7df8096821d02600d0de2a936"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

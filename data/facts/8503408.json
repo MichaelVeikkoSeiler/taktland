@@ -1,0 +1,225 @@
+{
+  "uic": 8503408,
+  "name": "Rekingen AG",
+  "kanton": "AG",
+  "bps": "REK",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rekingen AG",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.327126,
+    "lat": 47.569971,
+    "dwv": 160,
+    "dtv": 140,
+    "dnwv": 90,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 150
+      },
+      {
+        "jahr": 2023,
+        "dwv": 160
+      },
+      {
+        "jahr": 2024,
+        "dwv": 160
+      },
+      {
+        "jahr": 2025,
+        "dwv": 160
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rekingen AG",
+    "abkuerzung": "REK",
+    "hoehe_m_ue_m": 338.2,
+    "gemeinde": "Zurzach",
+    "ortschaft": "Rekingen AG",
+    "bezirk": "Zurzach",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 215,
+    "kuerzeste_m": 215,
+    "items": [
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 215,
+        "flaeche_netto_m2": 881.25,
+        "niveaufreier_zugang": "ja",
+        "linie": 701
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "6",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      25,
+      30
+    ],
+    "items": [
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 212,
+        "sektoren": []
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 212,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 2,
+      "30": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bad Zurzach",
+      "bis": "Rekingen AG",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 13404,
+      "zuege_pro_tag": 37
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bad Zurzach",
+      "bis": "Rekingen AG",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 13404,
+      "zuege_pro_tag": 37
+    },
+    "abschnitte": [
+      {
+        "von": "Bad Zurzach",
+        "bis": "Rekingen AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13404,
+        "zuege_pro_tag": 37
+      },
+      {
+        "von": "Rekingen AG",
+        "bis": "Mellikon",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12868,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Bad Zurzach",
+        "bis": "Rekingen AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2360,
+        "zuege_pro_tag": 6
+      },
+      {
+        "von": "Rekingen AG",
+        "bis": "Mellikon",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1985,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 701,
+        "name": "Eglisau - Koblenz - Stein Sackingen Ost",
+        "km": 38.11655
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8f1f0e291ef3e0dae0297d30b1ecad58"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

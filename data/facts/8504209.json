@@ -1,0 +1,242 @@
+{
+  "uic": 8504209,
+  "name": "Colombier NE",
+  "kanton": "NE",
+  "bps": "CLB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Colombier NE",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "SBB, transN",
+    "lon": 6.84887,
+    "lat": 46.967652,
+    "dwv": 460,
+    "dtv": 400,
+    "dnwv": 280,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 390
+      },
+      {
+        "jahr": 2022,
+        "dwv": 380
+      },
+      {
+        "jahr": 2023,
+        "dwv": 420
+      },
+      {
+        "jahr": 2024,
+        "dwv": 410
+      },
+      {
+        "jahr": 2025,
+        "dwv": 460
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Colombier NE",
+    "abkuerzung": "CLB",
+    "hoehe_m_ue_m": 489.62,
+    "gemeinde": "Milvignes",
+    "ortschaft": "Colombier NE",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 156,
+    "kuerzeste_m": 98,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 156,
+        "flaeche_netto_m2": 524.26,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 98,
+        "flaeche_netto_m2": 268.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 99,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 157,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 159,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 10
+    },
+    "segmente_mit_hilfstritt": 7,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Boudry",
+      "bis": "Colombier NE",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46124,
+      "zuege_pro_tag": 126
+    },
+    "staerkster_personenverkehr": {
+      "von": "Boudry",
+      "bis": "Colombier NE",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46124,
+      "zuege_pro_tag": 126
+    },
+    "abschnitte": [
+      {
+        "von": "Boudry",
+        "bis": "Colombier NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46124,
+        "zuege_pro_tag": 126
+      },
+      {
+        "von": "Colombier NE",
+        "bis": "Auvernier",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46032,
+        "zuege_pro_tag": 126
+      },
+      {
+        "von": "Colombier NE",
+        "bis": "Auvernier",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20586,
+        "zuege_pro_tag": 56
+      },
+      {
+        "von": "Boudry",
+        "bis": "Colombier NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20484,
+        "zuege_pro_tag": 56
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 67.66967
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/42b52cdb59cd3d45af9fccd9f0cd7072"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "uic": 8503340,
+  "name": "Opfikon",
+  "kanton": "ZH",
+  "bps": "OP",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Opfikon",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.561795,
+    "lat": 47.429955,
+    "dwv": 2500,
+    "dtv": 2100,
+    "dnwv": 1400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Opfikon",
+    "abkuerzung": "OP",
+    "hoehe_m_ue_m": 427.3,
+    "gemeinde": "Opfikon",
+    "ortschaft": "Glattbrugg",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 325,
+    "kuerzeste_m": 325,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 325,
+        "flaeche_netto_m2": 2263.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 752
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      42,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          42,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 244,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          42,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 246,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 13,
+    "segmente_pro_perronhoehe_cm": {
+      "42": 5,
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Opfikon Süd",
+      "bis": "Opfikon",
+      "strecke_nr": 62,
+      "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 189200,
+      "zuege_pro_tag": 518
+    },
+    "staerkster_personenverkehr": {
+      "von": "Opfikon Süd",
+      "bis": "Opfikon",
+      "strecke_nr": 62,
+      "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 189200,
+      "zuege_pro_tag": 518
+    },
+    "abschnitte": [
+      {
+        "von": "Opfikon Süd",
+        "bis": "Opfikon",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 189200,
+        "zuege_pro_tag": 518
+      },
+      {
+        "von": "Opfikon",
+        "bis": "Zürich Flughafen",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 158660,
+        "zuege_pro_tag": 435
+      },
+      {
+        "von": "Opfikon",
+        "bis": "Riet (Verzw)",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30537,
+        "zuege_pro_tag": 84
+      },
+      {
+        "von": "Opfikon Süd",
+        "bis": "Opfikon",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14136,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Opfikon",
+        "bis": "Riet (Verzw)",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12938,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Opfikon",
+        "bis": "Zürich Flughafen",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1198,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 750,
+        "name": "ZH Oerlikon Nord - Dorfnest",
+        "km": 7.18517
+      },
+      {
+        "nummer": 752,
+        "name": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
+        "km": 7.18518
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e47e65e0f4636b2bbb6b205e26fa95c5"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-glattbrugg-opfikon-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-glattbrugg-opfikon-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

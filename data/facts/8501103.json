@@ -1,0 +1,275 @@
+{
+  "uic": 8501103,
+  "name": "Vallorbe",
+  "kanton": "VD",
+  "bps": "VAL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Vallorbe",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.370566,
+    "lat": 46.712406,
+    "dwv": 1400,
+    "dtv": 1300,
+    "dnwv": 1100,
+    "bemerkung": "Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 980
+      },
+      {
+        "jahr": 2022,
+        "dwv": 790
+      },
+      {
+        "jahr": 2023,
+        "dwv": 980
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Vallorbe",
+    "abkuerzung": "VAL",
+    "hoehe_m_ue_m": 806.91,
+    "gemeinde": "Vallorbe",
+    "ortschaft": "Vallorbe",
+    "bezirk": "Jura-Nord vaudois",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 433,
+    "kuerzeste_m": 141,
+    "items": [
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 433,
+        "flaeche_netto_m2": 3326.5,
+        "niveaufreier_zugang": "ja",
+        "linie": 200
+      },
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 428,
+        "flaeche_netto_m2": 3178.76,
+        "niveaufreier_zugang": "ja",
+        "linie": 200
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 141,
+        "flaeche_netto_m2": 671.67,
+        "niveaufreier_zugang": "ja",
+        "linie": 200
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "3",
+      "5",
+      "4 quai 4/5"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 142,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 430,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 440,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4 quai 4/5",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 183,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2,
+      "25": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Vallorbe",
+      "bis": "Le Day",
+      "strecke_nr": 9,
+      "strecke": "Daillens - Vallorbe Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30613,
+      "zuege_pro_tag": 84
+    },
+    "staerkster_personenverkehr": {
+      "von": "Vallorbe",
+      "bis": "Le Day",
+      "strecke_nr": 9,
+      "strecke": "Daillens - Vallorbe Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30613,
+      "zuege_pro_tag": 84
+    },
+    "abschnitte": [
+      {
+        "von": "Vallorbe",
+        "bis": "Le Day",
+        "strecke_nr": 9,
+        "strecke": "Daillens - Vallorbe Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30613,
+        "zuege_pro_tag": 84
+      },
+      {
+        "von": "Vallorbe",
+        "bis": "Vallorbe-Frontière",
+        "strecke_nr": 9,
+        "strecke": "Daillens - Vallorbe Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3908,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Vallorbe",
+        "bis": "Le Day",
+        "strecke_nr": 9,
+        "strecke": "Daillens - Vallorbe Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 565,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Vallorbe",
+        "bis": "Vallorbe-Frontière",
+        "strecke_nr": 9,
+        "strecke": "Daillens - Vallorbe Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 263,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 200,
+        "name": "Renens VD Ouest - Vallorbe",
+        "km": 46.30584
+      },
+      {
+        "nummer": 203,
+        "name": "Frasne - Vallorbe",
+        "km": 461.62982
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/99b0291766c5351a0eaf005fb0dd811f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "uic": 8501420,
+  "name": "Massongex",
+  "kanton": "VS",
+  "bps": "MAS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Massongex",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "RegionAlps",
+    "lon": 6.985661,
+    "lat": 46.241207,
+    "dwv": 380,
+    "dtv": 320,
+    "dnwv": 190,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 340
+      },
+      {
+        "jahr": 2022,
+        "dwv": 320
+      },
+      {
+        "jahr": 2023,
+        "dwv": 360
+      },
+      {
+        "jahr": 2024,
+        "dwv": 430
+      },
+      {
+        "jahr": 2025,
+        "dwv": 380
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Massongex",
+    "abkuerzung": "MAS",
+    "hoehe_m_ue_m": 398.83,
+    "gemeinde": "Massongex",
+    "ortschaft": "Massongex",
+    "bezirk": "Saint-Maurice",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 364.94,
+        "niveaufreier_zugang": "ja",
+        "linie": 131
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Massongex",
+      "bis": "Monthey Industrie",
+      "strecke_nr": 5,
+      "strecke": "Les Paludes - Monthey",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26102,
+      "zuege_pro_tag": 72
+    },
+    "staerkster_personenverkehr": {
+      "von": "Massongex",
+      "bis": "Monthey Industrie",
+      "strecke_nr": 5,
+      "strecke": "Les Paludes - Monthey",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26102,
+      "zuege_pro_tag": 72
+    },
+    "abschnitte": [
+      {
+        "von": "Massongex",
+        "bis": "Monthey Industrie",
+        "strecke_nr": 5,
+        "strecke": "Les Paludes - Monthey",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26102,
+        "zuege_pro_tag": 72
+      },
+      {
+        "von": "Massongex",
+        "bis": "Les Paluds",
+        "strecke_nr": 5,
+        "strecke": "Les Paludes - Monthey",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26100,
+        "zuege_pro_tag": 72
+      },
+      {
+        "von": "Massongex",
+        "bis": "Les Paluds",
+        "strecke_nr": 5,
+        "strecke": "Les Paludes - Monthey",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3836,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Massongex",
+        "bis": "Monthey Industrie",
+        "strecke_nr": 5,
+        "strecke": "Les Paludes - Monthey",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3040,
+        "zuege_pro_tag": 8
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 131,
+        "name": "Les Paluds - St-Gingolph (Frontiere)",
+        "km": 3.19935
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/39e2e89be95c277c761f88a09739c963"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

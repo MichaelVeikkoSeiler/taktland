@@ -1,0 +1,177 @@
+{
+  "uic": 8506039,
+  "name": "Schloss Laufen am Rheinfall",
+  "kanton": "ZH",
+  "bps": "SLF",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Schloss Laufen am Rheinfall",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.614269,
+    "lat": 47.676566,
+    "dwv": 730,
+    "dtv": 820,
+    "dnwv": 1000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 270
+      },
+      {
+        "jahr": 2022,
+        "dwv": 410
+      },
+      {
+        "jahr": 2023,
+        "dwv": 580
+      },
+      {
+        "jahr": 2024,
+        "dwv": 770
+      },
+      {
+        "jahr": 2025,
+        "dwv": 730
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Schloss Laufen am Rheinfall",
+    "abkuerzung": "SLF",
+    "hoehe_m_ue_m": 389,
+    "gemeinde": "Laufen-Uhwiesen",
+    "ortschaft": "Dachsen",
+    "bezirk": "Andelfingen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 221,
+    "kuerzeste_m": 221,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 221,
+        "flaeche_netto_m2": 508.81,
+        "niveaufreier_zugang": "ja",
+        "linie": 762
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Neuhausen",
+      "bis": "Schloss Laufen am Rheinfall",
+      "strecke_nr": 69,
+      "strecke": "Winterthur - Neuhausen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 40736,
+      "zuege_pro_tag": 112
+    },
+    "staerkster_personenverkehr": {
+      "von": "Neuhausen",
+      "bis": "Schloss Laufen am Rheinfall",
+      "strecke_nr": 69,
+      "strecke": "Winterthur - Neuhausen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 40736,
+      "zuege_pro_tag": 112
+    },
+    "abschnitte": [
+      {
+        "von": "Neuhausen",
+        "bis": "Schloss Laufen am Rheinfall",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40736,
+        "zuege_pro_tag": 112
+      },
+      {
+        "von": "Schloss Laufen am Rheinfall",
+        "bis": "Dachsen",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40736,
+        "zuege_pro_tag": 112
+      },
+      {
+        "von": "Neuhausen",
+        "bis": "Schloss Laufen am Rheinfall",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Schloss Laufen am Rheinfall",
+        "bis": "Dachsen",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 762,
+        "name": "Winterthur Nord - Schaffhausen RB Ost",
+        "km": 52.49224
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/61e0f759acc3ee52c71e2e820e669c6c"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "uic": 8505219,
+  "name": "Lamone-Cadempino",
+  "kanton": "TI",
+  "bps": "LAM",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Lamone-Cadempino",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.932125,
+    "lat": 46.039719,
+    "dwv": 2200,
+    "dtv": 1700,
+    "dnwv": 710,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Lamone-Cadempino",
+    "abkuerzung": "LAM",
+    "hoehe_m_ue_m": 318,
+    "gemeinde": "Lamone",
+    "ortschaft": "Lamone",
+    "bezirk": "Lugano",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 627.67,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 791.04,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Taverne-Torricella",
+      "bis": "Lamone-Cadempino",
+      "strecke_nr": 88,
+      "strecke": "Giubiasco - BergSTRECKE - Lugano",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32854,
+      "zuege_pro_tag": 90
+    },
+    "staerkster_personenverkehr": {
+      "von": "Taverne-Torricella",
+      "bis": "Lamone-Cadempino",
+      "strecke_nr": 88,
+      "strecke": "Giubiasco - BergSTRECKE - Lugano",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32854,
+      "zuege_pro_tag": 90
+    },
+    "abschnitte": [
+      {
+        "von": "Taverne-Torricella",
+        "bis": "Lamone-Cadempino",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32854,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Vezia (bif)",
+        "bis": "Lamone-Cadempino",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32770,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Taverne-Torricella",
+        "bis": "Lamone-Cadempino",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1834,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Vezia (bif)",
+        "bis": "Lamone-Cadempino",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1834,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 176.09835
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/fb51632964e5886dc47440587311de3b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

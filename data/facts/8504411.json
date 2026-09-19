@@ -1,0 +1,231 @@
+{
+  "uic": 8504411,
+  "name": "Münchenbuchsee",
+  "kanton": "BE",
+  "bps": "MUEB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Münchenbuchsee",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.451948,
+    "lat": 47.021376,
+    "dwv": 4400,
+    "dtv": 3600,
+    "dnwv": 1900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 4400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Münchenbuchsee",
+    "abkuerzung": "MUEB",
+    "hoehe_m_ue_m": 553.67,
+    "gemeinde": "Münchenbuchsee",
+    "ortschaft": "Münchenbuchsee",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 235,
+    "kuerzeste_m": 234,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 235,
+        "flaeche_netto_m2": 640.24,
+        "niveaufreier_zugang": "ja",
+        "linie": 260
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 234,
+        "flaeche_netto_m2": 594.6,
+        "niveaufreier_zugang": "ja",
+        "linie": 260
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 53,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Münchenbuchsee",
+      "bis": "Zollikofen",
+      "strecke_nr": 20,
+      "strecke": "Madretsch - Lyss - Zollikofen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 69564,
+      "zuege_pro_tag": 191
+    },
+    "staerkster_personenverkehr": {
+      "von": "Münchenbuchsee",
+      "bis": "Zollikofen",
+      "strecke_nr": 20,
+      "strecke": "Madretsch - Lyss - Zollikofen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 69564,
+      "zuege_pro_tag": 191
+    },
+    "abschnitte": [
+      {
+        "von": "Münchenbuchsee",
+        "bis": "Zollikofen",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 69564,
+        "zuege_pro_tag": 191
+      },
+      {
+        "von": "Schüpfen",
+        "bis": "Münchenbuchsee",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58963,
+        "zuege_pro_tag": 162
+      },
+      {
+        "von": "Schüpfen",
+        "bis": "Münchenbuchsee",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4773,
+        "zuege_pro_tag": 13
+      },
+      {
+        "von": "Münchenbuchsee",
+        "bis": "Zollikofen",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4771,
+        "zuege_pro_tag": 13
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 260,
+        "name": "Zollikofen Nord - Biel/Bienne Aebistr.",
+        "km": 10.12482
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d0c8728eb14cd9275f069ea7a809d077"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

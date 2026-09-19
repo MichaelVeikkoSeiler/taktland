@@ -1,0 +1,246 @@
+{
+  "uic": 8506208,
+  "name": "Uzwil",
+  "kanton": "SG",
+  "bps": "UZW",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Uzwil",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 9.130992,
+    "lat": 47.436444,
+    "dwv": 6300,
+    "dtv": 5500,
+    "dnwv": 3800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 5800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 5000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 6400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 6300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Uzwil",
+    "abkuerzung": "UZW",
+    "hoehe_m_ue_m": 563.8,
+    "gemeinde": "Uzwil",
+    "ortschaft": "Uzwil",
+    "bezirk": "Wil",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 422,
+    "kuerzeste_m": 82,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 422,
+        "flaeche_netto_m2": 1714.49,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 82,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 421,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 424,
+        "sektoren": [
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 9,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 9
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Algetshausen-Henau",
+      "bis": "Uzwil",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78626,
+      "zuege_pro_tag": 215
+    },
+    "staerkster_personenverkehr": {
+      "von": "Algetshausen-Henau",
+      "bis": "Uzwil",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78626,
+      "zuege_pro_tag": 215
+    },
+    "abschnitte": [
+      {
+        "von": "Algetshausen-Henau",
+        "bis": "Uzwil",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78626,
+        "zuege_pro_tag": 215
+      },
+      {
+        "von": "Uzwil",
+        "bis": "Flawil",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78622,
+        "zuege_pro_tag": 215
+      },
+      {
+        "von": "Uzwil",
+        "bis": "Flawil",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6291,
+        "zuege_pro_tag": 17
+      },
+      {
+        "von": "Algetshausen-Henau",
+        "bis": "Uzwil",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6164,
+        "zuege_pro_tag": 17
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 850,
+        "name": "St.Gallen - Winterthur Nord",
+        "km": 100.93553
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ce33ebaa3dcf7541d68998ea98b525b1"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

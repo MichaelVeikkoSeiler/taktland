@@ -1,0 +1,209 @@
+{
+  "uic": 8500206,
+  "name": "Solothurn West",
+  "kanton": "SO",
+  "bps": "SW",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Solothurn West",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.531949,
+    "lat": 47.206717,
+    "dwv": 1600,
+    "dtv": 1300,
+    "dnwv": 810,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Solothurn West",
+    "abkuerzung": "SW",
+    "hoehe_m_ue_m": 433,
+    "gemeinde": "Solothurn",
+    "ortschaft": "Solothurn",
+    "bezirk": "Solothurn",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 149,
+    "kuerzeste_m": 149,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 497.09,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 382.7,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Solothurn West",
+      "bis": "Solothurn",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 74507,
+      "zuege_pro_tag": 204
+    },
+    "staerkster_personenverkehr": {
+      "von": "Solothurn West",
+      "bis": "Solothurn",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 74507,
+      "zuege_pro_tag": 204
+    },
+    "abschnitte": [
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 74507,
+        "zuege_pro_tag": 204
+      },
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn Allmend",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57215,
+        "zuege_pro_tag": 157
+      },
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25017,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn Allmend",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25007,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Langendorf",
+        "bis": "Solothurn West",
+        "strecke_nr": 401,
+        "strecke": "Moutier - Solothurn West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17294,
+        "zuege_pro_tag": 47
+      },
+      {
+        "von": "Langendorf",
+        "bis": "Solothurn West",
+        "strecke_nr": 401,
+        "strecke": "Moutier - Solothurn West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 74.78302
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/05911b4b07ab19eaa3cf962ac1cc4210"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

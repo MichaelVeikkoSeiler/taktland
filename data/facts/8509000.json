@@ -1,0 +1,699 @@
+{
+  "uic": 8509000,
+  "name": "Chur",
+  "kanton": "GR",
+  "bps": "CH",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Chur",
+    "kanton": "GR",
+    "isb": "SBB",
+    "evu": "RhB, SBB, SOB, Thurbo",
+    "lon": 9.528938,
+    "lat": 46.853084,
+    "dwv": 30300,
+    "dtv": 29800,
+    "dnwv": 28800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 24900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 24500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 27800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 28600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 30300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Chur",
+    "abkuerzung": "CH",
+    "hoehe_m_ue_m": 584.6,
+    "gemeinde": "Chur",
+    "ortschaft": "Chur",
+    "bezirk": "Plessur",
+    "kanton": "Graubünden",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 41000,
+    "einheit": "DP/jour ouvré",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 35300
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 37200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 35300
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 37400
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 37700
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 35800
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 35900
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 37600
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 37500
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 39300
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 28000
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 29700
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 31400
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 29500
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 34600
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 36300
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 39500
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 37600
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 38400
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 40300
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 38800
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 41000
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.0
+      },
+      {
+        "stunde": 6,
+        "prozent": 3.2
+      },
+      {
+        "stunde": 7,
+        "prozent": 8.1
+      },
+      {
+        "stunde": 8,
+        "prozent": 5.7
+      },
+      {
+        "stunde": 9,
+        "prozent": 5.1
+      },
+      {
+        "stunde": 10,
+        "prozent": 5.3
+      },
+      {
+        "stunde": 11,
+        "prozent": 6.8
+      },
+      {
+        "stunde": 12,
+        "prozent": 8.4
+      },
+      {
+        "stunde": 13,
+        "prozent": 6.8
+      },
+      {
+        "stunde": 14,
+        "prozent": 6.3
+      },
+      {
+        "stunde": 15,
+        "prozent": 7.2
+      },
+      {
+        "stunde": 16,
+        "prozent": 9.4
+      },
+      {
+        "stunde": 17,
+        "prozent": 9.3
+      },
+      {
+        "stunde": 18,
+        "prozent": 6.7
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.0
+      },
+      {
+        "stunde": 20,
+        "prozent": 2.6
+      },
+      {
+        "stunde": 21,
+        "prozent": 1.8
+      },
+      {
+        "stunde": 22,
+        "prozent": 1.2
+      },
+      {
+        "stunde": 23,
+        "prozent": 0.6
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 16,
+    "spitzenanteil": 9.4,
+    "wochentage": [
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 15.0
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 13.8
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 14.6
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.2
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.3
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 11.2
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 14.9
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 7,
+    "laengste_m": 533,
+    "kuerzeste_m": 181,
+    "items": [
+      {
+        "nr": "9/10",
+        "typ": "Mittelperron",
+        "laenge_m": 533,
+        "flaeche_netto_m2": 3740.31,
+        "niveaufreier_zugang": "ja",
+        "linie": 920
+      },
+      {
+        "nr": "4/5",
+        "typ": "Hausperron",
+        "laenge_m": 480,
+        "flaeche_netto_m2": 1925.88,
+        "niveaufreier_zugang": "ja",
+        "linie": 900
+      },
+      {
+        "nr": "7/8",
+        "typ": "Mittelperron",
+        "laenge_m": 416,
+        "flaeche_netto_m2": 2111.6,
+        "niveaufreier_zugang": "ja",
+        "linie": 900
+      },
+      {
+        "nr": "11/12",
+        "typ": "Mittelperron",
+        "laenge_m": 382,
+        "flaeche_netto_m2": 2081.4,
+        "niveaufreier_zugang": "ja",
+        "linie": 920
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 254,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 930
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 238,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 930
+      },
+      {
+        "nr": "13/14",
+        "typ": "Mittelperron",
+        "laenge_m": 181,
+        "flaeche_netto_m2": 896.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 920
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 12,
+    "nummern": [
+      "1",
+      "2",
+      "4",
+      "5",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 254,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 238,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 69,
+        "sektoren": [
+          "A"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          25,
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 173,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 335,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 334,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "9",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 433,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "10",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 497,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "11",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 383,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "12",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 336,
+        "sektoren": [
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "13",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 182,
+        "sektoren": [
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "14",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 182,
+        "sektoren": [
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 72,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 26,
+      "25": 5,
+      "35": 11,
+      "55": 16
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 12
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zizers SBB",
+      "bis": "Chur",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 73388,
+      "zuege_pro_tag": 201
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zizers SBB",
+      "bis": "Chur",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 73388,
+      "zuege_pro_tag": 201
+    },
+    "abschnitte": [
+      {
+        "von": "Zizers SBB",
+        "bis": "Chur",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 73388,
+        "zuege_pro_tag": 201
+      },
+      {
+        "von": "Zizers SBB",
+        "bis": "Chur",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3577,
+        "zuege_pro_tag": 10
+      },
+      {
+        "von": "Chur",
+        "bis": "Chur GB",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2972,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Chur",
+        "bis": "Chur GB",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 1,
+        "zuege_pro_jahr": 1,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 920,
+        "name": "Landquart RhB - Chur - Disentis",
+        "km": 13.87121
+      },
+      {
+        "nummer": 900,
+        "name": "Sargans Ost - Chur West (Gleisende)",
+        "km": 25.71888
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 5,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 11,
+    "wartehallen": 5,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/78770337bcba726299f6da4e23b5dad0"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-chur-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-chur-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

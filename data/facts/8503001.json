@@ -1,0 +1,693 @@
+{
+  "uic": 8503001,
+  "name": "Zürich Altstetten",
+  "kanton": "ZH",
+  "bps": "ZAS",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zürich Altstetten",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.488963,
+    "lat": 47.391483,
+    "dwv": 48700,
+    "dtv": 40500,
+    "dnwv": 22400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 46500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 37600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 44600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 47600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 48700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zürich Altstetten",
+    "abkuerzung": "ZAS",
+    "hoehe_m_ue_m": 398.9,
+    "gemeinde": "Zürich",
+    "ortschaft": "Zürich",
+    "bezirk": "Zürich",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 73000,
+    "einheit": "DP/jour ouvré",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 56700
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 46900
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 49200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 59700
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 64100
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 52800
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 61600
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 50700
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 0
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 0
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 0
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 0
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 36900
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 42700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 57400
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 49300
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 67100
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 57600
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 69700
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 59500
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 61100
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 73000
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.1
+      },
+      {
+        "stunde": 6,
+        "prozent": 4.3
+      },
+      {
+        "stunde": 7,
+        "prozent": 9.9
+      },
+      {
+        "stunde": 8,
+        "prozent": 9.7
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.2
+      },
+      {
+        "stunde": 10,
+        "prozent": 3.2
+      },
+      {
+        "stunde": 11,
+        "prozent": 4.5
+      },
+      {
+        "stunde": 12,
+        "prozent": 7.5
+      },
+      {
+        "stunde": 13,
+        "prozent": 4.7
+      },
+      {
+        "stunde": 14,
+        "prozent": 3.7
+      },
+      {
+        "stunde": 15,
+        "prozent": 5.1
+      },
+      {
+        "stunde": 16,
+        "prozent": 8.9
+      },
+      {
+        "stunde": 17,
+        "prozent": 11.6
+      },
+      {
+        "stunde": 18,
+        "prozent": 7.7
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.7
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.0
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.3
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.5
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.2
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 11.6,
+    "wochentage": [
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.5
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 9.3
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 15.7
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 17.6
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 17.1
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 18.1
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 6.7
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 458,
+    "kuerzeste_m": 320,
+    "items": [
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 458,
+        "flaeche_netto_m2": 1848.84,
+        "niveaufreier_zugang": "ja",
+        "linie": 710
+      },
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 375,
+        "flaeche_netto_m2": 2007.4,
+        "niveaufreier_zugang": "ja",
+        "linie": 711
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 2131.75,
+        "niveaufreier_zugang": "ja",
+        "linie": 708
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "2",
+      "3",
+      "4",
+      "6",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 376,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 375,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 11,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Teilweise",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Einfang (Abzw)",
+      "bis": "Zürich Altstetten",
+      "strecke_nr": 113,
+      "strecke": "Zürich PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 242042,
+      "zuege_pro_tag": 663
+    },
+    "staerkster_personenverkehr": {
+      "von": "Einfang (Abzw)",
+      "bis": "Zürich Altstetten",
+      "strecke_nr": 113,
+      "strecke": "Zürich PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 242042,
+      "zuege_pro_tag": 663
+    },
+    "abschnitte": [
+      {
+        "von": "Einfang (Abzw)",
+        "bis": "Zürich Altstetten",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 242042,
+        "zuege_pro_tag": 663
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Hardbrücke",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 177681,
+        "zuege_pro_tag": 487
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Vorbahnhof",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 120882,
+        "zuege_pro_tag": 331
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Altstetten Farbhof",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 53180,
+        "zuege_pro_tag": 146
+      },
+      {
+        "von": "Einfang (Abzw)",
+        "bis": "Zürich Altstetten",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28325,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Hard Käferberg (Abzw)",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14960,
+        "zuege_pro_tag": 41
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Vorbahnhof",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12981,
+        "zuege_pro_tag": 36
+      },
+      {
+        "von": "Zürich Mülligen",
+        "bis": "Zürich Altstetten",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9079,
+        "zuege_pro_tag": 25
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Vorbahnhof West",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9017,
+        "zuege_pro_tag": 25
+      },
+      {
+        "von": "Zürich Mülligen",
+        "bis": "Zürich Altstetten",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4796,
+        "zuege_pro_tag": 13
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Hardbrücke",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3902,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Herdern Abstellgruppe",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1668,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Herdern Abstellgruppe",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1442,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Altstetten Farbhof",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1358,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Zürich Vorbahnhof West",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 785,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Zürich Altstetten",
+        "bis": "Hard Käferberg (Abzw)",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 449,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 4,
+    "items": [
+      {
+        "nummer": 710,
+        "name": "Zurich HB - Brugg AG",
+        "km": 4.1655
+      },
+      {
+        "nummer": 711,
+        "name": "ZH Hardbrucke - Kollermuhle",
+        "km": 4.16414
+      },
+      {
+        "nummer": 708,
+        "name": "Zurich Altstetten - Einfang",
+        "km": 4.1655
+      },
+      {
+        "nummer": 709,
+        "name": "Zue Vorbahnhof Nord - Zurich Altstetten",
+        "km": 4.19283
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 8,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/41ae0d42e4aac3ecde954130ea1a9f50"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

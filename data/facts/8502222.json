@@ -1,0 +1,231 @@
+{
+  "uic": 8502222,
+  "name": "Bonstetten-Wettswil",
+  "kanton": "ZH",
+  "bps": "BON",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bonstetten-Wettswil",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.468197,
+    "lat": 47.325901,
+    "dwv": 4300,
+    "dtv": 3700,
+    "dnwv": 2400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 4300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bonstetten-Wettswil",
+    "abkuerzung": "BON",
+    "hoehe_m_ue_m": 527,
+    "gemeinde": "Bonstetten",
+    "ortschaft": "Bonstetten",
+    "bezirk": "Affoltern",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 320,
+    "kuerzeste_m": 320,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 1728.03,
+        "niveaufreier_zugang": "ja",
+        "linie": 711
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 7
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bonstetten Nord (Abzw)",
+      "bis": "Bonstetten-Wettswil",
+      "strecke_nr": 61,
+      "strecke": "Zürich Altstetten - Kollermühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 53375,
+      "zuege_pro_tag": 146
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bonstetten Nord (Abzw)",
+      "bis": "Bonstetten-Wettswil",
+      "strecke_nr": 61,
+      "strecke": "Zürich Altstetten - Kollermühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 53375,
+      "zuege_pro_tag": 146
+    },
+    "abschnitte": [
+      {
+        "von": "Bonstetten Nord (Abzw)",
+        "bis": "Bonstetten-Wettswil",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 53375,
+        "zuege_pro_tag": 146
+      },
+      {
+        "von": "Bonstetten-Wettswil",
+        "bis": "Bonstetten Süd (Abzw)",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 53372,
+        "zuege_pro_tag": 146
+      },
+      {
+        "von": "Bonstetten Nord (Abzw)",
+        "bis": "Bonstetten-Wettswil",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 706,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Bonstetten-Wettswil",
+        "bis": "Bonstetten Süd (Abzw)",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 706,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 711,
+        "name": "ZH Hardbrucke - Kollermuhle",
+        "km": 18.05825
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/927b07e4684f83b4fa2492683186cb8a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

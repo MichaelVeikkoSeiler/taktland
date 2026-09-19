@@ -1,0 +1,217 @@
+{
+  "uic": 8502247,
+  "name": "Birr",
+  "kanton": "AG",
+  "bps": "BIRR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Birr",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.217665,
+    "lat": 47.435847,
+    "dwv": 690,
+    "dtv": 540,
+    "dnwv": 220,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 690
+      },
+      {
+        "jahr": 2022,
+        "dwv": 580
+      },
+      {
+        "jahr": 2023,
+        "dwv": 650
+      },
+      {
+        "jahr": 2024,
+        "dwv": 670
+      },
+      {
+        "jahr": 2025,
+        "dwv": 690
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Birr",
+    "abkuerzung": "BIRR",
+    "hoehe_m_ue_m": 398,
+    "gemeinde": "Birr",
+    "ortschaft": "Birr",
+    "bezirk": "Brugg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 1404.09,
+        "niveaufreier_zugang": "ja",
+        "linie": 647
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "5",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Birr",
+      "bis": "Brunegg",
+      "strecke_nr": 34,
+      "strecke": "Brugg - Othmarsingen - Hendschiken",
+      "art": "Gueterverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 36715,
+      "zuege_pro_tag": 101
+    },
+    "staerkster_personenverkehr": {
+      "von": "Birr",
+      "bis": "Brunegg",
+      "strecke_nr": 34,
+      "strecke": "Brugg - Othmarsingen - Hendschiken",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 31485,
+      "zuege_pro_tag": 86
+    },
+    "abschnitte": [
+      {
+        "von": "Birr",
+        "bis": "Brunegg",
+        "strecke_nr": 34,
+        "strecke": "Brugg - Othmarsingen - Hendschiken",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36715,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Lupfig",
+        "bis": "Birr",
+        "strecke_nr": 34,
+        "strecke": "Brugg - Othmarsingen - Hendschiken",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36715,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Birr",
+        "bis": "Brunegg",
+        "strecke_nr": 34,
+        "strecke": "Brugg - Othmarsingen - Hendschiken",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31485,
+        "zuege_pro_tag": 86
+      },
+      {
+        "von": "Lupfig",
+        "bis": "Birr",
+        "strecke_nr": 34,
+        "strecke": "Brugg - Othmarsingen - Hendschiken",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31485,
+        "zuege_pro_tag": 86
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 647,
+        "name": "Brugg - Hendschiken Nord",
+        "km": 5.29376
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/43d8f5286716c6025fbe7a34ea7fc0c4"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

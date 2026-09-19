@@ -1,0 +1,242 @@
+{
+  "uic": 8500022,
+  "name": "Frenkendorf-Füllinsdorf",
+  "kanton": "BL",
+  "bps": "FRE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Frenkendorf-Füllinsdorf",
+    "kanton": "BL",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.719111,
+    "lat": 47.50147,
+    "dwv": 4200,
+    "dtv": 3500,
+    "dnwv": 2100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 4200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Frenkendorf-Füllinsdorf",
+    "abkuerzung": "FRE",
+    "hoehe_m_ue_m": 310.96,
+    "gemeinde": "Frenkendorf",
+    "ortschaft": "Frenkendorf",
+    "bezirk": "Liestal",
+    "kanton": "Basel-Landschaft",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 226,
+    "kuerzeste_m": 221,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 226,
+        "flaeche_netto_m2": 570.53,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 221,
+        "flaeche_netto_m2": 723.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 165,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 227,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 142,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Pratteln",
+      "bis": "Frenkendorf-Füllinsdorf",
+      "strecke_nr": 27,
+      "strecke": "Muttenz - HBT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 43003,
+      "zuege_pro_tag": 118
+    },
+    "staerkster_personenverkehr": {
+      "von": "Pratteln",
+      "bis": "Frenkendorf-Füllinsdorf",
+      "strecke_nr": 27,
+      "strecke": "Muttenz - HBT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 43003,
+      "zuege_pro_tag": 118
+    },
+    "abschnitte": [
+      {
+        "von": "Pratteln",
+        "bis": "Frenkendorf-Füllinsdorf",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 43003,
+        "zuege_pro_tag": 118
+      },
+      {
+        "von": "Frenkendorf-Füllinsdorf",
+        "bis": "Liestal Nord (Abzw)",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42942,
+        "zuege_pro_tag": 118
+      },
+      {
+        "von": "Pratteln",
+        "bis": "Frenkendorf-Füllinsdorf",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24386,
+        "zuege_pro_tag": 67
+      },
+      {
+        "von": "Frenkendorf-Füllinsdorf",
+        "bis": "Liestal Nord (Abzw)",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21490,
+        "zuege_pro_tag": 59
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 12.19992
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8d8259dcecd35356bbd797ad20eee8c2"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

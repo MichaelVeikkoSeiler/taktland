@@ -1,0 +1,239 @@
+{
+  "uic": 8502009,
+  "name": "Sempach-Neuenkirch",
+  "kanton": "LU",
+  "bps": "SEM",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Sempach-Neuenkirch",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.195979,
+    "lat": 47.116053,
+    "dwv": 2600,
+    "dtv": 2400,
+    "dnwv": 1800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Sempach-Neuenkirch",
+    "abkuerzung": "SEM",
+    "hoehe_m_ue_m": 514,
+    "gemeinde": "Neuenkirch",
+    "ortschaft": "Sempach Station",
+    "bezirk": "Sursee",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 152,
+    "kuerzeste_m": 152,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 152,
+        "flaeche_netto_m2": 485.29,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 152,
+        "flaeche_netto_m2": 401.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 212,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 221,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sempach-Neuenkirch",
+      "bis": "Rothenburg Station",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86249,
+      "zuege_pro_tag": 236
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sempach-Neuenkirch",
+      "bis": "Rothenburg Station",
+      "strecke_nr": 38,
+      "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86249,
+      "zuege_pro_tag": 236
+    },
+    "abschnitte": [
+      {
+        "von": "Sempach-Neuenkirch",
+        "bis": "Rothenburg Station",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86249,
+        "zuege_pro_tag": 236
+      },
+      {
+        "von": "Nottwil",
+        "bis": "Sempach-Neuenkirch",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86244,
+        "zuege_pro_tag": 236
+      },
+      {
+        "von": "Nottwil",
+        "bis": "Sempach-Neuenkirch",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5237,
+        "zuege_pro_tag": 14
+      },
+      {
+        "von": "Sempach-Neuenkirch",
+        "bis": "Rothenburg Station",
+        "strecke_nr": 38,
+        "strecke": "Aarburg-Oftringen/Aarburg-Oftringen West - Zofingen - Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5233,
+        "zuege_pro_tag": 14
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 78.9919
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4e40cdfe3db4d14c59b03e5a74c2f766"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

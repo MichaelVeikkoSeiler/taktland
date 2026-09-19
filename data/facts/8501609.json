@@ -1,0 +1,345 @@
+{
+  "uic": 8501609,
+  "name": "Brig",
+  "kanton": "VS",
+  "bps": "BR",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Brig",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "BLS, MGB, RegionAlps, SBB",
+    "lon": 7.988095,
+    "lat": 46.319423,
+    "dwv": 21400,
+    "dtv": 21200,
+    "dnwv": 20900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 17000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 17500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 20700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 21000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 21400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Brig",
+    "abkuerzung": "BR",
+    "hoehe_m_ue_m": 677.74,
+    "gemeinde": "Brig-Glis",
+    "ortschaft": "Brig",
+    "bezirk": "Brig",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 4,
+    "laengste_m": 456,
+    "kuerzeste_m": 390,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 456,
+        "flaeche_netto_m2": 3536.87,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 455,
+        "flaeche_netto_m2": 2590.78,
+        "niveaufreier_zugang": "ja",
+        "linie": 107
+      },
+      {
+        "nr": "8/9",
+        "typ": "Mittelperron",
+        "laenge_m": 416,
+        "flaeche_netto_m2": 3118.37,
+        "niveaufreier_zugang": "ja",
+        "linie": 107
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 390,
+        "flaeche_netto_m2": 2341.5,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 7,
+    "nummern": [
+      "1",
+      "3",
+      "4",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "perronhoehen_cm": [
+      20,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 391,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 428,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 429,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 358,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 359,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 270,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "9",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 271,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 28,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2,
+      "55": 26
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 7,
+    "gleise_mit_daten": 7
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Brig-Lötschberg (Abzw)",
+      "bis": "Brig",
+      "strecke_nr": 117,
+      "strecke": "Brig",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 89186,
+      "zuege_pro_tag": 244
+    },
+    "staerkster_personenverkehr": {
+      "von": "Brig-Lötschberg (Abzw)",
+      "bis": "Brig",
+      "strecke_nr": 117,
+      "strecke": "Brig",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 89186,
+      "zuege_pro_tag": 244
+    },
+    "abschnitte": [
+      {
+        "von": "Brig-Lötschberg (Abzw)",
+        "bis": "Brig",
+        "strecke_nr": 117,
+        "strecke": "Brig",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 89186,
+        "zuege_pro_tag": 244
+      },
+      {
+        "von": "Brig",
+        "bis": "Brig Tunnel",
+        "strecke_nr": 117,
+        "strecke": "Brig",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24340,
+        "zuege_pro_tag": 67
+      },
+      {
+        "von": "Brig-Lötschberg (Abzw)",
+        "bis": "Brig",
+        "strecke_nr": 117,
+        "strecke": "Brig",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20747,
+        "zuege_pro_tag": 57
+      },
+      {
+        "von": "Brig",
+        "bis": "Brig Tunnel",
+        "strecke_nr": 117,
+        "strecke": "Brig",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11932,
+        "zuege_pro_tag": 33
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 145.5485
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 0,
+    "billettentwerter": 8,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/21efd6989d0b1758fb54d453291a97ea"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-brig-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-brig-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

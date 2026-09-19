@@ -1,0 +1,287 @@
+{
+  "uic": 8501117,
+  "name": "Bussigny",
+  "kanton": "VD",
+  "bps": "BY",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bussigny",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.551826,
+    "lat": 46.54759,
+    "dwv": 7100,
+    "dtv": 6100,
+    "dnwv": 3700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 6400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 7100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bussigny",
+    "abkuerzung": "BY",
+    "hoehe_m_ue_m": 406.8,
+    "gemeinde": "Bussigny",
+    "ortschaft": "Bussigny",
+    "bezirk": "Ouest lausannois",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 1106.84,
+        "niveaufreier_zugang": "ja",
+        "linie": 200
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 346.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 200
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 150,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bussigny",
+      "bis": "Vufflens-la-Ville",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 93595,
+      "zuege_pro_tag": 256
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bussigny",
+      "bis": "Vufflens-la-Ville",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 93595,
+      "zuege_pro_tag": 256
+    },
+    "abschnitte": [
+      {
+        "von": "Bussigny",
+        "bis": "Vufflens-la-Ville",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 93595,
+        "zuege_pro_tag": 256
+      },
+      {
+        "von": "Renens VD Ouest (bif)",
+        "bis": "Bussigny",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 89296,
+        "zuege_pro_tag": 245
+      },
+      {
+        "von": "Bussigny",
+        "bis": "Vufflens-la-Ville",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32222,
+        "zuege_pro_tag": 88
+      },
+      {
+        "von": "Lausanne-Triage Nord",
+        "bis": "Bussigny",
+        "strecke_nr": 102,
+        "strecke": "Lausanne Triage",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14450,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Lausanne-Triage Est",
+        "bis": "Bussigny",
+        "strecke_nr": 102,
+        "strecke": "Lausanne Triage",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13555,
+        "zuege_pro_tag": 37
+      },
+      {
+        "von": "Renens VD Ouest (bif)",
+        "bis": "Bussigny",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4608,
+        "zuege_pro_tag": 13
+      },
+      {
+        "von": "Lausanne-Triage Nord",
+        "bis": "Bussigny",
+        "strecke_nr": 102,
+        "strecke": "Lausanne Triage",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4175,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Lausanne-Triage Est",
+        "bis": "Bussigny",
+        "strecke_nr": 102,
+        "strecke": "Lausanne Triage",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 59,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 169,
+        "name": "Lausanne-Triage sect. - Bussigny",
+        "km": 14.92027
+      },
+      {
+        "nummer": 200,
+        "name": "Renens VD Ouest - Vallorbe",
+        "km": 6.9281
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/92fff477551557c64da0f7bdd35e7dd9"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

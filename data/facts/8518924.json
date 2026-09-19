@@ -1,0 +1,206 @@
+{
+  "uic": 8518924,
+  "name": "Neuhausen Rheinfall",
+  "kanton": "SH",
+  "bps": "NHRH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Neuhausen Rheinfall",
+    "kanton": "SH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.616946,
+    "lat": 47.679805,
+    "dwv": 1300,
+    "dtv": 1400,
+    "dnwv": 1500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 730
+      },
+      {
+        "jahr": 2022,
+        "dwv": 820
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Neuhausen Rheinfall",
+    "abkuerzung": "NHRH",
+    "hoehe_m_ue_m": 402.4,
+    "gemeinde": "Neuhausen am Rheinfall",
+    "ortschaft": "Neuhausen am Rheinfall",
+    "bezirk": "Schaffhausen",
+    "kanton": "Schaffhausen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 314,
+    "kuerzeste_m": 314,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 314,
+        "flaeche_netto_m2": 990.43,
+        "niveaufreier_zugang": "ja",
+        "linie": 770
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Fischerhölzli",
+      "bis": "Neuhausen Rheinfall",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55281,
+      "zuege_pro_tag": 151
+    },
+    "staerkster_personenverkehr": {
+      "von": "Fischerhölzli",
+      "bis": "Neuhausen Rheinfall",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55281,
+      "zuege_pro_tag": 151
+    },
+    "abschnitte": [
+      {
+        "von": "Fischerhölzli",
+        "bis": "Neuhausen Rheinfall",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55281,
+        "zuege_pro_tag": 151
+      },
+      {
+        "von": "Neuhausen Rheinfall",
+        "bis": "Neuhausen",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55281,
+        "zuege_pro_tag": 151
+      },
+      {
+        "von": "Fischerhölzli",
+        "bis": "Neuhausen Rheinfall",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3864,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Neuhausen Rheinfall",
+        "bis": "Neuhausen",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3864,
+        "zuege_pro_tag": 11
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 770,
+        "name": "Bulach - Eglisau - Neuhausen",
+        "km": 39.05
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4b1bac260d9bd29c0503faf2e34740d1"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

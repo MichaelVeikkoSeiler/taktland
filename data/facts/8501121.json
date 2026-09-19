@@ -1,0 +1,189 @@
+{
+  "uic": 8501121,
+  "name": "Pully",
+  "kanton": "VD",
+  "bps": "PU",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Pully",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.659468,
+    "lat": 46.510924,
+    "dwv": 4600,
+    "dtv": 4000,
+    "dnwv": 2700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 4600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Pully",
+    "abkuerzung": "PU",
+    "hoehe_m_ue_m": 424.8,
+    "gemeinde": "Pully",
+    "ortschaft": "Pully",
+    "bezirk": "Lavaux-Oron",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 235,
+    "kuerzeste_m": 189,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 235,
+        "flaeche_netto_m2": 906.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 189,
+        "flaeche_netto_m2": 682.48,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Taillepied (diag)",
+      "bis": "Pully",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 110928,
+      "zuege_pro_tag": 304
+    },
+    "staerkster_personenverkehr": {
+      "von": "Taillepied (diag)",
+      "bis": "Pully",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 110928,
+      "zuege_pro_tag": 304
+    },
+    "abschnitte": [
+      {
+        "von": "Taillepied (diag)",
+        "bis": "Pully",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 110928,
+        "zuege_pro_tag": 304
+      },
+      {
+        "von": "Lausanne",
+        "bis": "Pully",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 110927,
+        "zuege_pro_tag": 304
+      },
+      {
+        "von": "Lausanne",
+        "bis": "Pully",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9371,
+        "zuege_pro_tag": 26
+      },
+      {
+        "von": "Taillepied (diag)",
+        "bis": "Pully",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9371,
+        "zuege_pro_tag": 26
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 2.506
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/208a6e0f069bb03eb934d16b27c59a24"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

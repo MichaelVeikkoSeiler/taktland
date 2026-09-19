@@ -1,0 +1,181 @@
+{
+  "uic": 8506004,
+  "name": "Kollbrunn",
+  "kanton": "ZH",
+  "bps": "KOL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Kollbrunn",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.774017,
+    "lat": 47.458324,
+    "dwv": 2000,
+    "dtv": 1700,
+    "dnwv": 1000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Kollbrunn",
+    "abkuerzung": "KOL",
+    "hoehe_m_ue_m": 493,
+    "gemeinde": "Zell (ZH)",
+    "ortschaft": "Kollbrunn",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 467.59,
+        "niveaufreier_zugang": "ja",
+        "linie": 754
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Kollbrunn",
+      "bis": "Rikon",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 36885,
+      "zuege_pro_tag": 101
+    },
+    "staerkster_personenverkehr": {
+      "von": "Kollbrunn",
+      "bis": "Rikon",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 36885,
+      "zuege_pro_tag": 101
+    },
+    "abschnitte": [
+      {
+        "von": "Kollbrunn",
+        "bis": "Rikon",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36885,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Sennhof-Kyburg",
+        "bis": "Kollbrunn",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36885,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Kollbrunn",
+        "bis": "Rikon",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Sennhof-Kyburg",
+        "bis": "Kollbrunn",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 754,
+        "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+        "km": 8.64454
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/bfb737b2d1c1f99cf5f5ae9dd74f0275"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

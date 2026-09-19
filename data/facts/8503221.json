@@ -1,0 +1,230 @@
+{
+  "uic": 8503221,
+  "name": "Siebnen-Wangen",
+  "kanton": "SZ",
+  "bps": "SIB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Siebnen-Wangen",
+    "kanton": "SZ",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.900714,
+    "lat": 47.182671,
+    "dwv": 3900,
+    "dtv": 3400,
+    "dnwv": 2300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Siebnen-Wangen",
+    "abkuerzung": "SIB",
+    "hoehe_m_ue_m": 433.1,
+    "gemeinde": "Wangen (SZ)",
+    "ortschaft": "Siebnen",
+    "bezirk": "March",
+    "kanton": "Schwyz",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 322,
+    "kuerzeste_m": 322,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 322,
+        "flaeche_netto_m2": 1276.97,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      42
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 323,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 323,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "42": 4
+    },
+    "segmente_mit_hilfstritt": 4,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Lachen SZ",
+      "bis": "Siebnen-Wangen",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84623,
+      "zuege_pro_tag": 232
+    },
+    "staerkster_personenverkehr": {
+      "von": "Lachen SZ",
+      "bis": "Siebnen-Wangen",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84623,
+      "zuege_pro_tag": 232
+    },
+    "abschnitte": [
+      {
+        "von": "Lachen SZ",
+        "bis": "Siebnen-Wangen",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84623,
+        "zuege_pro_tag": 232
+      },
+      {
+        "von": "Siebnen-Wangen",
+        "bis": "Schübelbach-Buttikon",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84555,
+        "zuege_pro_tag": 232
+      },
+      {
+        "von": "Lachen SZ",
+        "bis": "Siebnen-Wangen",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7403,
+        "zuege_pro_tag": 20
+      },
+      {
+        "von": "Siebnen-Wangen",
+        "bis": "Schübelbach-Buttikon",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7400,
+        "zuege_pro_tag": 20
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 720,
+        "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
+        "km": 43.48406
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a19701cfad3e4dd6f0ae14438403f7a3"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

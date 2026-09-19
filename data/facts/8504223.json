@@ -1,0 +1,250 @@
+{
+  "uic": 8504223,
+  "name": "Cornaux NE",
+  "kanton": "NE",
+  "bps": "CORN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Cornaux NE",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.023366,
+    "lat": 47.038572,
+    "dwv": 640,
+    "dtv": 530,
+    "dnwv": 270,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 540
+      },
+      {
+        "jahr": 2022,
+        "dwv": 550
+      },
+      {
+        "jahr": 2023,
+        "dwv": 620
+      },
+      {
+        "jahr": 2024,
+        "dwv": 600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 640
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Cornaux NE",
+    "abkuerzung": "CORN",
+    "hoehe_m_ue_m": 435.01,
+    "gemeinde": "Cornaux",
+    "ortschaft": "Cornaux NE",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 190,
+    "kuerzeste_m": 187,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 190,
+        "flaeche_netto_m2": 948.12,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 187,
+        "flaeche_netto_m2": 666.65,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      25,
+      30
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          25,
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 221,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 6,
+      "30": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "St-Blaise CFF",
+      "bis": "Cornaux NE",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 51734,
+      "zuege_pro_tag": 142
+    },
+    "staerkster_personenverkehr": {
+      "von": "St-Blaise CFF",
+      "bis": "Cornaux NE",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 51734,
+      "zuege_pro_tag": 142
+    },
+    "abschnitte": [
+      {
+        "von": "St-Blaise CFF",
+        "bis": "Cornaux NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 51734,
+        "zuege_pro_tag": 142
+      },
+      {
+        "von": "Cornaux NE",
+        "bis": "Cressier NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 51728,
+        "zuege_pro_tag": 142
+      },
+      {
+        "von": "Cornaux NE",
+        "bis": "Cressier NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24516,
+        "zuege_pro_tag": 67
+      },
+      {
+        "von": "St-Blaise CFF",
+        "bis": "Cornaux NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21418,
+        "zuege_pro_tag": 59
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 83.60063
+      },
+      {
+        "nummer": 216,
+        "name": "Cornaux - Raffinerie - Juracime",
+        "km": 0
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/272a5255690fd037343ba1e977018a64"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "uic": 8504404,
+  "name": "Aarberg",
+  "kanton": "BE",
+  "bps": "ABE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Aarberg",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.278693,
+    "lat": 47.044541,
+    "dwv": 610,
+    "dtv": 560,
+    "dnwv": 440,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 690
+      },
+      {
+        "jahr": 2022,
+        "dwv": 580
+      },
+      {
+        "jahr": 2023,
+        "dwv": 620
+      },
+      {
+        "jahr": 2024,
+        "dwv": 650
+      },
+      {
+        "jahr": 2025,
+        "dwv": 610
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Aarberg",
+    "abkuerzung": "ABE",
+    "hoehe_m_ue_m": 448.72,
+    "gemeinde": "Aarberg",
+    "ortschaft": "Aarberg",
+    "bezirk": "Seeland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 122,
+    "kuerzeste_m": 122,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 122,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 251
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 128,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Aarberg",
+      "bis": "Lyss Grien",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14439,
+      "zuege_pro_tag": 40
+    },
+    "staerkster_personenverkehr": {
+      "von": "Aarberg",
+      "bis": "Lyss Grien",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14439,
+      "zuege_pro_tag": 40
+    },
+    "abschnitte": [
+      {
+        "von": "Aarberg",
+        "bis": "Lyss Grien",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14439,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Bargen BE",
+        "bis": "Aarberg",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14210,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Aarberg",
+        "bis": "Lyss Grien",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2132,
+        "zuege_pro_tag": 6
+      },
+      {
+        "von": "Bargen BE",
+        "bis": "Aarberg",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 783,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 251,
+        "name": "Palezieux Est - Lyss Nord",
+        "km": 95.49304
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/efcd2abb1bfcefe65b7e2cabf33e2685"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

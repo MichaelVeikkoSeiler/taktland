@@ -1,0 +1,233 @@
+{
+  "uic": 8501603,
+  "name": "Gampel-Steg",
+  "kanton": "VS",
+  "bps": "GA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Gampel-Steg",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "RegionAlps, SBB",
+    "lon": 7.747581,
+    "lat": 46.306515,
+    "dwv": 930,
+    "dtv": 800,
+    "dnwv": 500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 630
+      },
+      {
+        "jahr": 2022,
+        "dwv": 850
+      },
+      {
+        "jahr": 2023,
+        "dwv": 950
+      },
+      {
+        "jahr": 2024,
+        "dwv": 900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 930
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Gampel-Steg",
+    "abkuerzung": "GA",
+    "hoehe_m_ue_m": 631.886,
+    "gemeinde": "Steg-Hohtenn",
+    "ortschaft": "Steg VS",
+    "bezirk": "Raron",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 260,
+    "kuerzeste_m": 100,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 260,
+        "flaeche_netto_m2": 1131.85,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 100,
+        "flaeche_netto_m2": 0,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      30,
+      42
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          42
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 260,
+        "sektoren": []
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 260,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 2,
+      "42": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Gampel-Steg",
+      "bis": "Raron",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55770,
+      "zuege_pro_tag": 153
+    },
+    "staerkster_personenverkehr": {
+      "von": "Gampel-Steg",
+      "bis": "Raron",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55770,
+      "zuege_pro_tag": 153
+    },
+    "abschnitte": [
+      {
+        "von": "Gampel-Steg",
+        "bis": "Raron",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55770,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "Turtmann",
+        "bis": "Gampel-Steg",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54803,
+        "zuege_pro_tag": 150
+      },
+      {
+        "von": "Gampel-Steg",
+        "bis": "Raron",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3749,
+        "zuege_pro_tag": 10
+      },
+      {
+        "von": "Turtmann",
+        "bis": "Gampel-Steg",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3632,
+        "zuege_pro_tag": 10
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 125.8725
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/882d333d509e8df733f5ee01c72c21bd"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

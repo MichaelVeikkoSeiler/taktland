@@ -1,0 +1,189 @@
+{
+  "uic": 8501042,
+  "name": "Etoy",
+  "kanton": "VD",
+  "bps": "ETOY",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Etoy",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.427135,
+    "lat": 46.475173,
+    "dwv": 2100,
+    "dtv": 1700,
+    "dnwv": 770,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Etoy",
+    "abkuerzung": "ETOY",
+    "hoehe_m_ue_m": 406.49,
+    "gemeinde": "Etoy",
+    "ortschaft": "Etoy",
+    "bezirk": "Morges",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 202,
+    "kuerzeste_m": 196,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 202,
+        "flaeche_netto_m2": 255.93,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 196,
+        "flaeche_netto_m2": 248.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Allaman",
+      "bis": "Etoy",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 116503,
+      "zuege_pro_tag": 319
+    },
+    "staerkster_personenverkehr": {
+      "von": "Allaman",
+      "bis": "Etoy",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 116503,
+      "zuege_pro_tag": 319
+    },
+    "abschnitte": [
+      {
+        "von": "Allaman",
+        "bis": "Etoy",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 116503,
+        "zuege_pro_tag": 319
+      },
+      {
+        "von": "Etoy",
+        "bis": "St-Prex",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 116503,
+        "zuege_pro_tag": 319
+      },
+      {
+        "von": "Allaman",
+        "bis": "Etoy",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12426,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Etoy",
+        "bis": "St-Prex",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12426,
+        "zuege_pro_tag": 34
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 19.34854
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/39b9d7ba335cfaa81d94eb621b173bcd"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

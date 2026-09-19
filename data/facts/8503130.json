@@ -1,0 +1,216 @@
+{
+  "uic": 8503130,
+  "name": "Hinwil",
+  "kanton": "ZH",
+  "bps": "HI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Hinwil",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.83972,
+    "lat": 47.300057,
+    "dwv": 3100,
+    "dtv": 2700,
+    "dnwv": 2000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Hinwil",
+    "abkuerzung": "HI",
+    "hoehe_m_ue_m": 565.5,
+    "gemeinde": "Hinwil",
+    "ortschaft": "Hinwil",
+    "bezirk": "Hinwil",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 296,
+    "kuerzeste_m": 296,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 296,
+        "flaeche_netto_m2": 1294.39,
+        "niveaufreier_zugang": "ja",
+        "linie": 753
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 296,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 298,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Wetzikon ZH",
+      "bis": "Hinwil",
+      "strecke_nr": 66,
+      "strecke": "Effretikon - Wetzikon - Hinwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30173,
+      "zuege_pro_tag": 83
+    },
+    "staerkster_personenverkehr": {
+      "von": "Wetzikon ZH",
+      "bis": "Hinwil",
+      "strecke_nr": 66,
+      "strecke": "Effretikon - Wetzikon - Hinwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30173,
+      "zuege_pro_tag": 83
+    },
+    "abschnitte": [
+      {
+        "von": "Wetzikon ZH",
+        "bis": "Hinwil",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30173,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Wetzikon ZH",
+        "bis": "Hinwil",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1719,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 753,
+        "name": "Effretikon - Wetzikon - Hinwil",
+        "km": 22.54311
+      },
+      {
+        "nummer": 742,
+        "name": "Hinwil - Baretswil - Bauma",
+        "km": 13.96577
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c1403f888035cf02def4cc692bbd06b8"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

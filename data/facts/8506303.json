@@ -1,0 +1,259 @@
+{
+  "uic": 8506303,
+  "name": "St. Gallen St. Fiden",
+  "kanton": "SG",
+  "bps": "SGF",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "St. Gallen St. Fiden",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB, Thurbo",
+    "lon": 9.393444,
+    "lat": 47.43454,
+    "dwv": 3200,
+    "dtv": 2800,
+    "dnwv": 2000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "St. Gallen St. Fiden",
+    "abkuerzung": "SGF",
+    "hoehe_m_ue_m": 645.5,
+    "gemeinde": "St. Gallen",
+    "ortschaft": "St. Gallen",
+    "bezirk": "St. Gallen",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 224,
+    "kuerzeste_m": 222,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 224,
+        "flaeche_netto_m2": 1013.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      },
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": 964.7,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 173,
+        "sektoren": [
+          "-",
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 173,
+        "sektoren": [
+          "-",
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 173,
+        "sektoren": [
+          "-",
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "St. Gallen",
+      "bis": "St. Gallen St. Fiden",
+      "strecke_nr": 72,
+      "strecke": "St.Gallen - Rorschach - St.Margrethen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 134185,
+      "zuege_pro_tag": 368
+    },
+    "staerkster_personenverkehr": {
+      "von": "St. Gallen",
+      "bis": "St. Gallen St. Fiden",
+      "strecke_nr": 72,
+      "strecke": "St.Gallen - Rorschach - St.Margrethen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 134185,
+      "zuege_pro_tag": 368
+    },
+    "abschnitte": [
+      {
+        "von": "St. Gallen",
+        "bis": "St. Gallen St. Fiden",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 134185,
+        "zuege_pro_tag": 368
+      },
+      {
+        "von": "St. Gallen St. Fiden",
+        "bis": "St. Gallen St. Fiden Nord",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Personenverkehr",
+        "richtungen": 4,
+        "zuege_pro_jahr": 130387,
+        "zuege_pro_tag": 357
+      },
+      {
+        "von": "St. Gallen",
+        "bis": "St. Gallen St. Fiden",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3481,
+        "zuege_pro_tag": 10
+      },
+      {
+        "von": "St. Gallen St. Fiden",
+        "bis": "St. Gallen St. Fiden Nord",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Gueterverkehr",
+        "richtungen": 4,
+        "zuege_pro_jahr": 3429,
+        "zuege_pro_tag": 9
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 869,
+        "name": "Romanshorn Sud - St.Gallen St.Fiden",
+        "km": 19.12693
+      },
+      {
+        "nummer": 880,
+        "name": "Sargans Ost - St.Gallen",
+        "km": 78.15556
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/5034e73205eec03557aa65db03c36d88"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

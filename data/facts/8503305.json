@@ -1,0 +1,318 @@
+{
+  "uic": 8503305,
+  "name": "Effretikon",
+  "kanton": "ZH",
+  "bps": "EF",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Effretikon",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.686679,
+    "lat": 47.425812,
+    "dwv": 20300,
+    "dtv": 17400,
+    "dnwv": 11100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 19700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 17500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 19400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 20000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 20300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Effretikon",
+    "abkuerzung": "EF",
+    "hoehe_m_ue_m": 509.6,
+    "gemeinde": "Illnau-Effretikon",
+    "ortschaft": "Effretikon",
+    "bezirk": "Pfäffikon",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 365,
+    "kuerzeste_m": 328,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 365,
+        "flaeche_netto_m2": 917.65,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      },
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 339,
+        "flaeche_netto_m2": 1108.08,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 328,
+        "flaeche_netto_m2": 1287.18,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 143,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 173,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 184,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 224,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 225,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 14,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 14
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Hürlistein (Abzw)",
+      "bis": "Effretikon",
+      "strecke_nr": 62,
+      "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 265585,
+      "zuege_pro_tag": 728
+    },
+    "staerkster_personenverkehr": {
+      "von": "Hürlistein (Abzw)",
+      "bis": "Effretikon",
+      "strecke_nr": 62,
+      "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 265585,
+      "zuege_pro_tag": 728
+    },
+    "abschnitte": [
+      {
+        "von": "Hürlistein (Abzw)",
+        "bis": "Effretikon",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 265585,
+        "zuege_pro_tag": 728
+      },
+      {
+        "von": "Effretikon",
+        "bis": "Kemptthal",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 217366,
+        "zuege_pro_tag": 596
+      },
+      {
+        "von": "Effretikon",
+        "bis": "Illnau",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33756,
+        "zuege_pro_tag": 92
+      },
+      {
+        "von": "Hürlistein (Abzw)",
+        "bis": "Effretikon",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16163,
+        "zuege_pro_tag": 44
+      },
+      {
+        "von": "Effretikon",
+        "bis": "Kemptthal",
+        "strecke_nr": 62,
+        "strecke": "Zürich Oerlikon-Nord / Zürich Seebach - Zürich Flughafen / Kloten - Winterthur West",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15243,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Effretikon",
+        "bis": "Illnau",
+        "strecke_nr": 66,
+        "strecke": "Effretikon - Wetzikon - Hinwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 517,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 753,
+        "name": "Effretikon - Wetzikon - Hinwil",
+        "km": -0.01948
+      },
+      {
+        "nummer": 751,
+        "name": "ZH Langstr. - Wallisellen - Winterthur",
+        "km": 16.82121
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 9,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c91e55a213877e2d5eb358d52b95a5ed"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

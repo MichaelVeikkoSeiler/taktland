@@ -1,0 +1,211 @@
+{
+  "uic": 8504303,
+  "name": "La Heutte",
+  "kanton": "BE",
+  "bps": "LHE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "La Heutte",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.225396,
+    "lat": 47.189492,
+    "dwv": 150,
+    "dtv": 130,
+    "dnwv": 90,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 180
+      },
+      {
+        "jahr": 2023,
+        "dwv": 160
+      },
+      {
+        "jahr": 2024,
+        "dwv": 120
+      },
+      {
+        "jahr": 2025,
+        "dwv": 150
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "La Heutte",
+    "abkuerzung": "LHE",
+    "hoehe_m_ue_m": 607.429,
+    "gemeinde": "Péry-La Heutte",
+    "ortschaft": "La Heutte",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 181,
+    "kuerzeste_m": 181,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 181,
+        "flaeche_netto_m2": 220.14,
+        "niveaufreier_zugang": "ja",
+        "linie": 225
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      20
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 131,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "La Heutte",
+      "bis": "Reuchenette-Péry",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29812,
+      "zuege_pro_tag": 82
+    },
+    "staerkster_personenverkehr": {
+      "von": "La Heutte",
+      "bis": "Reuchenette-Péry",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29812,
+      "zuege_pro_tag": 82
+    },
+    "abschnitte": [
+      {
+        "von": "La Heutte",
+        "bis": "Reuchenette-Péry",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29812,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Sonceboz-Sombeval",
+        "bis": "La Heutte",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29812,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "La Heutte",
+        "bis": "Reuchenette-Péry",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 383,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Sonceboz-Sombeval",
+        "bis": "La Heutte",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 383,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 225,
+        "name": "Biel/Bienne West - La Chaux-de-Fonds",
+        "km": 43.68453
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d98fef33c14bf80e9eed3ebaf2188ccd"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

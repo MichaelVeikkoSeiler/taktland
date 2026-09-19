@@ -1,0 +1,194 @@
+{
+  "uic": 8504226,
+  "name": "La Neuveville",
+  "kanton": "BE",
+  "bps": "NV",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "La Neuveville",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.095232,
+    "lat": 47.062833,
+    "dwv": 1600,
+    "dtv": 1400,
+    "dnwv": 910,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "La Neuveville",
+    "abkuerzung": "NV",
+    "hoehe_m_ue_m": 433.32,
+    "gemeinde": "La Neuveville",
+    "ortschaft": "La Neuveville",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 324,
+    "kuerzeste_m": 233,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 324,
+        "flaeche_netto_m2": 929.11,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 233,
+        "flaeche_netto_m2": 634.37,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Poudeille",
+      "bis": "La Neuveville",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50902,
+      "zuege_pro_tag": 139
+    },
+    "staerkster_personenverkehr": {
+      "von": "Poudeille",
+      "bis": "La Neuveville",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50902,
+      "zuege_pro_tag": 139
+    },
+    "abschnitte": [
+      {
+        "von": "Poudeille",
+        "bis": "La Neuveville",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50902,
+        "zuege_pro_tag": 139
+      },
+      {
+        "von": "Le Landeron",
+        "bis": "La Neuveville",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50900,
+        "zuege_pro_tag": 139
+      },
+      {
+        "von": "Le Landeron",
+        "bis": "La Neuveville",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24515,
+        "zuege_pro_tag": 67
+      },
+      {
+        "von": "Poudeille",
+        "bis": "La Neuveville",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24515,
+        "zuege_pro_tag": 67
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 90.04861
+      },
+      {
+        "nummer": 9210,
+        "name": "La Neuveville - Tuscherz",
+        "km": 90.04861
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f74b8b78bad3cfc02f03c618526d452f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

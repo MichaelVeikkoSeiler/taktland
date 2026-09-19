@@ -1,0 +1,226 @@
+{
+  "uic": 8517519,
+  "name": "Stabio",
+  "kanton": "TI",
+  "bps": "STAF",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Stabio",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.943942,
+    "lat": 45.84971,
+    "dwv": 1100,
+    "dtv": 870,
+    "dnwv": 370,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 960
+      },
+      {
+        "jahr": 2022,
+        "dwv": 750
+      },
+      {
+        "jahr": 2023,
+        "dwv": 950
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Stabio",
+    "abkuerzung": "STAF",
+    "hoehe_m_ue_m": 344,
+    "gemeinde": "Stabio",
+    "ortschaft": "Stabio",
+    "bezirk": "Mendrisio",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 471.12,
+        "niveaufreier_zugang": "ja",
+        "linie": 634
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 545.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 634
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Stabio Cargo",
+      "bis": "Stabio",
+      "strecke_nr": 49,
+      "strecke": "Mendrisio - Stabio",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25021,
+      "zuege_pro_tag": 69
+    },
+    "staerkster_personenverkehr": {
+      "von": "Stabio Cargo",
+      "bis": "Stabio",
+      "strecke_nr": 49,
+      "strecke": "Mendrisio - Stabio",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25021,
+      "zuege_pro_tag": 69
+    },
+    "abschnitte": [
+      {
+        "von": "Stabio Cargo",
+        "bis": "Stabio",
+        "strecke_nr": 49,
+        "strecke": "Mendrisio - Stabio",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25021,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Stabio",
+        "bis": "Valmorea",
+        "strecke_nr": 49,
+        "strecke": "Mendrisio - Stabio",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22542,
+        "zuege_pro_tag": 62
+      },
+      {
+        "von": "Stabio Cargo",
+        "bis": "Stabio",
+        "strecke_nr": 49,
+        "strecke": "Mendrisio - Stabio",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 634,
+        "name": "Mendrisio Sud - Stabio",
+        "km": 3.55921
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8e5e81939c1a28ff546ac41897eccf0a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

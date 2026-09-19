@@ -1,0 +1,255 @@
+{
+  "uic": 8501022,
+  "name": "Versoix",
+  "kanton": "GE",
+  "bps": "VSX",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Versoix",
+    "kanton": "GE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.165741,
+    "lat": 46.279727,
+    "dwv": 5400,
+    "dtv": 4700,
+    "dnwv": 3000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 5400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Versoix",
+    "abkuerzung": "VSX",
+    "hoehe_m_ue_m": 387.741,
+    "gemeinde": "Versoix",
+    "ortschaft": "Versoix",
+    "bezirk": null,
+    "kanton": "Genève",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 330,
+    "kuerzeste_m": 223,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 330,
+        "flaeche_netto_m2": 651.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 223,
+        "flaeche_netto_m2": 1025.61,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 222,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 331,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 329,
+        "sektoren": [
+          "-",
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 9,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 9
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Creux-de-Genthod",
+      "bis": "Versoix",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 150851,
+      "zuege_pro_tag": 413
+    },
+    "staerkster_personenverkehr": {
+      "von": "Creux-de-Genthod",
+      "bis": "Versoix",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 150851,
+      "zuege_pro_tag": 413
+    },
+    "abschnitte": [
+      {
+        "von": "Creux-de-Genthod",
+        "bis": "Versoix",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 150851,
+        "zuege_pro_tag": 413
+      },
+      {
+        "von": "Versoix",
+        "bis": "Pont-Céard",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 150837,
+        "zuege_pro_tag": 413
+      },
+      {
+        "von": "Creux-de-Genthod",
+        "bis": "Versoix",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10781,
+        "zuege_pro_tag": 30
+      },
+      {
+        "von": "Versoix",
+        "bis": "Pont-Céard",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10781,
+        "zuege_pro_tag": 30
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 51.954
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b678196c3a66ad888f1ce64348412ec1"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

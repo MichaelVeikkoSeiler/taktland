@@ -1,0 +1,534 @@
+{
+  "uic": 8503003,
+  "name": "Zürich Stadelhofen",
+  "kanton": "ZH",
+  "bps": "ZSTH",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zürich Stadelhofen",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.548489,
+    "lat": 47.36661,
+    "dwv": 86700,
+    "dtv": 75200,
+    "dnwv": 49500,
+    "bemerkung": "Ohne FB.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 82800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 71300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 80400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 83700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 86700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zürich Stadelhofen",
+    "abkuerzung": "ZSTH",
+    "hoehe_m_ue_m": 409.7,
+    "gemeinde": "Zürich",
+    "ortschaft": "Zürich",
+    "bezirk": "Zürich",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 82700,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 81000
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 92000
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 84000
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 95000
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 100000
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 88000
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 88200
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 99100
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 89200
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 99500
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 67900
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 59600
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 68100
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 61000
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 81100
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 73300
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 78900
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 86800
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 75500
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 84500
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 93000
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 82700
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 0.6
+      },
+      {
+        "stunde": 6,
+        "prozent": 3.4
+      },
+      {
+        "stunde": 7,
+        "prozent": 9.4
+      },
+      {
+        "stunde": 8,
+        "prozent": 8.5
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.9
+      },
+      {
+        "stunde": 10,
+        "prozent": 3.9
+      },
+      {
+        "stunde": 11,
+        "prozent": 4.3
+      },
+      {
+        "stunde": 12,
+        "prozent": 5.9
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.1
+      },
+      {
+        "stunde": 14,
+        "prozent": 4.9
+      },
+      {
+        "stunde": 15,
+        "prozent": 5.9
+      },
+      {
+        "stunde": 16,
+        "prozent": 8.9
+      },
+      {
+        "stunde": 17,
+        "prozent": 11.6
+      },
+      {
+        "stunde": 18,
+        "prozent": 8.2
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.4
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.2
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.8
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.4
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.2
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 11.6,
+    "wochentage": [
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 16.2
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 16.6
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 8.7
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.7
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 16.1
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.9
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 11.8
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 333,
+    "kuerzeste_m": 333,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 333,
+        "flaeche_netto_m2": 2350.9,
+        "niveaufreier_zugang": "ja",
+        "linie": 745
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 333,
+        "flaeche_netto_m2": 1478.37,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 333,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 333,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zürich HB",
+      "bis": "Zürich Stadelhofen",
+      "strecke_nr": 113,
+      "strecke": "Zürich PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 260851,
+      "zuege_pro_tag": 715
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zürich HB",
+      "bis": "Zürich Stadelhofen",
+      "strecke_nr": 113,
+      "strecke": "Zürich PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 260851,
+      "zuege_pro_tag": 715
+    },
+    "abschnitte": [
+      {
+        "von": "Zürich HB",
+        "bis": "Zürich Stadelhofen",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 260851,
+        "zuege_pro_tag": 715
+      },
+      {
+        "von": "Zürich Stadelhofen",
+        "bis": "Zürich Hottingen (Spw)",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 172289,
+        "zuege_pro_tag": 472
+      },
+      {
+        "von": "Zürich Stadelhofen",
+        "bis": "Zürich Tiefenbrunnen",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 87897,
+        "zuege_pro_tag": 241
+      },
+      {
+        "von": "Zürich HB",
+        "bis": "Zürich Stadelhofen",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3962,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Zürich Stadelhofen",
+        "bis": "Zürich Hottingen (Spw)",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3353,
+        "zuege_pro_tag": 9
+      },
+      {
+        "von": "Zürich Stadelhofen",
+        "bis": "Zürich Tiefenbrunnen",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 609,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 745,
+        "name": "ZH Langstrasse - Dietlikon Sud (S-Bahn)",
+        "km": 101.59088
+      },
+      {
+        "nummer": 730,
+        "name": "Zurich Stadelhofen - Rapperswil",
+        "km": 5.69924
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 6,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 9,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/441193e253bcd674aca62cfda9c4fb40"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zuerich-stadelhofen-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zuerich-stadelhofen-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "uic": 8504000,
+  "name": "Pully-Nord",
+  "kanton": "VD",
+  "bps": "PUN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Pully-Nord",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.657988,
+    "lat": 46.514681,
+    "dwv": 990,
+    "dtv": 900,
+    "dnwv": 710,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 880
+      },
+      {
+        "jahr": 2022,
+        "dwv": 870
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 990
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Pully-Nord",
+    "abkuerzung": "PUN",
+    "hoehe_m_ue_m": 473.38,
+    "gemeinde": "Pully",
+    "ortschaft": "Pully",
+    "bezirk": "Lavaux-Oron",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 177,
+    "kuerzeste_m": 176,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 177,
+        "flaeche_netto_m2": 582.88,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 176,
+        "flaeche_netto_m2": 631.89,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Pully-Nord",
+      "bis": "La Conversion",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78745,
+      "zuege_pro_tag": 216
+    },
+    "staerkster_personenverkehr": {
+      "von": "Pully-Nord",
+      "bis": "La Conversion",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78745,
+      "zuege_pro_tag": 216
+    },
+    "abschnitte": [
+      {
+        "von": "Pully-Nord",
+        "bis": "La Conversion",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78745,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Lausanne",
+        "bis": "Pully-Nord",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78741,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Lausanne",
+        "bis": "Pully-Nord",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3314,
+        "zuege_pro_tag": 9
+      },
+      {
+        "von": "Pully-Nord",
+        "bis": "La Conversion",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3313,
+        "zuege_pro_tag": 9
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 2.3668
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BATS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/eefe91d79859615e7f7a58dfa79dddd2"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "uic": 8504040,
+  "name": "Corseaux-Cornalles",
+  "kanton": "VD",
+  "bps": "CORS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Corseaux-Cornalles",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.824781,
+    "lat": 46.470451,
+    "dwv": 49,
+    "dtv": 49,
+    "dnwv": 49,
+    "bemerkung": "49: weniger als 50 Ein- und Aussteigende.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 80
+      },
+      {
+        "jahr": 2022,
+        "dwv": 100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 110
+      },
+      {
+        "jahr": 2025,
+        "dwv": 49
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Corseaux-Cornalles",
+    "abkuerzung": "CORS",
+    "hoehe_m_ue_m": 419.939,
+    "gemeinde": "Corseaux",
+    "ortschaft": "Corseaux",
+    "bezirk": "Riviera-Pays-d'Enhaut",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 70,
+    "kuerzeste_m": 70,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 70,
+        "flaeche_netto_m2": 116.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 111
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 82,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Chexbres-Village",
+      "bis": "Corseaux-Cornalles",
+      "strecke_nr": 84,
+      "strecke": "Vevey - Puidoux-Chexbres",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14143,
+      "zuege_pro_tag": 39
+    },
+    "staerkster_personenverkehr": {
+      "von": "Chexbres-Village",
+      "bis": "Corseaux-Cornalles",
+      "strecke_nr": 84,
+      "strecke": "Vevey - Puidoux-Chexbres",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14143,
+      "zuege_pro_tag": 39
+    },
+    "abschnitte": [
+      {
+        "von": "Chexbres-Village",
+        "bis": "Corseaux-Cornalles",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14143,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Corseaux-Cornalles",
+        "bis": "Vevey-Funi",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14143,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Chexbres-Village",
+        "bis": "Corseaux-Cornalles",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 255,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Corseaux-Cornalles",
+        "bis": "Vevey-Funi",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 255,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 111,
+        "name": "Vevey Ouest - Puidoux-Chexbres",
+        "km": 1.75
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/26788c0a6111e6c7520c8c09cdc86c1c"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "uic": 8501047,
+  "name": "Morges-St-Jean",
+  "kanton": "VD",
+  "bps": "STJ",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Morges-St-Jean",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.508044,
+    "lat": 46.518195,
+    "dwv": 630,
+    "dtv": 530,
+    "dnwv": 310,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 620
+      },
+      {
+        "jahr": 2022,
+        "dwv": 540
+      },
+      {
+        "jahr": 2023,
+        "dwv": 580
+      },
+      {
+        "jahr": 2024,
+        "dwv": 700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 630
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Morges-St-Jean",
+    "abkuerzung": "STJ",
+    "hoehe_m_ue_m": 380.161,
+    "gemeinde": "Morges",
+    "ortschaft": "Morges",
+    "bezirk": "Morges",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 242,
+    "kuerzeste_m": 151,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 242,
+        "flaeche_netto_m2": 289.8,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 151,
+        "flaeche_netto_m2": 207.3,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Morges-St-Jean",
+      "bis": "Lonay-Préverenges",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 118214,
+      "zuege_pro_tag": 324
+    },
+    "staerkster_personenverkehr": {
+      "von": "Morges-St-Jean",
+      "bis": "Lonay-Préverenges",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 118214,
+      "zuege_pro_tag": 324
+    },
+    "abschnitte": [
+      {
+        "von": "Morges-St-Jean",
+        "bis": "Lonay-Préverenges",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 118214,
+        "zuege_pro_tag": 324
+      },
+      {
+        "von": "Morges",
+        "bis": "Morges-St-Jean",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 118213,
+        "zuege_pro_tag": 324
+      },
+      {
+        "von": "Morges",
+        "bis": "Morges-St-Jean",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12073,
+        "zuege_pro_tag": 33
+      },
+      {
+        "von": "Morges-St-Jean",
+        "bis": "Lonay-Préverenges",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12073,
+        "zuege_pro_tag": 33
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 11.162
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/2ce42e7fda69b1ba381432acaf9fa78f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,327 @@
+{
+  "uic": 8503508,
+  "name": "Dietikon",
+  "kanton": "ZH",
+  "bps": "DT",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Dietikon",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.404988,
+    "lat": 47.405784,
+    "dwv": 24300,
+    "dtv": 21200,
+    "dnwv": 14400,
+    "bemerkung": "Ohne AVA.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 23700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 21100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 23700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 24400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 24300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Dietikon",
+    "abkuerzung": "DT",
+    "hoehe_m_ue_m": 388.3,
+    "gemeinde": "Dietikon",
+    "ortschaft": "Dietikon",
+    "bezirk": "Dietikon",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 407,
+    "kuerzeste_m": 330,
+    "items": [
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 407,
+        "flaeche_netto_m2": 1257.29,
+        "niveaufreier_zugang": "ja",
+        "linie": 710
+      },
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 401,
+        "flaeche_netto_m2": 1503.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 710
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 330,
+        "flaeche_netto_m2": 1268.87,
+        "niveaufreier_zugang": "ja",
+        "linie": 710
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      30,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 330,
+        "sektoren": [
+          "B",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 315,
+        "sektoren": [
+          "A",
+          "B",
+          "D"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          30,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "D"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          30,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 24,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 2,
+      "55": 22
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 6,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dietikon",
+      "bis": "Glanzenberg",
+      "strecke_nr": 33,
+      "strecke": "Killwangen - Zürich Altstetten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 241493,
+      "zuege_pro_tag": 662
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dietikon",
+      "bis": "Glanzenberg",
+      "strecke_nr": 33,
+      "strecke": "Killwangen - Zürich Altstetten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 241493,
+      "zuege_pro_tag": 662
+    },
+    "abschnitte": [
+      {
+        "von": "Dietikon",
+        "bis": "Glanzenberg",
+        "strecke_nr": 33,
+        "strecke": "Killwangen - Zürich Altstetten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 241493,
+        "zuege_pro_tag": 662
+      },
+      {
+        "von": "Silberen (Abzw)",
+        "bis": "Dietikon",
+        "strecke_nr": 33,
+        "strecke": "Killwangen - Zürich Altstetten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 227643,
+        "zuege_pro_tag": 624
+      },
+      {
+        "von": "Dietikon",
+        "bis": "Glanzenberg",
+        "strecke_nr": 33,
+        "strecke": "Killwangen - Zürich Altstetten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35993,
+        "zuege_pro_tag": 99
+      },
+      {
+        "von": "RBL Kopf Zürich",
+        "bis": "Dietikon",
+        "strecke_nr": 112,
+        "strecke": "RB Limmattal inkl. Zürich Mülligen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28917,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Silberen (Abzw)",
+        "bis": "Dietikon",
+        "strecke_nr": 33,
+        "strecke": "Killwangen - Zürich Altstetten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11825,
+        "zuege_pro_tag": 32
+      },
+      {
+        "von": "RBL Kopf Zürich",
+        "bis": "Dietikon",
+        "strecke_nr": 112,
+        "strecke": "RB Limmattal inkl. Zürich Mülligen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3613,
+        "zuege_pro_tag": 10
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 710,
+        "name": "Zurich HB - Brugg AG",
+        "km": 11.06546
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/68777434a27726fad293bfa7b5267dc0"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "uic": 8506203,
+  "name": "Bütschwil",
+  "kanton": "SG",
+  "bps": "BUET",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bütschwil",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.075151,
+    "lat": 47.359591,
+    "dwv": 1400,
+    "dtv": 1300,
+    "dnwv": 880,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bütschwil",
+    "abkuerzung": "BUET",
+    "hoehe_m_ue_m": 610.8,
+    "gemeinde": "Bütschwil-Ganterschwil",
+    "ortschaft": "Bütschwil",
+    "bezirk": "Toggenburg",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 404.82,
+        "niveaufreier_zugang": "ja",
+        "linie": 853
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 437.51,
+        "niveaufreier_zugang": "ja",
+        "linie": 853
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 7
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bütschwil",
+      "bis": "Dietfurt",
+      "strecke_nr": 77,
+      "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29312,
+      "zuege_pro_tag": 80
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bütschwil",
+      "bis": "Dietfurt",
+      "strecke_nr": 77,
+      "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29312,
+      "zuege_pro_tag": 80
+    },
+    "abschnitte": [
+      {
+        "von": "Bütschwil",
+        "bis": "Dietfurt",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29312,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Lütisburg",
+        "bis": "Bütschwil",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29311,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Bütschwil",
+        "bis": "Dietfurt",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 247,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Lütisburg",
+        "bis": "Bütschwil",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 247,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 853,
+        "name": "Wil Sud - Wattwil - Uznach",
+        "km": 12.92551
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c6beeaf57b728296f59a7cd9abeec94d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

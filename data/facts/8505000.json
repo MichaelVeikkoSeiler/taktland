@@ -1,0 +1,775 @@
+{
+  "uic": 8505000,
+  "name": "Luzern",
+  "kanton": "LU",
+  "bps": "LZ",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Luzern",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "BLS, SBB, SOB, Zentralbahn",
+    "lon": 8.310183,
+    "lat": 47.050178,
+    "dwv": 114900,
+    "dtv": 108800,
+    "dnwv": 95400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 97900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 88100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 104400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 109800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 114900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Luzern",
+    "abkuerzung": "LZ",
+    "hoehe_m_ue_m": 436,
+    "gemeinde": "Luzern",
+    "ortschaft": "Luzern",
+    "bezirk": "Luzern-Stadt",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 155400,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": 160000
+      },
+      {
+        "jahr": 2014,
+        "anzahl": 157000
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 159400
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 158700
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 163200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 160900
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 163600
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 161900
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 167200
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 166300
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 166900
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 166300
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 102700
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 104700
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 102300
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 102500
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 133600
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 131700
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 145200
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 144100
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 145400
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 146600
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 153800
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 155400
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 0.8
+      },
+      {
+        "stunde": 6,
+        "prozent": 2.5
+      },
+      {
+        "stunde": 7,
+        "prozent": 5.3
+      },
+      {
+        "stunde": 8,
+        "prozent": 5.0
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.9
+      },
+      {
+        "stunde": 10,
+        "prozent": 5.0
+      },
+      {
+        "stunde": 11,
+        "prozent": 5.8
+      },
+      {
+        "stunde": 12,
+        "prozent": 7.2
+      },
+      {
+        "stunde": 13,
+        "prozent": 6.2
+      },
+      {
+        "stunde": 14,
+        "prozent": 6.2
+      },
+      {
+        "stunde": 15,
+        "prozent": 7.2
+      },
+      {
+        "stunde": 16,
+        "prozent": 8.9
+      },
+      {
+        "stunde": 17,
+        "prozent": 9.8
+      },
+      {
+        "stunde": 18,
+        "prozent": 7.5
+      },
+      {
+        "stunde": 19,
+        "prozent": 5.5
+      },
+      {
+        "stunde": 20,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 21,
+        "prozent": 3.6
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.4
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.4
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 9.8,
+    "wochentage": [
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 13.1
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 13.8
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.5
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 14.3
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 16.2
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 13.2
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 13.9
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 15,
+    "laengste_m": 452,
+    "kuerzeste_m": 28,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 452,
+        "flaeche_netto_m2": 3274.33,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 415,
+        "flaeche_netto_m2": 3140.3,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 395,
+        "flaeche_netto_m2": 2617.67,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "8/9",
+        "typ": "Mittelperron",
+        "laenge_m": 352,
+        "flaeche_netto_m2": 2749.42,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "10/11",
+        "typ": "Mittelperron",
+        "laenge_m": 316,
+        "flaeche_netto_m2": 2462.02,
+        "niveaufreier_zugang": "ja",
+        "linie": 470
+      },
+      {
+        "nr": "12/13",
+        "typ": "Mittelperron",
+        "laenge_m": 274,
+        "flaeche_netto_m2": 1597.68,
+        "niveaufreier_zugang": "ja",
+        "linie": 470
+      },
+      {
+        "nr": "14/15",
+        "typ": "Mittelperron",
+        "laenge_m": 267,
+        "flaeche_netto_m2": 2045.7,
+        "niveaufreier_zugang": "ja",
+        "linie": 470
+      },
+      {
+        "nr": "16",
+        "typ": "Dienstperron",
+        "laenge_m": 200,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 470
+      },
+      {
+        "nr": "3",
+        "typ": "Dienstperron",
+        "laenge_m": 133,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "7",
+        "typ": "Dienstperron",
+        "laenge_m": 132,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "9",
+        "typ": "Dienstperron",
+        "laenge_m": 132,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "5",
+        "typ": "Dienstperron",
+        "laenge_m": 132,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "11",
+        "typ": "Dienstperron",
+        "laenge_m": 132,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 470
+      },
+      {
+        "nr": "1",
+        "typ": "Dienstperron",
+        "laenge_m": 81,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "13",
+        "typ": "Dienstperron",
+        "laenge_m": 28,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 470
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 14,
+    "nummern": [
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 303,
+        "sektoren": [
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 395,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 395,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 415,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 416,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 352,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "9",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 353,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "10",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 316,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "11",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 317,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "12",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 254,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "13",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 255,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "14",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 23,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "15",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 34,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 7,
+      "55": 27
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 9,
+    "gleise_mit_daten": 14
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Luzern Einfahrt (Abzw)",
+      "bis": "Luzern",
+      "strecke_nr": 108,
+      "strecke": "Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 244737,
+      "zuege_pro_tag": 671
+    },
+    "staerkster_personenverkehr": {
+      "von": "Luzern Einfahrt (Abzw)",
+      "bis": "Luzern",
+      "strecke_nr": 108,
+      "strecke": "Luzern",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 244737,
+      "zuege_pro_tag": 671
+    },
+    "abschnitte": [
+      {
+        "von": "Luzern Einfahrt (Abzw)",
+        "bis": "Luzern",
+        "strecke_nr": 108,
+        "strecke": "Luzern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 244737,
+        "zuege_pro_tag": 671
+      },
+      {
+        "von": "Luzern Einfahrt (Abzw)",
+        "bis": "Luzern",
+        "strecke_nr": 108,
+        "strecke": "Luzern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5463,
+        "zuege_pro_tag": 15
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 95.09297
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 13,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 23,
+    "wartehallen": 5,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9a6d27dbee7f8bd399ab1b4d85f9db77"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-luzern-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-luzern-plakat.pdf",
+    "shopping_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-luzern-shopping.pdf",
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

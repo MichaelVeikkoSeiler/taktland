@@ -1,0 +1,214 @@
+{
+  "uic": 8504308,
+  "name": "Cormoret",
+  "kanton": "BE",
+  "bps": "CORM",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Cormoret",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.054124,
+    "lat": 47.172947,
+    "dwv": 70,
+    "dtv": 70,
+    "dnwv": 50,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 70
+      },
+      {
+        "jahr": 2022,
+        "dwv": 70
+      },
+      {
+        "jahr": 2023,
+        "dwv": 80
+      },
+      {
+        "jahr": 2024,
+        "dwv": 80
+      },
+      {
+        "jahr": 2025,
+        "dwv": 70
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Cormoret",
+    "abkuerzung": "CORM",
+    "hoehe_m_ue_m": 710.41,
+    "gemeinde": "Cormoret",
+    "ortschaft": "Cormoret",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 134,
+    "kuerzeste_m": 134,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 134,
+        "flaeche_netto_m2": 404.65,
+        "niveaufreier_zugang": "ja",
+        "linie": 225
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      20,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 150,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 5,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 3,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Cormoret",
+      "bis": "Courtelary",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25527,
+      "zuege_pro_tag": 70
+    },
+    "staerkster_personenverkehr": {
+      "von": "Cormoret",
+      "bis": "Courtelary",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25527,
+      "zuege_pro_tag": 70
+    },
+    "abschnitte": [
+      {
+        "von": "Cormoret",
+        "bis": "Courtelary",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25527,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Villeret",
+        "bis": "Cormoret",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25527,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Cormoret",
+        "bis": "Courtelary",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 295,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Villeret",
+        "bis": "Cormoret",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 295,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 225,
+        "name": "Biel/Bienne West - La Chaux-de-Fonds",
+        "km": 57.63528
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/de3a43f8619b679997110fafe291cbb6"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

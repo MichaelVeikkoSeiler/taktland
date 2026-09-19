@@ -1,0 +1,231 @@
+{
+  "uic": 8500303,
+  "name": "Mumpf",
+  "kanton": "AG",
+  "bps": "MPF",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Mumpf",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.909624,
+    "lat": 47.547626,
+    "dwv": 1300,
+    "dtv": 1100,
+    "dnwv": 600,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mumpf",
+    "abkuerzung": "MPF",
+    "hoehe_m_ue_m": 310.3,
+    "gemeinde": "Mumpf",
+    "ortschaft": "Mumpf",
+    "bezirk": "Rheinfelden",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 224,
+    "kuerzeste_m": 224,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 224,
+        "flaeche_netto_m2": 549.59,
+        "niveaufreier_zugang": "ja",
+        "linie": 700
+      },
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 224,
+        "flaeche_netto_m2": 516.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 700
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 225,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 224,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dossenboden (Spw)",
+      "bis": "Mumpf",
+      "strecke_nr": 29,
+      "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 62047,
+      "zuege_pro_tag": 170
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dossenboden (Spw)",
+      "bis": "Mumpf",
+      "strecke_nr": 29,
+      "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 62047,
+      "zuege_pro_tag": 170
+    },
+    "abschnitte": [
+      {
+        "von": "Dossenboden (Spw)",
+        "bis": "Mumpf",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 62047,
+        "zuege_pro_tag": 170
+      },
+      {
+        "von": "Mumpf",
+        "bis": "Stein-Säckingen",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 62047,
+        "zuege_pro_tag": 170
+      },
+      {
+        "von": "Dossenboden (Spw)",
+        "bis": "Mumpf",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40243,
+        "zuege_pro_tag": 110
+      },
+      {
+        "von": "Mumpf",
+        "bis": "Stein-Säckingen",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40243,
+        "zuege_pro_tag": 110
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 700,
+        "name": "Brugg - Pratteln Ost",
+        "km": 61.88109
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/517a268f456f05bbd98368bf2b3b70cd"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

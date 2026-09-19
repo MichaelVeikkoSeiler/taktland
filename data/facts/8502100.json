@@ -1,0 +1,234 @@
+{
+  "uic": 8502100,
+  "name": "Safenwil",
+  "kanton": "AG",
+  "bps": "SAF",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Safenwil",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.983518,
+    "lat": 47.321758,
+    "dwv": 890,
+    "dtv": 740,
+    "dnwv": 420,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 790
+      },
+      {
+        "jahr": 2024,
+        "dwv": 900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 890
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Safenwil",
+    "abkuerzung": "SAF",
+    "hoehe_m_ue_m": 471,
+    "gemeinde": "Safenwil",
+    "ortschaft": "Safenwil",
+    "bezirk": "Zofingen",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 341.95,
+        "niveaufreier_zugang": "ja",
+        "linie": 504
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 253.25,
+        "niveaufreier_zugang": "ja",
+        "linie": 504
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 120,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 121,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 9,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 1,
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Kölliken Oberdorf",
+      "bis": "Safenwil",
+      "strecke_nr": 39,
+      "strecke": "Zofingen - Suhr - Lenzburg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 24000,
+      "zuege_pro_tag": 66
+    },
+    "staerkster_personenverkehr": {
+      "von": "Kölliken Oberdorf",
+      "bis": "Safenwil",
+      "strecke_nr": 39,
+      "strecke": "Zofingen - Suhr - Lenzburg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 24000,
+      "zuege_pro_tag": 66
+    },
+    "abschnitte": [
+      {
+        "von": "Kölliken Oberdorf",
+        "bis": "Safenwil",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24000,
+        "zuege_pro_tag": 66
+      },
+      {
+        "von": "Walterswil-Striegel",
+        "bis": "Safenwil",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23940,
+        "zuege_pro_tag": 66
+      },
+      {
+        "von": "Walterswil-Striegel",
+        "bis": "Safenwil",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1025,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Kölliken Oberdorf",
+        "bis": "Safenwil",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 913,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 504,
+        "name": "Zofingen - Suhr",
+        "km": 6.56045
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/2e0cafb2eae1e6bc2b3fb4bd2f8304da"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

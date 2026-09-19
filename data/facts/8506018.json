@@ -1,0 +1,235 @@
+{
+  "uic": 8506018,
+  "name": "Rickenbach-Attikon",
+  "kanton": "ZH",
+  "bps": "RIK",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rickenbach-Attikon",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.789175,
+    "lat": 47.535357,
+    "dwv": 1500,
+    "dtv": 1300,
+    "dnwv": 960,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rickenbach-Attikon",
+    "abkuerzung": "RIK",
+    "hoehe_m_ue_m": 471.8,
+    "gemeinde": "Rickenbach (ZH)",
+    "ortschaft": "Rickenbach Sulz",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 318,
+    "kuerzeste_m": 318,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 318,
+        "flaeche_netto_m2": 1008.26,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 233,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 233,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Wiesendangen",
+      "bis": "Rickenbach-Attikon",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 60947,
+      "zuege_pro_tag": 167
+    },
+    "staerkster_personenverkehr": {
+      "von": "Wiesendangen",
+      "bis": "Rickenbach-Attikon",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 60947,
+      "zuege_pro_tag": 167
+    },
+    "abschnitte": [
+      {
+        "von": "Wiesendangen",
+        "bis": "Rickenbach-Attikon",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 60947,
+        "zuege_pro_tag": 167
+      },
+      {
+        "von": "Rickenbach-Attikon",
+        "bis": "Islikon",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 60933,
+        "zuege_pro_tag": 167
+      },
+      {
+        "von": "Rickenbach-Attikon",
+        "bis": "Islikon",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10174,
+        "zuege_pro_tag": 28
+      },
+      {
+        "von": "Wiesendangen",
+        "bis": "Rickenbach-Attikon",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10173,
+        "zuege_pro_tag": 28
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 840,
+        "name": "Winterthur Nord - Romanshorn",
+        "km": 33.53471
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/044f7ffae78b0a5d24f1b0d14bbb18d2"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

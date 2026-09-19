@@ -1,0 +1,181 @@
+{
+  "uic": 8500144,
+  "name": "Buix",
+  "kanton": "JU",
+  "bps": "BX",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Buix",
+    "kanton": "JU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.029967,
+    "lat": 47.479333,
+    "dwv": 100,
+    "dtv": 80,
+    "dnwv": 49,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 60
+      },
+      {
+        "jahr": 2022,
+        "dwv": 90
+      },
+      {
+        "jahr": 2023,
+        "dwv": 100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Buix",
+    "abkuerzung": "BX",
+    "hoehe_m_ue_m": 381.62,
+    "gemeinde": "Basse-Allaine",
+    "ortschaft": "Buix",
+    "bezirk": "Porrentruy",
+    "kanton": "Jura",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 231.5,
+        "niveaufreier_zugang": "ja",
+        "linie": 240
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Courtemaîche",
+      "bis": "Buix",
+      "strecke_nr": 15,
+      "strecke": "Delémont - Porrentruy - Delle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 15662,
+      "zuege_pro_tag": 43
+    },
+    "staerkster_personenverkehr": {
+      "von": "Courtemaîche",
+      "bis": "Buix",
+      "strecke_nr": 15,
+      "strecke": "Delémont - Porrentruy - Delle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 15662,
+      "zuege_pro_tag": 43
+    },
+    "abschnitte": [
+      {
+        "von": "Courtemaîche",
+        "bis": "Buix",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15662,
+        "zuege_pro_tag": 43
+      },
+      {
+        "von": "Buix",
+        "bis": "Boncourt",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15658,
+        "zuege_pro_tag": 43
+      },
+      {
+        "von": "Buix",
+        "bis": "Boncourt",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Courtemaîche",
+        "bis": "Buix",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 240,
+        "name": "Delemont - Delle",
+        "km": 121.45023
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/66c7d8b00e61661a0f0a0ae74272f2af"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

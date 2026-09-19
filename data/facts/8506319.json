@@ -1,0 +1,254 @@
+{
+  "uic": 8506319,
+  "name": "Altstätten SG",
+  "kanton": "SG",
+  "bps": "ALT",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Altstätten SG",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB, Thurbo",
+    "lon": 9.55652,
+    "lat": 47.374235,
+    "dwv": 3500,
+    "dtv": 3200,
+    "dnwv": 2300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Altstätten SG",
+    "abkuerzung": "ALT",
+    "hoehe_m_ue_m": 429.7,
+    "gemeinde": "Altstätten",
+    "ortschaft": "Altstätten SG",
+    "bezirk": "Rheintal",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 332,
+    "kuerzeste_m": 305,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 332,
+        "flaeche_netto_m2": 1312.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 305,
+        "flaeche_netto_m2": 1382.99,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 173,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 305,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 305,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rebstein-Marbach",
+      "bis": "Altstätten SG",
+      "strecke_nr": 75,
+      "strecke": "St.Margrethen - Buchs",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55529,
+      "zuege_pro_tag": 152
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rebstein-Marbach",
+      "bis": "Altstätten SG",
+      "strecke_nr": 75,
+      "strecke": "St.Margrethen - Buchs",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55529,
+      "zuege_pro_tag": 152
+    },
+    "abschnitte": [
+      {
+        "von": "Rebstein-Marbach",
+        "bis": "Altstätten SG",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55529,
+        "zuege_pro_tag": 152
+      },
+      {
+        "von": "Altstätten SG",
+        "bis": "Oberriet SG Nord (Abzw)",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40640,
+        "zuege_pro_tag": 111
+      },
+      {
+        "von": "Altstätten SG",
+        "bis": "Oberriet SG Nord (Abzw)",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2608,
+        "zuege_pro_tag": 7
+      },
+      {
+        "von": "Rebstein-Marbach",
+        "bis": "Altstätten SG",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2608,
+        "zuege_pro_tag": 7
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 880,
+        "name": "Sargans Ost - St.Gallen",
+        "km": 41.17789
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c75c6ef3c3e80526a8d6d1fe7f59b34a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

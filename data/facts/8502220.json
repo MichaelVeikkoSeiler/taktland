@@ -1,0 +1,239 @@
+{
+  "uic": 8502220,
+  "name": "Urdorf",
+  "kanton": "ZH",
+  "bps": "URD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Urdorf",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.434731,
+    "lat": 47.390883,
+    "dwv": 2600,
+    "dtv": 2200,
+    "dnwv": 1200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Urdorf",
+    "abkuerzung": "URD",
+    "hoehe_m_ue_m": 442,
+    "gemeinde": "Schlieren",
+    "ortschaft": "Urdorf",
+    "bezirk": "Dietikon",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 323,
+    "kuerzeste_m": 319,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 323,
+        "flaeche_netto_m2": 1093.81,
+        "niveaufreier_zugang": "ja",
+        "linie": 711
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 319,
+        "flaeche_netto_m2": 995.16,
+        "niveaufreier_zugang": "ja",
+        "linie": 711
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Urdorf",
+      "bis": "Urdorf Weihermatt",
+      "strecke_nr": 61,
+      "strecke": "Zürich Altstetten - Kollermühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 53186,
+      "zuege_pro_tag": 146
+    },
+    "staerkster_personenverkehr": {
+      "von": "Urdorf",
+      "bis": "Urdorf Weihermatt",
+      "strecke_nr": 61,
+      "strecke": "Zürich Altstetten - Kollermühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 53186,
+      "zuege_pro_tag": 146
+    },
+    "abschnitte": [
+      {
+        "von": "Urdorf",
+        "bis": "Urdorf Weihermatt",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 53186,
+        "zuege_pro_tag": 146
+      },
+      {
+        "von": "Zürich Altstetten Farbhof",
+        "bis": "Urdorf",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 53180,
+        "zuege_pro_tag": 146
+      },
+      {
+        "von": "Urdorf",
+        "bis": "Urdorf Weihermatt",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1358,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Zürich Altstetten Farbhof",
+        "bis": "Urdorf",
+        "strecke_nr": 61,
+        "strecke": "Zürich Altstetten - Kollermühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1358,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 711,
+        "name": "ZH Hardbrucke - Kollermuhle",
+        "km": 8.57532
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 8,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/bc3f809155fc3486950423f181eaab65"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,403 @@
+{
+  "uic": 8503209,
+  "name": "Pfäffikon SZ",
+  "kanton": "SZ",
+  "bps": "PF",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Pfäffikon SZ",
+    "kanton": "SZ",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.77813,
+    "lat": 47.202997,
+    "dwv": 18400,
+    "dtv": 16700,
+    "dnwv": 12800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 16900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 15300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 17300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 17900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 18400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Pfäffikon SZ",
+    "abkuerzung": "PF",
+    "hoehe_m_ue_m": 411.9,
+    "gemeinde": "Freienbach",
+    "ortschaft": "Pfäffikon SZ",
+    "bezirk": "Höfe",
+    "kanton": "Schwyz",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 419,
+    "kuerzeste_m": 299,
+    "items": [
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 419,
+        "flaeche_netto_m2": 1839.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 419,
+        "flaeche_netto_m2": 1891.5,
+        "niveaufreier_zugang": "ja",
+        "linie": 672
+      },
+      {
+        "nr": "7",
+        "typ": "Aussenperron",
+        "laenge_m": 299,
+        "flaeche_netto_m2": 671.4,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "5",
+      "6",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      25,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 322,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25,
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 260,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 364,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 342,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 342,
+        "sektoren": [
+          "-",
+          "A",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 299,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 26,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 8,
+      "35": 6,
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 6,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Freienbach SBB",
+      "bis": "Pfäffikon SZ",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 106106,
+      "zuege_pro_tag": 291
+    },
+    "staerkster_personenverkehr": {
+      "von": "Freienbach SBB",
+      "bis": "Pfäffikon SZ",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 106106,
+      "zuege_pro_tag": 291
+    },
+    "abschnitte": [
+      {
+        "von": "Freienbach SBB",
+        "bis": "Pfäffikon SZ",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 106106,
+        "zuege_pro_tag": 291
+      },
+      {
+        "von": "Pfäffikon SZ",
+        "bis": "Altendorf",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 76709,
+        "zuege_pro_tag": 210
+      },
+      {
+        "von": "Pfäffikon SZ",
+        "bis": "Pfäffikon SZ Nord (Abzw)",
+        "strecke_nr": 864,
+        "strecke": "Rapperswil - Pfäffikon",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67651,
+        "zuege_pro_tag": 185
+      },
+      {
+        "von": "Freienbach SOB",
+        "bis": "Pfäffikon SZ",
+        "strecke_nr": 865,
+        "strecke": "Pfäffikon - Samstagern",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 39603,
+        "zuege_pro_tag": 109
+      },
+      {
+        "von": "Freienbach SBB",
+        "bis": "Pfäffikon SZ",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8886,
+        "zuege_pro_tag": 24
+      },
+      {
+        "von": "Pfäffikon SZ",
+        "bis": "Altendorf",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7124,
+        "zuege_pro_tag": 20
+      },
+      {
+        "von": "Pfäffikon SZ",
+        "bis": "Pfäffikon SZ Hurdnerfeld",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4165,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Pfäffikon SZ",
+        "bis": "Pfäffikon SZ Nord (Abzw)",
+        "strecke_nr": 864,
+        "strecke": "Rapperswil - Pfäffikon",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1122,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Pfäffikon SZ",
+        "bis": "Pfäffikon SZ Hurdnerfeld",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 279,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Freienbach SOB",
+        "bis": "Pfäffikon SZ",
+        "strecke_nr": 865,
+        "strecke": "Pfäffikon - Samstagern",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 38,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 720,
+        "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
+        "km": 33.43889
+      },
+      {
+        "nummer": 672,
+        "name": "Pfaffikon SZ - Samstagern",
+        "km": 4.02465
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 8,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c2e97fa6b43fd1e068fa77245f44da88"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

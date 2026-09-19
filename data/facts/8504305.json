@@ -1,0 +1,181 @@
+{
+  "uic": 8504305,
+  "name": "Corgémont",
+  "kanton": "BE",
+  "bps": "COG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Corgémont",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.144661,
+    "lat": 47.193399,
+    "dwv": 500,
+    "dtv": 400,
+    "dnwv": 190,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 470
+      },
+      {
+        "jahr": 2022,
+        "dwv": 440
+      },
+      {
+        "jahr": 2023,
+        "dwv": 490
+      },
+      {
+        "jahr": 2024,
+        "dwv": 560
+      },
+      {
+        "jahr": 2025,
+        "dwv": 500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Corgémont",
+    "abkuerzung": "COG",
+    "hoehe_m_ue_m": 660.15,
+    "gemeinde": "Corgémont",
+    "ortschaft": "Corgémont",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 296.11,
+        "niveaufreier_zugang": "ja",
+        "linie": 225
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Corgémont",
+      "bis": "Sonceboz-Sombeval",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25511,
+      "zuege_pro_tag": 70
+    },
+    "staerkster_personenverkehr": {
+      "von": "Corgémont",
+      "bis": "Sonceboz-Sombeval",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25511,
+      "zuege_pro_tag": 70
+    },
+    "abschnitte": [
+      {
+        "von": "Corgémont",
+        "bis": "Sonceboz-Sombeval",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25511,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Cortébert",
+        "bis": "Corgémont",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25511,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Corgémont",
+        "bis": "Sonceboz-Sombeval",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 295,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Cortébert",
+        "bis": "Corgémont",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 295,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 225,
+        "name": "Biel/Bienne West - La Chaux-de-Fonds",
+        "km": 50.22
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/1f9292584a10260bd29b0386f2a87bfe"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

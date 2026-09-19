@@ -1,0 +1,320 @@
+{
+  "uic": 8506121,
+  "name": "Romanshorn",
+  "kanton": "TG",
+  "bps": "RH",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Romanshorn",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 9.379371,
+    "lat": 47.565523,
+    "dwv": 12900,
+    "dtv": 11800,
+    "dnwv": 9600,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 11300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 11200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 12000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 12900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 12900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Romanshorn",
+    "abkuerzung": "RH",
+    "hoehe_m_ue_m": 398.5,
+    "gemeinde": "Romanshorn",
+    "ortschaft": "Romanshorn",
+    "bezirk": "Arbon",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 448,
+    "kuerzeste_m": 223,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 448,
+        "flaeche_netto_m2": 2557.13,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 282,
+        "flaeche_netto_m2": 1145.58,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 223,
+        "flaeche_netto_m2": 1252.49,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 224,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 265,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 449,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 237,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 237,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 13,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "55": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Romanshorn",
+      "bis": "Romanshorn GB",
+      "strecke_nr": 128,
+      "strecke": "Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 70635,
+      "zuege_pro_tag": 194
+    },
+    "staerkster_personenverkehr": {
+      "von": "Romanshorn",
+      "bis": "Romanshorn GB",
+      "strecke_nr": 128,
+      "strecke": "Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 70635,
+      "zuege_pro_tag": 194
+    },
+    "abschnitte": [
+      {
+        "von": "Romanshorn",
+        "bis": "Romanshorn GB",
+        "strecke_nr": 128,
+        "strecke": "Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 70635,
+        "zuege_pro_tag": 194
+      },
+      {
+        "von": "Romanshorn West (Abzw)",
+        "bis": "Romanshorn",
+        "strecke_nr": 128,
+        "strecke": "Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52105,
+        "zuege_pro_tag": 143
+      },
+      {
+        "von": "Uttwil",
+        "bis": "Romanshorn",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42719,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Uttwil",
+        "bis": "Romanshorn",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 903,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Romanshorn West (Abzw)",
+        "bis": "Romanshorn",
+        "strecke_nr": 128,
+        "strecke": "Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 724,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Romanshorn",
+        "bis": "Romanshorn GB",
+        "strecke_nr": 128,
+        "strecke": "Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 236,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 840,
+        "name": "Winterthur Nord - Romanshorn",
+        "km": 82.15072
+      },
+      {
+        "nummer": 824,
+        "name": "Romanshorn - Konstanz",
+        "km": 82.15161
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/5999c2f90e931e90d38e7a286239a119"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

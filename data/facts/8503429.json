@@ -1,0 +1,181 @@
+{
+  "uic": 8503429,
+  "name": "Schlattingen",
+  "kanton": "TG",
+  "bps": "SCHN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Schlattingen",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.770434,
+    "lat": 47.666624,
+    "dwv": 190,
+    "dtv": 180,
+    "dnwv": 140,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 230
+      },
+      {
+        "jahr": 2022,
+        "dwv": 220
+      },
+      {
+        "jahr": 2023,
+        "dwv": 220
+      },
+      {
+        "jahr": 2024,
+        "dwv": 200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 190
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Schlattingen",
+    "abkuerzung": "SCHN",
+    "hoehe_m_ue_m": 426.5,
+    "gemeinde": "Basadingen-Schlattingen",
+    "ortschaft": "Schlattingen",
+    "bezirk": "Frauenfeld",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 119,
+    "kuerzeste_m": 119,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 119,
+        "flaeche_netto_m2": 271.66,
+        "niveaufreier_zugang": "ja",
+        "linie": 820
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Diessenhofen",
+      "bis": "Schlattingen",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30308,
+      "zuege_pro_tag": 83
+    },
+    "staerkster_personenverkehr": {
+      "von": "Diessenhofen",
+      "bis": "Schlattingen",
+      "strecke_nr": 79,
+      "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30308,
+      "zuege_pro_tag": 83
+    },
+    "abschnitte": [
+      {
+        "von": "Diessenhofen",
+        "bis": "Schlattingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30308,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Schlattingen",
+        "bis": "Etzwilen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30307,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Diessenhofen",
+        "bis": "Schlattingen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 113,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Schlattingen",
+        "bis": "Etzwilen",
+        "strecke_nr": 79,
+        "strecke": "Schaffhausen - Kreuzlingen - Romanshorn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 113,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 820,
+        "name": "Etzwilen - Schaffhausen",
+        "km": 35.56775
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d75e04b4f06375a3287b1fcb57afe3c4"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

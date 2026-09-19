@@ -1,0 +1,181 @@
+{
+  "uic": 8506198,
+  "name": "Tägerwilen Dorf",
+  "kanton": "TG",
+  "bps": "TAEM",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Tägerwilen Dorf",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.13956,
+    "lat": 47.653721,
+    "dwv": 380,
+    "dtv": 340,
+    "dnwv": 270,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 280
+      },
+      {
+        "jahr": 2022,
+        "dwv": 280
+      },
+      {
+        "jahr": 2023,
+        "dwv": 320
+      },
+      {
+        "jahr": 2024,
+        "dwv": 360
+      },
+      {
+        "jahr": 2025,
+        "dwv": 380
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Tägerwilen Dorf",
+    "abkuerzung": "TAEM",
+    "hoehe_m_ue_m": 416.2,
+    "gemeinde": "Tägerwilen",
+    "ortschaft": "Tägerwilen",
+    "bezirk": "Kreuzlingen",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 171,
+    "kuerzeste_m": 171,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 171,
+        "flaeche_netto_m2": 841.45,
+        "niveaufreier_zugang": "ja",
+        "linie": 831
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Tägermoos (Abzw)",
+      "bis": "Tägerwilen Dorf",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42825,
+      "zuege_pro_tag": 117
+    },
+    "staerkster_personenverkehr": {
+      "von": "Tägermoos (Abzw)",
+      "bis": "Tägerwilen Dorf",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 42825,
+      "zuege_pro_tag": 117
+    },
+    "abschnitte": [
+      {
+        "von": "Tägermoos (Abzw)",
+        "bis": "Tägerwilen Dorf",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42825,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Tägerwilen Dorf",
+        "bis": "Kreuzlingen Bernrain",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42823,
+        "zuege_pro_tag": 117
+      },
+      {
+        "von": "Tägermoos (Abzw)",
+        "bis": "Tägerwilen Dorf",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Tägerwilen Dorf",
+        "bis": "Kreuzlingen Bernrain",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 831,
+        "name": "Weinfelden - Tagermoos",
+        "km": 38.61918
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/72748fe891951fd50aaff8acc151aa5e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

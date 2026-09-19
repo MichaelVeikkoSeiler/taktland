@@ -1,0 +1,212 @@
+{
+  "uic": 8506188,
+  "name": "Bronschhofen AMP",
+  "kanton": "SG",
+  "bps": "BROA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bronschhofen AMP",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.030928,
+    "lat": 47.481267,
+    "dwv": 200,
+    "dtv": 160,
+    "dnwv": 60,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 170
+      },
+      {
+        "jahr": 2022,
+        "dwv": 200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 180
+      },
+      {
+        "jahr": 2024,
+        "dwv": 190
+      },
+      {
+        "jahr": 2025,
+        "dwv": 200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bronschhofen AMP",
+    "abkuerzung": "BROA",
+    "hoehe_m_ue_m": 556.105,
+    "gemeinde": "Wil (SG)",
+    "ortschaft": "Bronschhofen",
+    "bezirk": "Wil",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 121,
+    "kuerzeste_m": 121,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 121,
+        "flaeche_netto_m2": 275.83,
+        "niveaufreier_zugang": "ja",
+        "linie": 830
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 121,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 5,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bettwiesen",
+      "bis": "Bronschhofen AMP",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 22428,
+      "zuege_pro_tag": 61
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bettwiesen",
+      "bis": "Bronschhofen AMP",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 22428,
+      "zuege_pro_tag": 61
+    },
+    "abschnitte": [
+      {
+        "von": "Bettwiesen",
+        "bis": "Bronschhofen AMP",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22428,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Bronschhofen AMP",
+        "bis": "Bronschhofen",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22428,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Bronschhofen AMP",
+        "bis": "Bronschhofen",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 999,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Bettwiesen",
+        "bis": "Bronschhofen AMP",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 983,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 830,
+        "name": "Wil - Weinfelden",
+        "km": 3.29024
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/63a706d1646b1dfb8ce43f19d243655d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

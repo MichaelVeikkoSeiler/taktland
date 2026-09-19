@@ -1,0 +1,242 @@
+{
+  "uic": 8503103,
+  "name": "Herrliberg-Feldmeilen",
+  "kanton": "ZH",
+  "bps": "HERL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Herrliberg-Feldmeilen",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.612733,
+    "lat": 47.281827,
+    "dwv": 4800,
+    "dtv": 4200,
+    "dnwv": 2800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 4800
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Herrliberg-Feldmeilen",
+    "abkuerzung": "HERL",
+    "hoehe_m_ue_m": 423.3,
+    "gemeinde": "Meilen",
+    "ortschaft": "Meilen",
+    "bezirk": "Meilen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 323,
+    "kuerzeste_m": 272,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 323,
+        "flaeche_netto_m2": 1524.47,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      },
+      {
+        "nr": "93",
+        "typ": "Dienstperron",
+        "laenge_m": 272,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      30,
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 266,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          30,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 219,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 2,
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Winkel am Zürichsee",
+      "bis": "Herrliberg-Feldmeilen",
+      "strecke_nr": 65,
+      "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 85146,
+      "zuege_pro_tag": 233
+    },
+    "staerkster_personenverkehr": {
+      "von": "Winkel am Zürichsee",
+      "bis": "Herrliberg-Feldmeilen",
+      "strecke_nr": 65,
+      "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 85146,
+      "zuege_pro_tag": 233
+    },
+    "abschnitte": [
+      {
+        "von": "Winkel am Zürichsee",
+        "bis": "Herrliberg-Feldmeilen",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 85146,
+        "zuege_pro_tag": 233
+      },
+      {
+        "von": "Herrliberg-Feldmeilen",
+        "bis": "Feldmeilen Wendeanlage",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 76457,
+        "zuege_pro_tag": 209
+      },
+      {
+        "von": "Herrliberg-Feldmeilen",
+        "bis": "Feldmeilen Wendeanlage",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1029,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Winkel am Zürichsee",
+        "bis": "Herrliberg-Feldmeilen",
+        "strecke_nr": 65,
+        "strecke": "Zürich Stadelhofen - Meilen - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1029,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 730,
+        "name": "Zurich Stadelhofen - Rapperswil",
+        "km": 16.61921
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d36b84292fe351c2273692961c30aac8"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

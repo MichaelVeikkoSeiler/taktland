@@ -1,0 +1,215 @@
+{
+  "uic": 8504125,
+  "name": "Domdidier",
+  "kanton": "FR",
+  "bps": "DOM",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Domdidier",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "BLS, SBB",
+    "lon": 7.011383,
+    "lat": 46.868512,
+    "dwv": 550,
+    "dtv": 470,
+    "dnwv": 270,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 460
+      },
+      {
+        "jahr": 2022,
+        "dwv": 600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 660
+      },
+      {
+        "jahr": 2024,
+        "dwv": 720
+      },
+      {
+        "jahr": 2025,
+        "dwv": 550
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Domdidier",
+    "abkuerzung": "DOM",
+    "hoehe_m_ue_m": 439.05,
+    "gemeinde": "Belmont-Broye",
+    "ortschaft": "Domdidier",
+    "bezirk": "La Broye",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 164,
+    "kuerzeste_m": 164,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 164,
+        "flaeche_netto_m2": 281.27,
+        "niveaufreier_zugang": "ja",
+        "linie": 251
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 150,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 2,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Domdidier",
+      "bis": "Avenches",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 18658,
+      "zuege_pro_tag": 51
+    },
+    "staerkster_personenverkehr": {
+      "von": "Domdidier",
+      "bis": "Avenches",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 18658,
+      "zuege_pro_tag": 51
+    },
+    "abschnitte": [
+      {
+        "von": "Domdidier",
+        "bis": "Avenches",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 18658,
+        "zuege_pro_tag": 51
+      },
+      {
+        "von": "Dompierre FR",
+        "bis": "Domdidier",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 18658,
+        "zuege_pro_tag": 51
+      },
+      {
+        "von": "Dompierre FR",
+        "bis": "Domdidier",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1036,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Domdidier",
+        "bis": "Avenches",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1032,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 251,
+        "name": "Palezieux Est - Lyss Nord",
+        "km": 66.18946
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9024ef0a8ef439cd9e9b7f0c955fb6bc"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "uic": 8503118,
+  "name": "Benken SG",
+  "kanton": "SG",
+  "bps": "BNK",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Benken SG",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SOB",
+    "lon": 9.008654,
+    "lat": 47.204458,
+    "dwv": 710,
+    "dtv": 630,
+    "dnwv": 440,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 340
+      },
+      {
+        "jahr": 2022,
+        "dwv": 370
+      },
+      {
+        "jahr": 2023,
+        "dwv": 410
+      },
+      {
+        "jahr": 2024,
+        "dwv": 670
+      },
+      {
+        "jahr": 2025,
+        "dwv": 710
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Benken SG",
+    "abkuerzung": "BNK",
+    "hoehe_m_ue_m": 416.4,
+    "gemeinde": "Benken (SG)",
+    "ortschaft": "Benken SG",
+    "bezirk": "See-Gaster",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 160,
+    "kuerzeste_m": 160,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 406.53,
+        "niveaufreier_zugang": "ja",
+        "linie": 735
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Benken SG",
+      "bis": "Schänis",
+      "strecke_nr": 78,
+      "strecke": "Uznach - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27941,
+      "zuege_pro_tag": 77
+    },
+    "staerkster_personenverkehr": {
+      "von": "Benken SG",
+      "bis": "Schänis",
+      "strecke_nr": 78,
+      "strecke": "Uznach - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27941,
+      "zuege_pro_tag": 77
+    },
+    "abschnitte": [
+      {
+        "von": "Benken SG",
+        "bis": "Schänis",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27941,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Uznach",
+        "bis": "Benken SG",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27941,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Benken SG",
+        "bis": "Schänis",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 112,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Uznach",
+        "bis": "Benken SG",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 112,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 735,
+        "name": "Ziegelbrucke West - Rapperswil Ost",
+        "km": 43.40673
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9b7fd5b05491d5b9a834006916377323"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

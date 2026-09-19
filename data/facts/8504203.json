@@ -1,0 +1,182 @@
+{
+  "uic": 8504203,
+  "name": "Concise",
+  "kanton": "VD",
+  "bps": "CC",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Concise",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.723157,
+    "lat": 46.850882,
+    "dwv": 220,
+    "dtv": 190,
+    "dnwv": 130,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 60
+      },
+      {
+        "jahr": 2022,
+        "dwv": 50
+      },
+      {
+        "jahr": 2023,
+        "dwv": 60
+      },
+      {
+        "jahr": 2024,
+        "dwv": 60
+      },
+      {
+        "jahr": 2025,
+        "dwv": 220
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Concise",
+    "abkuerzung": "CC",
+    "hoehe_m_ue_m": 429.5,
+    "gemeinde": "Concise",
+    "ortschaft": "Concise",
+    "bezirk": "Jura-Nord vaudois",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 156,
+    "kuerzeste_m": 156,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 156,
+        "flaeche_netto_m2": 344.68,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 156,
+        "flaeche_netto_m2": 338.57,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Concise",
+      "bis": "La Lance (diag)",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46422,
+      "zuege_pro_tag": 127
+    },
+    "staerkster_personenverkehr": {
+      "von": "Concise",
+      "bis": "La Lance (diag)",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46422,
+      "zuege_pro_tag": 127
+    },
+    "abschnitte": [
+      {
+        "von": "Concise",
+        "bis": "La Lance (diag)",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46422,
+        "zuege_pro_tag": 127
+      },
+      {
+        "von": "Onnens-Bonvillars",
+        "bis": "Concise",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46422,
+        "zuege_pro_tag": 127
+      },
+      {
+        "von": "Concise",
+        "bis": "La Lance (diag)",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20456,
+        "zuege_pro_tag": 56
+      },
+      {
+        "von": "Onnens-Bonvillars",
+        "bis": "Concise",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20455,
+        "zuege_pro_tag": 56
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 50.752
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/19931ddd2bbbb02f1e40978271111c4d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

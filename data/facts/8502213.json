@@ -1,0 +1,249 @@
+{
+  "uic": 8502213,
+  "name": "Wohlen AG",
+  "kanton": "AG",
+  "bps": "WO",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Wohlen AG",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.269792,
+    "lat": 47.348464,
+    "dwv": 7200,
+    "dtv": 6100,
+    "dnwv": 3700,
+    "bemerkung": "Ohne AVA.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 6500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 6300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 7000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 7100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 7200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Wohlen AG",
+    "abkuerzung": "WO",
+    "hoehe_m_ue_m": 423,
+    "gemeinde": "Wohlen (AG)",
+    "ortschaft": "Wohlen AG",
+    "bezirk": "Bremgarten",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 244,
+    "kuerzeste_m": 50,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 244,
+        "flaeche_netto_m2": 898.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 96,
+        "flaeche_netto_m2": 280.14,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      },
+      {
+        "nr": "6",
+        "typ": "Aussenperron",
+        "laenge_m": 50,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 244,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 245,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dottikon Umspannanlage",
+      "bis": "Wohlen AG",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 51027,
+      "zuege_pro_tag": 140
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dottikon Umspannanlage",
+      "bis": "Wohlen AG",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 51027,
+      "zuege_pro_tag": 140
+    },
+    "abschnitte": [
+      {
+        "von": "Dottikon Umspannanlage",
+        "bis": "Wohlen AG",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 51027,
+        "zuege_pro_tag": 140
+      },
+      {
+        "von": "Wohlen AG",
+        "bis": "Waltenschwil",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50132,
+        "zuege_pro_tag": 137
+      },
+      {
+        "von": "Dottikon Umspannanlage",
+        "bis": "Wohlen AG",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 39533,
+        "zuege_pro_tag": 108
+      },
+      {
+        "von": "Wohlen AG",
+        "bis": "Waltenschwil",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36302,
+        "zuege_pro_tag": 99
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 653,
+        "name": "Gexi Ost - Rotkreuz - Immensee West",
+        "km": 71.7722
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a5fb2119f61f81ce6896fe812aaf9563"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

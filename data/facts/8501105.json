@@ -1,0 +1,185 @@
+{
+  "uic": 8501105,
+  "name": "Bretonnières",
+  "kanton": "VD",
+  "bps": "BRT",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bretonnières",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.474733,
+    "lat": 46.715055,
+    "dwv": 50,
+    "dtv": 49,
+    "dnwv": 49,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 80
+      },
+      {
+        "jahr": 2022,
+        "dwv": 49
+      },
+      {
+        "jahr": 2023,
+        "dwv": 60
+      },
+      {
+        "jahr": 2024,
+        "dwv": 60
+      },
+      {
+        "jahr": 2025,
+        "dwv": 50
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bretonnières",
+    "abkuerzung": "BRT",
+    "hoehe_m_ue_m": 673.276,
+    "gemeinde": "Bretonnières",
+    "ortschaft": "Bretonnières",
+    "bezirk": "Jura-Nord vaudois",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 151,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 151,
+        "flaeche_netto_m2": 326.81,
+        "niveaufreier_zugang": "ja",
+        "linie": 200
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 266.46,
+        "niveaufreier_zugang": "ja",
+        "linie": 200
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Le Day",
+      "bis": "Bretonnières",
+      "strecke_nr": 9,
+      "strecke": "Daillens - Vallorbe Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 31748,
+      "zuege_pro_tag": 87
+    },
+    "staerkster_personenverkehr": {
+      "von": "Le Day",
+      "bis": "Bretonnières",
+      "strecke_nr": 9,
+      "strecke": "Daillens - Vallorbe Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 31748,
+      "zuege_pro_tag": 87
+    },
+    "abschnitte": [
+      {
+        "von": "Le Day",
+        "bis": "Bretonnières",
+        "strecke_nr": 9,
+        "strecke": "Daillens - Vallorbe Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31748,
+        "zuege_pro_tag": 87
+      },
+      {
+        "von": "Bretonnières",
+        "bis": "Croy-Romainmôtier",
+        "strecke_nr": 9,
+        "strecke": "Daillens - Vallorbe Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31747,
+        "zuege_pro_tag": 87
+      },
+      {
+        "von": "Bretonnières",
+        "bis": "Croy-Romainmôtier",
+        "strecke_nr": 9,
+        "strecke": "Daillens - Vallorbe Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 560,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Le Day",
+        "bis": "Bretonnières",
+        "strecke_nr": 9,
+        "strecke": "Daillens - Vallorbe Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 560,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 200,
+        "name": "Renens VD Ouest - Vallorbe",
+        "km": 35.82299
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/816b832d1373e32917bcdc01e7997b41"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

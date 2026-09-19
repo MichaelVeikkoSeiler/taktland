@@ -1,0 +1,257 @@
+{
+  "uic": 8506014,
+  "name": "Elgg",
+  "kanton": "ZH",
+  "bps": "EL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Elgg",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.863412,
+    "lat": 47.498529,
+    "dwv": 2000,
+    "dtv": 1800,
+    "dnwv": 1200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Elgg",
+    "abkuerzung": "EL",
+    "hoehe_m_ue_m": 507,
+    "gemeinde": "Elgg",
+    "ortschaft": "Elgg",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 235,
+    "kuerzeste_m": 90,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 235,
+        "flaeche_netto_m2": 1018.75,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 90,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 91,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 236,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 236,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 2,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Schneit",
+      "bis": "Elgg",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78948,
+      "zuege_pro_tag": 216
+    },
+    "staerkster_personenverkehr": {
+      "von": "Schneit",
+      "bis": "Elgg",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78948,
+      "zuege_pro_tag": 216
+    },
+    "abschnitte": [
+      {
+        "von": "Schneit",
+        "bis": "Elgg",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78948,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Elgg",
+        "bis": "Aadorf",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78945,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Elgg",
+        "bis": "Aadorf",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7127,
+        "zuege_pro_tag": 20
+      },
+      {
+        "von": "Schneit",
+        "bis": "Elgg",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7125,
+        "zuege_pro_tag": 20
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 850,
+        "name": "St.Gallen - Winterthur Nord",
+        "km": 126.14657
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c088aa48220ca11efe1ce5d2a8ce412e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

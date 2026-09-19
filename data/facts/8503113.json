@@ -1,0 +1,210 @@
+{
+  "uic": 8503113,
+  "name": "Blumenau",
+  "kanton": "SG",
+  "bps": "BLU",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Blumenau",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SOB",
+    "lon": 8.842405,
+    "lat": 47.223671,
+    "dwv": 1000,
+    "dtv": 870,
+    "dnwv": 520,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 560
+      },
+      {
+        "jahr": 2023,
+        "dwv": 610
+      },
+      {
+        "jahr": 2024,
+        "dwv": 910
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Blumenau",
+    "abkuerzung": "BLU",
+    "hoehe_m_ue_m": 413.8,
+    "gemeinde": "Rapperswil-Jona",
+    "ortschaft": "Jona",
+    "bezirk": "See-Gaster",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 162,
+    "kuerzeste_m": 162,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 162,
+        "flaeche_netto_m2": 548.25,
+        "niveaufreier_zugang": "ja",
+        "linie": 735
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 160,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {},
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Blumenau",
+      "bis": "Bollingen",
+      "strecke_nr": 77,
+      "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 56027,
+      "zuege_pro_tag": 153
+    },
+    "staerkster_personenverkehr": {
+      "von": "Blumenau",
+      "bis": "Bollingen",
+      "strecke_nr": 77,
+      "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 56027,
+      "zuege_pro_tag": 153
+    },
+    "abschnitte": [
+      {
+        "von": "Blumenau",
+        "bis": "Bollingen",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 56027,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "Blumenau",
+        "bis": "Rapperswil Ost",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 56025,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "Blumenau",
+        "bis": "Bollingen",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 415,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Blumenau",
+        "bis": "Rapperswil Ost",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 415,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 735,
+        "name": "Ziegelbrucke West - Rapperswil Ost",
+        "km": 57.34306
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ab8db2cbf9afe59cf1b8c6f530a9ae27"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

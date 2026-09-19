@@ -1,0 +1,520 @@
+{
+  "uic": 8503125,
+  "name": "Uster",
+  "kanton": "ZH",
+  "bps": "UST",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Uster",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.718709,
+    "lat": 47.350369,
+    "dwv": 29500,
+    "dtv": 25500,
+    "dnwv": 16600,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 27400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 24300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 27600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 28700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 29500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Uster",
+    "abkuerzung": "UST",
+    "hoehe_m_ue_m": 463.7,
+    "gemeinde": "Uster",
+    "ortschaft": "Uster",
+    "bezirk": "Uster",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 26000,
+    "einheit": "DP/jour ouvré",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": null
+      },
+      {
+        "jahr": 2016,
+        "anzahl": null
+      },
+      {
+        "jahr": 2016,
+        "anzahl": null
+      },
+      {
+        "jahr": 2017,
+        "anzahl": null
+      },
+      {
+        "jahr": 2017,
+        "anzahl": null
+      },
+      {
+        "jahr": 2018,
+        "anzahl": null
+      },
+      {
+        "jahr": 2018,
+        "anzahl": null
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 28000
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 26000
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 20600
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 22300
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 22500
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 20900
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 24000
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 25500
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 25900
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 27500
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 26200
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 27900
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 24400
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 26000
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 0.8
+      },
+      {
+        "stunde": 6,
+        "prozent": 4.4
+      },
+      {
+        "stunde": 7,
+        "prozent": 8.1
+      },
+      {
+        "stunde": 8,
+        "prozent": 5.8
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.5
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.3
+      },
+      {
+        "stunde": 11,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 12,
+        "prozent": 5.6
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.2
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.3
+      },
+      {
+        "stunde": 15,
+        "prozent": 6.5
+      },
+      {
+        "stunde": 16,
+        "prozent": 9.3
+      },
+      {
+        "stunde": 17,
+        "prozent": 11.3
+      },
+      {
+        "stunde": 18,
+        "prozent": 8.3
+      },
+      {
+        "stunde": 19,
+        "prozent": 5.0
+      },
+      {
+        "stunde": 20,
+        "prozent": 4.0
+      },
+      {
+        "stunde": 21,
+        "prozent": 3.3
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.0
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.3
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 11.3,
+    "wochentage": [
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.6
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 12.5
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 11.6
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.2
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.1
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 15.2
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.8
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 331,
+    "kuerzeste_m": 326,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 331,
+        "flaeche_netto_m2": 1523.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 740
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 326,
+        "flaeche_netto_m2": 1176.94,
+        "niveaufreier_zugang": "ja",
+        "linie": 740
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 327,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 331,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 331,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Nänikon-Greifensee",
+      "bis": "Uster",
+      "strecke_nr": 64,
+      "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 116371,
+      "zuege_pro_tag": 319
+    },
+    "staerkster_personenverkehr": {
+      "von": "Nänikon-Greifensee",
+      "bis": "Uster",
+      "strecke_nr": 64,
+      "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 116371,
+      "zuege_pro_tag": 319
+    },
+    "abschnitte": [
+      {
+        "von": "Nänikon-Greifensee",
+        "bis": "Uster",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 116371,
+        "zuege_pro_tag": 319
+      },
+      {
+        "von": "Uster",
+        "bis": "Aathal",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86121,
+        "zuege_pro_tag": 236
+      },
+      {
+        "von": "Nänikon-Greifensee",
+        "bis": "Uster",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1838,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Uster",
+        "bis": "Aathal",
+        "strecke_nr": 64,
+        "strecke": "Zürich Stadelhofen / Wallisellen - Uster - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1838,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 740,
+        "name": "Rapperswil - Uster - Wallisellen Ost",
+        "km": 81.35047
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 12,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/53994388e68f85ff8fb38da028b5d8a6"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-uster-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-uster-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

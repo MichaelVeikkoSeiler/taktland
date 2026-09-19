@@ -1,0 +1,189 @@
+{
+  "uic": 8506304,
+  "name": "Mörschwil",
+  "kanton": "SG",
+  "bps": "MOER",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Mörschwil",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SOB, Thurbo",
+    "lon": 9.414384,
+    "lat": 47.474771,
+    "dwv": 370,
+    "dtv": 350,
+    "dnwv": 290,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 350
+      },
+      {
+        "jahr": 2022,
+        "dwv": 310
+      },
+      {
+        "jahr": 2023,
+        "dwv": 380
+      },
+      {
+        "jahr": 2024,
+        "dwv": 370
+      },
+      {
+        "jahr": 2025,
+        "dwv": 370
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mörschwil",
+    "abkuerzung": "MOER",
+    "hoehe_m_ue_m": 542.4,
+    "gemeinde": "Mörschwil",
+    "ortschaft": "Mörschwil",
+    "bezirk": "Rorschach",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 279,
+    "kuerzeste_m": 259,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 279,
+        "flaeche_netto_m2": 958.52,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 259,
+        "flaeche_netto_m2": 426.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Mörschwil",
+      "bis": "Horchental",
+      "strecke_nr": 72,
+      "strecke": "St.Gallen - Rorschach - St.Margrethen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84130,
+      "zuege_pro_tag": 230
+    },
+    "staerkster_personenverkehr": {
+      "von": "Mörschwil",
+      "bis": "Horchental",
+      "strecke_nr": 72,
+      "strecke": "St.Gallen - Rorschach - St.Margrethen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84130,
+      "zuege_pro_tag": 230
+    },
+    "abschnitte": [
+      {
+        "von": "Mörschwil",
+        "bis": "Horchental",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84130,
+        "zuege_pro_tag": 230
+      },
+      {
+        "von": "St. Gallen St. Fiden Nord",
+        "bis": "Mörschwil",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84130,
+        "zuege_pro_tag": 230
+      },
+      {
+        "von": "Mörschwil",
+        "bis": "Horchental",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1976,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "St. Gallen St. Fiden Nord",
+        "bis": "Mörschwil",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1976,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 880,
+        "name": "Sargans Ost - St.Gallen",
+        "km": 72.81977
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/173a88127d8b9c54c938884dae3c1c41"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

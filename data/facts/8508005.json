@@ -1,0 +1,366 @@
+{
+  "uic": 8508005,
+  "name": "Burgdorf",
+  "kanton": "BE",
+  "bps": "BDF",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Burgdorf",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS, SBB, SOB",
+    "lon": 7.621694,
+    "lat": 47.060701,
+    "dwv": 18100,
+    "dtv": 16000,
+    "dnwv": 11200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 18700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 15900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 17200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 17700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 18100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Burgdorf",
+    "abkuerzung": "BDF",
+    "hoehe_m_ue_m": 533,
+    "gemeinde": "Burgdorf",
+    "ortschaft": "Burgdorf",
+    "bezirk": "Emmental",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 354,
+    "kuerzeste_m": 213,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 354,
+        "flaeche_netto_m2": 1233.95,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      },
+      {
+        "nr": "1/11",
+        "typ": "Mittelperron",
+        "laenge_m": 275,
+        "flaeche_netto_m2": 1497.61,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 213,
+        "flaeche_netto_m2": 850.91,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "11"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 275,
+        "sektoren": [
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20,
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 253,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 253,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 102,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 102,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "11",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 164,
+        "sektoren": [
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 30,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 3,
+      "25": 16,
+      "55": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 6,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Lyssach",
+      "bis": "Burgdorf",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 63657,
+      "zuege_pro_tag": 174
+    },
+    "staerkster_personenverkehr": {
+      "von": "Lyssach",
+      "bis": "Burgdorf",
+      "strecke_nr": 23,
+      "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 63657,
+      "zuege_pro_tag": 174
+    },
+    "abschnitte": [
+      {
+        "von": "Lyssach",
+        "bis": "Burgdorf",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 63657,
+        "zuege_pro_tag": 174
+      },
+      {
+        "von": "Burgdorf Steinhof West (Spw)",
+        "bis": "Burgdorf",
+        "strecke_nr": 403,
+        "strecke": "Burgdorf - Obermatt",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50107,
+        "zuege_pro_tag": 137
+      },
+      {
+        "von": "Burgdorf",
+        "bis": "Wynigen",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33361,
+        "zuege_pro_tag": 91
+      },
+      {
+        "von": "Burgdorf Buchmatt",
+        "bis": "Burgdorf",
+        "strecke_nr": 402,
+        "strecke": "Solothurn - Burgdorf",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29341,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Burgdorf",
+        "bis": "Wynigen",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14300,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Lyssach",
+        "bis": "Burgdorf",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12249,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Burgdorf Steinhof West (Spw)",
+        "bis": "Burgdorf",
+        "strecke_nr": 403,
+        "strecke": "Burgdorf - Obermatt",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1547,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Burgdorf Buchmatt",
+        "bis": "Burgdorf",
+        "strecke_nr": 402,
+        "strecke": "Solothurn - Burgdorf",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1075,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 450,
+        "name": "Olten Sud - Bern",
+        "km": 83.3908
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "BLS",
+      "ePOS"
+    ],
+    "billettentwerter": 10,
+    "wartehallen": 5,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/0376e4f4456a93c3c383db5766378502"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-burgdorf-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-burgdorf-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

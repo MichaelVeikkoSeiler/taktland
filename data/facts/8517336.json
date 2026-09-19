@@ -1,0 +1,241 @@
+{
+  "uic": 8517336,
+  "name": "Luzern Verkehrshaus",
+  "kanton": "LU",
+  "bps": "LZVH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Luzern Verkehrshaus",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.337297,
+    "lat": 47.053932,
+    "dwv": 930,
+    "dtv": 880,
+    "dnwv": 760,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 610
+      },
+      {
+        "jahr": 2022,
+        "dwv": 750
+      },
+      {
+        "jahr": 2023,
+        "dwv": 850
+      },
+      {
+        "jahr": 2024,
+        "dwv": 920
+      },
+      {
+        "jahr": 2025,
+        "dwv": 930
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Luzern Verkehrshaus",
+    "abkuerzung": "LZVH",
+    "hoehe_m_ue_m": 439,
+    "gemeinde": "Luzern",
+    "ortschaft": "Luzern",
+    "bezirk": "Luzern-Stadt",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 204,
+    "kuerzeste_m": 204,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 204,
+        "flaeche_netto_m2": 546,
+        "niveaufreier_zugang": "ja",
+        "linie": 570
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 204,
+        "flaeche_netto_m2": 546.56,
+        "niveaufreier_zugang": "ja",
+        "linie": 570
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 204,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 204,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Luzern Verkehrshaus",
+      "bis": "Meggen Zentrum",
+      "strecke_nr": 43,
+      "strecke": "Gütsch - Küssnacht - Immensee",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30392,
+      "zuege_pro_tag": 83
+    },
+    "staerkster_personenverkehr": {
+      "von": "Luzern Verkehrshaus",
+      "bis": "Meggen Zentrum",
+      "strecke_nr": 43,
+      "strecke": "Gütsch - Küssnacht - Immensee",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30392,
+      "zuege_pro_tag": 83
+    },
+    "abschnitte": [
+      {
+        "von": "Luzern Verkehrshaus",
+        "bis": "Meggen Zentrum",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30392,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Gütsch (Abzw)",
+        "bis": "Luzern Verkehrshaus",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29608,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Gütsch (Abzw)",
+        "bis": "Luzern Verkehrshaus",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 95,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Luzern Verkehrshaus",
+        "bis": "Meggen Zentrum",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 95,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 570,
+        "name": "Gutsch - Kussnacht - Immensee",
+        "km": 5.94
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/521c5979fa7704a8dd5ac865d94c2a42"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

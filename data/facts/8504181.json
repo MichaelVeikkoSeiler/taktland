@@ -1,0 +1,248 @@
+{
+  "uic": 8504181,
+  "name": "Givisiez",
+  "kanton": "FR",
+  "bps": "GIV",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Givisiez",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "SBB, TPF",
+    "lon": 7.129962,
+    "lat": 46.816756,
+    "dwv": 950,
+    "dtv": 800,
+    "dnwv": 460,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2022,
+        "dwv": 620
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 940
+      },
+      {
+        "jahr": 2025,
+        "dwv": 950
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Givisiez",
+    "abkuerzung": "GIV",
+    "hoehe_m_ue_m": 615.5,
+    "gemeinde": "Givisiez",
+    "ortschaft": "Givisiez",
+    "bezirk": "La Sarine",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 931.61,
+        "niveaufreier_zugang": "ja",
+        "linie": 253
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 170,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 170,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 7
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Fribourg Nord",
+      "bis": "Givisiez",
+      "strecke_nr": 16,
+      "strecke": "Yverdon - Payerne - Fribourg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 60990,
+      "zuege_pro_tag": 167
+    },
+    "staerkster_personenverkehr": {
+      "von": "Fribourg Nord",
+      "bis": "Givisiez",
+      "strecke_nr": 16,
+      "strecke": "Yverdon - Payerne - Fribourg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 60990,
+      "zuege_pro_tag": 167
+    },
+    "abschnitte": [
+      {
+        "von": "Fribourg Nord",
+        "bis": "Givisiez",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 60990,
+        "zuege_pro_tag": 167
+      },
+      {
+        "von": "Givisiez",
+        "bis": "Givisiez Ouest",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57065,
+        "zuege_pro_tag": 156
+      },
+      {
+        "von": "Givisiez dépôt",
+        "bis": "Givisiez",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7777,
+        "zuege_pro_tag": 21
+      },
+      {
+        "von": "Fribourg Nord",
+        "bis": "Givisiez",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1174,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Givisiez",
+        "bis": "Givisiez Ouest",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 842,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Givisiez dépôt",
+        "bis": "Givisiez",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 1,
+        "zuege_pro_jahr": 10,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 253,
+        "name": "Payerne Est - Fribourg Nord",
+        "km": 46.269
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d236838166e6671d06766f271f180331"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

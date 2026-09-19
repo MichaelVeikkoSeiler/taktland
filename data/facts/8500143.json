@@ -1,0 +1,75 @@
+{
+  "uic": 8500143,
+  "name": "Grandgourt",
+  "kanton": "JU",
+  "bps": "GRA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2022,
+    "name": "Grandgourt",
+    "kanton": "JU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.048108,
+    "lat": 47.46992,
+    "dwv": 49,
+    "dtv": 49,
+    "dnwv": 49,
+    "bemerkung": "49: weniger als 50 Ein- und Aussteigende.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 49
+      },
+      {
+        "jahr": 2022,
+        "dwv": 49
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Grandgourt",
+    "abkuerzung": "GRA",
+    "hoehe_m_ue_m": 390.68,
+    "gemeinde": "Basse-Allaine",
+    "ortschaft": "Courtemaîche",
+    "bezirk": "Porrentruy",
+    "kanton": "Jura",
+    "verkehrsmittel": [],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": null,
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 240,
+        "name": "Delemont - Delle",
+        "km": 119.6638
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 0,
+    "wartehallen": 0
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "linien",
+    "services"
+  ]
+}

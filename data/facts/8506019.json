@@ -1,0 +1,243 @@
+{
+  "uic": 8506019,
+  "name": "Islikon",
+  "kanton": "TG",
+  "bps": "ISL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Islikon",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.846197,
+    "lat": 47.547835,
+    "dwv": 1200,
+    "dtv": 1000,
+    "dnwv": 700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 940
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Islikon",
+    "abkuerzung": "ISL",
+    "hoehe_m_ue_m": 422.7,
+    "gemeinde": "Gachnang",
+    "ortschaft": "Islikon",
+    "bezirk": "Frauenfeld",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 225,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 225,
+        "flaeche_netto_m2": 546.29,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      },
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 640.59,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 225,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 221,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rickenbach-Attikon",
+      "bis": "Islikon",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 60933,
+      "zuege_pro_tag": 167
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rickenbach-Attikon",
+      "bis": "Islikon",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 60933,
+      "zuege_pro_tag": 167
+    },
+    "abschnitte": [
+      {
+        "von": "Rickenbach-Attikon",
+        "bis": "Islikon",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 60933,
+        "zuege_pro_tag": 167
+      },
+      {
+        "von": "Islikon",
+        "bis": "Frauenfeld",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 60873,
+        "zuege_pro_tag": 167
+      },
+      {
+        "von": "Rickenbach-Attikon",
+        "bis": "Islikon",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 10174,
+        "zuege_pro_tag": 28
+      },
+      {
+        "von": "Islikon",
+        "bis": "Frauenfeld",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9640,
+        "zuege_pro_tag": 26
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 840,
+        "name": "Winterthur Nord - Romanshorn",
+        "km": 38.05057
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/021cc93e8c7224fc4cd2a513cff9bf70"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "uic": 8503235,
+  "name": "Leuggelbach",
+  "kanton": "GL",
+  "bps": "LGB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Leuggelbach",
+    "kanton": "GL",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.046944,
+    "lat": 46.975743,
+    "dwv": 49,
+    "dtv": 49,
+    "dnwv": 49,
+    "bemerkung": "49: weniger als 50 Ein- und Aussteigende.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 49
+      },
+      {
+        "jahr": 2022,
+        "dwv": 49
+      },
+      {
+        "jahr": 2023,
+        "dwv": 49
+      },
+      {
+        "jahr": 2024,
+        "dwv": 49
+      },
+      {
+        "jahr": 2025,
+        "dwv": 49
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Leuggelbach",
+    "abkuerzung": "LGB",
+    "hoehe_m_ue_m": 553.9,
+    "gemeinde": "Glarus Süd",
+    "ortschaft": "Leuggelbach",
+    "bezirk": null,
+    "kanton": "Glarus",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 176,
+    "kuerzeste_m": 176,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 176,
+        "flaeche_netto_m2": 301.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 736
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Leuggelbach",
+      "bis": "Luchsingen-Hätzingen",
+      "strecke_nr": 55,
+      "strecke": "Ziegelbrücke - Glarus - Linthal",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 15859,
+      "zuege_pro_tag": 43
+    },
+    "staerkster_personenverkehr": {
+      "von": "Leuggelbach",
+      "bis": "Luchsingen-Hätzingen",
+      "strecke_nr": 55,
+      "strecke": "Ziegelbrücke - Glarus - Linthal",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 15859,
+      "zuege_pro_tag": 43
+    },
+    "abschnitte": [
+      {
+        "von": "Leuggelbach",
+        "bis": "Luchsingen-Hätzingen",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15859,
+        "zuege_pro_tag": 43
+      },
+      {
+        "von": "Nidfurn-Haslen",
+        "bis": "Leuggelbach",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15859,
+        "zuege_pro_tag": 43
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 736,
+        "name": "Ziegelbrucke Ost - Linthal Gleisende",
+        "km": 77.35064
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f1d5a0685d5c108fd002c13db71b6a37"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

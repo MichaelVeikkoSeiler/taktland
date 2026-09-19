@@ -1,0 +1,242 @@
+{
+  "uic": 8500119,
+  "name": "Münchenstein",
+  "kanton": "BL",
+  "bps": "MST",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Münchenstein",
+    "kanton": "BL",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.617597,
+    "lat": 47.513397,
+    "dwv": 800,
+    "dtv": 700,
+    "dnwv": 470,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 680
+      },
+      {
+        "jahr": 2023,
+        "dwv": 820
+      },
+      {
+        "jahr": 2024,
+        "dwv": 900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 800
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Münchenstein",
+    "abkuerzung": "MST",
+    "hoehe_m_ue_m": 272.72,
+    "gemeinde": "Münchenstein",
+    "ortschaft": "Münchenstein",
+    "bezirk": "Arlesheim",
+    "kanton": "Basel-Landschaft",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 766.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 585.38,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 171,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 7
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dornach-Arlesheim",
+      "bis": "Münchenstein",
+      "strecke_nr": 14,
+      "strecke": "Moutier - Delémont - Ruchfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50217,
+      "zuege_pro_tag": 138
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dornach-Arlesheim",
+      "bis": "Münchenstein",
+      "strecke_nr": 14,
+      "strecke": "Moutier - Delémont - Ruchfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50217,
+      "zuege_pro_tag": 138
+    },
+    "abschnitte": [
+      {
+        "von": "Dornach-Arlesheim",
+        "bis": "Münchenstein",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50217,
+        "zuege_pro_tag": 138
+      },
+      {
+        "von": "Münchenstein",
+        "bis": "Ruchfeld",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 49730,
+        "zuege_pro_tag": 136
+      },
+      {
+        "von": "Münchenstein",
+        "bis": "Ruchfeld",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 543,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Dornach-Arlesheim",
+        "bis": "Münchenstein",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 331,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 230,
+        "name": "Delemont Est - Basel SBB Ost",
+        "km": 118.30169
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b088dace22788c0487c766891d9e9dfd"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

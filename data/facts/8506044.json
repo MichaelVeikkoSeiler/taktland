@@ -1,0 +1,261 @@
+{
+  "uic": 8506044,
+  "name": "Winterthur Töss",
+  "kanton": "ZH",
+  "bps": "WTOE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Winterthur Töss",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.70931,
+    "lat": 47.489806,
+    "dwv": 780,
+    "dtv": 680,
+    "dnwv": 460,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 720
+      },
+      {
+        "jahr": 2022,
+        "dwv": 730
+      },
+      {
+        "jahr": 2023,
+        "dwv": 730
+      },
+      {
+        "jahr": 2024,
+        "dwv": 780
+      },
+      {
+        "jahr": 2025,
+        "dwv": 780
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Winterthur Töss",
+    "abkuerzung": "WTOE",
+    "hoehe_m_ue_m": 435.2,
+    "gemeinde": "Winterthur",
+    "ortschaft": "Winterthur",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 128,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "4",
+        "typ": "Hilfskante",
+        "laenge_m": 128,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 769
+      },
+      {
+        "nr": "3",
+        "typ": "Hilfskante",
+        "laenge_m": 128,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 769
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 769
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      35
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20,
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 33,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 36,
+        "sektoren": []
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          25,
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 129,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 21,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 8,
+      "25": 3,
+      "35": 10
+    },
+    "segmente_mit_hilfstritt": 7,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Winterthur Wülflingen",
+      "bis": "Winterthur Töss",
+      "strecke_nr": 68,
+      "strecke": "Winterthur West - Bülach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29450,
+      "zuege_pro_tag": 81
+    },
+    "staerkster_personenverkehr": {
+      "von": "Winterthur Wülflingen",
+      "bis": "Winterthur Töss",
+      "strecke_nr": 68,
+      "strecke": "Winterthur West - Bülach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29450,
+      "zuege_pro_tag": 81
+    },
+    "abschnitte": [
+      {
+        "von": "Winterthur Wülflingen",
+        "bis": "Winterthur Töss",
+        "strecke_nr": 68,
+        "strecke": "Winterthur West - Bülach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29450,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Winterthur Töss",
+        "bis": "Winterthur West (Abzw)",
+        "strecke_nr": 68,
+        "strecke": "Winterthur West - Bülach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29449,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Winterthur Töss",
+        "bis": "Winterthur West (Abzw)",
+        "strecke_nr": 68,
+        "strecke": "Winterthur West - Bülach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1804,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Winterthur Wülflingen",
+        "bis": "Winterthur Töss",
+        "strecke_nr": 68,
+        "strecke": "Winterthur West - Bülach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1803,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 9794,
+        "name": "W'thur West Unterquerung - W'thur Toss",
+        "km": 51.7178
+      },
+      {
+        "nummer": 769,
+        "name": "Winterthur West - Bulach",
+        "km": 1.7178
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f0374dc910a167e9d2124f1ccbe5b23e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "uic": 8501123,
+  "name": "Villette VD",
+  "kanton": "VD",
+  "bps": "VTE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Villette VD",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.707377,
+    "lat": 46.495425,
+    "dwv": 180,
+    "dtv": 180,
+    "dnwv": 180,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 130
+      },
+      {
+        "jahr": 2022,
+        "dwv": 120
+      },
+      {
+        "jahr": 2023,
+        "dwv": 130
+      },
+      {
+        "jahr": 2024,
+        "dwv": 130
+      },
+      {
+        "jahr": 2025,
+        "dwv": 180
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Villette VD",
+    "abkuerzung": "VTE",
+    "hoehe_m_ue_m": 387.487,
+    "gemeinde": "Bourg-en-Lavaux",
+    "ortschaft": "Villette (Lavaux)",
+    "bezirk": "Lavaux-Oron",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 242,
+    "kuerzeste_m": 181,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 242,
+        "flaeche_netto_m2": 404.26,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 181,
+        "flaeche_netto_m2": 357.68,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Lutry",
+      "bis": "Villette VD",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 110939,
+      "zuege_pro_tag": 304
+    },
+    "staerkster_personenverkehr": {
+      "von": "Lutry",
+      "bis": "Villette VD",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 110939,
+      "zuege_pro_tag": 304
+    },
+    "abschnitte": [
+      {
+        "von": "Lutry",
+        "bis": "Villette VD",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 110939,
+        "zuege_pro_tag": 304
+      },
+      {
+        "von": "Villette VD",
+        "bis": "Cully",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 110939,
+        "zuege_pro_tag": 304
+      },
+      {
+        "von": "Lutry",
+        "bis": "Villette VD",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9371,
+        "zuege_pro_tag": 26
+      },
+      {
+        "von": "Villette VD",
+        "bis": "Cully",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9371,
+        "zuege_pro_tag": 26
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 6.67962
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ca49d7428800c41f6e7ecba0e258cbae"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

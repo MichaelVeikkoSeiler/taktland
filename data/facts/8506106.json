@@ -1,0 +1,220 @@
+{
+  "uic": 8506106,
+  "name": "Bürglen TG",
+  "kanton": "TG",
+  "bps": "BGL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bürglen TG",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.149877,
+    "lat": 47.549098,
+    "dwv": 830,
+    "dtv": 730,
+    "dnwv": 500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 760
+      },
+      {
+        "jahr": 2022,
+        "dwv": 800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 820
+      },
+      {
+        "jahr": 2024,
+        "dwv": 820
+      },
+      {
+        "jahr": 2025,
+        "dwv": 830
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bürglen TG",
+    "abkuerzung": "BGL",
+    "hoehe_m_ue_m": 439.7,
+    "gemeinde": "Bürglen (TG)",
+    "ortschaft": "Bürglen TG",
+    "bezirk": "Weinfelden",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 127,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 127,
+        "flaeche_netto_m2": 317.73,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 245.49,
+        "niveaufreier_zugang": "ja",
+        "linie": 840
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 120,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Weinfelden KVA Thurgau (Abzw)",
+      "bis": "Bürglen TG",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 81764,
+      "zuege_pro_tag": 224
+    },
+    "staerkster_personenverkehr": {
+      "von": "Weinfelden KVA Thurgau (Abzw)",
+      "bis": "Bürglen TG",
+      "strecke_nr": 73,
+      "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 81764,
+      "zuege_pro_tag": 224
+    },
+    "abschnitte": [
+      {
+        "von": "Weinfelden KVA Thurgau (Abzw)",
+        "bis": "Bürglen TG",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 81764,
+        "zuege_pro_tag": 224
+      },
+      {
+        "von": "Bürglen TG",
+        "bis": "Sulgen",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 81762,
+        "zuege_pro_tag": 224
+      },
+      {
+        "von": "Bürglen TG",
+        "bis": "Sulgen",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8766,
+        "zuege_pro_tag": 24
+      },
+      {
+        "von": "Weinfelden KVA Thurgau (Abzw)",
+        "bis": "Bürglen TG",
+        "strecke_nr": 73,
+        "strecke": "Winterthur - Romanshorn / Romanshorn Süd",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8764,
+        "zuege_pro_tag": 24
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 840,
+        "name": "Winterthur Nord - Romanshorn",
+        "km": 63.28042
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/46f74aa4fea1a55fab76677b72dd3b09"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

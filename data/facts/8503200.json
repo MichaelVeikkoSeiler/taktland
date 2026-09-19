@@ -1,0 +1,238 @@
+{
+  "uic": 8503200,
+  "name": "Kilchberg ZH",
+  "kanton": "ZH",
+  "bps": "KIL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Kilchberg ZH",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.548016,
+    "lat": 47.324432,
+    "dwv": 4900,
+    "dtv": 4300,
+    "dnwv": 3000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 4900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Kilchberg ZH",
+    "abkuerzung": "KIL",
+    "hoehe_m_ue_m": 424.1,
+    "gemeinde": "Kilchberg (ZH)",
+    "ortschaft": "Kilchberg ZH",
+    "bezirk": "Horgen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 328,
+    "kuerzeste_m": 316,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 328,
+        "flaeche_netto_m2": 1274.6,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 316,
+        "flaeche_netto_m2": 1019.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 316,
+        "sektoren": [
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 329,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zürich Wollishofen",
+      "bis": "Kilchberg ZH",
+      "strecke_nr": 51,
+      "strecke": "Zürich Wiedikon - Kilchberg - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 85144,
+      "zuege_pro_tag": 233
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zürich Wollishofen",
+      "bis": "Kilchberg ZH",
+      "strecke_nr": 51,
+      "strecke": "Zürich Wiedikon - Kilchberg - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 85144,
+      "zuege_pro_tag": 233
+    },
+    "abschnitte": [
+      {
+        "von": "Zürich Wollishofen",
+        "bis": "Kilchberg ZH",
+        "strecke_nr": 51,
+        "strecke": "Zürich Wiedikon - Kilchberg - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 85144,
+        "zuege_pro_tag": 233
+      },
+      {
+        "von": "Kilchberg ZH",
+        "bis": "Rüschlikon",
+        "strecke_nr": 51,
+        "strecke": "Zürich Wiedikon - Kilchberg - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 85070,
+        "zuege_pro_tag": 233
+      },
+      {
+        "von": "Zürich Wollishofen",
+        "bis": "Kilchberg ZH",
+        "strecke_nr": 51,
+        "strecke": "Zürich Wiedikon - Kilchberg - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 676,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Kilchberg ZH",
+        "bis": "Rüschlikon",
+        "strecke_nr": 51,
+        "strecke": "Zürich Wiedikon - Kilchberg - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 346,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 720,
+        "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
+        "km": 8.63617
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/5d9a631ac993c2f416bff86ec1723ae0"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

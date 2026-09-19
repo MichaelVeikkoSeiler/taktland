@@ -1,0 +1,388 @@
+{
+  "uic": 8502119,
+  "name": "Lenzburg",
+  "kanton": "AG",
+  "bps": "LB",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Lenzburg",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.170393,
+    "lat": 47.3912,
+    "dwv": 31500,
+    "dtv": 27600,
+    "dnwv": 18900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 26800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 25100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 29500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 31300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 31500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Lenzburg",
+    "abkuerzung": "LB",
+    "hoehe_m_ue_m": 406,
+    "gemeinde": "Lenzburg",
+    "ortschaft": "Lenzburg",
+    "bezirk": "Lenzburg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 5,
+    "laengste_m": 401,
+    "kuerzeste_m": 110,
+    "items": [
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 401,
+        "flaeche_netto_m2": 1155.97,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 401,
+        "flaeche_netto_m2": 1302.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      },
+      {
+        "nr": "6",
+        "typ": "Hausperron",
+        "laenge_m": 180,
+        "flaeche_netto_m2": 767.39,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 397.8,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      },
+      {
+        "nr": "7",
+        "typ": "Aussenperron",
+        "laenge_m": 110,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 651
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 7,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      20,
+      30,
+      35,
+      42,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          42
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 160,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 348,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 348,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 401,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 401,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          20,
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 111,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 110,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 30,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2,
+      "30": 8,
+      "35": 12,
+      "42": 2,
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Teilweise",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 7
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Lenzburg",
+      "bis": "Gexi",
+      "strecke_nr": 35,
+      "strecke": "Olten Ost - Heitersberg - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 192887,
+      "zuege_pro_tag": 528
+    },
+    "staerkster_personenverkehr": {
+      "von": "Lenzburg",
+      "bis": "Gexi",
+      "strecke_nr": 35,
+      "strecke": "Olten Ost - Heitersberg - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 192887,
+      "zuege_pro_tag": 528
+    },
+    "abschnitte": [
+      {
+        "von": "Lenzburg",
+        "bis": "Gexi",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 192887,
+        "zuege_pro_tag": 528
+      },
+      {
+        "von": "Rupperswil",
+        "bis": "Lenzburg",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 173284,
+        "zuege_pro_tag": 475
+      },
+      {
+        "von": "Lenzburg",
+        "bis": "Gexi",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44651,
+        "zuege_pro_tag": 122
+      },
+      {
+        "von": "Rupperswil",
+        "bis": "Lenzburg",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35790,
+        "zuege_pro_tag": 98
+      },
+      {
+        "von": "Seon Nord",
+        "bis": "Lenzburg",
+        "strecke_nr": 40,
+        "strecke": "Lenzburg - Hochdorf - Hübeli",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26530,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Hunzenschwil",
+        "bis": "Lenzburg",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24862,
+        "zuege_pro_tag": 68
+      },
+      {
+        "von": "Hunzenschwil",
+        "bis": "Lenzburg",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13989,
+        "zuege_pro_tag": 38
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 650,
+        "name": "Killwangen West - Lenzburg - Daniken Ost",
+        "km": 31.93612
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "Andere",
+      "BATS",
+      "ePOS"
+    ],
+    "billettentwerter": 11,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d5d18656bf22a24bcff456204a62d45d"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-lenzburg-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-lenzburg-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

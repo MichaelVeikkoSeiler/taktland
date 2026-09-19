@@ -1,0 +1,227 @@
+{
+  "uic": 8501100,
+  "name": "Le Pont",
+  "kanton": "VD",
+  "bps": "PT",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Le Pont",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.32472,
+    "lat": 46.668667,
+    "dwv": 220,
+    "dtv": 240,
+    "dnwv": 260,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 260
+      },
+      {
+        "jahr": 2022,
+        "dwv": 320
+      },
+      {
+        "jahr": 2023,
+        "dwv": 350
+      },
+      {
+        "jahr": 2024,
+        "dwv": 430
+      },
+      {
+        "jahr": 2025,
+        "dwv": 220
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Le Pont",
+    "abkuerzung": "PT",
+    "hoehe_m_ue_m": 1007.86,
+    "gemeinde": "L'Abbaye",
+    "ortschaft": "Le Pont",
+    "bezirk": "Jura-Nord vaudois",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 89,
+    "kuerzeste_m": 73,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 89,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 201
+      },
+      {
+        "nr": "2",
+        "typ": "Zwischenperron",
+        "laenge_m": 73,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 201
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      20
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 89,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 73,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 16
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Le Pont",
+      "bis": "Les Charbonnières",
+      "strecke_nr": 9989,
+      "strecke": "Le Pont - Le Brassus TRAVYS",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 4089,
+      "zuege_pro_tag": 11
+    },
+    "staerkster_personenverkehr": {
+      "von": "Le Pont",
+      "bis": "Les Charbonnières",
+      "strecke_nr": 9989,
+      "strecke": "Le Pont - Le Brassus TRAVYS",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 4089,
+      "zuege_pro_tag": 11
+    },
+    "abschnitte": [
+      {
+        "von": "Le Pont",
+        "bis": "Les Charbonnières",
+        "strecke_nr": 9989,
+        "strecke": "Le Pont - Le Brassus TRAVYS",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4089,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Le Pont",
+        "bis": "Le Day",
+        "strecke_nr": 82,
+        "strecke": "Le Day - Le Pont",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4086,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Le Pont",
+        "bis": "Le Day",
+        "strecke_nr": 82,
+        "strecke": "Le Day - Le Pont",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Le Pont",
+        "bis": "Les Charbonnières",
+        "strecke_nr": 9989,
+        "strecke": "Le Pont - Le Brassus TRAVYS",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 201,
+        "name": "Le Day - Le Brassus",
+        "km": 11.293
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/0e86aa4305479b0b417c1546a5699bef"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

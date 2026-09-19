@@ -1,0 +1,225 @@
+{
+  "uic": 8506190,
+  "name": "Bussnang",
+  "kanton": "TG",
+  "bps": "BNG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bussnang",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.084163,
+    "lat": 47.556084,
+    "dwv": 760,
+    "dtv": 550,
+    "dnwv": 70,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 550
+      },
+      {
+        "jahr": 2022,
+        "dwv": 580
+      },
+      {
+        "jahr": 2023,
+        "dwv": 640
+      },
+      {
+        "jahr": 2024,
+        "dwv": 700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 760
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bussnang",
+    "abkuerzung": "BNG",
+    "hoehe_m_ue_m": 444.113,
+    "gemeinde": "Bussnang",
+    "ortschaft": "Bussnang",
+    "bezirk": "Weinfelden",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 110,
+    "kuerzeste_m": 110,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Zwischenperron",
+        "laenge_m": 110,
+        "flaeche_netto_m2": 118.88,
+        "niveaufreier_zugang": "nein",
+        "linie": 830
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      42,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 111,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 110,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "42": 3,
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 3,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Weinfelden Süd",
+      "bis": "Bussnang",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 22775,
+      "zuege_pro_tag": 62
+    },
+    "staerkster_personenverkehr": {
+      "von": "Weinfelden Süd",
+      "bis": "Bussnang",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 22775,
+      "zuege_pro_tag": 62
+    },
+    "abschnitte": [
+      {
+        "von": "Weinfelden Süd",
+        "bis": "Bussnang",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22775,
+        "zuege_pro_tag": 62
+      },
+      {
+        "von": "Oppikon",
+        "bis": "Bussnang",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22421,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Oppikon",
+        "bis": "Bussnang",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Weinfelden Süd",
+        "bis": "Bussnang",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 830,
+        "name": "Wil - Weinfelden",
+        "km": 16.35061
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/0d711152f755dba96312e8eafe42a12a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "uic": 8506006,
+  "name": "Rämismühle-Zell",
+  "kanton": "ZH",
+  "bps": "RMZ",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rämismühle-Zell",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.819137,
+    "lat": 47.441539,
+    "dwv": 730,
+    "dtv": 640,
+    "dnwv": 430,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 630
+      },
+      {
+        "jahr": 2022,
+        "dwv": 650
+      },
+      {
+        "jahr": 2023,
+        "dwv": 750
+      },
+      {
+        "jahr": 2024,
+        "dwv": 750
+      },
+      {
+        "jahr": 2025,
+        "dwv": 730
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rämismühle-Zell",
+    "abkuerzung": "RMZ",
+    "hoehe_m_ue_m": 529.8,
+    "gemeinde": "Zell (ZH)",
+    "ortschaft": "Rämismühle",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 172,
+    "kuerzeste_m": 172,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 172,
+        "flaeche_netto_m2": 349.06,
+        "niveaufreier_zugang": "ja",
+        "linie": 754
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rikon",
+      "bis": "Rämismühle-Zell",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 36871,
+      "zuege_pro_tag": 101
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rikon",
+      "bis": "Rämismühle-Zell",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 36871,
+      "zuege_pro_tag": 101
+    },
+    "abschnitte": [
+      {
+        "von": "Rikon",
+        "bis": "Rämismühle-Zell",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36871,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Rämismühle-Zell",
+        "bis": "Turbenthal",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36871,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Rikon",
+        "bis": "Rämismühle-Zell",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Rämismühle-Zell",
+        "bis": "Turbenthal",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 754,
+        "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+        "km": 13.52105
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7f434c9589d596783539e948d9ea3b47"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

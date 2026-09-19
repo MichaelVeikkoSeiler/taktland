@@ -1,0 +1,230 @@
+{
+  "uic": 8506022,
+  "name": "Thalheim-Altikon",
+  "kanton": "ZH",
+  "bps": "TLH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Thalheim-Altikon",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.757643,
+    "lat": 47.569621,
+    "dwv": 210,
+    "dtv": 190,
+    "dnwv": 150,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 180
+      },
+      {
+        "jahr": 2022,
+        "dwv": 240
+      },
+      {
+        "jahr": 2023,
+        "dwv": 210
+      },
+      {
+        "jahr": 2024,
+        "dwv": 200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 210
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Thalheim-Altikon",
+    "abkuerzung": "TLH",
+    "hoehe_m_ue_m": 445.9,
+    "gemeinde": "Thalheim an der Thur",
+    "ortschaft": "Thalheim an der Thur",
+    "bezirk": "Andelfingen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 151,
+    "kuerzeste_m": 151,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hilfskante",
+        "laenge_m": 151,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 821
+      },
+      {
+        "nr": "3",
+        "typ": "Hilfskante",
+        "laenge_m": 151,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 821
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      25
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 151,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 151,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Ossingen",
+      "bis": "Thalheim-Altikon",
+      "strecke_nr": 70,
+      "strecke": "Oberwinterthur - Etzwilen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26492,
+      "zuege_pro_tag": 73
+    },
+    "staerkster_personenverkehr": {
+      "von": "Ossingen",
+      "bis": "Thalheim-Altikon",
+      "strecke_nr": 70,
+      "strecke": "Oberwinterthur - Etzwilen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26492,
+      "zuege_pro_tag": 73
+    },
+    "abschnitte": [
+      {
+        "von": "Ossingen",
+        "bis": "Thalheim-Altikon",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26492,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Thalheim-Altikon",
+        "bis": "Dinhard",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26470,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Thalheim-Altikon",
+        "bis": "Dinhard",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 119,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Ossingen",
+        "bis": "Thalheim-Altikon",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 821,
+        "name": "Oberwinterthur - Etzwilen West (Abzw)",
+        "km": 11.83809
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/480265f6c282e738216fb74adc37d227"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

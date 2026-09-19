@@ -1,0 +1,189 @@
+{
+  "uic": 8502128,
+  "name": "Holderbank AG",
+  "kanton": "AG",
+  "bps": "HOBK",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Holderbank AG",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.166622,
+    "lat": 47.428643,
+    "dwv": 410,
+    "dtv": 350,
+    "dnwv": 210,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 390
+      },
+      {
+        "jahr": 2022,
+        "dwv": 290
+      },
+      {
+        "jahr": 2023,
+        "dwv": 340
+      },
+      {
+        "jahr": 2024,
+        "dwv": 390
+      },
+      {
+        "jahr": 2025,
+        "dwv": 410
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Holderbank AG",
+    "abkuerzung": "HOBK",
+    "hoehe_m_ue_m": 355,
+    "gemeinde": "Holderbank (AG)",
+    "ortschaft": "Holderbank AG",
+    "bezirk": "Lenzburg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 151,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 151,
+        "flaeche_netto_m2": 238.86,
+        "niveaufreier_zugang": "ja",
+        "linie": 640
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 202.4,
+        "niveaufreier_zugang": "ja",
+        "linie": 640
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Holderbank AG",
+      "bis": "Schinznach Bad",
+      "strecke_nr": 36,
+      "strecke": "Rupperswil - Brugg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 58394,
+      "zuege_pro_tag": 160
+    },
+    "staerkster_personenverkehr": {
+      "von": "Holderbank AG",
+      "bis": "Schinznach Bad",
+      "strecke_nr": 36,
+      "strecke": "Rupperswil - Brugg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 58394,
+      "zuege_pro_tag": 160
+    },
+    "abschnitte": [
+      {
+        "von": "Holderbank AG",
+        "bis": "Schinznach Bad",
+        "strecke_nr": 36,
+        "strecke": "Rupperswil - Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58394,
+        "zuege_pro_tag": 160
+      },
+      {
+        "von": "Wildegg",
+        "bis": "Holderbank AG",
+        "strecke_nr": 36,
+        "strecke": "Rupperswil - Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58394,
+        "zuege_pro_tag": 160
+      },
+      {
+        "von": "Holderbank AG",
+        "bis": "Schinznach Bad",
+        "strecke_nr": 36,
+        "strecke": "Rupperswil - Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8333,
+        "zuege_pro_tag": 23
+      },
+      {
+        "von": "Wildegg",
+        "bis": "Holderbank AG",
+        "strecke_nr": 36,
+        "strecke": "Rupperswil - Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8333,
+        "zuege_pro_tag": 23
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 640,
+        "name": "Brugg - Rupperswil",
+        "km": 38.76
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/616f9925d53cffe8ff73a12d4f84250c"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "uic": 8506301,
+  "name": "St. Gallen Bruggen",
+  "kanton": "SG",
+  "bps": "SGBR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "St. Gallen Bruggen",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.329655,
+    "lat": 47.407203,
+    "dwv": 840,
+    "dtv": 740,
+    "dnwv": 540,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 380
+      },
+      {
+        "jahr": 2022,
+        "dwv": 680
+      },
+      {
+        "jahr": 2023,
+        "dwv": 790
+      },
+      {
+        "jahr": 2024,
+        "dwv": 810
+      },
+      {
+        "jahr": 2025,
+        "dwv": 840
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "St. Gallen Bruggen",
+    "abkuerzung": "SGBR",
+    "hoehe_m_ue_m": 651.6,
+    "gemeinde": "St. Gallen",
+    "ortschaft": "St. Gallen",
+    "bezirk": "St. Gallen",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 180,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 648.15,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 180,
+        "flaeche_netto_m2": 411.8,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "St. Gallen Bruggen",
+      "bis": "St. Gallen West (Abzw)",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 100324,
+      "zuege_pro_tag": 275
+    },
+    "staerkster_personenverkehr": {
+      "von": "St. Gallen Bruggen",
+      "bis": "St. Gallen West (Abzw)",
+      "strecke_nr": 71,
+      "strecke": "Winterthur - Wil - St.Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 100324,
+      "zuege_pro_tag": 275
+    },
+    "abschnitte": [
+      {
+        "von": "St. Gallen Bruggen",
+        "bis": "St. Gallen West (Abzw)",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 100324,
+        "zuege_pro_tag": 275
+      },
+      {
+        "von": "St. Gallen Winkeln",
+        "bis": "St. Gallen Bruggen",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 100324,
+        "zuege_pro_tag": 275
+      },
+      {
+        "von": "St. Gallen Bruggen",
+        "bis": "St. Gallen West (Abzw)",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5821,
+        "zuege_pro_tag": 16
+      },
+      {
+        "von": "St. Gallen Winkeln",
+        "bis": "St. Gallen Bruggen",
+        "strecke_nr": 71,
+        "strecke": "Winterthur - Wil - St.Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5821,
+        "zuege_pro_tag": 16
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 850,
+        "name": "St.Gallen - Winterthur Nord",
+        "km": 84.0467
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a153621d7923e3f49b60028ddc91e205"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "uic": 8503137,
+  "name": "Gibswil",
+  "kanton": "ZH",
+  "bps": "GIB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Gibswil",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.915511,
+    "lat": 47.31372,
+    "dwv": 450,
+    "dtv": 390,
+    "dnwv": 250,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 280
+      },
+      {
+        "jahr": 2022,
+        "dwv": 380
+      },
+      {
+        "jahr": 2023,
+        "dwv": 430
+      },
+      {
+        "jahr": 2024,
+        "dwv": 420
+      },
+      {
+        "jahr": 2025,
+        "dwv": 450
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Gibswil",
+    "abkuerzung": "GIB",
+    "hoehe_m_ue_m": 756.8,
+    "gemeinde": "Fischenthal",
+    "ortschaft": "Gibswil",
+    "bezirk": "Hinwil",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 363.7,
+        "niveaufreier_zugang": "ja",
+        "linie": 754
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Fischenthal",
+      "bis": "Gibswil",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 21877,
+      "zuege_pro_tag": 60
+    },
+    "staerkster_personenverkehr": {
+      "von": "Fischenthal",
+      "bis": "Gibswil",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 21877,
+      "zuege_pro_tag": 60
+    },
+    "abschnitte": [
+      {
+        "von": "Fischenthal",
+        "bis": "Gibswil",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21877,
+        "zuege_pro_tag": 60
+      },
+      {
+        "von": "Gibswil",
+        "bis": "Wald ZH",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21877,
+        "zuege_pro_tag": 60
+      },
+      {
+        "von": "Fischenthal",
+        "bis": "Gibswil",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Gibswil",
+        "bis": "Wald ZH",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 754,
+        "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+        "km": 34.70027
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/94dce8f6ffeb8c9f4c6dc168ceb117e0"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

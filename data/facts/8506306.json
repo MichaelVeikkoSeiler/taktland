@@ -1,0 +1,196 @@
+{
+  "uic": 8506306,
+  "name": "Rorschach Hafen",
+  "kanton": "SG",
+  "bps": "RSHF",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rorschach Hafen",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.492923,
+    "lat": 47.47859,
+    "dwv": 1300,
+    "dtv": 1200,
+    "dnwv": 910,
+    "bemerkung": "Ohne AB.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rorschach Hafen",
+    "abkuerzung": "RSHF",
+    "hoehe_m_ue_m": 397.9,
+    "gemeinde": "Rorschach",
+    "ortschaft": "Rorschach",
+    "bezirk": "Rorschach",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 123,
+    "kuerzeste_m": 123,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 123,
+        "flaeche_netto_m2": 498.37,
+        "niveaufreier_zugang": "nein",
+        "linie": 825
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 123,
+        "flaeche_netto_m2": 733.1,
+        "niveaufreier_zugang": "nein",
+        "linie": 825
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Horn",
+      "bis": "Rorschach Hafen",
+      "strecke_nr": 74,
+      "strecke": "Romanshorn - Rorschach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29775,
+      "zuege_pro_tag": 82
+    },
+    "staerkster_personenverkehr": {
+      "von": "Horn",
+      "bis": "Rorschach Hafen",
+      "strecke_nr": 74,
+      "strecke": "Romanshorn - Rorschach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29775,
+      "zuege_pro_tag": 82
+    },
+    "abschnitte": [
+      {
+        "von": "Horn",
+        "bis": "Rorschach Hafen",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29775,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Rorschach Hafen",
+        "bis": "Rorschach",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29775,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Horn",
+        "bis": "Rorschach Hafen",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2199,
+        "zuege_pro_tag": 6
+      },
+      {
+        "von": "Rorschach Hafen",
+        "bis": "Rorschach",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2199,
+        "zuege_pro_tag": 6
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 825,
+        "name": "Romanshorn Feld H - Rorschach",
+        "km": 96.31988
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b6b0f247a5f5118feb8daef24d0251a0"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rorschach-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rorschach-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

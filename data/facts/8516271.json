@@ -1,0 +1,181 @@
+{
+  "uic": 8516271,
+  "name": "Steinach",
+  "kanton": "SG",
+  "bps": "STCH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Steinach",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.442003,
+    "lat": 47.500956,
+    "dwv": 520,
+    "dtv": 460,
+    "dnwv": 340,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 520
+      },
+      {
+        "jahr": 2022,
+        "dwv": 440
+      },
+      {
+        "jahr": 2023,
+        "dwv": 490
+      },
+      {
+        "jahr": 2024,
+        "dwv": 520
+      },
+      {
+        "jahr": 2025,
+        "dwv": 520
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Steinach",
+    "abkuerzung": "STCH",
+    "hoehe_m_ue_m": 402.022,
+    "gemeinde": "Steinach",
+    "ortschaft": "Steinach",
+    "bezirk": "Rorschach",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 237.61,
+        "niveaufreier_zugang": "ja",
+        "linie": 825
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Arbon",
+      "bis": "Steinach",
+      "strecke_nr": 74,
+      "strecke": "Romanshorn - Rorschach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29775,
+      "zuege_pro_tag": 82
+    },
+    "staerkster_personenverkehr": {
+      "von": "Arbon",
+      "bis": "Steinach",
+      "strecke_nr": 74,
+      "strecke": "Romanshorn - Rorschach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29775,
+      "zuege_pro_tag": 82
+    },
+    "abschnitte": [
+      {
+        "von": "Arbon",
+        "bis": "Steinach",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29775,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Steinach",
+        "bis": "Horn",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29775,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Arbon",
+        "bis": "Steinach",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1779,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Steinach",
+        "bis": "Horn",
+        "strecke_nr": 74,
+        "strecke": "Romanshorn - Rorschach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1779,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 825,
+        "name": "Romanshorn Feld H - Rorschach",
+        "km": 91.6293
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/03840f299b57761f96a387f81e2d8c51"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

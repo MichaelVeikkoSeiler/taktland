@@ -1,0 +1,181 @@
+{
+  "uic": 8506021,
+  "name": "Dinhard",
+  "kanton": "ZH",
+  "bps": "DIH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Dinhard",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.752981,
+    "lat": 47.553345,
+    "dwv": 240,
+    "dtv": 220,
+    "dnwv": 170,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 220
+      },
+      {
+        "jahr": 2022,
+        "dwv": 230
+      },
+      {
+        "jahr": 2023,
+        "dwv": 220
+      },
+      {
+        "jahr": 2024,
+        "dwv": 230
+      },
+      {
+        "jahr": 2025,
+        "dwv": 240
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Dinhard",
+    "abkuerzung": "DIH",
+    "hoehe_m_ue_m": 462.2,
+    "gemeinde": "Dinhard",
+    "ortschaft": "Dinhard",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 169,
+    "kuerzeste_m": 169,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 169,
+        "flaeche_netto_m2": 320.06,
+        "niveaufreier_zugang": "ja",
+        "linie": 821
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Dinhard",
+      "bis": "Seuzach",
+      "strecke_nr": 70,
+      "strecke": "Oberwinterthur - Etzwilen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26472,
+      "zuege_pro_tag": 73
+    },
+    "staerkster_personenverkehr": {
+      "von": "Dinhard",
+      "bis": "Seuzach",
+      "strecke_nr": 70,
+      "strecke": "Oberwinterthur - Etzwilen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26472,
+      "zuege_pro_tag": 73
+    },
+    "abschnitte": [
+      {
+        "von": "Dinhard",
+        "bis": "Seuzach",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26472,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Thalheim-Altikon",
+        "bis": "Dinhard",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26470,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Dinhard",
+        "bis": "Seuzach",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 119,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Thalheim-Altikon",
+        "bis": "Dinhard",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 119,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 821,
+        "name": "Oberwinterthur - Etzwilen West (Abzw)",
+        "km": 9.96916
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3b8fd8046d13b47643d90c828945f91f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

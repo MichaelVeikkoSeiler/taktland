@@ -1,0 +1,321 @@
+{
+  "uic": 8502105,
+  "name": "Othmarsingen",
+  "kanton": "AG",
+  "bps": "OTH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Othmarsingen",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.214805,
+    "lat": 47.407434,
+    "dwv": 2200,
+    "dtv": 1800,
+    "dnwv": 870,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Othmarsingen",
+    "abkuerzung": "OTH",
+    "hoehe_m_ue_m": 419,
+    "gemeinde": "Othmarsingen",
+    "ortschaft": "Othmarsingen",
+    "bezirk": "Lenzburg",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 320,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 1266.55,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 978.63,
+        "niveaufreier_zugang": "ja",
+        "linie": 647
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Gexi",
+      "bis": "Othmarsingen",
+      "strecke_nr": 35,
+      "strecke": "Olten Ost - Heitersberg - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 159784,
+      "zuege_pro_tag": 438
+    },
+    "staerkster_personenverkehr": {
+      "von": "Gexi",
+      "bis": "Othmarsingen",
+      "strecke_nr": 35,
+      "strecke": "Olten Ost - Heitersberg - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 159784,
+      "zuege_pro_tag": 438
+    },
+    "abschnitte": [
+      {
+        "von": "Gexi",
+        "bis": "Othmarsingen",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 159784,
+        "zuege_pro_tag": 438
+      },
+      {
+        "von": "Othmarsingen",
+        "bis": "Mägenwil",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 149542,
+        "zuege_pro_tag": 410
+      },
+      {
+        "von": "Othmarsingen",
+        "bis": "Mägenwil",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 38668,
+        "zuege_pro_tag": 106
+      },
+      {
+        "von": "Othmarsingen",
+        "bis": "Hendschiken",
+        "strecke_nr": 34,
+        "strecke": "Brugg - Othmarsingen - Hendschiken",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36464,
+        "zuege_pro_tag": 100
+      },
+      {
+        "von": "Gexi",
+        "bis": "Othmarsingen",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32993,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Brunegg",
+        "bis": "Othmarsingen",
+        "strecke_nr": 34,
+        "strecke": "Brugg - Othmarsingen - Hendschiken",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31737,
+        "zuege_pro_tag": 87
+      },
+      {
+        "von": "Brunegg",
+        "bis": "Othmarsingen",
+        "strecke_nr": 34,
+        "strecke": "Brugg - Othmarsingen - Hendschiken",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28769,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Othmarsingen",
+        "bis": "Hendschiken",
+        "strecke_nr": 34,
+        "strecke": "Brugg - Othmarsingen - Hendschiken",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 18376,
+        "zuege_pro_tag": 50
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 650,
+        "name": "Killwangen West - Lenzburg - Daniken Ost",
+        "km": 27.68041
+      },
+      {
+        "nummer": 647,
+        "name": "Brugg - Hendschiken Nord",
+        "km": 8.71671
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/464495c29182aeb5829005b2ed130c4e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

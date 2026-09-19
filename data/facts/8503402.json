@@ -1,0 +1,297 @@
+{
+  "uic": 8503402,
+  "name": "Eglisau",
+  "kanton": "ZH",
+  "bps": "EGL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Eglisau",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.516558,
+    "lat": 47.572375,
+    "dwv": 2200,
+    "dtv": 2000,
+    "dnwv": 1500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Eglisau",
+    "abkuerzung": "EGL",
+    "hoehe_m_ue_m": 390.2,
+    "gemeinde": "Eglisau",
+    "ortschaft": "Eglisau",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 369,
+    "kuerzeste_m": 317,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 369,
+        "flaeche_netto_m2": 1166.88,
+        "niveaufreier_zugang": "ja",
+        "linie": 770
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 317,
+        "flaeche_netto_m2": 1234.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 770
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      42,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          42,
+          55
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 242,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20,
+          42,
+          55
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 317,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 318,
+        "sektoren": [
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 21,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 9,
+      "42": 5,
+      "55": 7
+    },
+    "segmente_mit_hilfstritt": 5,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Eglisau",
+      "bis": "Glattfelden",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67235,
+      "zuege_pro_tag": 184
+    },
+    "staerkster_personenverkehr": {
+      "von": "Eglisau",
+      "bis": "Glattfelden",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67235,
+      "zuege_pro_tag": 184
+    },
+    "abschnitte": [
+      {
+        "von": "Eglisau",
+        "bis": "Glattfelden",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67235,
+        "zuege_pro_tag": 184
+      },
+      {
+        "von": "Hüntwangen-Wil",
+        "bis": "Eglisau",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54320,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Zweidlen",
+        "bis": "Eglisau",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12868,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Eglisau",
+        "bis": "Glattfelden",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12380,
+        "zuege_pro_tag": 34
+      },
+      {
+        "von": "Hüntwangen-Wil",
+        "bis": "Eglisau",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8555,
+        "zuege_pro_tag": 23
+      },
+      {
+        "von": "Zweidlen",
+        "bis": "Eglisau",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3690,
+        "zuege_pro_tag": 10
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 770,
+        "name": "Bulach - Eglisau - Neuhausen",
+        "km": 22.24718
+      },
+      {
+        "nummer": 701,
+        "name": "Eglisau - Koblenz - Stein Sackingen Ost",
+        "km": 22.24734
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b96e8f24256ba33fa91ce5ddcdf6da47"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,546 @@
+{
+  "uic": 8501026,
+  "name": "Genève-Aéroport",
+  "kanton": "GE",
+  "bps": "GEAP",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Genève-Aéroport",
+    "kanton": "GE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.111986,
+    "lat": 46.232539,
+    "dwv": 15500,
+    "dtv": 16000,
+    "dnwv": 17100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 16300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 11900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 14600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 15800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 15500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Genève-Aéroport",
+    "abkuerzung": "GEAP",
+    "hoehe_m_ue_m": 411,
+    "gemeinde": "Le Grand-Saconnex",
+    "ortschaft": "Le Grand-Saconnex",
+    "bezirk": null,
+    "kanton": "Genève",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 43400,
+    "einheit": "DP/jour ouvré",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 40600
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 42200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 41800
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 43200
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 43800
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 45200
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 44400
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 45300
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 46700
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 45900
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 19500
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 19300
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 20400
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 19700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 35700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 36900
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 42400
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 41100
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 44100
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 43000
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 44500
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 43400
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.7
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 4,
+        "prozent": 1.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.5
+      },
+      {
+        "stunde": 6,
+        "prozent": 2.1
+      },
+      {
+        "stunde": 7,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 8,
+        "prozent": 6.3
+      },
+      {
+        "stunde": 9,
+        "prozent": 6.4
+      },
+      {
+        "stunde": 10,
+        "prozent": 6.5
+      },
+      {
+        "stunde": 11,
+        "prozent": 6.6
+      },
+      {
+        "stunde": 12,
+        "prozent": 7.9
+      },
+      {
+        "stunde": 13,
+        "prozent": 6.6
+      },
+      {
+        "stunde": 14,
+        "prozent": 6.2
+      },
+      {
+        "stunde": 15,
+        "prozent": 6.2
+      },
+      {
+        "stunde": 16,
+        "prozent": 6.4
+      },
+      {
+        "stunde": 17,
+        "prozent": 7.1
+      },
+      {
+        "stunde": 18,
+        "prozent": 6.9
+      },
+      {
+        "stunde": 19,
+        "prozent": 5.4
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.8
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.3
+      },
+      {
+        "stunde": 22,
+        "prozent": 3.0
+      },
+      {
+        "stunde": 23,
+        "prozent": 2.4
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 12,
+    "spitzenanteil": 7.9,
+    "wochentage": [
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 12.8
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 12.8
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.7
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.6
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 13.9
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 16.1
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 14.1
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 6,
+    "laengste_m": 1031,
+    "kuerzeste_m": 175,
+    "items": [
+      {
+        "nr": "11",
+        "typ": "Dienstperron",
+        "laenge_m": 1031,
+        "flaeche_netto_m2": 1413.14,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "14",
+        "typ": "Dienstperron",
+        "laenge_m": 900,
+        "flaeche_netto_m2": 1499.62,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "12",
+        "typ": "Dienstperron",
+        "laenge_m": 543,
+        "flaeche_netto_m2": 846.43,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 481,
+        "flaeche_netto_m2": 3155.97,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 432,
+        "flaeche_netto_m2": 3136.24,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "13",
+        "typ": "Dienstperron",
+        "laenge_m": 175,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 433,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 432,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 432,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 433,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Genève-Aéroport",
+      "bis": "Châtelaine (bif)",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67066,
+      "zuege_pro_tag": 184
+    },
+    "staerkster_personenverkehr": {
+      "von": "Genève-Aéroport",
+      "bis": "Châtelaine (bif)",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67066,
+      "zuege_pro_tag": 184
+    },
+    "abschnitte": [
+      {
+        "von": "Genève-Aéroport",
+        "bis": "Châtelaine (bif)",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67066,
+        "zuege_pro_tag": 184
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 66.17882
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 7,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8bf2f16a4caa2fce1175edf39720f140"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-geneve-aeroport-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-geneve-aeroport-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

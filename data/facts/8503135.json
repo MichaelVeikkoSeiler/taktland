@@ -1,0 +1,181 @@
+{
+  "uic": 8503135,
+  "name": "Steg",
+  "kanton": "ZH",
+  "bps": "STG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Steg",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.932372,
+    "lat": 47.353852,
+    "dwv": 300,
+    "dtv": 300,
+    "dnwv": 300,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 210
+      },
+      {
+        "jahr": 2022,
+        "dwv": 260
+      },
+      {
+        "jahr": 2023,
+        "dwv": 290
+      },
+      {
+        "jahr": 2024,
+        "dwv": 290
+      },
+      {
+        "jahr": 2025,
+        "dwv": 300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Steg",
+    "abkuerzung": "STG",
+    "hoehe_m_ue_m": 694.8,
+    "gemeinde": "Fischenthal",
+    "ortschaft": "Steg im Tösstal",
+    "bezirk": "Hinwil",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 363.43,
+        "niveaufreier_zugang": "ja",
+        "linie": 754
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bauma",
+      "bis": "Steg",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 21889,
+      "zuege_pro_tag": 60
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bauma",
+      "bis": "Steg",
+      "strecke_nr": 67,
+      "strecke": "Winterthur Grüze - Bauma - Rüti",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 21889,
+      "zuege_pro_tag": 60
+    },
+    "abschnitte": [
+      {
+        "von": "Bauma",
+        "bis": "Steg",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21889,
+        "zuege_pro_tag": 60
+      },
+      {
+        "von": "Steg",
+        "bis": "Fischenthal",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21889,
+        "zuege_pro_tag": 60
+      },
+      {
+        "von": "Bauma",
+        "bis": "Steg",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Steg",
+        "bis": "Fischenthal",
+        "strecke_nr": 67,
+        "strecke": "Winterthur Grüze - Bauma - Rüti",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 754,
+        "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+        "km": 29.81037
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/fd8bb168742e05cc9338178de44fe9a8"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

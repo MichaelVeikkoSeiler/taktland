@@ -1,0 +1,181 @@
+{
+  "uic": 8504306,
+  "name": "Cortébert",
+  "kanton": "BE",
+  "bps": "CO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Cortébert",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.107309,
+    "lat": 47.189337,
+    "dwv": 170,
+    "dtv": 150,
+    "dnwv": 100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 160
+      },
+      {
+        "jahr": 2023,
+        "dwv": 160
+      },
+      {
+        "jahr": 2024,
+        "dwv": 190
+      },
+      {
+        "jahr": 2025,
+        "dwv": 170
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Cortébert",
+    "abkuerzung": "CO",
+    "hoehe_m_ue_m": 677.43,
+    "gemeinde": "Cortébert",
+    "ortschaft": "Cortébert",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 367.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 225
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Courtelary",
+      "bis": "Cortébert",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25515,
+      "zuege_pro_tag": 70
+    },
+    "staerkster_personenverkehr": {
+      "von": "Courtelary",
+      "bis": "Cortébert",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25515,
+      "zuege_pro_tag": 70
+    },
+    "abschnitte": [
+      {
+        "von": "Courtelary",
+        "bis": "Cortébert",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25515,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Cortébert",
+        "bis": "Corgémont",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25511,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Cortébert",
+        "bis": "Corgémont",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 295,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Courtelary",
+        "bis": "Cortébert",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 295,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 225,
+        "name": "Biel/Bienne West - La Chaux-de-Fonds",
+        "km": 53.11778
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/702788c59f3a4b1362f285f117f5bb28"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

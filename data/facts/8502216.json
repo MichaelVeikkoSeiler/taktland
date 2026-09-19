@@ -1,0 +1,244 @@
+{
+  "uic": 8502216,
+  "name": "Benzenschwil",
+  "kanton": "AG",
+  "bps": "BNZ",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Benzenschwil",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.365617,
+    "lat": 47.246852,
+    "dwv": 230,
+    "dtv": 200,
+    "dnwv": 120,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 220
+      },
+      {
+        "jahr": 2022,
+        "dwv": 190
+      },
+      {
+        "jahr": 2023,
+        "dwv": 210
+      },
+      {
+        "jahr": 2024,
+        "dwv": 220
+      },
+      {
+        "jahr": 2025,
+        "dwv": 230
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Benzenschwil",
+    "abkuerzung": "BNZ",
+    "hoehe_m_ue_m": 458,
+    "gemeinde": "Merenschwand",
+    "ortschaft": "Benzenschwil",
+    "bezirk": "Muri",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 217,
+    "kuerzeste_m": 180,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 217,
+        "flaeche_netto_m2": 499.89,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      },
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 180,
+        "flaeche_netto_m2": 400.22,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      25,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 179,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 180,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 180,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 12,
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Benzenschwil",
+      "bis": "Mühlau",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Gueterverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 35824,
+      "zuege_pro_tag": 98
+    },
+    "staerkster_personenverkehr": {
+      "von": "Muri AG",
+      "bis": "Benzenschwil",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30597,
+      "zuege_pro_tag": 84
+    },
+    "abschnitte": [
+      {
+        "von": "Benzenschwil",
+        "bis": "Mühlau",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35824,
+        "zuege_pro_tag": 98
+      },
+      {
+        "von": "Muri AG",
+        "bis": "Benzenschwil",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35824,
+        "zuege_pro_tag": 98
+      },
+      {
+        "von": "Muri AG",
+        "bis": "Benzenschwil",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30597,
+        "zuege_pro_tag": 84
+      },
+      {
+        "von": "Benzenschwil",
+        "bis": "Mühlau",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30595,
+        "zuege_pro_tag": 84
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 653,
+        "name": "Gexi Ost - Rotkreuz - Immensee West",
+        "km": 85.40633
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/91624b8d400a6653850121b548ecd435"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

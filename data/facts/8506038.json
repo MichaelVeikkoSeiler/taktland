@@ -1,0 +1,206 @@
+{
+  "uic": 8506038,
+  "name": "Winterthur Wallrüti",
+  "kanton": "ZH",
+  "bps": "WWAL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Winterthur Wallrüti",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.760882,
+    "lat": 47.516722,
+    "dwv": 1500,
+    "dtv": 1300,
+    "dnwv": 970,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Winterthur Wallrüti",
+    "abkuerzung": "WWAL",
+    "hoehe_m_ue_m": 457.8,
+    "gemeinde": "Winterthur",
+    "ortschaft": "Winterthur",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 320,
+    "kuerzeste_m": 320,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 749.95,
+        "niveaufreier_zugang": "ja",
+        "linie": 821
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Reutlingen",
+      "bis": "Winterthur Wallrüti",
+      "strecke_nr": 70,
+      "strecke": "Oberwinterthur - Etzwilen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46270,
+      "zuege_pro_tag": 127
+    },
+    "staerkster_personenverkehr": {
+      "von": "Reutlingen",
+      "bis": "Winterthur Wallrüti",
+      "strecke_nr": 70,
+      "strecke": "Oberwinterthur - Etzwilen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46270,
+      "zuege_pro_tag": 127
+    },
+    "abschnitte": [
+      {
+        "von": "Reutlingen",
+        "bis": "Winterthur Wallrüti",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46270,
+        "zuege_pro_tag": 127
+      },
+      {
+        "von": "Winterthur Wallrüti",
+        "bis": "Oberwinterthur",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46270,
+        "zuege_pro_tag": 127
+      },
+      {
+        "von": "Reutlingen",
+        "bis": "Winterthur Wallrüti",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 119,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Winterthur Wallrüti",
+        "bis": "Oberwinterthur",
+        "strecke_nr": 70,
+        "strecke": "Oberwinterthur - Etzwilen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 119,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 821,
+        "name": "Oberwinterthur - Etzwilen West (Abzw)",
+        "km": 4.6252
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/30b2d655d9b5744cde821d22f414b5ea"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

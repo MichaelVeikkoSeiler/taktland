@@ -1,0 +1,181 @@
+{
+  "uic": 8509417,
+  "name": "Murg",
+  "kanton": "SG",
+  "bps": "MG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Murg",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.215042,
+    "lat": 47.113175,
+    "dwv": 300,
+    "dtv": 310,
+    "dnwv": 340,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 280
+      },
+      {
+        "jahr": 2022,
+        "dwv": 260
+      },
+      {
+        "jahr": 2023,
+        "dwv": 280
+      },
+      {
+        "jahr": 2024,
+        "dwv": 330
+      },
+      {
+        "jahr": 2025,
+        "dwv": 300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Murg",
+    "abkuerzung": "MG",
+    "hoehe_m_ue_m": 427.2,
+    "gemeinde": "Quarten",
+    "ortschaft": "Murg",
+    "bezirk": "Sarganserland",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 200,
+    "kuerzeste_m": 200,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 200,
+        "flaeche_netto_m2": 781.51,
+        "niveaufreier_zugang": "ja",
+        "linie": 890
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Murg",
+      "bis": "Unterterzen",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54464,
+      "zuege_pro_tag": 149
+    },
+    "staerkster_personenverkehr": {
+      "von": "Murg",
+      "bis": "Unterterzen",
+      "strecke_nr": 54,
+      "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 54464,
+      "zuege_pro_tag": 149
+    },
+    "abschnitte": [
+      {
+        "von": "Murg",
+        "bis": "Unterterzen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54464,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Tiefenwinkel (Verzw)",
+        "bis": "Murg",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54464,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Murg",
+        "bis": "Unterterzen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7855,
+        "zuege_pro_tag": 22
+      },
+      {
+        "von": "Tiefenwinkel (Verzw)",
+        "bis": "Murg",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7855,
+        "zuege_pro_tag": 22
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 890,
+        "name": "Sargans Ost - Ziegelbrucke",
+        "km": 21.21914
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f3b141021653ae817b914977d13859ab"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

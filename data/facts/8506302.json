@@ -1,0 +1,522 @@
+{
+  "uic": 8506302,
+  "name": "St. Gallen",
+  "kanton": "SG",
+  "bps": "SG",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "St. Gallen",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB, Thurbo",
+    "lon": 9.369897,
+    "lat": 47.423179,
+    "dwv": 51300,
+    "dtv": 46900,
+    "dnwv": 37100,
+    "bemerkung": "Ohne AB.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 48600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 42700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 48200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 49000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 51300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "St. Gallen",
+    "abkuerzung": "SG",
+    "hoehe_m_ue_m": 669.6,
+    "gemeinde": "St. Gallen",
+    "ortschaft": "St. Gallen",
+    "bezirk": "St. Gallen",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 71800,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": 79000
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": 77000
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 73300
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 78500
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 71800
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 77300
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 0
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 0
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 0
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 0
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 76300
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 81800
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 49900
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 54200
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 54100
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 50600
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 69100
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 65100
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 77800
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 72900
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 72300
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 77400
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 77800
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 71800
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "wochentage": [
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.4
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.0
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.7
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.3
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 15.2
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 13.4
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 9.9
+      }
+    ],
+    "source": "anzahl-sbb-bahnhofbenutzer-wochentag"
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 5,
+    "laengste_m": 446,
+    "kuerzeste_m": 87,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 446,
+        "flaeche_netto_m2": 2809.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 429,
+        "flaeche_netto_m2": 2171.26,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 261,
+        "flaeche_netto_m2": 1295.42,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      },
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 196,
+        "flaeche_netto_m2": 1159.73,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      },
+      {
+        "nr": "50",
+        "typ": "Dienstperron",
+        "laenge_m": 87,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 850
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 7,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 411,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 408,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 64,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 261,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 261,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 196,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 173,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 20,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 3,
+      "55": 17
+    },
+    "segmente_mit_hilfstritt": 1,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 7,
+    "gleise_mit_daten": 7
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "St. Gallen GB",
+      "bis": "St. Gallen",
+      "strecke_nr": 116,
+      "strecke": "St. Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 171207,
+      "zuege_pro_tag": 469
+    },
+    "staerkster_personenverkehr": {
+      "von": "St. Gallen GB",
+      "bis": "St. Gallen",
+      "strecke_nr": 116,
+      "strecke": "St. Gallen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 171207,
+      "zuege_pro_tag": 469
+    },
+    "abschnitte": [
+      {
+        "von": "St. Gallen GB",
+        "bis": "St. Gallen",
+        "strecke_nr": 116,
+        "strecke": "St. Gallen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 171207,
+        "zuege_pro_tag": 469
+      },
+      {
+        "von": "St. Gallen",
+        "bis": "St. Gallen St. Fiden",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 134185,
+        "zuege_pro_tag": 368
+      },
+      {
+        "von": "St. Gallen GB",
+        "bis": "St. Gallen",
+        "strecke_nr": 116,
+        "strecke": "St. Gallen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3484,
+        "zuege_pro_tag": 10
+      },
+      {
+        "von": "St. Gallen",
+        "bis": "St. Gallen St. Fiden",
+        "strecke_nr": 72,
+        "strecke": "St.Gallen - Rorschach - St.Margrethen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3481,
+        "zuege_pro_tag": 10
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 850,
+        "name": "St.Gallen - Winterthur Nord",
+        "km": 80.45623
+      },
+      {
+        "nummer": 880,
+        "name": "Sargans Ost - St.Gallen",
+        "km": 80.49223
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 5,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 17,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/1ac730a7568f8f580b953e626d4303c9"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-st-gallen-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-st-gallen-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "uic": 8506211,
+  "name": "Arnegg",
+  "kanton": "SG",
+  "bps": "ARN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Arnegg",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.252025,
+    "lat": 47.442002,
+    "dwv": 730,
+    "dtv": 610,
+    "dnwv": 340,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 210
+      },
+      {
+        "jahr": 2022,
+        "dwv": 600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 630
+      },
+      {
+        "jahr": 2024,
+        "dwv": 690
+      },
+      {
+        "jahr": 2025,
+        "dwv": 730
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Arnegg",
+    "abkuerzung": "ARN",
+    "hoehe_m_ue_m": 621.23,
+    "gemeinde": "Gossau (SG)",
+    "ortschaft": "Arnegg",
+    "bezirk": "St. Gallen",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 121,
+    "kuerzeste_m": 121,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 121,
+        "flaeche_netto_m2": 338.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 852
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "2"
+    ],
+    "perronhoehen_cm": [
+      25,
+      42
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25,
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 93,
+        "sektoren": [
+          "A"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 3,
+      "42": 1
+    },
+    "segmente_mit_hilfstritt": 1,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Arnegg",
+      "bis": "Gossau-Sommerau (Agl)",
+      "strecke_nr": 76,
+      "strecke": "Gossau - Sulgen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 22173,
+      "zuege_pro_tag": 61
+    },
+    "staerkster_personenverkehr": {
+      "von": "Arnegg",
+      "bis": "Gossau-Sommerau (Agl)",
+      "strecke_nr": 76,
+      "strecke": "Gossau - Sulgen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 22173,
+      "zuege_pro_tag": 61
+    },
+    "abschnitte": [
+      {
+        "von": "Arnegg",
+        "bis": "Gossau-Sommerau (Agl)",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22173,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Hauptwil",
+        "bis": "Arnegg",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22173,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Arnegg",
+        "bis": "Gossau-Sommerau (Agl)",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1519,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Hauptwil",
+        "bis": "Arnegg",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1301,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 852,
+        "name": "Sulgen - Gossau SG",
+        "km": 18.58709
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/680984e5391f058c72339ca4eff19d4d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

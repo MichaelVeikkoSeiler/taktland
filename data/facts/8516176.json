@@ -1,0 +1,181 @@
+{
+  "uic": 8516176,
+  "name": "Klingnau",
+  "kanton": "AG",
+  "bps": "KLI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Klingnau",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.250295,
+    "lat": 47.581557,
+    "dwv": 840,
+    "dtv": 710,
+    "dnwv": 420,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 740
+      },
+      {
+        "jahr": 2022,
+        "dwv": 730
+      },
+      {
+        "jahr": 2023,
+        "dwv": 860
+      },
+      {
+        "jahr": 2024,
+        "dwv": 860
+      },
+      {
+        "jahr": 2025,
+        "dwv": 840
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Klingnau",
+    "abkuerzung": "KLI",
+    "hoehe_m_ue_m": 321.707,
+    "gemeinde": "Klingnau",
+    "ortschaft": "Klingnau",
+    "bezirk": "Zurzach",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 219,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 385.24,
+        "niveaufreier_zugang": "ja",
+        "linie": 702
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Klingnau",
+      "bis": "Döttingen",
+      "strecke_nr": 59,
+      "strecke": "Turgi - Koblenz Grenze",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32822,
+      "zuege_pro_tag": 90
+    },
+    "staerkster_personenverkehr": {
+      "von": "Klingnau",
+      "bis": "Döttingen",
+      "strecke_nr": 59,
+      "strecke": "Turgi - Koblenz Grenze",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32822,
+      "zuege_pro_tag": 90
+    },
+    "abschnitte": [
+      {
+        "von": "Klingnau",
+        "bis": "Döttingen",
+        "strecke_nr": 59,
+        "strecke": "Turgi - Koblenz Grenze",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32822,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Koblenz Süd",
+        "bis": "Klingnau",
+        "strecke_nr": 59,
+        "strecke": "Turgi - Koblenz Grenze",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32822,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Klingnau",
+        "bis": "Döttingen",
+        "strecke_nr": 59,
+        "strecke": "Turgi - Koblenz Grenze",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 653,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Koblenz Süd",
+        "bis": "Klingnau",
+        "strecke_nr": 59,
+        "strecke": "Turgi - Koblenz Grenze",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 653,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 702,
+        "name": "Turgi - Koblenz - Waldshut",
+        "km": 38.222
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8c8d3d7291c2fd64f5d9b69d4cde737d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

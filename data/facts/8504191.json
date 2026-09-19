@@ -1,0 +1,186 @@
+{
+  "uic": 8504191,
+  "name": "Flamatt Dorf",
+  "kanton": "FR",
+  "bps": "FLMD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Flamatt Dorf",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.31052,
+    "lat": 46.8899,
+    "dwv": 220,
+    "dtv": 210,
+    "dnwv": 180,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 280
+      },
+      {
+        "jahr": 2022,
+        "dwv": 210
+      },
+      {
+        "jahr": 2023,
+        "dwv": 250
+      },
+      {
+        "jahr": 2024,
+        "dwv": 250
+      },
+      {
+        "jahr": 2025,
+        "dwv": 220
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Flamatt Dorf",
+    "abkuerzung": "FLMD",
+    "hoehe_m_ue_m": 532.1,
+    "gemeinde": "Wünnewil-Flamatt",
+    "ortschaft": "Flamatt",
+    "bezirk": "Sense",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 224,
+    "kuerzeste_m": 224,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 224,
+        "flaeche_netto_m2": 478.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 257
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Flamatt",
+      "bis": "Flamatt Dorf",
+      "strecke_nr": 19,
+      "strecke": "Flamatt - Laupen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 23100,
+      "zuege_pro_tag": 63
+    },
+    "staerkster_personenverkehr": {
+      "von": "Flamatt",
+      "bis": "Flamatt Dorf",
+      "strecke_nr": 19,
+      "strecke": "Flamatt - Laupen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 23100,
+      "zuege_pro_tag": 63
+    },
+    "abschnitte": [
+      {
+        "von": "Flamatt",
+        "bis": "Flamatt Dorf",
+        "strecke_nr": 19,
+        "strecke": "Flamatt - Laupen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23100,
+        "zuege_pro_tag": 63
+      },
+      {
+        "von": "Flamatt Dorf",
+        "bis": "Neuenegg",
+        "strecke_nr": 19,
+        "strecke": "Flamatt - Laupen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23100,
+        "zuege_pro_tag": 63
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 257,
+        "name": "Flamatt - Laupen - Gummenen",
+        "km": 0.68
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/272b31a4df658133d624f1cec374057b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

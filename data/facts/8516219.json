@@ -1,0 +1,189 @@
+{
+  "uic": 8516219,
+  "name": "Mellingen Heitersberg",
+  "kanton": "AG",
+  "bps": "MELH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Mellingen Heitersberg",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.276363,
+    "lat": 47.428075,
+    "dwv": 4600,
+    "dtv": 3800,
+    "dnwv": 2000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 4600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mellingen Heitersberg",
+    "abkuerzung": "MELH",
+    "hoehe_m_ue_m": 397,
+    "gemeinde": "Mellingen",
+    "ortschaft": "Mellingen",
+    "bezirk": "Baden",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 321,
+    "kuerzeste_m": 318,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 321,
+        "flaeche_netto_m2": 1079.46,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 318,
+        "flaeche_netto_m2": 707.1,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Mellingen Heitersberg",
+      "bis": "Langacher (Spw)",
+      "strecke_nr": 35,
+      "strecke": "Olten Ost - Heitersberg - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 151503,
+      "zuege_pro_tag": 415
+    },
+    "staerkster_personenverkehr": {
+      "von": "Mellingen Heitersberg",
+      "bis": "Langacher (Spw)",
+      "strecke_nr": 35,
+      "strecke": "Olten Ost - Heitersberg - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 151503,
+      "zuege_pro_tag": 415
+    },
+    "abschnitte": [
+      {
+        "von": "Mellingen Heitersberg",
+        "bis": "Langacher (Spw)",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 151503,
+        "zuege_pro_tag": 415
+      },
+      {
+        "von": "Gruemet (Abzw)",
+        "bis": "Mellingen Heitersberg",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 151501,
+        "zuege_pro_tag": 415
+      },
+      {
+        "von": "Mellingen Heitersberg",
+        "bis": "Langacher (Spw)",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41483,
+        "zuege_pro_tag": 114
+      },
+      {
+        "von": "Gruemet (Abzw)",
+        "bis": "Mellingen Heitersberg",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41482,
+        "zuege_pro_tag": 114
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 650,
+        "name": "Killwangen West - Lenzburg - Daniken Ost",
+        "km": 22.24
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 7,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/70dbd41edfa5b30d182f8321487ce7aa"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

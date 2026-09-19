@@ -1,0 +1,189 @@
+{
+  "uic": 8518771,
+  "name": "Biel/Bienne Bözingenfeld/Champs-de-Boujean",
+  "kanton": "BE",
+  "bps": "BIBD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Biel/Bienne Bözingenfeld/Champs-de-Boujean",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.294648,
+    "lat": 47.158382,
+    "dwv": 730,
+    "dtv": 540,
+    "dnwv": 110,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 610
+      },
+      {
+        "jahr": 2022,
+        "dwv": 660
+      },
+      {
+        "jahr": 2023,
+        "dwv": 730
+      },
+      {
+        "jahr": 2024,
+        "dwv": 760
+      },
+      {
+        "jahr": 2025,
+        "dwv": 730
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Biel/Bienne Bözingenfeld/Champ",
+    "abkuerzung": "BIBD",
+    "hoehe_m_ue_m": 444.25,
+    "gemeinde": "Biel/Bienne",
+    "ortschaft": "Biel/Bienne",
+    "bezirk": "Biel/Bienne",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 159,
+    "kuerzeste_m": 159,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 159,
+        "flaeche_netto_m2": 365.75,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 159,
+        "flaeche_netto_m2": 346.94,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Biel/Bienne Bözingenfeld/Champ",
+      "bis": "Biel Mett (Abzw)",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84826,
+      "zuege_pro_tag": 232
+    },
+    "staerkster_personenverkehr": {
+      "von": "Biel/Bienne Bözingenfeld/Champ",
+      "bis": "Biel Mett (Abzw)",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84826,
+      "zuege_pro_tag": 232
+    },
+    "abschnitte": [
+      {
+        "von": "Biel/Bienne Bözingenfeld/Champ",
+        "bis": "Biel Mett (Abzw)",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84826,
+        "zuege_pro_tag": 232
+      },
+      {
+        "von": "Pieterlen",
+        "bis": "Biel/Bienne Bözingenfeld/Champ",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84824,
+        "zuege_pro_tag": 232
+      },
+      {
+        "von": "Biel/Bienne Bözingenfeld/Champ",
+        "bis": "Biel Mett (Abzw)",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25037,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Pieterlen",
+        "bis": "Biel/Bienne Bözingenfeld/Champ",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25037,
+        "zuege_pro_tag": 69
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 93.98099
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/126f1305443cd51053c85b88c908d9c5"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "uic": 8500105,
+  "name": "Moutier",
+  "kanton": "BE",
+  "bps": "MOU",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Moutier",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.381044,
+    "lat": 47.280673,
+    "dwv": 3700,
+    "dtv": 3200,
+    "dnwv": 2100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 3800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Moutier",
+    "abkuerzung": "MOU",
+    "hoehe_m_ue_m": 529.17,
+    "gemeinde": "Moutier",
+    "ortschaft": "Moutier",
+    "bezirk": "Moutier",
+    "kanton": "Jura",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 382,
+    "kuerzeste_m": 347,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 382,
+        "flaeche_netto_m2": 1539.17,
+        "niveaufreier_zugang": "ja",
+        "linie": 232
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 347,
+        "flaeche_netto_m2": 1748.29,
+        "niveaufreier_zugang": "ja",
+        "linie": 226
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "2",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      30
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 382,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 388,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 252,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 13,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 13
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Tunnelblock (Grenchenberg)",
+      "bis": "Moutier",
+      "strecke_nr": 301,
+      "strecke": "Moutier - Lengnau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27499,
+      "zuege_pro_tag": 75
+    },
+    "staerkster_personenverkehr": {
+      "von": "Tunnelblock (Grenchenberg)",
+      "bis": "Moutier",
+      "strecke_nr": 301,
+      "strecke": "Moutier - Lengnau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27499,
+      "zuege_pro_tag": 75
+    },
+    "abschnitte": [
+      {
+        "von": "Tunnelblock (Grenchenberg)",
+        "bis": "Moutier",
+        "strecke_nr": 301,
+        "strecke": "Moutier - Lengnau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27499,
+        "zuege_pro_tag": 75
+      },
+      {
+        "von": "Moutier",
+        "bis": "Choindez",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27127,
+        "zuege_pro_tag": 74
+      },
+      {
+        "von": "Court",
+        "bis": "Moutier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15109,
+        "zuege_pro_tag": 41
+      },
+      {
+        "von": "Moutier",
+        "bis": "Choindez",
+        "strecke_nr": 14,
+        "strecke": "Moutier - Delémont - Ruchfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 613,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Tunnelblock (Grenchenberg)",
+        "bis": "Moutier",
+        "strecke_nr": 301,
+        "strecke": "Moutier - Lengnau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 519,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Court",
+        "bis": "Moutier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 420,
+        "name": "Solothurn West - Moutier",
+        "km": 22.08686
+      },
+      {
+        "nummer": 232,
+        "name": "Moutier - Lengnau Ost",
+        "km": 0.00471
+      },
+      {
+        "nummer": 226,
+        "name": "Sonceboz-Sombeval - Moutier - Delemont",
+        "km": 73.39849
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 9,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/2d5c2392a20909f320c4e35d3306a835"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,605 @@
+{
+  "uic": 8502113,
+  "name": "Aarau",
+  "kanton": "AG",
+  "bps": "AA",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Aarau",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.051274,
+    "lat": 47.39136,
+    "dwv": 46600,
+    "dtv": 40100,
+    "dnwv": 25700,
+    "bemerkung": "Ohne AVA.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 44800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 38200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 43400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 45300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 46600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Aarau",
+    "abkuerzung": "AA",
+    "hoehe_m_ue_m": 383,
+    "gemeinde": "Aarau",
+    "ortschaft": "Aarau",
+    "bezirk": "Aarau",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 69300,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 63100
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 70700
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 64200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 72400
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 72800
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 64400
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 63900
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 72100
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 76000
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 68300
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 50200
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 56600
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 58000
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 51900
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 68700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 61700
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 76500
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 68200
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 70400
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 78600
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 78500
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 69300
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.3
+      },
+      {
+        "stunde": 6,
+        "prozent": 4.9
+      },
+      {
+        "stunde": 7,
+        "prozent": 9.4
+      },
+      {
+        "stunde": 8,
+        "prozent": 6.6
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.5
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 11,
+        "prozent": 5.3
+      },
+      {
+        "stunde": 12,
+        "prozent": 6.8
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.4
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.1
+      },
+      {
+        "stunde": 15,
+        "prozent": 6.1
+      },
+      {
+        "stunde": 16,
+        "prozent": 9.3
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.4
+      },
+      {
+        "stunde": 18,
+        "prozent": 7.0
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.2
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.6
+      },
+      {
+        "stunde": 22,
+        "prozent": 1.8
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.2
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 10.4,
+    "wochentage": [
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 16.4
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.1
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 8.9
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 16.3
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 16.1
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 11.1
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 15.3
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 5,
+    "laengste_m": 486,
+    "kuerzeste_m": 428,
+    "items": [
+      {
+        "nr": "1/10",
+        "typ": "Hausperron",
+        "laenge_m": 486,
+        "flaeche_netto_m2": 2539.35,
+        "niveaufreier_zugang": "ja",
+        "linie": 649
+      },
+      {
+        "nr": "6",
+        "typ": "Aussenperron",
+        "laenge_m": 480,
+        "flaeche_netto_m2": 1807.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 428,
+        "flaeche_netto_m2": 2140.17,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 428,
+        "flaeche_netto_m2": 2290.47,
+        "niveaufreier_zugang": "ja",
+        "linie": 649
+      },
+      {
+        "nr": "0",
+        "typ": "Dienstperron",
+        "laenge_m": null,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 650
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 7,
+    "nummern": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "0",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 174,
+        "sektoren": []
+      },
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 486,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 428,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 429,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 429,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 429,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 481,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 17,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 17
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 7,
+    "gleise_mit_daten": 7
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Aarau",
+      "bis": "Aarau GB",
+      "strecke_nr": 132,
+      "strecke": "Aarau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 231715,
+      "zuege_pro_tag": 635
+    },
+    "staerkster_personenverkehr": {
+      "von": "Aarau",
+      "bis": "Aarau GB",
+      "strecke_nr": 132,
+      "strecke": "Aarau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 231715,
+      "zuege_pro_tag": 635
+    },
+    "abschnitte": [
+      {
+        "von": "Aarau",
+        "bis": "Aarau GB",
+        "strecke_nr": 132,
+        "strecke": "Aarau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 231715,
+        "zuege_pro_tag": 635
+      },
+      {
+        "von": "Wöschnau SBB",
+        "bis": "Aarau",
+        "strecke_nr": 132,
+        "strecke": "Aarau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 202019,
+        "zuege_pro_tag": 553
+      },
+      {
+        "von": "Aarau",
+        "bis": "Aarau GB",
+        "strecke_nr": 132,
+        "strecke": "Aarau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 43694,
+        "zuege_pro_tag": 120
+      },
+      {
+        "von": "Wöschnau SBB",
+        "bis": "Aarau",
+        "strecke_nr": 132,
+        "strecke": "Aarau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 43486,
+        "zuege_pro_tag": 119
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 650,
+        "name": "Killwangen West - Lenzburg - Daniken Ost",
+        "km": 41.50577
+      },
+      {
+        "nummer": 649,
+        "name": "Aarau - Woschnau Tunnel alt",
+        "km": 41.50577
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 7,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 20,
+    "wartehallen": 6,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6e492909f859b32123ab89ee1df04926"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-aarau-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-aarau-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

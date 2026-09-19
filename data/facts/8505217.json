@@ -1,0 +1,185 @@
+{
+  "uic": 8505217,
+  "name": "Mezzovico",
+  "kanton": "TI",
+  "bps": "MEZ",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Mezzovico",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.92859,
+    "lat": 46.094276,
+    "dwv": 670,
+    "dtv": 520,
+    "dnwv": 180,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 640
+      },
+      {
+        "jahr": 2022,
+        "dwv": 570
+      },
+      {
+        "jahr": 2023,
+        "dwv": 670
+      },
+      {
+        "jahr": 2024,
+        "dwv": 700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 670
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mezzovico",
+    "abkuerzung": "MEZ",
+    "hoehe_m_ue_m": 416,
+    "gemeinde": "Mezzovico-Vira",
+    "ortschaft": "Mezzovico",
+    "bezirk": "Lugano",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 222,
+    "kuerzeste_m": 222,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": 491.94,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": 552.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Mezzovico",
+      "bis": "Mezzovico (c bin)",
+      "strecke_nr": 88,
+      "strecke": "Giubiasco - BergSTRECKE - Lugano",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32177,
+      "zuege_pro_tag": 88
+    },
+    "staerkster_personenverkehr": {
+      "von": "Mezzovico",
+      "bis": "Mezzovico (c bin)",
+      "strecke_nr": 88,
+      "strecke": "Giubiasco - BergSTRECKE - Lugano",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32177,
+      "zuege_pro_tag": 88
+    },
+    "abschnitte": [
+      {
+        "von": "Mezzovico",
+        "bis": "Mezzovico (c bin)",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32177,
+        "zuege_pro_tag": 88
+      },
+      {
+        "von": "Rivera-Bironico",
+        "bis": "Mezzovico",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32177,
+        "zuege_pro_tag": 88
+      },
+      {
+        "von": "Mezzovico",
+        "bis": "Mezzovico (c bin)",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3527,
+        "zuege_pro_tag": 10
+      },
+      {
+        "von": "Rivera-Bironico",
+        "bis": "Mezzovico",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3527,
+        "zuege_pro_tag": 10
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 168.8616
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/66e1383f6f40f7cd2ea37f5497a98b82"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "uic": 8515995,
+  "name": "Cham Alpenblick",
+  "kanton": "ZG",
+  "bps": "CHAA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Cham Alpenblick",
+    "kanton": "ZG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.471463,
+    "lat": 47.182282,
+    "dwv": 1700,
+    "dtv": 1500,
+    "dnwv": 930,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Cham Alpenblick",
+    "abkuerzung": "CHAA",
+    "hoehe_m_ue_m": 416,
+    "gemeinde": "Cham",
+    "ortschaft": "Cham",
+    "bezirk": null,
+    "kanton": "Zug",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 358.35,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 337.39,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Cham",
+      "bis": "Cham Alpenblick",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78727,
+      "zuege_pro_tag": 216
+    },
+    "staerkster_personenverkehr": {
+      "von": "Cham",
+      "bis": "Cham Alpenblick",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78727,
+      "zuege_pro_tag": 216
+    },
+    "abschnitte": [
+      {
+        "von": "Cham",
+        "bis": "Cham Alpenblick",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78727,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Cham Alpenblick",
+        "bis": "Kollermühle (Abzw)",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78727,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Cham",
+        "bis": "Cham Alpenblick",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 519,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Cham Alpenblick",
+        "bis": "Kollermühle (Abzw)",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 519,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 9660,
+        "name": "Sihlbrugg - Baar Projekt ZBT2",
+        "km": 42.425
+      },
+      {
+        "nummer": 660,
+        "name": "Thalwil - Zug - Fluhmuhle",
+        "km": 42.425
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a5e6053e705bb789acb905ed34d1cfd2"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

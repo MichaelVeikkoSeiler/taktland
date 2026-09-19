@@ -1,0 +1,211 @@
+{
+  "uic": 8506213,
+  "name": "Bischofszell Stadt",
+  "kanton": "TG",
+  "bps": "BZS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bischofszell Stadt",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.241479,
+    "lat": 47.492141,
+    "dwv": 1100,
+    "dtv": 1000,
+    "dnwv": 820,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 990
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bischofszell Stadt",
+    "abkuerzung": "BZS",
+    "hoehe_m_ue_m": 506.35,
+    "gemeinde": "Bischofszell",
+    "ortschaft": "Bischofszell",
+    "bezirk": "Weinfelden",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 140,
+    "kuerzeste_m": 140,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 140,
+        "flaeche_netto_m2": 323.68,
+        "niveaufreier_zugang": "nein",
+        "linie": 852
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 130,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sitterdorf",
+      "bis": "Bischofszell Stadt",
+      "strecke_nr": 76,
+      "strecke": "Gossau - Sulgen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28372,
+      "zuege_pro_tag": 78
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sitterdorf",
+      "bis": "Bischofszell Stadt",
+      "strecke_nr": 76,
+      "strecke": "Gossau - Sulgen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28372,
+      "zuege_pro_tag": 78
+    },
+    "abschnitte": [
+      {
+        "von": "Sitterdorf",
+        "bis": "Bischofszell Stadt",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28372,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Bischofszell Stadt",
+        "bis": "Hauptwil",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22187,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Bischofszell Stadt",
+        "bis": "Hauptwil",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1301,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Sitterdorf",
+        "bis": "Bischofszell Stadt",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1301,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 852,
+        "name": "Sulgen - Gossau SG",
+        "km": 10.04624
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/bb8995b850bbe6f4a3522b82754d17f8"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "uic": 8502205,
+  "name": "Walchwil",
+  "kanton": "ZG",
+  "bps": "WCHW",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Walchwil",
+    "kanton": "ZG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.516934,
+    "lat": 47.098687,
+    "dwv": 820,
+    "dtv": 700,
+    "dnwv": 430,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 630
+      },
+      {
+        "jahr": 2022,
+        "dwv": 750
+      },
+      {
+        "jahr": 2023,
+        "dwv": 850
+      },
+      {
+        "jahr": 2024,
+        "dwv": 840
+      },
+      {
+        "jahr": 2025,
+        "dwv": 820
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Walchwil",
+    "abkuerzung": "WCHW",
+    "hoehe_m_ue_m": 449.444,
+    "gemeinde": "Walchwil",
+    "ortschaft": "Walchwil",
+    "bezirk": null,
+    "kanton": "Zug",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 239,
+    "kuerzeste_m": 239,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 239,
+        "flaeche_netto_m2": 332.95,
+        "niveaufreier_zugang": "ja",
+        "linie": 665
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 80,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 80,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 80,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 7
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Walchwil Hörndli",
+      "bis": "Walchwil",
+      "strecke_nr": 44,
+      "strecke": "Zug - Walchwil - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 47536,
+      "zuege_pro_tag": 130
+    },
+    "staerkster_personenverkehr": {
+      "von": "Walchwil Hörndli",
+      "bis": "Walchwil",
+      "strecke_nr": 44,
+      "strecke": "Zug - Walchwil - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 47536,
+      "zuege_pro_tag": 130
+    },
+    "abschnitte": [
+      {
+        "von": "Walchwil Hörndli",
+        "bis": "Walchwil",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 47536,
+        "zuege_pro_tag": 130
+      },
+      {
+        "von": "Walchwil",
+        "bis": "Goldau Mühlefluh (Verzw)",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 39645,
+        "zuege_pro_tag": 109
+      },
+      {
+        "von": "Walchwil",
+        "bis": "Goldau Mühlefluh (Verzw)",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Walchwil Hörndli",
+        "bis": "Walchwil",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 665,
+        "name": "Zug Sud - Arth-Goldau",
+        "km": 9.4524
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/63dd3fdfe2704011e207ac79154694b9"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

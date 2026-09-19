@@ -1,0 +1,181 @@
+{
+  "uic": 8506214,
+  "name": "Sitterdorf",
+  "kanton": "TG",
+  "bps": "SIT",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Sitterdorf",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.248997,
+    "lat": 47.505218,
+    "dwv": 270,
+    "dtv": 240,
+    "dnwv": 180,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 150
+      },
+      {
+        "jahr": 2022,
+        "dwv": 230
+      },
+      {
+        "jahr": 2023,
+        "dwv": 230
+      },
+      {
+        "jahr": 2024,
+        "dwv": 260
+      },
+      {
+        "jahr": 2025,
+        "dwv": 270
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Sitterdorf",
+    "abkuerzung": "SIT",
+    "hoehe_m_ue_m": 485.12,
+    "gemeinde": "Zihlschlacht-Sitterdorf",
+    "ortschaft": "Sitterdorf",
+    "bezirk": "Weinfelden",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 105,
+    "kuerzeste_m": 105,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 105,
+        "flaeche_netto_m2": 251.35,
+        "niveaufreier_zugang": "ja",
+        "linie": 852
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bischofszell Nord",
+      "bis": "Sitterdorf",
+      "strecke_nr": 76,
+      "strecke": "Gossau - Sulgen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28372,
+      "zuege_pro_tag": 78
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bischofszell Nord",
+      "bis": "Sitterdorf",
+      "strecke_nr": 76,
+      "strecke": "Gossau - Sulgen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28372,
+      "zuege_pro_tag": 78
+    },
+    "abschnitte": [
+      {
+        "von": "Bischofszell Nord",
+        "bis": "Sitterdorf",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28372,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Sitterdorf",
+        "bis": "Bischofszell Stadt",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28372,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Bischofszell Nord",
+        "bis": "Sitterdorf",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1301,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Sitterdorf",
+        "bis": "Bischofszell Stadt",
+        "strecke_nr": 76,
+        "strecke": "Gossau - Sulgen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1301,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 852,
+        "name": "Sulgen - Gossau SG",
+        "km": 8.19829
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/efb850e723fc60ee7463900f5bab0995"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

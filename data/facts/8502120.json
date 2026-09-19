@@ -1,0 +1,181 @@
+{
+  "uic": 8502120,
+  "name": "Küngoldingen",
+  "kanton": "AG",
+  "bps": "KGD",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Küngoldingen",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.941797,
+    "lat": 47.302142,
+    "dwv": 230,
+    "dtv": 200,
+    "dnwv": 130,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 210
+      },
+      {
+        "jahr": 2022,
+        "dwv": 210
+      },
+      {
+        "jahr": 2023,
+        "dwv": 240
+      },
+      {
+        "jahr": 2024,
+        "dwv": 230
+      },
+      {
+        "jahr": 2025,
+        "dwv": 230
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Küngoldingen",
+    "abkuerzung": "KGD",
+    "hoehe_m_ue_m": 433.5,
+    "gemeinde": "Oftringen",
+    "ortschaft": "Oftringen",
+    "bezirk": "Zofingen",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 287.87,
+        "niveaufreier_zugang": "ja",
+        "linie": 504
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Küngoldingen",
+      "bis": "Walterswil-Striegel",
+      "strecke_nr": 39,
+      "strecke": "Zofingen - Suhr - Lenzburg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 23942,
+      "zuege_pro_tag": 66
+    },
+    "staerkster_personenverkehr": {
+      "von": "Küngoldingen",
+      "bis": "Walterswil-Striegel",
+      "strecke_nr": 39,
+      "strecke": "Zofingen - Suhr - Lenzburg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 23942,
+      "zuege_pro_tag": 66
+    },
+    "abschnitte": [
+      {
+        "von": "Küngoldingen",
+        "bis": "Walterswil-Striegel",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23942,
+        "zuege_pro_tag": 66
+      },
+      {
+        "von": "Zofingen",
+        "bis": "Küngoldingen",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 23942,
+        "zuege_pro_tag": 66
+      },
+      {
+        "von": "Küngoldingen",
+        "bis": "Walterswil-Striegel",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1025,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Zofingen",
+        "bis": "Küngoldingen",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1025,
+        "zuege_pro_tag": 3
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 504,
+        "name": "Zofingen - Suhr",
+        "km": 1.668
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/732291f28f5eb369c1f87a513b1e1144"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

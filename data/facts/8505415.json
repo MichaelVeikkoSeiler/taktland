@@ -1,0 +1,247 @@
+{
+  "uic": 8505415,
+  "name": "S. Antonino",
+  "kanton": "TI",
+  "bps": "SAN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "S. Antonino",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.969521,
+    "lat": 46.159049,
+    "dwv": 1500,
+    "dtv": 1300,
+    "dnwv": 780,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 590
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "S. Antonino",
+    "abkuerzung": "SAN",
+    "hoehe_m_ue_m": 211.272,
+    "gemeinde": "Sant'Antonino",
+    "ortschaft": "S. Antonino",
+    "bezirk": "Bellinzona",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 4,
+    "laengste_m": 220,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 519.89,
+        "niveaufreier_zugang": "ja",
+        "linie": 630
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 507.62,
+        "niveaufreier_zugang": "ja",
+        "linie": 630
+      },
+      {
+        "nr": "11",
+        "typ": "Hausperron",
+        "laenge_m": 151,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 630
+      },
+      {
+        "nr": "12",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 630
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "S. Antonino (dira)",
+      "bis": "S. Antonino",
+      "strecke_nr": 46,
+      "strecke": "Giubiasco - Pino Transito",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 72649,
+      "zuege_pro_tag": 199
+    },
+    "staerkster_personenverkehr": {
+      "von": "S. Antonino (dira)",
+      "bis": "S. Antonino",
+      "strecke_nr": 46,
+      "strecke": "Giubiasco - Pino Transito",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 72649,
+      "zuege_pro_tag": 199
+    },
+    "abschnitte": [
+      {
+        "von": "S. Antonino (dira)",
+        "bis": "S. Antonino",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72649,
+        "zuege_pro_tag": 199
+      },
+      {
+        "von": "S. Antonino",
+        "bis": "Cadenazzo",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72645,
+        "zuege_pro_tag": 199
+      },
+      {
+        "von": "S. Antonino",
+        "bis": "Cadenazzo",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16600,
+        "zuege_pro_tag": 45
+      },
+      {
+        "von": "S. Antonino (dira)",
+        "bis": "S. Antonino",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16600,
+        "zuege_pro_tag": 45
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 630,
+        "name": "Giubiasco - Locarno",
+        "km": 157.17
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "Altri",
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/37eb2ef097c656620580fc91fcc569da"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

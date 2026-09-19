@@ -1,0 +1,233 @@
+{
+  "uic": 8501421,
+  "name": "Monthey",
+  "kanton": "VS",
+  "bps": "MTH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Monthey",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "RegionAlps",
+    "lon": 6.955227,
+    "lat": 46.255656,
+    "dwv": 2800,
+    "dtv": 2300,
+    "dnwv": 1200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2800
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Monthey",
+    "abkuerzung": "MTH",
+    "hoehe_m_ue_m": 405.97,
+    "gemeinde": "Monthey",
+    "ortschaft": "Monthey",
+    "bezirk": "Monthey",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 154,
+    "kuerzeste_m": 119,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 154,
+        "flaeche_netto_m2": 736.97,
+        "niveaufreier_zugang": "ja",
+        "linie": 131
+      },
+      {
+        "nr": "2",
+        "typ": "Zwischenperron",
+        "laenge_m": 119,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 131
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      20,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 154,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 120,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 242,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 240,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Monthey Industrie",
+      "bis": "Monthey",
+      "strecke_nr": 5,
+      "strecke": "Les Paludes - Monthey",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26100,
+      "zuege_pro_tag": 72
+    },
+    "staerkster_personenverkehr": {
+      "von": "Monthey Industrie",
+      "bis": "Monthey",
+      "strecke_nr": 5,
+      "strecke": "Les Paludes - Monthey",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26100,
+      "zuege_pro_tag": 72
+    },
+    "abschnitte": [
+      {
+        "von": "Monthey Industrie",
+        "bis": "Monthey",
+        "strecke_nr": 5,
+        "strecke": "Les Paludes - Monthey",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26100,
+        "zuege_pro_tag": 72
+      },
+      {
+        "von": "Monthey Giovanola (embr)",
+        "bis": "Monthey",
+        "strecke_nr": 81,
+        "strecke": "Monthey - St. Gingolph",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13473,
+        "zuege_pro_tag": 37
+      },
+      {
+        "von": "Monthey Industrie",
+        "bis": "Monthey",
+        "strecke_nr": 5,
+        "strecke": "Les Paludes - Monthey",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3040,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Monthey Giovanola (embr)",
+        "bis": "Monthey",
+        "strecke_nr": 81,
+        "strecke": "Monthey - St. Gingolph",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 324,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 131,
+        "name": "Les Paluds - St-Gingolph (Frontiere)",
+        "km": 6.05475
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b8ad32c3125b5c65fe3f67dbac83201f"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

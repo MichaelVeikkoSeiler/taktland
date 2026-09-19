@@ -1,0 +1,248 @@
+{
+  "uic": 8502208,
+  "name": "Horgen Oberdorf",
+  "kanton": "ZH",
+  "bps": "HGO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Horgen Oberdorf",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.589816,
+    "lat": 47.25875,
+    "dwv": 3000,
+    "dtv": 2500,
+    "dnwv": 1400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Horgen Oberdorf",
+    "abkuerzung": "HGO",
+    "hoehe_m_ue_m": 483.6,
+    "gemeinde": "Horgen",
+    "ortschaft": "Horgen",
+    "bezirk": "Horgen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 322,
+    "kuerzeste_m": 320,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 322,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      },
+      {
+        "nr": "3",
+        "typ": "Mittelperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 1499.92,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      25,
+      35,
+      42
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 102,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25,
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          25,
+          42
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 219,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 10,
+      "35": 2,
+      "42": 4
+    },
+    "segmente_mit_hilfstritt": 4,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Oberrieden Dorf",
+      "bis": "Horgen Oberdorf",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80635,
+      "zuege_pro_tag": 221
+    },
+    "staerkster_personenverkehr": {
+      "von": "Oberrieden Dorf",
+      "bis": "Horgen Oberdorf",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80635,
+      "zuege_pro_tag": 221
+    },
+    "abschnitte": [
+      {
+        "von": "Oberrieden Dorf",
+        "bis": "Horgen Oberdorf",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80635,
+        "zuege_pro_tag": 221
+      },
+      {
+        "von": "Horgen Oberdorf",
+        "bis": "Sihlbrugg",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80607,
+        "zuege_pro_tag": 221
+      },
+      {
+        "von": "Oberrieden Dorf",
+        "bis": "Horgen Oberdorf",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 457,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Horgen Oberdorf",
+        "bis": "Sihlbrugg",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 455,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 660,
+        "name": "Thalwil - Zug - Fluhmuhle",
+        "km": 16.81272
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/523d20b26bc5a9d9fe8ef136014748ba"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

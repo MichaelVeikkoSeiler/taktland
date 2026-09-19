@@ -1,0 +1,181 @@
+{
+  "uic": 8504315,
+  "name": "Le Crêt-du-Locle",
+  "kanton": "NE",
+  "bps": "CRET",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Le Crêt-du-Locle",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.784581,
+    "lat": 47.077233,
+    "dwv": 650,
+    "dtv": 470,
+    "dnwv": 80,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 360
+      },
+      {
+        "jahr": 2022,
+        "dwv": 510
+      },
+      {
+        "jahr": 2023,
+        "dwv": 730
+      },
+      {
+        "jahr": 2024,
+        "dwv": 650
+      },
+      {
+        "jahr": 2025,
+        "dwv": 650
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Le Crêt-du-Locle",
+    "abkuerzung": "CRET",
+    "hoehe_m_ue_m": 1016.4,
+    "gemeinde": "La Chaux-de-Fonds",
+    "ortschaft": "Le Crêt-du-Locle",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 322.15,
+        "niveaufreier_zugang": "ja",
+        "linie": 224
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Le Crêt-du-Locle",
+      "bis": "La Chaux-de-Fonds Les Forges",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33053,
+      "zuege_pro_tag": 91
+    },
+    "staerkster_personenverkehr": {
+      "von": "Le Crêt-du-Locle",
+      "bis": "La Chaux-de-Fonds Les Forges",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33053,
+      "zuege_pro_tag": 91
+    },
+    "abschnitte": [
+      {
+        "von": "Le Crêt-du-Locle",
+        "bis": "La Chaux-de-Fonds Les Forges",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33053,
+        "zuege_pro_tag": 91
+      },
+      {
+        "von": "Le Locle",
+        "bis": "Le Crêt-du-Locle",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33053,
+        "zuege_pro_tag": 91
+      },
+      {
+        "von": "Le Crêt-du-Locle",
+        "bis": "La Chaux-de-Fonds Les Forges",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 536,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Le Locle",
+        "bis": "Le Crêt-du-Locle",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 536,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 224,
+        "name": "Chambrelien Nord - Le Locle (Frontiere)",
+        "km": 33.4
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/0daa59bb874705811ca1076ef7e34539"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

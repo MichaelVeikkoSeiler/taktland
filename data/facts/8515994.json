@@ -1,0 +1,181 @@
+{
+  "uic": 8515994,
+  "name": "Zug Fridbach",
+  "kanton": "ZG",
+  "bps": "ZGFR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zug Fridbach",
+    "kanton": "ZG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.512292,
+    "lat": 47.156581,
+    "dwv": 360,
+    "dtv": 310,
+    "dnwv": 190,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 320
+      },
+      {
+        "jahr": 2022,
+        "dwv": 290
+      },
+      {
+        "jahr": 2023,
+        "dwv": 350
+      },
+      {
+        "jahr": 2024,
+        "dwv": 360
+      },
+      {
+        "jahr": 2025,
+        "dwv": 360
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zug Fridbach",
+    "abkuerzung": "ZGFR",
+    "hoehe_m_ue_m": 432,
+    "gemeinde": "Zug",
+    "ortschaft": "Zug",
+    "bezirk": null,
+    "kanton": "Zug",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 80,
+    "kuerzeste_m": 80,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 80,
+        "flaeche_netto_m2": 216.55,
+        "niveaufreier_zugang": "ja",
+        "linie": 665
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zug Casino",
+      "bis": "Zug Fridbach",
+      "strecke_nr": 44,
+      "strecke": "Zug - Walchwil - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 47539,
+      "zuege_pro_tag": 130
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zug Casino",
+      "bis": "Zug Fridbach",
+      "strecke_nr": 44,
+      "strecke": "Zug - Walchwil - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 47539,
+      "zuege_pro_tag": 130
+    },
+    "abschnitte": [
+      {
+        "von": "Zug Casino",
+        "bis": "Zug Fridbach",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 47539,
+        "zuege_pro_tag": 130
+      },
+      {
+        "von": "Zug Fridbach",
+        "bis": "Zug Oberwil",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 47539,
+        "zuege_pro_tag": 130
+      },
+      {
+        "von": "Zug Casino",
+        "bis": "Zug Fridbach",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Zug Fridbach",
+        "bis": "Zug Oberwil",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 665,
+        "name": "Zug Sud - Arth-Goldau",
+        "km": 2.09
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/5f866c3c9720608d6490929a3e23b018"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

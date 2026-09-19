@@ -1,0 +1,181 @@
+{
+  "uic": 8501422,
+  "name": "Collombey",
+  "kanton": "VS",
+  "bps": "CBY",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Collombey",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "RegionAlps",
+    "lon": 6.948756,
+    "lat": 46.271193,
+    "dwv": 410,
+    "dtv": 340,
+    "dnwv": 210,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 380
+      },
+      {
+        "jahr": 2022,
+        "dwv": 410
+      },
+      {
+        "jahr": 2023,
+        "dwv": 450
+      },
+      {
+        "jahr": 2024,
+        "dwv": 400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 410
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Collombey",
+    "abkuerzung": "CBY",
+    "hoehe_m_ue_m": 390.96,
+    "gemeinde": "Collombey-Muraz",
+    "ortschaft": "Collombey",
+    "bezirk": "Monthey",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 336.58,
+        "niveaufreier_zugang": "ja",
+        "linie": 131
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Collombey",
+      "bis": "Monthey Giovanola (embr)",
+      "strecke_nr": 81,
+      "strecke": "Monthey - St. Gingolph",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 13473,
+      "zuege_pro_tag": 37
+    },
+    "staerkster_personenverkehr": {
+      "von": "Collombey",
+      "bis": "Monthey Giovanola (embr)",
+      "strecke_nr": 81,
+      "strecke": "Monthey - St. Gingolph",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 13473,
+      "zuege_pro_tag": 37
+    },
+    "abschnitte": [
+      {
+        "von": "Collombey",
+        "bis": "Monthey Giovanola (embr)",
+        "strecke_nr": 81,
+        "strecke": "Monthey - St. Gingolph",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13473,
+        "zuege_pro_tag": 37
+      },
+      {
+        "von": "Monthey Centre agr Bas-V (embr",
+        "bis": "Collombey",
+        "strecke_nr": 81,
+        "strecke": "Monthey - St. Gingolph",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13471,
+        "zuege_pro_tag": 37
+      },
+      {
+        "von": "Collombey",
+        "bis": "Monthey Giovanola (embr)",
+        "strecke_nr": 81,
+        "strecke": "Monthey - St. Gingolph",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 324,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Monthey Centre agr Bas-V (embr",
+        "bis": "Collombey",
+        "strecke_nr": 81,
+        "strecke": "Monthey - St. Gingolph",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 324,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 131,
+        "name": "Les Paluds - St-Gingolph (Frontiere)",
+        "km": 7.9055
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6ab432539b811a10ea9685dbe3f7028b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

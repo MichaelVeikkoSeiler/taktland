@@ -1,0 +1,243 @@
+{
+  "uic": 8502112,
+  "name": "Schönenwerd SO",
+  "kanton": "SO",
+  "bps": "SCOE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Schönenwerd SO",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.000158,
+    "lat": 47.371424,
+    "dwv": 2600,
+    "dtv": 2300,
+    "dnwv": 1500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Schönenwerd SO",
+    "abkuerzung": "SCOE",
+    "hoehe_m_ue_m": 379,
+    "gemeinde": "Schönenwerd",
+    "ortschaft": "Schönenwerd",
+    "bezirk": "Olten",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 324,
+    "kuerzeste_m": 184,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 324,
+        "flaeche_netto_m2": 624.6,
+        "niveaufreier_zugang": "ja",
+        "linie": 540
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 184,
+        "flaeche_netto_m2": 583.88,
+        "niveaufreier_zugang": "ja",
+        "linie": 540
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 179,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 222,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Däniken SO",
+      "bis": "Schönenwerd SO",
+      "strecke_nr": 35,
+      "strecke": "Olten Ost - Heitersberg - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 95244,
+      "zuege_pro_tag": 261
+    },
+    "staerkster_personenverkehr": {
+      "von": "Däniken SO",
+      "bis": "Schönenwerd SO",
+      "strecke_nr": 35,
+      "strecke": "Olten Ost - Heitersberg - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 95244,
+      "zuege_pro_tag": 261
+    },
+    "abschnitte": [
+      {
+        "von": "Däniken SO",
+        "bis": "Schönenwerd SO",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 95244,
+        "zuege_pro_tag": 261
+      },
+      {
+        "von": "Schönenwerd SO",
+        "bis": "Schönenwerd SO Ost (Spw)",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 95243,
+        "zuege_pro_tag": 261
+      },
+      {
+        "von": "Schönenwerd SO",
+        "bis": "Schönenwerd SO Ost (Spw)",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25440,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Däniken SO",
+        "bis": "Schönenwerd SO",
+        "strecke_nr": 35,
+        "strecke": "Olten Ost - Heitersberg - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25439,
+        "zuege_pro_tag": 70
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 540,
+        "name": "Olten - Woschnau",
+        "km": 48.1296
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4cff2743799f0e9b5da5f68ab4c3c5c9"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

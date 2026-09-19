@@ -1,0 +1,251 @@
+{
+  "uic": 8500101,
+  "name": "Reconvilier",
+  "kanton": "BE",
+  "bps": "REC",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Reconvilier",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.227418,
+    "lat": 47.235238,
+    "dwv": 630,
+    "dtv": 550,
+    "dnwv": 360,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 550
+      },
+      {
+        "jahr": 2023,
+        "dwv": 570
+      },
+      {
+        "jahr": 2024,
+        "dwv": 420
+      },
+      {
+        "jahr": 2025,
+        "dwv": 630
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Reconvilier",
+    "abkuerzung": "REC",
+    "hoehe_m_ue_m": 728.5,
+    "gemeinde": "Reconvilier",
+    "ortschaft": "Reconvilier",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 143,
+    "kuerzeste_m": 61,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Hilfskante",
+        "laenge_m": 143,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 226
+      },
+      {
+        "nr": "2",
+        "typ": "Zwischenperron",
+        "laenge_m": 137,
+        "flaeche_netto_m2": 275.99,
+        "niveaufreier_zugang": "nein",
+        "linie": 226
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 61,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 226
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 62,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 137,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 143,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 5,
+      "25": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Tavannes",
+      "bis": "Reconvilier",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 19962,
+      "zuege_pro_tag": 55
+    },
+    "staerkster_personenverkehr": {
+      "von": "Tavannes",
+      "bis": "Reconvilier",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 19962,
+      "zuege_pro_tag": 55
+    },
+    "abschnitte": [
+      {
+        "von": "Tavannes",
+        "bis": "Reconvilier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19962,
+        "zuege_pro_tag": 55
+      },
+      {
+        "von": "Reconvilier",
+        "bis": "Pontenet",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19956,
+        "zuege_pro_tag": 55
+      },
+      {
+        "von": "Reconvilier",
+        "bis": "Pontenet",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Tavannes",
+        "bis": "Reconvilier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 226,
+        "name": "Sonceboz-Sombeval - Moutier - Delemont",
+        "km": 58.01717
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b3422d94c52895ca2cbdec2e7cda54d5"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

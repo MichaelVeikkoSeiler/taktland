@@ -1,0 +1,212 @@
+{
+  "uic": 8504133,
+  "name": "Cugy FR",
+  "kanton": "FR",
+  "bps": "CGY",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Cugy FR",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.889165,
+    "lat": 46.816028,
+    "dwv": 840,
+    "dtv": 680,
+    "dnwv": 320,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 460
+      },
+      {
+        "jahr": 2022,
+        "dwv": 630
+      },
+      {
+        "jahr": 2023,
+        "dwv": 740
+      },
+      {
+        "jahr": 2024,
+        "dwv": 750
+      },
+      {
+        "jahr": 2025,
+        "dwv": 840
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Cugy FR",
+    "abkuerzung": "CGY",
+    "hoehe_m_ue_m": 468.94,
+    "gemeinde": "Cugy (FR)",
+    "ortschaft": "Cugy FR",
+    "bezirk": "La Broye",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 512.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 252
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Cugy FR",
+      "bis": "Payerne",
+      "strecke_nr": 16,
+      "strecke": "Yverdon - Payerne - Fribourg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27874,
+      "zuege_pro_tag": 76
+    },
+    "staerkster_personenverkehr": {
+      "von": "Cugy FR",
+      "bis": "Payerne",
+      "strecke_nr": 16,
+      "strecke": "Yverdon - Payerne - Fribourg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27874,
+      "zuege_pro_tag": 76
+    },
+    "abschnitte": [
+      {
+        "von": "Cugy FR",
+        "bis": "Payerne",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27874,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Sévaz (embr)",
+        "bis": "Cugy FR",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27874,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Cugy FR",
+        "bis": "Payerne",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1589,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Sévaz (embr)",
+        "bis": "Cugy FR",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1509,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 252,
+        "name": "Yverdon Est - Payerne",
+        "km": 23.68366
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/221ba2f62bd287c5da02400b81be7fbb"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

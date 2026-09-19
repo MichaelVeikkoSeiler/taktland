@@ -1,0 +1,181 @@
+{
+  "uic": 8503231,
+  "name": "Ennenda",
+  "kanton": "GL",
+  "bps": "EDA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Ennenda",
+    "kanton": "GL",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.077194,
+    "lat": 47.03296,
+    "dwv": 830,
+    "dtv": 760,
+    "dnwv": 590,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 630
+      },
+      {
+        "jahr": 2022,
+        "dwv": 700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 830
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Ennenda",
+    "abkuerzung": "EDA",
+    "hoehe_m_ue_m": 477.9,
+    "gemeinde": "Glarus",
+    "ortschaft": "Ennenda",
+    "bezirk": null,
+    "kanton": "Glarus",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 413.73,
+        "niveaufreier_zugang": "ja",
+        "linie": 736
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Ennenda",
+      "bis": "Mitlödi",
+      "strecke_nr": 55,
+      "strecke": "Ziegelbrücke - Glarus - Linthal",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27486,
+      "zuege_pro_tag": 75
+    },
+    "staerkster_personenverkehr": {
+      "von": "Ennenda",
+      "bis": "Mitlödi",
+      "strecke_nr": 55,
+      "strecke": "Ziegelbrücke - Glarus - Linthal",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 27486,
+      "zuege_pro_tag": 75
+    },
+    "abschnitte": [
+      {
+        "von": "Ennenda",
+        "bis": "Mitlödi",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27486,
+        "zuege_pro_tag": 75
+      },
+      {
+        "von": "Glarus",
+        "bis": "Ennenda",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27486,
+        "zuege_pro_tag": 75
+      },
+      {
+        "von": "Ennenda",
+        "bis": "Mitlödi",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Glarus",
+        "bis": "Ennenda",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 736,
+        "name": "Ziegelbrucke Ost - Linthal Gleisende",
+        "km": 69.51085
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/bd6ef233388df26ba09b332124eff4ab"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

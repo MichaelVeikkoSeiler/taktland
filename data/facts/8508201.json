@@ -1,0 +1,189 @@
+{
+  "uic": 8508201,
+  "name": "Tägertschi",
+  "kanton": "BE",
+  "bps": "TI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Tägertschi",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.580837,
+    "lat": 46.882286,
+    "dwv": 190,
+    "dtv": 170,
+    "dnwv": 140,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 90
+      },
+      {
+        "jahr": 2023,
+        "dwv": 130
+      },
+      {
+        "jahr": 2024,
+        "dwv": 160
+      },
+      {
+        "jahr": 2025,
+        "dwv": 190
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Tägertschi",
+    "abkuerzung": "TI",
+    "hoehe_m_ue_m": 644.36,
+    "gemeinde": "Münsingen",
+    "ortschaft": "Tägertschi",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 221,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 221,
+        "flaeche_netto_m2": 500.38,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 527.57,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bachtele (Trimstein)",
+      "bis": "Tägertschi",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 41215,
+      "zuege_pro_tag": 113
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bachtele (Trimstein)",
+      "bis": "Tägertschi",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 41215,
+      "zuege_pro_tag": 113
+    },
+    "abschnitte": [
+      {
+        "von": "Bachtele (Trimstein)",
+        "bis": "Tägertschi",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41215,
+        "zuege_pro_tag": 113
+      },
+      {
+        "von": "Tägertschi",
+        "bis": "Konolfingen",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41215,
+        "zuege_pro_tag": 113
+      },
+      {
+        "von": "Bachtele (Trimstein)",
+        "bis": "Tägertschi",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 135,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Tägertschi",
+        "bis": "Konolfingen",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 135,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 460,
+        "name": "Gumligen Sud - Fluhmuhle",
+        "km": 17.22084
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BLS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/0ea0e26edb2e4580325f3a135c032c6c"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

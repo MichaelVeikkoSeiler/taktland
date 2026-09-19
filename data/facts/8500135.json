@@ -1,0 +1,181 @@
+{
+  "uic": 8500135,
+  "name": "Pontenet",
+  "kanton": "BE",
+  "bps": "PON",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Pontenet",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.254159,
+    "lat": 47.238848,
+    "dwv": 60,
+    "dtv": 50,
+    "dnwv": 49,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 60
+      },
+      {
+        "jahr": 2022,
+        "dwv": 60
+      },
+      {
+        "jahr": 2023,
+        "dwv": 60
+      },
+      {
+        "jahr": 2024,
+        "dwv": 49
+      },
+      {
+        "jahr": 2025,
+        "dwv": 60
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Pontenet",
+    "abkuerzung": "PON",
+    "hoehe_m_ue_m": 711.77,
+    "gemeinde": "Valbirse",
+    "ortschaft": "Pontenet",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 196.29,
+        "niveaufreier_zugang": "ja",
+        "linie": 226
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Pontenet",
+      "bis": "Malleray-Bévilard",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 19956,
+      "zuege_pro_tag": 55
+    },
+    "staerkster_personenverkehr": {
+      "von": "Pontenet",
+      "bis": "Malleray-Bévilard",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 19956,
+      "zuege_pro_tag": 55
+    },
+    "abschnitte": [
+      {
+        "von": "Pontenet",
+        "bis": "Malleray-Bévilard",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19956,
+        "zuege_pro_tag": 55
+      },
+      {
+        "von": "Reconvilier",
+        "bis": "Pontenet",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19956,
+        "zuege_pro_tag": 55
+      },
+      {
+        "von": "Pontenet",
+        "bis": "Malleray-Bévilard",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Reconvilier",
+        "bis": "Pontenet",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 226,
+        "name": "Sonceboz-Sombeval - Moutier - Delemont",
+        "km": 60.1214
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/a3158d04aa326af32abec16aa1027c30"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,406 @@
+{
+  "uic": 8505004,
+  "name": "Arth-Goldau",
+  "kanton": "SZ",
+  "bps": "GD",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Arth-Goldau",
+    "kanton": "SZ",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.549446,
+    "lat": 47.049045,
+    "dwv": 19700,
+    "dtv": 20100,
+    "dnwv": 21000,
+    "bemerkung": "Ohne RB.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 14400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 16800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 18500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 18500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 19700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Arth-Goldau",
+    "abkuerzung": "GD",
+    "hoehe_m_ue_m": 510,
+    "gemeinde": "Arth",
+    "ortschaft": "Goldau",
+    "bezirk": "Schwyz",
+    "kanton": "Schwyz",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 4,
+    "laengste_m": 467,
+    "kuerzeste_m": 425,
+    "items": [
+      {
+        "nr": "4",
+        "typ": "Hausperron",
+        "laenge_m": 467,
+        "flaeche_netto_m2": 2479.8,
+        "niveaufreier_zugang": "ja",
+        "linie": 665
+      },
+      {
+        "nr": "6/8",
+        "typ": "Mittelperron",
+        "laenge_m": 441,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "5",
+        "typ": "Hausperron",
+        "laenge_m": 428,
+        "flaeche_netto_m2": 1620.44,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 425,
+        "flaeche_netto_m2": 1623.43,
+        "niveaufreier_zugang": "ja",
+        "linie": 665
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "8"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 234,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 428,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 428,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 442,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 442,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 21,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 3,
+      "55": 18
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 6,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Arth-Goldau",
+      "bis": "Steinen Nord (Spw)",
+      "strecke_nr": 45,
+      "strecke": "Arth-Goldau - Erstfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 69576,
+      "zuege_pro_tag": 191
+    },
+    "staerkster_personenverkehr": {
+      "von": "Arth-Goldau",
+      "bis": "Steinen Nord (Spw)",
+      "strecke_nr": 45,
+      "strecke": "Arth-Goldau - Erstfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 69576,
+      "zuege_pro_tag": 191
+    },
+    "abschnitte": [
+      {
+        "von": "Arth-Goldau",
+        "bis": "Steinen Nord (Spw)",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 69576,
+        "zuege_pro_tag": 191
+      },
+      {
+        "von": "Brunnmatt (Spw)",
+        "bis": "Arth-Goldau",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44012,
+        "zuege_pro_tag": 121
+      },
+      {
+        "von": "Goldau Mühlefluh (Verzw)",
+        "bis": "Arth-Goldau",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 39645,
+        "zuege_pro_tag": 109
+      },
+      {
+        "von": "Brunnmatt (Spw)",
+        "bis": "Arth-Goldau",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36724,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Arth-Goldau",
+        "bis": "Steinen Nord (Spw)",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36699,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Arth-Goldau",
+        "bis": "Eidg. Magazine",
+        "strecke_nr": 866,
+        "strecke": "Biberbrugg - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25475,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Goldau Mühlefluh (Verzw)",
+        "bis": "Arth-Goldau",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Arth-Goldau",
+        "bis": "Eidg. Magazine",
+        "strecke_nr": 866,
+        "strecke": "Biberbrugg - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 1,
+        "zuege_pro_jahr": 1,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 8.86435
+      },
+      {
+        "nummer": 602,
+        "name": "Arth Goldau - Rigi Kulm",
+        "km": 0
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "BATS"
+    ],
+    "billettentwerter": 8,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3d475ad6491307ba956ede76e40badfc"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-arth-goldau-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-arth-goldau-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

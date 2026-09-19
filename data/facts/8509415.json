@@ -1,0 +1,88 @@
+{
+  "uic": 8509415,
+  "name": "Mols",
+  "kanton": "SG",
+  "bps": "MOLS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2018,
+    "name": "Mols",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SOB",
+    "lon": 9.276817,
+    "lat": 47.112991,
+    "dwv": 90,
+    "dtv": 90,
+    "dnwv": 80,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 90
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mols",
+    "abkuerzung": "MOLS",
+    "hoehe_m_ue_m": 427.7,
+    "gemeinde": "Quarten",
+    "ortschaft": "Mols",
+    "bezirk": "Sarganserland",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 171,
+    "kuerzeste_m": 171,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 171,
+        "flaeche_netto_m2": 690.15,
+        "niveaufreier_zugang": "ja",
+        "linie": 890
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": null,
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 890,
+        "name": "Sargans Ost - Ziegelbrucke",
+        "km": 16.37362
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 1
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "linien",
+    "services"
+  ]
+}

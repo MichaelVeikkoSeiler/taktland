@@ -1,0 +1,198 @@
+{
+  "uic": 8504108,
+  "name": "Bern Europaplatz",
+  "kanton": "BE",
+  "bps": "BNAS",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bern Europaplatz",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.406118,
+    "lat": 46.94421,
+    "dwv": 8400,
+    "dtv": 7000,
+    "dnwv": 3800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 7100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 5900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 6700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 7300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 8400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bern Europaplatz",
+    "abkuerzung": "BNAS",
+    "hoehe_m_ue_m": 556.39,
+    "gemeinde": "Bern",
+    "ortschaft": "Bern",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 225,
+    "kuerzeste_m": 224,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 225,
+        "flaeche_netto_m2": 551.77,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "4",
+        "typ": "Aussenperron",
+        "laenge_m": 224,
+        "flaeche_netto_m2": 649.64,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bern Europaplatz",
+      "bis": "Bern Steigerhubel (Abzw)",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 82586,
+      "zuege_pro_tag": 226
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bern Europaplatz",
+      "bis": "Bern Steigerhubel (Abzw)",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 82586,
+      "zuege_pro_tag": 226
+    },
+    "abschnitte": [
+      {
+        "von": "Bern Europaplatz",
+        "bis": "Bern Steigerhubel (Abzw)",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 82586,
+        "zuege_pro_tag": 226
+      },
+      {
+        "von": "Bern Bümpliz Süd",
+        "bis": "Bern Europaplatz",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 82584,
+        "zuege_pro_tag": 226
+      },
+      {
+        "von": "Bern Bümpliz Süd",
+        "bis": "Bern Europaplatz",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3561,
+        "zuege_pro_tag": 10
+      },
+      {
+        "von": "Bern Europaplatz",
+        "bis": "Bern Steigerhubel (Abzw)",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3561,
+        "zuege_pro_tag": 10
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 94.111
+      },
+      {
+        "nummer": 9250,
+        "name": "Bern Bumpliz Sud - Bern",
+        "km": 94.111
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 4,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/38fb1bf859ab3035f08936333c317c61"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-bern-europaplatz-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-bern-europaplatz-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

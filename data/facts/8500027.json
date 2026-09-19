@@ -1,0 +1,255 @@
+{
+  "uic": 8500027,
+  "name": "Gelterkinden",
+  "kanton": "BL",
+  "bps": "GKD",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Gelterkinden",
+    "kanton": "BL",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 7.847667,
+    "lat": 47.465894,
+    "dwv": 5300,
+    "dtv": 4700,
+    "dnwv": 3400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 5600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 5300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Gelterkinden",
+    "abkuerzung": "GKD",
+    "hoehe_m_ue_m": 402.828,
+    "gemeinde": "Gelterkinden",
+    "ortschaft": "Gelterkinden",
+    "bezirk": "Sissach",
+    "kanton": "Basel-Landschaft",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 376,
+    "kuerzeste_m": 224,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 376,
+        "flaeche_netto_m2": 1581.87,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "2",
+        "typ": "Hilfskante",
+        "laenge_m": 224,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 321,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sissach",
+      "bis": "Gelterkinden",
+      "strecke_nr": 27,
+      "strecke": "Muttenz - HBT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 115009,
+      "zuege_pro_tag": 315
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sissach",
+      "bis": "Gelterkinden",
+      "strecke_nr": 27,
+      "strecke": "Muttenz - HBT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 115009,
+      "zuege_pro_tag": 315
+    },
+    "abschnitte": [
+      {
+        "von": "Sissach",
+        "bis": "Gelterkinden",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 115009,
+        "zuege_pro_tag": 315
+      },
+      {
+        "von": "Gelterkinden",
+        "bis": "Tecknau",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 114533,
+        "zuege_pro_tag": 314
+      },
+      {
+        "von": "Gelterkinden",
+        "bis": "Tecknau",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21831,
+        "zuege_pro_tag": 60
+      },
+      {
+        "von": "Sissach",
+        "bis": "Gelterkinden",
+        "strecke_nr": 27,
+        "strecke": "Muttenz - HBT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21829,
+        "zuege_pro_tag": 60
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 24.05343
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/97eec1f73c4ed4b7c0f172d6daed3e59"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

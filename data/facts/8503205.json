@@ -1,0 +1,231 @@
+{
+  "uic": 8503205,
+  "name": "Au ZH",
+  "kanton": "ZH",
+  "bps": "AU",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Au ZH",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.643726,
+    "lat": 47.246818,
+    "dwv": 1200,
+    "dtv": 1000,
+    "dnwv": 740,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Au ZH",
+    "abkuerzung": "AU",
+    "hoehe_m_ue_m": 409.9,
+    "gemeinde": "Wädenswil",
+    "ortschaft": "Au ZH",
+    "bezirk": "Horgen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 320,
+    "kuerzeste_m": 320,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 320,
+        "flaeche_netto_m2": 1835.89,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 5,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Au ZH",
+      "bis": "Wädenswil",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 106601,
+      "zuege_pro_tag": 292
+    },
+    "staerkster_personenverkehr": {
+      "von": "Au ZH",
+      "bis": "Wädenswil",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 106601,
+      "zuege_pro_tag": 292
+    },
+    "abschnitte": [
+      {
+        "von": "Au ZH",
+        "bis": "Wädenswil",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 106601,
+        "zuege_pro_tag": 292
+      },
+      {
+        "von": "Horgen",
+        "bis": "Au ZH",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 106499,
+        "zuege_pro_tag": 292
+      },
+      {
+        "von": "Horgen",
+        "bis": "Au ZH",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8990,
+        "zuege_pro_tag": 25
+      },
+      {
+        "von": "Au ZH",
+        "bis": "Wädenswil",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8947,
+        "zuege_pro_tag": 25
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 720,
+        "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
+        "km": 20.72628
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ff712bd99774e1d92deb7dab51b96c85"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

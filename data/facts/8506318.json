@@ -1,0 +1,212 @@
+{
+  "uic": 8506318,
+  "name": "Rebstein-Marbach",
+  "kanton": "SG",
+  "bps": "REB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rebstein-Marbach",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SOB, Thurbo",
+    "lon": 9.586754,
+    "lat": 47.39264,
+    "dwv": 430,
+    "dtv": 370,
+    "dnwv": 260,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 330
+      },
+      {
+        "jahr": 2022,
+        "dwv": 380
+      },
+      {
+        "jahr": 2023,
+        "dwv": 470
+      },
+      {
+        "jahr": 2024,
+        "dwv": 510
+      },
+      {
+        "jahr": 2025,
+        "dwv": 430
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rebstein-Marbach",
+    "abkuerzung": "REB",
+    "hoehe_m_ue_m": 409.8,
+    "gemeinde": "Rebstein",
+    "ortschaft": "Rebstein",
+    "bezirk": "Rheintal",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 428.39,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Heerbrugg",
+      "bis": "Rebstein-Marbach",
+      "strecke_nr": 75,
+      "strecke": "St.Margrethen - Buchs",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55537,
+      "zuege_pro_tag": 152
+    },
+    "staerkster_personenverkehr": {
+      "von": "Heerbrugg",
+      "bis": "Rebstein-Marbach",
+      "strecke_nr": 75,
+      "strecke": "St.Margrethen - Buchs",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55537,
+      "zuege_pro_tag": 152
+    },
+    "abschnitte": [
+      {
+        "von": "Heerbrugg",
+        "bis": "Rebstein-Marbach",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55537,
+        "zuege_pro_tag": 152
+      },
+      {
+        "von": "Rebstein-Marbach",
+        "bis": "Altstätten SG",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55529,
+        "zuege_pro_tag": 152
+      },
+      {
+        "von": "Heerbrugg",
+        "bis": "Rebstein-Marbach",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2608,
+        "zuege_pro_tag": 7
+      },
+      {
+        "von": "Rebstein-Marbach",
+        "bis": "Altstätten SG",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2608,
+        "zuege_pro_tag": 7
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 880,
+        "name": "Sargans Ost - St.Gallen",
+        "km": 44.28637
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7df722dfec82a9b0408de9798eb7888a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

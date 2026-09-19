@@ -1,0 +1,177 @@
+{
+  "uic": 8508216,
+  "name": "Werthenstein",
+  "kanton": "LU",
+  "bps": "WST",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Werthenstein",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 8.101863,
+    "lat": 47.057025,
+    "dwv": 120,
+    "dtv": 110,
+    "dnwv": 100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 80
+      },
+      {
+        "jahr": 2023,
+        "dwv": 100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 110
+      },
+      {
+        "jahr": 2025,
+        "dwv": 120
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Werthenstein",
+    "abkuerzung": "WST",
+    "hoehe_m_ue_m": 553,
+    "gemeinde": "Ruswil",
+    "ortschaft": "Werthenstein",
+    "bezirk": "Sursee",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 136,
+    "kuerzeste_m": 136,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 136,
+        "flaeche_netto_m2": 266.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 460
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Werthenstein",
+      "bis": "Schachen LU",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 31114,
+      "zuege_pro_tag": 85
+    },
+    "staerkster_personenverkehr": {
+      "von": "Werthenstein",
+      "bis": "Schachen LU",
+      "strecke_nr": 26,
+      "strecke": "Gümligen Süd - Fluhmühle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 31114,
+      "zuege_pro_tag": 85
+    },
+    "abschnitte": [
+      {
+        "von": "Werthenstein",
+        "bis": "Schachen LU",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31114,
+        "zuege_pro_tag": 85
+      },
+      {
+        "von": "Wolhusen",
+        "bis": "Werthenstein",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31114,
+        "zuege_pro_tag": 85
+      },
+      {
+        "von": "Werthenstein",
+        "bis": "Schachen LU",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 358,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Wolhusen",
+        "bis": "Werthenstein",
+        "strecke_nr": 26,
+        "strecke": "Gümligen Süd - Fluhmühle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 358,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 460,
+        "name": "Gumligen Sud - Fluhmuhle",
+        "km": 76.1464
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BLS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/aaea0755eec35237f7c565e58407525d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

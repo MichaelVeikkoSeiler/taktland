@@ -1,0 +1,275 @@
+{
+  "uic": 8502215,
+  "name": "Muri AG",
+  "kanton": "AG",
+  "bps": "MI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Muri AG",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.339821,
+    "lat": 47.276666,
+    "dwv": 3300,
+    "dtv": 2800,
+    "dnwv": 1800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 3200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 3300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 3300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Muri AG",
+    "abkuerzung": "MI",
+    "hoehe_m_ue_m": 459,
+    "gemeinde": "Muri (AG)",
+    "ortschaft": "Muri AG",
+    "bezirk": "Muri",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 219,
+    "kuerzeste_m": 83,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 917.18,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 180,
+        "flaeche_netto_m2": 375.74,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 83,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 221,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 221,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 221,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Boswil-Bünzen",
+      "bis": "Muri AG",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50131,
+      "zuege_pro_tag": 137
+    },
+    "staerkster_personenverkehr": {
+      "von": "Boswil-Bünzen",
+      "bis": "Muri AG",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50131,
+      "zuege_pro_tag": 137
+    },
+    "abschnitte": [
+      {
+        "von": "Boswil-Bünzen",
+        "bis": "Muri AG",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50131,
+        "zuege_pro_tag": 137
+      },
+      {
+        "von": "Boswil-Bünzen",
+        "bis": "Muri AG",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35859,
+        "zuege_pro_tag": 98
+      },
+      {
+        "von": "Muri AG",
+        "bis": "Benzenschwil",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35824,
+        "zuege_pro_tag": 98
+      },
+      {
+        "von": "Muri AG",
+        "bis": "Benzenschwil",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30597,
+        "zuege_pro_tag": 84
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 653,
+        "name": "Gexi Ost - Rotkreuz - Immensee West",
+        "km": 81.4905
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "S-POS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/44ff29f67da81229e004613562141aca"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

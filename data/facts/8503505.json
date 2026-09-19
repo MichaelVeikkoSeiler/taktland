@@ -1,0 +1,332 @@
+{
+  "uic": 8503505,
+  "name": "Wettingen",
+  "kanton": "AG",
+  "bps": "WE",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Wettingen",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.316006,
+    "lat": 47.459638,
+    "dwv": 6000,
+    "dtv": 5000,
+    "dnwv": 2900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 6000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 6000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 6000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Wettingen",
+    "abkuerzung": "WE",
+    "hoehe_m_ue_m": 388.3,
+    "gemeinde": "Wettingen",
+    "ortschaft": "Wettingen",
+    "bezirk": "Baden",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 4,
+    "laengste_m": 373,
+    "kuerzeste_m": 231,
+    "items": [
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 373,
+        "flaeche_netto_m2": 1082.49,
+        "niveaufreier_zugang": "ja",
+        "linie": 703
+      },
+      {
+        "nr": "5",
+        "typ": "Aussenperron",
+        "laenge_m": 334,
+        "flaeche_netto_m2": 1307.67,
+        "niveaufreier_zugang": "ja",
+        "linie": 710
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 252,
+        "flaeche_netto_m2": 429.68,
+        "niveaufreier_zugang": "ja",
+        "linie": 703
+      },
+      {
+        "nr": "2",
+        "typ": "Dienstperron",
+        "laenge_m": 231,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 703
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "3",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          25,
+          35,
+          55
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 85,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 318,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 319,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 322,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 17,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 3,
+      "25": 2,
+      "35": 3,
+      "55": 9
+    },
+    "segmente_mit_hilfstritt": 3,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Baden",
+      "bis": "Wettingen",
+      "strecke_nr": 32,
+      "strecke": "Brugg - Wettingen - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 117110,
+      "zuege_pro_tag": 321
+    },
+    "staerkster_personenverkehr": {
+      "von": "Baden",
+      "bis": "Wettingen",
+      "strecke_nr": 32,
+      "strecke": "Brugg - Wettingen - Killwangen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 117110,
+      "zuege_pro_tag": 321
+    },
+    "abschnitte": [
+      {
+        "von": "Baden",
+        "bis": "Wettingen",
+        "strecke_nr": 32,
+        "strecke": "Brugg - Wettingen - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 117110,
+        "zuege_pro_tag": 321
+      },
+      {
+        "von": "Wettingen",
+        "bis": "Neuenhof",
+        "strecke_nr": 32,
+        "strecke": "Brugg - Wettingen - Killwangen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 76518,
+        "zuege_pro_tag": 210
+      },
+      {
+        "von": "Wettingen",
+        "bis": "Würenlos",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28640,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Baden",
+        "bis": "Wettingen",
+        "strecke_nr": 32,
+        "strecke": "Brugg - Wettingen - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20451,
+        "zuege_pro_tag": 56
+      },
+      {
+        "von": "Wettingen",
+        "bis": "Neuenhof",
+        "strecke_nr": 32,
+        "strecke": "Brugg - Wettingen - Killwangen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15554,
+        "zuege_pro_tag": 43
+      },
+      {
+        "von": "Wettingen",
+        "bis": "Würenlos",
+        "strecke_nr": 57,
+        "strecke": "Wettingen / Killwangen - Würenlos - Zürich Oerlikon-Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5568,
+        "zuege_pro_tag": 15
+      },
+      {
+        "von": "Baden Oberstadt",
+        "bis": "Wettingen",
+        "strecke_nr": 37,
+        "strecke": "Wettingen - Dättwil - Gruemet",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 714,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Baden Oberstadt",
+        "bis": "Wettingen",
+        "strecke_nr": 37,
+        "strecke": "Wettingen - Dättwil - Gruemet",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 250,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 703,
+        "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
+        "km": 42.73435
+      },
+      {
+        "nummer": 710,
+        "name": "Zurich HB - Brugg AG",
+        "km": 20.33388
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f4cc9d790763f37c48529d9391d8fa21"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

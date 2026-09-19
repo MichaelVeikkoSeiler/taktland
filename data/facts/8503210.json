@@ -1,0 +1,235 @@
+{
+  "uic": 8503210,
+  "name": "Freienbach SBB",
+  "kanton": "SZ",
+  "bps": "FRB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Freienbach SBB",
+    "kanton": "SZ",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.756219,
+    "lat": 47.207311,
+    "dwv": 540,
+    "dtv": 490,
+    "dnwv": 360,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 560
+      },
+      {
+        "jahr": 2022,
+        "dwv": 420
+      },
+      {
+        "jahr": 2023,
+        "dwv": 510
+      },
+      {
+        "jahr": 2024,
+        "dwv": 550
+      },
+      {
+        "jahr": 2025,
+        "dwv": 540
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Freienbach SBB",
+    "abkuerzung": "FRB",
+    "hoehe_m_ue_m": 409.6,
+    "gemeinde": "Freienbach",
+    "ortschaft": "Freienbach",
+    "bezirk": "Höfe",
+    "kanton": "Schwyz",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 316,
+    "kuerzeste_m": 316,
+    "items": [
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 316,
+        "flaeche_netto_m2": 1249.81,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      25,
+      42,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25,
+          42,
+          55
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 311,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 9,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 4,
+      "42": 3,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 3,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bäch SZ",
+      "bis": "Freienbach SBB",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 106108,
+      "zuege_pro_tag": 291
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bäch SZ",
+      "bis": "Freienbach SBB",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 106108,
+      "zuege_pro_tag": 291
+    },
+    "abschnitte": [
+      {
+        "von": "Bäch SZ",
+        "bis": "Freienbach SBB",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 106108,
+        "zuege_pro_tag": 291
+      },
+      {
+        "von": "Freienbach SBB",
+        "bis": "Pfäffikon SZ",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 106106,
+        "zuege_pro_tag": 291
+      },
+      {
+        "von": "Bäch SZ",
+        "bis": "Freienbach SBB",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8886,
+        "zuege_pro_tag": 24
+      },
+      {
+        "von": "Freienbach SBB",
+        "bis": "Pfäffikon SZ",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8886,
+        "zuege_pro_tag": 24
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 720,
+        "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
+        "km": 31.70887
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f55d2aa2326013d0d1af5d3c99a12068"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

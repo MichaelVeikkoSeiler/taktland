@@ -1,0 +1,230 @@
+{
+  "uic": 8500128,
+  "name": "Boncourt",
+  "kanton": "JU",
+  "bps": "BCT",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Boncourt",
+    "kanton": "JU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.016552,
+    "lat": 47.492632,
+    "dwv": 220,
+    "dtv": 190,
+    "dnwv": 120,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 240
+      },
+      {
+        "jahr": 2022,
+        "dwv": 260
+      },
+      {
+        "jahr": 2023,
+        "dwv": 290
+      },
+      {
+        "jahr": 2024,
+        "dwv": 240
+      },
+      {
+        "jahr": 2025,
+        "dwv": 220
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Boncourt",
+    "abkuerzung": "BCT",
+    "hoehe_m_ue_m": 373.45,
+    "gemeinde": "Boncourt",
+    "ortschaft": "Boncourt",
+    "bezirk": "Porrentruy",
+    "kanton": "Jura",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 152,
+    "kuerzeste_m": 152,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 152,
+        "flaeche_netto_m2": 627.19,
+        "niveaufreier_zugang": "ja",
+        "linie": 240
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 150,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 153,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 153,
+        "sektoren": [
+          "-",
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 6,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 4,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 4,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Buix",
+      "bis": "Boncourt",
+      "strecke_nr": 15,
+      "strecke": "Delémont - Porrentruy - Delle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 15658,
+      "zuege_pro_tag": 43
+    },
+    "staerkster_personenverkehr": {
+      "von": "Buix",
+      "bis": "Boncourt",
+      "strecke_nr": 15,
+      "strecke": "Delémont - Porrentruy - Delle",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 15658,
+      "zuege_pro_tag": 43
+    },
+    "abschnitte": [
+      {
+        "von": "Buix",
+        "bis": "Boncourt",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15658,
+        "zuege_pro_tag": 43
+      },
+      {
+        "von": "Boncourt",
+        "bis": "Delle-Frontière",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15624,
+        "zuege_pro_tag": 43
+      },
+      {
+        "von": "Buix",
+        "bis": "Boncourt",
+        "strecke_nr": 15,
+        "strecke": "Delémont - Porrentruy - Delle",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 240,
+        "name": "Delemont - Delle",
+        "km": 123.35159
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BATS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6cbfa13c8485669fcea13a85fc308122"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

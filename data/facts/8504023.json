@@ -1,0 +1,320 @@
+{
+  "uic": 8504023,
+  "name": "Romont FR",
+  "kanton": "FR",
+  "bps": "ROM",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Romont FR",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "SBB, TPF",
+    "lon": 6.911811,
+    "lat": 46.693508,
+    "dwv": 6200,
+    "dtv": 5700,
+    "dnwv": 4600,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 6100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 6200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Romont FR",
+    "abkuerzung": "ROM",
+    "hoehe_m_ue_m": 707.2,
+    "gemeinde": "Romont (FR)",
+    "ortschaft": "Romont FR",
+    "bezirk": "La Glâne",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 402,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 402,
+        "flaeche_netto_m2": 1586.39,
+        "niveaufreier_zugang": "ja",
+        "linie": 254
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 349,
+        "flaeche_netto_m2": 1464.03,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "4/6",
+        "typ": "Mittelperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 499.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 318,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 318,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 251,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 150,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 150,
+        "sektoren": [
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 14,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 14
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Romont FR",
+      "bis": "Lussy FR",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83902,
+      "zuege_pro_tag": 230
+    },
+    "staerkster_personenverkehr": {
+      "von": "Romont FR",
+      "bis": "Lussy FR",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83902,
+      "zuege_pro_tag": 230
+    },
+    "abschnitte": [
+      {
+        "von": "Romont FR",
+        "bis": "Lussy FR",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83902,
+        "zuege_pro_tag": 230
+      },
+      {
+        "von": "Siviriez",
+        "bis": "Romont FR",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55882,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "Vuisternens-devant-Romont",
+        "bis": "Romont FR",
+        "strecke_nr": 9992,
+        "strecke": "Romont - Bulle - Broc TPF",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28249,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Romont FR",
+        "bis": "Lussy FR",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2853,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Siviriez",
+        "bis": "Romont FR",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2641,
+        "zuege_pro_tag": 7
+      },
+      {
+        "von": "Vuisternens-devant-Romont",
+        "bis": "Romont FR",
+        "strecke_nr": 9992,
+        "strecke": "Romont - Bulle - Broc TPF",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 254,
+        "name": "Bulle - Romont",
+        "km": 18.08936
+      },
+      {
+        "nummer": 9254,
+        "name": "Vuisternens - Romont Projet",
+        "km": 17.20737
+      },
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 40.1979
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/95a0bce53eb421f6712e656dd446d4dc"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "uic": 8500136,
+  "name": "Basel Dreispitz",
+  "kanton": "BS",
+  "bps": "BSDH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Basel Dreispitz",
+    "kanton": "BS",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.609596,
+    "lat": 47.537436,
+    "dwv": 2500,
+    "dtv": 2200,
+    "dnwv": 1500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Basel Dreispitz",
+    "abkuerzung": "BSDH",
+    "hoehe_m_ue_m": 277,
+    "gemeinde": "Basel",
+    "ortschaft": "Basel",
+    "bezirk": null,
+    "kanton": "Basel-Stadt",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 219,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 496.96,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 498.81,
+        "niveaufreier_zugang": "ja",
+        "linie": 230
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Basel Dreispitz",
+      "bis": "Basel SBB",
+      "strecke_nr": 106,
+      "strecke": "Basel SBB PB / GB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 49238,
+      "zuege_pro_tag": 135
+    },
+    "staerkster_personenverkehr": {
+      "von": "Basel Dreispitz",
+      "bis": "Basel SBB",
+      "strecke_nr": 106,
+      "strecke": "Basel SBB PB / GB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 49238,
+      "zuege_pro_tag": 135
+    },
+    "abschnitte": [
+      {
+        "von": "Basel Dreispitz",
+        "bis": "Basel SBB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 49238,
+        "zuege_pro_tag": 135
+      },
+      {
+        "von": "Ruchfeld",
+        "bis": "Basel Dreispitz",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 49162,
+        "zuege_pro_tag": 135
+      },
+      {
+        "von": "Basel Dreispitz",
+        "bis": "Basel SBB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 1,
+        "zuege_pro_jahr": 5,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Ruchfeld",
+        "bis": "Basel Dreispitz",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 1,
+        "zuege_pro_jahr": 5,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 230,
+        "name": "Delemont Est - Basel SBB Ost",
+        "km": 121.11361
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 4
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

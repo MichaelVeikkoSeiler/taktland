@@ -1,0 +1,228 @@
+{
+  "uic": 8501006,
+  "name": "Meyrin",
+  "kanton": "GE",
+  "bps": "VM",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Meyrin",
+    "kanton": "GE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.076901,
+    "lat": 46.222335,
+    "dwv": 1100,
+    "dtv": 880,
+    "dnwv": 380,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 420
+      },
+      {
+        "jahr": 2022,
+        "dwv": 600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 960
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Meyrin",
+    "abkuerzung": "VM",
+    "hoehe_m_ue_m": 433.37,
+    "gemeinde": "Meyrin",
+    "ortschaft": "Meyrin",
+    "bezirk": null,
+    "kanton": "Genève",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 172,
+    "kuerzeste_m": 162,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 172,
+        "flaeche_netto_m2": 667.5,
+        "niveaufreier_zugang": "ja",
+        "linie": 151
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 162,
+        "flaeche_netto_m2": 764.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 151
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zimeysa",
+      "bis": "Meyrin",
+      "strecke_nr": 3,
+      "strecke": "La Plaine Frontière - Genève",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 52998,
+      "zuege_pro_tag": 145
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zimeysa",
+      "bis": "Meyrin",
+      "strecke_nr": 3,
+      "strecke": "La Plaine Frontière - Genève",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 52998,
+      "zuege_pro_tag": 145
+    },
+    "abschnitte": [
+      {
+        "von": "Zimeysa",
+        "bis": "Meyrin",
+        "strecke_nr": 3,
+        "strecke": "La Plaine Frontière - Genève",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52998,
+        "zuege_pro_tag": 145
+      },
+      {
+        "von": "Meyrin",
+        "bis": "Vernier-Meyrin Cargo",
+        "strecke_nr": 3,
+        "strecke": "La Plaine Frontière - Genève",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52868,
+        "zuege_pro_tag": 145
+      },
+      {
+        "von": "Meyrin",
+        "bis": "Vernier-Meyrin Cargo",
+        "strecke_nr": 3,
+        "strecke": "La Plaine Frontière - Genève",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 306,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Zimeysa",
+        "bis": "Meyrin",
+        "strecke_nr": 3,
+        "strecke": "La Plaine Frontière - Genève",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 306,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 151,
+        "name": "Geneve St-Jean - La Plaine-Frontiere",
+        "km": 66.114
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ba688f7acce0947d5bedec5decd93167"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

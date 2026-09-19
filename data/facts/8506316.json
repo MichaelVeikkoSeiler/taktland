@@ -1,0 +1,212 @@
+{
+  "uic": 8506316,
+  "name": "Au SG",
+  "kanton": "SG",
+  "bps": "AUSG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Au SG",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SOB, Thurbo",
+    "lon": 9.641259,
+    "lat": 47.436116,
+    "dwv": 510,
+    "dtv": 450,
+    "dnwv": 320,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 450
+      },
+      {
+        "jahr": 2023,
+        "dwv": 520
+      },
+      {
+        "jahr": 2024,
+        "dwv": 530
+      },
+      {
+        "jahr": 2025,
+        "dwv": 510
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Au SG",
+    "abkuerzung": "AUSG",
+    "hoehe_m_ue_m": 405,
+    "gemeinde": "Au (SG)",
+    "ortschaft": "Au SG",
+    "bezirk": "Rheintal",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 170,
+    "kuerzeste_m": 170,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 170,
+        "flaeche_netto_m2": 441.51,
+        "niveaufreier_zugang": "nein",
+        "linie": 880
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 170,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Au SG",
+      "bis": "Heerbrugg",
+      "strecke_nr": 75,
+      "strecke": "St.Margrethen - Buchs",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55793,
+      "zuege_pro_tag": 153
+    },
+    "staerkster_personenverkehr": {
+      "von": "Au SG",
+      "bis": "Heerbrugg",
+      "strecke_nr": 75,
+      "strecke": "St.Margrethen - Buchs",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55793,
+      "zuege_pro_tag": 153
+    },
+    "abschnitte": [
+      {
+        "von": "Au SG",
+        "bis": "Heerbrugg",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55793,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "St. Margrethen SG",
+        "bis": "Au SG",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55793,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "Au SG",
+        "bis": "Heerbrugg",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2253,
+        "zuege_pro_tag": 6
+      },
+      {
+        "von": "St. Margrethen SG",
+        "bis": "Au SG",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2253,
+        "zuege_pro_tag": 6
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 880,
+        "name": "Sargans Ost - St.Gallen",
+        "km": 51.04704
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/757d635a90f37c88e879e14e3ddb5c81"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "uic": 8500209,
+  "name": "Deitingen",
+  "kanton": "SO",
+  "bps": "DN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Deitingen",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.618913,
+    "lat": 47.218226,
+    "dwv": 620,
+    "dtv": 530,
+    "dnwv": 330,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 670
+      },
+      {
+        "jahr": 2022,
+        "dwv": 640
+      },
+      {
+        "jahr": 2023,
+        "dwv": 690
+      },
+      {
+        "jahr": 2024,
+        "dwv": 680
+      },
+      {
+        "jahr": 2025,
+        "dwv": 620
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Deitingen",
+    "abkuerzung": "DN",
+    "hoehe_m_ue_m": 429,
+    "gemeinde": "Deitingen",
+    "ortschaft": "Deitingen",
+    "bezirk": "Wasseramt",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 249,
+    "kuerzeste_m": 149,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 249,
+        "flaeche_netto_m2": 970.23,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 441.84,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Deitingen",
+      "bis": "Wangen an der Aare",
+      "strecke_nr": 8,
+      "strecke": "Solothurn - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 43241,
+      "zuege_pro_tag": 118
+    },
+    "staerkster_personenverkehr": {
+      "von": "Deitingen",
+      "bis": "Wangen an der Aare",
+      "strecke_nr": 8,
+      "strecke": "Solothurn - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 43241,
+      "zuege_pro_tag": 118
+    },
+    "abschnitte": [
+      {
+        "von": "Deitingen",
+        "bis": "Wangen an der Aare",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 43241,
+        "zuege_pro_tag": 118
+      },
+      {
+        "von": "Luterbach-Attisholz",
+        "bis": "Deitingen",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 43241,
+        "zuege_pro_tag": 118
+      },
+      {
+        "von": "Deitingen",
+        "bis": "Wangen an der Aare",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28515,
+        "zuege_pro_tag": 78
+      },
+      {
+        "von": "Luterbach-Attisholz",
+        "bis": "Deitingen",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28515,
+        "zuege_pro_tag": 78
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 67.59769
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/77367c585fd12dd4868594c35684d225"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

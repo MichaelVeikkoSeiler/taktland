@@ -1,0 +1,233 @@
+{
+  "uic": 8502218,
+  "name": "Sins",
+  "kanton": "AG",
+  "bps": "SINS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Sins",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.397831,
+    "lat": 47.188314,
+    "dwv": 1600,
+    "dtv": 1400,
+    "dnwv": 890,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Sins",
+    "abkuerzung": "SINS",
+    "hoehe_m_ue_m": 406,
+    "gemeinde": "Sins",
+    "ortschaft": "Sins",
+    "bezirk": "Muri",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 214,
+    "kuerzeste_m": 145,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Aussenperron",
+        "laenge_m": 214,
+        "flaeche_netto_m2": 218.85,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 145,
+        "flaeche_netto_m2": 341.01,
+        "niveaufreier_zugang": "nein",
+        "linie": 653
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 145,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 165,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Teilweise",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sins",
+      "bis": "Oberrüti",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Gueterverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 36252,
+      "zuege_pro_tag": 99
+    },
+    "staerkster_personenverkehr": {
+      "von": "Mühlau",
+      "bis": "Sins",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30595,
+      "zuege_pro_tag": 84
+    },
+    "abschnitte": [
+      {
+        "von": "Sins",
+        "bis": "Oberrüti",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36252,
+        "zuege_pro_tag": 99
+      },
+      {
+        "von": "Mühlau",
+        "bis": "Sins",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35824,
+        "zuege_pro_tag": 98
+      },
+      {
+        "von": "Mühlau",
+        "bis": "Sins",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30595,
+        "zuege_pro_tag": 84
+      },
+      {
+        "von": "Sins",
+        "bis": "Oberrüti",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30595,
+        "zuege_pro_tag": 84
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 653,
+        "name": "Gexi Ost - Rotkreuz - Immensee West",
+        "km": 92.66842
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/fbc182cbc5a9df0ed2b20f0db8ac2cc8"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

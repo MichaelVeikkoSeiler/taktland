@@ -1,0 +1,194 @@
+{
+  "uic": 8515992,
+  "name": "Baar Neufeld",
+  "kanton": "ZG",
+  "bps": "BAAN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Baar Neufeld",
+    "kanton": "ZG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.517781,
+    "lat": 47.188493,
+    "dwv": 1500,
+    "dtv": 1100,
+    "dnwv": 170,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 890
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Baar Neufeld",
+    "abkuerzung": "BAAN",
+    "hoehe_m_ue_m": 435,
+    "gemeinde": "Baar",
+    "ortschaft": "Baar",
+    "bezirk": null,
+    "kanton": "Zug",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 149,
+    "kuerzeste_m": 149,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 382.4,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 149,
+        "flaeche_netto_m2": 386.56,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Baar",
+      "bis": "Baar Neufeld",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 127065,
+      "zuege_pro_tag": 348
+    },
+    "staerkster_personenverkehr": {
+      "von": "Baar",
+      "bis": "Baar Neufeld",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 127065,
+      "zuege_pro_tag": 348
+    },
+    "abschnitte": [
+      {
+        "von": "Baar",
+        "bis": "Baar Neufeld",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 127065,
+        "zuege_pro_tag": 348
+      },
+      {
+        "von": "Baar Neufeld",
+        "bis": "Baar Lindenpark",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 127065,
+        "zuege_pro_tag": 348
+      },
+      {
+        "von": "Baar",
+        "bis": "Baar Neufeld",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 448,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Baar Neufeld",
+        "bis": "Baar Lindenpark",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 448,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 660,
+        "name": "Thalwil - Zug - Fluhmuhle",
+        "km": 27.56
+      },
+      {
+        "nummer": 9660,
+        "name": "Sihlbrugg - Baar Projekt ZBT2",
+        "km": 27.56
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d7660cc31e6bb392b43b9f07cfabd169"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

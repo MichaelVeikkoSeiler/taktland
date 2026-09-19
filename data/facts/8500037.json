@@ -1,0 +1,178 @@
+{
+  "uic": 8500037,
+  "name": "Trimbach",
+  "kanton": "SO",
+  "bps": "TRI",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Trimbach",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.904285,
+    "lat": 47.366052,
+    "dwv": 80,
+    "dtv": 80,
+    "dnwv": 60,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 90
+      },
+      {
+        "jahr": 2022,
+        "dwv": 60
+      },
+      {
+        "jahr": 2023,
+        "dwv": 70
+      },
+      {
+        "jahr": 2024,
+        "dwv": 110
+      },
+      {
+        "jahr": 2025,
+        "dwv": 80
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Trimbach",
+    "abkuerzung": "TRI",
+    "hoehe_m_ue_m": 424,
+    "gemeinde": "Trimbach",
+    "ortschaft": "Trimbach",
+    "bezirk": "Gösgen",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 66,
+    "kuerzeste_m": 66,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 66,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 503
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Läufelfingen",
+      "bis": "Trimbach",
+      "strecke_nr": 28,
+      "strecke": "Sissach - AHT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 13749,
+      "zuege_pro_tag": 38
+    },
+    "staerkster_personenverkehr": {
+      "von": "Läufelfingen",
+      "bis": "Trimbach",
+      "strecke_nr": 28,
+      "strecke": "Sissach - AHT - Olten Nord",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 13749,
+      "zuege_pro_tag": 38
+    },
+    "abschnitte": [
+      {
+        "von": "Läufelfingen",
+        "bis": "Trimbach",
+        "strecke_nr": 28,
+        "strecke": "Sissach - AHT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13749,
+        "zuege_pro_tag": 38
+      },
+      {
+        "von": "Trimbach",
+        "bis": "Olten Nord (Abzw)",
+        "strecke_nr": 28,
+        "strecke": "Sissach - AHT - Olten Nord",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13749,
+        "zuege_pro_tag": 38
+      },
+      {
+        "von": "Läufelfingen",
+        "bis": "Trimbach",
+        "strecke_nr": 28,
+        "strecke": "Sissach - AHT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 606,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Trimbach",
+        "bis": "Olten Nord (Abzw)",
+        "strecke_nr": 28,
+        "strecke": "Sissach - AHT - Olten Nord",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 606,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 503,
+        "name": "Sissach - Laufelfingen - Olten",
+        "km": 36.2721
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/37323422cebf59731e8c26f334d6c9b9"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "uic": 8500205,
+  "name": "Bellach",
+  "kanton": "SO",
+  "bps": "BELL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bellach",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.507825,
+    "lat": 47.208879,
+    "dwv": 830,
+    "dtv": 700,
+    "dnwv": 430,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 770
+      },
+      {
+        "jahr": 2022,
+        "dwv": 790
+      },
+      {
+        "jahr": 2023,
+        "dwv": 830
+      },
+      {
+        "jahr": 2024,
+        "dwv": 870
+      },
+      {
+        "jahr": 2025,
+        "dwv": 830
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bellach",
+    "abkuerzung": "BELL",
+    "hoehe_m_ue_m": 430.14,
+    "gemeinde": "Bellach",
+    "ortschaft": "Bellach",
+    "bezirk": "Lebern",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 159,
+    "kuerzeste_m": 159,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 159,
+        "flaeche_netto_m2": 261.57,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 159,
+        "flaeche_netto_m2": 250.89,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bellach",
+      "bis": "Bellach Industrie",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57215,
+      "zuege_pro_tag": 157
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bellach",
+      "bis": "Bellach Industrie",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 57215,
+      "zuege_pro_tag": 157
+    },
+    "abschnitte": [
+      {
+        "von": "Bellach",
+        "bis": "Bellach Industrie",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57215,
+        "zuege_pro_tag": 157
+      },
+      {
+        "von": "Solothurn Allmend",
+        "bis": "Bellach",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57215,
+        "zuege_pro_tag": 157
+      },
+      {
+        "von": "Bellach",
+        "bis": "Bellach Industrie",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25007,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Solothurn Allmend",
+        "bis": "Bellach",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25007,
+        "zuege_pro_tag": 69
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 76.68243
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7a09f82a4b10b78c94b9d52d0c3ad295"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "uic": 8506185,
+  "name": "Oppikon",
+  "kanton": "TG",
+  "bps": "OPP",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Oppikon",
+    "kanton": "TG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 9.062103,
+    "lat": 47.552064,
+    "dwv": 49,
+    "dtv": 49,
+    "dnwv": 49,
+    "bemerkung": "49: weniger als 50 Ein- und Aussteigende.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 49
+      },
+      {
+        "jahr": 2022,
+        "dwv": 49
+      },
+      {
+        "jahr": 2023,
+        "dwv": 49
+      },
+      {
+        "jahr": 2024,
+        "dwv": 70
+      },
+      {
+        "jahr": 2025,
+        "dwv": 49
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Oppikon",
+    "abkuerzung": "OPP",
+    "hoehe_m_ue_m": 488.195,
+    "gemeinde": "Bussnang",
+    "ortschaft": "Oppikon",
+    "bezirk": "Weinfelden",
+    "kanton": "Thurgau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 110,
+    "kuerzeste_m": 110,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 110,
+        "flaeche_netto_m2": 302.62,
+        "niveaufreier_zugang": "ja",
+        "linie": 830
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Märwil",
+      "bis": "Oppikon",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 22421,
+      "zuege_pro_tag": 61
+    },
+    "staerkster_personenverkehr": {
+      "von": "Märwil",
+      "bis": "Oppikon",
+      "strecke_nr": 80,
+      "strecke": "Wil - Weinfelden - Tägermoos",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 22421,
+      "zuege_pro_tag": 61
+    },
+    "abschnitte": [
+      {
+        "von": "Märwil",
+        "bis": "Oppikon",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22421,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Oppikon",
+        "bis": "Bussnang",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 22421,
+        "zuege_pro_tag": 61
+      },
+      {
+        "von": "Märwil",
+        "bis": "Oppikon",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Oppikon",
+        "bis": "Bussnang",
+        "strecke_nr": 80,
+        "strecke": "Wil - Weinfelden - Tägermoos",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 19,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 830,
+        "name": "Wil - Weinfelden",
+        "km": 14.05437
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ebfba92efc872c59100f8bc77c3423e5"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

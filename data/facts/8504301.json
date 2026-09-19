@@ -1,0 +1,181 @@
+{
+  "uic": 8504301,
+  "name": "Frinvillier-Taubenloch",
+  "kanton": "BE",
+  "bps": "FRIN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Frinvillier-Taubenloch",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.257529,
+    "lat": 47.169458,
+    "dwv": 170,
+    "dtv": 180,
+    "dnwv": 200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 130
+      },
+      {
+        "jahr": 2022,
+        "dwv": 140
+      },
+      {
+        "jahr": 2023,
+        "dwv": 220
+      },
+      {
+        "jahr": 2024,
+        "dwv": 230
+      },
+      {
+        "jahr": 2025,
+        "dwv": 170
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Frinvillier-Taubenloch",
+    "abkuerzung": "FRIN",
+    "hoehe_m_ue_m": 554.921,
+    "gemeinde": "Sauge",
+    "ortschaft": "Frinvillier",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 128,
+    "kuerzeste_m": 128,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 128,
+        "flaeche_netto_m2": 157.62,
+        "niveaufreier_zugang": "ja",
+        "linie": 225
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Frinvillier-Taubenloch",
+      "bis": "Mahlenwald",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29802,
+      "zuege_pro_tag": 82
+    },
+    "staerkster_personenverkehr": {
+      "von": "Frinvillier-Taubenloch",
+      "bis": "Mahlenwald",
+      "strecke_nr": 12,
+      "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29802,
+      "zuege_pro_tag": 82
+    },
+    "abschnitte": [
+      {
+        "von": "Frinvillier-Taubenloch",
+        "bis": "Mahlenwald",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29802,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Reuchenette-Péry",
+        "bis": "Frinvillier-Taubenloch",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29802,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Frinvillier-Taubenloch",
+        "bis": "Mahlenwald",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2770,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Reuchenette-Péry",
+        "bis": "Frinvillier-Taubenloch",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2770,
+        "zuege_pro_tag": 8
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 225,
+        "name": "Biel/Bienne West - La Chaux-de-Fonds",
+        "km": 39.11025
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/97c078e30273349de03e0670301e63f6"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

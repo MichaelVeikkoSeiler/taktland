@@ -1,0 +1,211 @@
+{
+  "uic": 8503226,
+  "name": "Nieder- und Oberurnen",
+  "kanton": "GL",
+  "bps": "NOU",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Nieder- und Oberurnen",
+    "kanton": "GL",
+    "isb": "SBB",
+    "evu": "SOB",
+    "lon": 9.062394,
+    "lat": 47.122362,
+    "dwv": 320,
+    "dtv": 270,
+    "dnwv": 170,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 430
+      },
+      {
+        "jahr": 2022,
+        "dwv": 520
+      },
+      {
+        "jahr": 2023,
+        "dwv": 390
+      },
+      {
+        "jahr": 2024,
+        "dwv": 360
+      },
+      {
+        "jahr": 2025,
+        "dwv": 320
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Nieder- und Oberurnen",
+    "abkuerzung": "NOU",
+    "hoehe_m_ue_m": 428,
+    "gemeinde": "Glarus Nord",
+    "ortschaft": "Niederurnen",
+    "bezirk": null,
+    "kanton": "Glarus",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 195,
+    "kuerzeste_m": 195,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Hilfskante",
+        "laenge_m": 195,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 736
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "3"
+    ],
+    "perronhoehen_cm": [
+      35
+    ],
+    "items": [
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 170,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2
+    },
+    "segmente_mit_hilfstritt": 2,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Ziegelbrücke",
+      "bis": "Nieder- und Oberurnen",
+      "strecke_nr": 55,
+      "strecke": "Ziegelbrücke - Glarus - Linthal",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29530,
+      "zuege_pro_tag": 81
+    },
+    "staerkster_personenverkehr": {
+      "von": "Ziegelbrücke",
+      "bis": "Nieder- und Oberurnen",
+      "strecke_nr": 55,
+      "strecke": "Ziegelbrücke - Glarus - Linthal",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29530,
+      "zuege_pro_tag": 81
+    },
+    "abschnitte": [
+      {
+        "von": "Ziegelbrücke",
+        "bis": "Nieder- und Oberurnen",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29530,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Nieder- und Oberurnen",
+        "bis": "Näfels-Mollis",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27381,
+        "zuege_pro_tag": 75
+      },
+      {
+        "von": "Ziegelbrücke",
+        "bis": "Nieder- und Oberurnen",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 526,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Nieder- und Oberurnen",
+        "bis": "Näfels-Mollis",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 508,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 736,
+        "name": "Ziegelbrucke Ost - Linthal Gleisende",
+        "km": 58.9095
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/ee5323310a7a9d2aec490c1ca6f4f14a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

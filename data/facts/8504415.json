@@ -1,0 +1,265 @@
+{
+  "uic": 8504415,
+  "name": "Busswil BE",
+  "kanton": "BE",
+  "bps": "BUS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Busswil BE",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.318623,
+    "lat": 47.098685,
+    "dwv": 1900,
+    "dtv": 1600,
+    "dnwv": 1000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Busswil BE",
+    "abkuerzung": "BUS",
+    "hoehe_m_ue_m": 437.589,
+    "gemeinde": "Lyss",
+    "ortschaft": "Busswil BE",
+    "bezirk": "Seeland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 340,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 340,
+        "flaeche_netto_m2": 1469.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 260
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 286.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 260
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 120,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 255,
+        "sektoren": [
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 222,
+        "sektoren": [
+          "D",
+          "E",
+          "F"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 9,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 9
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Busswil BE",
+      "bis": "Lyss",
+      "strecke_nr": 20,
+      "strecke": "Madretsch - Lyss - Zollikofen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 75794,
+      "zuege_pro_tag": 208
+    },
+    "staerkster_personenverkehr": {
+      "von": "Busswil BE",
+      "bis": "Lyss",
+      "strecke_nr": 20,
+      "strecke": "Madretsch - Lyss - Zollikofen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 75794,
+      "zuege_pro_tag": 208
+    },
+    "abschnitte": [
+      {
+        "von": "Busswil BE",
+        "bis": "Lyss",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 75794,
+        "zuege_pro_tag": 208
+      },
+      {
+        "von": "Studen BE",
+        "bis": "Busswil BE",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58928,
+        "zuege_pro_tag": 161
+      },
+      {
+        "von": "Busswil BE",
+        "bis": "Dotzigen",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16856,
+        "zuege_pro_tag": 46
+      },
+      {
+        "von": "Busswil BE",
+        "bis": "Lyss",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6669,
+        "zuege_pro_tag": 18
+      },
+      {
+        "von": "Studen BE",
+        "bis": "Busswil BE",
+        "strecke_nr": 20,
+        "strecke": "Madretsch - Lyss - Zollikofen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6668,
+        "zuege_pro_tag": 18
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 260,
+        "name": "Zollikofen Nord - Biel/Bienne Aebistr.",
+        "km": 26.15786
+      },
+      {
+        "nummer": 415,
+        "name": "Wanzwil (Abzw) - Solothurn - Busswil",
+        "km": 101.86418
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4e2b279b1a1e60c6eaf5cb1414d6d55a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

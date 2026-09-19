@@ -1,0 +1,83 @@
+{
+  "uic": 8500131,
+  "name": "Bure-Casernes",
+  "kanton": "JU",
+  "bps": "BURE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bure-Casernes",
+    "kanton": "JU",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.01153,
+    "lat": 47.453819,
+    "dwv": 49,
+    "dtv": 49,
+    "dnwv": 49,
+    "bemerkung": "49: weniger als 50 Ein- und Aussteigende.",
+    "verlauf": [
+      {
+        "jahr": 2022,
+        "dwv": 49
+      },
+      {
+        "jahr": 2023,
+        "dwv": 49
+      },
+      {
+        "jahr": 2024,
+        "dwv": 49
+      },
+      {
+        "jahr": 2025,
+        "dwv": 49
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bure-Casernes",
+    "abkuerzung": "BURE",
+    "hoehe_m_ue_m": 531.961,
+    "gemeinde": "Bure",
+    "ortschaft": "Bure",
+    "bezirk": "Porrentruy",
+    "kanton": "Jura",
+    "verkehrsmittel": [],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": null,
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 241,
+        "name": "Courtemaiche - Bure-Casernes",
+        "km": 4.935
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 0,
+    "wartehallen": 0
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "linien",
+    "services"
+  ]
+}

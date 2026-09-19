@@ -1,0 +1,258 @@
+{
+  "uic": 8503423,
+  "name": "Neuhausen",
+  "kanton": "SH",
+  "bps": "NH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Neuhausen",
+    "kanton": "SH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.624935,
+    "lat": 47.683133,
+    "dwv": 2100,
+    "dtv": 1900,
+    "dnwv": 1600,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Neuhausen",
+    "abkuerzung": "NH",
+    "hoehe_m_ue_m": 397.2,
+    "gemeinde": "Neuhausen am Rheinfall",
+    "ortschaft": "Neuhausen am Rheinfall",
+    "bezirk": "Schaffhausen",
+    "kanton": "Schaffhausen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 328,
+    "kuerzeste_m": 328,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 328,
+        "flaeche_netto_m2": 1249.69,
+        "niveaufreier_zugang": "ja",
+        "linie": 762
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 328,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 329,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 9,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 9
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Schaffhausen Süd",
+      "bis": "Neuhausen",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 96008,
+      "zuege_pro_tag": 263
+    },
+    "staerkster_personenverkehr": {
+      "von": "Schaffhausen Süd",
+      "bis": "Neuhausen",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 96008,
+      "zuege_pro_tag": 263
+    },
+    "abschnitte": [
+      {
+        "von": "Schaffhausen Süd",
+        "bis": "Neuhausen",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 96008,
+        "zuege_pro_tag": 263
+      },
+      {
+        "von": "Neuhausen Rheinfall",
+        "bis": "Neuhausen",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55281,
+        "zuege_pro_tag": 151
+      },
+      {
+        "von": "Neuhausen",
+        "bis": "Schloss Laufen am Rheinfall",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40736,
+        "zuege_pro_tag": 112
+      },
+      {
+        "von": "Schaffhausen Süd",
+        "bis": "Neuhausen",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3904,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Neuhausen Rheinfall",
+        "bis": "Neuhausen",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3864,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Neuhausen",
+        "bis": "Schloss Laufen am Rheinfall",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 762,
+        "name": "Winterthur Nord - Schaffhausen RB Ost",
+        "km": 53.8373
+      },
+      {
+        "nummer": 770,
+        "name": "Bulach - Eglisau - Neuhausen",
+        "km": 40.12551
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/464f13916804308918b00fb4cb37f3ea"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

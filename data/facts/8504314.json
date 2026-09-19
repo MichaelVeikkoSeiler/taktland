@@ -1,0 +1,358 @@
+{
+  "uic": 8504314,
+  "name": "La Chaux-de-Fonds",
+  "kanton": "NE",
+  "bps": "CF",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "La Chaux-de-Fonds",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "BLS, SBB",
+    "lon": 6.825983,
+    "lat": 47.098374,
+    "dwv": 11900,
+    "dtv": 10200,
+    "dnwv": 6300,
+    "bemerkung": "Ohne CJ und transN.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 9800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 10100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 11500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 12100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 11900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "La Chaux-de-Fonds",
+    "abkuerzung": "CF",
+    "hoehe_m_ue_m": 994.23,
+    "gemeinde": "La Chaux-de-Fonds",
+    "ortschaft": "La Chaux-de-Fonds",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 279,
+    "kuerzeste_m": 141,
+    "items": [
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 279,
+        "flaeche_netto_m2": 1054.08,
+        "niveaufreier_zugang": "ja",
+        "linie": 224
+      },
+      {
+        "nr": "3/4",
+        "typ": "Mittelperron",
+        "laenge_m": 231,
+        "flaeche_netto_m2": 956.58,
+        "niveaufreier_zugang": "ja",
+        "linie": 224
+      },
+      {
+        "nr": "1/2",
+        "typ": "Mittelperron",
+        "laenge_m": 141,
+        "flaeche_netto_m2": 803.56,
+        "niveaufreier_zugang": "ja",
+        "linie": 224
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 230,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 143,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 151,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 150,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 150,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 150,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 39,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 25,
+      "25": 6,
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "La Chaux-de-Fonds Les Forges",
+      "bis": "La Chaux-de-Fonds",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33053,
+      "zuege_pro_tag": 91
+    },
+    "staerkster_personenverkehr": {
+      "von": "La Chaux-de-Fonds Les Forges",
+      "bis": "La Chaux-de-Fonds",
+      "strecke_nr": 11,
+      "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33053,
+      "zuege_pro_tag": 91
+    },
+    "abschnitte": [
+      {
+        "von": "La Chaux-de-Fonds Les Forges",
+        "bis": "La Chaux-de-Fonds",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33053,
+        "zuege_pro_tag": 91
+      },
+      {
+        "von": "La Chaux-de-Fonds",
+        "bis": "Les Hauts-Geneveys",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27594,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "La Chaux-de-Fonds",
+        "bis": "Renan BE",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25273,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "La Chaux-de-Fonds Les Forges",
+        "bis": "La Chaux-de-Fonds",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 536,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "La Chaux-de-Fonds",
+        "bis": "Renan BE",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 295,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "La Chaux-de-Fonds",
+        "bis": "Les Hauts-Geneveys",
+        "strecke_nr": 11,
+        "strecke": "Neuchâtel-Vauseyon (bif) - La Chaux de Fonds - Le Locle Frontière",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 224,
+        "name": "Chambrelien Nord - Le Locle (Frontiere)",
+        "km": 29.457
+      },
+      {
+        "nummer": 234,
+        "name": "La Chaux-de-Fonds - Les Ponts-de-Martel",
+        "km": 0
+      },
+      {
+        "nummer": 235,
+        "name": "Tavannes - Le Noirmont",
+        "km": 44.033
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/967fd716d4140a6675b595deb14a7ef5"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-la-chaux-de-fonds-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-la-chaux-de-fonds-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

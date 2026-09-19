@@ -1,0 +1,239 @@
+{
+  "uic": 8503501,
+  "name": "Döttingen",
+  "kanton": "AG",
+  "bps": "DOE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Döttingen",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.256365,
+    "lat": 47.57527,
+    "dwv": 2900,
+    "dtv": 2500,
+    "dnwv": 1600,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Döttingen",
+    "abkuerzung": "DOE",
+    "hoehe_m_ue_m": 325.4,
+    "gemeinde": "Döttingen",
+    "ortschaft": "Döttingen",
+    "bezirk": "Zurzach",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 455.28,
+        "niveaufreier_zugang": "ja",
+        "linie": 702
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 469.79,
+        "niveaufreier_zugang": "ja",
+        "linie": 702
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Döttingen",
+      "bis": "Würenlingen Zwischenlager(Agl)",
+      "strecke_nr": 59,
+      "strecke": "Turgi - Koblenz Grenze",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32854,
+      "zuege_pro_tag": 90
+    },
+    "staerkster_personenverkehr": {
+      "von": "Döttingen",
+      "bis": "Würenlingen Zwischenlager(Agl)",
+      "strecke_nr": 59,
+      "strecke": "Turgi - Koblenz Grenze",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 32854,
+      "zuege_pro_tag": 90
+    },
+    "abschnitte": [
+      {
+        "von": "Döttingen",
+        "bis": "Würenlingen Zwischenlager(Agl)",
+        "strecke_nr": 59,
+        "strecke": "Turgi - Koblenz Grenze",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32854,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Klingnau",
+        "bis": "Döttingen",
+        "strecke_nr": 59,
+        "strecke": "Turgi - Koblenz Grenze",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 32822,
+        "zuege_pro_tag": 90
+      },
+      {
+        "von": "Döttingen",
+        "bis": "Würenlingen Zwischenlager(Agl)",
+        "strecke_nr": 59,
+        "strecke": "Turgi - Koblenz Grenze",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 653,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Klingnau",
+        "bis": "Döttingen",
+        "strecke_nr": 59,
+        "strecke": "Turgi - Koblenz Grenze",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 653,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 702,
+        "name": "Turgi - Koblenz - Waldshut",
+        "km": 37.35808
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/767032e2b86c8336674ae2d0d8dcfe2b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "uic": 8506317,
+  "name": "Heerbrugg",
+  "kanton": "SG",
+  "bps": "HEBG",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Heerbrugg",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB, Thurbo",
+    "lon": 9.627249,
+    "lat": 47.410393,
+    "dwv": 5200,
+    "dtv": 4500,
+    "dnwv": 2900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4500
+      },
+      {
+        "jahr": 2022,
+        "dwv": 4100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 5200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Heerbrugg",
+    "abkuerzung": "HEBG",
+    "hoehe_m_ue_m": 405.6,
+    "gemeinde": "Au (SG)",
+    "ortschaft": "Heerbrugg",
+    "bezirk": "Rheintal",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 310,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 310,
+        "flaeche_netto_m2": 960.27,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 763.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 880
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 310,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 219,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 5,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Au SG",
+      "bis": "Heerbrugg",
+      "strecke_nr": 75,
+      "strecke": "St.Margrethen - Buchs",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55793,
+      "zuege_pro_tag": 153
+    },
+    "staerkster_personenverkehr": {
+      "von": "Au SG",
+      "bis": "Heerbrugg",
+      "strecke_nr": 75,
+      "strecke": "St.Margrethen - Buchs",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55793,
+      "zuege_pro_tag": 153
+    },
+    "abschnitte": [
+      {
+        "von": "Au SG",
+        "bis": "Heerbrugg",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55793,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "Heerbrugg",
+        "bis": "Rebstein-Marbach",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55537,
+        "zuege_pro_tag": 152
+      },
+      {
+        "von": "Heerbrugg",
+        "bis": "Rebstein-Marbach",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2608,
+        "zuege_pro_tag": 7
+      },
+      {
+        "von": "Au SG",
+        "bis": "Heerbrugg",
+        "strecke_nr": 75,
+        "strecke": "St.Margrethen - Buchs",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2253,
+        "zuege_pro_tag": 6
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 880,
+        "name": "Sargans Ost - St.Gallen",
+        "km": 47.92854
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/737086957529e4fb7ffd3ee75b30721e"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

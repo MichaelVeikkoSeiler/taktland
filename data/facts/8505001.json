@@ -1,0 +1,182 @@
+{
+  "uic": 8505001,
+  "name": "Meggen",
+  "kanton": "LU",
+  "bps": "MEG",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Meggen",
+    "kanton": "LU",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.383061,
+    "lat": 47.050148,
+    "dwv": 110,
+    "dtv": 100,
+    "dnwv": 70,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 110
+      },
+      {
+        "jahr": 2022,
+        "dwv": 90
+      },
+      {
+        "jahr": 2023,
+        "dwv": 120
+      },
+      {
+        "jahr": 2024,
+        "dwv": 130
+      },
+      {
+        "jahr": 2025,
+        "dwv": 110
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Meggen",
+    "abkuerzung": "MEG",
+    "hoehe_m_ue_m": 472,
+    "gemeinde": "Meggen",
+    "ortschaft": "Meggen",
+    "bezirk": "Luzern-Land",
+    "kanton": "Luzern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 152,
+    "kuerzeste_m": 152,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hilfskante",
+        "laenge_m": 152,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 570
+      },
+      {
+        "nr": "3",
+        "typ": "Zwischenperron",
+        "laenge_m": 152,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 570
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Meggen",
+      "bis": "Merlischachen",
+      "strecke_nr": 43,
+      "strecke": "Gütsch - Küssnacht - Immensee",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30392,
+      "zuege_pro_tag": 83
+    },
+    "staerkster_personenverkehr": {
+      "von": "Meggen",
+      "bis": "Merlischachen",
+      "strecke_nr": 43,
+      "strecke": "Gütsch - Küssnacht - Immensee",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30392,
+      "zuege_pro_tag": 83
+    },
+    "abschnitte": [
+      {
+        "von": "Meggen",
+        "bis": "Merlischachen",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30392,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Meggen Zentrum",
+        "bis": "Meggen",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30392,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Meggen",
+        "bis": "Merlischachen",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 100,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Meggen Zentrum",
+        "bis": "Meggen",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 95,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 570,
+        "name": "Gutsch - Kussnacht - Immensee",
+        "km": 10.72047
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/06ed1c64e5dba873e93085e70171fb4b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

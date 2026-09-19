@@ -1,0 +1,189 @@
+{
+  "uic": 8504222,
+  "name": "St-Blaise CFF",
+  "kanton": "NE",
+  "bps": "SBL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "St-Blaise CFF",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.98211,
+    "lat": 47.014576,
+    "dwv": 640,
+    "dtv": 550,
+    "dnwv": 350,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 430
+      },
+      {
+        "jahr": 2022,
+        "dwv": 470
+      },
+      {
+        "jahr": 2023,
+        "dwv": 520
+      },
+      {
+        "jahr": 2024,
+        "dwv": 520
+      },
+      {
+        "jahr": 2025,
+        "dwv": 640
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "St-Blaise CFF",
+    "abkuerzung": "SBL",
+    "hoehe_m_ue_m": 463.8,
+    "gemeinde": "Laténa",
+    "ortschaft": "St-Blaise",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 190,
+    "kuerzeste_m": 188,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 190,
+        "flaeche_netto_m2": 355.45,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 188,
+        "flaeche_netto_m2": 357.38,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Neuchâtel Est (bif)",
+      "bis": "St-Blaise CFF",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 51734,
+      "zuege_pro_tag": 142
+    },
+    "staerkster_personenverkehr": {
+      "von": "Neuchâtel Est (bif)",
+      "bis": "St-Blaise CFF",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 51734,
+      "zuege_pro_tag": 142
+    },
+    "abschnitte": [
+      {
+        "von": "Neuchâtel Est (bif)",
+        "bis": "St-Blaise CFF",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 51734,
+        "zuege_pro_tag": 142
+      },
+      {
+        "von": "St-Blaise CFF",
+        "bis": "Cornaux NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 51734,
+        "zuege_pro_tag": 142
+      },
+      {
+        "von": "St-Blaise CFF",
+        "bis": "Cornaux NE",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21418,
+        "zuege_pro_tag": 59
+      },
+      {
+        "von": "Neuchâtel Est (bif)",
+        "bis": "St-Blaise CFF",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 21417,
+        "zuege_pro_tag": 59
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 79.36773
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4e420c346e90dee2f6319e9961d0c407"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

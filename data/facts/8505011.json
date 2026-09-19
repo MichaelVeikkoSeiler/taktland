@@ -1,0 +1,177 @@
+{
+  "uic": 8505011,
+  "name": "Merlischachen",
+  "kanton": "SZ",
+  "bps": "MERL",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Merlischachen",
+    "kanton": "SZ",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.409058,
+    "lat": 47.06766,
+    "dwv": 170,
+    "dtv": 160,
+    "dnwv": 130,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 210
+      },
+      {
+        "jahr": 2022,
+        "dwv": 190
+      },
+      {
+        "jahr": 2023,
+        "dwv": 210
+      },
+      {
+        "jahr": 2024,
+        "dwv": 230
+      },
+      {
+        "jahr": 2025,
+        "dwv": 170
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Merlischachen",
+    "abkuerzung": "MERL",
+    "hoehe_m_ue_m": 465,
+    "gemeinde": "Küssnacht (SZ)",
+    "ortschaft": "Merlischachen",
+    "bezirk": "Küssnacht (SZ)",
+    "kanton": "Schwyz",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 99,
+    "kuerzeste_m": 99,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 99,
+        "flaeche_netto_m2": 227.67,
+        "niveaufreier_zugang": "ja",
+        "linie": 570
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Meggen",
+      "bis": "Merlischachen",
+      "strecke_nr": 43,
+      "strecke": "Gütsch - Küssnacht - Immensee",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30392,
+      "zuege_pro_tag": 83
+    },
+    "staerkster_personenverkehr": {
+      "von": "Meggen",
+      "bis": "Merlischachen",
+      "strecke_nr": 43,
+      "strecke": "Gütsch - Küssnacht - Immensee",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30392,
+      "zuege_pro_tag": 83
+    },
+    "abschnitte": [
+      {
+        "von": "Meggen",
+        "bis": "Merlischachen",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30392,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Merlischachen",
+        "bis": "Küssnacht am Rigi",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30392,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Meggen",
+        "bis": "Merlischachen",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 100,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Merlischachen",
+        "bis": "Küssnacht am Rigi",
+        "strecke_nr": 43,
+        "strecke": "Gütsch - Küssnacht - Immensee",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 100,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 570,
+        "name": "Gutsch - Kussnacht - Immensee",
+        "km": 13.549
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/469e1884eb571efde49e3259a4a197eb"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

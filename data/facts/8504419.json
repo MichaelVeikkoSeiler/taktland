@@ -1,0 +1,189 @@
+{
+  "uic": 8504419,
+  "name": "Biel Mett",
+  "kanton": "BE",
+  "bps": "BIM",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Biel Mett",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.272487,
+    "lat": 47.144725,
+    "dwv": 880,
+    "dtv": 750,
+    "dnwv": 470,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 850
+      },
+      {
+        "jahr": 2023,
+        "dwv": 920
+      },
+      {
+        "jahr": 2024,
+        "dwv": 940
+      },
+      {
+        "jahr": 2025,
+        "dwv": 880
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Biel Mett",
+    "abkuerzung": "BIM",
+    "hoehe_m_ue_m": 442.758,
+    "gemeinde": "Biel/Bienne",
+    "ortschaft": "Biel/Bienne",
+    "bezirk": "Biel/Bienne",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 151,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 151,
+        "flaeche_netto_m2": 373,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 355.53,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Biel Mett",
+      "bis": "Biel Mett (Abzw)",
+      "strecke_nr": 104,
+      "strecke": "Biel/Bienne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83685,
+      "zuege_pro_tag": 229
+    },
+    "staerkster_personenverkehr": {
+      "von": "Biel Mett",
+      "bis": "Biel Mett (Abzw)",
+      "strecke_nr": 104,
+      "strecke": "Biel/Bienne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83685,
+      "zuege_pro_tag": 229
+    },
+    "abschnitte": [
+      {
+        "von": "Biel Mett",
+        "bis": "Biel Mett (Abzw)",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83685,
+        "zuege_pro_tag": 229
+      },
+      {
+        "von": "Biel/Bienne",
+        "bis": "Biel Mett",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83685,
+        "zuege_pro_tag": 229
+      },
+      {
+        "von": "Biel Mett",
+        "bis": "Biel Mett (Abzw)",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16564,
+        "zuege_pro_tag": 45
+      },
+      {
+        "von": "Biel/Bienne",
+        "bis": "Biel Mett",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16563,
+        "zuege_pro_tag": 45
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 96.25
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 5,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/531362242669d3c87907d9e460cdb4ba"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

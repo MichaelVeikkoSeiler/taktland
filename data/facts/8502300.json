@@ -1,0 +1,181 @@
+{
+  "uic": 8502300,
+  "name": "Zug Postplatz",
+  "kanton": "ZG",
+  "bps": "ZGPP",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zug Postplatz",
+    "kanton": "ZG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.516937,
+    "lat": 47.168276,
+    "dwv": 230,
+    "dtv": 190,
+    "dnwv": 110,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 180
+      },
+      {
+        "jahr": 2022,
+        "dwv": 200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 240
+      },
+      {
+        "jahr": 2024,
+        "dwv": 240
+      },
+      {
+        "jahr": 2025,
+        "dwv": 230
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zug Postplatz",
+    "abkuerzung": "ZGPP",
+    "hoehe_m_ue_m": 427,
+    "gemeinde": "Zug",
+    "ortschaft": "Zug",
+    "bezirk": null,
+    "kanton": "Zug",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 79,
+    "kuerzeste_m": 79,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 79,
+        "flaeche_netto_m2": 259.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 665
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zug",
+      "bis": "Zug Postplatz",
+      "strecke_nr": 44,
+      "strecke": "Zug - Walchwil - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 47539,
+      "zuege_pro_tag": 130
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zug",
+      "bis": "Zug Postplatz",
+      "strecke_nr": 44,
+      "strecke": "Zug - Walchwil - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 47539,
+      "zuege_pro_tag": 130
+    },
+    "abschnitte": [
+      {
+        "von": "Zug",
+        "bis": "Zug Postplatz",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 47539,
+        "zuege_pro_tag": 130
+      },
+      {
+        "von": "Zug Postplatz",
+        "bis": "Zug Casino",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 47539,
+        "zuege_pro_tag": 130
+      },
+      {
+        "von": "Zug",
+        "bis": "Zug Postplatz",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Zug Postplatz",
+        "bis": "Zug Casino",
+        "strecke_nr": 44,
+        "strecke": "Zug - Walchwil - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 665,
+        "name": "Zug Sud - Arth-Goldau",
+        "km": 0.605
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/bbaa643d98121ae2a9d1c9163c40059b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

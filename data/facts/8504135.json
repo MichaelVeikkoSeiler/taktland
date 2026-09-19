@@ -1,0 +1,181 @@
+{
+  "uic": 8504135,
+  "name": "Corcelles-Sud",
+  "kanton": "VD",
+  "bps": "CS",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Corcelles-Sud",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.957192,
+    "lat": 46.828847,
+    "dwv": 590,
+    "dtv": 510,
+    "dnwv": 330,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 420
+      },
+      {
+        "jahr": 2022,
+        "dwv": 540
+      },
+      {
+        "jahr": 2023,
+        "dwv": 590
+      },
+      {
+        "jahr": 2024,
+        "dwv": 610
+      },
+      {
+        "jahr": 2025,
+        "dwv": 590
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Corcelles-Sud",
+    "abkuerzung": "CS",
+    "hoehe_m_ue_m": 451.88,
+    "gemeinde": "Corcelles-près-Payerne",
+    "ortschaft": "Corcelles-près-Payerne",
+    "bezirk": "Broye-Vully",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 348.61,
+        "niveaufreier_zugang": "ja",
+        "linie": 253
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Corcelles-Sud",
+      "bis": "Bossy Bois (embr)",
+      "strecke_nr": 16,
+      "strecke": "Yverdon - Payerne - Fribourg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26956,
+      "zuege_pro_tag": 74
+    },
+    "staerkster_personenverkehr": {
+      "von": "Corcelles-Sud",
+      "bis": "Bossy Bois (embr)",
+      "strecke_nr": 16,
+      "strecke": "Yverdon - Payerne - Fribourg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 26956,
+      "zuege_pro_tag": 74
+    },
+    "abschnitte": [
+      {
+        "von": "Corcelles-Sud",
+        "bis": "Bossy Bois (embr)",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26956,
+        "zuege_pro_tag": 74
+      },
+      {
+        "von": "Payerne",
+        "bis": "Corcelles-Sud",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26956,
+        "zuege_pro_tag": 74
+      },
+      {
+        "von": "Corcelles-Sud",
+        "bis": "Bossy Bois (embr)",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 125,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Payerne",
+        "bis": "Corcelles-Sud",
+        "strecke_nr": 16,
+        "strecke": "Yverdon - Payerne - Fribourg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 125,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 253,
+        "name": "Payerne Est - Fribourg Nord",
+        "km": 29.73142
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3560b0a019188a51d9f95291d6aaed4a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

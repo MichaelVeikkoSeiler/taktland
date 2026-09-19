@@ -1,0 +1,225 @@
+{
+  "uic": 8502103,
+  "name": "Suhr",
+  "kanton": "AG",
+  "bps": "SUHR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Suhr",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.082291,
+    "lat": 47.371635,
+    "dwv": 2400,
+    "dtv": 2000,
+    "dnwv": 1200,
+    "bemerkung": "Ohne AVA.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Suhr",
+    "abkuerzung": "SUHR",
+    "hoehe_m_ue_m": 397,
+    "gemeinde": "Suhr",
+    "ortschaft": "Suhr",
+    "bezirk": "Aarau",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 299,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "5/6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 299,
+        "flaeche_netto_m2": 1372.24,
+        "niveaufreier_zugang": "ja",
+        "linie": 504
+      },
+      {
+        "nr": "8",
+        "typ": "Aussenperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 305.72,
+        "niveaufreier_zugang": "ja",
+        "linie": 504
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "5-6"
+    ],
+    "perronhoehen_cm": [
+      35
+    ],
+    "items": [
+      {
+        "nr": "5-6",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 300,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 5,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Suhr",
+      "bis": "Suhr Migros",
+      "strecke_nr": 39,
+      "strecke": "Zofingen - Suhr - Lenzburg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 24890,
+      "zuege_pro_tag": 68
+    },
+    "staerkster_personenverkehr": {
+      "von": "Suhr",
+      "bis": "Suhr Migros",
+      "strecke_nr": 39,
+      "strecke": "Zofingen - Suhr - Lenzburg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 24890,
+      "zuege_pro_tag": 68
+    },
+    "abschnitte": [
+      {
+        "von": "Suhr",
+        "bis": "Suhr Migros",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24890,
+        "zuege_pro_tag": 68
+      },
+      {
+        "von": "Oberentfelden",
+        "bis": "Suhr",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24584,
+        "zuege_pro_tag": 67
+      },
+      {
+        "von": "Suhr",
+        "bis": "Suhr Migros",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4805,
+        "zuege_pro_tag": 13
+      },
+      {
+        "von": "Oberentfelden",
+        "bis": "Suhr",
+        "strecke_nr": 39,
+        "strecke": "Zofingen - Suhr - Lenzburg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 912,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 504,
+        "name": "Zofingen - Suhr",
+        "km": 16.71887
+      },
+      {
+        "nummer": 645,
+        "name": "Lenzburg West - Suhr",
+        "km": 67.48457
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b32a6eab0d76b51d14676c3996567024"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

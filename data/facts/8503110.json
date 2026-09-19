@@ -1,0 +1,385 @@
+{
+  "uic": 8503110,
+  "name": "Rapperswil SG",
+  "kanton": "SG",
+  "bps": "RW",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rapperswil SG",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.816745,
+    "lat": 47.224887,
+    "dwv": 27000,
+    "dtv": 25300,
+    "dnwv": 21400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 22900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 21600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 24400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 25900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 27000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rapperswil SG",
+    "abkuerzung": "RW",
+    "hoehe_m_ue_m": 408.6,
+    "gemeinde": "Rapperswil-Jona",
+    "ortschaft": "Rapperswil SG",
+    "bezirk": "See-Gaster",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 4,
+    "laengste_m": 364,
+    "kuerzeste_m": 151,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 364,
+        "flaeche_netto_m2": 1568.97,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 327,
+        "flaeche_netto_m2": 1827.12,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 288,
+        "flaeche_netto_m2": 1402.26,
+        "niveaufreier_zugang": "ja",
+        "linie": 730
+      },
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 151,
+        "flaeche_netto_m2": 521.73,
+        "niveaufreier_zugang": "ja",
+        "linie": 671
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 7,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 215,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 222,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 221,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 86,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 98,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 130,
+        "sektoren": [
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 98,
+        "sektoren": [
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 16
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 7,
+    "gleise_mit_daten": 7
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rapperswil SG",
+      "bis": "Rapperswil West",
+      "strecke_nr": 864,
+      "strecke": "Rapperswil - Pfäffikon",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67652,
+      "zuege_pro_tag": 185
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rapperswil SG",
+      "bis": "Rapperswil West",
+      "strecke_nr": 864,
+      "strecke": "Rapperswil - Pfäffikon",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 67652,
+      "zuege_pro_tag": 185
+    },
+    "abschnitte": [
+      {
+        "von": "Rapperswil SG",
+        "bis": "Rapperswil West",
+        "strecke_nr": 864,
+        "strecke": "Rapperswil - Pfäffikon",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 67652,
+        "zuege_pro_tag": 185
+      },
+      {
+        "von": "Rapperswil SG",
+        "bis": "Rapperswil Nordost",
+        "strecke_nr": 115,
+        "strecke": "Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57049,
+        "zuege_pro_tag": 156
+      },
+      {
+        "von": "Rapperswil Ost",
+        "bis": "Rapperswil SG",
+        "strecke_nr": 115,
+        "strecke": "Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 56025,
+        "zuege_pro_tag": 153
+      },
+      {
+        "von": "Rapperswil Nord",
+        "bis": "Rapperswil SG",
+        "strecke_nr": 115,
+        "strecke": "Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27632,
+        "zuege_pro_tag": 76
+      },
+      {
+        "von": "Rapperswil SG",
+        "bis": "Rapperswil West",
+        "strecke_nr": 864,
+        "strecke": "Rapperswil - Pfäffikon",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1122,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Rapperswil Nord",
+        "bis": "Rapperswil SG",
+        "strecke_nr": 115,
+        "strecke": "Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 934,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Rapperswil Ost",
+        "bis": "Rapperswil SG",
+        "strecke_nr": 115,
+        "strecke": "Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 415,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Rapperswil SG",
+        "bis": "Rapperswil Nordost",
+        "strecke_nr": 115,
+        "strecke": "Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 122,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 671,
+        "name": "Rapperswil - Pfaffikon Ost (SOB)",
+        "km": 0.02101
+      },
+      {
+        "nummer": 730,
+        "name": "Zurich Stadelhofen - Rapperswil",
+        "km": 35.97301
+      },
+      {
+        "nummer": 740,
+        "name": "Rapperswil - Uster - Wallisellen Ost",
+        "km": 59.34854
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 11,
+    "wartehallen": 7,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8ff50ac7a63313d60f42ca97f9c26ffd"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rapperswil-sg-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rapperswil-sg-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

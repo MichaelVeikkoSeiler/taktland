@@ -1,0 +1,259 @@
+{
+  "uic": 8500302,
+  "name": "Möhlin",
+  "kanton": "AG",
+  "bps": "MOE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Möhlin",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.833863,
+    "lat": 47.561858,
+    "dwv": 4000,
+    "dtv": 3400,
+    "dnwv": 2100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 4400
+      },
+      {
+        "jahr": 2022,
+        "dwv": 3700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 4100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 4400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 4000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Möhlin",
+    "abkuerzung": "MOE",
+    "hoehe_m_ue_m": 307.7,
+    "gemeinde": "Möhlin",
+    "ortschaft": "Möhlin",
+    "bezirk": "Rheinfelden",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 318,
+    "kuerzeste_m": 129,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 318,
+        "flaeche_netto_m2": 1422.79,
+        "niveaufreier_zugang": "ja",
+        "linie": 700
+      },
+      {
+        "nr": "1",
+        "typ": "Dienstperron",
+        "laenge_m": 129,
+        "flaeche_netto_m2": 221.28,
+        "niveaufreier_zugang": "ja",
+        "linie": 700
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 106,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 318,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 319,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 9,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2,
+      "35": 1,
+      "55": 6
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rheinfelden",
+      "bis": "Möhlin",
+      "strecke_nr": 29,
+      "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 62213,
+      "zuege_pro_tag": 170
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rheinfelden",
+      "bis": "Möhlin",
+      "strecke_nr": 29,
+      "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 62213,
+      "zuege_pro_tag": 170
+    },
+    "abschnitte": [
+      {
+        "von": "Rheinfelden",
+        "bis": "Möhlin",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 62213,
+        "zuege_pro_tag": 170
+      },
+      {
+        "von": "Möhlin",
+        "bis": "Dossenboden (Spw)",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 62047,
+        "zuege_pro_tag": 170
+      },
+      {
+        "von": "Rheinfelden",
+        "bis": "Möhlin",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 41896,
+        "zuege_pro_tag": 115
+      },
+      {
+        "von": "Möhlin",
+        "bis": "Dossenboden (Spw)",
+        "strecke_nr": 29,
+        "strecke": "Pratteln - Stein-Säckingen - Brugg Süd / Brugg",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40243,
+        "zuege_pro_tag": 110
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 700,
+        "name": "Brugg - Pratteln Ost",
+        "km": 68.2677
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/cee32aedf167e205bb6b76604680f932"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

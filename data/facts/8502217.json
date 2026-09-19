@@ -1,0 +1,185 @@
+{
+  "uic": 8502217,
+  "name": "Mühlau",
+  "kanton": "AG",
+  "bps": "MUEH",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Mühlau",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.388524,
+    "lat": 47.22502,
+    "dwv": 200,
+    "dtv": 170,
+    "dnwv": 120,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 230
+      },
+      {
+        "jahr": 2022,
+        "dwv": 200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mühlau",
+    "abkuerzung": "MUEH",
+    "hoehe_m_ue_m": 445,
+    "gemeinde": "Mühlau",
+    "ortschaft": "Mühlau",
+    "bezirk": "Muri",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 179,
+    "kuerzeste_m": 178,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 179,
+        "flaeche_netto_m2": 386.88,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 178,
+        "flaeche_netto_m2": 383.68,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Benzenschwil",
+      "bis": "Mühlau",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Gueterverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 35824,
+      "zuege_pro_tag": 98
+    },
+    "staerkster_personenverkehr": {
+      "von": "Benzenschwil",
+      "bis": "Mühlau",
+      "strecke_nr": 41,
+      "strecke": "Gexi - Hendschiken - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30595,
+      "zuege_pro_tag": 84
+    },
+    "abschnitte": [
+      {
+        "von": "Benzenschwil",
+        "bis": "Mühlau",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35824,
+        "zuege_pro_tag": 98
+      },
+      {
+        "von": "Mühlau",
+        "bis": "Sins",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35824,
+        "zuege_pro_tag": 98
+      },
+      {
+        "von": "Benzenschwil",
+        "bis": "Mühlau",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30595,
+        "zuege_pro_tag": 84
+      },
+      {
+        "von": "Mühlau",
+        "bis": "Sins",
+        "strecke_nr": 41,
+        "strecke": "Gexi - Hendschiken - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30595,
+        "zuege_pro_tag": 84
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 653,
+        "name": "Gexi Ost - Rotkreuz - Immensee West",
+        "km": 88.46876
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d87182bcef9eb7650571ec16e0407e15"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

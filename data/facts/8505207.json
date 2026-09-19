@@ -1,0 +1,212 @@
+{
+  "uic": 8505207,
+  "name": "Bodio TI",
+  "kanton": "TI",
+  "bps": "BO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bodio TI",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.906568,
+    "lat": 46.380255,
+    "dwv": 300,
+    "dtv": 260,
+    "dnwv": 170,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 160
+      },
+      {
+        "jahr": 2022,
+        "dwv": 250
+      },
+      {
+        "jahr": 2023,
+        "dwv": 280
+      },
+      {
+        "jahr": 2024,
+        "dwv": 310
+      },
+      {
+        "jahr": 2025,
+        "dwv": 300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bodio TI",
+    "abkuerzung": "BO",
+    "hoehe_m_ue_m": 331,
+    "gemeinde": "Giornico",
+    "ortschaft": "Bodio TI",
+    "bezirk": "Leventina",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 19,
+    "kuerzeste_m": 19,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Hausperron",
+        "laenge_m": 19,
+        "flaeche_netto_m2": 0,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "2"
+    ],
+    "perronhoehen_cm": [
+      35
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 151,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2
+    },
+    "segmente_mit_hilfstritt": 2,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Giornico (c bin)",
+      "bis": "Bodio TI",
+      "strecke_nr": 86,
+      "strecke": "Erstfeld - Airolo - Bodio",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14708,
+      "zuege_pro_tag": 40
+    },
+    "staerkster_personenverkehr": {
+      "von": "Giornico (c bin)",
+      "bis": "Bodio TI",
+      "strecke_nr": 86,
+      "strecke": "Erstfeld - Airolo - Bodio",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 14708,
+      "zuege_pro_tag": 40
+    },
+    "abschnitte": [
+      {
+        "von": "Giornico (c bin)",
+        "bis": "Bodio TI",
+        "strecke_nr": 86,
+        "strecke": "Erstfeld - Airolo - Bodio",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14708,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Bodio TI",
+        "bis": "Pollegio Nord (dira)",
+        "strecke_nr": 87,
+        "strecke": "Bodio - Bellinzona - Giubiasco",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14642,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Bodio TI",
+        "bis": "Pollegio Nord (dira)",
+        "strecke_nr": 87,
+        "strecke": "Bodio - Bellinzona - Giubiasco",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1130,
+        "zuege_pro_tag": 3
+      },
+      {
+        "von": "Giornico (c bin)",
+        "bis": "Bodio TI",
+        "strecke_nr": 86,
+        "strecke": "Erstfeld - Airolo - Bodio",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 557,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 125.49506
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/aab9a70d8a456a4bb2811591cb070d93"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

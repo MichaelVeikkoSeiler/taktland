@@ -1,0 +1,650 @@
+{
+  "uic": 8503006,
+  "name": "Zürich Oerlikon",
+  "kanton": "ZH",
+  "bps": "ZOER",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zürich Oerlikon",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.54414,
+    "lat": 47.41153,
+    "dwv": 99900,
+    "dtv": 86200,
+    "dnwv": 55700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 94700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 84000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 94200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 98100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 99900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zürich Oerlikon",
+    "abkuerzung": "ZOER",
+    "hoehe_m_ue_m": 441.7,
+    "gemeinde": "Zürich",
+    "ortschaft": "Zürich",
+    "bezirk": "Zürich",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 118300,
+    "einheit": "DP/jour ouvré",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": null
+      },
+      {
+        "jahr": 2016,
+        "anzahl": null
+      },
+      {
+        "jahr": 2016,
+        "anzahl": null
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 106000
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 94200
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 99800
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 111700
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 105400
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 117400
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 75700
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 84200
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 84500
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 77100
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 104300
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 95200
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 113900
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 103800
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 113800
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 103300
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 106000
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 118300
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.1
+      },
+      {
+        "stunde": 6,
+        "prozent": 3.9
+      },
+      {
+        "stunde": 7,
+        "prozent": 8.2
+      },
+      {
+        "stunde": 8,
+        "prozent": 7.8
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.4
+      },
+      {
+        "stunde": 10,
+        "prozent": 3.7
+      },
+      {
+        "stunde": 11,
+        "prozent": 4.2
+      },
+      {
+        "stunde": 12,
+        "prozent": 6.0
+      },
+      {
+        "stunde": 13,
+        "prozent": 4.8
+      },
+      {
+        "stunde": 14,
+        "prozent": 4.4
+      },
+      {
+        "stunde": 15,
+        "prozent": 5.4
+      },
+      {
+        "stunde": 16,
+        "prozent": 8.5
+      },
+      {
+        "stunde": 17,
+        "prozent": 11.6
+      },
+      {
+        "stunde": 18,
+        "prozent": 8.7
+      },
+      {
+        "stunde": 19,
+        "prozent": 5.5
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.7
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.9
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.9
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.7
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 11.6,
+    "wochentage": [
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.9
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 8.8
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 16.5
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 16.2
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.5
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 12.2
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 15.9
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 5,
+    "laengste_m": 444,
+    "kuerzeste_m": 334,
+    "items": [
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 444,
+        "flaeche_netto_m2": 2355.57,
+        "niveaufreier_zugang": "ja",
+        "linie": 760
+      },
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 421,
+        "flaeche_netto_m2": 2429.21,
+        "niveaufreier_zugang": "ja",
+        "linie": 760
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 379,
+        "flaeche_netto_m2": 2319.9,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 372,
+        "flaeche_netto_m2": 1697.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 748
+      },
+      {
+        "nr": "8",
+        "typ": "Aussenperron",
+        "laenge_m": 334,
+        "flaeche_netto_m2": 1933.04,
+        "niveaufreier_zugang": "ja",
+        "linie": 760
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 8,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 274,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 330,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 331,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 447,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 447,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 424,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 423,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 334,
+        "sektoren": [
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 48,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "55": 46
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 8,
+    "gleise_mit_daten": 8
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Zürich Oerlikon",
+      "bis": "Zürich Birchsteg (Abzw)",
+      "strecke_nr": 113,
+      "strecke": "Zürich PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 390389,
+      "zuege_pro_tag": 1070
+    },
+    "staerkster_personenverkehr": {
+      "von": "Zürich Oerlikon",
+      "bis": "Zürich Birchsteg (Abzw)",
+      "strecke_nr": 113,
+      "strecke": "Zürich PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 390389,
+      "zuege_pro_tag": 1070
+    },
+    "abschnitte": [
+      {
+        "von": "Zürich Oerlikon",
+        "bis": "Zürich Birchsteg (Abzw)",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 390389,
+        "zuege_pro_tag": 1070
+      },
+      {
+        "von": "Zürich Oerlikon Nord (Abzw)",
+        "bis": "Zürich Oerlikon",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 306110,
+        "zuege_pro_tag": 839
+      },
+      {
+        "von": "Zürich Oerlikon",
+        "bis": "Wallisellen",
+        "strecke_nr": 63,
+        "strecke": "Zürich Oerlikon - Wallisellen - Hürlistein",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 79583,
+        "zuege_pro_tag": 218
+      },
+      {
+        "von": "Zürich Oerlikon",
+        "bis": "Zürich Birchsteg (Abzw)",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15545,
+        "zuege_pro_tag": 43
+      },
+      {
+        "von": "Zürich Oerlikon Nord (Abzw)",
+        "bis": "Zürich Oerlikon",
+        "strecke_nr": 113,
+        "strecke": "Zürich PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15193,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Zürich Oerlikon",
+        "bis": "Wallisellen",
+        "strecke_nr": 63,
+        "strecke": "Zürich Oerlikon - Wallisellen - Hürlistein",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 377,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 760,
+        "name": "Zurich Hardbrucke  - Bulach",
+        "km": 4.72282
+      },
+      {
+        "nummer": 748,
+        "name": "ZH Altstetten - ZH Oerlikon, DML",
+        "km": 206.71983
+      },
+      {
+        "nummer": 751,
+        "name": "ZH Langstr. - Wallisellen - Winterthur",
+        "km": 4.7228
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 11,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 25,
+    "wartehallen": 4,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f6110cf6a910a9258c89c82a526e44b2"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zuerich-oerlikon-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zuerich-oerlikon-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

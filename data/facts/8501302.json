@@ -1,0 +1,185 @@
+{
+  "uic": 8501302,
+  "name": "Veytaux-Chillon",
+  "kanton": "VD",
+  "bps": "VEY",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Veytaux-Chillon",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.927861,
+    "lat": 46.417621,
+    "dwv": 270,
+    "dtv": 310,
+    "dnwv": 400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 110
+      },
+      {
+        "jahr": 2022,
+        "dwv": 170
+      },
+      {
+        "jahr": 2023,
+        "dwv": 200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 270
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Veytaux-Chillon",
+    "abkuerzung": "VEY",
+    "hoehe_m_ue_m": 379.795,
+    "gemeinde": "Veytaux",
+    "ortschaft": "Veytaux",
+    "bezirk": "Riviera-Pays-d'Enhaut",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 162,
+    "kuerzeste_m": 161,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 162,
+        "flaeche_netto_m2": 466.15,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 161,
+        "flaeche_netto_m2": 505.62,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Territet",
+      "bis": "Veytaux-Chillon",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84312,
+      "zuege_pro_tag": 231
+    },
+    "staerkster_personenverkehr": {
+      "von": "Territet",
+      "bis": "Veytaux-Chillon",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84312,
+      "zuege_pro_tag": 231
+    },
+    "abschnitte": [
+      {
+        "von": "Territet",
+        "bis": "Veytaux-Chillon",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84312,
+        "zuege_pro_tag": 231
+      },
+      {
+        "von": "Veytaux-Chillon",
+        "bis": "Villeneuve VD",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84295,
+        "zuege_pro_tag": 231
+      },
+      {
+        "von": "Territet",
+        "bis": "Veytaux-Chillon",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9518,
+        "zuege_pro_tag": 26
+      },
+      {
+        "von": "Veytaux-Chillon",
+        "bis": "Villeneuve VD",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9517,
+        "zuege_pro_tag": 26
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 27.09045
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/530e27b932b358fc7f9b2d60eb357d76"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

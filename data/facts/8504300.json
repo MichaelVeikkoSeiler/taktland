@@ -1,0 +1,700 @@
+{
+  "uic": 8504300,
+  "name": "Biel/Bienne",
+  "kanton": "BE",
+  "bps": "BI",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Biel/Bienne",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS, SBB",
+    "lon": 7.242911,
+    "lat": 47.132898,
+    "dwv": 53200,
+    "dtv": 48400,
+    "dnwv": 37700,
+    "bemerkung": "Ohne ASM.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 53700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 46000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 50800
+      },
+      {
+        "jahr": 2024,
+        "dwv": 52300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 53200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Biel/Bienne",
+    "abkuerzung": "BI",
+    "hoehe_m_ue_m": 437.08,
+    "gemeinde": "Biel/Bienne",
+    "ortschaft": "Biel/Bienne",
+    "bezirk": "Biel/Bienne",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 68000,
+    "einheit": "DP/jour ouvré",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 67900
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 63400
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 67300
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 62700
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 67000
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 62300
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 68600
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 64100
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 64800
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 69400
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 53000
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 49700
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 54600
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 51600
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 58700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 61500
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 60300
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 63600
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 65200
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 61600
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 63700
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 68000
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.2
+      },
+      {
+        "stunde": 6,
+        "prozent": 4.3
+      },
+      {
+        "stunde": 7,
+        "prozent": 7.5
+      },
+      {
+        "stunde": 8,
+        "prozent": 5.9
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 11,
+        "prozent": 5.1
+      },
+      {
+        "stunde": 12,
+        "prozent": 6.1
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.6
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.7
+      },
+      {
+        "stunde": 15,
+        "prozent": 6.6
+      },
+      {
+        "stunde": 16,
+        "prozent": 8.9
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.2
+      },
+      {
+        "stunde": 18,
+        "prozent": 7.3
+      },
+      {
+        "stunde": 19,
+        "prozent": 5.0
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.8
+      },
+      {
+        "stunde": 21,
+        "prozent": 3.1
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.3
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.5
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 10.2,
+    "wochentage": [
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 14.8
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.3
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 10.5
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 14.9
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.2
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.4
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 13.8
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 5,
+    "laengste_m": 407,
+    "kuerzeste_m": 264,
+    "items": [
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 407,
+        "flaeche_netto_m2": 2007.72,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 379,
+        "flaeche_netto_m2": 1860.18,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 299,
+        "flaeche_netto_m2": 1427.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 297,
+        "flaeche_netto_m2": 1238.88,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "9/10",
+        "typ": "Mittelperron",
+        "laenge_m": 264,
+        "flaeche_netto_m2": 1738.07,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 9,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "9",
+      "10"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 235,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 335,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 337,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 348,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 355,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 263,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 264,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "9",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 264,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "10",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 266,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 20,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 3,
+      "55": 17
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 8,
+    "gleise_mit_daten": 9
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Biel/Bienne",
+      "bis": "Biel Mett",
+      "strecke_nr": 104,
+      "strecke": "Biel/Bienne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83685,
+      "zuege_pro_tag": 229
+    },
+    "staerkster_personenverkehr": {
+      "von": "Biel/Bienne",
+      "bis": "Biel Mett",
+      "strecke_nr": 104,
+      "strecke": "Biel/Bienne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 83685,
+      "zuege_pro_tag": 229
+    },
+    "abschnitte": [
+      {
+        "von": "Biel/Bienne",
+        "bis": "Biel Mett",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83685,
+        "zuege_pro_tag": 229
+      },
+      {
+        "von": "Biel/Bienne",
+        "bis": "Madretsch",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 59088,
+        "zuege_pro_tag": 162
+      },
+      {
+        "von": "Tüscherz",
+        "bis": "Biel/Bienne",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50988,
+        "zuege_pro_tag": 140
+      },
+      {
+        "von": "Mahlenwald",
+        "bis": "Biel/Bienne",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29800,
+        "zuege_pro_tag": 82
+      },
+      {
+        "von": "Tüscherz",
+        "bis": "Biel/Bienne",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 24518,
+        "zuege_pro_tag": 67
+      },
+      {
+        "von": "Biel/Bienne",
+        "bis": "Biel Mett",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16563,
+        "zuege_pro_tag": 45
+      },
+      {
+        "von": "Biel/Bienne",
+        "bis": "Biel/Bienne Blumenrain",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9341,
+        "zuege_pro_tag": 26
+      },
+      {
+        "von": "Mahlenwald",
+        "bis": "Biel/Bienne",
+        "strecke_nr": 12,
+        "strecke": "Biel - Sonceboz - La Chaux de Fonds",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2770,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Biel/Bienne",
+        "bis": "Biel/Bienne Blumenrain",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2414,
+        "zuege_pro_tag": 7
+      },
+      {
+        "von": "Biel/Bienne",
+        "bis": "Madretsch",
+        "strecke_nr": 104,
+        "strecke": "Biel/Bienne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1533,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 99.3685
+      },
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 104.5
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 7,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 15,
+    "wartehallen": 4,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/5efd32b6bcc96a0bba105029ad3b6e32"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-biel-bienne-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-biel-bienne-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

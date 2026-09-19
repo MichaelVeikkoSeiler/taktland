@@ -1,0 +1,232 @@
+{
+  "uic": 8503117,
+  "name": "Kaltbrunn",
+  "kanton": "SG",
+  "bps": "KAB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Kaltbrunn",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SOB",
+    "lon": 9.022431,
+    "lat": 47.217983,
+    "dwv": 380,
+    "dtv": 330,
+    "dnwv": 230,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 290
+      },
+      {
+        "jahr": 2022,
+        "dwv": 290
+      },
+      {
+        "jahr": 2023,
+        "dwv": 300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 400
+      },
+      {
+        "jahr": 2025,
+        "dwv": 380
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Kaltbrunn",
+    "abkuerzung": "KAB",
+    "hoehe_m_ue_m": 469.6,
+    "gemeinde": "Kaltbrunn",
+    "ortschaft": "Kaltbrunn",
+    "bezirk": "See-Gaster",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 199,
+    "kuerzeste_m": 116,
+    "items": [
+      {
+        "nr": "3",
+        "typ": "Hilfskante",
+        "laenge_m": 199,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 853
+      },
+      {
+        "nr": "2",
+        "typ": "Zwischenperron",
+        "laenge_m": 116,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 853
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25
+    ],
+    "items": [
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Zwischenperron",
+        "perronkante_m": 117,
+        "sektoren": []
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hilfskante",
+        "perronkante_m": 165,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2,
+      "25": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Kaltbrunn",
+      "bis": "Uznach",
+      "strecke_nr": 77,
+      "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28680,
+      "zuege_pro_tag": 79
+    },
+    "staerkster_personenverkehr": {
+      "von": "Kaltbrunn",
+      "bis": "Uznach",
+      "strecke_nr": 77,
+      "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 28680,
+      "zuege_pro_tag": 79
+    },
+    "abschnitte": [
+      {
+        "von": "Kaltbrunn",
+        "bis": "Uznach",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28680,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Wattwil",
+        "bis": "Kaltbrunn",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28679,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Wattwil",
+        "bis": "Kaltbrunn",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 312,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Kaltbrunn",
+        "bis": "Uznach",
+        "strecke_nr": 77,
+        "strecke": "Wil - Lichtensteig - Wattwil - Rapperswil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 302,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 853,
+        "name": "Wil Sud - Wattwil - Uznach",
+        "km": 30.98199
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/aab64a27e702669d662a42ae3872bf52"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

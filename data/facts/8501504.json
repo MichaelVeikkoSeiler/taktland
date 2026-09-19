@@ -1,0 +1,185 @@
+{
+  "uic": 8501504,
+  "name": "Chamoson-St-Pierre-de-Clages",
+  "kanton": "VS",
+  "bps": "CHA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Chamoson-St-Pierre-de-Clages",
+    "kanton": "VS",
+    "isb": "SBB",
+    "evu": "RegionAlps",
+    "lon": 7.241099,
+    "lat": 46.188836,
+    "dwv": 370,
+    "dtv": 320,
+    "dnwv": 200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 270
+      },
+      {
+        "jahr": 2022,
+        "dwv": 310
+      },
+      {
+        "jahr": 2023,
+        "dwv": 380
+      },
+      {
+        "jahr": 2024,
+        "dwv": 370
+      },
+      {
+        "jahr": 2025,
+        "dwv": 370
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Chamoson-St-Pierre-de-Clages",
+    "abkuerzung": "CHA",
+    "hoehe_m_ue_m": 488.167,
+    "gemeinde": "Chamoson",
+    "ortschaft": "St-Pierre-de-Clages",
+    "bezirk": "Conthey",
+    "kanton": "Valais",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 150,
+    "kuerzeste_m": 150,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 714.33,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 150,
+        "flaeche_netto_m2": 332.58,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Chamoson-St-Pierre-de-Clages",
+      "bis": "Ardon",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 56665,
+      "zuege_pro_tag": 155
+    },
+    "staerkster_personenverkehr": {
+      "von": "Chamoson-St-Pierre-de-Clages",
+      "bis": "Ardon",
+      "strecke_nr": 90,
+      "strecke": "St. Maurice - Visp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 56665,
+      "zuege_pro_tag": 155
+    },
+    "abschnitte": [
+      {
+        "von": "Chamoson-St-Pierre-de-Clages",
+        "bis": "Ardon",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 56665,
+        "zuege_pro_tag": 155
+      },
+      {
+        "von": "Riddes",
+        "bis": "Chamoson-St-Pierre-de-Clages",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 56663,
+        "zuege_pro_tag": 155
+      },
+      {
+        "von": "Chamoson-St-Pierre-de-Clages",
+        "bis": "Ardon",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5404,
+        "zuege_pro_tag": 15
+      },
+      {
+        "von": "Riddes",
+        "bis": "Chamoson-St-Pierre-de-Clages",
+        "strecke_nr": 90,
+        "strecke": "St. Maurice - Visp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 5404,
+        "zuege_pro_tag": 15
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 82.12316
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3333ea54f1caca21a981290b84ca9bf1"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

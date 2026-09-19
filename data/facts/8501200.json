@@ -1,0 +1,324 @@
+{
+  "uic": 8501200,
+  "name": "Vevey",
+  "kanton": "VD",
+  "bps": "VV",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Vevey",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "MOB, SBB",
+    "lon": 6.843446,
+    "lat": 46.463002,
+    "dwv": 30400,
+    "dtv": 27400,
+    "dnwv": 20600,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 24100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 24000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 26700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 28800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 30400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Vevey",
+    "abkuerzung": "VV",
+    "hoehe_m_ue_m": 386.09,
+    "gemeinde": "Vevey",
+    "ortschaft": "Vevey",
+    "bezirk": "Riviera-Pays-d'Enhaut",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 486,
+    "kuerzeste_m": 276,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 486,
+        "flaeche_netto_m2": 2233.08,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "2/4",
+        "typ": "Mittelperron",
+        "laenge_m": 466,
+        "flaeche_netto_m2": 2385.54,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      },
+      {
+        "nr": "5/7",
+        "typ": "Mittelperron",
+        "laenge_m": 276,
+        "flaeche_netto_m2": 1031.13,
+        "niveaufreier_zugang": "ja",
+        "linie": 100
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "2",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      35,
+      42,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          42,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 367,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 424,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 425,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 137,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "42": 3,
+      "55": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "St-Saphorin",
+      "bis": "Vevey",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86544,
+      "zuege_pro_tag": 237
+    },
+    "staerkster_personenverkehr": {
+      "von": "St-Saphorin",
+      "bis": "Vevey",
+      "strecke_nr": 4,
+      "strecke": "Lausanne - St. Maurice",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 86544,
+      "zuege_pro_tag": 237
+    },
+    "abschnitte": [
+      {
+        "von": "St-Saphorin",
+        "bis": "Vevey",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86544,
+        "zuege_pro_tag": 237
+      },
+      {
+        "von": "Vevey",
+        "bis": "La Tour-de-Peilz",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84483,
+        "zuege_pro_tag": 231
+      },
+      {
+        "von": "Vevey-Funi",
+        "bis": "Vevey",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14141,
+        "zuege_pro_tag": 39
+      },
+      {
+        "von": "Vevey",
+        "bis": "La Tour-de-Peilz",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9520,
+        "zuege_pro_tag": 26
+      },
+      {
+        "von": "St-Saphorin",
+        "bis": "Vevey",
+        "strecke_nr": 4,
+        "strecke": "Lausanne - St. Maurice",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 9370,
+        "zuege_pro_tag": 26
+      },
+      {
+        "von": "Vevey-Funi",
+        "bis": "Vevey",
+        "strecke_nr": 84,
+        "strecke": "Vevey - Puidoux-Chexbres",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 255,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 112,
+        "name": "Vevey - Blonay",
+        "km": 0
+      },
+      {
+        "nummer": 100,
+        "name": "Lausanne - Simplon Tunnel I - Iselle",
+        "km": 18.39805
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 10,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/07049114a0ae793390aa8c99a78d220d"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-vevey-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-vevey-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

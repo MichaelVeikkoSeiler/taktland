@@ -1,0 +1,366 @@
+{
+  "uic": 8505307,
+  "name": "Chiasso",
+  "kanton": "TI",
+  "bps": "CHI",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Chiasso",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 9.03145,
+    "lat": 45.832168,
+    "dwv": 10200,
+    "dtv": 9100,
+    "dnwv": 6700,
+    "bemerkung": "Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst. Ohne Trenord.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 6300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 7500
+      },
+      {
+        "jahr": 2023,
+        "dwv": 9600
+      },
+      {
+        "jahr": 2024,
+        "dwv": 10000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 10200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Chiasso",
+    "abkuerzung": "CHI",
+    "hoehe_m_ue_m": 237,
+    "gemeinde": "Chiasso",
+    "ortschaft": "Chiasso",
+    "bezirk": "Mendrisio",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 12,
+    "laengste_m": 800,
+    "kuerzeste_m": 14,
+    "items": [
+      {
+        "nr": "1/11",
+        "typ": "Hausperron",
+        "laenge_m": 800,
+        "flaeche_netto_m2": 3348.86,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "4/5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 507,
+        "flaeche_netto_m2": 4293.85,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "38",
+        "typ": "Dienstperron",
+        "laenge_m": 426,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 639
+      },
+      {
+        "nr": "37",
+        "typ": "Dienstperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 600
+      },
+      {
+        "nr": "73/74",
+        "typ": "Dienstperron",
+        "laenge_m": 211,
+        "flaeche_netto_m2": 312.49,
+        "niveaufreier_zugang": "nein",
+        "linie": 600
+      },
+      {
+        "nr": "71/72",
+        "typ": "Dienstperron",
+        "laenge_m": 211,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "24/25",
+        "typ": "Dienstperron",
+        "laenge_m": 112,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 637
+      },
+      {
+        "nr": "22/23",
+        "typ": "Dienstperron",
+        "laenge_m": 62,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 637
+      },
+      {
+        "nr": "23/24",
+        "typ": "Dienstperron",
+        "laenge_m": 51,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 637
+      },
+      {
+        "nr": "28",
+        "typ": "Dienstperron",
+        "laenge_m": 30,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 600
+      },
+      {
+        "nr": "27",
+        "typ": "Dienstperron",
+        "laenge_m": 14,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 600
+      },
+      {
+        "nr": "26",
+        "typ": "Dienstperron",
+        "laenge_m": 14,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "nein",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "1",
+      "4",
+      "5",
+      "6",
+      "11",
+      "38"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 565,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 287,
+        "sektoren": [
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 243,
+        "sektoren": [
+          "-",
+          "A",
+          "B"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 489,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "11",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 238,
+        "sektoren": []
+      },
+      {
+        "nr": "38",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "A"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Balerna",
+      "bis": "Chiasso",
+      "strecke_nr": 111,
+      "strecke": "Chiasso PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80505,
+      "zuege_pro_tag": 221
+    },
+    "staerkster_personenverkehr": {
+      "von": "Balerna",
+      "bis": "Chiasso",
+      "strecke_nr": 111,
+      "strecke": "Chiasso PB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80505,
+      "zuege_pro_tag": 221
+    },
+    "abschnitte": [
+      {
+        "von": "Balerna",
+        "bis": "Chiasso",
+        "strecke_nr": 111,
+        "strecke": "Chiasso PB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80505,
+        "zuege_pro_tag": 221
+      },
+      {
+        "von": "Balerna",
+        "bis": "Chiasso",
+        "strecke_nr": 111,
+        "strecke": "Chiasso PB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4446,
+        "zuege_pro_tag": 12
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 206.16614
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 3,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 8,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/60b0b1b848945bb443fc375568d356fc"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

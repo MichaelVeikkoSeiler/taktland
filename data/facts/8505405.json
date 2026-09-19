@@ -1,0 +1,174 @@
+{
+  "uic": 8505405,
+  "name": "Quartino",
+  "kanton": "TI",
+  "bps": "QUA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Quartino",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.887331,
+    "lat": 46.151298,
+    "dwv": 49,
+    "dtv": 49,
+    "dnwv": 49,
+    "bemerkung": "49: weniger als 50 Ein- und Aussteigende.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 49
+      },
+      {
+        "jahr": 2022,
+        "dwv": 49
+      },
+      {
+        "jahr": 2023,
+        "dwv": 49
+      },
+      {
+        "jahr": 2024,
+        "dwv": 49
+      },
+      {
+        "jahr": 2025,
+        "dwv": 49
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Quartino",
+    "abkuerzung": "QUA",
+    "hoehe_m_ue_m": 202,
+    "gemeinde": "Gambarogno",
+    "ortschaft": "Quartino",
+    "bezirk": "Locarno",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 131,
+    "kuerzeste_m": 131,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 131,
+        "flaeche_netto_m2": 343.69,
+        "niveaufreier_zugang": "ja",
+        "linie": 631
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Cadenazzo Ovest (bif)",
+      "bis": "Quartino",
+      "strecke_nr": 46,
+      "strecke": "Giubiasco - Pino Transito",
+      "art": "Gueterverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 11402,
+      "zuege_pro_tag": 31
+    },
+    "staerkster_personenverkehr": {
+      "von": "Cadenazzo Ovest (bif)",
+      "bis": "Quartino",
+      "strecke_nr": 46,
+      "strecke": "Giubiasco - Pino Transito",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 7088,
+      "zuege_pro_tag": 19
+    },
+    "abschnitte": [
+      {
+        "von": "Cadenazzo Ovest (bif)",
+        "bis": "Quartino",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11402,
+        "zuege_pro_tag": 31
+      },
+      {
+        "von": "Quartino",
+        "bis": "Magadino-Vira",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11401,
+        "zuege_pro_tag": 31
+      },
+      {
+        "von": "Cadenazzo Ovest (bif)",
+        "bis": "Quartino",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7088,
+        "zuege_pro_tag": 19
+      },
+      {
+        "von": "Quartino",
+        "bis": "Magadino-Vira",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7088,
+        "zuege_pro_tag": 19
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 631,
+        "name": "Cadenazzo - Pino confine",
+        "km": 163.95801
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6bf0c8238145a68b635f5077634484ce"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

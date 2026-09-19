@@ -1,0 +1,189 @@
+{
+  "uic": 8504113,
+  "name": "Wünnewil",
+  "kanton": "FR",
+  "bps": "WUE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Wünnewil",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.280654,
+    "lat": 46.871861,
+    "dwv": 910,
+    "dtv": 790,
+    "dnwv": 520,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 840
+      },
+      {
+        "jahr": 2022,
+        "dwv": 720
+      },
+      {
+        "jahr": 2023,
+        "dwv": 830
+      },
+      {
+        "jahr": 2024,
+        "dwv": 880
+      },
+      {
+        "jahr": 2025,
+        "dwv": 910
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Wünnewil",
+    "abkuerzung": "WUE",
+    "hoehe_m_ue_m": 588.17,
+    "gemeinde": "Wünnewil-Flamatt",
+    "ortschaft": "Wünnewil",
+    "bezirk": "Sense",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 260,
+    "kuerzeste_m": 239,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 260,
+        "flaeche_netto_m2": 382.86,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 239,
+        "flaeche_netto_m2": 318.55,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Schmitten FR",
+      "bis": "Wünnewil",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 58042,
+      "zuege_pro_tag": 159
+    },
+    "staerkster_personenverkehr": {
+      "von": "Schmitten FR",
+      "bis": "Wünnewil",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 58042,
+      "zuege_pro_tag": 159
+    },
+    "abschnitte": [
+      {
+        "von": "Schmitten FR",
+        "bis": "Wünnewil",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58042,
+        "zuege_pro_tag": 159
+      },
+      {
+        "von": "Wünnewil",
+        "bis": "Flamatt",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 58041,
+        "zuege_pro_tag": 159
+      },
+      {
+        "von": "Schmitten FR",
+        "bis": "Wünnewil",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3065,
+        "zuege_pro_tag": 8
+      },
+      {
+        "von": "Wünnewil",
+        "bis": "Flamatt",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3065,
+        "zuege_pro_tag": 8
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 80.34335
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "Libero"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/88679ad6577bd19f18bcae5b462aad55"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

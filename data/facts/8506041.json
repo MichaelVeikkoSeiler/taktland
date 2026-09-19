@@ -1,0 +1,215 @@
+{
+  "uic": 8506041,
+  "name": "Embrach-Rorbas",
+  "kanton": "ZH",
+  "bps": "EMB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Embrach-Rorbas",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.587069,
+    "lat": 47.52059,
+    "dwv": 2100,
+    "dtv": 1800,
+    "dnwv": 1100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Embrach-Rorbas",
+    "abkuerzung": "EMB",
+    "hoehe_m_ue_m": 423.3,
+    "gemeinde": "Embrach",
+    "ortschaft": "Embrach",
+    "bezirk": "Bülach",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 172,
+    "kuerzeste_m": 172,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 172,
+        "flaeche_netto_m2": 640.34,
+        "niveaufreier_zugang": "ja",
+        "linie": 769
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 170,
+        "sektoren": [
+          "-",
+          "A",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bülach",
+      "bis": "Embrach-Rorbas",
+      "strecke_nr": 68,
+      "strecke": "Winterthur West - Bülach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29199,
+      "zuege_pro_tag": 80
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bülach",
+      "bis": "Embrach-Rorbas",
+      "strecke_nr": 68,
+      "strecke": "Winterthur West - Bülach",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 29199,
+      "zuege_pro_tag": 80
+    },
+    "abschnitte": [
+      {
+        "von": "Bülach",
+        "bis": "Embrach-Rorbas",
+        "strecke_nr": 68,
+        "strecke": "Winterthur West - Bülach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29199,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Embrach-Rorbas",
+        "bis": "Pfungen",
+        "strecke_nr": 68,
+        "strecke": "Winterthur West - Bülach",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29180,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Bülach",
+        "bis": "Embrach-Rorbas",
+        "strecke_nr": 68,
+        "strecke": "Winterthur West - Bülach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1805,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Embrach-Rorbas",
+        "bis": "Pfungen",
+        "strecke_nr": 68,
+        "strecke": "Winterthur West - Bülach",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1803,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 769,
+        "name": "Winterthur West - Bulach",
+        "km": 12.3183
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/82e2070cd9f925ec05eac71a02de7636"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "uic": 8508103,
+  "name": "Rothrist",
+  "kanton": "AG",
+  "bps": "RTR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rothrist",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.879396,
+    "lat": 47.306456,
+    "dwv": 1300,
+    "dtv": 1100,
+    "dnwv": 620,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1300
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rothrist",
+    "abkuerzung": "RTR",
+    "hoehe_m_ue_m": 407,
+    "gemeinde": "Rothrist",
+    "ortschaft": "Rothrist",
+    "bezirk": "Zofingen",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 222,
+    "kuerzeste_m": 213,
+    "items": [
+      {
+        "nr": "4",
+        "typ": "Aussenperron",
+        "laenge_m": 222,
+        "flaeche_netto_m2": 523.51,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 213,
+        "flaeche_netto_m2": 527.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 450
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 214,
+        "sektoren": []
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 222,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rothrist",
+      "bis": "Olten",
+      "strecke_nr": 22,
+      "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 102375,
+      "zuege_pro_tag": 280
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rothrist",
+      "bis": "Olten",
+      "strecke_nr": 22,
+      "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 102375,
+      "zuege_pro_tag": 280
+    },
+    "abschnitte": [
+      {
+        "von": "Rothrist",
+        "bis": "Olten",
+        "strecke_nr": 22,
+        "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 102375,
+        "zuege_pro_tag": 280
+      },
+      {
+        "von": "Wanzwil (Abzw)",
+        "bis": "Rothrist",
+        "strecke_nr": 22,
+        "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 88955,
+        "zuege_pro_tag": 244
+      },
+      {
+        "von": "Rothrist GB",
+        "bis": "Rothrist",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57752,
+        "zuege_pro_tag": 158
+      },
+      {
+        "von": "Rothrist",
+        "bis": "Bifang AG (Spw)",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44427,
+        "zuege_pro_tag": 122
+      },
+      {
+        "von": "Rothrist GB",
+        "bis": "Rothrist",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15293,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Rothrist",
+        "bis": "Olten",
+        "strecke_nr": 22,
+        "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14478,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Rothrist",
+        "bis": "Bifang AG (Spw)",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8216,
+        "zuege_pro_tag": 23
+      },
+      {
+        "von": "Wanzwil (Abzw)",
+        "bis": "Rothrist",
+        "strecke_nr": 22,
+        "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7399,
+        "zuege_pro_tag": 20
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 453,
+        "name": "Rothrist Ost - Rothrist Gleis 4",
+        "km": 46.19971
+      },
+      {
+        "nummer": 451,
+        "name": "Aarburg-Oftringen - Rothrist Gleis 1",
+        "km": 46.19837
+      },
+      {
+        "nummer": 450,
+        "name": "Olten Sud - Bern",
+        "km": 46.20125
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3c407e180b3c1a0a02fba43553043e31"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

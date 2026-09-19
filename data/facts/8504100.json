@@ -1,0 +1,567 @@
+{
+  "uic": 8504100,
+  "name": "Fribourg/Freiburg",
+  "kanton": "FR",
+  "bps": "FRI",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Fribourg/Freiburg",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "BLS, SBB, TPF",
+    "lon": 7.151047,
+    "lat": 46.803148,
+    "dwv": 34600,
+    "dtv": 30800,
+    "dnwv": 22100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 23000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 24400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 33400
+      },
+      {
+        "jahr": 2024,
+        "dwv": 34600
+      },
+      {
+        "jahr": 2025,
+        "dwv": 34600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Fribourg/Freiburg",
+    "abkuerzung": "FRI",
+    "hoehe_m_ue_m": 629.33,
+    "gemeinde": "Fribourg",
+    "ortschaft": "Fribourg",
+    "bezirk": "La Sarine",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 30900,
+    "einheit": "DP/jour ouvré",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 28200
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 31000
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 28200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 31100
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 28000
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 30900
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 27900
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 30600
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 32200
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 29500
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 23300
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 21300
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 25100
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 23100
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 27700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 29900
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 32800
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 30400
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 29500
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 31500
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 29000
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 30900
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.7
+      },
+      {
+        "stunde": 6,
+        "prozent": 4.9
+      },
+      {
+        "stunde": 7,
+        "prozent": 6.2
+      },
+      {
+        "stunde": 8,
+        "prozent": 4.4
+      },
+      {
+        "stunde": 9,
+        "prozent": 3.9
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 11,
+        "prozent": 5.5
+      },
+      {
+        "stunde": 12,
+        "prozent": 5.9
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.4
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.6
+      },
+      {
+        "stunde": 15,
+        "prozent": 8.7
+      },
+      {
+        "stunde": 16,
+        "prozent": 12.1
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.1
+      },
+      {
+        "stunde": 18,
+        "prozent": 6.8
+      },
+      {
+        "stunde": 19,
+        "prozent": 5.4
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.9
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.6
+      },
+      {
+        "stunde": 22,
+        "prozent": 1.5
+      },
+      {
+        "stunde": 23,
+        "prozent": 0.9
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 16,
+    "spitzenanteil": 12.1,
+    "wochentage": [
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.2
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 13.0
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 11.3
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.5
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 14.8
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.3
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 14.8
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 4,
+    "laengste_m": 440,
+    "kuerzeste_m": 282,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 440,
+        "flaeche_netto_m2": 1363.79,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 422,
+        "flaeche_netto_m2": 2861.72,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 297,
+        "flaeche_netto_m2": 3128.74,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      },
+      {
+        "nr": "61",
+        "typ": "Dienstperron",
+        "laenge_m": 282,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 250
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "perronhoehen_cm": [
+      20,
+      30,
+      42,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          30,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 286,
+        "sektoren": [
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 133,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          42,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 404,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 414,
+        "sektoren": []
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 418,
+        "sektoren": [
+          "H"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 27,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 2,
+      "30": 11,
+      "42": 2,
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Fribourg/Freiburg",
+      "bis": "Fribourg Nord",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 123213,
+      "zuege_pro_tag": 338
+    },
+    "staerkster_personenverkehr": {
+      "von": "Fribourg/Freiburg",
+      "bis": "Fribourg Nord",
+      "strecke_nr": 21,
+      "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 123213,
+      "zuege_pro_tag": 338
+    },
+    "abschnitte": [
+      {
+        "von": "Fribourg/Freiburg",
+        "bis": "Fribourg Nord",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 123213,
+        "zuege_pro_tag": 338
+      },
+      {
+        "von": "Villars-sur-Glâne",
+        "bis": "Fribourg/Freiburg",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 83474,
+        "zuege_pro_tag": 229
+      },
+      {
+        "von": "Fribourg/Freiburg",
+        "bis": "Fribourg Nord",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4891,
+        "zuege_pro_tag": 13
+      },
+      {
+        "von": "Villars-sur-Glâne",
+        "bis": "Fribourg/Freiburg",
+        "strecke_nr": 21,
+        "strecke": "Lausanne - Fribourg - Bern Steigerhubel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2843,
+        "zuege_pro_tag": 8
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 250,
+        "name": "Lausanne Est - Bern",
+        "km": 65.99265
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 5,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 11,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c89c90c7c51148db842096a50baaef0e"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-fribourg-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-fribourg-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

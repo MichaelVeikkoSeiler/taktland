@@ -1,0 +1,237 @@
+{
+  "uic": 8502230,
+  "name": "Zug Chollermüli",
+  "kanton": "ZG",
+  "bps": "KMUE",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Zug Chollermüli",
+    "kanton": "ZG",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.486646,
+    "lat": 47.180238,
+    "dwv": 740,
+    "dtv": 670,
+    "dnwv": 510,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 850
+      },
+      {
+        "jahr": 2022,
+        "dwv": 690
+      },
+      {
+        "jahr": 2023,
+        "dwv": 710
+      },
+      {
+        "jahr": 2024,
+        "dwv": 770
+      },
+      {
+        "jahr": 2025,
+        "dwv": 740
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Zug Chollermüli",
+    "abkuerzung": "KMUE",
+    "hoehe_m_ue_m": 418,
+    "gemeinde": "Zug",
+    "ortschaft": "Zug",
+    "bezirk": null,
+    "kanton": "Zug",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 151,
+    "kuerzeste_m": 151,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 151,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 151,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 151,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 151,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 8
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Kollermühle (Abzw)",
+      "bis": "Zug Chollermüli",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 107501,
+      "zuege_pro_tag": 295
+    },
+    "staerkster_personenverkehr": {
+      "von": "Kollermühle (Abzw)",
+      "bis": "Zug Chollermüli",
+      "strecke_nr": 50,
+      "strecke": "Rotkreuz - Zug - Thalwil",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 107501,
+      "zuege_pro_tag": 295
+    },
+    "abschnitte": [
+      {
+        "von": "Kollermühle (Abzw)",
+        "bis": "Zug Chollermüli",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 107501,
+        "zuege_pro_tag": 295
+      },
+      {
+        "von": "Zug Chollermüli",
+        "bis": "Zug Schutzengel",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 107501,
+        "zuege_pro_tag": 295
+      },
+      {
+        "von": "Kollermühle (Abzw)",
+        "bis": "Zug Chollermüli",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 603,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Zug Chollermüli",
+        "bis": "Zug Schutzengel",
+        "strecke_nr": 50,
+        "strecke": "Rotkreuz - Zug - Thalwil",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 603,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 9660,
+        "name": "Sihlbrugg - Baar Projekt ZBT2",
+        "km": 41.196
+      },
+      {
+        "nummer": 660,
+        "name": "Thalwil - Zug - Fluhmuhle",
+        "km": 41.196
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b79f16ec268f4111e895204fd7b0017a"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

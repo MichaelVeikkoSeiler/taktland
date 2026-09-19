@@ -1,0 +1,181 @@
+{
+  "uic": 8504140,
+  "name": "Muntelier-Löwenberg",
+  "kanton": "FR",
+  "bps": "LOEW",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Muntelier-Löwenberg",
+    "kanton": "FR",
+    "isb": "SBB",
+    "evu": "BLS, TPF",
+    "lon": 7.133262,
+    "lat": 46.937974,
+    "dwv": 540,
+    "dtv": 470,
+    "dnwv": 320,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 380
+      },
+      {
+        "jahr": 2022,
+        "dwv": 400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 490
+      },
+      {
+        "jahr": 2024,
+        "dwv": 520
+      },
+      {
+        "jahr": 2025,
+        "dwv": 540
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Muntelier-Löwenberg",
+    "abkuerzung": "LOEW",
+    "hoehe_m_ue_m": 438.522,
+    "gemeinde": "Murten",
+    "ortschaft": "Murten",
+    "bezirk": "See",
+    "kanton": "Fribourg",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 162,
+    "kuerzeste_m": 162,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 162,
+        "flaeche_netto_m2": 344.03,
+        "niveaufreier_zugang": "ja",
+        "linie": 251
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Murten/Morat",
+      "bis": "Muntelier-Löwenberg",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55387,
+      "zuege_pro_tag": 152
+    },
+    "staerkster_personenverkehr": {
+      "von": "Murten/Morat",
+      "bis": "Muntelier-Löwenberg",
+      "strecke_nr": 18,
+      "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 55387,
+      "zuege_pro_tag": 152
+    },
+    "abschnitte": [
+      {
+        "von": "Murten/Morat",
+        "bis": "Muntelier-Löwenberg",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55387,
+        "zuege_pro_tag": 152
+      },
+      {
+        "von": "Muntelier-Löwenberg",
+        "bis": "Muntelier",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 55385,
+        "zuege_pro_tag": 152
+      },
+      {
+        "von": "Muntelier-Löwenberg",
+        "bis": "Muntelier",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1359,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Murten/Morat",
+        "bis": "Muntelier-Löwenberg",
+        "strecke_nr": 18,
+        "strecke": "Payerne - Kerzers - Lyss - Büren (ohne Lyss - Busswil)",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1359,
+        "zuege_pro_tag": 4
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 251,
+        "name": "Palezieux Est - Lyss Nord",
+        "km": 78.5725
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BLS"
+    ],
+    "billettentwerter": 0,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6fefc205f3e24d0ae8962b13e2257f6b"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

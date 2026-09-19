@@ -1,0 +1,239 @@
+{
+  "uic": 8501003,
+  "name": "Satigny",
+  "kanton": "GE",
+  "bps": "SY",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Satigny",
+    "kanton": "GE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.037665,
+    "lat": 46.214227,
+    "dwv": 2600,
+    "dtv": 2200,
+    "dnwv": 1400,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 2100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 2200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2500
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 2600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Satigny",
+    "abkuerzung": "SY",
+    "hoehe_m_ue_m": 414,
+    "gemeinde": "Satigny",
+    "ortschaft": "Satigny",
+    "bezirk": null,
+    "kanton": "Genève",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 160,
+    "kuerzeste_m": 160,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 527.12,
+        "niveaufreier_zugang": "ja",
+        "linie": 151
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 160,
+        "flaeche_netto_m2": 448.97,
+        "niveaufreier_zugang": "ja",
+        "linie": 151
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 160,
+        "sektoren": [
+          "-",
+          "A",
+          "C"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 160,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 10,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Satigny",
+      "bis": "Zimeysa",
+      "strecke_nr": 3,
+      "strecke": "La Plaine Frontière - Genève",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 52998,
+      "zuege_pro_tag": 145
+    },
+    "staerkster_personenverkehr": {
+      "von": "Satigny",
+      "bis": "Zimeysa",
+      "strecke_nr": 3,
+      "strecke": "La Plaine Frontière - Genève",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 52998,
+      "zuege_pro_tag": 145
+    },
+    "abschnitte": [
+      {
+        "von": "Satigny",
+        "bis": "Zimeysa",
+        "strecke_nr": 3,
+        "strecke": "La Plaine Frontière - Genève",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52998,
+        "zuege_pro_tag": 145
+      },
+      {
+        "von": "Satigny",
+        "bis": "Mandement (diag)",
+        "strecke_nr": 3,
+        "strecke": "La Plaine Frontière - Genève",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52482,
+        "zuege_pro_tag": 144
+      },
+      {
+        "von": "Satigny",
+        "bis": "Mandement (diag)",
+        "strecke_nr": 3,
+        "strecke": "La Plaine Frontière - Genève",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 306,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Satigny",
+        "bis": "Zimeysa",
+        "strecke_nr": 3,
+        "strecke": "La Plaine Frontière - Genève",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 306,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 151,
+        "name": "Geneve St-Jean - La Plaine-Frontiere",
+        "km": 69.365
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "BATS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 3,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/854fc6a99a613f05562d3b3df7613948"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

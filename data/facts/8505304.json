@@ -1,0 +1,256 @@
+{
+  "uic": 8505304,
+  "name": "Capolago-Riva S. Vitale",
+  "kanton": "TI",
+  "bps": "CAP",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Capolago-Riva S. Vitale",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.978905,
+    "lat": 45.902837,
+    "dwv": 1200,
+    "dtv": 1100,
+    "dnwv": 730,
+    "bemerkung": "Ohne MG.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1200
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Capolago-Riva S. Vitale",
+    "abkuerzung": "CAP",
+    "hoehe_m_ue_m": 274,
+    "gemeinde": "Mendrisio",
+    "ortschaft": "Capolago",
+    "bezirk": "Mendrisio",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 301,
+    "kuerzeste_m": 235,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 301,
+        "flaeche_netto_m2": 984.86,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 235,
+        "flaeche_netto_m2": 950.85,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 288,
+        "sektoren": [
+          "-",
+          "B"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 221,
+        "sektoren": [
+          "-",
+          "B"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 220,
+        "sektoren": [
+          "-",
+          "B"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 11,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Maroggia-Melano",
+      "bis": "Capolago-Riva S. Vitale",
+      "strecke_nr": 48,
+      "strecke": "Lugano - Chiasso",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 81826,
+      "zuege_pro_tag": 224
+    },
+    "staerkster_personenverkehr": {
+      "von": "Maroggia-Melano",
+      "bis": "Capolago-Riva S. Vitale",
+      "strecke_nr": 48,
+      "strecke": "Lugano - Chiasso",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 81826,
+      "zuege_pro_tag": 224
+    },
+    "abschnitte": [
+      {
+        "von": "Maroggia-Melano",
+        "bis": "Capolago-Riva S. Vitale",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 81826,
+        "zuege_pro_tag": 224
+      },
+      {
+        "von": "Mendrisio S. Martino",
+        "bis": "Capolago-Riva S. Vitale",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 81394,
+        "zuege_pro_tag": 223
+      },
+      {
+        "von": "Mendrisio S. Martino",
+        "bis": "Capolago-Riva S. Vitale",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20865,
+        "zuege_pro_tag": 57
+      },
+      {
+        "von": "Maroggia-Melano",
+        "bis": "Capolago-Riva S. Vitale",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20850,
+        "zuege_pro_tag": 57
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 636,
+        "name": "Capolago-Riva S. Vitale - Monte Generoso",
+        "km": 0
+      },
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 194.61388
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/78ec290b7e755b7690f86abb13a8ffcb"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

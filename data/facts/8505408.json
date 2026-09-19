@@ -1,0 +1,211 @@
+{
+  "uic": 8505408,
+  "name": "Ranzo-S. Abbondio",
+  "kanton": "TI",
+  "bps": "RZO",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Ranzo-S. Abbondio",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 8.776538,
+    "lat": 46.116998,
+    "dwv": 49,
+    "dtv": 49,
+    "dnwv": 49,
+    "bemerkung": "49: weniger als 50 Ein- und Aussteigende.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 49
+      },
+      {
+        "jahr": 2022,
+        "dwv": 49
+      },
+      {
+        "jahr": 2023,
+        "dwv": 49
+      },
+      {
+        "jahr": 2024,
+        "dwv": 49
+      },
+      {
+        "jahr": 2025,
+        "dwv": 49
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Ranzo-S. Abbondio",
+    "abkuerzung": "RZO",
+    "hoehe_m_ue_m": 220,
+    "gemeinde": "Gambarogno",
+    "ortschaft": "Ranzo",
+    "bezirk": "Locarno",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 122,
+    "kuerzeste_m": 122,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 122,
+        "flaeche_netto_m2": 379.38,
+        "niveaufreier_zugang": "ja",
+        "linie": 631
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      35
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35
+        ],
+        "hilfstritt": true,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 122,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 8,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 8
+    },
+    "segmente_mit_hilfstritt": 8,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Gerra (Gambarogno)",
+      "bis": "Ranzo-S. Abbondio",
+      "strecke_nr": 46,
+      "strecke": "Giubiasco - Pino Transito",
+      "art": "Gueterverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 11394,
+      "zuege_pro_tag": 31
+    },
+    "staerkster_personenverkehr": {
+      "von": "Gerra (Gambarogno)",
+      "bis": "Ranzo-S. Abbondio",
+      "strecke_nr": 46,
+      "strecke": "Giubiasco - Pino Transito",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 7310,
+      "zuege_pro_tag": 20
+    },
+    "abschnitte": [
+      {
+        "von": "Gerra (Gambarogno)",
+        "bis": "Ranzo-S. Abbondio",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11394,
+        "zuege_pro_tag": 31
+      },
+      {
+        "von": "Ranzo-S. Abbondio",
+        "bis": "Pino confine",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 11393,
+        "zuege_pro_tag": 31
+      },
+      {
+        "von": "Gerra (Gambarogno)",
+        "bis": "Ranzo-S. Abbondio",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7310,
+        "zuege_pro_tag": 20
+      },
+      {
+        "von": "Ranzo-S. Abbondio",
+        "bis": "Pino confine",
+        "strecke_nr": 46,
+        "strecke": "Giubiasco - Pino Transito",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 6745,
+        "zuege_pro_tag": 18
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 631,
+        "name": "Cadenazzo - Pino confine",
+        "km": 173.69164
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/2e1bf1343de832c6bb01e68718dbe8c3"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

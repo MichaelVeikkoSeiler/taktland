@@ -1,0 +1,357 @@
+{
+  "uic": 8502202,
+  "name": "Rotkreuz",
+  "kanton": "ZG",
+  "bps": "RK",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rotkreuz",
+    "kanton": "ZG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.430495,
+    "lat": 47.141764,
+    "dwv": 17800,
+    "dtv": 15300,
+    "dnwv": 9700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 17300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 15200
+      },
+      {
+        "jahr": 2023,
+        "dwv": 17000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 17900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 17800
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rotkreuz",
+    "abkuerzung": "RK",
+    "hoehe_m_ue_m": 429,
+    "gemeinde": "Risch",
+    "ortschaft": "Rotkreuz",
+    "bezirk": null,
+    "kanton": "Zug",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 458,
+    "kuerzeste_m": 308,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 458,
+        "flaeche_netto_m2": 2492.03,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      },
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 448,
+        "flaeche_netto_m2": 2402.8,
+        "niveaufreier_zugang": "ja",
+        "linie": 653
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 308,
+        "flaeche_netto_m2": 584.45,
+        "niveaufreier_zugang": "ja",
+        "linie": 660
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          20,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 150,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 320,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 319,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 180,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 180,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 12,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 1,
+      "25": 1,
+      "55": 10
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 5,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rotkreuz Nordost",
+      "bis": "Rotkreuz",
+      "strecke_nr": 110,
+      "strecke": "Rotkreuz",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78721,
+      "zuege_pro_tag": 216
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rotkreuz Nordost",
+      "bis": "Rotkreuz",
+      "strecke_nr": 110,
+      "strecke": "Rotkreuz",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 78721,
+      "zuege_pro_tag": 216
+    },
+    "abschnitte": [
+      {
+        "von": "Rotkreuz Nordost",
+        "bis": "Rotkreuz",
+        "strecke_nr": 110,
+        "strecke": "Rotkreuz",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 78721,
+        "zuege_pro_tag": 216
+      },
+      {
+        "von": "Rotkreuz Südwest",
+        "bis": "Rotkreuz",
+        "strecke_nr": 110,
+        "strecke": "Rotkreuz",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72588,
+        "zuege_pro_tag": 199
+      },
+      {
+        "von": "Rotkreuz",
+        "bis": "Rotkreuz Südost",
+        "strecke_nr": 110,
+        "strecke": "Rotkreuz",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36796,
+        "zuege_pro_tag": 101
+      },
+      {
+        "von": "Rotkreuz Nordwest",
+        "bis": "Rotkreuz",
+        "strecke_nr": 110,
+        "strecke": "Rotkreuz",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 36253,
+        "zuege_pro_tag": 99
+      },
+      {
+        "von": "Rotkreuz Nordwest",
+        "bis": "Rotkreuz",
+        "strecke_nr": 110,
+        "strecke": "Rotkreuz",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30651,
+        "zuege_pro_tag": 84
+      },
+      {
+        "von": "Rotkreuz",
+        "bis": "Rotkreuz Südost",
+        "strecke_nr": 110,
+        "strecke": "Rotkreuz",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15236,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Rotkreuz Südwest",
+        "bis": "Rotkreuz",
+        "strecke_nr": 110,
+        "strecke": "Rotkreuz",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3339,
+        "zuege_pro_tag": 9
+      },
+      {
+        "von": "Rotkreuz Nordost",
+        "bis": "Rotkreuz",
+        "strecke_nr": 110,
+        "strecke": "Rotkreuz",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 519,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 660,
+        "name": "Thalwil - Zug - Fluhmuhle",
+        "km": 48.9998
+      },
+      {
+        "nummer": 653,
+        "name": "Gexi Ost - Rotkreuz - Immensee West",
+        "km": 99.35989
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 5,
+    "automat_typen": [
+      "S-POS",
+      "andere",
+      "ePOS"
+    ],
+    "billettentwerter": 10,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/4718da809f9ad527dde1247d6e9da053"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rotkreuz-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rotkreuz-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,553 @@
+{
+  "uic": 8505300,
+  "name": "Lugano",
+  "kanton": "TI",
+  "bps": "LG",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Lugano",
+    "kanton": "TI",
+    "isb": "SBB",
+    "evu": "RhB, SBB",
+    "lon": 8.946995,
+    "lat": 46.005501,
+    "dwv": 35600,
+    "dtv": 32300,
+    "dnwv": 25000,
+    "bemerkung": "Ohne FLP; RhB: Bus.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 18600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 27400
+      },
+      {
+        "jahr": 2023,
+        "dwv": 33300
+      },
+      {
+        "jahr": 2024,
+        "dwv": 34200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 35600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Lugano",
+    "abkuerzung": "LG",
+    "hoehe_m_ue_m": 335,
+    "gemeinde": "Lugano",
+    "ortschaft": "Lugano",
+    "bezirk": "Lugano",
+    "kanton": "Ticino",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 36200,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": null
+      },
+      {
+        "jahr": 2016,
+        "anzahl": null
+      },
+      {
+        "jahr": 2016,
+        "anzahl": null
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 22100
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 24200
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 25500
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 23300
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 24100
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 26300
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 17000
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 15500
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 20100
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 21700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 25600
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 27200
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 30000
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 28100
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 34100
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 31700
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 39000
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 36200
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 0.9
+      },
+      {
+        "stunde": 6,
+        "prozent": 3.6
+      },
+      {
+        "stunde": 7,
+        "prozent": 9.2
+      },
+      {
+        "stunde": 8,
+        "prozent": 7.6
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.9
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.8
+      },
+      {
+        "stunde": 11,
+        "prozent": 5.2
+      },
+      {
+        "stunde": 12,
+        "prozent": 6.1
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.4
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.2
+      },
+      {
+        "stunde": 15,
+        "prozent": 6.6
+      },
+      {
+        "stunde": 16,
+        "prozent": 9.2
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.2
+      },
+      {
+        "stunde": 18,
+        "prozent": 7.6
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.7
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.1
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.6
+      },
+      {
+        "stunde": 22,
+        "prozent": 1.5
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.0
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 10.2,
+    "wochentage": [
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.6
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 14.9
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 10.7
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 12.9
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.4
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.0
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.5
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 451,
+    "kuerzeste_m": 220,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 451,
+        "flaeche_netto_m2": 3025.72,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 367,
+        "flaeche_netto_m2": 1203.93,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      },
+      {
+        "nr": "4",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 1086.71,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 4,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "perronhoehen_cm": [
+      25,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 224,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 208,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 208,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 170,
+        "sektoren": [
+          "-",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 20,
+    "segmente_pro_perronhoehe_cm": {
+      "25": 8,
+      "55": 12
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 4
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Lugano",
+      "bis": "Vezia (bif)",
+      "strecke_nr": 88,
+      "strecke": "Giubiasco - BergSTRECKE - Lugano",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 110937,
+      "zuege_pro_tag": 304
+    },
+    "staerkster_personenverkehr": {
+      "von": "Lugano",
+      "bis": "Vezia (bif)",
+      "strecke_nr": 88,
+      "strecke": "Giubiasco - BergSTRECKE - Lugano",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 110937,
+      "zuege_pro_tag": 304
+    },
+    "abschnitte": [
+      {
+        "von": "Lugano",
+        "bis": "Vezia (bif)",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 110937,
+        "zuege_pro_tag": 304
+      },
+      {
+        "von": "Lugano",
+        "bis": "Paradiso",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 88989,
+        "zuege_pro_tag": 244
+      },
+      {
+        "von": "Lugano",
+        "bis": "Vezia (bif)",
+        "strecke_nr": 88,
+        "strecke": "Giubiasco - BergSTRECKE - Lugano",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20813,
+        "zuege_pro_tag": 57
+      },
+      {
+        "von": "Lugano",
+        "bis": "Paradiso",
+        "strecke_nr": 48,
+        "strecke": "Lugano - Chiasso",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20790,
+        "zuege_pro_tag": 57
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 180.44953
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 7,
+    "automat_typen": [
+      "Altri",
+      "ePOS"
+    ],
+    "billettentwerter": 17,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6e7b7fe3ffd59595952c442a76d89cec"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-lugano-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-lugano-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "uic": 8503415,
+  "name": "Rümikon AG",
+  "kanton": "AG",
+  "bps": "RUEN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rümikon AG",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.373667,
+    "lat": 47.565384,
+    "dwv": 140,
+    "dtv": 110,
+    "dnwv": 49,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 130
+      },
+      {
+        "jahr": 2022,
+        "dwv": 130
+      },
+      {
+        "jahr": 2023,
+        "dwv": 130
+      },
+      {
+        "jahr": 2024,
+        "dwv": 120
+      },
+      {
+        "jahr": 2025,
+        "dwv": 140
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rümikon AG",
+    "abkuerzung": "RUEN",
+    "hoehe_m_ue_m": 353.7,
+    "gemeinde": "Zurzach",
+    "ortschaft": "Rümikon AG",
+    "bezirk": "Zurzach",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 119,
+    "kuerzeste_m": 119,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 119,
+        "flaeche_netto_m2": 160.86,
+        "niveaufreier_zugang": "ja",
+        "linie": 701
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Mellikon",
+      "bis": "Rümikon AG",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 12868,
+      "zuege_pro_tag": 35
+    },
+    "staerkster_personenverkehr": {
+      "von": "Mellikon",
+      "bis": "Rümikon AG",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 12868,
+      "zuege_pro_tag": 35
+    },
+    "abschnitte": [
+      {
+        "von": "Mellikon",
+        "bis": "Rümikon AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12868,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Rümikon AG",
+        "bis": "Kaiserstuhl AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12868,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Mellikon",
+        "bis": "Rümikon AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1985,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Rümikon AG",
+        "bis": "Kaiserstuhl AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1985,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 701,
+        "name": "Eglisau - Koblenz - Stein Sackingen Ost",
+        "km": 34.54316
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7082d2e7f989f2ef2c05ec31dd38b934"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

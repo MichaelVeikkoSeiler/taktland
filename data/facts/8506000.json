@@ -1,0 +1,678 @@
+{
+  "uic": 8506000,
+  "name": "Winterthur",
+  "kanton": "ZH",
+  "bps": "W",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Winterthur",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.723821,
+    "lat": 47.500334,
+    "dwv": 116400,
+    "dtv": 103800,
+    "dnwv": 75800,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 109300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 93700
+      },
+      {
+        "jahr": 2023,
+        "dwv": 110900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 114300
+      },
+      {
+        "jahr": 2025,
+        "dwv": 116400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Winterthur",
+    "abkuerzung": "W",
+    "hoehe_m_ue_m": 438.9,
+    "gemeinde": "Winterthur",
+    "ortschaft": "Winterthur",
+    "bezirk": "Winterthur",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 119200,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": 112000
+      },
+      {
+        "jahr": 2014,
+        "anzahl": 115000
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 121000
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 111200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 109200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 121000
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 105900
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 117200
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 121200
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 109900
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 128200
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 116200
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 82300
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 91700
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 86200
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 95000
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 121400
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 111600
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 120100
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 131100
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 123000
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 134700
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 132300
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 119200
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.1
+      },
+      {
+        "stunde": 6,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 7,
+        "prozent": 9.0
+      },
+      {
+        "stunde": 8,
+        "prozent": 6.4
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 11,
+        "prozent": 4.9
+      },
+      {
+        "stunde": 12,
+        "prozent": 6.2
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.3
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.0
+      },
+      {
+        "stunde": 15,
+        "prozent": 6.1
+      },
+      {
+        "stunde": 16,
+        "prozent": 9.2
+      },
+      {
+        "stunde": 17,
+        "prozent": 11.3
+      },
+      {
+        "stunde": 18,
+        "prozent": 8.0
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.5
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.9
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.2
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.3
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 11.3,
+    "wochentage": [
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 15.7
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 16.4
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.5
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 12.8
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 8.6
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.1
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.9
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 5,
+    "laengste_m": 424,
+    "kuerzeste_m": 176,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Hausperron",
+        "laenge_m": 424,
+        "flaeche_netto_m2": 2924.31,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 419,
+        "flaeche_netto_m2": 2792.98,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      },
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 414,
+        "flaeche_netto_m2": 2159.05,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      },
+      {
+        "nr": "8/9",
+        "typ": "Mittelperron",
+        "laenge_m": 340,
+        "flaeche_netto_m2": 1580.42,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 176,
+        "flaeche_netto_m2": 368.3,
+        "niveaufreier_zugang": "ja",
+        "linie": 751
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 9,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 110,
+        "sektoren": [
+          "F",
+          "G",
+          "H",
+          "J"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 105,
+        "sektoren": [
+          "F",
+          "G",
+          "H",
+          "J"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 38,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 57,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 64,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 59,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 78,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 264,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ]
+      },
+      {
+        "nr": "9",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 130,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 19,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 19
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 9,
+    "gleise_mit_daten": 9
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Winterthur West (Abzw)",
+      "bis": "Winterthur",
+      "strecke_nr": 114,
+      "strecke": "Winterthur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 247593,
+      "zuege_pro_tag": 678
+    },
+    "staerkster_personenverkehr": {
+      "von": "Winterthur West (Abzw)",
+      "bis": "Winterthur",
+      "strecke_nr": 114,
+      "strecke": "Winterthur",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 247593,
+      "zuege_pro_tag": 678
+    },
+    "abschnitte": [
+      {
+        "von": "Winterthur West (Abzw)",
+        "bis": "Winterthur",
+        "strecke_nr": 114,
+        "strecke": "Winterthur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 247593,
+        "zuege_pro_tag": 678
+      },
+      {
+        "von": "Winterthur",
+        "bis": "Schwalmenacker (Spw)",
+        "strecke_nr": 114,
+        "strecke": "Winterthur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 246774,
+        "zuege_pro_tag": 676
+      },
+      {
+        "von": "Lantig (B)",
+        "bis": "Winterthur",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40212,
+        "zuege_pro_tag": 110
+      },
+      {
+        "von": "Winterthur",
+        "bis": "Schwalmenacker (Spw)",
+        "strecke_nr": 114,
+        "strecke": "Winterthur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 18596,
+        "zuege_pro_tag": 51
+      },
+      {
+        "von": "Winterthur West (Abzw)",
+        "bis": "Winterthur",
+        "strecke_nr": 114,
+        "strecke": "Winterthur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17857,
+        "zuege_pro_tag": 49
+      },
+      {
+        "von": "Lantig (B)",
+        "bis": "Winterthur",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 751,
+        "name": "ZH Langstr. - Wallisellen - Winterthur",
+        "km": 26.14175
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 9,
+    "automat_typen": [
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 26,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/361ed1828e4386fad0c5a85a3c09fa8e"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-winterthur-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-winterthur-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

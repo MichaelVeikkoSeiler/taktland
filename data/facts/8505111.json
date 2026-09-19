@@ -1,0 +1,224 @@
+{
+  "uic": 8505111,
+  "name": "Sisikon",
+  "kanton": "UR",
+  "bps": "SK",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Sisikon",
+    "kanton": "UR",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 8.620749,
+    "lat": 46.949254,
+    "dwv": 190,
+    "dtv": 210,
+    "dnwv": 250,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 190
+      },
+      {
+        "jahr": 2022,
+        "dwv": 180
+      },
+      {
+        "jahr": 2023,
+        "dwv": 200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 210
+      },
+      {
+        "jahr": 2025,
+        "dwv": 190
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Sisikon",
+    "abkuerzung": "SK",
+    "hoehe_m_ue_m": 446,
+    "gemeinde": "Sisikon",
+    "ortschaft": "Sisikon",
+    "bezirk": null,
+    "kanton": "Uri",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 605
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 600
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      30
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          30
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 121,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "30": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 0,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Sisikon Nord",
+      "bis": "Sisikon",
+      "strecke_nr": 45,
+      "strecke": "Arth-Goldau - Erstfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 52401,
+      "zuege_pro_tag": 144
+    },
+    "staerkster_personenverkehr": {
+      "von": "Sisikon Nord",
+      "bis": "Sisikon",
+      "strecke_nr": 45,
+      "strecke": "Arth-Goldau - Erstfeld",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 52401,
+      "zuege_pro_tag": 144
+    },
+    "abschnitte": [
+      {
+        "von": "Sisikon Nord",
+        "bis": "Sisikon",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52401,
+        "zuege_pro_tag": 144
+      },
+      {
+        "von": "Sisikon",
+        "bis": "Gruonbach (Spw)",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 52375,
+        "zuege_pro_tag": 143
+      },
+      {
+        "von": "Sisikon Nord",
+        "bis": "Sisikon",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35202,
+        "zuege_pro_tag": 96
+      },
+      {
+        "von": "Sisikon",
+        "bis": "Gruonbach (Spw)",
+        "strecke_nr": 45,
+        "strecke": "Arth-Goldau - Erstfeld",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35126,
+        "zuege_pro_tag": 96
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 600,
+        "name": "Immensee - Bellinzona - Chiasso",
+        "km": 26.38269
+      },
+      {
+        "nummer": 605,
+        "name": "Sisikon - Gruonbach (Gleis links)",
+        "km": 26.38272
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/46d6f9dc1a354ddaf46b30b68a8343ad"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

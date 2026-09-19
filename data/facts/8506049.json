@@ -1,0 +1,234 @@
+{
+  "uic": 8506049,
+  "name": "Dachsen",
+  "kanton": "ZH",
+  "bps": "DA",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Dachsen",
+    "kanton": "ZH",
+    "isb": "SBB",
+    "evu": "SBB, Thurbo",
+    "lon": 8.613823,
+    "lat": 47.66709,
+    "dwv": 1000,
+    "dtv": 940,
+    "dnwv": 720,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 910
+      },
+      {
+        "jahr": 2022,
+        "dwv": 820
+      },
+      {
+        "jahr": 2023,
+        "dwv": 940
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1000
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Dachsen",
+    "abkuerzung": "DA",
+    "hoehe_m_ue_m": 394,
+    "gemeinde": "Dachsen",
+    "ortschaft": "Dachsen",
+    "bezirk": "Andelfingen",
+    "kanton": "Zürich",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 220,
+    "kuerzeste_m": 219,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 220,
+        "flaeche_netto_m2": 537.41,
+        "niveaufreier_zugang": "ja",
+        "linie": 762
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 219,
+        "flaeche_netto_m2": 514.13,
+        "niveaufreier_zugang": "ja",
+        "linie": 762
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 221,
+        "sektoren": []
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 220,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 7,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 2,
+      "55": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Schloss Laufen am Rheinfall",
+      "bis": "Dachsen",
+      "strecke_nr": 69,
+      "strecke": "Winterthur - Neuhausen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 40736,
+      "zuege_pro_tag": 112
+    },
+    "staerkster_personenverkehr": {
+      "von": "Schloss Laufen am Rheinfall",
+      "bis": "Dachsen",
+      "strecke_nr": 69,
+      "strecke": "Winterthur - Neuhausen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 40736,
+      "zuege_pro_tag": 112
+    },
+    "abschnitte": [
+      {
+        "von": "Schloss Laufen am Rheinfall",
+        "bis": "Dachsen",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40736,
+        "zuege_pro_tag": 112
+      },
+      {
+        "von": "Dachsen",
+        "bis": "Marthalen Nord",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 40670,
+        "zuege_pro_tag": 111
+      },
+      {
+        "von": "Schloss Laufen am Rheinfall",
+        "bis": "Dachsen",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Dachsen",
+        "bis": "Marthalen Nord",
+        "strecke_nr": 69,
+        "strecke": "Winterthur - Neuhausen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 42,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 762,
+        "name": "Winterthur Nord - Schaffhausen RB Ost",
+        "km": 51.30854
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 4,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/67f4ecbe94e6fe0c23555bd6a2a18584"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

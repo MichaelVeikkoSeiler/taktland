@@ -1,0 +1,383 @@
+{
+  "uic": 8500207,
+  "name": "Solothurn",
+  "kanton": "SO",
+  "bps": "SO",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Solothurn",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "BLS, SBB",
+    "lon": 7.542689,
+    "lat": 47.204193,
+    "dwv": 17100,
+    "dtv": 15600,
+    "dnwv": 12300,
+    "bemerkung": "Ohne ASM und RBS.",
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 18300
+      },
+      {
+        "jahr": 2022,
+        "dwv": 15100
+      },
+      {
+        "jahr": 2023,
+        "dwv": 16900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 17500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 17100
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Solothurn",
+    "abkuerzung": "SO",
+    "hoehe_m_ue_m": 432,
+    "gemeinde": "Solothurn",
+    "ortschaft": "Solothurn",
+    "bezirk": "Solothurn",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 3,
+    "laengste_m": 401,
+    "kuerzeste_m": 221,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 401,
+        "flaeche_netto_m2": 1946.71,
+        "niveaufreier_zugang": "ja",
+        "linie": 415
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 401,
+        "flaeche_netto_m2": 1475.42,
+        "niveaufreier_zugang": "ja",
+        "linie": 410
+      },
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 221,
+        "flaeche_netto_m2": 1233.11,
+        "niveaufreier_zugang": "ja",
+        "linie": 415
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 5,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "5",
+      "6"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          25,
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 388,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          25,
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 342,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          20,
+          25,
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 342,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 221,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [],
+        "hilfstritt": false,
+        "perrontyp": null,
+        "perronkante_m": null,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 18,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 1,
+      "25": 6,
+      "35": 6,
+      "55": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 4,
+    "gleise_mit_daten": 5
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Solothurn West",
+      "bis": "Solothurn",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 74507,
+      "zuege_pro_tag": 204
+    },
+    "staerkster_personenverkehr": {
+      "von": "Solothurn West",
+      "bis": "Solothurn",
+      "strecke_nr": 7,
+      "strecke": "Biel Mett - Solothurn",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 74507,
+      "zuege_pro_tag": 204
+    },
+    "abschnitte": [
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 74507,
+        "zuege_pro_tag": 204
+      },
+      {
+        "von": "Solothurn",
+        "bis": "Luterbach-Attisholz",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 43997,
+        "zuege_pro_tag": 121
+      },
+      {
+        "von": "Solothurn",
+        "bis": "Biberist Ost",
+        "strecke_nr": 402,
+        "strecke": "Solothurn - Burgdorf",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28861,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Solothurn",
+        "bis": "Luterbach-Attisholz",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 28702,
+        "zuege_pro_tag": 79
+      },
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn",
+        "strecke_nr": 7,
+        "strecke": "Biel Mett - Solothurn",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25017,
+        "zuege_pro_tag": 69
+      },
+      {
+        "von": "Solothurn",
+        "bis": "Inkwil (Verzw)",
+        "strecke_nr": 22,
+        "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13020,
+        "zuege_pro_tag": 36
+      },
+      {
+        "von": "Solothurn",
+        "bis": "Biberist Ost",
+        "strecke_nr": 402,
+        "strecke": "Solothurn - Burgdorf",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3283,
+        "zuege_pro_tag": 9
+      },
+      {
+        "von": "Solothurn",
+        "bis": "Inkwil (Verzw)",
+        "strecke_nr": 22,
+        "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 323,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 4,
+    "items": [
+      {
+        "nummer": 415,
+        "name": "Wanzwil (Abzw) - Solothurn - Busswil",
+        "km": 80.29297
+      },
+      {
+        "nummer": 411,
+        "name": "Solothurn - Niederbipp",
+        "km": 0
+      },
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 73.81863
+      },
+      {
+        "nummer": 292,
+        "name": "Solothurn - Bern RBS",
+        "km": 0
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 7,
+    "wartehallen": 4,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/62475d419011b096659be971b2f6b8ea"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-solothurn-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-solothurn-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

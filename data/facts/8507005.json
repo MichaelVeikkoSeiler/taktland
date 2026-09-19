@@ -1,0 +1,241 @@
+{
+  "uic": 8507005,
+  "name": "Rubigen",
+  "kanton": "BE",
+  "bps": "RUB",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Rubigen",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "BLS",
+    "lon": 7.545368,
+    "lat": 46.89917,
+    "dwv": 1900,
+    "dtv": 1700,
+    "dnwv": 1100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1900
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 2000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Rubigen",
+    "abkuerzung": "RUB",
+    "hoehe_m_ue_m": 549.016,
+    "gemeinde": "Rubigen",
+    "ortschaft": "Rubigen",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 227,
+    "kuerzeste_m": 221,
+    "items": [
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 227,
+        "flaeche_netto_m2": 580.79,
+        "niveaufreier_zugang": "ja",
+        "linie": 290
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 221,
+        "flaeche_netto_m2": 569.76,
+        "niveaufreier_zugang": "ja",
+        "linie": 290
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 223,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 227,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Rubigen",
+      "bis": "Münsingen",
+      "strecke_nr": 24,
+      "strecke": "Wankdorf - Uttigen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80360,
+      "zuege_pro_tag": 220
+    },
+    "staerkster_personenverkehr": {
+      "von": "Rubigen",
+      "bis": "Münsingen",
+      "strecke_nr": 24,
+      "strecke": "Wankdorf - Uttigen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 80360,
+      "zuege_pro_tag": 220
+    },
+    "abschnitte": [
+      {
+        "von": "Rubigen",
+        "bis": "Münsingen",
+        "strecke_nr": 24,
+        "strecke": "Wankdorf - Uttigen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80360,
+        "zuege_pro_tag": 220
+      },
+      {
+        "von": "Gümligen Süd (Abzw)",
+        "bis": "Rubigen",
+        "strecke_nr": 24,
+        "strecke": "Wankdorf - Uttigen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 80356,
+        "zuege_pro_tag": 220
+      },
+      {
+        "von": "Rubigen",
+        "bis": "Münsingen",
+        "strecke_nr": 24,
+        "strecke": "Wankdorf - Uttigen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17051,
+        "zuege_pro_tag": 47
+      },
+      {
+        "von": "Gümligen Süd (Abzw)",
+        "bis": "Rubigen",
+        "strecke_nr": 24,
+        "strecke": "Wankdorf - Uttigen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 16873,
+        "zuege_pro_tag": 46
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 290,
+        "name": "Bern Wylerfeld - Thun",
+        "km": 119.03812
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 3,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/72d82d78d8564a31f2930f75e478d661"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

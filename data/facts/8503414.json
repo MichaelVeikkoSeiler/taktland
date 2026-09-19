@@ -1,0 +1,178 @@
+{
+  "uic": 8503414,
+  "name": "Mellikon",
+  "kanton": "AG",
+  "bps": "MELN",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Mellikon",
+    "kanton": "AG",
+    "isb": "SBB",
+    "evu": "Thurbo",
+    "lon": 8.352511,
+    "lat": 47.568485,
+    "dwv": 70,
+    "dtv": 60,
+    "dnwv": 49,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 60
+      },
+      {
+        "jahr": 2022,
+        "dwv": 50
+      },
+      {
+        "jahr": 2023,
+        "dwv": 60
+      },
+      {
+        "jahr": 2024,
+        "dwv": 70
+      },
+      {
+        "jahr": 2025,
+        "dwv": 70
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Mellikon",
+    "abkuerzung": "MELN",
+    "hoehe_m_ue_m": 348,
+    "gemeinde": "Mellikon",
+    "ortschaft": "Mellikon",
+    "bezirk": "Zurzach",
+    "kanton": "Aargau",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 120,
+    "kuerzeste_m": 120,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 120,
+        "flaeche_netto_m2": 173.97,
+        "niveaufreier_zugang": "ja",
+        "linie": 701
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Mellikon",
+      "bis": "Rümikon AG",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 12868,
+      "zuege_pro_tag": 35
+    },
+    "staerkster_personenverkehr": {
+      "von": "Mellikon",
+      "bis": "Rümikon AG",
+      "strecke_nr": 60,
+      "strecke": "Koblenz - Eglisau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 12868,
+      "zuege_pro_tag": 35
+    },
+    "abschnitte": [
+      {
+        "von": "Mellikon",
+        "bis": "Rümikon AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12868,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Rekingen AG",
+        "bis": "Mellikon",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12868,
+        "zuege_pro_tag": 35
+      },
+      {
+        "von": "Mellikon",
+        "bis": "Rümikon AG",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1985,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Rekingen AG",
+        "bis": "Mellikon",
+        "strecke_nr": 60,
+        "strecke": "Koblenz - Eglisau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1985,
+        "zuege_pro_tag": 5
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 701,
+        "name": "Eglisau - Koblenz - Stein Sackingen Ost",
+        "km": 36.19319
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 0,
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/7ec239f3fbb467ce15cefe6759141c1d"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

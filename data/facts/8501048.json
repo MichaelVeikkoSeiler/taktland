@@ -1,0 +1,189 @@
+{
+  "uic": 8501048,
+  "name": "Lonay-Préverenges",
+  "kanton": "VD",
+  "bps": "LON",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Lonay-Préverenges",
+    "kanton": "VD",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 6.519545,
+    "lat": 46.523136,
+    "dwv": 650,
+    "dtv": 570,
+    "dnwv": 370,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 370
+      },
+      {
+        "jahr": 2022,
+        "dwv": 310
+      },
+      {
+        "jahr": 2023,
+        "dwv": 310
+      },
+      {
+        "jahr": 2024,
+        "dwv": 340
+      },
+      {
+        "jahr": 2025,
+        "dwv": 650
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Lonay-Préverenges",
+    "abkuerzung": "LON",
+    "hoehe_m_ue_m": 386.707,
+    "gemeinde": "Lonay",
+    "ortschaft": "Lonay",
+    "bezirk": "Morges",
+    "kanton": "Vaud",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 2,
+    "laengste_m": 216,
+    "kuerzeste_m": 154,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 216,
+        "flaeche_netto_m2": 416.92,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      },
+      {
+        "nr": "2",
+        "typ": "Aussenperron",
+        "laenge_m": 154,
+        "flaeche_netto_m2": 312.53,
+        "niveaufreier_zugang": "ja",
+        "linie": 150
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "sicherheitslinie": "Ja"
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Lonay-Préverenges",
+      "bis": "Lonay A (bif)",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 118216,
+      "zuege_pro_tag": 324
+    },
+    "staerkster_personenverkehr": {
+      "von": "Lonay-Préverenges",
+      "bis": "Lonay A (bif)",
+      "strecke_nr": 1,
+      "strecke": "Genève Aéroport - Lausanne",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 118216,
+      "zuege_pro_tag": 324
+    },
+    "abschnitte": [
+      {
+        "von": "Lonay-Préverenges",
+        "bis": "Lonay A (bif)",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 118216,
+        "zuege_pro_tag": 324
+      },
+      {
+        "von": "Morges-St-Jean",
+        "bis": "Lonay-Préverenges",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 118214,
+        "zuege_pro_tag": 324
+      },
+      {
+        "von": "Lonay-Préverenges",
+        "bis": "Lonay A (bif)",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12073,
+        "zuege_pro_tag": 33
+      },
+      {
+        "von": "Morges-St-Jean",
+        "bis": "Lonay-Préverenges",
+        "strecke_nr": 1,
+        "strecke": "Genève Aéroport - Lausanne",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 12073,
+        "zuege_pro_tag": 33
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 150,
+        "name": "Lausanne - Geneve-Aeroport",
+        "km": 10.12288
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 2,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/384fa0ce381ea264a2ba1cdb9d1eda67"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

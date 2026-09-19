@@ -1,0 +1,253 @@
+{
+  "uic": 8500016,
+  "name": "Basel St. Johann",
+  "kanton": "BS",
+  "bps": "BSSJ",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Basel St. Johann",
+    "kanton": "BS",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.572529,
+    "lat": 47.570306,
+    "dwv": 250,
+    "dtv": 190,
+    "dnwv": 60,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 90
+      },
+      {
+        "jahr": 2022,
+        "dwv": 140
+      },
+      {
+        "jahr": 2023,
+        "dwv": 100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 150
+      },
+      {
+        "jahr": 2025,
+        "dwv": 250
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Basel St. Johann",
+    "abkuerzung": "BSSJ",
+    "hoehe_m_ue_m": 260.5,
+    "gemeinde": "Basel",
+    "ortschaft": "Basel",
+    "bezirk": null,
+    "kanton": "Basel-Stadt",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 199,
+    "kuerzeste_m": 199,
+    "items": [
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 199,
+        "flaeche_netto_m2": 1178.85,
+        "niveaufreier_zugang": "ja",
+        "linie": 510
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "7",
+      "8"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 199,
+        "sektoren": []
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 199,
+        "sektoren": []
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 4,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 4
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Basel Grenze (FR)",
+      "bis": "Basel St. Johann",
+      "strecke_nr": 106,
+      "strecke": "Basel SBB PB / GB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33310,
+      "zuege_pro_tag": 91
+    },
+    "staerkster_personenverkehr": {
+      "von": "Basel Grenze (FR)",
+      "bis": "Basel St. Johann",
+      "strecke_nr": 106,
+      "strecke": "Basel SBB PB / GB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 33310,
+      "zuege_pro_tag": 91
+    },
+    "abschnitte": [
+      {
+        "von": "Basel Grenze (FR)",
+        "bis": "Basel St. Johann",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 33310,
+        "zuege_pro_tag": 91
+      },
+      {
+        "von": "Basel St. Johann",
+        "bis": "Basel SBB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 31587,
+        "zuege_pro_tag": 87
+      },
+      {
+        "von": "Basel St. Johann",
+        "bis": "Basel SBB",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 8146,
+        "zuege_pro_tag": 22
+      },
+      {
+        "von": "Basel Grenze (FR)",
+        "bis": "Basel St. Johann",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7124,
+        "zuege_pro_tag": 20
+      },
+      {
+        "von": "Morgartenring (Spw)",
+        "bis": "Basel St. Johann",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1384,
+        "zuege_pro_tag": 4
+      },
+      {
+        "von": "Morgartenring (Spw)",
+        "bis": "Basel St. Johann",
+        "strecke_nr": 106,
+        "strecke": "Basel SBB PB / GB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 287,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 3,
+    "items": [
+      {
+        "nummer": 510,
+        "name": "Mulhouse-Ville - Basel SBB",
+        "km": 137.81135
+      },
+      {
+        "nummer": 9497,
+        "name": "Basel St.Johann - Basel SBB GB West(Spw)",
+        "km": 0
+      },
+      {
+        "nummer": 9495,
+        "name": "Basel St.Johann - Basel Mitte",
+        "km": 0
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/bf1f66671621dc3b49eeada6b2c4d098"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

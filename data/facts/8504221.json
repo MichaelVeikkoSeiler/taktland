@@ -1,0 +1,630 @@
+{
+  "uic": 8504221,
+  "name": "Neuchâtel",
+  "kanton": "NE",
+  "bps": "NE",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Neuchâtel",
+    "kanton": "NE",
+    "isb": "SBB",
+    "evu": "BLS, SBB, TPF, transN",
+    "lon": 6.935702,
+    "lat": 46.996727,
+    "dwv": 32600,
+    "dtv": 29300,
+    "dnwv": 22000,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 28800
+      },
+      {
+        "jahr": 2022,
+        "dwv": 26900
+      },
+      {
+        "jahr": 2023,
+        "dwv": 31200
+      },
+      {
+        "jahr": 2024,
+        "dwv": 32700
+      },
+      {
+        "jahr": 2025,
+        "dwv": 32600
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Neuchâtel",
+    "abkuerzung": "NE",
+    "hoehe_m_ue_m": 479.22,
+    "gemeinde": "Neuchâtel",
+    "ortschaft": "Neuchâtel",
+    "bezirk": null,
+    "kanton": "Neuchâtel",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 27900,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 30600
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 33400
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 30400
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 33200
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 30200
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 33000
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 32600
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 30000
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 30400
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 33000
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 21900
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 23600
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 23500
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 25000
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 28600
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 26700
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 29300
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 27100
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 26700
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 28900
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 30600
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 27900
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.2
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.0
+      },
+      {
+        "stunde": 6,
+        "prozent": 4.5
+      },
+      {
+        "stunde": 7,
+        "prozent": 9.5
+      },
+      {
+        "stunde": 8,
+        "prozent": 7.5
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 11,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 12,
+        "prozent": 5.9
+      },
+      {
+        "stunde": 13,
+        "prozent": 4.7
+      },
+      {
+        "stunde": 14,
+        "prozent": 4.5
+      },
+      {
+        "stunde": 15,
+        "prozent": 5.7
+      },
+      {
+        "stunde": 16,
+        "prozent": 8.6
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.5
+      },
+      {
+        "stunde": 18,
+        "prozent": 8.1
+      },
+      {
+        "stunde": 19,
+        "prozent": 5.4
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.7
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.9
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.2
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.4
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 10.5,
+    "wochentage": [
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.6
+      },
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 16.0
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.1
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.7
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 15.4
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 11.6
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 10.7
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 4,
+    "laengste_m": 419,
+    "kuerzeste_m": 187,
+    "items": [
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 419,
+        "flaeche_netto_m2": 1931.3,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "4/5",
+        "typ": "Mittelperron",
+        "laenge_m": 402,
+        "flaeche_netto_m2": 2084.36,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      },
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 218,
+        "flaeche_netto_m2": 895.63,
+        "niveaufreier_zugang": "ja",
+        "linie": 215
+      },
+      {
+        "nr": "6/7",
+        "typ": "Mittelperron",
+        "laenge_m": 187,
+        "flaeche_netto_m2": 864.53,
+        "niveaufreier_zugang": "ja",
+        "linie": 210
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 7,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 218,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 303,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 303,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 302,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 302,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 187,
+        "sektoren": [
+          "-",
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 188,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 27,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 27
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 7,
+    "gleise_mit_daten": 7
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Neuchâtel-Vauseyon (bif)",
+      "bis": "Neuchâtel",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 117781,
+      "zuege_pro_tag": 323
+    },
+    "staerkster_personenverkehr": {
+      "von": "Neuchâtel-Vauseyon (bif)",
+      "bis": "Neuchâtel",
+      "strecke_nr": 6,
+      "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 117781,
+      "zuege_pro_tag": 323
+    },
+    "abschnitte": [
+      {
+        "von": "Neuchâtel-Vauseyon (bif)",
+        "bis": "Neuchâtel",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 117781,
+        "zuege_pro_tag": 323
+      },
+      {
+        "von": "Neuchâtel",
+        "bis": "Neuchâtel Est (bif)",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 104398,
+        "zuege_pro_tag": 286
+      },
+      {
+        "von": "Neuchâtel-Vauseyon (bif)",
+        "bis": "Neuchâtel",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20791,
+        "zuege_pro_tag": 57
+      },
+      {
+        "von": "Neuchâtel",
+        "bis": "Neuchâtel Est (bif)",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20122,
+        "zuege_pro_tag": 55
+      },
+      {
+        "von": "Neuchâtel",
+        "bis": "Neuchâtel Cargo",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2189,
+        "zuege_pro_tag": 6
+      },
+      {
+        "von": "Neuchâtel",
+        "bis": "Neuchâtel Cargo",
+        "strecke_nr": 6,
+        "strecke": "Renens - Yverdon - Neuchâtel - Biel",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 691,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 210,
+        "name": "Daillens - Biel/Bienne",
+        "km": 75.29488
+      },
+      {
+        "nummer": 215,
+        "name": "Neuchatel - Neuchatel Est",
+        "km": 75.29488
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 4,
+    "automat_typen": [
+      "BATS",
+      "ePOS"
+    ],
+    "billettentwerter": 7,
+    "wartehallen": 2,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9d009b06053f9931edf53912d99955e5"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-neuchatel-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-neuchatel-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "uic": 8500103,
+  "name": "Sorvilier",
+  "kanton": "BE",
+  "bps": "SOR",
+  "tier": "S",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Sorvilier",
+    "kanton": "BE",
+    "isb": "SBB",
+    "evu": "SBB",
+    "lon": 7.305794,
+    "lat": 47.239354,
+    "dwv": 70,
+    "dtv": 60,
+    "dnwv": 49,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 80
+      },
+      {
+        "jahr": 2022,
+        "dwv": 70
+      },
+      {
+        "jahr": 2023,
+        "dwv": 70
+      },
+      {
+        "jahr": 2024,
+        "dwv": 70
+      },
+      {
+        "jahr": 2025,
+        "dwv": 70
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Sorvilier",
+    "abkuerzung": "SOR",
+    "hoehe_m_ue_m": 681.07,
+    "gemeinde": "Sorvilier",
+    "ortschaft": "Sorvilier",
+    "bezirk": "Jura bernois",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 1,
+    "laengste_m": 147,
+    "kuerzeste_m": 147,
+    "items": [
+      {
+        "nr": "1",
+        "typ": "Hausperron",
+        "laenge_m": 147,
+        "flaeche_netto_m2": 353,
+        "niveaufreier_zugang": "nein",
+        "linie": 226
+      }
+    ]
+  },
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Malleray-Bévilard",
+      "bis": "Sorvilier",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 15401,
+      "zuege_pro_tag": 42
+    },
+    "staerkster_personenverkehr": {
+      "von": "Malleray-Bévilard",
+      "bis": "Sorvilier",
+      "strecke_nr": 13,
+      "strecke": "Sonceboz - Moutier",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 15401,
+      "zuege_pro_tag": 42
+    },
+    "abschnitte": [
+      {
+        "von": "Malleray-Bévilard",
+        "bis": "Sorvilier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15401,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Sorvilier",
+        "bis": "Court",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15401,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Malleray-Bévilard",
+        "bis": "Sorvilier",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Sorvilier",
+        "bis": "Court",
+        "strecke_nr": 13,
+        "strecke": "Sonceboz - Moutier",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 86,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 1,
+    "items": [
+      {
+        "nummer": 226,
+        "name": "Sonceboz-Sombeval - Moutier - Delemont",
+        "km": 64.19957
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": false,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 1,
+    "wartehallen": 1,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/817d8008ec8e26a9ea4b1931a48c13d6"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}

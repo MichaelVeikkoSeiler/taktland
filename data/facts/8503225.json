@@ -1,0 +1,363 @@
+{
+  "uic": 8503225,
+  "name": "Ziegelbrücke",
+  "kanton": "SG",
+  "bps": "ZB",
+  "tier": "M",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Ziegelbrücke",
+    "kanton": "SG",
+    "isb": "SBB",
+    "evu": "SBB, SOB",
+    "lon": 9.060052,
+    "lat": 47.136156,
+    "dwv": 12400,
+    "dtv": 12000,
+    "dnwv": 11100,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 10100
+      },
+      {
+        "jahr": 2022,
+        "dwv": 10000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 12100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 12100
+      },
+      {
+        "jahr": 2025,
+        "dwv": 12400
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Ziegelbrücke",
+    "abkuerzung": "ZB",
+    "hoehe_m_ue_m": 425,
+    "gemeinde": "Schänis",
+    "ortschaft": "Ziegelbrücke",
+    "bezirk": "See-Gaster",
+    "kanton": "St. Gallen",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 4,
+    "laengste_m": 429,
+    "kuerzeste_m": 140,
+    "items": [
+      {
+        "nr": "9/10",
+        "typ": "Mittelperron",
+        "laenge_m": 429,
+        "flaeche_netto_m2": 1955.54,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      },
+      {
+        "nr": "5/6",
+        "typ": "Mittelperron",
+        "laenge_m": 425,
+        "flaeche_netto_m2": 2032.04,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      },
+      {
+        "nr": "7/8",
+        "typ": "Mittelperron",
+        "laenge_m": 384,
+        "flaeche_netto_m2": 1833.2,
+        "niveaufreier_zugang": "ja",
+        "linie": 720
+      },
+      {
+        "nr": "1",
+        "typ": "Dienstperron",
+        "laenge_m": 140,
+        "flaeche_netto_m2": null,
+        "niveaufreier_zugang": "ja",
+        "linie": 890
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 374,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "6",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 374,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 336,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 336,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "9",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 372,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "10",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 374,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 17,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 17
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 6,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bilten",
+      "bis": "Ziegelbrücke",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84654,
+      "zuege_pro_tag": 232
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bilten",
+      "bis": "Ziegelbrücke",
+      "strecke_nr": 53,
+      "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 84654,
+      "zuege_pro_tag": 232
+    },
+    "abschnitte": [
+      {
+        "von": "Bilten",
+        "bis": "Ziegelbrücke",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 84654,
+        "zuege_pro_tag": 232
+      },
+      {
+        "von": "Ziegelbrücke",
+        "bis": "Weesen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 54565,
+        "zuege_pro_tag": 149
+      },
+      {
+        "von": "Ziegelbrücke",
+        "bis": "Nieder- und Oberurnen",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29530,
+        "zuege_pro_tag": 81
+      },
+      {
+        "von": "Schänis",
+        "bis": "Ziegelbrücke",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 27941,
+        "zuege_pro_tag": 77
+      },
+      {
+        "von": "Ziegelbrücke",
+        "bis": "Weesen",
+        "strecke_nr": 54,
+        "strecke": "Ziegelbrücke / Buchs - Sargans - Chur",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7921,
+        "zuege_pro_tag": 22
+      },
+      {
+        "von": "Bilten",
+        "bis": "Ziegelbrücke",
+        "strecke_nr": 53,
+        "strecke": "Thalwil - Pfäffikon - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 7364,
+        "zuege_pro_tag": 20
+      },
+      {
+        "von": "Ziegelbrücke",
+        "bis": "Nieder- und Oberurnen",
+        "strecke_nr": 55,
+        "strecke": "Ziegelbrücke - Glarus - Linthal",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 526,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Schänis",
+        "bis": "Ziegelbrücke",
+        "strecke_nr": 78,
+        "strecke": "Uznach - Ziegelbrücke",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 112,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 2,
+    "items": [
+      {
+        "nummer": 890,
+        "name": "Sargans Ost - Ziegelbrucke",
+        "km": 33.60528
+      },
+      {
+        "nummer": 720,
+        "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
+        "km": 57.14637
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter": 6,
+    "wartehallen": 5,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d4648e6f25b3ff458e8b619814d3db43"
+  },
+  "bahnhofplan": null,
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services"
+  ]
+}
