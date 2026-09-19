@@ -1,0 +1,353 @@
+{
+  "uic": 8506306,
+  "name": "Rorschach Hafen",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "wifistation",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Rorschach Hafen liegt in der Gemeinde Rorschach im Kanton St. Gallen, auf 398 Metern über Meer. An einem Werktag steigen hier 1300 Personen ein und aus, an einem freien Tag 910. Die Anlage gehört der SBB, die Züge fahren von Thurbo.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 1300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 910,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 398,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "Thurbo",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Rorschach Hafen ein und aus?",
+          "options": [
+            "380",
+            "1300",
+            "3400",
+            "7600"
+          ],
+          "correct": 1,
+          "explanation": "1300 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Züge in Rorschach Hafen werden von der SBB gefahren.",
+          "correct": false,
+          "explanation": "Erfasst ist Thurbo als Bahnunternehmen. Die Anlage selbst gehört der SBB.",
+          "factRef": "steckbrief.evu",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Erfasst sind 2 Perrons, beide 123 Meter lang: ein Aussenperron und ein Hausperron. Bei keinem der beiden ist ein niveaufreier Zugang vermerkt.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Länge der Perrons",
+          "value": 123,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 0,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang sind die erfassten Perrons in Rorschach Hafen?",
+          "options": [
+            "64 m",
+            "123 m",
+            "260 m",
+            "410 m"
+          ],
+          "correct": 1,
+          "explanation": "123 Meter, beide gleich lang.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "Für keines der 2 erfassten Perrons ist ein niveaufreier Zugang vermerkt. Wer zum Zug will, muss also mit einer Gleisquerung rechnen. Eine visuell-taktile Sicherheitslinie ist vorhanden. Zur Höhe der Perronkanten liegen keine Daten vor.",
+      "erlaeuterung": "Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht, etwa über eine Unterführung oder eine Rampe. Wo das fehlt, führt der Weg über einen gesicherten Übergang auf Schienenhöhe.",
+      "facts": [
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 0,
+          "unit": null,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Erfasste Perrons",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_mit_daten"
+        },
+        {
+          "label": "Visuell-taktile Sicherheitslinie",
+          "value": "Ja",
+          "unit": null,
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Rorschach Hafen sind ohne Gleisquerung erreichbar.",
+          "correct": false,
+          "explanation": "Für keines der beiden Perrons ist ein niveaufreier Zugang vermerkt.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der erfassten Perrons sind niveaufrei erreichbar?",
+          "options": [
+            "0",
+            "1",
+            "2"
+          ],
+          "correct": 0,
+          "explanation": "Keines. Das unterscheidet Rorschach Hafen von den meisten erfassten Bahnhöfen.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf der Strecke",
+      "body": "Von Horn her verkehren 29'775 Personenzüge pro Jahr, rund 82 pro Tag in beiden Richtungen zusammen. Gleich viele sind es Richtung Rorschach. Dazu kommen 6 Güterzüge pro Tag von Horn her.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Abschnitt Horn",
+          "value": 82,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag, Abschnitt Horn",
+          "value": 6,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt von Horn her?",
+          "options": [
+            "26",
+            "82",
+            "230",
+            "540"
+          ],
+          "correct": 1,
+          "explanation": "Rund 82 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linie",
+      "body": "Rorschach Hafen liegt an der Linie 825 von Romanshorn Feld H nach Rorschach.",
+      "facts": [
+        {
+          "label": "Linie",
+          "value": 825,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "Rorschach Hafen liegt an der Linie ___.",
+          "options": [
+            "225",
+            "450",
+            "825",
+            "910"
+          ],
+          "correct": 2,
+          "explanation": "Linie 825, von Romanshorn Feld H nach Rorschach.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 1 Billettautomat, 4 Billettentwerter und 1 Wartehalle. Rorschach Hafen steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 1,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 4,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 1,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Rorschach Hafen erfasst?",
+          "options": [
+            "1",
+            "4",
+            "9",
+            "15"
+          ],
+          "correct": 1,
+          "explanation": "4 Entwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Rorschach Hafen ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rorschach-hafen-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Rorschach Hafen gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja. Ein Plan liegt nur für einen kleinen Teil der Bahnhöfe vor.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 2 erfassten Perrons sind 0 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne AB.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

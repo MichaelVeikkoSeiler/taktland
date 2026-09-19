@@ -255,9 +255,17 @@ def pruefe(profil, facts, fix=False, entfernen=False):
         # nicht nennen, sonst wird aus der Erlaeuterung wieder eine Behauptung.
         erl = kap.get("erlaeuterung")
         if erl:
-            if profil["name"].split()[0].lower() in erl.lower():
+            # Nur den vollen Namen und aussagekraeftige Namensteile pruefen, mit
+            # Wortgrenzen. Sonst trifft "S." aus "S. Nazzaro" jedes Wort, das auf
+            # "s." endet, und "La" aus "La Chaux-de-Fonds" jedes "la".
+            name = profil["name"]
+            teile = [name] + [w for w in re.split(r"[\s/()-]+", name) if len(w) >= 4]
+            getroffen = [w for w in teile
+                         if re.search(rf"\b{re.escape(w)}\b", erl, re.I)]
+            if getroffen:
                 b.fehlt(f"{wo}/erlaeuterung",
-                        "nennt den Bahnhof. Erläuterungen sind allgemein zu halten")
+                        f"nennt den Bahnhof («{getroffen[0]}»). "
+                        "Erläuterungen sind allgemein zu halten")
             for roh in ZAHL.findall(erl):
                 n = zahl(roh)
                 if n is not None and not belegt(n, erlaubt) and n not in NORMHOEHEN:
