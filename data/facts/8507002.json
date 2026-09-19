@@ -4,7 +4,7 @@
   "kanton": "BE",
   "bps": "OST",
   "tier": "S",
-  "datenstand": "2026-09-19",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -134,7 +134,9 @@
     ]
   },
   "hindernisfreiheit": {
-    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "perrons_niveaufrei": 2,
+    "perrons_mit_daten": 2,
     "segmente": 14,
     "segmente_pro_perronhoehe_cm": {
       "20": 2,
@@ -260,6 +262,11 @@
       "thema": "Sektoren",
       "grund": "Zu den Gleisen 1, 2, 3 sind keine Sektortafeln erfasst.",
       "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
     },
     {
       "thema": "WLAN",

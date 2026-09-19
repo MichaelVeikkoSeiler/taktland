@@ -4,7 +4,7 @@
   "kanton": "SZ",
   "bps": "MERL",
   "tier": "S",
-  "datenstand": "2026-09-19",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -76,7 +76,11 @@
     ]
   },
   "gleise": null,
-  "hindernisfreiheit": null,
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "perrons_niveaufrei": 1,
+    "perrons_mit_daten": 1
+  },
   "zuege": {
     "source": "zugzahlen",
     "jahr": 2025,
@@ -195,11 +199,6 @@
       "quelle": "wifistation"
     },
     {
-      "thema": "Hindernisfreiheit",
-      "grund": "Zur Hindernisfreiheit liegen für diesen Bahnhof keine Daten vor.",
-      "quelle": "21197_behig-haltekantesegment"
-    },
-    {
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
@@ -209,6 +208,7 @@
     "steckbrief",
     "stammdaten",
     "perrons",
+    "hindernisfreiheit",
     "zuege",
     "linien",
     "services"

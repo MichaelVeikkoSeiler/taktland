@@ -4,7 +4,7 @@
   "kanton": "AG",
   "bps": "WE",
   "tier": "M",
-  "datenstand": "2026-09-19",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -171,7 +171,10 @@
     ]
   },
   "hindernisfreiheit": {
-    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "perrons_niveaufrei": 3,
+    "perrons_mit_daten": 4,
+    "gleisquerung_noetig": true,
     "segmente": 17,
     "segmente_pro_perronhoehe_cm": {
       "20": 3,
@@ -346,6 +349,11 @@
       "thema": "Sektoren",
       "grund": "Zu Gleis 1 sind keine Sektortafeln erfasst.",
       "quelle": "sektortafel"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 4 erfassten Perrons sind 3 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
     },
     {
       "thema": "WLAN",

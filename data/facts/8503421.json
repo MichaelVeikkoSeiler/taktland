@@ -4,7 +4,7 @@
   "kanton": "Ausland",
   "bps": null,
   "tier": "S",
-  "datenstand": "2026-09-19",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -119,7 +119,10 @@
     ]
   },
   "hindernisfreiheit": {
-    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "perrons_niveaufrei": 1,
+    "perrons_mit_daten": 2,
+    "gleisquerung_noetig": true,
     "gleise_mit_55cm": 0,
     "gleise_mit_daten": 3
   },
@@ -151,6 +154,16 @@
     {
       "thema": "Vollständigkeit der Gleise",
       "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 2 erfassten Perrons ist 1 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {

@@ -4,7 +4,7 @@
   "kanton": "GE",
   "bps": "GEAP",
   "tier": "L",
-  "datenstand": "2026-09-19",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -459,7 +459,10 @@
     ]
   },
   "hindernisfreiheit": {
-    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "perrons_niveaufrei": 5,
+    "perrons_mit_daten": 6,
+    "gleisquerung_noetig": true,
     "segmente": 8,
     "segmente_pro_perronhoehe_cm": {
       "55": 8
@@ -542,6 +545,11 @@
       "thema": "Vollständigkeit der Gleise",
       "grund": "Erfasst sind 4 Gleise (1, 2, 3, 4). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 6 erfassten Perrons sind 5 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
     },
     {
       "thema": "Stand der BehiG-Daten",

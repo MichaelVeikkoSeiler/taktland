@@ -4,7 +4,7 @@
   "kanton": "SG",
   "bps": "SG",
   "tier": "L",
-  "datenstand": "2026-09-19",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -400,7 +400,9 @@
     ]
   },
   "hindernisfreiheit": {
-    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "perrons_niveaufrei": 5,
+    "perrons_mit_daten": 5,
     "segmente": 20,
     "segmente_pro_perronhoehe_cm": {
       "35": 3,

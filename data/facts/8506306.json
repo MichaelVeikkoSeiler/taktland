@@ -4,7 +4,7 @@
   "kanton": "SG",
   "bps": "RSHF",
   "tier": "L",
-  "datenstand": "2026-09-19",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -85,7 +85,10 @@
   },
   "gleise": null,
   "hindernisfreiheit": {
-    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "perrons_niveaufrei": 0,
+    "perrons_mit_daten": 2,
+    "gleisquerung_noetig": true,
     "sicherheitslinie": "Ja"
   },
   "zuege": {
@@ -200,6 +203,11 @@
       "thema": "Gleise",
       "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
       "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 2 erfassten Perrons sind 0 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
     },
     {
       "thema": "WLAN",

@@ -4,7 +4,7 @@
   "kanton": "LU",
   "bps": "WH",
   "tier": "S",
-  "datenstand": "2026-09-19",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -141,7 +141,9 @@
     ]
   },
   "hindernisfreiheit": {
-    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "perrons_niveaufrei": 2,
+    "perrons_mit_daten": 2,
     "segmente": 12,
     "segmente_pro_perronhoehe_cm": {
       "30": 4,

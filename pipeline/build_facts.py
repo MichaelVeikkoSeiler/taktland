@@ -269,8 +269,16 @@ def gleise(d, uic):
     }
 
 
-def hindernisfreiheit(d, uic, gl):
-    out = {"source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie"}
+def hindernisfreiheit(d, uic, gl, pr):
+    out = {"source": "21197_behig-haltekantesegment, "
+                     "haltestelle-visuell-taktile-sicherheitslinie, perron"}
+    if pr:
+        frei = pr["niveaufrei_erreichbar"]
+        gesamt = pr["anzahl_mit_daten"]
+        out["perrons_niveaufrei"] = frei
+        out["perrons_mit_daten"] = gesamt
+        if frei < gesamt:
+            out["gleisquerung_noetig"] = True
     seg = d.behig[d.behig.uic == uic]
     if not seg.empty:
         out["segmente"] = int(len(seg))
@@ -407,6 +415,20 @@ def luecken(d, uic, f):
                    f"Zu {'Gleis' if len(ohne) == 1 else 'den Gleisen'} "
                    f"{', '.join(ohne)} sind keine Sektortafeln erfasst.",
                    "sektortafel")
+    hf = f.get("hindernisfreiheit") or {}
+    if hf.get("gleisquerung_noetig"):
+        frei, gesamt = hf.get("perrons_niveaufrei", 0), hf.get("perrons_mit_daten", 0)
+        lueckt("Zugang zum Perron",
+               f"Von {gesamt} erfassten Perrons {'ist' if frei == 1 else 'sind'} "
+               f"{frei} niveaufrei erreichbar. Für die übrigen ist in den Daten kein "
+               "niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+               "perron")
+    if hf and hf.get("gleise_mit_daten") and hf.get("gleise_mit_55cm") == 0:
+        lueckt("Stufenfreier Einstieg",
+               "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der "
+               "Referenzhöhe für den stufenfreien Einstieg.",
+               "21197_behig-haltekantesegment")
+
     sv = f.get("services") or {}
     if not sv.get("wlan_erfasst"):
         lueckt("WLAN",
@@ -533,6 +555,7 @@ def build(d, uic):
     name = sb["name"]
     plan = bahnhofplan(d, uic)
     gl = gleise(d, uic)
+    pr = perrons(d, uic)
     f = {
         "uic": uic,
         "name": name,
@@ -544,9 +567,9 @@ def build(d, uic):
         "stammdaten": stammdaten(d, uic),
         "bahnhofbenutzer": bahnhofbenutzer(d, name),
         "tagesrhythmus": tagesrhythmus(d, uic, name),
-        "perrons": perrons(d, uic),
+        "perrons": pr,
         "gleise": gl,
-        "hindernisfreiheit": hindernisfreiheit(d, uic, gl),
+        "hindernisfreiheit": hindernisfreiheit(d, uic, gl, pr),
         "zuege": zuege(d, uic),
         "linien": linien(d, uic),
         "services": services(d, uic),
