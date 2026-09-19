@@ -113,7 +113,6 @@ function KapitelBlock({ kapitel, antworten, merken }: {
         return (
           <Frage
             key={id}
-            id={id}
             frage={f}
             beantwortet={id in antworten}
             onAntwort={(richtig) => merken(id, richtig)}

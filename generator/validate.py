@@ -158,6 +158,9 @@ class Bericht:
 
 def pruefe_text(text, wo, erlaubt, b, streng=True):
     for roh in ZAHL.findall(text or ""):
+        # Schweizer Schreibweise: ab 10000 mit Apostroph
+        if roh.isdigit() and len(roh) >= 5:
+            b.warnt(wo, f"{roh} sollte als {int(roh):,}".replace(",", "'") + " geschrieben werden")
         n = zahl(roh)
         if n is None:
             continue

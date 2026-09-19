@@ -21,7 +21,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Pfäffikon SZ liegt in der Gemeinde Freienbach im Kanton Schwyz, auf 412 Metern über Meer. An einem Werktag steigen hier 18400 Personen ein und aus, an freien Tagen 12800. Die Anlage gehört der SBB, Züge fahren von SBB und SOB.",
+      "body": "Pfäffikon SZ liegt in der Gemeinde Freienbach im Kanton Schwyz, auf 412 Metern über Meer. An einem Werktag steigen hier 18'400 Personen ein und aus, an freien Tagen 12'800. Die Anlage gehört der SBB, Züge fahren von SBB und SOB.",
       "facts": [
         {
           "label": "Ein- und Aussteigende pro Werktag",
@@ -213,7 +213,7 @@
       "body": "Die Perronkanten sind unterschiedlich hoch: erfasst sind Abschnitte mit 25, 35 und 55 Zentimetern. 55 Zentimeter ist die Referenzhöhe für den stufenfreien Einstieg, und an 6 von 6 erfassten Gleisen gibt es einen solchen Abschnitt. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
       "facts": [
         {
-          "label": "Perronhöhen",
+          "label": "Höchste erfasste Perronhöhe",
           "value": 55,
           "unit": "cm",
           "source": "21197_behig-haltekantesegment",
@@ -268,7 +268,7 @@
     {
       "id": "zuege",
       "title": "Züge auf den Strecken",
-      "body": "Am stärksten befahren ist der Abschnitt von Freienbach SBB her: 106106 Personenzüge pro Jahr, rund 291 pro Tag in beiden Richtungen zusammen. Richtung Altendorf sind es 210 pro Tag. Gezählt werden Fahrten auf dem Streckenabschnitt, nicht Halte am Bahnhof.",
+      "body": "Am stärksten befahren ist der Abschnitt von Freienbach SBB her: 106'106 Personenzüge pro Jahr, rund 291 pro Tag in beiden Richtungen zusammen. Richtung Altendorf sind es 210 pro Tag. Gezählt werden Fahrten auf dem Streckenabschnitt, nicht Halte am Bahnhof.",
       "facts": [
         {
           "label": "Personenzüge pro Tag, Abschnitt Freienbach SBB",

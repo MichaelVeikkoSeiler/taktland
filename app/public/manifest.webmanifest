@@ -1,0 +1,19 @@
+{
+  "name": "Taktland – Bahnhöfe entdecken",
+  "short_name": "Taktland",
+  "description": "Schweizer Bahnhöfe kennenlernen, mit Angaben aus offenen Daten der SBB.",
+  "lang": "de-CH",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#122b38",
+  "theme_color": "#234e63",
+  "categories": ["education", "travel"],
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "./icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

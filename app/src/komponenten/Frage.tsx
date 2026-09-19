@@ -3,13 +3,12 @@ import type { Frage as FrageTyp } from '../typen'
 
 interface Props {
   frage: FrageTyp
-  id: string
   beantwortet?: boolean
   onAntwort: (richtig: boolean) => void
 }
 
 /** Eine Frage mit sofortiger Rückmeldung. Die Erklärung erscheint erst danach. */
-export function Frage({ frage, id, beantwortet, onAntwort }: Props) {
+export function Frage({ frage, beantwortet, onAntwort }: Props) {
   const [gewaehlt, setGewaehlt] = useState<number | boolean | null>(null)
   const [schieber, setSchieber] = useState<number>(
     frage.type === 'slider' ? Math.round(((frage.min ?? 0) + (frage.max ?? 100)) / 2) : 0,
