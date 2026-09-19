@@ -32,9 +32,14 @@ jobs:
         working-directory: app
         run: npm ci
 
-      # validate.py kommt mit der Standardbibliothek aus, kein pip nötig
+      # Beide Skripte kommen mit der Standardbibliothek aus, kein pip nötig
       - name: Profile gegen die Fakten prüfen
         run: python3 generator/validate.py --alle
+
+      # Stellt sicher, dass die App die aktuellen Profile ausliefert, auch wenn
+      # jemand vergessen hat, export_app.py vor dem Einchecken laufen zu lassen
+      - name: Daten für die App bereitstellen
+        run: python3 pipeline/export_app.py
 
       - name: Bauen
         working-directory: app
