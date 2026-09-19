@@ -1,0 +1,740 @@
+{
+  "uic": 8500218,
+  "name": "Olten",
+  "kanton": "SO",
+  "bps": "OL",
+  "tier": "L",
+  "datenstand": "2026-09-19",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Olten",
+    "kanton": "SO",
+    "isb": "SBB",
+    "evu": "BLS, SBB, SOB",
+    "lon": 7.9077,
+    "lat": 47.351935,
+    "dwv": 86700,
+    "dtv": 81600,
+    "dnwv": 70500,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 83000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 71800
+      },
+      {
+        "jahr": 2023,
+        "dwv": 80900
+      },
+      {
+        "jahr": 2024,
+        "dwv": 84500
+      },
+      {
+        "jahr": 2025,
+        "dwv": 86700
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Olten",
+    "abkuerzung": "OL",
+    "hoehe_m_ue_m": 396,
+    "gemeinde": "Olten",
+    "ortschaft": "Olten",
+    "bezirk": "Olten",
+    "kanton": "Solothurn",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Bundesbahnen SBB"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 69600,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 64900
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 73200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 73600
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 65100
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 74700
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 65900
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 76400
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 67800
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 68100
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 76600
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 52400
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 46700
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 51300
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 46400
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 62900
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 57200
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 62400
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 68800
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 69600
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 62900
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 78300
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 69600
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.5
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.3
+      },
+      {
+        "stunde": 5,
+        "prozent": 2.2
+      },
+      {
+        "stunde": 6,
+        "prozent": 6.8
+      },
+      {
+        "stunde": 7,
+        "prozent": 10.8
+      },
+      {
+        "stunde": 8,
+        "prozent": 7.4
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.0
+      },
+      {
+        "stunde": 10,
+        "prozent": 3.2
+      },
+      {
+        "stunde": 11,
+        "prozent": 4.0
+      },
+      {
+        "stunde": 12,
+        "prozent": 5.1
+      },
+      {
+        "stunde": 13,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 14,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 15,
+        "prozent": 5.8
+      },
+      {
+        "stunde": 16,
+        "prozent": 9.8
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.2
+      },
+      {
+        "stunde": 18,
+        "prozent": 7.3
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.3
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.8
+      },
+      {
+        "stunde": 22,
+        "prozent": 2.1
+      },
+      {
+        "stunde": 23,
+        "prozent": 1.2
+      },
+      {
+        "stunde": null,
+        "prozent": NaN
+      }
+    ],
+    "spitzenstunde": 7,
+    "spitzenanteil": 10.8,
+    "wochentage": [
+      {
+        "tag": "4_Do_Jeu_Gio_Th",
+        "prozent": 16.5
+      },
+      {
+        "tag": "6_Sa_Sam_Sab_Sa",
+        "prozent": 11.1
+      },
+      {
+        "tag": "7_So_Dim_Dom_Su",
+        "prozent": 9.3
+      },
+      {
+        "tag": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.9
+      },
+      {
+        "tag": "3_Mi_Mer_Mer_We",
+        "prozent": 16.1
+      },
+      {
+        "tag": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.8
+      },
+      {
+        "tag": "2_Di_Mar_Mar_Tu",
+        "prozent": 16.3
+      }
+    ]
+  },
+  "perrons": {
+    "source": "perron",
+    "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
+    "anzahl_mit_daten": 6,
+    "laengste_m": 460,
+    "kuerzeste_m": 300,
+    "items": [
+      {
+        "nr": "12",
+        "typ": "Aussenperron",
+        "laenge_m": 460,
+        "flaeche_netto_m2": 1637.78,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "10/11",
+        "typ": "Mittelperron",
+        "laenge_m": 450,
+        "flaeche_netto_m2": 2563.02,
+        "niveaufreier_zugang": "ja",
+        "linie": 500
+      },
+      {
+        "nr": "8/9",
+        "typ": "Mittelperron",
+        "laenge_m": 435,
+        "flaeche_netto_m2": 2306.92,
+        "niveaufreier_zugang": "ja",
+        "linie": 540
+      },
+      {
+        "nr": "4/7",
+        "typ": "Mittelperron",
+        "laenge_m": 429,
+        "flaeche_netto_m2": 4823.69,
+        "niveaufreier_zugang": "ja",
+        "linie": 540
+      },
+      {
+        "nr": "2/3",
+        "typ": "Mittelperron",
+        "laenge_m": 402,
+        "flaeche_netto_m2": 1789.81,
+        "niveaufreier_zugang": "ja",
+        "linie": 503
+      },
+      {
+        "nr": "1",
+        "typ": "Aussenperron",
+        "laenge_m": 300,
+        "flaeche_netto_m2": 1213.85,
+        "niveaufreier_zugang": "ja",
+        "linie": 503
+      }
+    ]
+  },
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 10,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    "perronhoehen_cm": [
+      20,
+      25,
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 301,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          20,
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 360,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          25,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 357,
+        "sektoren": [
+          "A",
+          "B",
+          "C"
+        ]
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 370,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "7",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 364,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "8",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 435,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "9",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 435,
+        "sektoren": [
+          "A",
+          "D"
+        ]
+      },
+      {
+        "nr": "10",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 450,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      },
+      {
+        "nr": "11",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 425,
+        "sektoren": [
+          "A",
+          "D"
+        ]
+      },
+      {
+        "nr": "12",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Aussenperron",
+        "perronkante_m": 460,
+        "sektoren": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie",
+    "segmente": 56,
+    "segmente_pro_perronhoehe_cm": {
+      "20": 1,
+      "25": 2,
+      "35": 8,
+      "55": 45
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "sicherheitslinie": "Ja",
+    "gleise_mit_55cm": 10,
+    "gleise_mit_daten": 10
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Olten",
+      "bis": "Olten Nord-Ost (Abzw)",
+      "strecke_nr": 105,
+      "strecke": "Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 245874,
+      "zuege_pro_tag": 674
+    },
+    "staerkster_personenverkehr": {
+      "von": "Olten",
+      "bis": "Olten Nord-Ost (Abzw)",
+      "strecke_nr": 105,
+      "strecke": "Olten",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 245874,
+      "zuege_pro_tag": 674
+    },
+    "abschnitte": [
+      {
+        "von": "Olten",
+        "bis": "Olten Nord-Ost (Abzw)",
+        "strecke_nr": 105,
+        "strecke": "Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 245874,
+        "zuege_pro_tag": 674
+      },
+      {
+        "von": "Olten",
+        "bis": "Aarburg-Oftringen",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 104814,
+        "zuege_pro_tag": 287
+      },
+      {
+        "von": "Rothrist",
+        "bis": "Olten",
+        "strecke_nr": 22,
+        "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 102375,
+        "zuege_pro_tag": 280
+      },
+      {
+        "von": "Olten",
+        "bis": "Olten Nord-Ost (Abzw)",
+        "strecke_nr": 105,
+        "strecke": "Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 60933,
+        "zuege_pro_tag": 167
+      },
+      {
+        "von": "Olten Hammer",
+        "bis": "Olten",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 44164,
+        "zuege_pro_tag": 121
+      },
+      {
+        "von": "Olten Hammer",
+        "bis": "Olten",
+        "strecke_nr": 8,
+        "strecke": "Solothurn - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 35557,
+        "zuege_pro_tag": 97
+      },
+      {
+        "von": "Rothrist",
+        "bis": "Olten",
+        "strecke_nr": 22,
+        "strecke": "Löchligut/Solothurn - NBS/ABS - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14478,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Olten",
+        "bis": "Aarburg-Oftringen",
+        "strecke_nr": 23,
+        "strecke": "Löchligut - Zollikofen - Burgdorf - Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 13065,
+        "zuege_pro_tag": 36
+      },
+      {
+        "von": "Olten",
+        "bis": "Olten RB",
+        "strecke_nr": 105,
+        "strecke": "Olten",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 1963,
+        "zuege_pro_tag": 5
+      },
+      {
+        "von": "Olten",
+        "bis": "Olten RB",
+        "strecke_nr": 105,
+        "strecke": "Olten",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 460,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": {
+    "source": "linie-mit-betriebspunkten",
+    "anzahl": 4,
+    "items": [
+      {
+        "nummer": 540,
+        "name": "Olten - Woschnau",
+        "km": 39.30213
+      },
+      {
+        "nummer": 410,
+        "name": "Olten - Solothurn - Biel/Bienne",
+        "km": 39.29156
+      },
+      {
+        "nummer": 500,
+        "name": "Basel SBB - Olten - Luzern",
+        "km": 39.29245
+      },
+      {
+        "nummer": 503,
+        "name": "Sissach - Laufelfingen - Olten",
+        "km": 39.29156
+      }
+    ]
+  },
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "wlan": true,
+    "billettautomaten": 7,
+    "automat_typen": [
+      "BOGG",
+      "S-POS",
+      "ePOS"
+    ],
+    "billettentwerter": 28,
+    "wartehallen": 11,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/8fea4c00c42bcffabd64217d20e48396"
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-olten-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-olten-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "perrons",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "linien",
+    "services",
+    "bahnhofplan"
+  ]
+}
