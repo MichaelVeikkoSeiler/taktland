@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+"""Stellt die Daten fuer die App bereit: app/public/data/
+
+- index.json  : alle SBB-Bahnhoefe, mit Angabe ob ein Profil vorliegt
+- profile/    : die fertigen Profile
+
+Der Index fuehrt auch Bahnhoefe ohne Profil auf. Die App soll zeigen, was es
+noch nicht gibt, statt so zu tun, als gaebe es nur die vier fertigen.
+"""
+import json
+import shutil
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+FACTS = ROOT / "data" / "facts"
+PROFILES = ROOT / "data" / "profiles"
+ZIEL = ROOT / "app" / "public" / "data"
+
+
+def main():
+    (ZIEL / "profile").mkdir(parents=True, exist_ok=True)
+    for alt in (ZIEL / "profile").glob("*.json"):
+        alt.unlink()
+
+    mit_profil = {}
+    for p in PROFILES.glob("*.json"):
+        d = json.loads(p.read_text(encoding="utf-8"))
+        mit_profil.setdefault(str(d["uic"]), []).append(d["lang"])
+        shutil.copy(p, ZIEL / "profile" / p.name)
+
+    eintraege = []
+    for f in sorted(FACTS.glob("*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        sb = d["steckbrief"]
+        eintraege.append({
+            "uic": d["uic"],
+            "name": d["name"],
+            "kanton": d["kanton"],
+            "tier": d["tier"],
+            "dwv": sb.get("dwv"),
+            "lat": sb.get("lat"),
+            "lon": sb.get("lon"),
+            "sprachen": sorted(mit_profil.get(str(d["uic"]), [])),
+        })
+    eintraege.sort(key=lambda e: (e["dwv"] or 0), reverse=True)
+
+    index = {
+        "stand": max(json.loads(f.read_text(encoding="utf-8"))["datenstand"]
+                     for f in FACTS.glob("*.json")),
+        "bahnhoefe_gesamt": len(eintraege),
+        "mit_profil": sum(1 for e in eintraege if e["sprachen"]),
+        "quelle": "data.sbb.ch",
+        "bahnhoefe": eintraege,
+    }
+    (ZIEL / "index.json").write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
+    groesse = (ZIEL / "index.json").stat().st_size
+    print(f"index.json: {len(eintraege)} Bahnhöfe, davon {index['mit_profil']} mit Profil "
+          f"({groesse/1024:.0f} KB)")
+    print(f"profile/: {len(list((ZIEL / 'profile').glob('*.json')))} Dateien")
+
+
+if __name__ == "__main__":
+    main()

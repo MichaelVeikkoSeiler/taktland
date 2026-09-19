@@ -34,7 +34,7 @@ ZAHL = re.compile(r"\d[\d'’’.,]*\d|\d")
 VERMUTUNG = re.compile(
     r"\b(stammen aus|stammt aus|gilt als|gelten als|d\u00fcrfte|vermutlich|"
     r"bekannt f\u00fcr|beliebt|typisch|erwarten|erwartet|offenbar|wahrscheinlich|"
-    r"traditionell|historisch|Pendlerbahnhof|gilt \w+ als|gelten \w+ als)\b"
+    r"traditionell|historisch|Pendlerbahnhof|gilt \w+ als|gelten \w+ als|seit Jahren|seit langem|schon lange|seit jeher|in letzter Zeit|zunehmend)\b"
     # Superlative nur dort, wo sie andere Bahnhoefe vergleichen. "das laengste
     # Perron" ist belegt, "der groesste Bahnhof der Schweiz" nicht.
     r"|\b(gr\u00f6sst|kleinst|wichtigst|bedeutendst|st\u00e4rkst|sch\u00f6nst)\w*\s+"
