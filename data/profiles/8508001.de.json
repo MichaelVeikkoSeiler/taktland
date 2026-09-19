@@ -118,11 +118,12 @@
           "max": 400,
           "step": 25,
           "correct": 225,
-          "explanation": "Rund 225 Meter. Damit haben auch längere Zugskompositionen Platz.",
+          "explanation": "Rund 225 Meter misst die Perronkante an Gleis 3.",
           "factRef": "gleise.items[0].perronkante_m",
           "difficulty": 2
         }
-      ]
+      ],
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet."
     },
     {
       "id": "hindernisfreiheit",
@@ -162,11 +163,12 @@
             "92 cm"
           ],
           "correct": 2,
-          "explanation": "55 Zentimeter. Bei dieser Höhe ist der Einstieg in die meisten Züge stufenfrei.",
+          "explanation": "55 Zentimeter, an beiden erfassten Gleisen.",
           "factRef": "gleise.perronhoehen_cm[0]",
           "difficulty": 1
         }
-      ]
+      ],
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, braucht es eine Rampe oder einen Hilfstritt. Die visuell-taktile Sicherheitslinie führt sehbehinderte Reisende entlang der Kante."
     },
     {
       "id": "zuege",
@@ -210,7 +212,8 @@
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 2
         }
-      ]
+      ],
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält."
     },
     {
       "id": "services",

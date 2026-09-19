@@ -75,7 +75,7 @@
           "step": 25,
           "unit": "m",
           "correct": 412,
-          "explanation": "412 Meter über Meer, am oberen Zürichsee.",
+          "explanation": "412 Meter über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
@@ -134,7 +134,7 @@
             "612 m"
           ],
           "correct": 2,
-          "explanation": "419 Meter. Damit haben auch lange Doppelstockzüge Platz.",
+          "explanation": "419 Meter messen die beiden Mittelperrons.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         }
@@ -204,7 +204,8 @@
           "factRef": "gleise.nummern",
           "difficulty": 3
         }
-      ]
+      ],
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet."
     },
     {
       "id": "hindernisfreiheit",
@@ -236,14 +237,14 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Welche Perronhöhe erlaubt bei den meisten Zügen den stufenfreien Einstieg?",
+          "prompt": "Welche Perronhöhe ist in Pfäffikon SZ am häufigsten erfasst?",
           "options": [
             "25 cm",
             "35 cm",
             "55 cm"
           ],
           "correct": 2,
-          "explanation": "55 Zentimeter ist die Referenzhöhe. In Pfäffikon SZ haben 6 von 6 erfassten Gleisen einen solchen Abschnitt.",
+          "explanation": "55 Zentimeter, bei 12 der 26 erfassten Abschnitte.",
           "factRef": "gleise.perronhoehen_cm[2]",
           "difficulty": 1
         },
@@ -261,7 +262,8 @@
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 2
         }
-      ]
+      ],
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, braucht es eine Rampe oder einen Hilfstritt. Die visuell-taktile Sicherheitslinie führt sehbehinderte Reisende entlang der Kante."
     },
     {
       "id": "zuege",
@@ -313,7 +315,8 @@
           "factRef": "zuege.hinweis",
           "difficulty": 3
         }
-      ]
+      ],
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält."
     },
     {
       "id": "linien",

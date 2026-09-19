@@ -29,6 +29,19 @@ VERALLGEMEINERUNG = re.compile(
 
 ZAHL = re.compile(r"\d[\d'’’.,]*\d|\d")
 
+# Wendungen, die etwas behaupten, was aus offenen Daten nicht folgen kann:
+# Deutungen, Vermutungen, Vergleiche mit anderen Bahnhoefen.
+VERMUTUNG = re.compile(
+    r"\b(stammen aus|stammt aus|gilt als|gelten als|d\u00fcrfte|vermutlich|"
+    r"bekannt f\u00fcr|beliebt|typisch|erwarten|erwartet|offenbar|wahrscheinlich|"
+    r"traditionell|historisch|Pendlerbahnhof|gilt \w+ als|gelten \w+ als)\b"
+    # Superlative nur dort, wo sie andere Bahnhoefe vergleichen. "das laengste
+    # Perron" ist belegt, "der groesste Bahnhof der Schweiz" nicht.
+    r"|\b(gr\u00f6sst|kleinst|wichtigst|bedeutendst|st\u00e4rkst|sch\u00f6nst)\w*\s+"
+    r"(Bahnhof|Station|Knoten)|\bder Schweiz\b", re.I)
+
+NORMHOEHEN = {20, 25, 30, 35, 42, 55, 76}   # uebliche Perronhoehen in cm
+
 UMFANG = {"S": (4, 6, 5, 8), "M": (6, 8, 10, 14), "L": (8, 10, 18, 24)}
 
 
@@ -150,6 +163,10 @@ def pruefe_text(text, wo, erlaubt, b, streng=True):
             continue
         if not belegt(n, erlaubt):
             (b.fehlt if streng else b.warnt)(wo, f"Zahl {roh} steht nicht in den Fakten")
+    m = VERMUTUNG.search(text or "")
+    if m:
+        b.fehlt(wo, f"«{m.group(0)}» deutet oder vermutet. "
+                    "Die offenen Daten geben das nicht her")
     m = VERALLGEMEINERUNG.search(text or "")
     if m and ZAHL.search(text or ""):
         b.warnt(wo, f"«{m.group(0)}» zusammen mit einer Zahl behauptet Vollständigkeit")
@@ -200,6 +217,18 @@ def pruefe(profil, facts, fix=False, entfernen=False):
         if not kap.get("title") or not kap.get("body"):
             b.fehlt(wo, "title oder body fehlt")
         pruefe_text(kap.get("body", ""), f"{wo}/body", erlaubt, b)
+        # Allgemeines Fachwissen gehoert in ein eigenes Feld und darf den Bahnhof
+        # nicht nennen, sonst wird aus der Erlaeuterung wieder eine Behauptung.
+        erl = kap.get("erlaeuterung")
+        if erl:
+            if profil["name"].split()[0].lower() in erl.lower():
+                b.fehlt(f"{wo}/erlaeuterung",
+                        "nennt den Bahnhof. Erläuterungen sind allgemein zu halten")
+            for roh in ZAHL.findall(erl):
+                n = zahl(roh)
+                if n is not None and not belegt(n, erlaubt) and n not in NORMHOEHEN:
+                    b.warnt(f"{wo}/erlaeuterung",
+                            f"Zahl {roh} ist weder belegt noch eine Normhöhe")
 
         fakten_raus = []
         for i, fk in enumerate(kap.get("facts", [])):

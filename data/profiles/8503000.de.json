@@ -90,7 +90,7 @@
           "type": "true_false",
           "prompt": "Die Zahl der Bahnhofbenutzer ist kleiner als die Zahl der Ein- und Aussteigenden.",
           "correct": true,
-          "explanation": "426'400 Bahnhofbenutzer gegenüber 480'900 Ein- und Aussteigenden. Die beiden Zahlen stammen aus verschiedenen Erhebungen und zählen nicht dasselbe.",
+          "explanation": "426'400 Bahnhofbenutzer gegenüber 480'900 Ein- und Aussteigenden. Die beiden Zahlen kommen aus zwei verschiedenen Erhebungen und zählen nicht dasselbe.",
           "factRef": "bahnhofbenutzer.anzahl_pro_tag",
           "difficulty": 3
         }
@@ -99,7 +99,7 @@
     {
       "id": "tagesrhythmus",
       "title": "Der Tag am Bahnhof",
-      "body": "Die Bahnhofbenutzer verteilen sich ungleich über den Tag. Am meisten los ist es um 17 Uhr mit 10.9 Prozent des Tagesaufkommens. Um 2 Uhr in der Nacht sind es 0.0 Prozent. Über die Woche ist der Freitag mit 15.6 Prozent der stärkste Tag, der Sonntag mit 11.4 Prozent der schwächste.",
+      "body": "Die Bahnhofbenutzer verteilen sich ungleich über den Tag. Die stärkste Stunde beginnt um 17 Uhr mit 10.9 Prozent des Tagesaufkommens. Um 2 Uhr in der Nacht sind es 0.0 Prozent. Über die Woche ist der Freitag mit 15.6 Prozent der stärkste Tag, der Sonntag mit 11.4 Prozent der schwächste.",
       "facts": [
         {
           "label": "Spitzenstunde",
@@ -126,7 +126,7 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wann ist in Zürich HB am meisten los?",
+          "prompt": "In welcher Stunde ist in Zürich HB der grösste Anteil der Bahnhofbenutzer unterwegs?",
           "options": [
             "8 Uhr",
             "12 Uhr",
@@ -160,7 +160,7 @@
           "step": 0.1,
           "unit": "%",
           "correct": 10.9,
-          "explanation": "10.9 Prozent. Auch am stärksten Bahnhof verteilt sich der Tag breiter, als man erwarten würde.",
+          "explanation": "10.9 Prozent des Tagesaufkommens fallen auf die Stunde ab 17 Uhr.",
           "factRef": "tagesrhythmus.spitzenanteil",
           "difficulty": 3
         }
@@ -221,7 +221,7 @@
     {
       "id": "gleise",
       "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 16 Gleisen vor, mit den Nummern 3 bis 18. Die längste Perronkante hat Gleis 12 mit 269 Metern, die kürzeste Gleis 3 mit 95 Metern. An den meisten Gleisen reichen die Sektoren von A bis D.",
+      "body": "Offene Daten liegen zu 16 Gleisen vor, mit den Nummern 3 bis 18. Die längste Perronkante hat Gleis 12 mit 269 Metern, die kürzeste Gleis 3 mit 95 Metern. An 15 der 16 erfassten Gleise reichen die Sektoren von A bis D.",
       "facts": [
         {
           "label": "Gleise mit Daten",
@@ -270,7 +270,7 @@
             "H"
           ],
           "correct": 1,
-          "explanation": "Von A bis D. An den meisten Gleisen in Zürich HB ist das so.",
+          "explanation": "Von A bis D. An 15 der 16 erfassten Gleise ist das so.",
           "factRef": "gleise.items[1].sektoren[3]",
           "difficulty": 2
         },
@@ -282,7 +282,8 @@
           "factRef": "gleise.nummern",
           "difficulty": 3
         }
-      ]
+      ],
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet."
     },
     {
       "id": "hindernisfreiheit",
@@ -348,7 +349,8 @@
           "factRef": "hindernisfreiheit.sicherheitslinie",
           "difficulty": 1
         }
-      ]
+      ],
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, braucht es eine Rampe oder einen Hilfstritt. Die visuell-taktile Sicherheitslinie führt sehbehinderte Reisende entlang der Kante."
     },
     {
       "id": "zuege",
@@ -401,7 +403,8 @@
           "factRef": "zuege.hinweis",
           "difficulty": 3
         }
-      ]
+      ],
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält."
     },
     {
       "id": "services",

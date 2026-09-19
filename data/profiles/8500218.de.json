@@ -126,7 +126,7 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wann ist in Olten am meisten los?",
+          "prompt": "In welcher Stunde ist in Olten der grösste Anteil der Bahnhofbenutzer unterwegs?",
           "options": [
             "7 Uhr",
             "12 Uhr",
@@ -134,7 +134,7 @@
             "20 Uhr"
           ],
           "correct": 0,
-          "explanation": "Um 7 Uhr, mit 10.8 Prozent des Tagesaufkommens. Olten ist ein Pendlerbahnhof mit ausgeprägter Morgenspitze.",
+          "explanation": "Um 7 Uhr, mit 10.8 Prozent des Tagesaufkommens. Am Abend um 17 Uhr sind es 10.2 Prozent.",
           "factRef": "tagesrhythmus.spitzenstunde",
           "optionen_aus_fakten": true,
           "difficulty": 1
@@ -222,7 +222,7 @@
     {
       "id": "gleise",
       "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 10 Gleisen vor: 1, 2, 3, 4, 7, 8, 9, 10, 11 und 12. Die längste Perronkante hat Gleis 12 mit 460 Metern. An den meisten Gleisen reichen die Sektoren von A bis D, an den Gleisen 9 und 11 sind nur A und D erfasst.",
+      "body": "Offene Daten liegen zu 10 Gleisen vor: 1, 2, 3, 4, 7, 8, 9, 10, 11 und 12. Die längste Perronkante hat Gleis 12 mit 460 Metern. An 7 der 10 erfassten Gleise reichen die Sektoren von A bis D, an den Gleisen 9 und 11 sind nur A und D erfasst.",
       "facts": [
         {
           "label": "Gleise mit Daten",
@@ -270,7 +270,8 @@
           "factRef": "gleise.nummern",
           "difficulty": 3
         }
-      ]
+      ],
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet."
     },
     {
       "id": "hindernisfreiheit",
@@ -324,7 +325,7 @@
             "55 cm"
           ],
           "correct": 0,
-          "explanation": "20 Zentimeter, bei genau einem Abschnitt. Solche tiefen Kanten stammen aus älteren Bauzuständen.",
+          "explanation": "20 Zentimeter, bei genau einem der 56 erfassten Abschnitte.",
           "factRef": "gleise.perronhoehen_cm[0]",
           "optionen_aus_fakten": true,
           "difficulty": 3
@@ -337,7 +338,8 @@
           "factRef": "hindernisfreiheit.sicherheitslinie",
           "difficulty": 1
         }
-      ]
+      ],
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, braucht es eine Rampe oder einen Hilfstritt. Die visuell-taktile Sicherheitslinie führt sehbehinderte Reisende entlang der Kante."
     },
     {
       "id": "zuege",
@@ -389,7 +391,8 @@
           "factRef": "zuege.abschnitte[3].zuege_pro_tag",
           "difficulty": 2
         }
-      ]
+      ],
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält."
     },
     {
       "id": "linien",
@@ -422,7 +425,7 @@
             "9"
           ],
           "correct": 2,
-          "explanation": "4 Linien. Deshalb gilt Olten als Knotenbahnhof.",
+          "explanation": "4 Linien sind in diesen Daten erfasst.",
           "factRef": "linien.anzahl",
           "optionen_aus_fakten": true,
           "difficulty": 1
