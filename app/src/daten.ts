@@ -2,6 +2,16 @@ import type { BahnhofIndex, Profil } from './typen'
 
 const BASIS = import.meta.env.BASE_URL
 
+/**
+ * Eingebettete Daten, falls die Seite als einzelne Datei ausgeliefert wird.
+ * Dann gibt es keine Nebendateien, die geladen werden könnten.
+ */
+interface EingebetteteDaten {
+  index: BahnhofIndex
+  profile: Record<string, Profil>
+}
+const eingebettet = (window as unknown as { __TAKTLAND__?: EingebetteteDaten }).__TAKTLAND__
+
 /** Einmal geladene Daten im Speicher halten, damit Offline-Aufrufe schnell sind. */
 const zwischenspeicher = new Map<string, unknown>()
 
@@ -15,7 +25,17 @@ async function holen<T>(pfad: string): Promise<T> {
   return daten
 }
 
-export const indexLaden = () => holen<BahnhofIndex>('data/index.json')
+export async function indexLaden(): Promise<BahnhofIndex> {
+  if (eingebettet) return eingebettet.index
+  return holen<BahnhofIndex>('data/index.json')
+}
 
-export const profilLaden = (uic: number, sprache = 'de') =>
-  holen<Profil>(`data/profile/${uic}.${sprache}.json`)
+export async function profilLaden(uic: number, sprache = 'de'): Promise<Profil> {
+  const schluessel = `${uic}.${sprache}`
+  if (eingebettet) {
+    const p = eingebettet.profile[schluessel]
+    if (p) return p
+    throw new Error(`Profil ${schluessel} ist nicht eingebettet`)
+  }
+  return holen<Profil>(`data/profile/${schluessel}.json`)
+}
