@@ -87,4 +87,12 @@ MVP_STATIONS = {
     "8508001": "Schönbühl SBB",
 }
 
+# Bahnhoefe ausserhalb der SBB-Infrastruktur, die trotzdem aufgenommen werden.
+# Die Frequenzdaten decken 1252 Bahnhoefe ab, die Infrastrukturdaten im Wesentlichen
+# nur die 769 der SBB. Fuer diese hier reicht die Datenlage dennoch fuer ein Profil.
+ZUSAETZLICH = {
+    8507083: "Köniz",          # BLS
+    8504484: "Müntschemier",   # BLS
+}
+
 ATTRIBUTION = "Daten: SBB Open Data (data.sbb.ch), Lizenz mit Quellenangabe"

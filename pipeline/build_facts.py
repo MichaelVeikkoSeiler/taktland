@@ -16,6 +16,9 @@ from pathlib import Path
 
 import pandas as pd
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from sources import ZUSAETZLICH  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "facts"
@@ -109,7 +112,11 @@ class Data:
 
     def alle_sbb(self):
         neu = self.pf.sort_values("jahr").groupby("uic").tail(1)
-        return [int(u) for u in neu[neu.isb_gi.astype(str).str.strip() == "SBB"].uic]
+        uics = [int(u) for u in neu[neu.isb_gi.astype(str).str.strip() == "SBB"].uic]
+        # ausdruecklich gewuenschte Bahnhoefe anderer Betreiberinnen
+        vorhanden = set(neu.uic.astype("int64"))
+        uics += [u for u in ZUSAETZLICH if u in vorhanden and u not in uics]
+        return uics
 
 
 def steckbrief(d, uic):
