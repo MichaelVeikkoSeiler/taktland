@@ -42,7 +42,32 @@ VERMUTUNG = re.compile(
 
 NORMHOEHEN = {20, 25, 30, 35, 42, 55, 76}   # uebliche Perronhoehen in cm
 
-UMFANG = {"S": (4, 6, 5, 8), "M": (6, 8, 10, 14), "L": (8, 10, 18, 24)}
+def umfang_erwartet(facts):
+    """Wie viele Kapitel und Fragen die Datenlage dieses Bahnhofs hergibt.
+
+    Frueher haing das an der Stufe. Das brach bei kleinen Bahnhoefen mit
+    Bahnhofplan: Stufe L verlangte 18 Fragen, die Daten gaben 10 her.
+    Jetzt zaehlt, was tatsaechlich da ist.
+    """
+    kapitel = len(facts.get("verfuegbare_kapitel", []))
+    # grobe Zahl belegbarer Einzelwerte, aus denen Fragen entstehen koennen
+    gl = facts.get("gleise") or {}
+    pr = facts.get("perrons") or {}
+    zu = facts.get("zuege") or {}
+    stoff = (
+        len(gl.get("items", [])) + len(gl.get("perronhoehen_cm", []))
+        + len(pr.get("items", [])) + min(len(zu.get("abschnitte", [])), 4)
+        + (facts.get("linien") or {}).get("anzahl", 0)
+        + (3 if facts.get("tagesrhythmus") else 0)
+        + (2 if facts.get("bahnhofplan") else 0)
+        + 4  # Steckbrief und Stammdaten gibt es immer
+    )
+    min_k = max(3, kapitel - 3)
+    max_k = kapitel
+    min_f = max(5, round(stoff * 0.5))
+    max_f = max(min_f + 4, round(stoff * 1.3))
+    return min_k, max_k, min_f, max_f
+
 
 
 def zahl(text):
@@ -412,12 +437,12 @@ def pruefe(profil, facts, fix=False, entfernen=False):
     if entfernen and kapitel_raus:
         profil["chapters"] = [k for k in profil["chapters"] if k not in kapitel_raus]
 
-    min_k, max_k, min_f, max_f = UMFANG.get(profil["tier"], (0, 99, 0, 99))
+    min_k, max_k, min_f, max_f = umfang_erwartet(facts)
     n_k = len(profil["chapters"])
     if not min_k <= n_k <= max_k:
-        b.warnt("Umfang", f"{n_k} Kapitel, Stufe {profil['tier']} erwartet {min_k}–{max_k}")
+        b.warnt("Umfang", f"{n_k} Kapitel, die Datenlage trägt {min_k}–{max_k}")
     if not min_f <= fragen_gesamt <= max_f:
-        b.warnt("Umfang", f"{fragen_gesamt} Fragen, Stufe {profil['tier']} erwartet {min_f}–{max_f}")
+        b.warnt("Umfang", f"{fragen_gesamt} Fragen, die Datenlage trägt {min_f}–{max_f}")
 
     return b, profil
 

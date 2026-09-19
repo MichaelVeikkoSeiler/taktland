@@ -1,0 +1,327 @@
+{
+  "uic": 8504484,
+  "name": "Müntschemier",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "wifistation",
+    "haltestelle-wartehallen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Müntschemier liegt in der gleichnamigen Gemeinde im Kanton Bern, auf 436 Metern über Meer. An einem Werktag steigen hier 350 Personen ein und aus, an einem freien Tag 180. Die Anlage gehört der BLS.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 350,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 180,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 436,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "BLS",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Müntschemier ein und aus?",
+          "options": [
+            "140",
+            "350",
+            "820",
+            "1700"
+          ],
+          "correct": 1,
+          "explanation": "350 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Müntschemier liegt auf ___ Metern über Meer.",
+          "options": [
+            "220",
+            "436",
+            "677",
+            "980"
+          ],
+          "correct": 1,
+          "explanation": "436 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "An freien Tagen nutzen etwa halb so viele Personen den Bahnhof wie an Werktagen.",
+          "correct": true,
+          "explanation": "350 an Werktagen, 180 an freien Tagen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Offene Daten liegen zu den Gleisen 1 und 2 vor. Beide Perronkanten sind 220 Meter lang. Gleis 1 liegt an einem Hausperron, Gleis 2 an einem Aussenperron.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 2,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Perronkante an Gleis 1",
+          "value": 220,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perrontyp an Gleis 2",
+          "value": "Aussenperron",
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perrontyp"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang sind die erfassten Perronkanten in Müntschemier?",
+          "options": [
+            "90 m",
+            "150 m",
+            "220 m",
+            "380 m"
+          ],
+          "correct": 2,
+          "explanation": "220 Meter, an beiden Gleisen gleich.",
+          "factRef": "gleise.items[0].perronkante_m",
+          "difficulty": 1
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis liegt am Hausperron?",
+          "schema": "gleise",
+          "correct": "1",
+          "explanation": "Gleis 1. Ein Hausperron liegt direkt beim Aufnahmegebäude.",
+          "factRef": "gleise.items[0].nr",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "Die erfassten Perronkanten sind 55 Zentimeter hoch, an 2 von 2 Gleisen. Erfasst sind 6 Abschnitte, keiner davon braucht einen Hilfstritt.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, braucht es eine Rampe oder einen Hilfstritt.",
+      "facts": [
+        {
+          "label": "Perronhöhe",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        },
+        {
+          "label": "Abschnitte mit Hilfstritt",
+          "value": 0,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Müntschemier braucht es an keinem erfassten Abschnitt einen Hilfstritt.",
+          "correct": true,
+          "explanation": "Die 6 erfassten Abschnitte liegen auf 55 Zentimetern.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf der Strecke",
+      "body": "Richtung Kerzers verkehren 34'164 Personenzüge pro Jahr, rund 94 pro Tag in beiden Richtungen zusammen. Von Ins her sind es 34'159 im Jahr. Dazu kommen Güterzüge: 4 pro Tag von Ins her.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag Richtung Kerzers",
+          "value": 94,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag von Ins her",
+          "value": 4,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt Richtung Kerzers?",
+          "options": [
+            "24",
+            "94",
+            "260",
+            "510"
+          ],
+          "correct": 1,
+          "explanation": "Rund 94 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf der Strecke bei Müntschemier verkehren auch Güterzüge.",
+          "correct": true,
+          "explanation": "4 Güterzüge pro Tag von Ins her.",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Müntschemier steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten liegen für diesen Bahnhof keine Daten vor.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 0,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Müntschemier ist als WLAN-Standort erfasst.",
+          "correct": false,
+          "explanation": "Der Bahnhof steht nicht in der Liste der WLAN-Standorte.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Billettautomaten und Entwertern liegen für diesen Bahnhof keine Daten vor. Die Quelle ordnet diese Geräte über ein Betriebspunkt-Kürzel zu, das hier fehlt.",
+      "quelle": "billetautomat, billetentwerter"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 220,
+      "sektoren": []
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 220,
+      "sektoren": []
+    }
+  ]
+}

@@ -172,6 +172,11 @@
       "quelle": "wifistation"
     },
     {
+      "thema": "Ausstattung",
+      "grund": "Zu Billettautomaten und Entwertern liegen für diesen Bahnhof keine Daten vor. Die Quelle ordnet diese Geräte über ein Betriebspunkt-Kürzel zu, das hier fehlt.",
+      "quelle": "billetautomat, billetentwerter"
+    },
+    {
       "thema": "Wartehallen",
       "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
       "quelle": "haltestelle-wartehallen"

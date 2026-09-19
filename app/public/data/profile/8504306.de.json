@@ -1,0 +1,306 @@
+{
+  "uic": 8504306,
+  "name": "Cortébert",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "billetautomat",
+    "haltestelle-wartehallen",
+    "wifistation",
+    "haltestelle-visuell-taktile-sicherheitslinie"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Cortébert liegt in der gleichnamigen Gemeinde im Berner Jura, auf 677 Metern über Meer. An einem Werktag steigen hier 170 Personen ein und aus, an einem freien Tag 100. 2018 waren es 200 pro Werktag, 2024 noch 190.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 170,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 677,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Kanton",
+          "value": "Bern",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.kanton"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Cortébert ein und aus?",
+          "options": [
+            "80",
+            "170",
+            "420",
+            "930"
+          ],
+          "correct": 1,
+          "explanation": "170 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am höchsten?",
+          "options": [
+            "2018",
+            "2022",
+            "2024",
+            "2025"
+          ],
+          "correct": 0,
+          "explanation": "2018, mit 200 Personen pro Werktag.",
+          "factRef": "steckbrief.verlauf[0].jahr",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Cortébert?",
+          "min": 300,
+          "max": 1200,
+          "step": 25,
+          "unit": "m",
+          "correct": 677,
+          "explanation": "677 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perron",
+      "body": "Erfasst ist 1 Perron: ein Aussenperron von 150 Metern Länge. Es ist niveaufrei erreichbar, man muss also kein Gleis überqueren.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 1,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Länge des Perrons",
+          "value": 150,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.items[0].laenge_m"
+        },
+        {
+          "label": "Perrontyp",
+          "value": "Aussenperron",
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.items[0].typ"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das erfasste Perron in Cortébert?",
+          "options": [
+            "60 m",
+            "150 m",
+            "290 m",
+            "440 m"
+          ],
+          "correct": 1,
+          "explanation": "150 Meter.",
+          "factRef": "perrons.items[0].laenge_m",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "Das erfasste Perron ist niveaufrei erreichbar. Eine visuell-taktile Sicherheitslinie ist vorhanden. Zur Höhe der Perronkante liegen für diesen Bahnhof keine Daten vor.",
+      "erlaeuterung": "Die visuell-taktile Sicherheitslinie ist ein ertastbarer Streifen entlang der Perronkante. Sie hilft sehbehinderten Reisenden, den sicheren Abstand zum Gleis zu halten.",
+      "facts": [
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 1,
+          "unit": null,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Visuell-taktile Sicherheitslinie",
+          "value": "Ja",
+          "unit": null,
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Wer in Cortébert zum Perron will, muss ein Gleis überqueren.",
+          "correct": false,
+          "explanation": "Das erfasste Perron ist niveaufrei erreichbar.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf der Strecke",
+      "body": "Von Courtelary her verkehren 25'515 Personenzüge pro Jahr, rund 70 pro Tag in beiden Richtungen zusammen. Richtung Corgémont sind es 25'511 im Jahr. Gezählt werden Fahrten auf dem Streckenabschnitt, nicht Halte am Bahnhof.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Abschnitt Courtelary",
+          "value": 70,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Jahr, Abschnitt Courtelary",
+          "value": 25515,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt von Courtelary her?",
+          "options": [
+            "28",
+            "38",
+            "49",
+            "70"
+          ],
+          "correct": 3,
+          "explanation": "Rund 70 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linie",
+      "body": "Cortébert liegt an der Linie 225 von Biel/Bienne West nach La Chaux-de-Fonds.",
+      "facts": [
+        {
+          "label": "Linie",
+          "value": 225,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "An welcher Linie liegt Cortébert?",
+          "options": [
+            "Linie 100",
+            "Linie 225",
+            "Linie 410",
+            "Linie 631"
+          ],
+          "correct": 1,
+          "explanation": "Linie 225, von Biel/Bienne West nach La Chaux-de-Fonds.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 1 Billettautomat und 1 Wartehalle. Cortébert steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 1,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 1,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Cortébert ist ein Billettautomat erfasst.",
+          "correct": true,
+          "explanation": "Ein Automat vom Typ ePOS.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

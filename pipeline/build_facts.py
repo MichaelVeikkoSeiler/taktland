@@ -442,6 +442,11 @@ def luecken(d, uic, f):
                "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. "
                "Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
                "wifistation")
+    if "billettautomaten_erfasst" not in sv:
+        lueckt("Ausstattung",
+               "Zu Billettautomaten und Entwertern liegen für diesen Bahnhof keine Daten vor. "
+               "Die Quelle ordnet diese Geräte über ein Betriebspunkt-Kürzel zu, das hier fehlt.",
+               "billetautomat, billetentwerter")
     if sv.get("billettautomaten_erfasst") == 0:
         lueckt("Billettautomaten",
                "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, "

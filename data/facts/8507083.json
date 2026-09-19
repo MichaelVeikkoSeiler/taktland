@@ -210,6 +210,11 @@
       "quelle": "wifistation"
     },
     {
+      "thema": "Ausstattung",
+      "grund": "Zu Billettautomaten und Entwertern liegen für diesen Bahnhof keine Daten vor. Die Quelle ordnet diese Geräte über ein Betriebspunkt-Kürzel zu, das hier fehlt.",
+      "quelle": "billetautomat, billetentwerter"
+    },
+    {
       "thema": "Stand der BehiG-Daten",
       "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
       "quelle": "21197_behig-haltekantesegment"
