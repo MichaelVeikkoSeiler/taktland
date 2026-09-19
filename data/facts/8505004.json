@@ -61,6 +61,7 @@
     "source": "perron",
     "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
     "anzahl_mit_daten": 4,
+    "niveaufrei_erreichbar": 4,
     "laengste_m": 467,
     "kuerzeste_m": 425,
     "items": [
@@ -125,7 +126,6 @@
         "perrontyp": "Mittelperron",
         "perronkante_m": 234,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -145,7 +145,6 @@
         "perrontyp": "Mittelperron",
         "perronkante_m": 428,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -166,7 +165,6 @@
         "perrontyp": "Hausperron",
         "perronkante_m": 320,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -186,7 +184,6 @@
         "perrontyp": "Hausperron",
         "perronkante_m": 428,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -206,7 +203,6 @@
         "perrontyp": "Mittelperron",
         "perronkante_m": 442,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -226,7 +222,6 @@
         "perrontyp": "Mittelperron",
         "perronkante_m": 442,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -376,13 +371,14 @@
   },
   "services": {
     "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
-    "wlan": true,
-    "billettautomaten": 2,
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": true,
+    "billettautomaten_erfasst": 2,
     "automat_typen": [
       "BATS"
     ],
-    "billettentwerter": 8,
-    "wartehallen": 2,
+    "billettentwerter_erfasst": 8,
+    "wartehallen_erfasst": 2,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3d475ad6491307ba956ede76e40badfc"
   },
   "bahnhofplan": {
@@ -392,6 +388,38 @@
     "shopping_pdf": null,
     "eigentuemer": "SBB"
   },
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (2, 3, 4, 5, 6, 8). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne RB.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
   "verfuegbare_kapitel": [
     "steckbrief",
     "stammdaten",

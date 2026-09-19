@@ -12,6 +12,25 @@ für das Profil nicht — auch wenn es allgemein bekannt ist.
 Kein Weltwissen: nicht «Olten ist ein wichtiger Eisenbahnknoten», nicht «hier halten
 ICE-Züge», nicht «der Bahnhof wurde 1856 eröffnet». Auch dann nicht, wenn es stimmt.
 
+## Die zweite Regel: Lücken werden genannt
+
+Fehlt etwas, wird das **ausdrücklich angegeben** und nicht stillschweigend weggelassen.
+Die Faktendatei führt dazu den Block `luecken`. Das Profil übernimmt diese Liste
+**unverändert** in sein Feld `luecken`, und die App zeigt sie am Bahnhof an.
+Der Agent formuliert die Lücken nicht selbst — `validate.py --fix` trägt sie ein.
+So können sie weder vergessen noch umgedeutet werden.
+
+Der Unterschied, um den es geht:
+
+| Falsch | Richtig |
+|---|---|
+| «Der Bahnhof hat kein WLAN» | «Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte» |
+| «Es gibt keinen Billettautomaten» | «Es ist kein Billettautomat erfasst» |
+| Kapitel Bahnhofplan fehlt einfach | «Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht» |
+
+Eine 0 in den Daten heisst «nicht erfasst», nicht «nicht vorhanden». Deshalb enden
+die betreffenden Felder auf `_erfasst`.
+
 ## factRef
 
 Jeder Fakt und jede Frage trägt einen `factRef`: einen Pfad in die Faktendatei.
@@ -109,6 +128,10 @@ Typen: `single_choice`, `multiple_choice`, `true_false`, `cloze`, `match`, `sort
 - **Falsche Antworten** dürfen erfunden sein — sie müssen aber klar falsch sein und
   dürfen keinem anderen Wert aus derselben Faktendatei entsprechen.
 - Distraktoren zu Mengen: plausibler Abstand, nicht Faktor 100.
+- Stammen die Optionen von Natur aus aus einer bekannten Menge — Jahre, Gleisnummern,
+  Wochentage, Nachbarabschnitte —, dann sind auch die falschen Optionen echte Werte.
+  Solche Fragen setzen `optionen_aus_fakten: true`. Ohne dieses Feld warnt der Validator,
+  weil eine falsche Antwort, die anderswo stimmt, sonst unfair ist.
 - `explanation` erklärt in einem Satz, warum die Antwort stimmt, und nennt das Jahr,
   wenn der Wert ein Jahr trägt.
 - `difficulty`: 1 = ablesbar, 2 = verknüpfen, 3 = überlegen.

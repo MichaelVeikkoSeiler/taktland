@@ -158,10 +158,12 @@ def perrons(d, uic):
     if not items:
         return None
     laengen = [i["laenge_m"] for i in items if i["laenge_m"]]
+    niveaufrei = sum(1 for i in items if str(i["niveaufreier_zugang"]).lower() == "ja")
     return {
         "source": "perron",
         "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
         "anzahl_mit_daten": len(items),
+        "niveaufrei_erreichbar": niveaufrei,
         "laengste_m": max(laengen) if laengen else None,
         "kuerzeste_m": min(laengen) if laengen else None,
         "items": sorted(items, key=lambda i: (i["laenge_m"] or 0), reverse=True),
@@ -236,6 +238,8 @@ def gleise(d, uic):
             continue
         e = pro_gleis.setdefault(g, {"nr": g, "perronhoehen_cm": set(), "hilfstritt": False,
                                      "perrontyp": None, "perronkante_m": None, "sektoren": []})
+        if s in ("-", "?"):   # Platzhalter in der Quelle, kein Sektor
+            s = None
         if s and s not in e["sektoren"]:
             e["sektoren"].append(s)
     if not pro_gleis:
@@ -342,20 +346,104 @@ def linien(d, uic):
 def services(d, uic):
     bps = d.uic2bps.get(uic)
     out = {"source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, "
-                     "haltestelle-wartehallen, abfahrtsplakate0"}
-    out["wlan"] = bool((d.wifi.uic == uic).any())
+                     "haltestelle-wartehallen, abfahrtsplakate0",
+           "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. "
+                      "Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt."}
+    out["wlan_erfasst"] = bool((d.wifi.uic == uic).any())
     if bps:
         aut = d.automat[d.automat.bps.astype(str) == bps]
-        out["billettautomaten"] = int(len(aut))
+        out["billettautomaten_erfasst"] = int(len(aut))
         if not aut.empty:
             out["automat_typen"] = sorted({t for t in aut.typ_text.dropna().astype(str)})
-        out["billettentwerter"] = int(len(d.entwerter[d.entwerter.bps.astype(str) == bps]))
+        out["billettentwerter_erfasst"] = int(len(d.entwerter[d.entwerter.bps.astype(str) == bps]))
     wh = d.wartehalle[d.wartehalle.uic == uic]
-    out["wartehallen"] = int(len(wh))
+    out["wartehallen_erfasst"] = int(len(wh))
     pl = d.plakat[d.plakat.uic == uic]
     if not pl.empty:
         out["abfahrtsplakat_pdf"] = txt(pl.iloc[0].file)
     return out
+
+
+def luecken(d, uic, f):
+    """Was zu diesem Bahnhof fehlt - ausdruecklich benannt statt weggelassen.
+
+    Der Nutzer der App soll den Unterschied sehen zwischen
+    "gibt es nicht" und "steht nicht in den offenen Daten".
+    """
+    fehlt = []
+
+    def lueckt(thema, grund, quelle):
+        fehlt.append({"thema": thema, "grund": grund, "quelle": quelle})
+
+    if not f.get("bahnhofplan"):
+        lueckt("Bahnhofplan",
+               "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. "
+               "Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+               "haltestelle-karte-trafimage")
+    if not f.get("tagesrhythmus"):
+        lueckt("Tagesrhythmus",
+               "Wie sich die Besucherzahl über den Tag verteilt, ist nur für "
+               "26 grosse Bahnhöfe erhoben.",
+               "anzahl-sbb-bahnhofbenutzer-tagesverlauf")
+    if not f.get("bahnhofbenutzer"):
+        lueckt("Bahnhofbenutzer",
+               "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für "
+               "28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+               "anzahl-sbb-bahnhofbenutzer")
+    gl = f.get("gleise")
+    if not gl:
+        lueckt("Gleise",
+               "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+               "21197_behig-haltekantesegment")
+    else:
+        lueckt("Vollständigkeit der Gleise",
+               f"Erfasst sind {gl['anzahl_mit_daten']} Gleise "
+               f"({', '.join(gl['nummern'])}). Ob der Bahnhof weitere Gleise hat, "
+               "etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+               "21197_behig-haltekantesegment")
+        ohne = [e["nr"] for e in gl["items"] if not e["sektoren"]]
+        if ohne:
+            lueckt("Sektoren",
+                   f"Zu {'Gleis' if len(ohne) == 1 else 'den Gleisen'} "
+                   f"{', '.join(ohne)} sind keine Sektortafeln erfasst.",
+                   "sektortafel")
+    sv = f.get("services") or {}
+    if not sv.get("wlan_erfasst"):
+        lueckt("WLAN",
+               "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. "
+               "Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+               "wifistation")
+    if sv.get("billettautomaten_erfasst") == 0:
+        lueckt("Billettautomaten",
+               "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, "
+               "dass vor Ort einer steht.",
+               "billetautomat")
+    h = f.get("hindernisfreiheit")
+    if not h:
+        lueckt("Hindernisfreiheit",
+               "Zur Hindernisfreiheit liegen für diesen Bahnhof keine Daten vor.",
+               "21197_behig-haltekantesegment")
+    elif h.get("datenstand_quelle"):
+        lueckt("Stand der BehiG-Daten",
+               f"Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand "
+               f"{h['datenstand_quelle']}, die übrigen Daten sind neuer.",
+               "21197_behig-haltekantesegment")
+    bem = (f.get("steckbrief") or {}).get("bemerkung")
+    if bem:
+        lueckt("Abgrenzung der Frequenzzahl",
+               f"Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «{bem}» "
+               "Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+               "passagierfrequenz")
+    if (f.get("services") or {}).get("wartehallen_erfasst") == 0:
+        lueckt("Wartehallen",
+               "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, "
+               "dass es vor Ort einen Warteraum gibt.",
+               "haltestelle-wartehallen")
+    lueckt("Fahrplan",
+           "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. "
+           "Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+           "zugzahlen")
+    return fehlt
 
 
 def bahnhofplan(d, uic):
@@ -374,6 +462,7 @@ def bahnhofplan(d, uic):
 
 def tagesrhythmus(d, uic, name):
     tv = d.tagesverlauf[d.tagesverlauf.uic == uic]
+    tv = tv.dropna(subset=["uhrzeit", "prozentsatz"])   # Quelle enthaelt Leerzeilen
     out = {}
     if not tv.empty:
         jahr = tv.jahr_annee_anno_year.max()
@@ -388,10 +477,29 @@ def tagesrhythmus(d, uic, name):
     if not wt.empty:
         jahr = wt.jahr_annee_anno_year.max()
         wt = wt[wt.jahr_annee_anno_year == jahr]
-        out["wochentage"] = [{"tag": txt(r.wochentag), "prozent": round(float(r.prozentsatz), 2)}
-                             for _, r in wt.iterrows()]
+        tage = [{"tag": wochentag_name(r.wochentag), "code": txt(r.wochentag),
+                 "prozent": round(float(r.prozentsatz), 2)} for _, r in wt.iterrows()]
+        reihenfolge = {v: k for k, v in WOCHENTAGE.items()}
+        out["wochentage"] = sorted(tage, key=lambda t: reihenfolge.get(t["tag"], 99))
+        if out["wochentage"]:
+            staerkster = max(out["wochentage"], key=lambda t: t["prozent"])
+            out["staerkster_wochentag"] = staerkster["tag"]
+            out["staerkster_wochentag_prozent"] = staerkster["prozent"]
         out.setdefault("source", "anzahl-sbb-bahnhofbenutzer-wochentag")
     return out or None
+
+
+WOCHENTAGE = {1: "Montag", 2: "Dienstag", 3: "Mittwoch", 4: "Donnerstag",
+              5: "Freitag", 6: "Samstag", 7: "Sonntag"}
+
+
+def wochentag_name(code):
+    """'2_Di_Mar_Mar_Tu' -> 'Dienstag'. Die fuehrende Ziffer ist der Wochentag."""
+    s = txt(code)
+    if not s:
+        return None
+    kopf = s.split("_", 1)[0]
+    return WOCHENTAGE.get(int(kopf)) if kopf.isdigit() else s
 
 
 def bahnhofbenutzer(d, name):
@@ -444,6 +552,7 @@ def build(d, uic):
         "services": services(d, uic),
         "bahnhofplan": plan,
     }
+    f["luecken"] = luecken(d, uic, f)
     f["verfuegbare_kapitel"] = [k for k in
                                 ["steckbrief", "stammdaten", "tagesrhythmus", "perrons", "gleise",
                                  "hindernisfreiheit", "zuege", "linien", "services", "bahnhofplan"]

@@ -170,40 +170,50 @@
   "tagesrhythmus": {
     "wochentage": [
       {
-        "tag": "5_Fr_Ven_Ven_Fr",
-        "prozent": 16.4
-      },
-      {
-        "tag": "2_Di_Mar_Mar_Tu",
-        "prozent": 15.0
-      },
-      {
-        "tag": "4_Do_Jeu_Gio_Th",
-        "prozent": 15.7
-      },
-      {
-        "tag": "1_Mo_Lun_Lun_Mo",
+        "tag": "Montag",
+        "code": "1_Mo_Lun_Lun_Mo",
         "prozent": 14.3
       },
       {
-        "tag": "3_Mi_Mer_Mer_We",
+        "tag": "Dienstag",
+        "code": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.0
+      },
+      {
+        "tag": "Mittwoch",
+        "code": "3_Mi_Mer_Mer_We",
         "prozent": 15.2
       },
       {
-        "tag": "6_Sa_Sam_Sab_Sa",
+        "tag": "Donnerstag",
+        "code": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.7
+      },
+      {
+        "tag": "Freitag",
+        "code": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.4
+      },
+      {
+        "tag": "Samstag",
+        "code": "6_Sa_Sam_Sab_Sa",
         "prozent": 13.4
       },
       {
-        "tag": "7_So_Dim_Dom_Su",
+        "tag": "Sonntag",
+        "code": "7_So_Dim_Dom_Su",
         "prozent": 9.9
       }
     ],
+    "staerkster_wochentag": "Freitag",
+    "staerkster_wochentag_prozent": 16.4,
     "source": "anzahl-sbb-bahnhofbenutzer-wochentag"
   },
   "perrons": {
     "source": "perron",
     "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
     "anzahl_mit_daten": 5,
+    "niveaufrei_erreichbar": 5,
     "laengste_m": 446,
     "kuerzeste_m": 87,
     "items": [
@@ -315,7 +325,6 @@
         "perrontyp": "Mittelperron",
         "perronkante_m": 64,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -335,7 +344,6 @@
         "perrontyp": "Mittelperron",
         "perronkante_m": 261,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -352,7 +360,6 @@
         "perrontyp": "Mittelperron",
         "perronkante_m": 261,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -369,7 +376,6 @@
         "perrontyp": "Mittelperron",
         "perronkante_m": 196,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -491,13 +497,14 @@
   },
   "services": {
     "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
-    "wlan": false,
-    "billettautomaten": 5,
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": false,
+    "billettautomaten_erfasst": 5,
     "automat_typen": [
       "ePOS"
     ],
-    "billettentwerter": 17,
-    "wartehallen": 3,
+    "billettentwerter_erfasst": 17,
+    "wartehallen_erfasst": 3,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/1ac730a7568f8f580b953e626d4303c9"
   },
   "bahnhofplan": {
@@ -507,6 +514,33 @@
     "shopping_pdf": null,
     "eigentuemer": "SBB"
   },
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 7 Gleise (1, 2, 3, 4, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne AB.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
   "verfuegbare_kapitel": [
     "steckbrief",
     "stammdaten",

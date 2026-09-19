@@ -7,7 +7,8 @@ aus den Fakten stammen.
 
     python generator/validate.py data/profiles/8508001.de.json
     python generator/validate.py --alle
-    python generator/validate.py --alle --fix    # ungueltige Teile entfernen
+    python generator/validate.py --alle --fix        # Luecken eintragen
+    python generator/validate.py --alle --entfernen  # zusaetzlich Ungueltiges loeschen
 """
 import json
 import re
@@ -154,7 +155,7 @@ def pruefe_text(text, wo, erlaubt, b, streng=True):
         b.warnt(wo, f"«{m.group(0)}» zusammen mit einer Zahl behauptet Vollständigkeit")
 
 
-def pruefe(profil, facts, fix=False):
+def pruefe(profil, facts, fix=False, entfernen=False):
     b = Bericht(profil.get("name", "?"))
     erlaubt = alle_zahlen(facts)
     erlaubt.add(float(facts["uic"]))
@@ -171,6 +172,21 @@ def pruefe(profil, facts, fix=False):
         b.fehlt("Profil", f"Stufe {profil['tier']} statt {facts['tier']}")
     if "ß" in json.dumps(profil, ensure_ascii=False):
         b.fehlt("Profil", "ß gefunden, Schweizer Rechtschreibung verlangt ss")
+
+    # Lücken müssen übernommen werden, sonst verschweigt das Profil, was fehlt
+    soll = {l["thema"] for l in facts.get("luecken", [])}
+    ist = {l.get("thema") for l in profil.get("luecken", [])}
+    if fix:
+        # Lücken werden nie formuliert, sondern unveraendert uebernommen
+        profil["luecken"] = facts.get("luecken", [])
+        ist = {l.get("thema") for l in profil["luecken"]}
+    if soll and not profil.get("luecken"):
+        b.fehlt("Profil", f"Feld 'luecken' fehlt, {len(soll)} Lücken wären anzugeben")
+    else:
+        for t_ in sorted(soll - ist):
+            b.fehlt("Profil/luecken", f"Lücke «{t_}» wird verschwiegen")
+        for t_ in sorted(ist - soll):
+            b.fehlt("Profil/luecken", f"Lücke «{t_}» steht nicht in den Fakten")
 
     verfuegbar = set(facts.get("verfuegbare_kapitel", []))
     kapitel_raus, fragen_gesamt = [], 0
@@ -243,13 +259,17 @@ def pruefe(profil, facts, fix=False):
                     if not passt(opts[x], wert):
                         b.fehlt(qwo, f"richtige Antwort {opts[x]!r} passt nicht zu {ref} = {wert!r}")
                         fragen_raus.append(i)
-                # Distraktoren duerfen keinen anderen Faktenwert treffen
-                for j, o in enumerate(opts):
-                    if j in idxs:
-                        continue
-                    n = zahl(o)
-                    if n is not None and n in erlaubt:
-                        b.warnt(qwo, f"falsche Antwort {o!r} ist selbst ein Faktenwert")
+                # Distraktoren duerfen keinen anderen Faktenwert treffen. Ausnahme:
+                # Fragen, deren Optionen von Natur aus aus einer bekannten Menge stammen
+                # (Jahre, Gleisnummern, Wochentage). Die muessen das ausdruecklich sagen.
+                if not fr.get("optionen_aus_fakten"):
+                    for j, o in enumerate(opts):
+                        if j in idxs:
+                            continue
+                        n = zahl(o)
+                        if n is not None and n in erlaubt:
+                            b.warnt(qwo, f"falsche Antwort {o!r} ist selbst ein Faktenwert. "
+                                         "Wenn das gewollt ist: optionen_aus_fakten auf true setzen")
             elif typ == "true_false":
                 if fr.get("correct") not in (True, False):
                     b.fehlt(qwo, "correct muss true oder false sein")
@@ -262,7 +282,7 @@ def pruefe(profil, facts, fix=False):
             if not fr.get("explanation"):
                 b.warnt(qwo, "explanation fehlt")
 
-        if fix:
+        if entfernen:
             for i in sorted(set(fakten_raus), reverse=True):
                 kap["facts"].pop(i)
             for i in sorted(set(fragen_raus), reverse=True):
@@ -271,7 +291,7 @@ def pruefe(profil, facts, fix=False):
                 kapitel_raus.append(kap)
         fragen_gesamt += len(kap.get("questions", []))
 
-    if fix and kapitel_raus:
+    if entfernen and kapitel_raus:
         profil["chapters"] = [k for k in profil["chapters"] if k not in kapitel_raus]
 
     min_k, max_k, min_f, max_f = UMFANG.get(profil["tier"], (0, 99, 0, 99))
@@ -285,7 +305,8 @@ def pruefe(profil, facts, fix=False):
 
 
 def main():
-    fix = "--fix" in sys.argv
+    fix = "--fix" in sys.argv or "--entfernen" in sys.argv
+    entfernen = "--entfernen" in sys.argv
     pfade = [Path(a) for a in sys.argv[1:] if not a.startswith("--")]
     if "--alle" in sys.argv:
         pfade = sorted(PROFILES.glob("*.json"))
@@ -302,7 +323,7 @@ def main():
             schlecht += 1
             continue
         facts = json.loads(fpfad.read_text(encoding="utf-8"))
-        b, profil = pruefe(profil, facts, fix=fix)
+        b, profil = pruefe(profil, facts, fix=fix, entfernen=entfernen)
         zeichen = "✓" if b.ok else "✗"
         print(f"{zeichen} {p.name}  {b.name}  "
               f"{len(b.fehler)} Fehler, {len(b.warnungen)} Warnungen")

@@ -1,0 +1,534 @@
+{
+  "uic": 8500218,
+  "name": "Olten",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-19",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Olten liegt im Kanton Solothurn, auf 396 Metern über Meer. An einem Werktag steigen hier 86700 Personen ein und aus, an freien Tagen 70500. Die Anlage gehört der SBB, Züge fahren von BLS, SBB und SOB.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 86700,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 70500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 396,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "BLS, SBB, SOB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Olten ein und aus?",
+          "options": [
+            "35000",
+            "52000",
+            "65000",
+            "86700"
+          ],
+          "correct": 3,
+          "explanation": "86'700 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Olten fahren Züge von drei Bahnunternehmen.",
+          "correct": true,
+          "explanation": "Erfasst sind BLS, SBB und SOB. Die Anlage selbst gehört der SBB.",
+          "factRef": "steckbrief.evu",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "options": [
+            "2018",
+            "2022",
+            "2024",
+            "2025"
+          ],
+          "correct": 1,
+          "explanation": "2022, mit 71'800 Personen pro Werktag.",
+          "factRef": "steckbrief.verlauf[1].jahr",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Der Tag am Bahnhof",
+      "body": "Olten hat seine Spitze am Morgen: um 7 Uhr fallen 10.8 Prozent des Tagesaufkommens an, am Abend um 17 Uhr sind es 10.2 Prozent. Um 2 Uhr nachts sind es 0.0 Prozent. Der stärkste Wochentag ist der Donnerstag mit 16.5 Prozent, der schwächste der Sonntag mit 9.3 Prozent.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 7,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil der Spitzenstunde",
+          "value": 10.8,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Stärkster Wochentag",
+          "value": "Donnerstag",
+          "unit": null,
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wann ist in Olten am meisten los?",
+          "options": [
+            "7 Uhr",
+            "12 Uhr",
+            "17 Uhr",
+            "20 Uhr"
+          ],
+          "correct": 0,
+          "explanation": "Um 7 Uhr, mit 10.8 Prozent des Tagesaufkommens. Olten ist ein Pendlerbahnhof mit ausgeprägter Morgenspitze.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag ist in Olten der stärkste?",
+          "options": [
+            "Montag",
+            "Mittwoch",
+            "Donnerstag",
+            "Samstag"
+          ],
+          "correct": 2,
+          "explanation": "Der Donnerstag mit 16.5 Prozent der Wochenbesuche.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Olten ist die Morgenspitze höher als die Abendspitze.",
+          "correct": true,
+          "explanation": "Um 7 Uhr sind es 10.8 Prozent, um 17 Uhr 10.2 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 6 Perrons liegen Daten vor. Das längste misst 460 Meter, das kürzeste 300 Meter. Bei 6 von 6 erfassten Perrons ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 6,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 460,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 300,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Olten?",
+          "options": [
+            "180 m",
+            "340 m",
+            "460 m",
+            "600 m"
+          ],
+          "correct": 2,
+          "explanation": "460 Meter, das Perron an Gleis 12.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie lang ist das kürzeste erfasste Perron?",
+          "min": 100,
+          "max": 600,
+          "step": 25,
+          "unit": "m",
+          "correct": 300,
+          "explanation": "300 Meter, das Perron an Gleis 1.",
+          "factRef": "perrons.kuerzeste_m",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 10 Gleisen vor: 1, 2, 3, 4, 7, 8, 9, 10, 11 und 12. Die längste Perronkante hat Gleis 12 mit 460 Metern. An den meisten Gleisen reichen die Sektoren von A bis D, an den Gleisen 9 und 11 sind nur A und D erfasst.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 10,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 12",
+          "value": 460,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[9].perronkante_m"
+        },
+        {
+          "label": "Letzter Sektor an Gleis 1",
+          "value": "D",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren[3]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "options": [
+            "Gleis 1",
+            "Gleis 4",
+            "Gleis 8",
+            "Gleis 12"
+          ],
+          "correct": 3,
+          "explanation": "Gleis 12, mit 460 Metern Perronkante.",
+          "factRef": "gleise.items[9].nr",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu Gleisen mit den Nummern 5 und 6 liegen in diesen Daten keine Angaben vor.",
+          "correct": true,
+          "explanation": "Erfasst sind die Gleise 1, 2, 3, 4, 7, 8, 9, 10, 11 und 12. Ob es weitere gibt, sagen die offenen Daten nicht.",
+          "factRef": "gleise.nummern",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "56 Perronabschnitte sind auf ihre Hindernisfreiheit erfasst. 45 davon haben 55 Zentimeter Höhe, 8 messen 35 Zentimeter, 2 messen 25 Zentimeter und einer misst 20 Zentimeter. An 10 von 10 erfassten Gleisen gibt es einen Abschnitt mit 55 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "facts": [
+        {
+          "label": "Erfasste Perronabschnitte",
+          "value": 56,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Abschnitte mit 55 cm",
+          "value": 45,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 10,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronabschnitte sind in Olten erfasst?",
+          "options": [
+            "34",
+            "42",
+            "56",
+            "73"
+          ],
+          "correct": 2,
+          "explanation": "56 Abschnitte, Stand 2023. 45 davon sind 55 Zentimeter hoch.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe kommt in Olten nur bei einem einzelnen Abschnitt vor?",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": 0,
+          "explanation": "20 Zentimeter, bei genau einem Abschnitt. Solche tiefen Kanten stammen aus älteren Bauzuständen.",
+          "factRef": "gleise.perronhoehen_cm[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Olten gibt es eine visuell-taktile Sicherheitslinie.",
+          "correct": true,
+          "explanation": "Ja. Diese Linie führt sehbehinderte Reisende entlang der Perronkante.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Am stärksten befahren ist der Abschnitt Richtung Olten Nord-Ost: 674 Personenzüge pro Tag in beiden Richtungen zusammen. Richtung Aarburg-Oftringen sind es 287, von Rothrist her 280. Gezählt werden Fahrten auf dem Streckenabschnitt, nicht Halte.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag Richtung Olten Nord-Ost",
+          "value": 674,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag Richtung Aarburg-Oftringen",
+          "value": 287,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag Richtung Olten Nord-Ost",
+          "value": 167,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Olten?",
+          "options": [
+            "270",
+            "400",
+            "510",
+            "674"
+          ],
+          "correct": 3,
+          "explanation": "Rund 674 pro Tag Richtung Olten Nord-Ost, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem stärksten Abschnitt bei Olten fahren auch Güterzüge.",
+          "correct": true,
+          "explanation": "167 Güterzüge pro Tag Richtung Olten Nord-Ost, zusätzlich zu den 674 Personenzügen.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Olten ist ein Knoten: In diesen Daten laufen hier 4 Linien zusammen, darunter die Linie 500 von Basel SBB über Olten nach Luzern und die Linie 410 nach Solothurn und Biel.",
+      "facts": [
+        {
+          "label": "Linien am Bahnhof",
+          "value": 4,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie Richtung Basel und Luzern",
+          "value": 500,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[2].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien führen in diesen Daten über Olten?",
+          "options": [
+            "1",
+            "2",
+            "4",
+            "9"
+          ],
+          "correct": 2,
+          "explanation": "4 Linien. Deshalb gilt Olten als Knotenbahnhof.",
+          "factRef": "linien.anzahl",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche Linie führt von Basel SBB über Olten nach Luzern?",
+          "options": [
+            "Linie 410",
+            "Linie 500",
+            "Linie 503",
+            "Linie 540"
+          ],
+          "correct": 1,
+          "explanation": "Die Linie 500.",
+          "factRef": "linien.items[2].nummer",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 7 Billettautomaten, 28 Billettentwerter und 11 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 7,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 28,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 11,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Olten erfasst?",
+          "options": [
+            "2",
+            "7",
+            "16",
+            "31"
+          ],
+          "correct": 1,
+          "explanation": "7 Automaten, in drei Bauarten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Olten ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-olten-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Olten gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja. Ein Plan liegt nur für einen kleinen Teil der Bahnhöfe vor.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 10 Gleise (1, 2, 3, 4, 7, 8, 9, 10, 11, 12). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

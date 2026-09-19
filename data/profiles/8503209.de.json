@@ -1,0 +1,430 @@
+{
+  "uic": 8503209,
+  "name": "Pfäffikon SZ",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-19",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Pfäffikon SZ liegt in der Gemeinde Freienbach im Kanton Schwyz, auf 412 Metern über Meer. An einem Werktag steigen hier 18400 Personen ein und aus, an freien Tagen 12800. Die Anlage gehört der SBB, Züge fahren von SBB und SOB.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 18400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 12800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 412,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "SBB, SOB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Pfäffikon SZ ein und aus?",
+          "options": [
+            "4200",
+            "18400",
+            "46000",
+            "121000"
+          ],
+          "correct": 1,
+          "explanation": "18'400 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Pfäffikon SZ?",
+          "min": 200,
+          "max": 800,
+          "step": 25,
+          "unit": "m",
+          "correct": 412,
+          "explanation": "412 Meter über Meer, am oberen Zürichsee.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Pfäffikon SZ fahren Züge von zwei Bahnunternehmen.",
+          "correct": true,
+          "explanation": "Erfasst sind SBB und SOB. Die Anlage selbst gehört der SBB.",
+          "factRef": "steckbrief.evu",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu drei Perrons liegen Daten vor. Die beiden Mittelperrons sind je 419 Meter lang, das Aussenperron 299 Meter. Bei 3 von 3 erfassten Perrons ist der Zugang niveaufrei, man muss also kein Gleis überqueren.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 3,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 419,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 299,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 3,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang sind die beiden Mittelperrons?",
+          "options": [
+            "185 m",
+            "299 m",
+            "419 m",
+            "612 m"
+          ],
+          "correct": 2,
+          "explanation": "419 Meter. Damit haben auch lange Doppelstockzüge Platz.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 6 Gleisen vor: 1, 2, 3, 5, 6 und 7. Die längste Perronkante hat Gleis 3 mit 364 Metern, die kürzeste Gleis 2 mit 260 Metern. An den Gleisen 2, 3 und 5 reichen die Sektoren von A bis H.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 6,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 3",
+          "value": 364,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Letzter Sektor an Gleis 2",
+          "value": "H",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[1].sektoren[7]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "options": [
+            "Gleis 1",
+            "Gleis 2",
+            "Gleis 3",
+            "Gleis 7"
+          ],
+          "correct": 2,
+          "explanation": "Gleis 3 mit 364 Metern Perronkante.",
+          "factRef": "gleise.items[2].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 2?",
+          "options": [
+            "D",
+            "F",
+            "H",
+            "K"
+          ],
+          "correct": 2,
+          "explanation": "Die Sektoren an Gleis 2 gehen von A bis H.",
+          "factRef": "gleise.items[1].sektoren[7]",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu einem Gleis mit der Nummer 4 liegen in den offenen Daten keine Angaben vor.",
+          "correct": true,
+          "explanation": "Erfasst sind die Gleise 1, 2, 3, 5, 6 und 7. Ob es ein Gleis mit einer anderen Nummer gibt, sagen die offenen Daten nicht.",
+          "factRef": "gleise.nummern",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "Die Perronkanten sind unterschiedlich hoch: erfasst sind Abschnitte mit 25, 35 und 55 Zentimetern. 55 Zentimeter ist die Referenzhöhe für den stufenfreien Einstieg, und an 6 von 6 erfassten Gleisen gibt es einen solchen Abschnitt. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "facts": [
+        {
+          "label": "Perronhöhen",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[2]"
+        },
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 26,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 6,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe erlaubt bei den meisten Zügen den stufenfreien Einstieg?",
+          "options": [
+            "25 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": 2,
+          "explanation": "55 Zentimeter ist die Referenzhöhe. In Pfäffikon SZ haben 6 von 6 erfassten Gleisen einen solchen Abschnitt.",
+          "factRef": "gleise.perronhoehen_cm[2]",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronabschnitte sind zur Hindernisfreiheit erfasst?",
+          "options": [
+            "14",
+            "26",
+            "31",
+            "48"
+          ],
+          "correct": 1,
+          "explanation": "26 Abschnitte, davon 12 mit 55 Zentimetern Höhe.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Am stärksten befahren ist der Abschnitt von Freienbach SBB her: 106106 Personenzüge pro Jahr, rund 291 pro Tag in beiden Richtungen zusammen. Richtung Altendorf sind es 210 pro Tag. Gezählt werden Fahrten auf dem Streckenabschnitt, nicht Halte am Bahnhof.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Abschnitt Freienbach SBB",
+          "value": 291,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Jahr, Abschnitt Freienbach SBB",
+          "value": 106106,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Personenzüge pro Tag, Abschnitt Altendorf",
+          "value": 210,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt von Freienbach SBB her?",
+          "options": [
+            "58",
+            "291",
+            "740",
+            "1850"
+          ],
+          "correct": 1,
+          "explanation": "Rund 291 Personenzüge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen sagen, wie viele Züge in Pfäffikon SZ halten.",
+          "correct": false,
+          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt. Ob ein Zug hier hält oder durchfährt, steht nicht in diesen Daten.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Pfäffikon SZ liegt an zwei Linien: der Linie 720 von Zürich Langstrasse über Thalwil nach Ziegelbrücke und der Linie 672 nach Samstagern.",
+      "facts": [
+        {
+          "label": "Linien am Bahnhof",
+          "value": 2,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie Richtung Samstagern",
+          "value": 672,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Linie führt von Pfäffikon SZ nach Samstagern?",
+          "options": [
+            "Linie 53",
+            "Linie 672",
+            "Linie 720"
+          ],
+          "correct": 1,
+          "explanation": "Die Linie 672. Die Linie 720 führt über Thalwil nach Zürich.",
+          "factRef": "linien.items[1].nummer",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 2 Billettautomaten, 8 Billettentwerter und 3 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 2,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 8,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Pfäffikon SZ steht in der Liste der WLAN-Standorte der SBB.",
+          "correct": true,
+          "explanation": "Ja, der Bahnhof ist als WLAN-Standort erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (1, 2, 3, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu Gleis 1 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

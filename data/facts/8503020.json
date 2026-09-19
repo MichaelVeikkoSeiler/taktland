@@ -266,49 +266,55 @@
       {
         "stunde": 23,
         "prozent": 1.8
-      },
-      {
-        "stunde": null,
-        "prozent": NaN
       }
     ],
     "spitzenstunde": 17,
     "spitzenanteil": 13.0,
     "wochentage": [
       {
-        "tag": "1_Mo_Lun_Lun_Mo",
+        "tag": "Montag",
+        "code": "1_Mo_Lun_Lun_Mo",
         "prozent": 15.0
       },
       {
-        "tag": "7_So_Dim_Dom_Su",
-        "prozent": 7.2
-      },
-      {
-        "tag": "3_Mi_Mer_Mer_We",
-        "prozent": 17.0
-      },
-      {
-        "tag": "5_Fr_Ven_Ven_Fr",
-        "prozent": 15.0
-      },
-      {
-        "tag": "4_Do_Jeu_Gio_Th",
-        "prozent": 17.9
-      },
-      {
-        "tag": "2_Di_Mar_Mar_Tu",
+        "tag": "Dienstag",
+        "code": "2_Di_Mar_Mar_Tu",
         "prozent": 17.4
       },
       {
-        "tag": "6_Sa_Sam_Sab_Sa",
+        "tag": "Mittwoch",
+        "code": "3_Mi_Mer_Mer_We",
+        "prozent": 17.0
+      },
+      {
+        "tag": "Donnerstag",
+        "code": "4_Do_Jeu_Gio_Th",
+        "prozent": 17.9
+      },
+      {
+        "tag": "Freitag",
+        "code": "5_Fr_Ven_Ven_Fr",
+        "prozent": 15.0
+      },
+      {
+        "tag": "Samstag",
+        "code": "6_Sa_Sam_Sab_Sa",
         "prozent": 10.5
+      },
+      {
+        "tag": "Sonntag",
+        "code": "7_So_Dim_Dom_Su",
+        "prozent": 7.2
       }
-    ]
+    ],
+    "staerkster_wochentag": "Donnerstag",
+    "staerkster_wochentag_prozent": 17.9
   },
   "perrons": {
     "source": "perron",
     "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
     "anzahl_mit_daten": 3,
+    "niveaufrei_erreichbar": 3,
     "laengste_m": 344,
     "kuerzeste_m": 320,
     "items": [
@@ -376,7 +382,6 @@
         "perrontyp": null,
         "perronkante_m": null,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -392,7 +397,6 @@
         "perrontyp": null,
         "perronkante_m": null,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -410,7 +414,6 @@
         "perrontyp": "Aussenperron",
         "perronkante_m": 320,
         "sektoren": [
-          "-",
           "A",
           "B",
           "C",
@@ -568,13 +571,14 @@
   },
   "services": {
     "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
-    "wlan": true,
-    "billettautomaten": 8,
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": true,
+    "billettautomaten_erfasst": 8,
     "automat_typen": [
       "ePOS"
     ],
-    "billettentwerter": 12,
-    "wartehallen": 3,
+    "billettentwerter_erfasst": 12,
+    "wartehallen_erfasst": 3,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/c5f1f3535d51d81a402ba985a96c7492"
   },
   "bahnhofplan": {
@@ -584,6 +588,23 @@
     "shopping_pdf": null,
     "eigentuemer": "SBB"
   },
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 4 Gleise (1, 2, 3, 4). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
   "verfuegbare_kapitel": [
     "steckbrief",
     "stammdaten",

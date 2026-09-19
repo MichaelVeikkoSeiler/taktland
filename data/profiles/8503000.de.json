@@ -1,0 +1,526 @@
+{
+  "uic": 8503000,
+  "name": "Zürich HB",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-19",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Zürich HB liegt in der Gemeinde Zürich, auf 408 Metern über Meer. An einem Werktag steigen hier 480900 Personen ein und aus, an einem freien Tag 380600. Der Wert fiel 2022 auf 360900 und liegt 2025 wieder über dem von 2018, als es 471300 waren.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 480900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 380600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 408,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bahnhofbenutzer pro Werktag",
+          "value": 426400,
+          "unit": "Personen",
+          "source": "anzahl-sbb-bahnhofbenutzer",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Zürich HB ein und aus?",
+          "options": [
+            "96400",
+            "218000",
+            "480900",
+            "1240000"
+          ],
+          "correct": 2,
+          "explanation": "480'900 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "options": [
+            "2018",
+            "2022",
+            "2023",
+            "2025"
+          ],
+          "correct": 1,
+          "explanation": "2022, mit 360'900 Personen pro Werktag.",
+          "factRef": "steckbrief.verlauf[1].jahr",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zahl der Bahnhofbenutzer ist kleiner als die Zahl der Ein- und Aussteigenden.",
+          "correct": true,
+          "explanation": "426'400 Bahnhofbenutzer gegenüber 480'900 Ein- und Aussteigenden. Die beiden Zahlen stammen aus verschiedenen Erhebungen und zählen nicht dasselbe.",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Der Tag am Bahnhof",
+      "body": "Die Bahnhofbenutzer verteilen sich ungleich über den Tag. Am meisten los ist es um 17 Uhr mit 10.9 Prozent des Tagesaufkommens. Um 2 Uhr in der Nacht sind es 0.0 Prozent. Über die Woche ist der Freitag mit 15.6 Prozent der stärkste Tag, der Sonntag mit 11.4 Prozent der schwächste.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 17,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil der Spitzenstunde",
+          "value": 10.9,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Stärkster Wochentag",
+          "value": "Freitag",
+          "unit": null,
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wann ist in Zürich HB am meisten los?",
+          "options": [
+            "8 Uhr",
+            "12 Uhr",
+            "17 Uhr",
+            "20 Uhr"
+          ],
+          "correct": 2,
+          "explanation": "Um 17 Uhr, mit 10.9 Prozent des Tagesaufkommens.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag ist der stärkste?",
+          "options": [
+            "Montag",
+            "Donnerstag",
+            "Freitag",
+            "Sonntag"
+          ],
+          "correct": 2,
+          "explanation": "Der Freitag mit 15.6 Prozent der Wochenbesuche.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Welcher Anteil des Tagesaufkommens fällt auf die Spitzenstunde?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 10.9,
+          "explanation": "10.9 Prozent. Auch am stärksten Bahnhof verteilt sich der Tag breiter, als man erwarten würde.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 9 Perrons liegen Daten vor. Das längste misst 433 Meter, das kürzeste 418 Meter. Bei 9 von 9 erfassten Perrons ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 9,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 433,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 418,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron?",
+          "options": [
+            "218 m",
+            "433 m",
+            "640 m",
+            "812 m"
+          ],
+          "correct": 1,
+          "explanation": "433 Meter, das Perron an den Gleisen 12 und 13.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die erfassten Perrons unterscheiden sich in der Länge um mehr als 100 Meter.",
+          "correct": false,
+          "explanation": "Das längste misst 433 Meter, das kürzeste 418 Meter. Der Unterschied beträgt 15 Meter.",
+          "factRef": "perrons.kuerzeste_m",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 16 Gleisen vor, mit den Nummern 3 bis 18. Die längste Perronkante hat Gleis 12 mit 269 Metern, die kürzeste Gleis 3 mit 95 Metern. An den meisten Gleisen reichen die Sektoren von A bis D.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 16,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 12",
+          "value": 269,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[9].perronkante_m"
+        },
+        {
+          "label": "Letzter Sektor an Gleis 4",
+          "value": "D",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[1].sektoren[3]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "options": [
+            "Gleis 3",
+            "Gleis 8",
+            "Gleis 12",
+            "Gleis 18"
+          ],
+          "correct": 2,
+          "explanation": "Gleis 12, mit 269 Metern Perronkante.",
+          "factRef": "gleise.items[9].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 4?",
+          "options": [
+            "B",
+            "D",
+            "F",
+            "H"
+          ],
+          "correct": 1,
+          "explanation": "Von A bis D. An den meisten Gleisen in Zürich HB ist das so.",
+          "factRef": "gleise.items[1].sektoren[3]",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu Gleisen mit Nummern über 18 liegen in diesen Daten keine Angaben vor.",
+          "correct": true,
+          "explanation": "Erfasst sind die Gleise 3 bis 18. Was darüber hinaus existiert, etwa unterirdische Gleise, steht nicht in den offenen Daten.",
+          "factRef": "gleise.nummern",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "49 Perronabschnitte sind auf ihre Hindernisfreiheit erfasst. 32 davon haben eine Höhe von 55 Zentimetern, 12 messen 30 Zentimeter und 5 messen 35 Zentimeter. An 16 von 16 erfassten Gleisen gibt es mindestens einen Abschnitt mit 55 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "facts": [
+        {
+          "label": "Erfasste Perronabschnitte",
+          "value": 49,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Abschnitte mit 55 cm",
+          "value": 32,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 16,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe kommt in Zürich HB am häufigsten vor?",
+          "options": [
+            "30 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": 2,
+          "explanation": "55 Zentimeter, bei 32 der 49 erfassten Abschnitte. Das ist die Referenzhöhe für den stufenfreien Einstieg.",
+          "factRef": "gleise.perronhoehen_cm[2]",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronabschnitte sind zur Hindernisfreiheit erfasst?",
+          "options": [
+            "29",
+            "37",
+            "49",
+            "64"
+          ],
+          "correct": 2,
+          "explanation": "49 Abschnitte, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Zürich HB gibt es eine visuell-taktile Sicherheitslinie.",
+          "correct": true,
+          "explanation": "Ja. Diese Linie führt sehbehinderte Reisende entlang der Perronkante.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Am stärksten befahren ist der Abschnitt Richtung Zürich Langstrasse: 2135 Personenzüge pro Tag in beiden Richtungen zusammen. Richtung Zürich Stadelhofen sind es 715, Richtung Zürich Wehntalerstrasse 433. Gezählt werden Fahrten auf dem Streckenabschnitt, nicht Halte am Bahnhof.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag Richtung Langstrasse",
+          "value": 2135,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag Richtung Stadelhofen",
+          "value": 715,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Jahr Richtung Langstrasse",
+          "value": 779381,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt Richtung Zürich Langstrasse?",
+          "options": [
+            "433",
+            "715",
+            "2135",
+            "8400"
+          ],
+          "correct": 2,
+          "explanation": "Rund 2135 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen sagen, wie viele Züge in Zürich HB halten.",
+          "correct": false,
+          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt. Ob ein Zug hält oder durchfährt, steht nicht in diesen Daten.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 21 Billettautomaten und 34 Billettentwerter. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 21,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 34,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Zürich HB erfasst?",
+          "options": [
+            "21",
+            "27",
+            "46",
+            "63"
+          ],
+          "correct": 0,
+          "explanation": "21 Automaten, in zwei Bauarten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "In diesen Daten ist Zürich HB der Linie 710 Richtung Brugg AG zugeordnet.",
+      "facts": [
+        {
+          "label": "Linie",
+          "value": 710,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Diese Daten führen für Zürich HB nur eine einzelne Linie auf.",
+          "correct": true,
+          "explanation": "Erfasst ist die Linie 710. Das heisst nicht, dass hier nur eine Linie verkehrt, sondern nur, dass die Quelle eine nennt.",
+          "factRef": "linien.anzahl",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Zürich HB ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zuerich-hb-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Zürich HB gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja. Ein Bahnhofplan liegt nur für einen kleinen Teil der Bahnhöfe vor.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 16 Gleise (3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Umfasst auch ZLOE, ZMUS und ZUSZ.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

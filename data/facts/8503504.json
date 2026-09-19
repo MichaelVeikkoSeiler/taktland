@@ -266,49 +266,55 @@
       {
         "stunde": 23,
         "prozent": 0.9
-      },
-      {
-        "stunde": null,
-        "prozent": NaN
       }
     ],
     "spitzenstunde": 17,
     "spitzenanteil": 10.8,
     "wochentage": [
       {
-        "tag": "2_Di_Mar_Mar_Tu",
-        "prozent": 15.2
-      },
-      {
-        "tag": "3_Mi_Mer_Mer_We",
-        "prozent": 15.3
-      },
-      {
-        "tag": "4_Do_Jeu_Gio_Th",
-        "prozent": 15.3
-      },
-      {
-        "tag": "6_Sa_Sam_Sab_Sa",
-        "prozent": 14.2
-      },
-      {
-        "tag": "1_Mo_Lun_Lun_Mo",
+        "tag": "Montag",
+        "code": "1_Mo_Lun_Lun_Mo",
         "prozent": 14.5
       },
       {
-        "tag": "5_Fr_Ven_Ven_Fr",
+        "tag": "Dienstag",
+        "code": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.2
+      },
+      {
+        "tag": "Mittwoch",
+        "code": "3_Mi_Mer_Mer_We",
+        "prozent": 15.3
+      },
+      {
+        "tag": "Donnerstag",
+        "code": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.3
+      },
+      {
+        "tag": "Freitag",
+        "code": "5_Fr_Ven_Ven_Fr",
         "prozent": 15.8
       },
       {
-        "tag": "7_So_Dim_Dom_Su",
+        "tag": "Samstag",
+        "code": "6_Sa_Sam_Sab_Sa",
+        "prozent": 14.2
+      },
+      {
+        "tag": "Sonntag",
+        "code": "7_So_Dim_Dom_Su",
         "prozent": 9.7
       }
-    ]
+    ],
+    "staerkster_wochentag": "Freitag",
+    "staerkster_wochentag_prozent": 15.8
   },
   "perrons": {
     "source": "perron",
     "hinweis": "Nur Perrons, zu denen offene Daten vorliegen.",
     "anzahl_mit_daten": 4,
+    "niveaufrei_erreichbar": 3,
     "laengste_m": 371,
     "kuerzeste_m": 80,
     "items": [
@@ -536,14 +542,15 @@
   },
   "services": {
     "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
-    "wlan": true,
-    "billettautomaten": 5,
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": true,
+    "billettautomaten_erfasst": 5,
     "automat_typen": [
       "Autelca",
       "ePOS"
     ],
-    "billettentwerter": 9,
-    "wartehallen": 2,
+    "billettentwerter_erfasst": 9,
+    "wartehallen_erfasst": 2,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b73f254efa5d893eb9f0cfd3a0e612cf"
   },
   "bahnhofplan": {
@@ -553,6 +560,23 @@
     "shopping_pdf": null,
     "eigentuemer": "SBB"
   },
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 5 Gleise (1, 2, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
   "verfuegbare_kapitel": [
     "steckbrief",
     "stammdaten",
