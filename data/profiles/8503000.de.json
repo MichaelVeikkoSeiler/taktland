@@ -93,6 +93,21 @@
           "explanation": "426'400 Bahnhofbenutzer gegenüber 480'900 Ein- und Aussteigenden. Die beiden Zahlen kommen aus zwei verschiedenen Erhebungen und zählen nicht dasselbe.",
           "factRef": "bahnhofbenutzer.anzahl_pro_tag",
           "difficulty": 3
+        },
+        {
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Zürich HB ___ Personen ein und aus.",
+          "options": [
+            "216'000",
+            "380'600",
+            "480'900",
+            "612'000"
+          ],
+          "correct": 1,
+          "explanation": "380'600 an freien Tagen, gegenüber 480'900 an Werktagen.",
+          "factRef": "steckbrief.dnwv",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
         }
       ]
     },
@@ -248,20 +263,6 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "options": [
-            "Gleis 3",
-            "Gleis 8",
-            "Gleis 12",
-            "Gleis 18"
-          ],
-          "correct": 2,
-          "explanation": "Gleis 12, mit 269 Metern Perronkante.",
-          "factRef": "gleise.items[9].nr",
-          "difficulty": 2
-        },
-        {
-          "type": "single_choice",
           "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 4?",
           "options": [
             "B",
@@ -281,6 +282,41 @@
           "explanation": "Erfasst sind die Gleise 3 bis 18. Was darüber hinaus existiert, etwa unterirdische Gleise, steht nicht in den offenen Daten.",
           "factRef": "gleise.nummern",
           "difficulty": 3
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der Länge ihrer Perronkante, die längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 17",
+              "value": 254,
+              "factRef": "gleise.items[14].perronkante_m"
+            },
+            {
+              "label": "Gleis 10",
+              "value": 236,
+              "factRef": "gleise.items[7].perronkante_m"
+            },
+            {
+              "label": "Gleis 6",
+              "value": 96,
+              "factRef": "gleise.items[3].perronkante_m"
+            }
+          ],
+          "correct": null,
+          "explanation": "Gleis 17 hat mit 254 Metern die längste dieser drei Perronkanten, Gleis 6 mit 96 Metern die kürzeste.",
+          "factRef": "gleise.items",
+          "difficulty": 3
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "12",
+          "explanation": "Gleis 12 mit 269 Metern. Die Balken im Schema zeigen die Längen im Verhältnis zueinander.",
+          "factRef": "gleise.items[9].nr",
+          "difficulty": 2
         }
       ],
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet."
@@ -524,6 +560,252 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 95,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 261,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 261,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 96,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 261,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "8",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 263,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "9",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 261,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "10",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 236,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "11",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 95,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "12",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 269,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "13",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 269,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "14",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 95,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "15",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 223,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "16",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 253,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "17",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 254,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "18",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 263,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
     }
   ]
 }

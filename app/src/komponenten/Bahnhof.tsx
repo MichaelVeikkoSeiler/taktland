@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { profilLaden } from '../daten'
 import { antwortSpeichern, antwortenLesen, bahnhofZuruecksetzen } from '../fortschritt'
-import type { Fakt, Kapitel, Profil } from '../typen'
+import type { Fakt, Gleis, Kapitel, Profil } from '../typen'
 import { Frage } from './Frage'
 import { Luecken } from './Luecken'
 
@@ -27,14 +27,14 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
   if (fehler) {
     return (
       <Rahmen zurueck={zurueck}>
-        <p className="px-4 text-takt-900 dark:text-takt-50">
+        <p className="px-4 text-sbb-black dark:text-sbb-white">
           Dieses Profil konnte nicht geladen werden. {fehler}
         </p>
       </Rahmen>
     )
   }
   if (!profil) {
-    return <Rahmen zurueck={zurueck}><p className="px-4 text-takt-700">Wird geladen …</p></Rahmen>
+    return <Rahmen zurueck={zurueck}><p className="px-4 text-sbb-metal">Wird geladen …</p></Rahmen>
   }
 
   const fragenGesamt = profil.chapters.reduce((n, k) => n + k.questions.length, 0)
@@ -49,12 +49,12 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
   return (
     <Rahmen zurueck={zurueck}>
       <header className="px-4">
-        <h1 className="text-2xl font-bold text-takt-900 dark:text-takt-50">{profil.name}</h1>
-        <p className="mt-1 text-sm text-takt-700 dark:text-takt-300">
+        <h1 className="text-2xl font-bold text-sbb-black dark:text-sbb-white">{profil.name}</h1>
+        <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
           {STUFE_TEXT[profil.tier]} · Daten von {profil.dataYear} · {fragenGesamt} Fragen
         </p>
         {beantwortet > 0 && (
-          <p className="mt-2 flex items-center gap-3 text-sm text-takt-700 dark:text-takt-300">
+          <p className="mt-2 flex items-center gap-3 text-sm text-sbb-metal dark:text-sbb-storm">
             <span>{richtig} von {beantwortet} richtig</span>
             <button
               type="button"
@@ -69,7 +69,8 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
 
       <div className="px-4">
         {profil.chapters.map((k) => (
-          <KapitelBlock key={k.id} kapitel={k} antworten={antworten} merken={merken} />
+          <KapitelBlock key={k.id} kapitel={k} antworten={antworten} merken={merken}
+                        gleise={profil.gleise} />
         ))}
         <Luecken luecken={profil.luecken} />
         <Quellen profil={profil} />
@@ -78,15 +79,16 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
   )
 }
 
-function KapitelBlock({ kapitel, antworten, merken }: {
+function KapitelBlock({ kapitel, antworten, merken, gleise }: {
   kapitel: Kapitel
   antworten: Record<string, { richtig: boolean }>
   merken: (id: string, richtig: boolean) => void
+  gleise?: Gleis[]
 }) {
   return (
     <section className="mt-8">
-      <h2 className="text-xl font-semibold text-takt-900 dark:text-takt-50">{kapitel.title}</h2>
-      <p className="mt-2 leading-relaxed text-takt-900 dark:text-takt-100">{kapitel.body}</p>
+      <h2 className="text-xl font-semibold text-sbb-black dark:text-sbb-white">{kapitel.title}</h2>
+      <p className="mt-2 leading-relaxed text-sbb-black dark:text-sbb-white">{kapitel.body}</p>
 
       {kapitel.facts.length > 0 && (
         <dl className="mt-4 grid gap-2 sm:grid-cols-2">
@@ -95,14 +97,14 @@ function KapitelBlock({ kapitel, antworten, merken }: {
       )}
 
       {kapitel.erlaeuterung && (
-        <aside className="mt-4 rounded-xl border-l-4 border-takt-600 bg-takt-50 px-4 py-3
-                          dark:bg-takt-900/60">
-          <p className="text-xs font-semibold uppercase tracking-wide text-takt-600
-                        dark:text-takt-300">
+        <aside className="mt-4 border-l-4 border-sbb-red bg-sbb-milk px-4 py-3
+                          dark:bg-sbb-charcoal">
+          <p className="text-xs font-semibold uppercase tracking-wide text-sbb-metal
+                        dark:text-sbb-storm">
             Zum Verständnis
           </p>
-          <p className="mt-1 text-sm text-takt-900 dark:text-takt-100">{kapitel.erlaeuterung}</p>
-          <p className="mt-1 text-xs text-takt-700 dark:text-takt-300">
+          <p className="mt-1 text-sm text-sbb-black dark:text-sbb-white">{kapitel.erlaeuterung}</p>
+          <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
             Allgemeine Erklärung, keine Angabe zu diesem Bahnhof.
           </p>
         </aside>
@@ -114,6 +116,7 @@ function KapitelBlock({ kapitel, antworten, merken }: {
           <Frage
             key={id}
             frage={f}
+            gleise={gleise}
             beantwortet={id in antworten}
             onAntwort={(richtig) => merken(id, richtig)}
           />
@@ -131,36 +134,36 @@ function FaktZeile({ fakt }: { fakt: Fakt }) {
       : String(fakt.value ?? '—')
   const lang = wert.length > 40
   return (
-    <div className="rounded-lg border border-takt-300 bg-white px-3 py-2
-                    dark:border-takt-700 dark:bg-takt-900">
-      <dt className="text-xs text-takt-700 dark:text-takt-300">{fakt.label}</dt>
-      <dd className={`font-semibold text-takt-900 dark:text-takt-50 ${
+    <div className="border border-sbb-cloud bg-white px-3 py-2
+                    dark:border-sbb-iron dark:bg-sbb-midnight">
+      <dt className="text-xs text-sbb-metal dark:text-sbb-storm">{fakt.label}</dt>
+      <dd className={`font-semibold text-sbb-black dark:text-sbb-white ${
         lang ? 'truncate text-sm font-normal' : 'text-lg tabular-nums'}`}>
         {wert}{fakt.unit ? ` ${fakt.unit}` : ''}
       </dd>
-      <dd className="mt-0.5 text-xs text-takt-600 dark:text-takt-300">Quelle: {fakt.source}</dd>
+      <dd className="mt-0.5 text-xs text-sbb-metal dark:text-sbb-storm">Quelle: {fakt.source}</dd>
     </div>
   )
 }
 
 function Quellen({ profil }: { profil: Profil }) {
   return (
-    <section className="mt-8 border-t border-takt-300 pt-4 dark:border-takt-700">
-      <h2 className="text-sm font-semibold text-takt-900 dark:text-takt-50">
+    <section className="mt-8 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
+      <h2 className="text-sm font-semibold text-sbb-black dark:text-sbb-white">
         Woher diese Angaben stammen
       </h2>
-      <p className="mt-1 text-sm text-takt-700 dark:text-takt-300">
+      <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
         Alle Angaben stammen aus offenen Daten der SBB (data.sbb.ch), verwendete Datensätze:
       </p>
       <ul className="mt-2 flex flex-wrap gap-1.5">
         {profil.sources.map((s) => (
-          <li key={s} className="rounded bg-takt-100 px-2 py-0.5 text-xs text-takt-700
-                                 dark:bg-takt-900 dark:text-takt-300">
+          <li key={s} className="bg-sbb-cloud px-2 py-0.5 text-xs text-sbb-metal
+                                 dark:bg-sbb-midnight dark:text-sbb-storm">
             {s}
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-xs text-takt-600 dark:text-takt-300">
+      <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
         Stand der Aufbereitung: {profil.generated}
       </p>
     </section>
@@ -173,7 +176,7 @@ function Rahmen({ children, zurueck }: { children: React.ReactNode; zurueck: () 
       <button
         type="button"
         onClick={zurueck}
-        className="mx-4 mb-4 mt-2 text-takt-600 underline underline-offset-2 dark:text-takt-300"
+        className="mx-4 mb-4 mt-2 text-sbb-metal underline underline-offset-2 dark:text-sbb-storm"
       >
         ← Alle Bahnhöfe
       </button>

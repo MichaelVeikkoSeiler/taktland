@@ -28,12 +28,13 @@ export default function App() {
   function zurueck() { window.location.hash = '' }
 
   return (
-    <div className="min-h-dvh bg-white text-takt-900 dark:bg-takt-900 dark:text-takt-50">
+    <div className="min-h-dvh bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <div className="mx-auto max-w-2xl">
         {uic === null && (
-          <header className="px-4 pb-4 pt-8">
-            <h1 className="text-3xl font-bold tracking-tight">Taktland</h1>
-            <p className="mt-1 text-takt-700 dark:text-takt-300">Bahnhöfe entdecken</p>
+          <header className="border-b border-sbb-cloud px-4 pb-5 pt-8 dark:border-sbb-iron">
+            <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />
+            <h1 className="mt-3 text-3xl font-bold tracking-tight">Taktland</h1>
+            <p className="mt-1 text-sbb-metal dark:text-sbb-storm">Bahnhöfe entdecken</p>
           </header>
         )}
 
@@ -41,14 +42,14 @@ export default function App() {
           <p className="px-4 py-8">Die Bahnhofsliste konnte nicht geladen werden. {fehler}</p>
         )}
 
-        {!index && !fehler && <p className="px-4 py-8 text-takt-700">Wird geladen …</p>}
+        {!index && !fehler && <p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>}
 
         {index && (uic === null
           ? <Suche index={index} oeffnen={oeffnen} />
           : <Bahnhof uic={uic} zurueck={zurueck} />)}
 
-        <footer className="mt-12 border-t border-takt-300 px-4 py-6 text-xs
-                           text-takt-700 dark:border-takt-700 dark:text-takt-300">
+        <footer className="mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
+                           text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch. Taktland ist ein privates Lernprojekt
             und kein Angebot der SBB.

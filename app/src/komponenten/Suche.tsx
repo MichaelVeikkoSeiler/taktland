@@ -34,23 +34,23 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
           onChange={(e) => setBegriff(e.target.value)}
           placeholder="Bahnhof suchen"
           autoComplete="off"
-          className="w-full rounded-xl border border-takt-300 bg-white px-4 py-3 text-lg
-                     text-takt-900 placeholder:text-takt-600/60 dark:border-takt-700
-                     dark:bg-takt-900 dark:text-takt-50"
+          className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg
+                     text-sbb-black placeholder:text-sbb-metal dark:border-sbb-iron
+                     dark:bg-sbb-midnight dark:text-sbb-white"
         />
       </label>
 
-      <label className="mt-3 flex items-center gap-2 text-sm text-takt-700 dark:text-takt-300">
+      <label className="mt-3 flex items-center gap-2 text-sm text-sbb-metal dark:text-sbb-storm">
         <input
           type="checkbox"
           checked={nurMitProfil}
           onChange={(e) => setNurMitProfil(e.target.checked)}
-          className="size-4 accent-takt-600"
+          className="size-4 accent-sbb-red"
         />
         Nur Bahnhöfe mit Lerninhalten
       </label>
 
-      <p className="mt-2 text-sm text-takt-700 dark:text-takt-300">
+      <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         {index.mit_profil} von {index.bahnhoefe_gesamt} Bahnhöfen haben bisher Lerninhalte.
         Die übrigen sind aufgeführt, damit sichtbar ist, was noch fehlt.
       </p>
@@ -60,7 +60,7 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
       </ul>
 
       {treffer.length === 0 && (
-        <p className="mt-8 text-center text-takt-700 dark:text-takt-300">
+        <p className="mt-8 text-center text-sbb-metal dark:text-sbb-storm">
           Kein Bahnhof gefunden.
           {nurMitProfil && ' Versuche es ohne den Filter für Lerninhalte.'}
         </p>
@@ -77,23 +77,23 @@ function Eintrag({ e, oeffnen }: { e: IndexEintrag; oeffnen: (uic: number) => vo
         type="button"
         disabled={!hatProfil}
         onClick={() => hatProfil && oeffnen(e.uic)}
-        className={`flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3
+        className={`flex w-full items-center justify-between gap-3 border px-4 py-3
                     text-left transition ${
           hatProfil
-            ? 'border-takt-300 bg-white hover:border-takt-600 dark:border-takt-700 dark:bg-takt-900'
-            : 'cursor-default border-dashed border-takt-300/60 bg-transparent opacity-70 dark:border-takt-700/60'
+            ? 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'
+            : 'cursor-default border-dashed border-sbb-cloud bg-transparent opacity-70 dark:border-sbb-iron'
         }`}
       >
         <span className="min-w-0">
-          <span className="block truncate font-medium text-takt-900 dark:text-takt-50">
+          <span className="block truncate font-medium text-sbb-black dark:text-sbb-white">
             {e.name}
           </span>
-          <span className="block text-sm text-takt-700 dark:text-takt-300">
+          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
             {e.kanton ? `Kanton ${e.kanton} · ` : ''}{STUFE_TEXT[e.tier]}
             {e.dwv != null && ` · ${e.dwv.toLocaleString('de-CH')} pro Werktag`}
           </span>
         </span>
-        <span className="shrink-0 text-sm text-takt-600 dark:text-takt-300">
+        <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">
           {hatProfil ? '→' : 'noch keine Inhalte'}
         </span>
       </button>

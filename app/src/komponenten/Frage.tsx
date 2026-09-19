@@ -1,142 +1,438 @@
-import { useState } from 'react'
-import type { Frage as FrageTyp } from '../typen'
+import { useMemo, useState } from 'react'
+import type { Frage as FrageTyp, Gleis, MatchPaar, SortItem } from '../typen'
+import { Gleisschema } from './Gleisschema'
 
 interface Props {
   frage: FrageTyp
   beantwortet?: boolean
+  /** Gleisdaten des Bahnhofs, für Fragen mit Schema */
+  gleise?: Gleis[]
   onAntwort: (richtig: boolean) => void
 }
 
-/** Eine Frage mit sofortiger Rückmeldung. Die Erklärung erscheint erst danach. */
-export function Frage({ frage, beantwortet, onAntwort }: Props) {
-  const [gewaehlt, setGewaehlt] = useState<number | boolean | null>(null)
-  const [schieber, setSchieber] = useState<number>(
-    frage.type === 'slider' ? Math.round(((frage.min ?? 0) + (frage.max ?? 100)) / 2) : 0,
-  )
+/** Reihenfolge einmal festlegen, damit sie beim Tippen nicht springt. */
+function mischen<T>(liste: T[]): T[] {
+  const kopie = [...liste]
+  for (let i = kopie.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[kopie[i], kopie[j]] = [kopie[j], kopie[i]]
+  }
+  return kopie
+}
+
+export function Frage({ frage, beantwortet, gleise, onAntwort }: Props) {
   const [gezeigt, setGezeigt] = useState(false)
+  const [richtig, setRichtig] = useState(false)
 
-  function pruefen(wert: number | boolean) {
-    if (gezeigt) return
-    setGewaehlt(wert)
+  function abschliessen(war: boolean) {
+    setRichtig(war)
     setGezeigt(true)
-    onAntwort(istRichtig(wert))
+    onAntwort(war)
   }
-
-  function istRichtig(wert: number | boolean) {
-    if (frage.type === 'true_false') return wert === frage.correct
-    if (frage.type === 'slider') {
-      const ziel = Number(frage.correct)
-      const spanne = (frage.max ?? 100) - (frage.min ?? 0)
-      return Math.abs(Number(wert) - ziel) <= Math.max(frage.step ?? 1, spanne * 0.05)
-    }
-    return wert === frage.correct
-  }
-
-  const richtig = gezeigt && gewaehlt !== null && istRichtig(gewaehlt)
 
   return (
-    <div className="mt-4 rounded-xl border border-takt-300 bg-takt-50 p-4
-                    dark:border-takt-700 dark:bg-takt-900/60">
-      <p className="font-medium text-takt-900 dark:text-takt-50">
-        {frage.prompt}
+    <div className="mt-4 border-l-2 border-sbb-red bg-sbb-milk px-4 py-4 dark:bg-sbb-charcoal">
+      <p className="font-bold text-sbb-black dark:text-sbb-white">
+        {frage.type === 'cloze'
+          ? frage.prompt.replace('___', '＿＿＿')
+          : frage.prompt}
         {beantwortet && !gezeigt && (
-          <span className="ml-2 align-middle text-xs font-normal text-takt-600 dark:text-takt-300">
-            schon einmal beantwortet
+          <span className="ml-2 align-middle text-xs font-normal text-sbb-metal">
+            schon beantwortet
           </span>
         )}
       </p>
 
-      {(frage.type === 'single_choice' || frage.type === 'multiple_choice') && (
-        <ul className="mt-3 space-y-2">
-          {frage.options?.map((o, i) => (
-            <li key={o}>
-              <button
-                type="button"
-                onClick={() => pruefen(i)}
-                disabled={gezeigt}
-                className={`w-full rounded-lg border px-3 py-2.5 text-left transition ${
-                  auswahlStil(gezeigt, i === gewaehlt, i === frage.correct)}`}
-              >
-                {o}
-              </button>
-            </li>
-          ))}
-        </ul>
+      {(frage.type === 'single_choice' || frage.type === 'cloze') && (
+        <Auswahl frage={frage} gezeigt={gezeigt} abschliessen={abschliessen} />
       )}
-
+      {frage.type === 'multiple_choice' && (
+        <Mehrfachauswahl frage={frage} gezeigt={gezeigt} abschliessen={abschliessen} />
+      )}
       {frage.type === 'true_false' && (
-        <div className="mt-3 flex gap-2">
-          {[true, false].map((w) => (
-            <button
-              key={String(w)}
-              type="button"
-              onClick={() => pruefen(w)}
-              disabled={gezeigt}
-              className={`flex-1 rounded-lg border px-3 py-2.5 transition ${
-                auswahlStil(gezeigt, w === gewaehlt, w === frage.correct)}`}
-            >
-              {w ? 'Stimmt' : 'Stimmt nicht'}
-            </button>
-          ))}
-        </div>
+        <WahrFalsch frage={frage} gezeigt={gezeigt} abschliessen={abschliessen} />
       )}
-
       {frage.type === 'slider' && (
-        <div className="mt-3">
-          <input
-            type="range"
-            min={frage.min ?? 0}
-            max={frage.max ?? 100}
-            step={frage.step ?? 1}
-            value={schieber}
-            disabled={gezeigt}
-            onChange={(e) => setSchieber(Number(e.target.value))}
-            className="w-full accent-takt-600"
-          />
-          <div className="mt-1 flex items-baseline justify-between">
-            <span className="text-2xl font-semibold text-takt-900 tabular-nums dark:text-takt-50">
-              {schieber.toLocaleString('de-CH')}
-              {frage.unit ? ` ${frage.unit}` : ''}
-            </span>
-            {!gezeigt && (
-              <button
-                type="button"
-                onClick={() => pruefen(schieber)}
-                className="rounded-lg bg-takt-600 px-4 py-2 font-medium text-white"
-              >
-                Prüfen
-              </button>
-            )}
-          </div>
-          {gezeigt && (
-            <p className="mt-1 text-sm text-takt-700 dark:text-takt-300">
-              Richtig wäre: {Number(frage.correct).toLocaleString('de-CH')}
-              {frage.unit ? ` ${frage.unit}` : ''}
-            </p>
-          )}
-        </div>
+        <Schieberegler frage={frage} gezeigt={gezeigt} abschliessen={abschliessen} />
+      )}
+      {frage.type === 'sort' && (
+        <Sortieren items={frage.items ?? []} gezeigt={gezeigt} abschliessen={abschliessen} />
+      )}
+      {frage.type === 'hotspot' && (
+        <Hotspot frage={frage} gleise={gleise ?? []} gezeigt={gezeigt}
+                 abschliessen={abschliessen} />
+      )}
+      {frage.type === 'match' && (
+        <Zuordnen pairs={frage.pairs ?? []} gezeigt={gezeigt} abschliessen={abschliessen} />
       )}
 
       {gezeigt && (
-        <div className={`mt-3 rounded-lg px-3 py-2 text-sm ${
+        <div className={`mt-4 border-l-2 px-3 py-2 text-sm ${
           richtig
-            ? 'bg-emerald-50 text-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-100'
-            : 'bg-amber-50 text-amber-900 dark:bg-amber-950/60 dark:text-amber-100'
+            ? 'border-sbb-green bg-sbb-green-bg text-sbb-black dark:bg-sbb-green/15 dark:text-sbb-white'
+            : 'border-sbb-red bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white'
         }`}>
-          <p className="font-medium">{richtig ? 'Richtig' : 'Nicht ganz'}</p>
+          <p className="font-bold">{richtig ? 'Richtig' : 'Nicht ganz'}</p>
           {frage.explanation && <p className="mt-0.5">{frage.explanation}</p>}
-          <p className="mt-1 text-xs opacity-80">Beleg: {frage.factRef}</p>
+          <p className="mt-1 text-xs text-sbb-metal">Beleg: {frage.factRef}</p>
         </div>
       )}
     </div>
   )
 }
 
-function auswahlStil(gezeigt: boolean, istGewaehlt: boolean, istLoesung: boolean) {
-  if (!gezeigt) {
-    return 'border-takt-300 bg-white hover:border-takt-600 dark:border-takt-700 dark:bg-takt-900'
+/* ---------- Einfachauswahl und Lückentext ---------- */
+
+function Auswahl({ frage, gezeigt, abschliessen }: {
+  frage: FrageTyp; gezeigt: boolean; abschliessen: (r: boolean) => void
+}) {
+  const [gewaehlt, setGewaehlt] = useState<number | null>(null)
+  return (
+    <ul className="mt-3 space-y-2">
+      {frage.options?.map((o, i) => (
+        <li key={o}>
+          <button
+            type="button"
+            disabled={gezeigt}
+            onClick={() => { setGewaehlt(i); abschliessen(i === frage.correct) }}
+            className={knopf(gezeigt, i === gewaehlt, i === frage.correct)}
+          >
+            {o}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/* ---------- Mehrfachauswahl ---------- */
+
+function Mehrfachauswahl({ frage, gezeigt, abschliessen }: {
+  frage: FrageTyp; gezeigt: boolean; abschliessen: (r: boolean) => void
+}) {
+  const [gewaehlt, setGewaehlt] = useState<number[]>([])
+  const loesung = (Array.isArray(frage.correct) ? frage.correct : []) as number[]
+
+  function umschalten(i: number) {
+    setGewaehlt((g) => (g.includes(i) ? g.filter((x) => x !== i) : [...g, i]))
   }
-  if (istLoesung) return 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/60'
-  if (istGewaehlt) return 'border-amber-600 bg-amber-50 dark:bg-amber-950/60'
-  return 'border-takt-300/60 opacity-60 dark:border-takt-700/60'
+
+  return (
+    <>
+      <p className="mt-1 text-sm text-sbb-metal">Mehrere Antworten möglich.</p>
+      <ul className="mt-2 space-y-2">
+        {frage.options?.map((o, i) => (
+          <li key={o}>
+            <button
+              type="button"
+              disabled={gezeigt}
+              onClick={() => umschalten(i)}
+              className={knopf(gezeigt, gewaehlt.includes(i), loesung.includes(i))}
+            >
+              <span className="mr-2 inline-block w-4 font-bold">
+                {gewaehlt.includes(i) ? '×' : ''}
+              </span>
+              {o}
+            </button>
+          </li>
+        ))}
+      </ul>
+      {!gezeigt && (
+        <button
+          type="button"
+          disabled={gewaehlt.length === 0}
+          onClick={() => abschliessen(
+            gewaehlt.length === loesung.length && gewaehlt.every((i) => loesung.includes(i)),
+          )}
+          className={pruefKnopf(gewaehlt.length === 0)}
+        >
+          Antwort prüfen
+        </button>
+      )}
+    </>
+  )
+}
+
+/* ---------- Wahr oder falsch ---------- */
+
+function WahrFalsch({ frage, gezeigt, abschliessen }: {
+  frage: FrageTyp; gezeigt: boolean; abschliessen: (r: boolean) => void
+}) {
+  const [gewaehlt, setGewaehlt] = useState<boolean | null>(null)
+  return (
+    <div className="mt-3 flex gap-2">
+      {[true, false].map((w) => (
+        <button
+          key={String(w)}
+          type="button"
+          disabled={gezeigt}
+          onClick={() => { setGewaehlt(w); abschliessen(w === frage.correct) }}
+          className={`flex-1 ${knopf(gezeigt, w === gewaehlt, w === frage.correct)}`}
+        >
+          {w ? 'Stimmt' : 'Stimmt nicht'}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+/* ---------- Schieberegler ---------- */
+
+function Schieberegler({ frage, gezeigt, abschliessen }: {
+  frage: FrageTyp; gezeigt: boolean; abschliessen: (r: boolean) => void
+}) {
+  const min = frage.min ?? 0
+  const max = frage.max ?? 100
+  const [wert, setWert] = useState(Math.round((min + max) / 2))
+
+  function pruefen() {
+    const ziel = Number(frage.correct)
+    const toleranz = Math.max(frage.step ?? 1, (max - min) * 0.05)
+    abschliessen(Math.abs(wert - ziel) <= toleranz)
+  }
+
+  return (
+    <div className="mt-3">
+      <input
+        type="range"
+        min={min} max={max} step={frage.step ?? 1}
+        value={wert}
+        disabled={gezeigt}
+        onChange={(e) => setWert(Number(e.target.value))}
+        className="w-full accent-sbb-red"
+      />
+      <div className="mt-1 flex items-baseline justify-between gap-3">
+        <span className="text-2xl font-bold tabular-nums text-sbb-black dark:text-sbb-white">
+          {wert.toLocaleString('de-CH')}{frage.unit ? ` ${frage.unit}` : ''}
+        </span>
+        {!gezeigt && (
+          <button type="button" onClick={pruefen} className={pruefKnopf(false)}>
+            Antwort prüfen
+          </button>
+        )}
+      </div>
+      {gezeigt && (
+        <p className="mt-1 text-sm text-sbb-metal">
+          Richtig wäre: {Number(frage.correct).toLocaleString('de-CH')}
+          {frage.unit ? ` ${frage.unit}` : ''}
+        </p>
+      )}
+    </div>
+  )
+}
+
+/* ---------- Sortieren ---------- */
+
+function Sortieren({ items, gezeigt, abschliessen }: {
+  items: SortItem[]; gezeigt: boolean; abschliessen: (r: boolean) => void
+}) {
+  // items stehen in der richtigen Reihenfolge, deshalb wird zum Anzeigen gemischt
+  const [reihe, setReihe] = useState<SortItem[]>(() => {
+    const gemischt = mischen(items)
+    const gleich = gemischt.every((x, i) => x.label === items[i].label)
+    return gleich && items.length > 1 ? [...gemischt].reverse() : gemischt
+  })
+
+  function schieben(von: number, nach: number) {
+    if (nach < 0 || nach >= reihe.length || gezeigt) return
+    const neu = [...reihe]
+    ;[neu[von], neu[nach]] = [neu[nach], neu[von]]
+    setReihe(neu)
+  }
+
+  return (
+    <>
+      <p className="mt-1 text-sm text-sbb-metal">Mit den Pfeilen in die richtige Reihenfolge bringen.</p>
+      <ol className="mt-2 space-y-2">
+        {reihe.map((it, i) => {
+          const amRichtigenPlatz = gezeigt && items[i]?.label === it.label
+          return (
+            <li
+              key={it.label}
+              className={`flex items-center justify-between gap-2 border px-3 py-2.5 ${
+                !gezeigt
+                  ? 'border-sbb-cloud bg-sbb-white dark:border-sbb-iron dark:bg-sbb-midnight'
+                  : amRichtigenPlatz
+                    ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15'
+                    : 'border-sbb-red bg-sbb-white dark:bg-sbb-midnight'
+              }`}
+            >
+              <span className="min-w-0 truncate text-sbb-black dark:text-sbb-white">
+                <span className="mr-2 text-sbb-metal tabular-nums">{i + 1}.</span>
+                {it.label}
+                {gezeigt && (
+                  <span className="ml-2 text-sm text-sbb-metal">
+                    {typeof it.value === 'number' ? it.value.toLocaleString('de-CH') : it.value}
+                  </span>
+                )}
+              </span>
+              {!gezeigt && (
+                <span className="flex shrink-0 gap-1">
+                  <button
+                    type="button" aria-label="nach oben"
+                    onClick={() => schieben(i, i - 1)} disabled={i === 0}
+                    className="size-9 border border-sbb-cloud text-lg disabled:opacity-30
+                               dark:border-sbb-iron dark:text-sbb-white"
+                  >↑</button>
+                  <button
+                    type="button" aria-label="nach unten"
+                    onClick={() => schieben(i, i + 1)} disabled={i === reihe.length - 1}
+                    className="size-9 border border-sbb-cloud text-lg disabled:opacity-30
+                               dark:border-sbb-iron dark:text-sbb-white"
+                  >↓</button>
+                </span>
+              )}
+            </li>
+          )
+        })}
+      </ol>
+      {!gezeigt && (
+        <button
+          type="button"
+          onClick={() => abschliessen(reihe.every((x, i) => x.label === items[i].label))}
+          className={pruefKnopf(false)}
+        >
+          Reihenfolge prüfen
+        </button>
+      )}
+    </>
+  )
+}
+
+/* ---------- Zuordnen ---------- */
+
+function Zuordnen({ pairs, gezeigt, abschliessen }: {
+  pairs: MatchPaar[]; gezeigt: boolean; abschliessen: (r: boolean) => void
+}) {
+  const rechteSeite = useMemo(() => mischen(pairs.map((p) => p.rechts)), [pairs])
+  const [zuordnung, setZuordnung] = useState<Record<string, string>>({})
+  const [aktiv, setAktiv] = useState<string | null>(null)
+
+  function waehlen(rechts: string) {
+    if (gezeigt || !aktiv) return
+    setZuordnung((z) => {
+      const neu = { ...z }
+      // eine rechte Karte gehört immer nur zu einer linken
+      for (const [k, v] of Object.entries(neu)) if (v === rechts) delete neu[k]
+      neu[aktiv] = rechts
+      return neu
+    })
+    setAktiv(null)
+  }
+
+  const vollstaendig = Object.keys(zuordnung).length === pairs.length
+
+  return (
+    <>
+      <p className="mt-1 text-sm text-sbb-metal">
+        Links antippen, dann den passenden Wert rechts wählen.
+      </p>
+      <div className="mt-2 grid grid-cols-[1.7fr_1fr] gap-2">
+        <ul className="space-y-2">
+          {pairs.map((p) => {
+            const stimmt = gezeigt && zuordnung[p.links] === p.rechts
+            return (
+              <li key={p.links}>
+                <button
+                  type="button"
+                  disabled={gezeigt}
+                  onClick={() => setAktiv(aktiv === p.links ? null : p.links)}
+                  className={`w-full border px-3 py-2.5 text-left ${
+                    gezeigt
+                      ? stimmt
+                        ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15'
+                        : 'border-sbb-red bg-sbb-white dark:bg-sbb-midnight'
+                      : aktiv === p.links
+                        ? 'border-sbb-red bg-sbb-white dark:bg-sbb-midnight'
+                        : 'border-sbb-cloud bg-sbb-white dark:border-sbb-iron dark:bg-sbb-midnight'
+                  } text-sbb-black dark:text-sbb-white`}
+                >
+                  <span className="block hyphens-auto break-words">{p.links}</span>
+                  <span className="mt-0.5 block text-sm font-bold text-sbb-red">
+                    {zuordnung[p.links] ?? '—'}
+                  </span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+        <ul className="space-y-2">
+          {rechteSeite.map((r) => {
+            const vergeben = Object.values(zuordnung).includes(r)
+            return (
+              <li key={r}>
+                <button
+                  type="button"
+                  disabled={gezeigt || (vergeben && !aktiv)}
+                  onClick={() => waehlen(r)}
+                  className={`w-full border px-3 py-2.5 text-left text-sbb-black
+                              dark:text-sbb-white ${
+                    vergeben
+                      ? 'border-sbb-cloud bg-sbb-milk opacity-50 dark:border-sbb-iron dark:bg-sbb-charcoal'
+                      : 'border-sbb-cloud bg-sbb-white dark:border-sbb-iron dark:bg-sbb-midnight'
+                  }`}
+                >
+                  <span className="block break-words tabular-nums">{r}</span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+      {!gezeigt && (
+        <button
+          type="button"
+          disabled={!vollstaendig}
+          onClick={() => abschliessen(pairs.every((p) => zuordnung[p.links] === p.rechts))}
+          className={pruefKnopf(!vollstaendig)}
+        >
+          Zuordnung prüfen
+        </button>
+      )}
+    </>
+  )
+}
+
+/* ---------- Hotspot auf dem Gleisschema ---------- */
+
+function Hotspot({ frage, gleise, gezeigt, abschliessen }: {
+  frage: FrageTyp; gleise: Gleis[]; gezeigt: boolean; abschliessen: (r: boolean) => void
+}) {
+  const [gewaehlt, setGewaehlt] = useState<string | null>(null)
+  if (!gleise.length) {
+    return <p className="mt-2 text-sm text-sbb-metal">Zu diesem Bahnhof liegt kein Schema vor.</p>
+  }
+  return (
+    <div className="mt-3">
+      <Gleisschema
+        gleise={gleise}
+        auswaehlbar={!gezeigt}
+        gewaehlt={gewaehlt}
+        loesung={gezeigt ? String(frage.correct) : null}
+        onWahl={(nr) => { setGewaehlt(nr); abschliessen(nr === String(frage.correct)) }}
+      />
+      {!gezeigt && (
+        <p className="mt-1 text-sm text-sbb-metal">Das passende Gleis im Schema antippen.</p>
+      )}
+    </div>
+  )
+}
+
+/* ---------- gemeinsame Stile ---------- */
+
+function knopf(gezeigt: boolean, istGewaehlt: boolean, istLoesung: boolean) {
+  const grund = 'w-full border px-3 py-2.5 text-left text-sbb-black dark:text-sbb-white'
+  if (!gezeigt) {
+    return `${grund} border-sbb-cloud bg-sbb-white hover:border-sbb-black
+            dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white ${
+              istGewaehlt ? 'border-sbb-black dark:border-sbb-white' : ''}`
+  }
+  if (istLoesung) return `${grund} border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15`
+  if (istGewaehlt) return `${grund} border-sbb-red bg-sbb-white dark:bg-sbb-midnight`
+  return `${grund} border-sbb-cloud opacity-50 dark:border-sbb-iron`
+}
+
+function pruefKnopf(deaktiviert: boolean) {
+  return `mt-3 w-full bg-sbb-red px-4 py-2.5 font-bold text-sbb-white
+          ${deaktiviert ? 'opacity-40' : 'hover:bg-sbb-red125'}`
 }

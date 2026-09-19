@@ -15,10 +15,28 @@ export interface Fakt {
   factRef: string
 }
 
+export interface SortItem {
+  label: string
+  value: string | number
+  factRef: string
+}
+
+export interface MatchPaar {
+  links: string
+  rechts: string
+  factRef: string
+}
+
 export interface Frage {
   type: Fragetyp
   prompt: string
   options?: string[]
+  /** sort: in der richtigen Reihenfolge, die App mischt beim Anzeigen */
+  items?: SortItem[]
+  /** match: Paare, die rechte Spalte wird gemischt */
+  pairs?: MatchPaar[]
+  /** sort: aufsteigend oder absteigend */
+  richtung?: 'aufsteigend' | 'absteigend'
   correct: number | number[] | boolean | string | null
   explanation?: string
   factRef: string
@@ -40,6 +58,15 @@ export interface Kapitel {
   questions: Frage[]
 }
 
+export interface Gleis {
+  nr: string
+  perronhoehen_cm: number[]
+  hilfstritt: boolean
+  perrontyp: string | null
+  perronkante_m: number | null
+  sektoren: string[]
+}
+
 export interface Luecke {
   thema: string
   grund: string
@@ -56,6 +83,8 @@ export interface Profil {
   sources: string[]
   chapters: Kapitel[]
   luecken: Luecke[]
+  /** Gleisdaten für das Schema, aus den Fakten übernommen */
+  gleise?: Gleis[]
 }
 
 export interface IndexEintrag {

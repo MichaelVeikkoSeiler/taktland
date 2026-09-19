@@ -216,6 +216,32 @@
           "explanation": "300 Meter, das Perron an Gleis 1.",
           "factRef": "perrons.kuerzeste_m",
           "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 12",
+              "value": 460,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 8/9",
+              "value": 435,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 300,
+              "factRef": "perrons.items[5].laenge_m"
+            }
+          ],
+          "correct": null,
+          "explanation": "Das Perron an Gleis 12 ist mit 460 Metern das längste, jenes an Gleis 1 mit 300 Metern das kürzeste.",
+          "factRef": "perrons.items",
+          "difficulty": 2
         }
       ]
     },
@@ -269,6 +295,15 @@
           "explanation": "Erfasst sind die Gleise 1, 2, 3, 4, 7, 8, 9, 10, 11 und 12. Ob es weitere gibt, sagen die offenen Daten nicht.",
           "factRef": "gleise.nummern",
           "difficulty": 3
+        },
+        {
+          "type": "hotspot",
+          "prompt": "An welchem Gleis ist die Perronkante am kürzesten?",
+          "schema": "gleise",
+          "correct": "1",
+          "explanation": "Gleis 1 mit 301 Metern. Die übrigen erfassten Gleise haben längere Perronkanten.",
+          "factRef": "gleise.items[0].nr",
+          "difficulty": 2
         }
       ],
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet."
@@ -444,6 +479,36 @@
           "factRef": "linien.items[2].nummer",
           "optionen_aus_fakten": true,
           "difficulty": 2
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Strecke?",
+          "pairs": [
+            {
+              "links": "Olten - Woschnau",
+              "rechts": "540",
+              "factRef": "linien.items[0].nummer"
+            },
+            {
+              "links": "Olten - Solothurn - Biel/Bienne",
+              "rechts": "410",
+              "factRef": "linien.items[1].nummer"
+            },
+            {
+              "links": "Basel SBB - Olten - Luzern",
+              "rechts": "500",
+              "factRef": "linien.items[2].nummer"
+            },
+            {
+              "links": "Sissach - Laufelfingen - Olten",
+              "rechts": "503",
+              "factRef": "linien.items[3].nummer"
+            }
+          ],
+          "correct": null,
+          "explanation": "Vier Linien sind für Olten erfasst.",
+          "factRef": "linien.items",
+          "difficulty": 3
         }
       ]
     },
@@ -532,6 +597,158 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 301,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        20,
+        25,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 360,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        25,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 357,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 370,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 364,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "8",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 435,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "9",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 435,
+      "sektoren": [
+        "A",
+        "D"
+      ]
+    },
+    {
+      "nr": "10",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 450,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "11",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 425,
+      "sektoren": [
+        "A",
+        "D"
+      ]
+    },
+    {
+      "nr": "12",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 460,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
     }
   ]
 }

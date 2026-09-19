@@ -47,3 +47,24 @@ if __name__ == "__main__":
     uic, wert = sys.argv[1], float(sys.argv[2])
     liste, frei = vorschlaege(uic, wert, 3)
     print(f"{wert}: {liste}" + ("" if frei else "   (nicht alle frei, optionen_aus_fakten setzen)"))
+
+
+def eindeutige_auswahl(items, feld, anzahl=3):
+    """Wählt Elemente aus, deren Wert nur einmal vorkommt und die weit auseinanderliegen.
+
+    Eine Sortieraufgabe mit zwei gleichen Werten ist nicht lösbar, und zwei Werte
+    dicht beieinander sind Raten. Gibt eine Liste von (index, element) zurück,
+    absteigend nach Wert.
+    """
+    haeufigkeit = {}
+    for it in items:
+        haeufigkeit[it.get(feld)] = haeufigkeit.get(it.get(feld), 0) + 1
+    kandidaten = [(i, it) for i, it in enumerate(items)
+                  if it.get(feld) is not None and haeufigkeit[it[feld]] == 1]
+    if len(kandidaten) < anzahl:
+        return []
+    kandidaten.sort(key=lambda x: x[1][feld], reverse=True)
+    # gleichmässig über die Spanne verteilen, damit die Abstände deutlich sind
+    schritt = (len(kandidaten) - 1) / (anzahl - 1)
+    gewaehlt = [kandidaten[round(i * schritt)] for i in range(anzahl)]
+    return gewaehlt

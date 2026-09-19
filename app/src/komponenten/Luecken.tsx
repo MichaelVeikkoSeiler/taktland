@@ -7,23 +7,21 @@ import type { Luecke } from '../typen'
 export function Luecken({ luecken }: { luecken: Luecke[] }) {
   if (!luecken.length) return null
   return (
-    <section className="mt-8 rounded-xl border border-amber-300 bg-amber-50/70 p-4
-                        dark:border-amber-900 dark:bg-amber-950/30">
-      <h2 className="text-lg font-semibold text-amber-950 dark:text-amber-100">
+    <section className="mt-10 border-t-2 border-sbb-red bg-sbb-milk px-4 py-5
+                        dark:bg-sbb-charcoal">
+      <h2 className="text-lg font-bold text-sbb-black dark:text-sbb-white">
         Was diese Daten nicht sagen
       </h2>
-      <p className="mt-1 text-sm text-amber-900/90 dark:text-amber-100/80">
+      <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
         Taktland gibt nur weiter, was in den offenen Daten steht. Diese {luecken.length} Punkte
         fehlen oder sind eingeschränkt.
       </p>
       <ul className="mt-3 space-y-3">
         {luecken.map((l) => (
           <li key={l.thema}>
-            <p className="font-medium text-amber-950 dark:text-amber-100">{l.thema}</p>
-            <p className="text-sm text-amber-900/90 dark:text-amber-100/80">{l.grund}</p>
-            <p className="mt-0.5 text-xs text-amber-900/70 dark:text-amber-100/60">
-              Quelle: {l.quelle}
-            </p>
+            <p className="font-bold text-sbb-black dark:text-sbb-white">{l.thema}</p>
+            <p className="text-sm text-sbb-iron dark:text-sbb-storm">{l.grund}</p>
+            <p className="mt-0.5 text-xs text-sbb-metal">Quelle: {l.quelle}</p>
           </li>
         ))}
       </ul>

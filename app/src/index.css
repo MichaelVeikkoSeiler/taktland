@@ -1,17 +1,59 @@
 @import "tailwindcss";
 
+/*
+ * Farben nach der öffentlichen Designdokumentation der SBB (digital.sbb.ch).
+ * Grundsatz dort: zurückhaltender Farbeinsatz, Rot nur für Wichtiges,
+ * keine Farbverläufe.
+ *
+ * Kein Logo, keine Bildmarke: Taktland ist kein Angebot der SBB.
+ */
 @theme {
-  --color-takt-50: #f2f6f8;
-  --color-takt-100: #dde8ee;
-  --color-takt-300: #9cb8c7;
-  --color-takt-600: #2f6580;
-  --color-takt-700: #234e63;
-  --color-takt-900: #122b38;
+  --color-sbb-red: #eb0000;
+  --color-sbb-red125: #c60018;
+  --color-sbb-red150: #a20013;
+
+  --color-sbb-white: #ffffff;
+  --color-sbb-milk: #f6f6f6;
+  --color-sbb-cloud: #e5e5e5;
+  --color-sbb-silver: #dcdcdc;
+  --color-sbb-aluminum: #d2d2d2;
+  --color-sbb-cement: #bdbdbd;
+  --color-sbb-storm: #a8a8a8;
+  --color-sbb-smoke: #8d8d8d;
+  --color-sbb-metal: #767676;
+  --color-sbb-granite: #686868;
+  --color-sbb-anthracite: #5a5a5a;
+  --color-sbb-iron: #444444;
+  --color-sbb-charcoal: #212121;
+  --color-sbb-midnight: #151515;
+  --color-sbb-black: #000000;
+
+  --color-sbb-blue: #2d327d;
+
+  /* Rückmeldung im Self-Check. Grün ist nicht Teil der Basispalette,
+     der Ton ist darauf abgestimmt gewählt. */
+  --color-sbb-green: #00873d;
+  --color-sbb-green-bg: #eaf4ee;
+
+  /* SBB Web ist nicht frei lizenziert. Helvetica kommt dem Schriftbild am nächsten. */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
 }
 
 html { -webkit-text-size-adjust: 100%; }
-body { overscroll-behavior-y: none; }
 
-/* Fokus nur bei Tastaturbedienung zeigen */
+body {
+  overscroll-behavior-y: none;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fokus nur bei Tastaturbedienung, dann aber deutlich */
 :focus:not(:focus-visible) { outline: none; }
-:focus-visible { outline: 2px solid var(--color-takt-600); outline-offset: 2px; }
+:focus-visible {
+  outline: 2px solid var(--color-sbb-black);
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :focus-visible { outline-color: var(--color-sbb-white); }
+}

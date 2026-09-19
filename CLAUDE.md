@@ -64,6 +64,16 @@ python pipeline/fetch.py                    # Datasets laden
 .venv/bin/python generator/validate.py --alle    # Profile prüfen
 ```
 
+## Gestaltung
+
+Die App folgt der öffentlichen Designdokumentation der SBB (digital.sbb.ch):
+Rot `#eb0000` nur für Wichtiges, sonst Weiss, Milk `#f6f6f6`, Cloud `#e5e5e5`,
+Metal `#767676`, Charcoal `#212121`. Keine Farbverläufe, kantige Flächen,
+Helvetica als Ersatz für die nicht frei lizenzierte Hausschrift SBB Web.
+
+**Kein Logo, keine Bildmarke der SBB.** Die Farb- und Formensprache ist übernommen,
+die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot der SBB ist.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph.

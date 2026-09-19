@@ -136,6 +136,76 @@ Typen: `single_choice`, `multiple_choice`, `true_false`, `cloze`, `match`, `sort
   wenn der Wert ein Jahr trägt.
 - `difficulty`: 1 = ablesbar, 2 = verknüpfen, 3 = überlegen.
 
+## Die Fragetypen im Einzelnen
+
+Bei jedem Typ muss die Lösung aus den Fakten stammen. Wie das geprüft wird, steht dabei.
+
+### single_choice, multiple_choice
+
+`options` als Liste, `correct` als Index oder Liste von Indizes. Die richtige Antwort
+muss dem Wert unter `factRef` entsprechen.
+
+### true_false
+
+`correct` ist `true` oder `false`. `factRef` zeigt auf den Wert, um den es geht.
+
+### slider
+
+`min`, `max`, `step`, `unit`, `correct` als Zahl. Gilt als richtig, wenn die Eingabe
+höchstens eine Schrittweite oder 5 Prozent der Spanne daneben liegt.
+
+### cloze (Lückentext)
+
+`prompt` enthält `___` an der Stelle der Lücke. Sonst wie single_choice.
+
+```json
+{ "type": "cloze", "prompt": "Das längste Perron misst ___ Meter.",
+  "options": ["418", "433", "460"], "correct": 1, "factRef": "perrons.laengste_m" }
+```
+
+### sort (Sortieren)
+
+`items` stehen **in der richtigen Reihenfolge**, die App mischt sie beim Anzeigen.
+Jedes Element trägt den Wert, nach dem sortiert wird, und seinen `factRef`.
+Der Validator prüft beides: dass jeder Wert stimmt und dass die Reihenfolge
+tatsächlich sortiert ist. Damit kann keine falsche Reihenfolge entstehen.
+
+```json
+{ "type": "sort", "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
+  "richtung": "absteigend",
+  "items": [
+    { "label": "Gleis 12", "value": 269, "factRef": "gleise.items[9].perronkante_m" },
+    { "label": "Gleis 8",  "value": 263, "factRef": "gleise.items[5].perronkante_m" }
+  ],
+  "factRef": "gleise.items" }
+```
+
+### match (Zuordnen)
+
+`pairs` mit `links`, `rechts` und `factRef` je Paar. Der Wert rechts muss dem Fakt
+entsprechen. Die App mischt die rechte Spalte.
+
+```json
+{ "type": "match", "prompt": "Welche Perronkante gehört zu welchem Gleis?",
+  "pairs": [ { "links": "Gleis 12", "rechts": "269 m",
+               "factRef": "gleise.items[9].perronkante_m" } ],
+  "factRef": "gleise.items" }
+```
+
+### hotspot
+
+Zeigt ein Schema, das aus den Fakten gezeichnet wird, keine Fotografie und keinen
+massstäblichen Plan. `bereiche` nennt die anklickbaren Teile, `correct` den richtigen.
+
+```json
+{ "type": "hotspot", "prompt": "Welches Gleis hat die längste Perronkante?",
+  "schema": "gleise", "correct": "12", "factRef": "gleise.items[9].nr" }
+```
+
+Das Schema darf nur zeigen, was in den Fakten steht: Gleisnummern, Perrontyp,
+Länge der Kante, Sektoren. Die Lage zueinander ist erfunden und deshalb als
+Schema gekennzeichnet.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:

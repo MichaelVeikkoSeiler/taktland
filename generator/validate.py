@@ -199,6 +199,12 @@ def pruefe(profil, facts, fix=False, entfernen=False):
     if fix:
         # Lücken werden nie formuliert, sondern unveraendert uebernommen
         profil["luecken"] = facts.get("luecken", [])
+        # Dasselbe gilt fuer die Gleisdaten, aus denen das Schema gezeichnet wird
+        if any(f.get("type") == "hotspot"
+               for k in profil.get("chapters", []) for f in k.get("questions", [])):
+            profil["gleise"] = (facts.get("gleise") or {}).get("items", [])
+        else:
+            profil.pop("gleise", None)
         ist = {l.get("thema") for l in profil["luecken"]}
     if soll and not profil.get("luecken"):
         b.fehlt("Profil", f"Feld 'luecken' fehlt, {len(soll)} Lücken wären anzugeben")
@@ -302,6 +308,82 @@ def pruefe(profil, facts, fix=False, entfernen=False):
                         if n is not None and n in erlaubt:
                             b.warnt(qwo, f"falsche Antwort {o!r} ist selbst ein Faktenwert. "
                                          "Wenn das gewollt ist: optionen_aus_fakten auf true setzen")
+            elif typ == "sort":
+                items = fr.get("items")
+                if not isinstance(items, list) or len(items) < 3:
+                    b.fehlt(qwo, "sort braucht mindestens drei items")
+                    fragen_raus.append(i)
+                    continue
+                werte = []
+                for j, it in enumerate(items):
+                    ref = it.get("factRef")
+                    if not it.get("label") or not ref:
+                        b.fehlt(qwo, f"items[{j}]: label oder factRef fehlt")
+                        continue
+                    try:
+                        soll = aufloesen(facts, ref)
+                    except KeyError as e:
+                        b.fehlt(qwo, f"items[{j}]: {e}")
+                        continue
+                    if not passt(it.get("value"), soll):
+                        b.fehlt(qwo, f"items[{j}]: value {it.get('value')!r} passt nicht "
+                                     f"zu {ref} = {soll!r}")
+                    werte.append(zahl(it.get("value")))
+                # Die angegebene Reihenfolge muss wirklich sortiert sein
+                if all(w is not None for w in werte) and len(werte) > 1:
+                    ab = all(werte[k] >= werte[k + 1] for k in range(len(werte) - 1))
+                    auf = all(werte[k] <= werte[k + 1] for k in range(len(werte) - 1))
+                    richtung = fr.get("richtung", "absteigend")
+                    if richtung == "absteigend" and not ab:
+                        b.fehlt(qwo, f"items sind nicht absteigend sortiert: {werte}")
+                    if richtung == "aufsteigend" and not auf:
+                        b.fehlt(qwo, f"items sind nicht aufsteigend sortiert: {werte}")
+                    if len(set(werte)) < len(werte):
+                        b.warnt(qwo, "gleiche Werte in der Reihenfolge, das ist nicht eindeutig")
+
+            elif typ == "match":
+                paare = fr.get("pairs")
+                if not isinstance(paare, list) or len(paare) < 2:
+                    b.fehlt(qwo, "match braucht mindestens zwei pairs")
+                    fragen_raus.append(i)
+                    continue
+                if len({p.get("rechts") for p in paare}) < len(paare):
+                    b.fehlt(qwo, "zwei Paare haben dieselbe rechte Seite, "
+                                 "die Zuordnung wäre nicht eindeutig")
+                for j, paar in enumerate(paare):
+                    ref = paar.get("factRef")
+                    if not paar.get("links") or not paar.get("rechts") or not ref:
+                        b.fehlt(qwo, f"pairs[{j}]: links, rechts oder factRef fehlt")
+                        continue
+                    try:
+                        soll = aufloesen(facts, ref)
+                    except KeyError as e:
+                        b.fehlt(qwo, f"pairs[{j}]: {e}")
+                        continue
+                    if not passt(paar["rechts"], soll):
+                        b.fehlt(qwo, f"pairs[{j}]: {paar['rechts']!r} passt nicht "
+                                     f"zu {ref} = {soll!r}")
+
+            elif typ == "cloze":
+                if "___" not in (fr.get("prompt") or ""):
+                    b.fehlt(qwo, "cloze braucht ___ als Lücke im prompt")
+                opts = fr.get("options")
+                idx = fr.get("correct")
+                if not isinstance(opts, list) or len(opts) < 2:
+                    b.fehlt(qwo, "cloze braucht mindestens zwei options")
+                elif not isinstance(idx, int) or not 0 <= idx < len(opts):
+                    b.fehlt(qwo, f"correct {idx!r} zeigt nicht auf eine Option")
+                elif not passt(opts[idx], wert):
+                    b.fehlt(qwo, f"richtige Antwort {opts[idx]!r} passt nicht "
+                                 f"zu {ref} = {wert!r}")
+
+            elif typ == "hotspot":
+                if not fr.get("schema"):
+                    b.fehlt(qwo, "hotspot braucht ein schema")
+                if not passt(fr.get("correct"), wert):
+                    b.fehlt(qwo, f"correct {fr.get('correct')!r} passt nicht "
+                                 f"zu {ref} = {wert!r}")
+
             elif typ == "true_false":
                 if fr.get("correct") not in (True, False):
                     b.fehlt(qwo, "correct muss true oder false sein")
@@ -309,6 +391,10 @@ def pruefe(profil, facts, fix=False, entfernen=False):
                 if not passt(fr.get("correct"), wert):
                     b.fehlt(qwo, f"correct {fr.get('correct')!r} passt nicht zu {ref} = {wert!r}")
 
+            for it in fr.get("items", []) or []:
+                pruefe_text(str(it.get("label", "")), f"{qwo}/items", erlaubt, b)
+            for paar in fr.get("pairs", []) or []:
+                pruefe_text(str(paar.get("links", "")), f"{qwo}/pairs", erlaubt, b)
             pruefe_text(fr.get("prompt", ""), f"{qwo}/prompt", erlaubt, b)
             pruefe_text(fr.get("explanation", ""), f"{qwo}/explanation", erlaubt, b)
             if not fr.get("explanation"):
