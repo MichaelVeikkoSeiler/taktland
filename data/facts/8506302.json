@@ -518,6 +518,11 @@
   },
   "luecken": [
     {
+      "thema": "Verteilung über den Tag",
+      "grund": "Für diesen Bahnhof ist erfasst, wie sich die Besuche über die Woche verteilen, aber nicht über die Stunden des Tages.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
       "thema": "Vollständigkeit der Gleise",
       "grund": "Erfasst sind 7 Gleise (1, 2, 3, 4, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"

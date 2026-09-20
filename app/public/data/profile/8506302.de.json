@@ -1,0 +1,625 @@
+{
+  "uic": 8506302,
+  "name": "St. Gallen",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "St. Gallen liegt im gleichnamigen Kanton, auf 670 Metern über Meer. An einem Werktag steigen hier 51'300 Personen ein und aus, an einem freien Tag 37'100. Als Bahnhofbenutzer sind 71'800 pro Tag erfasst. Die Quelle vermerkt, dass die Appenzeller Bahnen nicht mitgezählt sind.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 51300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 37100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnhofbenutzer pro Tag",
+          "value": 71800,
+          "unit": "Personen",
+          "source": "anzahl-sbb-bahnhofbenutzer",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 670,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in St. Gallen ein und aus?",
+          "options": [
+            "18'000",
+            "51'300",
+            "110'000",
+            "230'000"
+          ],
+          "correct": 1,
+          "explanation": "51'300 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden umfasst auch die Reisenden der Appenzeller Bahnen.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt dazu ausdrücklich: ohne AB.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt St. Gallen?",
+          "min": 300,
+          "max": 1200,
+          "step": 25,
+          "unit": "m",
+          "correct": 670,
+          "explanation": "670 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Die Woche am Bahnhof",
+      "body": "Für St. Gallen ist erfasst, wie sich die Besuche über die Woche verteilen, nicht aber über die Stunden des Tages. Der Freitag ist mit 16.4 Prozent der stärkste Tag, der Sonntag mit 9.9 Prozent der schwächste.",
+      "facts": [
+        {
+          "label": "Stärkster Wochentag",
+          "value": "Freitag",
+          "unit": null,
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil am Freitag",
+          "value": 16.4,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Anteil am Sonntag",
+          "value": 9.9,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag ist in St. Gallen der stärkste?",
+          "options": [
+            "Montag",
+            "Mittwoch",
+            "Freitag",
+            "Samstag"
+          ],
+          "correct": 2,
+          "explanation": "Der Freitag mit 16.4 Prozent der Wochenbesuche.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für St. Gallen ist bekannt, in welcher Stunde am meisten los ist.",
+          "correct": false,
+          "explanation": "Erfasst ist nur die Verteilung über die Wochentage, nicht über die Stunden.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 5 Perrons liegen Daten vor. Das längste misst 446 Meter, das kürzeste 87 Meter; letzteres ist als Dienstperron erfasst. Bei 5 von 5 ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 5,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 446,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 87,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 1",
+              "value": 446,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 4/5",
+              "value": 261,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 50",
+              "value": 87,
+              "factRef": "perrons.items[4].laenge_m"
+            }
+          ],
+          "correct": null,
+          "explanation": "Perron 1 mit 446 Metern, dann 4/5 mit 261, schliesslich das Dienstperron 50 mit 87 Metern.",
+          "factRef": "perrons.items",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 7 Gleisen vor, den Nummern 1 bis 7. Die längste Perronkante hat Gleis 1 mit 411 Metern, die kürzeste Gleis 3 mit 64 Metern. An den Gleisen 1 bis 3 reichen die Sektoren bis H, an den Gleisen 6 und 7 nur bis D.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 7,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 1",
+          "value": 411,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Kürzeste Perronkante, Gleis 3",
+          "value": 64,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Letzter Sektor an Gleis 1",
+          "value": "H",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren[7]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "An welchem Gleis ist die Perronkante am kürzesten?",
+          "schema": "gleise",
+          "correct": "3",
+          "explanation": "An Gleis 3 mit 64 Metern, gegenüber 411 Metern an Gleis 1.",
+          "factRef": "gleise.items[2].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 1?",
+          "options": [
+            "D",
+            "E",
+            "H",
+            "K"
+          ],
+          "correct": 2,
+          "explanation": "Von A bis H.",
+          "factRef": "gleise.items[0].sektoren[7]",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "20 Perronabschnitte sind erfasst: 17 auf 55 Zentimetern und 3 auf 35. An 7 von 7 erfassten Gleisen gibt es einen Abschnitt auf 55 Zentimetern. Ein Abschnitt braucht einen Hilfstritt. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Ein Hilfstritt gleicht den Unterschied aus.",
+      "facts": [
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 20,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 7,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Abschnitte mit Hilfstritt",
+          "value": 1,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der 20 erfassten Abschnitte brauchen einen Hilfstritt?",
+          "options": [
+            "0",
+            "1",
+            "3",
+            "7"
+          ],
+          "correct": 1,
+          "explanation": "Ein Abschnitt. Bei den übrigen liegt die Kante auf Einstiegshöhe.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "An jedem erfassten Gleis gibt es einen Abschnitt auf 55 Zentimetern.",
+          "correct": true,
+          "explanation": "7 von 7 erfassten Gleisen haben einen solchen Abschnitt.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Vom Güterbahnhof her verkehren 171'207 Personenzüge pro Jahr, rund 469 pro Tag in beiden Richtungen zusammen. Richtung St. Gallen St. Fiden sind es 368 pro Tag. Dazu kommen auf beiden Abschnitten je 10 Güterzüge pro Tag.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, stärkster Abschnitt",
+          "value": 469,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag Richtung St. Fiden",
+          "value": 368,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag",
+          "value": 10,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei St. Gallen?",
+          "options": [
+            "190",
+            "368",
+            "469",
+            "940"
+          ],
+          "correct": 2,
+          "explanation": "Rund 469 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "In diesen Daten sind für St. Gallen 2 Linien erfasst: die Linie 850 Richtung Winterthur Nord und die Linie 880 von Sargans Ost her.",
+      "facts": [
+        {
+          "label": "Linien am Bahnhof",
+          "value": 2,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie Richtung Winterthur",
+          "value": 850,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Strecke?",
+          "pairs": [
+            {
+              "links": "St.Gallen - Winterthur Nord",
+              "rechts": "850",
+              "factRef": "linien.items[0].nummer"
+            },
+            {
+              "links": "Sargans Ost - St.Gallen",
+              "rechts": "880",
+              "factRef": "linien.items[1].nummer"
+            }
+          ],
+          "correct": null,
+          "explanation": "Die Schreibweise der Streckennamen stammt unverändert aus der Quelle.",
+          "factRef": "linien.items",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 5 Billettautomaten, 17 Billettentwerter und 3 Wartehallen. St. Gallen steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 5,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 17,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "St. Gallen steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist dort nicht aufgeführt.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für St. Gallen ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-st-gallen-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für St. Gallen gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Verteilung über den Tag",
+      "grund": "Für diesen Bahnhof ist erfasst, wie sich die Besuche über die Woche verteilen, aber nicht über die Stunden des Tages.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 7 Gleise (1, 2, 3, 4, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne AB.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 411,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 408,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 64,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 261,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 261,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 196,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 173,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ]
+}

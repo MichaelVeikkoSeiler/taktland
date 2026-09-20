@@ -395,6 +395,17 @@ def luecken(d, uic, f):
                "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. "
                "Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
                "haltestelle-karte-trafimage")
+    tr = f.get("tagesrhythmus") or {}
+    if tr and not tr.get("stunden"):
+        lueckt("Verteilung über den Tag",
+               "Für diesen Bahnhof ist erfasst, wie sich die Besuche über die Woche "
+               "verteilen, aber nicht über die Stunden des Tages.",
+               "anzahl-sbb-bahnhofbenutzer-tagesverlauf")
+    if tr and not tr.get("wochentage"):
+        lueckt("Verteilung über die Woche",
+               "Für diesen Bahnhof ist die Verteilung über den Tag erfasst, "
+               "aber nicht über die Wochentage.",
+               "anzahl-sbb-bahnhofbenutzer-wochentag")
     if not f.get("tagesrhythmus"):
         lueckt("Tagesrhythmus",
                "Wie sich die Besucherzahl über den Tag verteilt, ist nur für "
