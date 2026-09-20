@@ -1,0 +1,526 @@
+{
+  "uic": 8504100,
+  "name": "Fribourg/Freiburg",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Fribourg/Freiburg liegt im gleichnamigen Kanton, auf 629 Metern über Meer. An einem Werktag steigen hier 34'600 Personen ein und aus, an einem freien Tag 22'100. Züge fahren von BLS, SBB und TPF. 2018 waren es 23'000 pro Werktag.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 34600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 22100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Wert 2018",
+          "value": 23000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 629,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Fribourg/Freiburg ein und aus?",
+          "options": [
+            "12'000",
+            "34'600",
+            "72'000",
+            "150'000"
+          ],
+          "correct": 1,
+          "explanation": "34'600 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "2025 wurden deutlich mehr Ein- und Aussteigende gezählt als 2018.",
+          "correct": true,
+          "explanation": "34'600 gegenüber 23'000 im Jahr 2018.",
+          "factRef": "steckbrief.verlauf[0].dwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Der Tag am Bahnhof",
+      "body": "Die stärkste Stunde beginnt um 16 Uhr mit 12.1 Prozent des Tagesaufkommens. Über die Woche ist der Freitag mit 16.2 Prozent der stärkste Tag, der Sonntag mit 11.3 Prozent der schwächste.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 16,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil der Spitzenstunde",
+          "value": 12.1,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Bahnhofbenutzer pro Tag",
+          "value": 30900,
+          "unit": "Personen",
+          "source": "anzahl-sbb-bahnhofbenutzer",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "In welcher Stunde ist in Fribourg/Freiburg der grösste Anteil der Bahnhofbenutzer unterwegs?",
+          "options": [
+            "8 Uhr",
+            "12 Uhr",
+            "16 Uhr",
+            "18 Uhr"
+          ],
+          "correct": 2,
+          "explanation": "Um 16 Uhr, mit 12.1 Prozent des Tagesaufkommens.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Welcher Anteil des Tagesaufkommens fällt auf die stärkste Stunde?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 12.1,
+          "explanation": "12.1 Prozent, in der Stunde ab 16 Uhr.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 4 Perrons liegen Daten vor. Das längste misst 440 Meter, das kürzeste 282 Meter. Eines davon ist als Dienstperron erfasst. Bei 4 von 4 ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 4,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 440,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 4,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron?",
+          "options": [
+            "282 m",
+            "340 m",
+            "440 m",
+            "560 m"
+          ],
+          "correct": 2,
+          "explanation": "440 Meter, das Perron an Gleis 1.",
+          "factRef": "perrons.laengste_m",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Jedes erfasste Perron ist ohne Gleisquerung erreichbar.",
+          "correct": true,
+          "explanation": "Bei 4 von 4 erfassten Perrons ist der Zugang niveaufrei.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 5 Gleisen vor, den Nummern 1 bis 5. Die längste Perronkante hat Gleis 5 mit 418 Metern. Die Sektoren sind sehr unterschiedlich erfasst: an Gleis 1 nur D, an Gleis 5 nur H, an den Gleisen 2 und 3 dagegen A bis H.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 5,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 5",
+          "value": 418,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[4].perronkante_m"
+        },
+        {
+          "label": "Einziger erfasster Sektor an Gleis 1",
+          "value": "D",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren[0]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Sektor ist an Gleis 1 erfasst?",
+          "options": [
+            "A",
+            "B",
+            "D",
+            "H"
+          ],
+          "correct": 2,
+          "explanation": "Nur der Sektor D. An anderen Gleisen sind mehr Sektoren erfasst.",
+          "factRef": "gleise.items[0].sektoren[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "5",
+          "explanation": "Gleis 5 mit 418 Metern.",
+          "factRef": "gleise.items[4].nr",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "In Fribourg/Freiburg sind vier verschiedene Perronhöhen erfasst: 20, 30, 42 und 55 Zentimeter. Von 27 Abschnitten liegen 12 auf 55 Zentimetern und 11 auf 30. Von 5 Gleisen haben 4 einen Abschnitt auf 55 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "facts": [
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 27,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 4,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Seltene Perronhöhe",
+          "value": 42,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[2]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche dieser Perronhöhen ist in Fribourg/Freiburg erfasst?",
+          "options": [
+            "25 cm",
+            "42 cm",
+            "50 cm",
+            "76 cm"
+          ],
+          "correct": 1,
+          "explanation": "42 Zentimeter. Erfasst sind ausserdem 20, 30 und 55 Zentimeter.",
+          "factRef": "gleise.perronhoehen_cm[2]",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der 5 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": 2,
+          "explanation": "4 von 5 Gleisen.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Richtung Fribourg Nord verkehren 123'213 Personenzüge pro Jahr, rund 338 pro Tag in beiden Richtungen zusammen. Von Villars-sur-Glâne her sind es 229 pro Tag.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag Richtung Fribourg Nord",
+          "value": 338,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag von Villars-sur-Glâne her",
+          "value": 229,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Fribourg/Freiburg?",
+          "options": [
+            "110",
+            "229",
+            "338",
+            "690"
+          ],
+          "correct": 2,
+          "explanation": "Rund 338 pro Tag Richtung Fribourg Nord, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen sagen, wie viele Züge in Fribourg/Freiburg halten.",
+          "correct": false,
+          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 5 Billettautomaten, 11 Billettentwerter und 1 Wartehalle. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 5,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 11,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Fribourg/Freiburg sind ___ Billettentwerter erfasst.",
+          "options": [
+            "5",
+            "11",
+            "18",
+            "26"
+          ],
+          "correct": 1,
+          "explanation": "11 Entwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Fribourg/Freiburg ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-fribourg-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Fribourg/Freiburg gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 5 Gleise (1, 2, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu Gleis 4 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        20,
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 286,
+      "sektoren": [
+        "D"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        30
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 133,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        42,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 404,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 414,
+      "sektoren": []
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 418,
+      "sektoren": [
+        "H"
+      ]
+    }
+  ]
+}

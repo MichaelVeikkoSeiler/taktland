@@ -1,0 +1,692 @@
+{
+  "uic": 8509000,
+  "name": "Chur",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Chur liegt im Kanton Graubünden, auf 585 Metern über Meer. An einem Werktag steigen hier 30'300 Personen ein und aus, an einem freien Tag 28'800 und damit fast gleich viele. Erfasst sind vier Bahnunternehmen: RhB, SBB, SOB und Thurbo.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 30300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 28800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "RhB, SBB, SOB, Thurbo",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 585,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Chur ein und aus?",
+          "options": [
+            "11'000",
+            "30'300",
+            "64'000",
+            "130'000"
+          ],
+          "correct": 1,
+          "explanation": "30'300 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Chur unterscheidet sich die Zahl der Reisenden an Werktagen und an freien Tagen stark.",
+          "correct": false,
+          "explanation": "30'300 an Werktagen gegenüber 28'800 an freien Tagen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Chur sind Züge von vier Bahnunternehmen erfasst.",
+          "correct": true,
+          "explanation": "Erfasst sind RhB, SBB, SOB und Thurbo.",
+          "factRef": "steckbrief.evu",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Der Tag am Bahnhof",
+      "body": "Die stärkste Stunde beginnt um 16 Uhr mit 9.4 Prozent des Tagesaufkommens. Über die Woche ist der Freitag mit 16.2 Prozent der stärkste Tag, der Sonntag mit 11.2 Prozent der schwächste. Als Bahnhofbenutzer sind 41'000 pro Tag erfasst.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 16,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil der Spitzenstunde",
+          "value": 9.4,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Bahnhofbenutzer pro Tag",
+          "value": 41000,
+          "unit": "Personen",
+          "source": "anzahl-sbb-bahnhofbenutzer",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "In welcher Stunde ist in Chur der grösste Anteil der Bahnhofbenutzer unterwegs?",
+          "options": [
+            "7 Uhr",
+            "12 Uhr",
+            "16 Uhr",
+            "19 Uhr"
+          ],
+          "correct": 2,
+          "explanation": "Um 16 Uhr, mit 9.4 Prozent des Tagesaufkommens.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag ist in Chur der stärkste?",
+          "options": [
+            "Montag",
+            "Mittwoch",
+            "Freitag",
+            "Sonntag"
+          ],
+          "correct": 2,
+          "explanation": "Der Freitag mit 16.2 Prozent.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 7 Perrons liegen Daten vor. Das längste misst 533 Meter, das kürzeste 181 Meter. Bei 7 von 7 ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 7,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 533,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 181,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 9/10",
+              "value": 533,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 7/8",
+              "value": 416,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 254,
+              "factRef": "perrons.items[4].laenge_m"
+            }
+          ],
+          "correct": null,
+          "explanation": "Perron 9/10 ist mit 533 Metern das längste der erfassten.",
+          "factRef": "perrons.items",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Chur?",
+          "options": [
+            "254 m",
+            "416 m",
+            "533 m",
+            "720 m"
+          ],
+          "correct": 2,
+          "explanation": "533 Meter, das Perron an den Gleisen 9 und 10.",
+          "factRef": "perrons.laengste_m",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 12 Gleisen vor: 1, 2, 4, 5, 7 bis 14. Die längste erfasste Perronkante hat Gleis 10 mit 497 Metern, die kürzeste Gleis 4 mit 69 Metern. An Gleis 12 sind nur die Sektoren C und D erfasst, an Gleis 14 nur C.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 12,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 10",
+          "value": 497,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[7].perronkante_m"
+        },
+        {
+          "label": "Kürzeste Perronkante, Gleis 4",
+          "value": 69,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Erster Sektor an Gleis 12",
+          "value": "C",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[9].sektoren[0]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "10",
+          "explanation": "Gleis 10 mit 497 Metern.",
+          "factRef": "gleise.items[7].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Mit welchem Buchstaben beginnen die Sektoren an Gleis 12?",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": 2,
+          "explanation": "Mit C. An Gleis 12 sind nur die Sektoren C und D erfasst.",
+          "factRef": "gleise.items[9].sektoren[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu Gleisen mit den Nummern 3 und 6 liegen in diesen Daten keine Angaben vor.",
+          "correct": true,
+          "explanation": "Erfasst sind die Gleise 1, 2, 4, 5 sowie 7 bis 14.",
+          "factRef": "gleise.nummern",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "An welchem Gleis ist die Perronkante am kürzesten?",
+          "options": [
+            "Gleis 1",
+            "Gleis 4",
+            "Gleis 10",
+            "Gleis 12"
+          ],
+          "correct": 1,
+          "explanation": "An Gleis 4 mit 69 Metern.",
+          "factRef": "gleise.items[2].nr",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "In Chur sind vier verschiedene Perronhöhen erfasst: 20, 25, 35 und 55 Zentimeter. Von 72 Abschnitten liegen 26 auf 20 Zentimetern und 16 auf 55. Von 12 erfassten Gleisen haben 5 einen Abschnitt auf 55 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "facts": [
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 72,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Abschnitte mit 20 cm",
+          "value": 26,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.20"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 5,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe kommt bei den erfassten Abschnitten am häufigsten vor?",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": 0,
+          "explanation": "20 Zentimeter, bei 26 der 72 erfassten Abschnitte.",
+          "factRef": "gleise.perronhoehen_cm[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der 12 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
+          "options": [
+            "3",
+            "5",
+            "8",
+            "12"
+          ],
+          "correct": 1,
+          "explanation": "5 von 12 Gleisen. An den übrigen liegt die Kante tiefer oder die Angabe fehlt.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Jedes erfasste Perron in Chur ist ohne Gleisquerung erreichbar.",
+          "correct": true,
+          "explanation": "Bei 7 von 7 erfassten Perrons ist der Zugang niveaufrei.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Von Zizers her verkehren 73'388 Personenzüge pro Jahr, rund 201 pro Tag in beiden Richtungen zusammen. Dazu kommen 10 Güterzüge pro Tag von Zizers her.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Abschnitt Zizers",
+          "value": 201,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag, Abschnitt Zizers",
+          "value": 10,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt von Zizers her?",
+          "options": [
+            "64",
+            "201",
+            "410",
+            "820"
+          ],
+          "correct": 1,
+          "explanation": "Rund 201 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen erfassen sämtliche Bahnen, die in Chur verkehren.",
+          "correct": false,
+          "explanation": "Die Quelle zählt Fahrten auf Streckenabschnitten. Welche Bahnen dabei erfasst sind, geht aus diesen Daten nicht hervor.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 5 Billettautomaten, 11 Billettentwerter und 5 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 5,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 11,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 5,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Chur sind ___ Wartehallen erfasst.",
+          "options": [
+            "2",
+            "5",
+            "9",
+            "14"
+          ],
+          "correct": 1,
+          "explanation": "5 Wartehallen.",
+          "factRef": "services.wartehallen_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Chur steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Ja, der Bahnhof ist als WLAN-Standort erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Chur ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-chur-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Chur gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 12 Gleise (1, 2, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        20
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 254,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        20
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 238,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 69,
+      "sektoren": [
+        "A"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        25,
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 173,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 335,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "8",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 334,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "9",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 433,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "nr": "10",
+      "perronhoehen_cm": [
+        25
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 497,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    },
+    {
+      "nr": "11",
+      "perronhoehen_cm": [],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 383,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "12",
+      "perronhoehen_cm": [
+        20
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 336,
+      "sektoren": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "13",
+      "perronhoehen_cm": [],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 182,
+      "sektoren": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "14",
+      "perronhoehen_cm": [],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 182,
+      "sektoren": [
+        "C"
+      ]
+    }
+  ]
+}
