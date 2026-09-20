@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { allesZuruecksetzen, bearbeiteBahnhoefe } from './fortschritt'
 import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
 import { Suche } from './komponenten/Suche'
@@ -65,8 +66,69 @@ export default function App() {
           <p className="mt-1">
             Der Lernfortschritt bleibt auf diesem Gerät. Es gibt kein Konto und keine Auswertung.
           </p>
+          <Zuruecksetzen />
           {index && <p className="mt-1">Datenstand: {index.stand}</p>}
         </footer>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Löscht den ganzen Fortschritt auf diesem Gerät. Zwei Schritte, weil sich das
+ * nicht rückgängig machen lässt und ein Fehlgriff Wochen an Arbeit kostet.
+ */
+function Zuruecksetzen() {
+  const [fragt, setFragt] = useState(false)
+  const [fertig, setFertig] = useState(false)
+  const anzahl = fragt ? bearbeiteBahnhoefe().length : 0
+
+  // Die Bestätigung soll nicht für immer stehen bleiben
+  useEffect(() => {
+    if (!fertig) return
+    const uhr = setTimeout(() => { setFertig(false); setFragt(false) }, 4000)
+    return () => clearTimeout(uhr)
+  }, [fertig])
+
+  if (fertig) {
+    return <p className="mt-2 text-sbb-black dark:text-sbb-white">Alles gelöscht.</p>
+  }
+
+  if (!fragt) {
+    return (
+      <button
+        type="button" onClick={() => setFragt(true)}
+        className="mt-2 underline underline-offset-2 hover:text-sbb-black
+                   dark:hover:text-sbb-white"
+      >
+        Fortschritt auf diesem Gerät löschen
+      </button>
+    )
+  }
+
+  return (
+    <div className="mt-2 border-l-2 border-sbb-red pl-3">
+      <p className="text-sbb-black dark:text-sbb-white">
+        {anzahl > 0
+          ? `Damit werden die Antworten bei ${anzahl} ${anzahl === 1 ? 'Bahnhof' : 'Bahnhöfen'} `
+            + 'und alle Bestwerte im Duell gelöscht. Das lässt sich nicht rückgängig machen.'
+          : 'Damit werden alle Antworten und alle Bestwerte im Duell gelöscht. '
+            + 'Das lässt sich nicht rückgängig machen.'}
+      </p>
+      <div className="mt-2 flex gap-2">
+        <button
+          type="button"
+          onClick={() => { allesZuruecksetzen(); setFertig(true) }}
+          className="bg-sbb-red px-3 py-2 font-bold text-white hover:bg-sbb-red125"
+        >
+          Ja, alles löschen
+        </button>
+        <button
+          type="button" onClick={() => setFragt(false)}
+          className="border border-sbb-cloud px-3 py-2 dark:border-sbb-iron"
+        >
+          Abbrechen
+        </button>
       </div>
     </div>
   )

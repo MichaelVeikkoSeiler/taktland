@@ -1,6 +1,7 @@
 /** Fortschritt liegt nur auf dem Gerät. Kein Login, kein Server, kein Tracking. */
 
 const SCHLUESSEL = 'taktland.fortschritt.v1'
+const DUELL_SCHLUESSEL = 'taktland.duell.v1'
 
 export interface Antwort {
   richtig: boolean
@@ -42,11 +43,21 @@ export function bahnhofZuruecksetzen(uic: number) {
   schreiben(s)
 }
 
+/**
+ * Löscht alles, was der Nutzer erarbeitet hat: beantwortete Fragen bei allen
+ * Bahnhöfen und die Bestwerte im Duell. Die Kantonsauswahl bleibt - das ist
+ * eine Einstellung und kein Ergebnis.
+ *
+ * Die Schlüssel stehen hier ausgeschrieben, damit ein neuer Speicherort nicht
+ * stillschweigend vom Zurücksetzen ausgenommen bleibt.
+ */
 export function allesZuruecksetzen() {
-  try {
-    localStorage.removeItem(SCHLUESSEL)
-  } catch {
-    // nichts zu tun
+  for (const schluessel of [SCHLUESSEL, DUELL_SCHLUESSEL]) {
+    try {
+      localStorage.removeItem(schluessel)
+    } catch {
+      // Privater Modus oder gesperrter Speicher: es gab ohnehin nichts zu löschen
+    }
   }
 }
 
@@ -56,28 +67,30 @@ export function bearbeiteBahnhoefe(): number[] {
 
 /* ---------- Bestleistung im Duell ---------- */
 
-const DUELL_SCHLUESSEL = 'taktland.duell.v1'
-
 export interface Duellstand {
-  rekord: number
+  /** Bestwert je Auswahl: 'CH' für die ganze Schweiz, sonst das Kantonskürzel.
+   *  Getrennt, weil ein Duell innerhalb eines kleinen Kantons nicht dieselbe
+   *  Aufgabe ist wie eines über alle 771 Bahnhöfe. */
+  rekorde: Record<string, number>
   gespielt: number
   richtig: number
 }
 
-const LEER: Duellstand = { rekord: 0, gespielt: 0, richtig: 0 }
+const LEER: Duellstand = { rekorde: {}, gespielt: 0, richtig: 0 }
 
 export function duellstandLesen(): Duellstand {
   try {
-    return { ...LEER, ...JSON.parse(localStorage.getItem(DUELL_SCHLUESSEL) ?? '{}') }
+    const roh = JSON.parse(localStorage.getItem(DUELL_SCHLUESSEL) ?? '{}')
+    return { ...LEER, ...roh, rekorde: { ...(roh.rekorde ?? {}) } }
   } catch {
-    return { ...LEER }
+    return { ...LEER, rekorde: {} }
   }
 }
 
-export function duellstandMerken(richtig: boolean, serie: number) {
+export function duellstandMerken(auswahl: string, richtig: boolean, serie: number) {
   const s = duellstandLesen()
   const neu: Duellstand = {
-    rekord: Math.max(s.rekord, serie),
+    rekorde: { ...s.rekorde, [auswahl]: Math.max(s.rekorde[auswahl] ?? 0, serie) },
     gespielt: s.gespielt + 1,
     richtig: s.richtig + (richtig ? 1 : 0),
   }
@@ -87,4 +100,22 @@ export function duellstandMerken(richtig: boolean, serie: number) {
     // Privater Modus: die Bestleistung geht verloren, das Spiel läuft weiter
   }
   return neu
+}
+
+const AUSWAHL_SCHLUESSEL = 'taktland.duell.auswahl'
+
+export function auswahlLesen(): string {
+  try {
+    return localStorage.getItem(AUSWAHL_SCHLUESSEL) ?? 'CH'
+  } catch {
+    return 'CH'
+  }
+}
+
+export function auswahlMerken(auswahl: string) {
+  try {
+    localStorage.setItem(AUSWAHL_SCHLUESSEL, auswahl)
+  } catch {
+    // ohne Speicher beginnt das Duell eben wieder bei der ganzen Schweiz
+  }
 }

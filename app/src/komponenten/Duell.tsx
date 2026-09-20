@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { duellstandLesen, duellstandMerken, type Duellstand } from '../fortschritt'
+import {
+  auswahlLesen, auswahlMerken, duellstandLesen, duellstandMerken, type Duellstand,
+} from '../fortschritt'
 import { vergleichLaden } from '../daten'
 import type { Kategorie, Vergleichsdaten, VergleichsBahnhof } from '../typen'
 
@@ -13,6 +15,19 @@ import type { Kategorie, Vergleichsdaten, VergleichsBahnhof } from '../typen'
  * Datenbestand verglichen wird - etwa beim längsten erfassten Perron -, sagt
  * die Frage das ausdrücklich.
  */
+
+/** Ein Kanton braucht genug Bahnhöfe, sonst findet sich kein faires Paar.
+ *  Die Grenze ist dieselbe, die versuchen() ohnehin verlangt. */
+const MINDESTENS = 8
+
+const KANTONSNAME: Record<string, string> = {
+  AG: 'Aargau', AI: 'Appenzell Innerrhoden', AR: 'Appenzell Ausserrhoden',
+  BE: 'Bern', BL: 'Basel-Landschaft', BS: 'Basel-Stadt', FR: 'Freiburg',
+  GE: 'Genf', GL: 'Glarus', GR: 'Graubünden', JU: 'Jura', LU: 'Luzern',
+  NE: 'Neuenburg', NW: 'Nidwalden', OW: 'Obwalden', SG: 'St. Gallen',
+  SH: 'Schaffhausen', SO: 'Solothurn', SZ: 'Schwyz', TG: 'Thurgau',
+  TI: 'Tessin', UR: 'Uri', VD: 'Waadt', VS: 'Wallis', ZG: 'Zug', ZH: 'Zürich',
+}
 
 interface Runde {
   kategorie: Kategorie
@@ -45,9 +60,9 @@ function weitGenug(a: number, b: number, k: Kategorie) {
  * es gab kein Paar mehr, und das Spiel blieb beim Laden stehen. Wer eine
  * Serie von 8 schaffte, wurde also dafür bestraft.
  */
-function versuchen(daten: Vergleichsdaten, kategorie: Kategorie,
+function versuchen(feldAlle: VergleichsBahnhof[], kategorie: Kategorie,
                    serie: number, engziehen: boolean): Runde | null {
-  const feld = daten.bahnhoefe.filter((b) => wertVon(b, kategorie) != null)
+  const feld = feldAlle.filter((b) => wertVon(b, kategorie) != null)
   if (feld.length < 8) return null
 
   const anzahl = serie >= 4 && Math.random() < 0.4 ? 4 : 2
@@ -89,11 +104,12 @@ function versuchen(daten: Vergleichsdaten, kategorie: Kategorie,
  * Baut eine Runde. Geht eine Kategorie nicht auf, kommt die nächste dran, und
  * zuletzt wird ohne Verengung gesucht. So bleibt das Spiel nie stehen.
  */
-function rundeBauen(daten: Vergleichsdaten, serie: number): Runde | null {
+function rundeBauen(daten: Vergleichsdaten, feld: VergleichsBahnhof[],
+                    serie: number): Runde | null {
   const reihenfolge = [...daten.kategorien].sort(() => Math.random() - 0.5)
   for (const eng of [true, false]) {
     for (const kategorie of reihenfolge) {
-      const runde = versuchen(daten, kategorie, serie, eng)
+      const runde = versuchen(feld, kategorie, serie, eng)
       if (runde) return runde
     }
   }
@@ -117,6 +133,27 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
   const [gewaehlt, setGewaehlt] = useState<number | null>(null)
   const [serie, setSerie] = useState(0)
   const [stand, setStand] = useState<Duellstand>(() => duellstandLesen())
+  const [auswahl, setAuswahl] = useState<string>(() => auswahlLesen())
+
+  /** Die Kantone, die genug Bahnhöfe für faire Paare haben. */
+  const kantone = useMemo(() => {
+    if (!daten) return []
+    const zaehler = new Map<string, number>()
+    for (const b of daten.bahnhoefe) {
+      if (b.kanton) zaehler.set(b.kanton, (zaehler.get(b.kanton) ?? 0) + 1)
+    }
+    return [...zaehler.entries()]
+      .filter(([, n]) => n >= MINDESTENS)
+      .map(([k, n]) => ({ kuerzel: k, name: KANTONSNAME[k] ?? k, anzahl: n }))
+      .sort((a, b) => a.name.localeCompare(b.name, 'de-CH'))
+  }, [daten])
+
+  const feld = useMemo(() => {
+    if (!daten) return []
+    return auswahl === 'CH'
+      ? daten.bahnhoefe
+      : daten.bahnhoefe.filter((b) => b.kanton === auswahl)
+  }, [daten, auswahl])
 
   useEffect(() => {
     vergleichLaden().then(setDaten).catch((e: Error) => setFehler(e.message))
@@ -125,10 +162,18 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
   const naechste = useCallback((mitSerie: number) => {
     if (!daten) return
     setGewaehlt(null)
-    setRunde(rundeBauen(daten, mitSerie))
-  }, [daten])
+    setRunde(rundeBauen(daten, feld, mitSerie))
+  }, [daten, feld])
 
   useEffect(() => { if (daten && !runde) naechste(0) }, [daten, runde, naechste])
+
+  function auswahlWechseln(neu: string) {
+    setAuswahl(neu)
+    auswahlMerken(neu)
+    setSerie(0)
+    setGewaehlt(null)
+    setRunde(null)   // der useEffect oben baut die erste Runde im neuen Feld
+  }
 
   function waehlen(i: number) {
     if (gewaehlt !== null || !runde) return
@@ -136,8 +181,10 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
     const richtig = i === runde.richtig
     const neueSerie = richtig ? serie + 1 : 0
     setSerie(neueSerie)
-    setStand(duellstandMerken(richtig, richtig ? neueSerie : serie))
+    setStand(duellstandMerken(auswahl, richtig, richtig ? neueSerie : serie))
   }
+
+  const rekord = stand.rekorde[auswahl] ?? 0
 
   const quote = useMemo(
     () => (stand.gespielt ? Math.round((stand.richtig / stand.gespielt) * 100) : null),
@@ -146,21 +193,10 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
 
   if (fehler) return <p className="px-4 py-8">Der Vergleich konnte nicht geladen werden. {fehler}</p>
   if (!daten) return <p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>
-  if (!runde) {
-    return (
-      <div className="px-4 py-8">
-        <p>Zu dieser Runde liess sich kein faires Paar finden.</p>
-        <button
-          type="button" onClick={() => naechste(0)}
-          className="mt-4 bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125"
-        >Nochmals versuchen</button>
-      </div>
-    )
-  }
 
-  const k = runde.kategorie
+  const k = runde?.kategorie
   const aufgeloest = gewaehlt !== null
-  const getroffen = gewaehlt === runde.richtig
+  const getroffen = runde !== null && gewaehlt === runde.richtig
 
   return (
     <div className="px-4 pb-16">
@@ -175,91 +211,134 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
         <h1 className="text-2xl font-bold tracking-tight">Duell</h1>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">
           Serie <span className="font-bold tabular-nums text-sbb-black dark:text-sbb-white">{serie}</span>
-          {stand.rekord > 0 && <> · Bestwert {stand.rekord}</>}
+          {rekord > 0 && <> · Bestwert {rekord}</>}
           {quote !== null && <> · {quote}% richtig</>}
         </p>
       </div>
 
-      <p className="mt-5 text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
-        {k.titel}
-      </p>
-      <p className="mt-1 text-lg font-medium">
-        {runde.bahnhoefe.length > 2 ? k.frage_mehrere : k.frage}
-      </p>
+      {/* Die Auswahl steht ausserhalb des Frageteils: Beim Wechsel wird die
+          Runde kurz verworfen, und ein Feld, das dabei verschwindet, lässt
+          sich nicht bedienen. */}
+      <label className="mt-4 block">
+        <span className="sr-only">Auswahl</span>
+        <select
+          value={auswahl}
+          onChange={(e) => auswahlWechseln(e.target.value)}
+          className="w-full appearance-none border border-sbb-cloud bg-white px-3 py-2.5
+                     text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
+                     dark:text-sbb-white"
+        >
+          <option value="CH">Ganze Schweiz ({daten.bahnhoefe.length} Bahnhöfe)</option>
+          {kantone.map((kt) => (
+            <option key={kt.kuerzel} value={kt.kuerzel}>
+              {kt.name} ({kt.anzahl} Bahnhöfe)
+            </option>
+          ))}
+        </select>
+      </label>
 
-      <ul className="mt-4 space-y-2">
-        {runde.bahnhoefe.map((b, i) => {
-          const istRichtig = i === runde.richtig
-          const rahmen = !aufgeloest
-            ? 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'
-            : istRichtig
-              ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15'
-              : i === gewaehlt
-                ? 'border-sbb-red bg-white dark:bg-sbb-midnight'
-                : 'border-sbb-cloud bg-white opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight'
-          return (
-            <li key={b.uic}>
-              <button
-                type="button" onClick={() => waehlen(i)} disabled={aufgeloest}
-                className={`flex w-full items-center justify-between gap-3 border px-4 py-4
-                            text-left transition ${rahmen}`}
-              >
-                <span className="min-w-0">
-                  <span className="block truncate font-medium">{b.name}</span>
-                  {b.kanton && (
-                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                      Kanton {b.kanton}
-                    </span>
-                  )}
-                </span>
-                {aufgeloest && (
-                  <span className="shrink-0 text-right tabular-nums">
-                    <span className="block font-bold">{zahl(wertVon(b, k), k)}</span>
-                  </span>
-                )}
-              </button>
-            </li>
-          )
-        })}
-      </ul>
-
-      {aufgeloest && (
+      {runde && k ? (
         <>
-          <div className={`mt-4 border-l-2 px-3 py-2 text-sm ${
-            getroffen
-              ? 'border-sbb-green bg-sbb-green-bg text-sbb-black dark:bg-sbb-green/15 dark:text-sbb-white'
-              : 'border-sbb-red bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white'
-          }`}>
-            <p className="font-bold">{getroffen ? 'Richtig' : 'Nicht ganz'}</p>
-            {/* «führt mit 304 Züge pro Tag» wäre falsch gebeugt, und die
-                Einheiten lassen sich nicht zuverlässig beugen. Der Doppelpunkt
-                umgeht das. */}
-            <p className="mt-0.5">
-              {runde.bahnhoefe[runde.richtig].name} liegt vorn:{' '}
-              {mitPunkt(zahl(wertVon(runde.bahnhoefe[runde.richtig], k), k))}
-            </p>
-            {/* Bei art «erfasst» verlangt generator/validate_vergleich.py einen
-                hinweis, der das sagt. Darum hier keine zweite, fast gleich
-                lautende Zeile. */}
-            {k.hinweis && <p className="mt-1">{k.hinweis}</p>}
-            <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-              Quelle: {k.quelle}
-            </p>
-          </div>
+          <p className="mt-5 text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
+            {k.titel}
+          </p>
+          <p className="mt-1 text-lg font-medium">
+            {runde.bahnhoefe.length > 2 ? k.frage_mehrere : k.frage}
+          </p>
 
-          <button
-            type="button" onClick={() => naechste(serie)}
-            className="mt-4 w-full bg-sbb-red px-4 py-3 font-bold text-white
-                       hover:bg-sbb-red125"
-          >
-            Nächste Frage
-          </button>
+          <ul className="mt-4 space-y-2">
+            {runde.bahnhoefe.map((b, i) => {
+              const istRichtig = i === runde.richtig
+              const rahmen = !aufgeloest
+                ? 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'
+                : istRichtig
+                  ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15'
+                  : i === gewaehlt
+                    ? 'border-sbb-red bg-white dark:bg-sbb-midnight'
+                    : 'border-sbb-cloud bg-white opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight'
+              return (
+                <li key={b.uic}>
+                  <button
+                    type="button" onClick={() => waehlen(i)} disabled={aufgeloest}
+                    className={`flex w-full items-center justify-between gap-3 border px-4 py-4
+                                text-left transition ${rahmen}`}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate font-medium">{b.name}</span>
+                      {b.kanton && (
+                        <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+                          Kanton {b.kanton}
+                        </span>
+                      )}
+                    </span>
+                    {aufgeloest && (
+                      <span className="shrink-0 text-right tabular-nums">
+                        <span className="block font-bold">{zahl(wertVon(b, k), k)}</span>
+                      </span>
+                    )}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+
+          {aufgeloest && (
+            <>
+              <div className={`mt-4 border-l-2 px-3 py-2 text-sm ${
+                getroffen
+                  ? 'border-sbb-green bg-sbb-green-bg text-sbb-black dark:bg-sbb-green/15 dark:text-sbb-white'
+                  : 'border-sbb-red bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white'
+              }`}>
+                <p className="font-bold">{getroffen ? 'Richtig' : 'Nicht ganz'}</p>
+                {/* «führt mit 304 Züge pro Tag» wäre falsch gebeugt, und die
+                    Einheiten lassen sich nicht zuverlässig beugen. Der
+                    Doppelpunkt umgeht das. */}
+                <p className="mt-0.5">
+                  {runde.bahnhoefe[runde.richtig].name} liegt vorn:{' '}
+                  {mitPunkt(zahl(wertVon(runde.bahnhoefe[runde.richtig], k), k))}
+                </p>
+                {/* Bei art «erfasst» verlangt generator/validate_vergleich.py
+                    einen hinweis, der das sagt. Darum hier keine zweite, fast
+                    gleich lautende Zeile. */}
+                {k.hinweis && <p className="mt-1">{k.hinweis}</p>}
+                <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
+                  Quelle: {k.quelle}
+                </p>
+              </div>
+
+              <button
+                type="button" onClick={() => naechste(serie)}
+                className="mt-4 w-full bg-sbb-red px-4 py-3 font-bold text-white
+                           hover:bg-sbb-red125"
+              >
+                Nächste Frage
+              </button>
+            </>
+          )}
         </>
+      ) : (
+        <div className="mt-6">
+          <p>
+            {auswahl === 'CH'
+              ? 'Zu dieser Runde liess sich kein faires Paar finden.'
+              : `Im Kanton ${KANTONSNAME[auswahl] ?? auswahl} liessen sich keine `
+                + 'Bahnhöfe finden, die weit genug auseinanderliegen.'}
+          </p>
+          <button
+            type="button"
+            onClick={() => (auswahl === 'CH' ? naechste(0) : auswahlWechseln('CH'))}
+            className="mt-4 bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125"
+          >{auswahl === 'CH' ? 'Nochmals versuchen' : 'Ganze Schweiz spielen'}</button>
+        </div>
       )}
 
       <p className="mt-8 text-xs text-sbb-metal dark:text-sbb-storm">
-        Alle {daten.bahnhoefe.length} Bahnhöfe sind dabei, auch die ohne Lernkapitel.
+        {auswahl === 'CH'
+          ? `Alle ${daten.bahnhoefe.length} Bahnhöfe sind dabei, auch die ohne Lernkapitel.`
+          : `${feld.length} Bahnhöfe im Kanton ${KANTONSNAME[auswahl] ?? auswahl}, `
+            + 'auch die ohne Lernkapitel.'}{' '}
         Jeder Wert stammt unverändert aus den offenen Daten. Datenstand: {daten.datenstand}.
+        {kantone.length < 26 && ' Kantone mit zu wenigen Bahnhöfen für faire Paare fehlen in der Auswahl.'}
       </p>
     </div>
   )
