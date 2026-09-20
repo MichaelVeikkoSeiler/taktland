@@ -1,0 +1,317 @@
+{
+  "uic": 8508006,
+  "name": "Wynigen",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Wynigen liegt im Kanton Bern und wird von BLS, SBB und SOB bedient. An einem durchschnittlichen Werktag steigen 990 Personen ein und aus, an einem freien Tag sind es 590.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 990,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende pro Tag (DTV)",
+          "value": 860,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Betreibende Bahnunternehmen",
+          "value": "BLS, SBB, SOB",
+          "unit": "",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem durchschnittlichen Werktag in Wynigen ein und aus?",
+          "options": [
+            "400",
+            "540",
+            "690",
+            "990"
+          ],
+          "correct": 3,
+          "explanation": "Der Wert für den durchschnittlichen Werktagsverkehr (DWV) betrug 2025 990 Personen.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der durchschnittliche tägliche Verkehr (DTV) in Wynigen liegt 2025 bei 860 Personen.",
+          "correct": true,
+          "explanation": "Die Faktendatei nennt für 2025 einen DTV von 860 Personen.",
+          "factRef": "steckbrief.dtv",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Der Bahnhof Wynigen liegt auf 528 Metern über Meer in der gleichnamigen Gemeinde im Verwaltungskreis Emmental. Betrieben wird er von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 528,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiber",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Wynigen?",
+          "options": [
+            "428 m",
+            "528 m",
+            "628 m",
+            "728 m"
+          ],
+          "correct": 1,
+          "explanation": "Der Bahnhof Wynigen liegt auf 528 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu zwei Perrons in Wynigen liegen offene Daten vor: ein Hausperron und ein Aussenperron. Beide sind 260 Meter lang und niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 2,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronlänge",
+          "value": 260,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welcher Perrontyp gehört zu welcher Nummer?",
+          "pairs": [
+            {
+              "links": "Perron 1",
+              "rechts": "Hausperron",
+              "factRef": "perrons.items[0].typ"
+            },
+            {
+              "links": "Perron 2",
+              "rechts": "Aussenperron",
+              "factRef": "perrons.items[1].typ"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 1 ist als Hausperron erfasst, Perron 2 als Aussenperron."
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Wynigen?",
+          "options": [
+            "180 m",
+            "220 m",
+            "260 m",
+            "310 m"
+          ],
+          "correct": 2,
+          "explanation": "Für Wynigen sind Perronlängen von 260 Metern erfasst.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Beide erfassten Perrons in Wynigen sind niveaufrei erreichbar. Für die Haltekanten ist eine visuell-taktile Sicherheitslinie vorhanden.",
+      "facts": [
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 2,
+          "unit": "",
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Sicherheitslinie vorhanden",
+          "value": "Ja",
+          "unit": "",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Wynigen ist eine visuell-taktile Sicherheitslinie erfasst.",
+          "correct": true,
+          "explanation": "Die Faktendatei weist für Wynigen eine vorhandene Sicherheitslinie aus.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Streckenabschnitt Burgdorf–Wynigen verkehren im Personenverkehr rund 91 Züge pro Tag in beide Richtungen zusammen. Im Güterverkehr sind es auf demselben Abschnitt rund 39 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Burgdorf–Wynigen",
+          "value": 91,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Tag, Güterverkehr Burgdorf–Wynigen",
+          "value": 39,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr täglich auf dem Abschnitt Burgdorf–Wynigen (beide Richtungen zusammen)?",
+          "options": [
+            "36",
+            "50",
+            "64",
+            "91"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt Burgdorf–Wynigen verkehren 2025 rund 91 Personenzüge pro Tag.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Wynigen ist ein Billettautomat des Typs ePOS erfasst sowie zwei Billettentwerter und eine Wartehalle. Ein WLAN-Standort ist für Wynigen nicht erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 1,
+          "unit": "",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 2,
+          "unit": "",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Wynigen erfasst?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "correct": 1,
+          "explanation": "Für Wynigen ist 1 Billettautomat des Typs ePOS erfasst.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Wynigen steht nicht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Die Faktendatei weist für Wynigen kein erfasstes WLAN aus.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

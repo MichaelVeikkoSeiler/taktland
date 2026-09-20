@@ -220,6 +220,53 @@ Das Schema darf nur zeigen, was in den Fakten steht: Gleisnummern, Perrontyp,
 Länge der Kante, Sektoren. Die Lage zueinander ist erfunden und deshalb als
 Schema gekennzeichnet.
 
+## Was die Felder bedeuten
+
+Diese drei Werte werden am häufigsten verwechselt:
+
+| Feld | Bedeutung | So schreibt man es |
+|---|---|---|
+| `dwv` | Durchschnittlicher **Werktags**verkehr | «an einem Werktag» |
+| `dtv` | Durchschnittlicher **Tages**verkehr, Mittel über alle Tage | «im Tagesmittel über das ganze Jahr» |
+| `dnwv` | Durchschnittlicher **Nicht-Werktags**verkehr | «an einem freien Tag» |
+
+`dnwv` ist **nicht** «Werktagsverkehr an Nichtwerktagen» und **nicht** «am
+Wochenende»: Der Wert umfasst Wochenenden und Feiertage zusammen.
+
+Weitere Felder, die oft missverstanden werden:
+
+- `isb` ist die Infrastrukturbetreiberin, also wem die Anlage gehört.
+  `evu` sind die Bahnunternehmen, deren Züge dort fahren. Das ist nicht dasselbe.
+- `segmente` sind Perronabschnitte aus der BehiG-Erhebung, keine Gleise.
+- `bahnhofbenutzer` zählt auch Personen ohne Zugfahrt und stammt aus einer
+  anderen Erhebung als `dwv`. Die beiden Zahlen sind nicht vergleichbar.
+
+**Feldnamen gehören nicht in den Text.** «Der dwv-Wert beträgt 51'800» ist
+Datenbanksprache. Richtig: «An einem Werktag steigen hier 51'800 Personen ein
+und aus.»
+
+## Drei Regeln, an denen Profile am häufigsten scheitern
+
+**1. Jede Frage braucht eine Erklärung.** `explanation` ist Pflicht, nicht Kür.
+Wer falsch antwortet, muss erfahren warum — sonst ist es kein Lernen, sondern Raten.
+Die Erklärung nennt den Wert und, wo vorhanden, das Jahr.
+
+**2. Keine Leerformeln.** Sätze, die formal stimmen und nichts sagen, werden
+abgelehnt:
+
+| Abgelehnt | Stattdessen |
+|---|---|
+| «Der Wert hat sich seit 2018 verändert» | «2018 waren es 2000, 2025 sind es 2400» |
+| «Die Perronkanten unterscheiden sich leicht» | «Die Perronkanten messen 244 und 246 Meter» |
+| «Die Zahl variiert» | die Zahlen nennen |
+
+Wenn ein Wert in den Fakten steht, gehört er in den Text. Ihn zu umschreiben,
+statt ihn zu nennen, ist der häufigste Weg, ein Profil wertlos zu machen.
+
+**3. Nicht mehr Fragen, als die Daten tragen.** Der Umfang steht im Auftrag.
+Wer darüber hinausgeht, fragt dieselben Werte mehrfach ab. Lieber sechs gute
+Fragen als zwanzig, die sich wiederholen.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:

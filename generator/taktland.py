@@ -28,6 +28,18 @@ KAPITEL_REIHENFOLGE = ["steckbrief", "stammdaten", "tagesrhythmus", "perrons", "
 NORMHOEHEN = {20, 25, 30, 35, 42, 55, 76}
 
 #: Wendungen, die formal stimmen, aber nichts aussagen
+#: Feldnamen aus den Fakten gehören nicht in den Text
+FELDJARGON = [r"\bdwv\b", r"\bdtv\b", r"\bdnwv\b", r"\bisb\b", r"\bevu\b",
+              r"\bbpuic\b", r"\buic-?Wert", r"factRef"]
+
+#: Falsch aufgelöste Abkürzungen
+FALSCHDEUTUNG = [
+    (r"Werktagsverkehr an Nichtwerktagen",
+     "dnwv heisst Nicht-Werktagsverkehr, nicht Werktagsverkehr an Nichtwerktagen"),
+    (r"(dnwv|Nicht-?Werktag\w*)[^.]{0,40}\bam Wochenende\b|\bam Wochenende\b[^.]{0,40}(dnwv)",
+     "der Wert umfasst Wochenenden und Feiertage, nicht nur das Wochenende"),
+]
+
 LEERFORMELN = [
     r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",
     r"ist unterschiedlich", r"variiert", r"in gewissem Masse", r"mehr oder weniger",
@@ -238,6 +250,13 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
         if not kap.get("title") or not kap.get("body"):
             b.fehlt(wo, "title oder body fehlt")
         REGELWERK.pruefe_text(kap.get("body", ""), f"{wo}/body", fb, b)
+        for muster in FELDJARGON:
+            if m := re.search(muster, kap.get("body", ""), re.I):
+                b.fehlt(f"{wo}/body", f"«{m.group(0)}» ist ein Feldname aus den Daten. "
+                                      "Schreibe, was der Wert bedeutet")
+        for muster, warum in FALSCHDEUTUNG:
+            if m := re.search(muster, kap.get("body", ""), re.I):
+                b.fehlt(f"{wo}/body", f"«{m.group(0)}»: {warum}")
         for muster in LEERFORMELN:
             if m := re.search(muster, kap.get("body", ""), re.I):
                 b.fehlt(f"{wo}/body", f"«{m.group(0)}» sagt nichts aus. "
