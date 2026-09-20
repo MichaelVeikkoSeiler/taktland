@@ -27,7 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from auswahl import laden as fakten_alle, waehlen  # noqa: E402
 from belegt.erzeugung import Auftrag, Erzeuger  # noqa: E402
-from taktland import (FACTS, PROFILES, SCHEMA, fakten_laden,  # noqa: E402
+from taktland import (FACTS, PROFILES, ROOT, SCHEMA, fakten_laden,  # noqa: E402
                       pruefe, umfang_erwartet)
 
 def ch(n):
@@ -55,13 +55,19 @@ Das Regelwerk im Wortlaut:
 #: Preise je Million Token (Eingabe, Ausgabe), Stand 2026-06
 PREISE = {"claude-opus-5": (5.0, 25.0), "claude-sonnet-5": (2.0, 10.0)}
 
-#: Gemessen an Arbon, dem ersten erzeugten Profil: 22'577 Eingabe- und
-#: 18'127 Ausgabe-Token über zwei Runden. Die Ausgabe ist weit höher als die
-#: reine Textlänge, weil Opus vor dem Schreiben denkt und diese Token
-#: mitzählen. Ein Aufwand unter "high" senkt das deutlich.
-GEMESSEN_EIN = 22_600
-GEMESSEN_AUS = 18_100
-AUFWAND_FAKTOR = {"low": 0.45, "medium": 0.7, "high": 1.0, "xhigh": 1.5, "max": 2.2}
+#: Gemessen am Lauf vom 2026-09-20: 39 Anläufe mit Sonnet bei Aufwand "low"
+#: brauchten 1'389'866 Eingabe- und 731'486 Ausgabe-Token, zusammen $10.09.
+#: Das sind die Werte je Bahnhof, einschliesslich der Korrekturrunden - und
+#: die machen den Unterschied. Die erste Schätzung rechnete nur den ersten
+#: Anlauf und lag darum um mehr als das Doppelte zu tief. Die Ausgabe ist weit
+#: höher als die reine Textlänge, weil das Denken vor dem Schreiben mitzählt.
+GEMESSEN_EIN = 35_600
+GEMESSEN_AUS = 18_800
+
+#: Bezugspunkt ist "low", weil dort gemessen wurde. Die Abstände sind
+#: geschätzt, nicht gemessen - wer einen höheren Aufwand fährt, prüft die
+#: Rechnung am Ende des Laufs nach.
+AUFWAND_FAKTOR = {"low": 1.0, "medium": 1.55, "high": 2.2, "xhigh": 3.3, "max": 4.9}
 
 
 def kosten_schaetzen(auftraege, stapel=False, modell="claude-opus-5", aufwand="high"):
@@ -116,6 +122,29 @@ def speichern(dokument, uic):
     return bericht
 
 
+GESCHEITERT = ROOT / "data" / "gescheitert"
+
+
+def ablegen(uic, name, ergebnis):
+    """Legt einen gescheiterten Entwurf samt Befund ab.
+
+    Die Token sind bezahlt, auch wenn der Prüfer das Ergebnis zurückweist.
+    Frueher war der Entwurf danach weg und es blieb nur die Zeile im
+    Terminal. So laesst sich nachsehen, woran es lag, und oft reicht eine
+    Korrektur von Hand statt eines neuen Laufs.
+    """
+    GESCHEITERT.mkdir(parents=True, exist_ok=True)
+    ziel = GESCHEITERT / f"{uic}.json"
+    ziel.write_text(json.dumps({
+        "uic": uic,
+        "name": name,
+        "fehlermeldung": ergebnis.fehlermeldung,
+        "befund": ergebnis.bericht.zeilen() if ergebnis.bericht else [],
+        "entwurf": ergebnis.dokument,
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"   Entwurf und Befund abgelegt: {ziel.relative_to(ROOT)}")
+
+
 def groesste_offenen(n):
     """Die n meistgenutzten Bahnhöfe, zu denen noch kein Profil vorliegt."""
     fertig = {json.loads(f.read_text(encoding="utf-8"))["uic"] for f in PROFILES.glob("*.json")}
@@ -134,6 +163,8 @@ def main():
     args = sys.argv[1:]
     probelauf = "--probelauf" in args
     stapel = "--stapel" in args
+    modell = args[args.index("--modell") + 1] if "--modell" in args else "claude-opus-5"
+    aufwand = args[args.index("--aufwand") + 1] if "--aufwand" in args else "high"
 
     if "--groesste" in args:
         n = int(args[args.index("--groesste") + 1])
@@ -158,20 +189,20 @@ def main():
         a = auftraege[0]
         print(f"\n--- Systemauftrag ({len(a.system)} Zeichen) ---\n{a.system[:600]} …")
         print(f"\n--- Anfrage für {a.kennung} ({len(a.anfrage)} Zeichen) ---\n{a.anfrage[:900]} …")
-        zeichen = sum(len(a.system) + len(a.anfrage) for a in auftraege)
-        marken = zeichen // 4
-        # Opus 5: 5 $ je Million Eingabe, 25 $ je Million Ausgabe
-        aus = sum(umfang_erwartet(fakten_laden(int(a.kennung)))[3] for a in auftraege) * 120
-        preis = marken / 1e6 * 5 + aus / 1e6 * 25
+        # Nicht aus der Textlänge rechnen: das zählte nur den ersten Anlauf und
+        # lag darum um mehr als das Doppelte zu tief. Es gelten die gemessenen
+        # Werte je Bahnhof, Korrekturrunden eingerechnet.
+        n = len(auftraege)
+        f = AUFWAND_FAKTOR.get(aufwand, 1.0)
+        marken, aus = n * GEMESSEN_EIN, int(n * GEMESSEN_AUS * f)
+        preis = kosten_schaetzen(auftraege, modell=modell, aufwand=aufwand)
         print(f"\nEingabe rund {ch(marken)} Token, Ausgabe geschätzt {ch(aus)} Token")
-        print(f"Grobe Kosten: ${preis:.2f} einzeln, ${preis / 2:.2f} im Stapel "
-              f"(ohne Korrekturrunden)")
+        print(f"Erwartete Kosten: ${preis:.2f} einzeln, ${preis / 2:.2f} im Stapel "
+              f"(Korrekturrunden sind eingerechnet)")
         return 0
 
     # Kostenbremse: Ohne Rückfrage wird nie mehr als dieser Betrag ausgegeben.
     limit = float(args[args.index("--limit") + 1]) if "--limit" in args else 2.00
-    modell = args[args.index("--modell") + 1] if "--modell" in args else "claude-opus-5"
-    aufwand = args[args.index("--aufwand") + 1] if "--aufwand" in args else "high"
     geschaetzt = kosten_schaetzen(auftraege, stapel, modell, aufwand)
     print(f"Modell {modell}, Aufwand {aufwand}"
           + (", im Stapel" if stapel else "")
@@ -238,6 +269,7 @@ def main():
         if e.bericht:
             for zeile in e.bericht.zeilen()[:6]:
                 print(zeile)
+        ablegen(int(kennung), name, e)
 
     ep, ap = PREISE.get(modell, PREISE["claude-opus-5"])
     preis = kosten["eingabe"] / 1e6 * ep + kosten["ausgabe"] / 1e6 * ap
