@@ -1,0 +1,384 @@
+{
+  "uic": 8502206,
+  "name": "Baar",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Baar liegt in der gleichnamigen Gemeinde im Kanton Zug, auf 444 Metern über Meer. An einem Werktag steigen hier 10'800 Personen ein und aus, an einem freien Tag 5500. 2022 waren es 8800 pro Werktag.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 10800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 5500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 444,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Wert 2022",
+          "value": 8800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Baar ein und aus?",
+          "options": [
+            "3'900",
+            "10'800",
+            "24'000",
+            "51'000"
+          ],
+          "correct": 1,
+          "explanation": "10'800 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "An freien Tagen nutzen etwa halb so viele Personen den Bahnhof wie an Werktagen.",
+          "correct": true,
+          "explanation": "5500 an freien Tagen gegenüber 10'800 an Werktagen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Erfasst sind 2 Perrons: ein Hausperron von 320 Metern und ein Mittelperron von 318 Metern. Bei 2 von 2 ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 320,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Baar?",
+          "options": [
+            "180 m",
+            "260 m",
+            "320 m",
+            "460 m"
+          ],
+          "correct": 2,
+          "explanation": "320 Meter, der Hausperron an Gleis 1.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 3 Gleisen vor. Die Perronkante an Gleis 1 misst 320 Meter, jene an Gleis 2 nur 214 Meter. Die Sektoren sind unterschiedlich erfasst: an Gleis 1 A bis C, an Gleis 2 B und C, an Gleis 3 A und B.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 3,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Perronkante an Gleis 1",
+          "value": 320,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Erster Sektor an Gleis 2",
+          "value": "B",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[1].sektoren[0]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Mit welchem Buchstaben beginnen die Sektoren an Gleis 2?",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": 1,
+          "explanation": "Mit B. An Gleis 2 sind nur die Sektoren B und C erfasst.",
+          "factRef": "gleise.items[1].sektoren[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "hotspot",
+          "prompt": "An welchem Gleis ist die Perronkante am kürzesten?",
+          "schema": "gleise",
+          "correct": "2",
+          "explanation": "An Gleis 2 mit 214 Metern.",
+          "factRef": "gleise.items[1].nr",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "Die 17 erfassten Perronabschnitte liegen auf 55 Zentimetern, und 3 von 3 Gleisen haben einen solchen Abschnitt. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe.",
+      "facts": [
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 17,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 3,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Visuell-taktile Sicherheitslinie",
+          "value": "Ja",
+          "unit": null,
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Baar liegt die Perronkante an jedem erfassten Gleis auf 55 Zentimetern.",
+          "correct": true,
+          "explanation": "3 von 3 erfassten Gleisen haben einen Abschnitt auf 55 Zentimetern.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Richtung Baar Neufeld verkehren 127'065 Personenzüge pro Jahr, rund 348 pro Tag in beiden Richtungen zusammen. Von Litti her sind es 221 pro Tag. Güterzüge sind selten: einer pro Tag.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag Richtung Baar Neufeld",
+          "value": 348,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag von Litti her",
+          "value": 221,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Baar?",
+          "options": [
+            "92",
+            "221",
+            "348",
+            "710"
+          ],
+          "correct": 2,
+          "explanation": "Rund 348 pro Tag Richtung Baar Neufeld, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 3 Billettautomaten, 6 Billettentwerter und 1 Wartehalle. Unter den Automaten ist einer als Bus-Billettautomat verzeichnet. Baar steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 3,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 6,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Baar sind ___ Billettautomaten erfasst.",
+          "options": [
+            "1",
+            "3",
+            "6",
+            "12"
+          ],
+          "correct": 1,
+          "explanation": "3 Automaten, darunter ein Bus-Billettautomat.",
+          "factRef": "services.billettautomaten_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 320,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 214,
+      "sektoren": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 319,
+      "sektoren": [
+        "A",
+        "B"
+      ]
+    }
+  ]
+}

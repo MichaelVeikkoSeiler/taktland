@@ -1,0 +1,619 @@
+{
+  "uic": 8506000,
+  "name": "Winterthur",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Winterthur liegt im Kanton Zürich, auf 439 Metern über Meer. An einem Werktag steigen hier 116'400 Personen ein und aus, an einem freien Tag 75'800. Als Bahnhofbenutzer sind 119'200 pro Tag erfasst. Züge fahren von SBB und Thurbo.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 116400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 75800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnhofbenutzer pro Tag",
+          "value": 119200,
+          "unit": "Personen",
+          "source": "anzahl-sbb-bahnhofbenutzer",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 439,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Winterthur ein und aus?",
+          "options": [
+            "42'000",
+            "116'400",
+            "260'000",
+            "510'000"
+          ],
+          "correct": 1,
+          "explanation": "116'400 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "options": [
+            "2018",
+            "2022",
+            "2023",
+            "2025"
+          ],
+          "correct": 1,
+          "explanation": "2022, mit 93'700 Personen pro Werktag.",
+          "factRef": "steckbrief.verlauf[1].jahr",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Der Tag am Bahnhof",
+      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 11.3 Prozent des Tagesaufkommens. Über die Woche ist der Donnerstag mit 16.4 Prozent der stärkste Tag, der Sonntag mit 8.6 Prozent der schwächste.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 17,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil der Spitzenstunde",
+          "value": 11.3,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Anteil am Sonntag",
+          "value": 8.6,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag ist in Winterthur der stärkste?",
+          "options": [
+            "Dienstag",
+            "Donnerstag",
+            "Freitag",
+            "Samstag"
+          ],
+          "correct": 1,
+          "explanation": "Der Donnerstag mit 16.4 Prozent.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Welcher Anteil der Wochenbesuche fällt auf den Sonntag?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 8.6,
+          "explanation": "8.6 Prozent, gegenüber 16.4 Prozent am Donnerstag.",
+          "factRef": "tagesrhythmus.wochentage[6].prozent",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 5 Perrons liegen Daten vor. Das längste misst 424 Meter, das kürzeste 176 Meter. Bei 5 von 5 ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 5,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 424,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 176,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 2/3",
+              "value": 424,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 8/9",
+              "value": 340,
+              "factRef": "perrons.items[3].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 176,
+              "factRef": "perrons.items[4].laenge_m"
+            }
+          ],
+          "correct": null,
+          "explanation": "Perron 2/3 ist mit 424 Metern das längste, Perron 1 mit 176 Metern das kürzeste.",
+          "factRef": "perrons.items",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 9 Gleisen vor, den Nummern 1 bis 9. Die Sektoren sind unterschiedlich beschriftet: an den Gleisen 1 und 2 mit F, G, H und J, an den übrigen ab A. Die längste erfasste Perronkante hat Gleis 8 mit 264 Metern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 9,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Erster Sektor an Gleis 1",
+          "value": "F",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren[0]"
+        },
+        {
+          "label": "Letzter Sektor an Gleis 1",
+          "value": "J",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren[3]"
+        },
+        {
+          "label": "Perronkante an Gleis 8",
+          "value": 264,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[7].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Mit welchem Buchstaben beginnen die Sektoren an Gleis 1?",
+          "options": [
+            "A",
+            "C",
+            "F",
+            "H"
+          ],
+          "correct": 2,
+          "explanation": "Mit F. An den Gleisen 1 und 2 sind die Sektoren F, G, H und J erfasst.",
+          "factRef": "gleise.items[0].sektoren[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher ist der letzte erfasste Sektor an Gleis 1?",
+          "options": [
+            "G",
+            "H",
+            "I",
+            "J"
+          ],
+          "correct": 3,
+          "explanation": "J. Ein Sektor I ist an diesem Gleis nicht erfasst.",
+          "factRef": "gleise.items[0].sektoren[3]",
+          "difficulty": 3
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "8",
+          "explanation": "Gleis 8 mit 264 Metern.",
+          "factRef": "gleise.items[7].nr",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "Die 19 erfassten Perronabschnitte liegen auf 55 Zentimetern, und 9 von 9 Gleisen haben einen solchen Abschnitt. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "facts": [
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 19,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 9,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Winterthur liegt die Perronkante an jedem erfassten Gleis auf 55 Zentimetern.",
+          "correct": true,
+          "explanation": "9 von 9 erfassten Gleisen haben einen Abschnitt auf 55 Zentimetern.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Von Winterthur West her verkehren 247'593 Personenzüge pro Jahr, rund 678 pro Tag in beiden Richtungen zusammen. Richtung Schwalmenacker sind es 676 pro Tag, von Lantig her 110. Dazu kommen 51 Güterzüge pro Tag Richtung Schwalmenacker.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Abschnitt Winterthur West",
+          "value": 678,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag von Lantig her",
+          "value": 110,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag Richtung Schwalmenacker",
+          "value": 51,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Winterthur?",
+          "options": [
+            "220",
+            "410",
+            "678",
+            "1'320"
+          ],
+          "correct": 2,
+          "explanation": "Rund 678 pro Tag von Winterthur West her, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen sagen, wie viele Züge in Winterthur halten.",
+          "correct": false,
+          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 9 Billettautomaten, 26 Billettentwerter und 1 Wartehalle. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 9,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 26,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Winterthur sind ___ Billettautomaten erfasst.",
+          "options": [
+            "4",
+            "9",
+            "18",
+            "26"
+          ],
+          "correct": 1,
+          "explanation": "9 Automaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Winterthur steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Ja, der Bahnhof ist als WLAN-Standort erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Winterthur ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-winterthur-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Winterthur gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 9 Gleise (1, 2, 3, 4, 5, 6, 7, 8, 9). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 110,
+      "sektoren": [
+        "F",
+        "G",
+        "H",
+        "J"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 105,
+      "sektoren": [
+        "F",
+        "G",
+        "H",
+        "J"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 38,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 57,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 64,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+      ]
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 59,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 78,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+      ]
+    },
+    {
+      "nr": "8",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 264,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "nr": "9",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 130,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,473 @@
+{
+  "uic": 8501008,
+  "name": "Genève",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Genève liegt im gleichnamigen Kanton, auf 392 Metern über Meer. An einem Werktag steigen hier 92'900 Personen ein und aus, an einem freien Tag 61'400. Als Bahnhofbenutzer sind 173'800 pro Tag erfasst. Die Quelle weist darauf hin, dass Reisende ins und aus dem Ausland nur zum Teil erfasst sind.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 92900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Bahnhofbenutzer pro Tag",
+          "value": 173800,
+          "unit": "Personen",
+          "source": "anzahl-sbb-bahnhofbenutzer",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+        },
+        {
+          "label": "Wert 2018",
+          "value": 70700,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 392,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Genève ein und aus?",
+          "options": [
+            "34'000",
+            "92'900",
+            "210'000",
+            "430'000"
+          ],
+          "correct": 1,
+          "explanation": "92'900 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "2025 wurden mehr Ein- und Aussteigende gezählt als 2018.",
+          "correct": true,
+          "explanation": "92'900 gegenüber 70'700 im Jahr 2018.",
+          "factRef": "steckbrief.verlauf[0].dwv",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden erfasst den Verkehr ins Ausland vollständig.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt, dass Einsteigende Richtung Ausland und Aussteigende aus dem Ausland nur zum Teil erfasst sind.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "Es sind mehr Bahnhofbenutzer erfasst als Ein- und Aussteigende.",
+          "correct": true,
+          "explanation": "173'800 Bahnhofbenutzer gegenüber 92'900 Ein- und Aussteigenden. Die beiden Zahlen kommen aus zwei verschiedenen Erhebungen.",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Der Tag am Bahnhof",
+      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 9.6 Prozent des Tagesaufkommens. Über die Woche ist der Freitag mit 15.7 Prozent der stärkste Tag, der Sonntag mit 12.1 Prozent der schwächste.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 17,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil der Spitzenstunde",
+          "value": 9.6,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Stärkster Wochentag",
+          "value": "Freitag",
+          "unit": null,
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Welcher Anteil des Tagesaufkommens fällt auf die stärkste Stunde?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 9.6,
+          "explanation": "9.6 Prozent, in der Stunde ab 17 Uhr.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag ist in Genève der stärkste?",
+          "options": [
+            "Montag",
+            "Mittwoch",
+            "Freitag",
+            "Sonntag"
+          ],
+          "correct": 2,
+          "explanation": "Der Freitag mit 15.7 Prozent, der Sonntag mit 12.1 Prozent der schwächste.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 4 Perrons liegen Daten vor. Das längste misst 549 Meter, das kürzeste 422 Meter. Bei 4 von 4 ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 4,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 549,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 422,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Genève?",
+          "options": [
+            "318 m",
+            "422 m",
+            "549 m",
+            "690 m"
+          ],
+          "correct": 2,
+          "explanation": "549 Meter, das Perron an Gleis 1.",
+          "factRef": "perrons.laengste_m",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Jedes erfasste Perron in Genève ist ohne Gleisquerung erreichbar.",
+          "correct": true,
+          "explanation": "Bei 4 von 4 erfassten Perrons ist der Zugang niveaufrei.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 11 Gleisen vor. Neben den Nummern 1 bis 8 und 10 sind zwei Einträge als 5 quai 4/5 und 5 quai 5/6 bezeichnet. Die längste Perronkante hat Gleis 4 mit 415 Metern. An den Gleisen 4 und 6 reichen die Sektoren bis H.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 11,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 4",
+          "value": 415,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[3].perronkante_m"
+        },
+        {
+          "label": "Letzter Sektor an Gleis 4",
+          "value": "H",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[3].sektoren[7]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 4?",
+          "options": [
+            "D",
+            "F",
+            "H",
+            "K"
+          ],
+          "correct": 2,
+          "explanation": "Von A bis H.",
+          "factRef": "gleise.items[3].sektoren[7]",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Genève liegen Daten zu ___ Gleisen vor.",
+          "options": [
+            "7",
+            "9",
+            "11",
+            "16"
+          ],
+          "correct": 2,
+          "explanation": "11 Gleise, darunter zwei mit den Bezeichnungen 5 quai 4/5 und 5 quai 5/6.",
+          "factRef": "gleise.anzahl_mit_daten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "43 Perronabschnitte sind erfasst: 24 auf 55 Zentimetern, 16 auf 35 und 3 auf 20. Von 11 erfassten Gleisen haben 7 einen Abschnitt auf 55 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "facts": [
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 43,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 7,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Abschnitte mit 55 cm",
+          "value": 24,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der 11 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
+          "options": [
+            "4",
+            "7",
+            "9",
+            "11"
+          ],
+          "correct": 1,
+          "explanation": "7 von 11 Gleisen. An den übrigen liegt die Kante tiefer oder es fehlt die Angabe.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Von St-Jean her verkehren 208'660 Personenzüge pro Jahr, rund 572 pro Tag in beiden Richtungen zusammen. Von Genève Voie-Creuse her sind es 411 pro Tag.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Abschnitt St-Jean",
+          "value": 572,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag, Abschnitt Voie-Creuse",
+          "value": 411,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Genève?",
+          "options": [
+            "180",
+            "411",
+            "572",
+            "1'100"
+          ],
+          "correct": 2,
+          "explanation": "Rund 572 pro Tag von St-Jean her, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen sagen, wie viele Züge in Genève halten.",
+          "correct": false,
+          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 21 Billettautomaten, 26 Billettentwerter und 1 Wartehalle. Genève steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 21,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 26,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Genève steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist dort nicht aufgeführt. Die Liste umfasst nur einen kleinen Teil der Bahnhöfe.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Genève erfasst?",
+          "options": [
+            "9",
+            "14",
+            "21",
+            "35"
+          ],
+          "correct": 2,
+          "explanation": "21 Automaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Genève ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-geneve-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Genève gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 11 Gleise (1, 2, 3, 4, 5, 6, 7, 8, 10, 5 quai 4/5, 5 quai 5/6). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 8, 5 quai 4/5, 5 quai 5/6 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

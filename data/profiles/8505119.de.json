@@ -1,0 +1,387 @@
+{
+  "uic": 8505119,
+  "name": "Göschenen",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Göschenen liegt in der gleichnamigen Gemeinde im Kanton Uri, auf 1106 Metern über Meer. An freien Tagen steigen hier mehr Personen ein und aus als an Werktagen, nämlich 3600 gegenüber 2400. Erfasst sind drei Bahnunternehmen: MGB, SBB und SOB.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 2400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 3600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 1106,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "MGB, SBB, SOB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Göschenen steigen an freien Tagen mehr Personen ein und aus als an Werktagen.",
+          "correct": true,
+          "explanation": "3600 an freien Tagen gegenüber 2400 an Werktagen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 3
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Göschenen?",
+          "min": 400,
+          "max": 1600,
+          "step": 25,
+          "unit": "m",
+          "correct": 1106,
+          "explanation": "1106 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Göschenen ein und aus?",
+          "options": [
+            "820",
+            "2'400",
+            "6'100",
+            "14'000"
+          ],
+          "correct": 1,
+          "explanation": "2400 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 3 Gleisen vor. Die Perronkanten an den Gleisen 2 und 3 messen 401 und 400 Meter, jene an Gleis 1 nur 41 Meter. An Gleis 1 reichen die Sektoren von A bis D, an den Gleisen 2 und 3 sind A, B und D erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 3,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Perronkante an Gleis 2",
+          "value": 401,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        },
+        {
+          "label": "Perronkante an Gleis 1",
+          "value": 41,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "An welchem Gleis ist die Perronkante am kürzesten?",
+          "schema": "gleise",
+          "correct": "1",
+          "explanation": "An Gleis 1 mit 41 Metern, gegenüber rund 400 Metern an den Gleisen 2 und 3.",
+          "factRef": "gleise.items[0].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Länge der Perronkante, die längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 2",
+              "value": 401,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 400,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 41,
+              "factRef": "gleise.items[0].perronkante_m"
+            }
+          ],
+          "correct": null,
+          "explanation": "Gleis 2 mit 401 Metern, Gleis 3 mit 400 Metern, Gleis 1 mit 41 Metern.",
+          "factRef": "gleise.items",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "In Göschenen sind vier verschiedene Perronhöhen erfasst: 20, 25, 35 und 55 Zentimeter. Von 19 Abschnitten liegen 9 auf 25 Zentimetern und nur 2 auf 55. Von 3 Gleisen hat eines einen Abschnitt auf 55 Zentimetern. Bei 2 von 2 Perrons ist der Zugang niveaufrei.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe; ein Hilfstritt gleicht den Unterschied aus. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "facts": [
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 1,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 19,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Tiefste erfasste Perronhöhe",
+          "value": 20,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der 3 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "correct": 1,
+          "explanation": "Ein Gleis. An den übrigen liegt die Kante tiefer.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe kommt bei den erfassten Abschnitten am häufigsten vor?",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": 1,
+          "explanation": "25 Zentimeter, bei 9 der 19 erfassten Abschnitte.",
+          "factRef": "gleise.perronhoehen_cm[1]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf der Strecke",
+      "body": "Von Eggwald her verkehren 13'147 Personenzüge pro Jahr, rund 36 pro Tag in beiden Richtungen zusammen. Richtung Gotthard Nord sind es 12'993 im Jahr. Dazu kommen 8 Güterzüge pro Tag Richtung Gotthard Nord.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Abschnitt Eggwald",
+          "value": 36,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag Richtung Gotthard Nord",
+          "value": 8,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt von Eggwald her?",
+          "options": [
+            "12",
+            "36",
+            "95",
+            "210"
+          ],
+          "correct": 1,
+          "explanation": "Rund 36 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 3 Billettentwerter und 1 Wartehalle. Ein Billettautomat ist nicht erfasst, und Göschenen steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettentwerter",
+          "value": 3,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Billettautomaten",
+          "value": 0,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Göschenen ist ein Billettautomat erfasst.",
+          "correct": false,
+          "explanation": "Es ist keiner erfasst. Das schliesst nicht aus, dass vor Ort einer steht.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Billettautomaten",
+      "grund": "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, dass vor Ort einer steht.",
+      "quelle": "billetautomat"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        20,
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 41,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        25
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 401,
+      "sektoren": [
+        "A",
+        "B",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        25
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 400,
+      "sektoren": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  ]
+}

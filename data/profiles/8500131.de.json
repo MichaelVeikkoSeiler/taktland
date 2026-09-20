@@ -1,0 +1,231 @@
+{
+  "uic": 8500131,
+  "name": "Bure-Casernes",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "haltestelle-wartehallen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Bure-Casernes liegt in der Gemeinde Bure im Kanton Jura, auf 532 Metern über Meer. Die Quelle vermerkt seit 2022 unverändert 49 Ein- und Aussteigende pro Tag und erklärt dazu: weniger als 50. Zu diesem Bahnhof liegen ausserdem kaum Daten vor.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 49,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 532,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Bure",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
+        },
+        {
+          "label": "Erfasst seit",
+          "value": 2022,
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Die Zahl 49 bedeutet, dass genau 49 Personen pro Tag ein- und aussteigen.",
+          "correct": false,
+          "explanation": "Die Quelle schreibt dazu: weniger als 50 Ein- und Aussteigende. Die 49 steht stellvertretend für Werte unterhalb dieser Schwelle.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Bure-Casernes?",
+          "min": 300,
+          "max": 900,
+          "step": 25,
+          "unit": "m",
+          "correct": 532,
+          "explanation": "532 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Ab welchem Jahr liegen für Bure-Casernes Frequenzdaten vor?",
+          "options": [
+            "2018",
+            "2020",
+            "2022",
+            "2024"
+          ],
+          "correct": 2,
+          "explanation": "Ab 2022. Für die Jahre davor ist der Bahnhof in dieser Quelle nicht aufgeführt.",
+          "factRef": "steckbrief.verlauf[0].jahr",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linie",
+      "body": "Bure-Casernes liegt an der Linie 241 von Courtemaîche her. Diese Linie endet hier.",
+      "facts": [
+        {
+          "label": "Linie",
+          "value": 241,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        },
+        {
+          "label": "Linien am Bahnhof",
+          "value": 1,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "Bure-Casernes liegt an der Linie ___.",
+          "options": [
+            "225",
+            "241",
+            "450",
+            "600"
+          ],
+          "correct": 1,
+          "explanation": "Linie 241, in der Quelle als Courtemaiche - Bure-Casernes geführt.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind weder Billettautomat noch Billettentwerter noch Wartehalle. Bure-Casernes steht auch nicht in der Liste der WLAN-Standorte. Das heisst nicht, dass es vor Ort nichts davon gibt, sondern nur, dass nichts erfasst ist.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 0,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 0,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Dass kein Billettautomat erfasst ist, beweist, dass vor Ort keiner steht.",
+          "correct": false,
+          "explanation": "Die Daten sagen nur, was erfasst ist. Was nicht erfasst ist, kann trotzdem vorhanden sein.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Wartehallen sind in Bure-Casernes erfasst?",
+          "options": [
+            "0",
+            "1",
+            "2"
+          ],
+          "correct": 0,
+          "explanation": "Keine. Zu diesem Bahnhof liegen insgesamt nur wenige Angaben vor.",
+          "factRef": "services.wartehallen_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Billettautomaten",
+      "grund": "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, dass vor Ort einer steht.",
+      "quelle": "billetautomat"
+    },
+    {
+      "thema": "Hindernisfreiheit",
+      "grund": "Zur Hindernisfreiheit liegen für diesen Bahnhof keine Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «49: weniger als 50 Ein- und Aussteigende.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

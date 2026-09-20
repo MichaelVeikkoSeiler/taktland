@@ -1,0 +1,371 @@
+{
+  "uic": 8508213,
+  "name": "Entlebuch",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Entlebuch liegt in der gleichnamigen Gemeinde im Kanton Luzern, auf 684 Metern über Meer. An einem Werktag steigen hier 950 Personen ein und aus, an einem freien Tag 690. Die Züge fahren von der BLS.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 950,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 690,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 684,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Entlebuch ein und aus?",
+          "options": [
+            "380",
+            "950",
+            "2'100",
+            "4'600"
+          ],
+          "correct": 1,
+          "explanation": "950 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Entlebuch?",
+          "min": 300,
+          "max": 1200,
+          "step": 25,
+          "unit": "m",
+          "correct": 684,
+          "explanation": "684 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Erfasst sind 2 Perrons mit ungewöhnlichen Bauarten: eine Hilfskante von 200 Metern und ein Zwischenperron von 160 Metern. Für keines der beiden ist ein niveaufreier Zugang vermerkt.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Bauart des längeren Perrons",
+          "value": "Hilfskante",
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.items[0].typ"
+        },
+        {
+          "label": "Bauart des kürzeren Perrons",
+          "value": "Zwischenperron",
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.items[1].typ"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Bauart hat das längere der beiden erfassten Perrons?",
+          "options": [
+            "Hausperron",
+            "Hilfskante",
+            "Mittelperron",
+            "Zwischenperron"
+          ],
+          "correct": 1,
+          "explanation": "Eine Hilfskante von 200 Metern Länge.",
+          "factRef": "perrons.items[0].typ",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Offene Daten liegen zu den Gleisen 2 und 3 vor. Die Perronkante an Gleis 2 misst 160 Meter, jene an Gleis 3 nur 89 Meter. Sektortafeln sind keine erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 2,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Perronkante an Gleis 2",
+          "value": 160,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perronkante an Gleis 3",
+          "value": 89,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "An welchem Gleis ist die Perronkante kürzer?",
+          "schema": "gleise",
+          "correct": "3",
+          "explanation": "An Gleis 3 mit 89 Metern, gegenüber 160 Metern an Gleis 2.",
+          "factRef": "gleise.items[1].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu den Gleisen in Entlebuch sind Sektortafeln erfasst.",
+          "correct": false,
+          "explanation": "Sektortafeln sind für diesen Bahnhof keine erfasst.",
+          "factRef": "gleise.items[0].sektoren",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "Die Perronkanten liegen auf 20 und 35 Zentimetern. Die Referenzhöhe für den stufenfreien Einstieg wird an keinem der 2 erfassten Gleise erreicht. Von 14 erfassten Abschnitten braucht einer einen Hilfstritt. Für keines der 2 Perrons ist ein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe; ein Hilfstritt gleicht den Unterschied aus. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "facts": [
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 0,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Abschnitte mit Hilfstritt",
+          "value": 1,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 0,
+          "unit": null,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 14,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Entlebuch erreicht mindestens ein Gleis die Referenzhöhe für den stufenfreien Einstieg.",
+          "correct": false,
+          "explanation": "Erfasst sind 20 und 35 Zentimeter. Die Referenzhöhe wird an keinem Gleis erreicht.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Wer in Entlebuch zum Perron will, muss mit einer Gleisquerung rechnen.",
+          "correct": true,
+          "explanation": "Für keines der 2 erfassten Perrons ist ein niveaufreier Zugang vermerkt.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf der Strecke",
+      "body": "Richtung Doppleschwand-Romoos verkehren 28'040 Personenzüge pro Jahr, rund 77 pro Tag in beiden Richtungen zusammen. Von Hasle LU her sind es 27'986 im Jahr. Güterzüge sind selten: 135 pro Jahr.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag Richtung Doppleschwand-Romoos",
+          "value": 77,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Jahr",
+          "value": 135,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt Richtung Doppleschwand-Romoos?",
+          "options": [
+            "24",
+            "77",
+            "180",
+            "420"
+          ],
+          "correct": 1,
+          "explanation": "Rund 77 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 1 Billettautomat der BLS und 1 Wartehalle. Billettentwerter sind keine erfasst, und Entlebuch steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 1,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 1,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Entlebuch ist ein Billettautomat erfasst.",
+          "correct": true,
+          "explanation": "Ein Automat, in der Quelle der BLS zugeordnet.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 2, 3 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 2 erfassten Perrons sind 0 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        20
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Zwischenperron",
+      "perronkante_m": 160,
+      "sektoren": []
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        20,
+        35
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Hilfskante",
+      "perronkante_m": 89,
+      "sektoren": []
+    }
+  ]
+}
