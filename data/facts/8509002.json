@@ -258,6 +258,44 @@
     "wartehallen_erfasst": 2,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/69612ce6f7c6cf91ef237bac158f708a"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 10,
+    "infopunkte": 6,
+    "schliessfaecher": 12,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 2,
+      "belagsarten": [
+        "Bituminöses Mischgut"
+      ],
+      "items": [
+        {
+          "nr": "2/3",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 3523
+            }
+          ],
+          "flaeche_m2": 3523
+        },
+        {
+          "nr": "4",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1655
+            }
+          ],
+          "flaeche_m2": 1655
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-landquart-a4.pdf",
@@ -306,6 +344,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

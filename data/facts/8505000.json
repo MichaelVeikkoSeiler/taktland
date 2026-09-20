@@ -777,6 +777,233 @@
     "wartehallen_erfasst": 5,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9a6d27dbee7f8bd399ab1b4d85f9db77"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 60,
+    "infopunkte": 41,
+    "schliessfaecher": 288,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 15,
+      "belagsarten": [
+        "Beton-Belag",
+        "Bituminöses Mischgut",
+        "Gussasphalt"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 214
+            }
+          ],
+          "flaeche_m2": 214
+        },
+        {
+          "nr": "10/11",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 2803
+            }
+          ],
+          "flaeche_m2": 2803
+        },
+        {
+          "nr": "11",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 163
+            },
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 112
+            },
+            {
+              "belag": "Beton-Belag",
+              "flaeche_m2": 69
+            }
+          ],
+          "flaeche_m2": 344
+        },
+        {
+          "nr": "12/13",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 1903
+            }
+          ],
+          "flaeche_m2": 1903
+        },
+        {
+          "nr": "13",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Beton-Belag",
+              "flaeche_m2": 57
+            }
+          ],
+          "flaeche_m2": 57
+        },
+        {
+          "nr": "14/15",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 1828
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 449
+            }
+          ],
+          "flaeche_m2": 2277
+        },
+        {
+          "nr": "16",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 776
+            }
+          ],
+          "flaeche_m2": 776
+        },
+        {
+          "nr": "2/3",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 3660
+            }
+          ],
+          "flaeche_m2": 3660
+        },
+        {
+          "nr": "3",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 152
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 119
+            }
+          ],
+          "flaeche_m2": 271
+        },
+        {
+          "nr": "4/5",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 2793
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 243
+            }
+          ],
+          "flaeche_m2": 3036
+        },
+        {
+          "nr": "5",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 152
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 118
+            }
+          ],
+          "flaeche_m2": 270
+        },
+        {
+          "nr": "6/7",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 2954
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 634
+            }
+          ],
+          "flaeche_m2": 3588
+        },
+        {
+          "nr": "7",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 118
+            },
+            {
+              "belag": "Beton-Belag",
+              "flaeche_m2": 78
+            },
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 72
+            }
+          ],
+          "flaeche_m2": 268
+        },
+        {
+          "nr": "8/9",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 3130
+            }
+          ],
+          "flaeche_m2": 3130
+        },
+        {
+          "nr": "9",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 118
+            },
+            {
+              "belag": "Beton-Belag",
+              "flaeche_m2": 77
+            },
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 73
+            }
+          ],
+          "flaeche_m2": 268
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-luzern-a4.pdf",
@@ -811,6 +1038,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

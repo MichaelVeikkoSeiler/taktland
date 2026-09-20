@@ -558,6 +558,109 @@
       ]
     },
     {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Olten 38 Sitzbänke, 54 Infopunkte sowie 72 Schliessfächer erfasst. Zu 6 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 38,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 54,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 72,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 6,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "27",
+            "32",
+            "38",
+            "46"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 38 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "30",
+            "46",
+            "54",
+            "65"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 54 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 14,
+          "max": 130,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 72,
+          "explanation": "Erfasst sind 72 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 4/7",
+              "value": 5268,
+              "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
+            },
+            {
+              "label": "Perron 10/11",
+              "value": 3021,
+              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+            },
+            {
+              "label": "Perron 8/9",
+              "value": 2777,
+              "factRef": "ausstattung.perronbelag.items[5].flaeche_m2"
+            },
+            {
+              "label": "Perron 2/3",
+              "value": 2342,
+              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 4/7 hat mit 5'268 Quadratmetern die grösste erfasste Fläche, Perron 2/3 mit 2'342 die kleinste der gezeigten.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
       "body": "Für Olten ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",

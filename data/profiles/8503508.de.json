@@ -410,6 +410,104 @@
           "difficulty": 1
         }
       ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Dietikon 13 Sitzbänke, 8 Infopunkte sowie 20 Schliessfächer erfasst. Zu 3 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 13,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 8,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 20,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 3,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "7",
+            "9",
+            "11",
+            "13"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 13 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "7",
+            "8",
+            "11",
+            "14"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 8 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 4,
+          "max": 36,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 20,
+          "explanation": "Erfasst sind 20 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 3/4",
+              "value": 2659,
+              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+            },
+            {
+              "label": "Perron 5/6",
+              "value": 2391,
+              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
+            },
+            {
+              "label": "Perron 1",
+              "value": 1244,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 3/4 hat mit 2'659 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 1'244 die kleinste der gezeigten.",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [

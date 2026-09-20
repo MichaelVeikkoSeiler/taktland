@@ -183,7 +183,10 @@ function Schieberegler({ frage, gezeigt, abschliessen }: {
 }) {
   const min = frage.min ?? 0
   const max = frage.max ?? 100
-  const [wert, setWert] = useState(Math.round((min + max) / 2))
+  // Nicht in der Mitte starten: Wer die Spanne um die Antwort herum legt - und
+  // das tut man beim Schreiben ganz natuerlich -, verraet sie damit. Bei 86 von
+  // 133 Schiebereglern stand der Startwert auf der richtigen Antwort.
+  const [wert, setWert] = useState(min)
 
   function pruefen() {
     const ziel = Number(frage.correct)

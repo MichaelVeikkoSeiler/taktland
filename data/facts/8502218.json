@@ -227,6 +227,49 @@
     "wartehallen_erfasst": 3,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/fbc182cbc5a9df0ed2b20f0db8ac2cc8"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 2,
+    "infopunkte": 3,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 2,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Stahl",
+        "Verbundstein-Pflästerung"
+      ],
+      "items": [
+        {
+          "nr": "2",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 550
+            }
+          ],
+          "flaeche_m2": 550
+        },
+        {
+          "nr": "3",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Stahl",
+              "flaeche_m2": 401
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 113
+            }
+          ],
+          "flaeche_m2": 514
+        }
+      ]
+    }
+  },
   "bahnhofplan": null,
   "luecken": [
     {
@@ -283,6 +326,7 @@
     "hindernisfreiheit",
     "zuege",
     "linien",
-    "services"
+    "services",
+    "ausstattung"
   ]
 }

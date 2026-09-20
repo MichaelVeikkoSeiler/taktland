@@ -337,11 +337,11 @@
           "prompt": "Wie viele Perronsegmente sind in Arth-Goldau aus der BehiG-Erhebung erfasst?",
           "options": [
             "12",
-            "15",
             "21",
-            "25"
+            "25",
+            "29"
           ],
-          "correct": 2,
+          "correct": 1,
           "explanation": "Erfasst sind 21 Perronsegmente.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
@@ -366,10 +366,10 @@
           "options": [
             "10",
             "13",
-            "15",
-            "18"
+            "18",
+            "22"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "18 der 21 erfassten Segmente weisen eine Perronhöhe von 55 cm auf.",
           "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
           "difficulty": 2
@@ -565,7 +565,7 @@
           "options": [
             "8",
             "10",
-            "11"
+            "14"
           ],
           "correct": 0,
           "explanation": "Erfasst sind 8 Billettentwerter.",
@@ -586,6 +586,125 @@
           "factRef": "services.wartehallen_erfasst",
           "difficulty": 1,
           "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Arth-Goldau 11 Sitzbänke, 2 Infopunkte sowie 15 Schliessfächer erfasst. Zu 4 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 11,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 2,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 15,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 4,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "9",
+            "11",
+            "13",
+            "19"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 11 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 3,
+          "max": 27,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 15,
+          "explanation": "Erfasst sind 15 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 4",
+              "value": 2709,
+              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+            },
+            {
+              "label": "Perron 6/8",
+              "value": 2670,
+              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
+            },
+            {
+              "label": "Perron 2/3",
+              "value": 2059,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+            },
+            {
+              "label": "Perron 5",
+              "value": 1841,
+              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 4 hat mit 2'709 Quadratmetern die grösste erfasste Fläche, Perron 5 mit 1'841 die kleinste der gezeigten.",
+          "difficulty": 2
         }
       ]
     },

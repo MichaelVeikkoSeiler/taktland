@@ -302,14 +302,10 @@
           "difficulty": 1
         },
         {
-          "type": "slider",
-          "prompt": "Bei wie vielen Perronsegmenten in Landquart ist ein Hilfstritt erfasst?",
-          "min": 0,
-          "max": 6,
-          "step": 1,
-          "unit": "Segmente",
-          "correct": 0,
-          "explanation": "Bei 0 der 6 erfassten Segmente ist ein Hilfstritt verzeichnet.",
+          "type": "true_false",
+          "prompt": "Bei keinem der 6 erfassten Perronsegmente in Landquart ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 6 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -355,8 +351,8 @@
           "prompt": "Wie viele Güterzüge verkehren pro Tag rund auf dem Abschnitt Rossriet (Spw) - Landquart, beide Richtungen zusammen?",
           "options": [
             "8",
-            "10",
             "13",
+            "16",
             "19"
           ],
           "correct": 3,
@@ -485,6 +481,94 @@
           "factRef": "services.wartehallen_erfasst",
           "difficulty": 1,
           "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Landquart 10 Sitzbänke, 6 Infopunkte sowie 12 Schliessfächer erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 10,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 6,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 12,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "7",
+            "8",
+            "10",
+            "14"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 10 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 6 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 2,
+          "max": 22,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 12,
+          "explanation": "Erfasst sind 12 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
         }
       ]
     }

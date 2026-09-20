@@ -543,6 +543,65 @@
     "wartehallen_erfasst": 2,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/6e7b7fe3ffd59595952c442a76d89cec"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 36,
+    "infopunkte": 15,
+    "schliessfaecher": 129,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 3,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Holz",
+        "Naturstein-Pflästerung"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1702
+            },
+            {
+              "belag": "Holz",
+              "flaeche_m2": 294
+            },
+            {
+              "belag": "Naturstein-Pflästerung",
+              "flaeche_m2": 209
+            }
+          ],
+          "flaeche_m2": 2205
+        },
+        {
+          "nr": "2/3",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 3551
+            }
+          ],
+          "flaeche_m2": 3551
+        },
+        {
+          "nr": "4",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1216
+            }
+          ],
+          "flaeche_m2": 1216
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-lugano-a4.pdf",
@@ -582,6 +641,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

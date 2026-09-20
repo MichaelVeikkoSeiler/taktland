@@ -219,6 +219,41 @@
     "wartehallen_erfasst": 2,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/9e8e2b906649e0ecdec1d9942b6e2b3b"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 4,
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 2,
+      "belagsarten": [
+        "Bituminöses Mischgut"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 915
+            }
+          ],
+          "flaeche_m2": 915
+        },
+        {
+          "nr": "2",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 976
+            }
+          ],
+          "flaeche_m2": 976
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rorschach-a4.pdf",
@@ -267,6 +302,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

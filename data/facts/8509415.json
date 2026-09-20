@@ -84,6 +84,29 @@
     "billettentwerter_erfasst": 1,
     "wartehallen_erfasst": 1
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 1,
+      "belagsarten": [
+        "Bituminöses Mischgut"
+      ],
+      "items": [
+        {
+          "nr": "1/2",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 941
+            }
+          ],
+          "flaeche_m2": 941
+        }
+      ]
+    }
+  },
   "bahnhofplan": null,
   "luecken": [
     {
@@ -128,6 +151,7 @@
     "perrons",
     "hindernisfreiheit",
     "linien",
-    "services"
+    "services",
+    "ausstattung"
   ]
 }

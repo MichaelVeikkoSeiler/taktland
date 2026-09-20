@@ -256,6 +256,58 @@
     "wartehallen_erfasst": 0,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/f0374dc910a167e9d2124f1ccbe5b23e"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "infopunkte": 1,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 3,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Stahl"
+      ],
+      "items": [
+        {
+          "nr": "2",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 764
+            },
+            {
+              "belag": "Stahl",
+              "flaeche_m2": 73
+            }
+          ],
+          "flaeche_m2": 837
+        },
+        {
+          "nr": "3",
+          "typ": "Hilfskante",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 240
+            }
+          ],
+          "flaeche_m2": 240
+        },
+        {
+          "nr": "4",
+          "typ": "Hilfskante",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 245
+            }
+          ],
+          "flaeche_m2": 245
+        }
+      ]
+    }
+  },
   "bahnhofplan": null,
   "luecken": [
     {
@@ -322,6 +374,7 @@
     "hindernisfreiheit",
     "zuege",
     "linien",
-    "services"
+    "services",
+    "ausstattung"
   ]
 }

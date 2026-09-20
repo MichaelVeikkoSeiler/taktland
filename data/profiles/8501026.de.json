@@ -464,6 +464,107 @@
       ]
     },
     {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Genève-Aéroport 27 Sitzbänke sowie 6 Infopunkte erfasst. Zu 6 Perrons liegt der Belag vor, erfasst ist überall: Beton-Belag. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 27,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 6,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 6,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "27",
+            "32",
+            "38",
+            "46"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 27 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "6"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 6 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 0,
+          "explanation": "Für alle Perrons mit Daten ist Beton-Belag erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 1/2",
+              "value": 5104,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+            },
+            {
+              "label": "Perron 3/4",
+              "value": 3664,
+              "factRef": "ausstattung.perronbelag.items[5].flaeche_m2"
+            },
+            {
+              "label": "Perron 14",
+              "value": 1467,
+              "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
+            },
+            {
+              "label": "Perron 12",
+              "value": 856,
+              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 1/2 hat mit 5'104 Quadratmetern die grösste erfasste Fläche, Perron 12 mit 856 die kleinste der gezeigten.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
       "body": "Für Genève-Aéroport liegen Bahnhofplan-Daten vor. Eigentümerin der Anlage ist gemäss diesen Daten die SBB.",

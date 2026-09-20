@@ -361,6 +361,66 @@
     "wartehallen_erfasst": 2,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/e233d877347efee893f32126ec0208c0"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 15,
+    "infopunkte": 54,
+    "schliessfaecher": 87,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 4,
+      "belagsarten": [
+        "Bituminöses Mischgut"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1632
+            }
+          ],
+          "flaeche_m2": 1632
+        },
+        {
+          "nr": "2/3",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1979
+            }
+          ],
+          "flaeche_m2": 1979
+        },
+        {
+          "nr": "4/5",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1767
+            }
+          ],
+          "flaeche_m2": 1767
+        },
+        {
+          "nr": "6",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 590
+            }
+          ],
+          "flaeche_m2": 590
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-schaffhausen-a4.pdf",
@@ -409,6 +469,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

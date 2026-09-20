@@ -517,6 +517,78 @@
     "wartehallen_erfasst": 3,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/1ac730a7568f8f580b953e626d4303c9"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 46,
+    "infopunkte": 15,
+    "schliessfaecher": 184,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 5,
+      "belagsarten": [
+        "Beton-Belag",
+        "Bituminöses Mischgut"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 3265
+            }
+          ],
+          "flaeche_m2": 3265
+        },
+        {
+          "nr": "2/3",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2759
+            }
+          ],
+          "flaeche_m2": 2759
+        },
+        {
+          "nr": "4/5",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1618
+            }
+          ],
+          "flaeche_m2": 1618
+        },
+        {
+          "nr": "50",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Beton-Belag",
+              "flaeche_m2": 272
+            }
+          ],
+          "flaeche_m2": 272
+        },
+        {
+          "nr": "6/7",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1355
+            }
+          ],
+          "flaeche_m2": 1355
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-st-gallen-a4.pdf",
@@ -566,6 +638,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

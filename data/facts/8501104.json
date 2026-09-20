@@ -278,6 +278,81 @@
     "wartehallen_erfasst": 3,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/3b461fb70a74a220d1340c999fb8002d"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 4,
+    "infopunkte": 2,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 5,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Kiessandbelag"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1156
+            }
+          ],
+          "flaeche_m2": 1156
+        },
+        {
+          "nr": "11",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 422
+            },
+            {
+              "belag": "Kiessandbelag",
+              "flaeche_m2": 29
+            }
+          ],
+          "flaeche_m2": 451
+        },
+        {
+          "nr": "12",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 462
+            }
+          ],
+          "flaeche_m2": 462
+        },
+        {
+          "nr": "13",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 349
+            }
+          ],
+          "flaeche_m2": 349
+        },
+        {
+          "nr": "2",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1260
+            }
+          ],
+          "flaeche_m2": 1260
+        }
+      ]
+    }
+  },
   "bahnhofplan": null,
   "luecken": [
     {
@@ -324,6 +399,7 @@
     "hindernisfreiheit",
     "zuege",
     "linien",
-    "services"
+    "services",
+    "ausstattung"
   ]
 }

@@ -123,7 +123,7 @@ Jede Aussage dazu muss den Abschnitt nennen. «Züge, die hier halten» ist imme
 
 Erlaubt sind nur Kapitel, die in `verfuegbare_kapitel` der Faktendatei stehen:
 `steckbrief`, `stammdaten`, `tagesrhythmus`, `perrons`, `gleise`, `hindernisfreiheit`,
-`zuege`, `linien`, `services`, `bahnhofplan`.
+`zuege`, `linien`, `services`, `ausstattung`, `bahnhofplan`.
 
 ### Umfang nach Stufe
 
@@ -167,6 +167,13 @@ muss dem Wert unter `factRef` entsprechen.
 
 `min`, `max`, `step`, `unit`, `correct` als Zahl. Gilt als richtig, wenn die Eingabe
 höchstens eine Schrittweite oder 5 Prozent der Spanne daneben liegt.
+
+**Die Antwort darf nicht am Rand der Spanne liegen.** Der Regler startet unten,
+eine Spanne von 0 bis 5 mit der Antwort 5 wäre also nur ein Zug nach rechts.
+Ebenso wenig taugt eine Spanne, die mittig um die Antwort liegt - dann stünde
+der Regler beim Öffnen schon fast richtig. Lege die Spanne unsymmetrisch an.
+
+Für «wie viele von N», wo die Antwort 0 oder N ist, nimm einen anderen Fragetyp.
 
 ### cloze (Lückentext)
 
@@ -245,6 +252,25 @@ Weitere Felder, die oft missverstanden werden:
 - `segmente` sind Perronabschnitte aus der BehiG-Erhebung, keine Gleise.
 - `bahnhofbenutzer` zählt auch Personen ohne Zugfahrt und stammt aus einer
   anderen Erhebung als `dwv`. Die beiden Zahlen sind nicht vergleichbar.
+- `km_am_bahnhof` ist die Kilometrierung des Bahnhofs auf der Linie, also sein
+  Standort. Es ist **nicht** die Länge der Linie. Beweis: Auf der Linie 100
+  steht Lausanne bei 0.0 km und Brig bei 145.5 km.
+
+### Das Kapitel `ausstattung`
+
+Zwei Quellen: Mobiliar am Bahnhof und Perronbelag.
+
+- `sitzbaenke`, `infopunkte`, `schliessfaecher` sind **erfasste Stückzahlen**.
+  Sie stehen nur da, wo etwas erhoben wurde. Fehlt ein Feld, heisst das nicht
+  null, sondern: dazu liegt nichts vor. Schreibe darum «erfasst», nie
+  «vorhanden».
+- Was die Quelle unter einem **Infopunkt** versteht, sagt sie nicht. Deute es
+  nicht als Schalter, Kundendienst oder Anlaufstelle. Nenne nur die Zahl.
+- `perronbelag.items` nennt je Perron den Belag und die erfasste Fläche. Ein
+  Perron kann mehrere Beläge tragen, dann stehen mehrere Einträge da.
+- Die Quelle führt **keine** Lifte, Toiletten, Defibrillatoren, Sammelplätze
+  oder Läden, die bei den meisten Bahnhöfen brauchbar wären. Erfinde sie nicht
+  und schreibe auch nicht, es gebe sie nicht.
 
 **Feldnamen gehören nicht in den Text.** «Der dwv-Wert beträgt 51'800» ist
 Datenbanksprache. Richtig: «An einem Werktag steigen hier 51'800 Personen ein

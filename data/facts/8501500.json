@@ -322,6 +322,78 @@
     "wartehallen_erfasst": 2,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/08388e3bf30a3001cbbaed5582bdfa0a"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 11,
+    "infopunkte": 7,
+    "schliessfaecher": 169,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 5,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Naturstein-Pflästerung"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2114
+            }
+          ],
+          "flaeche_m2": 2114
+        },
+        {
+          "nr": "2/3",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2744
+            }
+          ],
+          "flaeche_m2": 2744
+        },
+        {
+          "nr": "20",
+          "typ": "Hilfskante",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 418
+            }
+          ],
+          "flaeche_m2": 418
+        },
+        {
+          "nr": "21",
+          "typ": "Hilfskante",
+          "belaege": [
+            {
+              "belag": "Naturstein-Pflästerung",
+              "flaeche_m2": 170
+            }
+          ],
+          "flaeche_m2": 170
+        },
+        {
+          "nr": "50",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 410
+            }
+          ],
+          "flaeche_m2": 410
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-martigny-a4.pdf",
@@ -375,6 +447,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

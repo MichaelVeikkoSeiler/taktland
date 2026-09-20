@@ -1,0 +1,229 @@
+#!/usr/bin/env python3
+"""Baut das Kapitel «Ausstattung» aus den Fakten, ohne Sprachmodell.
+
+Das Kapitel besteht aus erfassten Stückzahlen und Perronbelägen. Ein Modell
+fügt dem nichts hinzu, was nicht schon in den Daten steht - es würde nur
+Geld kosten und die Gefahr einer Deutung mitbringen. Darum hier mechanisch.
+
+Die Sätze gleichen sich zwangsläufig über die Bahnhöfe hinweg. Das ist bei
+einer Aufzählung von Beständen hinnehmbar und ehrlicher als eine Vielfalt,
+die es in den Daten nicht gibt.
+
+    python generator/ausstattung_kapitel.py data/profiles/8502113.de.json
+    python generator/ausstattung_kapitel.py --alle
+"""
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from distraktoren import vorschlaege  # noqa: E402
+from taktland import PROFILES, fakten_laden  # noqa: E402
+
+#: Wie die Bestände im Text heissen. Immer «erfasst», nie «vorhanden»:
+#: ein fehlender Eintrag heisst nicht, dass der Gegenstand fehlt.
+BESTAENDE = [
+    ("sitzbaenke", "Sitzbank", "Sitzbänke"),
+    ("infopunkte", "Infopunkt", "Infopunkte"),
+    ("schliessfaecher", "Schliessfach", "Schliessfächer"),
+]
+
+
+def ch(n):
+    return f"{int(n):,}".replace(",", "'")
+
+
+def aufzaehlen(teile):
+    if len(teile) == 1:
+        return teile[0]
+    return ", ".join(teile[:-1]) + " sowie " + teile[-1]
+
+
+def body_text(name, a):
+    saetze = []
+    teile = [f"{ch(a[feld])} {mehrz if a[feld] != 1 else einz}"
+             for feld, einz, mehrz in BESTAENDE if feld in a]
+    if teile:
+        saetze.append(f"In den offenen Daten sind für {name} {aufzaehlen(teile)} erfasst.")
+    pb = a.get("perronbelag")
+    if pb:
+        arten = pb["belagsarten"]
+        n = pb["anzahl_perrons_mit_daten"]
+        if len(arten) == 1:
+            # Nominativ, weil sich die Belagsnamen nicht zuverlaessig beugen
+            # lassen: «aus Bituminöses Mischgut» war falsch.
+            saetze.append(f"Zu {n} Perrons liegt der Belag vor, erfasst ist "
+                          f"überall: {arten[0]}.")
+        else:
+            saetze.append(f"Zu {n} Perrons liegt der Belag vor, erfasst sind "
+                          f"{aufzaehlen(arten)}.")
+    saetze.append("Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt "
+                  "in den Daten und nicht zwingend vor Ort.")
+    return " ".join(saetze)
+
+
+def fakten_karten(a):
+    karten = []
+    for feld, einz, mehrz in BESTAENDE:
+        if feld in a:
+            karten.append({"label": f"{mehrz} erfasst", "value": a[feld],
+                           "source": "mobiliar-im-bahnhof",
+                           "factRef": f"ausstattung.{feld}"})
+    pb = a.get("perronbelag")
+    if pb:
+        karten.append({"label": "Perrons mit erfasstem Belag",
+                       "value": pb["anzahl_perrons_mit_daten"],
+                       "source": "perronoberflache",
+                       "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"})
+    return karten
+
+
+def frage_bestand(uic, a, feld, einz, mehrz, nummer=0):
+    """Frage auf eine erfasste Stückzahl. Der Typ wechselt nach Reihenfolge."""
+    wert = a[feld]
+    erklaerung = (f"Erfasst sind {ch(wert)} {mehrz if wert != 1 else einz}. "
+                  "Die Zahl gibt den erhobenen Bestand wieder, nicht "
+                  "zwingend den Bestand vor Ort.")
+
+    if nummer % 3 == 2 and wert >= 8:
+        # Schieberegler braucht eine sinnvolle Spanne, darum erst ab 8
+        # bewusst unsymmetrisch: Der Regler startet unten, eine mittige
+        # Spanne wuerde die Antwort verschenken
+        spanne = max(4, round(wert * 0.8))
+        return {
+            "type": "slider",
+            "prompt": f"Wie viele {mehrz} sind in den offenen Daten erfasst?",
+            "min": max(0, wert - round(spanne * 0.5)), "max": wert + spanne,
+            "step": 1, "unit": mehrz, "correct": wert,
+            "explanation": erklaerung,
+            "factRef": f"ausstattung.{feld}",
+            "difficulty": 2,
+        }
+
+    frei, alle_frei = vorschlaege(uic, wert, 3)
+    optionen = sorted({wert, *[int(f) for f in frei]})
+    if len(optionen) < 3:
+        return None
+    fr = {
+        "type": "cloze" if nummer % 3 == 1 else "single_choice",
+        "prompt": (f"In den offenen Daten sind ___ {mehrz} erfasst."
+                   if nummer % 3 == 1
+                   else f"Wie viele {mehrz} sind in den offenen Daten erfasst?"),
+        "options": [ch(o) for o in optionen],
+        "correct": optionen.index(wert),
+        "explanation": erklaerung,
+        "factRef": f"ausstattung.{feld}",
+        "difficulty": 1,
+    }
+    if not alle_frei:
+        fr["optionen_aus_fakten"] = True
+    return fr
+
+
+def frage_belag(a):
+    """Single Choice auf den Belag, wenn es nur einen gibt."""
+    pb = a.get("perronbelag")
+    if not pb or len(pb["belagsarten"]) != 1:
+        return None
+    richtig = pb["belagsarten"][0]
+    andere = ["Bituminöses Mischgut", "Verbundstein-Pflästerung", "Beton-Belag",
+              "Gussasphalt", "Naturstein-Pflästerung", "Kiessandbelag"]
+    optionen = [richtig] + [x for x in andere if x != richtig][:3]
+    optionen.sort()
+    return {
+        "type": "single_choice",
+        "prompt": "Welcher Belag ist für die Perrons erfasst?",
+        "options": optionen,
+        "correct": optionen.index(richtig),
+        "explanation": f"Für alle Perrons mit Daten ist {richtig} erfasst.",
+        "factRef": "ausstattung.perronbelag.belagsarten",
+        "optionen_aus_fakten": True,
+        "difficulty": 2,
+    }
+
+
+def frage_flaeche(a):
+    """Sortieren nach erfasster Perronfläche, wenn die Werte eindeutig sind."""
+    pb = a.get("perronbelag")
+    if not pb:
+        return None
+    items = []
+    for i, e in enumerate(pb["items"]):
+        items.append({"label": f"Perron {e['nr']}", "value": e["flaeche_m2"],
+                      "factRef": f"ausstattung.perronbelag.items[{i}].flaeche_m2"})
+    if len(items) < 3 or len({i["value"] for i in items}) == 1:
+        return None
+    items = sorted(items, key=lambda x: -x["value"])[:4]
+    if len({i["value"] for i in items}) < 2:
+        return None
+    gross, klein = items[0], items[-1]
+    return {
+        "type": "sort",
+        "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+        "richtung": "absteigend",
+        "items": items,
+        "factRef": "ausstattung.perronbelag.items",
+        "explanation": (f"{gross['label']} hat mit {ch(gross['value'])} Quadratmetern "
+                        f"die grösste erfasste Fläche, {klein['label']} mit "
+                        f"{ch(klein['value'])} die kleinste der gezeigten."),
+        "difficulty": 2,
+    }
+
+
+def kapitel_bauen(uic, name, a):
+    fragen = []
+    for nr, (feld, einz, mehrz) in enumerate(BESTAENDE):
+        if feld in a:
+            if fr := frage_bestand(uic, a, feld, einz, mehrz, nr):
+                fragen.append(fr)
+    if fr := frage_belag(a):
+        fragen.append(fr)
+    if fr := frage_flaeche(a):
+        fragen.append(fr)
+    if not fragen:
+        return None
+    return {
+        "id": "ausstattung",
+        "title": "Ausstattung",
+        "body": body_text(name, a),
+        "facts": fakten_karten(a),
+        "questions": fragen,
+    }
+
+
+def einfuegen(profil, fakten):
+    """Setzt das Kapitel hinter services, sonst ans Ende."""
+    a = fakten.get("ausstattung")
+    if not a:
+        return False
+    if any(k.get("id") == "ausstattung" for k in profil["chapters"]):
+        return False
+    kap = kapitel_bauen(fakten["uic"], fakten["name"], a)
+    if not kap:
+        return False
+    stellen = [i for i, k in enumerate(profil["chapters"]) if k.get("id") == "services"]
+    profil["chapters"].insert(stellen[0] + 1 if stellen else len(profil["chapters"]), kap)
+    return True
+
+
+def main():
+    pfade = [Path(x) for x in sys.argv[1:] if not x.startswith("--")]
+    if "--alle" in sys.argv:
+        pfade = sorted(PROFILES.glob("*.json"))
+    if not pfade:
+        print(__doc__)
+        return 1
+    n = 0
+    for p in pfade:
+        profil = json.loads(p.read_text(encoding="utf-8"))
+        if einfuegen(profil, fakten_laden(profil["uic"])):
+            p.write_text(json.dumps(profil, ensure_ascii=False, indent=2), encoding="utf-8")
+            n += 1
+    print(f"{n} Profile um das Kapitel Ausstattung ergänzt")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

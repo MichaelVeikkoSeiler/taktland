@@ -969,6 +969,193 @@
     "wartehallen_erfasst": 14,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/883cc827c7533ba48309a642481097ee"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 56,
+    "infopunkte": 69,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 14,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Naturstein-Pflästerung",
+        "Verbundstein-Pflästerung"
+      ],
+      "items": [
+        {
+          "nr": "0",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 679
+            }
+          ],
+          "flaeche_m2": 679
+        },
+        {
+          "nr": "1/2",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 1488
+            }
+          ],
+          "flaeche_m2": 1488
+        },
+        {
+          "nr": "11/12",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 3284
+            }
+          ],
+          "flaeche_m2": 3284
+        },
+        {
+          "nr": "14/15",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 4199
+            }
+          ],
+          "flaeche_m2": 4199
+        },
+        {
+          "nr": "16/17",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 3606
+            }
+          ],
+          "flaeche_m2": 3606
+        },
+        {
+          "nr": "18",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 1714
+            }
+          ],
+          "flaeche_m2": 1714
+        },
+        {
+          "nr": "19/20",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 4653
+            }
+          ],
+          "flaeche_m2": 4653
+        },
+        {
+          "nr": "3/4",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2220
+            },
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 360
+            }
+          ],
+          "flaeche_m2": 2580
+        },
+        {
+          "nr": "30/31",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 3181
+            }
+          ],
+          "flaeche_m2": 3181
+        },
+        {
+          "nr": "31",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 782
+            }
+          ],
+          "flaeche_m2": 782
+        },
+        {
+          "nr": "33/35",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1912
+            }
+          ],
+          "flaeche_m2": 1912
+        },
+        {
+          "nr": "5/6",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 3837
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1760
+            }
+          ],
+          "flaeche_m2": 5597
+        },
+        {
+          "nr": "7/8",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Naturstein-Pflästerung",
+              "flaeche_m2": 3742
+            },
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 215
+            }
+          ],
+          "flaeche_m2": 3957
+        },
+        {
+          "nr": "9/10",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 3329
+            },
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 494
+            }
+          ],
+          "flaeche_m2": 3823
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-basel-sbb-a4.pdf",
@@ -1013,6 +1200,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

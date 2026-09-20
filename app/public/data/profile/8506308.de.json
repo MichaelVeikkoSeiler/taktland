@@ -323,12 +323,12 @@
           "type": "single_choice",
           "prompt": "Wie viele der erfassten Segmente haben eine Perronhöhe von 55 Zentimetern?",
           "options": [
-            "3",
             "4",
             "6",
-            "7"
+            "7",
+            "10"
           ],
-          "correct": 2,
+          "correct": 1,
           "explanation": "Von den 8 erfassten Segmenten tragen 6 die Perronhöhe 55 Zentimeter (Stand 2023).",
           "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
           "difficulty": 2
@@ -520,6 +520,74 @@
           "correct": true,
           "explanation": "Der Wert für Wartehallen steht auf 0, das heisst nicht erfasst.",
           "factRef": "services.wartehallen_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Arbon 3 Sitzbänke sowie 12 Schliessfächer erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 3,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 12,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 1,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "3",
+            "4",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 2,
+          "max": 22,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 12,
+          "explanation": "Erfasst sind 12 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
           "difficulty": 2
         }
       ]

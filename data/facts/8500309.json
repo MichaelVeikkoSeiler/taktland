@@ -357,6 +357,65 @@
     "wartehallen_erfasst": 3,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/97a246412a9af01b29da3c1f2473a9dc"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 25,
+    "infopunkte": 11,
+    "schliessfaecher": 30,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 3,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Kiessandbelag",
+        "Verbundstein-Pflästerung"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 1942
+            },
+            {
+              "belag": "Kiessandbelag",
+              "flaeche_m2": 113
+            }
+          ],
+          "flaeche_m2": 2055
+        },
+        {
+          "nr": "2/3",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2239
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 706
+            }
+          ],
+          "flaeche_m2": 2945
+        },
+        {
+          "nr": "4/5",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 1933
+            }
+          ],
+          "flaeche_m2": 1933
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-brugg-ag-a4.pdf",
@@ -400,6 +459,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

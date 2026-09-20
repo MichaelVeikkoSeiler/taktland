@@ -374,6 +374,78 @@
     "wartehallen_erfasst": 2,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/61926364ced7c6787a34975d9a9a8f35"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 16,
+    "infopunkte": 9,
+    "schliessfaecher": 18,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 5,
+      "belagsarten": [
+        "Beton-Belag",
+        "Bituminöses Mischgut"
+      ],
+      "items": [
+        {
+          "nr": "2",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2433
+            }
+          ],
+          "flaeche_m2": 2433
+        },
+        {
+          "nr": "3/4",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2759
+            }
+          ],
+          "flaeche_m2": 2759
+        },
+        {
+          "nr": "5",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1883
+            }
+          ],
+          "flaeche_m2": 1883
+        },
+        {
+          "nr": "6",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Beton-Belag",
+              "flaeche_m2": 1337
+            }
+          ],
+          "flaeche_m2": 1337
+        },
+        {
+          "nr": "7",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Beton-Belag",
+              "flaeche_m2": 1057
+            }
+          ],
+          "flaeche_m2": 1057
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-sargans-a4.pdf",
@@ -417,6 +489,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

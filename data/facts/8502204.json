@@ -636,6 +636,87 @@
     "wartehallen_erfasst": 3,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/31bad3e034461502dc63ad153ef9f6fb"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 32,
+    "infopunkte": 9,
+    "schliessfaecher": 60,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 5,
+      "belagsarten": [
+        "Beton-Belag",
+        "Bituminöses Mischgut",
+        "Verbundstein-Pflästerung"
+      ],
+      "items": [
+        {
+          "nr": "1/2",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2605
+            }
+          ],
+          "flaeche_m2": 2605
+        },
+        {
+          "nr": "3",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2257
+            },
+            {
+              "belag": "Beton-Belag",
+              "flaeche_m2": 131
+            }
+          ],
+          "flaeche_m2": 2388
+        },
+        {
+          "nr": "4",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2128
+            }
+          ],
+          "flaeche_m2": 2128
+        },
+        {
+          "nr": "5/6",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2791
+            }
+          ],
+          "flaeche_m2": 2791
+        },
+        {
+          "nr": "7",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 929
+            },
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 152
+            }
+          ],
+          "flaeche_m2": 1081
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zug-a4.pdf",
@@ -670,6 +751,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

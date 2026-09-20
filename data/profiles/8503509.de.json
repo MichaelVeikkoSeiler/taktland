@@ -274,12 +274,12 @@
           "type": "single_choice",
           "prompt": "Wie viele Perronsegmente sind für Schlieren in der BehiG-Erhebung erfasst?",
           "options": [
-            "8",
             "12",
             "14",
-            "17"
+            "17",
+            "20"
           ],
-          "correct": 2,
+          "correct": 1,
           "explanation": "Es sind 14 Perronsegmente erfasst.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
@@ -315,7 +315,8 @@
           "correct": 0,
           "explanation": "Alle 3 erfassten Perrons sind niveaufrei erreichbar.",
           "factRef": "hindernisfreiheit.perrons_niveaufrei",
-          "difficulty": 1
+          "difficulty": 1,
+          "optionen_aus_fakten": true
         }
       ]
     },
@@ -481,6 +482,105 @@
           "explanation": "Erfasst sind 3 Billettentwerter.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Schlieren 8 Sitzbänke, 7 Infopunkte sowie 11 Schliessfächer erfasst. Zu 3 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 8,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 7,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 11,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 3,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "3",
+            "8",
+            "18",
+            "24"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 8 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "7",
+            "12",
+            "15",
+            "21"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 7 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 2,
+          "max": 20,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 11,
+          "explanation": "Erfasst sind 11 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 5/6",
+              "value": 2705,
+              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
+            },
+            {
+              "label": "Perron 3/4",
+              "value": 2449,
+              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+            },
+            {
+              "label": "Perron 1",
+              "value": 810,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 5/6 hat mit 2'705 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 810 die kleinste der gezeigten.",
+          "difficulty": 2
         }
       ]
     }

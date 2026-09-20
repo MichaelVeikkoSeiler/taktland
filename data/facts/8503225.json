@@ -360,6 +360,72 @@
     "wartehallen_erfasst": 5,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/d4648e6f25b3ff458e8b619814d3db43"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 26,
+    "infopunkte": 7,
+    "schliessfaecher": 4,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 4,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Kiessandbelag",
+        "Verbundstein-Pflästerung"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 178
+            },
+            {
+              "belag": "Kiessandbelag",
+              "flaeche_m2": 100
+            }
+          ],
+          "flaeche_m2": 278
+        },
+        {
+          "nr": "5/6",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2681
+            }
+          ],
+          "flaeche_m2": 2681
+        },
+        {
+          "nr": "7/8",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2466
+            }
+          ],
+          "flaeche_m2": 2466
+        },
+        {
+          "nr": "9/10",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2581
+            }
+          ],
+          "flaeche_m2": 2581
+        }
+      ]
+    }
+  },
   "bahnhofplan": null,
   "luecken": [
     {
@@ -401,6 +467,7 @@
     "hindernisfreiheit",
     "zuege",
     "linien",
-    "services"
+    "services",
+    "ausstattung"
   ]
 }

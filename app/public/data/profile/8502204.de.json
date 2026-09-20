@@ -704,6 +704,110 @@
       ]
     },
     {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Zug 32 Sitzbänke, 9 Infopunkte sowie 60 Schliessfächer erfasst. Zu 5 Perrons liegt der Belag vor, erfasst sind Beton-Belag, Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 32,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 9,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 60,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 5,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "27",
+            "32",
+            "38",
+            "45"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 32 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "4",
+            "5",
+            "9",
+            "27"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 9 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 12,
+          "max": 108,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 60,
+          "explanation": "Erfasst sind 60 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 5/6",
+              "value": 2791,
+              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
+            },
+            {
+              "label": "Perron 1/2",
+              "value": 2605,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+            },
+            {
+              "label": "Perron 3",
+              "value": 2388,
+              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+            },
+            {
+              "label": "Perron 4",
+              "value": 2128,
+              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 5/6 hat mit 2'791 Quadratmetern die grösste erfasste Fläche, Perron 4 mit 2'128 die kleinste der gezeigten.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
       "body": "Für Zug ist ein Bahnhofplan als A4- und Plakatversion veröffentlicht. Eigentümerin der Anlage ist die SBB.",

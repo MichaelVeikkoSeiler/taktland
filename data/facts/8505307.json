@@ -361,6 +361,154 @@
     "wartehallen_erfasst": 1,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/60b0b1b848945bb443fc375568d356fc"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 43,
+    "infopunkte": 5,
+    "schliessfaecher": 26,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 12,
+      "belagsarten": [
+        "Bituminöses Mischgut"
+      ],
+      "items": [
+        {
+          "nr": "1/11",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 3772
+            }
+          ],
+          "flaeche_m2": 3772
+        },
+        {
+          "nr": "22/23",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 201
+            }
+          ],
+          "flaeche_m2": 201
+        },
+        {
+          "nr": "23/24",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 156
+            }
+          ],
+          "flaeche_m2": 156
+        },
+        {
+          "nr": "24/25",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 378
+            }
+          ],
+          "flaeche_m2": 378
+        },
+        {
+          "nr": "26",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 29
+            }
+          ],
+          "flaeche_m2": 29
+        },
+        {
+          "nr": "27",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 29
+            }
+          ],
+          "flaeche_m2": 29
+        },
+        {
+          "nr": "28",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 32
+            }
+          ],
+          "flaeche_m2": 32
+        },
+        {
+          "nr": "37",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 368
+            }
+          ],
+          "flaeche_m2": 368
+        },
+        {
+          "nr": "38",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 788
+            }
+          ],
+          "flaeche_m2": 788
+        },
+        {
+          "nr": "4/5/6",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 4842
+            }
+          ],
+          "flaeche_m2": 4842
+        },
+        {
+          "nr": "71/72",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 504
+            }
+          ],
+          "flaeche_m2": 504
+        },
+        {
+          "nr": "73/74",
+          "typ": "Dienstperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 312
+            }
+          ],
+          "flaeche_m2": 312
+        }
+      ]
+    }
+  },
   "bahnhofplan": null,
   "luecken": [
     {
@@ -422,6 +570,7 @@
     "hindernisfreiheit",
     "zuege",
     "linien",
-    "services"
+    "services",
+    "ausstattung"
   ]
 }

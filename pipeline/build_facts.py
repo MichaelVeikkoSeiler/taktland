@@ -67,6 +67,7 @@ class Data:
 
         self.perron = self._with_uic("perron", "bpuic")
         self.perronoberflache = self._with_uic("perronoberflache", "bpuic")
+        self.mobiliar = self._with_uic("mobiliar-im-bahnhof", "bpuic")
         self.sektor = self._with_uic("sektortafel", "bpuic")
         self.wartehalle = self._with_uic("haltestelle-wartehallen", "bpuic")
         self.sicherheitslinie = self._with_uic("haltestelle-visuell-taktile-sicherheitslinie", "bpuic")
@@ -365,6 +366,82 @@ def linien(d, uic):
             "items": items}
 
 
+#: Mobiliar, das wir auswerten. Der Rest der Quelle bleibt liegen, weil er
+#: entweder zu luecken haft erhoben ist (Lifte an 26 von 763 Bahnhoefen) oder
+#: als Flaeche statt als Stueckzahl gefuehrt wird (oeffentliche Toiletten).
+#: Eine Zahl, die bei Zuerich HB fehlt, fuehrt Lernende in die Irre.
+MOBILIAR = {"Sitzbank": "sitzbaenke",
+            "Infopunkt": "infopunkte",
+            "Schliessfächer": "schliessfaecher"}
+
+#: Die Quelle schreibt ohne Umlaute. Fuer die App werden sie zurueckgesetzt,
+#: das Wort bleibt dasselbe.
+UMLAUTE = [("aesterung", "ästerung"), ("Bituminoes", "Bituminös"),
+           ("Kiessand", "Kiessand"), ("Aussen", "Aussen")]
+
+
+def mit_umlaut(s):
+    if not s:
+        return s
+    for alt_, neu_ in UMLAUTE:
+        s = s.replace(alt_, neu_)
+    return s
+
+
+def ausstattung(d, uic):
+    """Mobiliar und Perronbelag, soweit die Quellen es hergeben."""
+    out = {
+        "source": "mobiliar-im-bahnhof, perronoberflache",
+        "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag "
+                   "heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die "
+                   "Stueckzahl steht in einem Feld, das die Quelle selbst nicht "
+                   "beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    }
+
+    mb = d.mobiliar[d.mobiliar.uic == uic]
+    for bez, feld in MOBILIAR.items():
+        t = mb[(mb.bezeichnung == bez) & (mb.einheit == "Stck")]
+        if not t.empty:
+            # mehrere Zeilen je Bahnhof und Gegenstand, darum summieren
+            out[feld] = int(t.flame2.fillna(0).sum())
+    if "infopunkte" in out:
+        out["infopunkte_hinweis"] = ("Was die Quelle unter einem Infopunkt versteht, "
+                                     "sagt sie nicht. Die Zahl ist darum nur als "
+                                     "erfasster Bestand zu lesen.")
+
+    po = d.perronoberflache[d.perronoberflache.uic == uic]
+    pro_perron = {}
+    for _, r in po.iterrows():
+        nr = txt(r.p_nr)
+        if not nr:
+            continue
+        e = pro_perron.setdefault(nr, {"nr": nr, "typ": txt(r.perrontyp), "belaege": {}})
+        belag = mit_umlaut(txt(r.oberflache))
+        if not belag or belag == "Unbekannt":
+            continue
+        e["belaege"][belag] = round((e["belaege"].get(belag) or 0) + (num(r.flache) or 0))
+    perrons_ = []
+    for nr in sorted(pro_perron):
+        e = pro_perron[nr]
+        if not e["belaege"]:
+            continue
+        # die Summe mitgeben, damit Texte sie nennen koennen, ohne sie selbst
+        # zu rechnen - eine gerechnete Zahl waere nicht belegt
+        e["flaeche_m2"] = round(sum(e["belaege"].values()))
+        e["belaege"] = [{"belag": b, "flaeche_m2": f}
+                        for b, f in sorted(e["belaege"].items(), key=lambda x: -x[1])]
+        perrons_.append(e)
+    if perrons_:
+        out["perronbelag"] = {
+            "anzahl_perrons_mit_daten": len(perrons_),
+            "belagsarten": sorted({b["belag"] for e in perrons_ for b in e["belaege"]}),
+            "items": perrons_,
+        }
+
+    hat_etwas = any(k in out for k in list(MOBILIAR.values()) + ["perronbelag"])
+    return out if hat_etwas else None
+
+
 def services(d, uic):
     bps = d.uic2bps.get(uic)
     out = {"source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, "
@@ -397,6 +474,16 @@ def luecken(d, uic, f):
     def lueckt(thema, grund, quelle):
         fehlt.append({"thema": thema, "grund": grund, "quelle": quelle})
 
+    if not f.get("ausstattung"):
+        lueckt("Ausstattung",
+               "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine "
+               "offenen Daten vor.",
+               "mobiliar-im-bahnhof, perronoberflache")
+    a = f.get("ausstattung") or {}
+    if a and "perronbelag" not in a:
+        lueckt("Perronbelag",
+               "Womit die Perrons belegt sind, ist für diesen Bahnhof nicht erfasst.",
+               "perronoberflache")
     if not f.get("bahnhofplan"):
         lueckt("Bahnhofplan",
                "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. "
@@ -603,12 +690,14 @@ def build(d, uic):
         "zuege": zuege(d, uic),
         "linien": linien(d, uic),
         "services": services(d, uic),
+        "ausstattung": ausstattung(d, uic),
         "bahnhofplan": plan,
     }
     f["luecken"] = luecken(d, uic, f)
     f["verfuegbare_kapitel"] = [k for k in
                                 ["steckbrief", "stammdaten", "tagesrhythmus", "perrons", "gleise",
-                                 "hindernisfreiheit", "zuege", "linien", "services", "bahnhofplan"]
+                                 "hindernisfreiheit", "zuege", "linien", "services",
+                                 "ausstattung", "bahnhofplan"]
                                 if f.get(k)]
     return f
 

@@ -697,6 +697,98 @@
     "wartehallen_erfasst": 4,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/5efd32b6bcc96a0bba105029ad3b6e32"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 38,
+    "infopunkte": 6,
+    "schliessfaecher": 114,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 5,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Gussasphalt"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1391
+            },
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 228
+            }
+          ],
+          "flaeche_m2": 1619
+        },
+        {
+          "nr": "2/3",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2035
+            },
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 211
+            }
+          ],
+          "flaeche_m2": 2246
+        },
+        {
+          "nr": "4/5",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2459
+            },
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 248
+            }
+          ],
+          "flaeche_m2": 2707
+        },
+        {
+          "nr": "6/7",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1636
+            },
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 158
+            }
+          ],
+          "flaeche_m2": 1794
+        },
+        {
+          "nr": "9/10",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1931
+            },
+            {
+              "belag": "Gussasphalt",
+              "flaeche_m2": 384
+            }
+          ],
+          "flaeche_m2": 2315
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-biel-bienne-a4.pdf",
@@ -736,6 +828,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }

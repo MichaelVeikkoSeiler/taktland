@@ -35,6 +35,11 @@ DATASETS = {
     "perronoberflache": dict(
         join="bpuic", tier="extra",
         beschreibung="Perronoberflaeche und Baujahr"),
+    "mobiliar-im-bahnhof": dict(
+        join="bpuic", tier="extra",
+        beschreibung="Mobiliar am Bahnhof: Sitzbaenke, Infopunkte und weiteres. "
+                     "Nur teilweise erhoben - Lifte und Toiletten fehlen bei den "
+                     "meisten Bahnhoefen und taugen darum nicht fuer Aussagen."),
     "sektortafel": dict(
         join="bpuic", tier="core",
         beschreibung="Sektortafeln pro Kundengleis"),

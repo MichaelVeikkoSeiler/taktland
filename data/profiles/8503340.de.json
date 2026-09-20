@@ -506,7 +506,8 @@
           "correct": 0,
           "explanation": "Erfasst sind 3 Billettentwerter.",
           "factRef": "services.billettentwerter_erfasst",
-          "difficulty": 1
+          "difficulty": 1,
+          "optionen_aus_fakten": true
         },
         {
           "type": "true_false",
@@ -527,6 +528,41 @@
           "correct": 0,
           "explanation": "Erfasst ist der Automattyp ePOS.",
           "factRef": "services.automat_typen[0]",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Opfikon 4 Sitzbänke erfasst. Zu 1 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Naturstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 4,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 1,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "4",
+            "6",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 4 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         }
       ]

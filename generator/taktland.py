@@ -66,6 +66,14 @@ REGELWERK = Regelwerk(
 )
 
 
+def _stoff_ausstattung(fakten):
+    """Wie viel das Kapitel Ausstattung an Fragestoff hergibt."""
+    a = fakten.get("ausstattung") or {}
+    bestaende = sum(1 for f in ("sitzbaenke", "infopunkte", "schliessfaecher") if f in a)
+    belag = (a.get("perronbelag") or {}).get("anzahl_perrons_mit_daten", 0)
+    return bestaende + min(belag, 3)
+
+
 def umfang_erwartet(fakten):
     """Wie viele Kapitel und Fragen die Datenlage eines Bahnhofs hergibt.
 
@@ -81,6 +89,7 @@ def umfang_erwartet(fakten):
              + (fakten.get("linien") or {}).get("anzahl", 0)
              + (3 if fakten.get("tagesrhythmus") else 0)
              + (2 if fakten.get("bahnhofplan") else 0)
+             + _stoff_ausstattung(fakten)
              + 4)
     return (max(3, kapitel - 3), kapitel,
             max(5, round(stoff * 0.5)), max(max(5, round(stoff * 0.5)) + 4, round(stoff * 1.3)))
@@ -144,6 +153,14 @@ def _pruefe_frage(fr, i, kap_id, fb, fakten, b, raus):
     elif typ == "slider":
         if not fb.passt(fr.get("correct"), wert):
             b.fehlt(wo, f"correct {fr.get('correct')!r} passt nicht zu {ref} = {wert!r}")
+        mn, mx, c = fr.get("min"), fr.get("max"), fr.get("correct")
+        if all(isinstance(x, (int, float)) for x in (mn, mx, c)):
+            if not mn < c < mx:
+                b.fehlt(wo, f"die Antwort {c} liegt am Rand der Spanne {mn} bis {mx}. "
+                            "Der Regler startet unten, damit wäre sie verschenkt")
+            elif mx - mn < 4 * max(fr.get("step") or 1, 1):
+                b.warnt(wo, f"die Spanne {mn} bis {mx} ist so eng, dass kaum zu "
+                            "raten bleibt")
 
     elif typ == "hotspot":
         if not fr.get("schema"):

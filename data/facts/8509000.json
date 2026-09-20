@@ -699,6 +699,104 @@
     "wartehallen_erfasst": 5,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/78770337bcba726299f6da4e23b5dad0"
   },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 25,
+    "infopunkte": 14,
+    "schliessfaecher": 108,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 7,
+      "belagsarten": [
+        "Bituminöses Mischgut",
+        "Verbundstein-Pflästerung"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Aussenperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 726
+            }
+          ],
+          "flaeche_m2": 726
+        },
+        {
+          "nr": "11/12",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2466
+            }
+          ],
+          "flaeche_m2": 2466
+        },
+        {
+          "nr": "13/14",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 1156
+            }
+          ],
+          "flaeche_m2": 1156
+        },
+        {
+          "nr": "2",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 1055
+            }
+          ],
+          "flaeche_m2": 1055
+        },
+        {
+          "nr": "4/5",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 2032
+            },
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 1168
+            }
+          ],
+          "flaeche_m2": 3200
+        },
+        {
+          "nr": "7/8",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 2541
+            }
+          ],
+          "flaeche_m2": 2541
+        },
+        {
+          "nr": "9/10",
+          "typ": "Mittelperron",
+          "belaege": [
+            {
+              "belag": "Verbundstein-Pflästerung",
+              "flaeche_m2": 4300
+            }
+          ],
+          "flaeche_m2": 4300
+        }
+      ]
+    }
+  },
   "bahnhofplan": {
     "source": "haltestelle-karte-trafimage",
     "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-chur-a4.pdf",
@@ -733,6 +831,7 @@
     "zuege",
     "linien",
     "services",
+    "ausstattung",
     "bahnhofplan"
   ]
 }
