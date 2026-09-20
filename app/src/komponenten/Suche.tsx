@@ -51,11 +51,27 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
       </label>
 
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        {index.mit_profil} von {index.bahnhoefe_gesamt} Bahnhöfen haben bisher Lerninhalte.
-        Die übrigen sind aufgeführt, damit sichtbar ist, was noch fehlt.
+        {index.mit_profil} von {index.bahnhoefe_gesamt} Bahnhöfen mit Lerninhalten
       </p>
 
-      <ul className="mt-4 space-y-2">
+      <a
+        href="#/duell"
+        className="mt-4 flex items-center justify-between gap-3 border border-l-4
+                   border-sbb-cloud border-l-sbb-red bg-white px-4 py-3 transition
+                   hover:border-sbb-black hover:border-l-sbb-red dark:border-sbb-iron
+                   dark:border-l-sbb-red dark:bg-sbb-midnight dark:hover:border-sbb-white
+                   dark:hover:border-l-sbb-red"
+      >
+        <span className="min-w-0">
+          <span className="block font-medium text-sbb-black dark:text-sbb-white">Duell</span>
+          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+            Zwei Bahnhöfe gegeneinander, über alle {index.bahnhoefe_gesamt}
+          </span>
+        </span>
+        <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">→</span>
+      </a>
+
+      <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
         {treffer.map((e) => <Eintrag key={e.uic} e={e} oeffnen={oeffnen} />)}
       </ul>
 

@@ -10,7 +10,7 @@
  *
  * Es wird nichts an einen Server gemeldet. Der Cache liegt auf dem Gerät.
  */
-const VERSION = 'taktland-v3'
+const VERSION = 'taktland-v4'
 const SHELL = './'
 
 /** So viele Profile werden im Voraus gespeichert. Bei vielen Bahnhöfen ist
@@ -26,7 +26,7 @@ async function vorratAnlegen() {
   const html = await antwort.text()
   const verlinkt = [...html.matchAll(/(?:src|href)="\.\/([^"]+)"/g)].map((m) => `./${m[1]}`)
 
-  const dateien = new Set([...verlinkt, './data/index.json'])
+  const dateien = new Set([...verlinkt, './data/index.json', './data/vergleich.json'])
 
   // Die Profile dazu, damit auch ein noch nicht geöffneter Bahnhof funktioniert
   try {

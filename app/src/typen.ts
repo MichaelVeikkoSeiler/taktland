@@ -105,3 +105,36 @@ export interface BahnhofIndex {
   quelle: string
   bahnhoefe: IndexEintrag[]
 }
+
+/* ---------- Vergleich zweier Bahnhöfe ---------- */
+
+/** «messwert»: die Grösse ist erhoben, der Vergleich gilt der Wirklichkeit.
+ *  «erfasst»: verglichen wird der Datenbestand, nicht die Wirklichkeit. */
+export type Vergleichsart = 'messwert' | 'erfasst'
+
+export interface Kategorie {
+  id: string
+  titel: string
+  frage: string
+  frage_mehrere: string
+  einheit: string
+  art: Vergleichsart
+  quelle: string
+  hinweis?: string
+  min_abstand: number
+  min_anteil: number
+}
+
+export interface VergleichsBahnhof {
+  uic: number
+  name: string
+  kanton: string | null
+  werte: Record<string, number>
+}
+
+export interface Vergleichsdaten {
+  datenstand: string
+  hinweis: string
+  kategorien: Kategorie[]
+  bahnhoefe: VergleichsBahnhof[]
+}

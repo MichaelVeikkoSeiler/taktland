@@ -53,3 +53,38 @@ export function allesZuruecksetzen() {
 export function bearbeiteBahnhoefe(): number[] {
   return Object.keys(lesen()).map(Number)
 }
+
+/* ---------- Bestleistung im Duell ---------- */
+
+const DUELL_SCHLUESSEL = 'taktland.duell.v1'
+
+export interface Duellstand {
+  rekord: number
+  gespielt: number
+  richtig: number
+}
+
+const LEER: Duellstand = { rekord: 0, gespielt: 0, richtig: 0 }
+
+export function duellstandLesen(): Duellstand {
+  try {
+    return { ...LEER, ...JSON.parse(localStorage.getItem(DUELL_SCHLUESSEL) ?? '{}') }
+  } catch {
+    return { ...LEER }
+  }
+}
+
+export function duellstandMerken(richtig: boolean, serie: number) {
+  const s = duellstandLesen()
+  const neu: Duellstand = {
+    rekord: Math.max(s.rekord, serie),
+    gespielt: s.gespielt + 1,
+    richtig: s.richtig + (richtig ? 1 : 0),
+  }
+  try {
+    localStorage.setItem(DUELL_SCHLUESSEL, JSON.stringify(neu))
+  } catch {
+    // Privater Modus: die Bestleistung geht verloren, das Spiel läuft weiter
+  }
+  return neu
+}

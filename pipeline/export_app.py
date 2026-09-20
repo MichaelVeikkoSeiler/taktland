@@ -22,6 +22,11 @@ def main():
     for alt in (ZIEL / "profile").glob("*.json"):
         alt.unlink()
 
+    # die Vergleichsdaten unveraendert mitnehmen, die App baut daraus Fragen
+    quelle = ROOT / "data" / "vergleich.json"
+    if quelle.exists():
+        shutil.copy(quelle, ZIEL / "vergleich.json")
+
     mit_profil = {}
     for p in PROFILES.glob("*.json"):
         d = json.loads(p.read_text(encoding="utf-8"))

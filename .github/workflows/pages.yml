@@ -36,6 +36,11 @@ jobs:
       - name: Profile gegen die Fakten prüfen
         run: python3 generator/validate.py --alle
 
+      # Die Vergleichsfragen entstehen erst in der App, geprueft wird darum
+      # ihre Grundlage: jeder Wert gegen die Faktendatei, aus der er stammt
+      - name: Vergleichsdaten gegen die Fakten prüfen
+        run: python3 generator/validate_vergleich.py
+
       # Stellt sicher, dass die App die aktuellen Profile ausliefert, auch wenn
       # jemand vergessen hat, export_app.py vor dem Einchecken laufen zu lassen
       - name: Daten für die App bereitstellen
