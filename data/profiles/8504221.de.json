@@ -385,7 +385,7 @@
             "Linie 410"
           ],
           "correct": 0,
-          "explanation": "Die Linie 210.",
+          "explanation": "Die Linie 210, in der Quelle als «Daillens - Biel/Bienne» geführt.",
           "factRef": "linien.items[0].nummer",
           "optionen_aus_fakten": true,
           "difficulty": 2

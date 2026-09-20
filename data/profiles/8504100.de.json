@@ -392,7 +392,7 @@
             "26"
           ],
           "correct": 1,
-          "explanation": "11 Entwerter.",
+          "explanation": "11 Entwerter, dazu 5 Billettautomaten.",
           "factRef": "services.billettentwerter_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 1

@@ -30,6 +30,8 @@ class Ergebnis:
     runden: int = 1
     kosten: dict = field(default_factory=dict)
     fehlermeldung: str | None = None
+    #: ob das Dokument bereits gespeichert wurde (None = noch nicht versucht)
+    gesichert: bool | None = None
 
     @property
     def ok(self):

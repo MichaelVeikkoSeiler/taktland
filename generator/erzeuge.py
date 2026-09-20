@@ -3,6 +3,7 @@
 
     python generator/erzeuge.py 8503504                 # ein Bahnhof
     python generator/erzeuge.py --auswahl 10            # die 10 vielfältigsten
+    python generator/erzeuge.py --groesste 50           # die 50 meistgenutzten
     python generator/erzeuge.py --alle --stapel         # alle offenen, im Batch
     python generator/erzeuge.py 8503504 --probelauf     # nur den Auftrag zeigen
 
@@ -115,6 +116,15 @@ def speichern(dokument, uic):
     return bericht
 
 
+def groesste_offenen(n):
+    """Die n meistgenutzten Bahnhöfe, zu denen noch kein Profil vorliegt."""
+    fertig = {json.loads(f.read_text(encoding="utf-8"))["uic"] for f in PROFILES.glob("*.json")}
+    offen = [(d["steckbrief"].get("dwv") or 0, d["uic"])
+             for d in fakten_alle() if d["uic"] not in fertig]
+    offen.sort(reverse=True)
+    return [uic for _, uic in offen[:n]]
+
+
 def offene_uics():
     fertig = {json.loads(f.read_text(encoding="utf-8"))["uic"] for f in PROFILES.glob("*.json")}
     return [d["uic"] for d in fakten_alle() if d["uic"] not in fertig]
@@ -125,7 +135,10 @@ def main():
     probelauf = "--probelauf" in args
     stapel = "--stapel" in args
 
-    if "--auswahl" in args:
+    if "--groesste" in args:
+        n = int(args[args.index("--groesste") + 1])
+        uics = groesste_offenen(n)
+    elif "--auswahl" in args:
         n = int(args[args.index("--auswahl") + 1])
         uics = [d["uic"] for d, _ in waehlen(n)[0]]
     elif "--alle" in args:
@@ -214,8 +227,10 @@ def main():
         for s in kosten:
             kosten[s] += e.kosten.get(s, 0)
         if e.ok:
-            bericht = speichern(e.dokument, int(kennung))
-            if bericht.ok:
+            # im Einzelbetrieb schon gespeichert, im Stapel noch nicht
+            if getattr(e, "gesichert", None) is None:
+                e.gesichert = speichern(e.dokument, int(kennung)).ok
+            if e.gesichert:
                 gut += 1
                 continue
         name = fakten_laden(int(kennung))["name"]

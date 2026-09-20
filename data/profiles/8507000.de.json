@@ -452,7 +452,7 @@
             "9"
           ],
           "correct": 2,
-          "explanation": "5 Linien.",
+          "explanation": "5 Linien: 220, 9220, 9250, 250, 450.",
           "factRef": "linien.anzahl",
           "optionen_aus_fakten": true,
           "difficulty": 1
@@ -522,7 +522,7 @@
             "48"
           ],
           "correct": 1,
-          "explanation": "15 Automaten.",
+          "explanation": "15 Automaten, dazu 32 Billettentwerter.",
           "factRef": "services.billettautomaten_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 2

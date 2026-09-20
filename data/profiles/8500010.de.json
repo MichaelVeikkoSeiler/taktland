@@ -342,7 +342,7 @@
             "H"
           ],
           "correct": 1,
-          "explanation": "Von A bis D.",
+          "explanation": "Von A bis D, also 4 Sektoren.",
           "factRef": "gleise.items[5].sektoren[3]",
           "difficulty": 2
         },
@@ -364,7 +364,7 @@
             "560 m"
           ],
           "correct": 2,
-          "explanation": "423 Meter.",
+          "explanation": "423 Meter. Die längste erfasste Kante misst 431 Meter.",
           "factRef": "gleise.items[21].perronkante_m",
           "optionen_aus_fakten": true,
           "difficulty": 2

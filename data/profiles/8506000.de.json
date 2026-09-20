@@ -401,7 +401,7 @@
             "26"
           ],
           "correct": 1,
-          "explanation": "9 Automaten.",
+          "explanation": "9 Automaten, dazu 26 Billettentwerter.",
           "factRef": "services.billettautomaten_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 1

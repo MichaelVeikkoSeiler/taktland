@@ -415,7 +415,7 @@
             "6"
           ],
           "correct": 2,
-          "explanation": "3 Linien.",
+          "explanation": "3 Linien: 760, 748, 751.",
           "factRef": "linien.anzahl",
           "optionen_aus_fakten": true,
           "difficulty": 1
@@ -460,7 +460,7 @@
             "25"
           ],
           "correct": 1,
-          "explanation": "11 Automaten.",
+          "explanation": "11 Automaten, dazu 25 Billettentwerter.",
           "factRef": "services.billettautomaten_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 1

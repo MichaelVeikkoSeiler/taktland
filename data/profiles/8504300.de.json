@@ -268,7 +268,7 @@
             "K"
           ],
           "correct": 1,
-          "explanation": "Von A bis D.",
+          "explanation": "Von A bis D, also 4 Sektoren.",
           "factRef": "gleise.items[1].sektoren[3]",
           "difficulty": 2
         }
@@ -477,7 +477,7 @@
             "24"
           ],
           "correct": 1,
-          "explanation": "7 Automaten.",
+          "explanation": "7 Automaten, dazu 15 Billettentwerter.",
           "factRef": "services.billettautomaten_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 1
