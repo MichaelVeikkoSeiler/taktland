@@ -11,7 +11,9 @@ def main():
     schluessel = os.environ.get("ANTHROPIC_API_KEY")
     if not schluessel:
         print("Es ist kein Schlüssel gesetzt.\n\n"
-              "    export ANTHROPIC_API_KEY=sk-ant-...\n\n"
+              '    read -rs "?Schlüssel einfügen, dann Enter: " ANTHROPIC_API_KEY && export ANTHROPIC_API_KEY\n\n'
+              "Der Befehl zeigt den Schlüssel beim Eintippen nicht an. "
+              "Das ist Absicht: ein sichtbarer Schlüssel ist ein verbrauchter.\n"
               "Den Schlüssel gibt es auf console.anthropic.com unter API Keys.")
         return 1
     if not schluessel.startswith("sk-ant-"):

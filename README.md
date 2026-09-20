@@ -32,9 +32,20 @@ npm --prefix app run dev                         # App unter http://localhost:51
 
 ## Profile erzeugen
 
+Zuerst den Schlüssel von console.anthropic.com setzen. Dieser Befehl fragt ihn
+ab, ohne ihn auf den Bildschirm zu schreiben - eingetippt oder eingefügt bleibt
+die Zeile leer:
+
+```bash
+read -rs "?Anthropic-Schlüssel einfügen, dann Enter: " ANTHROPIC_API_KEY && export ANTHROPIC_API_KEY
+```
+
+Den Schlüssel nie in eine Datei schreiben und nie in einem Screenshot zeigen:
+Das Repository ist öffentlich, und ein sichtbarer Schlüssel ist ein
+verbrauchter Schlüssel. Er gilt nur für dieses Terminal-Fenster.
+
 ```bash
 python generator/erzeuge.py --auswahl 10 --probelauf   # zeigt Auftrag und Kosten
-export ANTHROPIC_API_KEY=sk-ant-...                    # console.anthropic.com
 python generator/erzeuge.py --auswahl 10               # erzeugen, einzeln
 python generator/erzeuge.py --alle --stapel            # alle offenen, halber Preis
 ```
