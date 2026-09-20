@@ -28,13 +28,18 @@ def main():
 
     client = anthropic.Anthropic(max_retries=0)
     try:
+        # Opus 5 denkt vor dem Antworten. Bei zu knappem Limit gehen alle Token
+        # dafür drauf und es kommt kein Text zurück.
         antwort = client.messages.create(
             model="claude-opus-5",
-            max_tokens=8,
-            messages=[{"role": "user", "content": "Antworte nur mit: bereit"}],
+            max_tokens=200,
+            output_config={"effort": "low"},
+            messages=[{"role": "user", "content": "Antworte nur mit dem Wort: bereit"}],
         )
         text = "".join(b.text for b in antwort.content if b.type == "text").strip()
-        print(f"Antwort vom Modell: «{text}»")
+        print(f"Antwort vom Modell: «{text}»" if text
+              else "Das Modell hat geantwortet, aber ohne Text "
+                   f"(stop_reason: {antwort.stop_reason})")
         print(f"Verbrauch: {antwort.usage.input_tokens} Eingabe-, "
               f"{antwort.usage.output_tokens} Ausgabe-Token "
               f"(unter einem Rappen)")
