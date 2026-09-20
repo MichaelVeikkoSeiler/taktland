@@ -22,13 +22,27 @@ Die Regeln dazu stehen in [CLAUDE.md](CLAUDE.md), geprüft werden sie von
 ## Schnellstart
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install pandas pillow
+python3 -m venv .venv && .venv/bin/pip install pandas pillow anthropic
 python3 pipeline/fetch.py                        # Datensätze von data.sbb.ch laden
 .venv/bin/python pipeline/build_facts.py --all   # Fakten je Bahnhof erzeugen
 .venv/bin/python generator/validate.py --alle    # Profile prüfen
 .venv/bin/python pipeline/export_app.py          # Daten für die App bereitstellen
 npm --prefix app run dev                         # App unter http://localhost:5173
 ```
+
+## Profile erzeugen
+
+```bash
+python generator/erzeuge.py --auswahl 10 --probelauf   # zeigt Auftrag und Kosten
+export ANTHROPIC_API_KEY=sk-ant-...                    # console.anthropic.com
+python generator/erzeuge.py --auswahl 10               # erzeugen, einzeln
+python generator/erzeuge.py --alle --stapel            # alle offenen, halber Preis
+```
+
+Der Generator erzeugt ein Profil, lässt es prüfen und gibt dem Modell bei
+Fehlern die Liste zurück, bis zu dreimal. **Nur was die Prüfung besteht, wird
+gespeichert.** Für alle 747 noch offenen Bahnhöfe rechnet der Probelauf mit
+rund 55 Dollar einzeln oder 28 Dollar im Stapel.
 
 ## Aufbau
 
@@ -39,9 +53,14 @@ pipeline/     Rohdaten laden, prüfen, zu Fakten verdichten
   coverage.py     Abdeckung und Verknüpfbarkeit prüfen
   build_facts.py  data/facts/{uic}.json erzeugen
   export_app.py   Daten für die App bereitstellen
+belegt/       wiederverwendbarer Unterbau: Faktenbasis, Regelwerk, Erzeuger
+              kennt keine Bahnhöfe, siehe belegt/README.md
 generator/    Profile schreiben und prüfen
   SCHEMA.md       Regeln für die Texte und Fragen
+  taktland.py     die Bahnhofslogik auf dem Unterbau
   validate.py     mechanische Prüfung gegen die Fakten
+  erzeuge.py      Profile mit Claude erzeugen, einzeln oder als Stapel
+  auswahl.py      wählt Bahnhöfe nach Datenvielfalt aus
   distraktoren.py schlägt falsche Antworten vor, die keinen echten Wert treffen
 app/          React, Vite, Tailwind
 data/
