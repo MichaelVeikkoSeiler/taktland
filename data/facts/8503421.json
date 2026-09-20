@@ -90,7 +90,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "2",
@@ -102,7 +103,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "3",
@@ -114,7 +116,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },

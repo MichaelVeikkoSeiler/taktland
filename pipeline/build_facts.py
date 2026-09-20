@@ -262,6 +262,8 @@ def gleise(d, uic):
         e = pro_gleis[g]
         e["perronhoehen_cm"] = sorted(e["perronhoehen_cm"])
         e["sektoren"] = sorted(e["sektoren"])
+        # die Zahl mitgeben, damit Texte sie nennen koennen, ohne sie zu rechnen
+        e["sektoren_anzahl"] = len(e["sektoren"])
         items.append(e)
     alle_hoehen = sorted({h for e in items for h in e["perronhoehen_cm"]})
     return {
@@ -354,8 +356,13 @@ def linien(d, uic):
         return None
     items = []
     for _, r in df.drop_duplicates("linie").iterrows():
-        items.append({"nummer": num(r.linie), "name": txt(r.linienname), "km": num(r.km)})
-    return {"source": "linie-mit-betriebspunkten", "anzahl": len(items), "items": items}
+        items.append({"nummer": num(r.linie), "name": txt(r.linienname),
+                      "km_am_bahnhof": num(r.km)})
+    return {"source": "linie-mit-betriebspunkten", "anzahl": len(items),
+            "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der "
+                       "Linie, also der Standort. Es ist NICHT die Laenge der Linie. "
+                       "Die Laenge der Linie steht in den offenen Daten nicht.",
+            "items": items}
 
 
 def services(d, uic):

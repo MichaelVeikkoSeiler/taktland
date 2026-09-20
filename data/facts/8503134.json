@@ -105,7 +105,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 170,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "1B",
@@ -115,7 +116,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 125,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3B",
@@ -125,7 +127,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 101,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -214,16 +217,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 754,
         "name": "Winterthur Gruze - Bauma - Ruti ZH West",
-        "km": 25.14292
+        "km_am_bahnhof": 25.14292
       },
       {
         "nummer": 742,
         "name": "Hinwil - Baretswil - Bauma",
-        "km": 25.26275
+        "km_am_bahnhof": 25.26275
       }
     ]
   },

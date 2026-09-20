@@ -103,7 +103,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 226,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -113,7 +114,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 220,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -201,11 +203,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 230,
         "name": "Delemont Est - Basel SBB Ost",
-        "km": 115.45125
+        "km_am_bahnhof": 115.45125
       }
     ]
   },

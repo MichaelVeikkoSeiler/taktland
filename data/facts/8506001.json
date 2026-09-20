@@ -113,7 +113,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "5",
@@ -128,7 +129,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "6",
@@ -143,7 +145,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "7",
@@ -159,7 +162,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -270,16 +274,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 850,
         "name": "St.Gallen - Winterthur Nord",
-        "km": 135.2914
+        "km_am_bahnhof": 135.2914
       },
       {
         "nummer": 754,
         "name": "Winterthur Gruze - Bauma - Ruti ZH West",
-        "km": 2.51899
+        "km_am_bahnhof": 2.51899
       }
     ]
   },

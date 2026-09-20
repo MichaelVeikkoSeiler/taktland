@@ -218,7 +218,7 @@
     {
       "id": "services",
       "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 1 Billettautomat vom Typ Libero und 2 Billettentwerter. Eine Wartehalle ist vorhanden. WLAN ist für diesen Bahnhof nicht erfasst.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ Libero und 2 Billettentwerter. Eine Wartehalle ist verzeichnet. WLAN ist für diesen Bahnhof nicht erfasst.",
       "facts": [
         {
           "label": "Billettautomaten",

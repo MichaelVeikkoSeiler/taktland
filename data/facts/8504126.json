@@ -104,7 +104,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 147,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -114,7 +115,8 @@
         "hilfstritt": false,
         "perrontyp": "Zwischenperron",
         "perronkante_m": 121,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -203,11 +205,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 251,
         "name": "Palezieux Est - Lyss Nord",
-        "km": 69.11816
+        "km_am_bahnhof": 69.11816
       }
     ]
   },

@@ -1,0 +1,615 @@
+{
+  "uic": 8501200,
+  "name": "Vevey",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Vevey liegt im Kanton Waadt. Die Infrastruktur wird von der SBB betrieben, Züge fahren hier von MOB und SBB. An einem Werktag steigen 30'400 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 27'400, an einem freien Tag 20'600.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 30400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 27400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 20600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "unit": "",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Vevey ein und aus?",
+          "options": [
+            "18'400",
+            "24'900",
+            "30'400",
+            "42'100"
+          ],
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 30'400 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "An einem freien Tag steigen in Vevey 20'600 Personen ein und aus.",
+          "correct": true,
+          "explanation": "Der Wert für einen freien Tag (dnwv) beträgt 20'600 Personen, Stand 2025.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 24000,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 24100,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 26700,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 28800,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 30400,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "explanation": "Der Werktagsverkehr stieg von 24'000 (2022) über 24'100 (2018), 26'700 (2023) und 28'800 (2024) auf 30'400 Personen im Jahr 2025.",
+          "factRef": "steckbrief.verlauf"
+        },
+        {
+          "type": "cloze",
+          "prompt": "Die Infrastruktur in Vevey wird von ___ betrieben.",
+          "options": [
+            "MOB",
+            "SBB",
+            "SNCF"
+          ],
+          "correct": 1,
+          "explanation": "Als Infrastrukturbetreiberin (isb) ist die SBB erfasst.",
+          "factRef": "steckbrief.isb",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Der Bahnhof Vevey liegt auf 386.09 Metern über Meer in der Gemeinde Vevey, Kanton Waadt. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 386.09,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiberin",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Vevey?",
+          "options": [
+            "286.09 m",
+            "386.09 m",
+            "486.09 m",
+            "586.09 m"
+          ],
+          "correct": 1,
+          "explanation": "Der Bahnhof liegt auf 386.09 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Betreiberin des Bahnhofs Vevey ist die Schweizerische Bundesbahnen SBB.",
+          "correct": true,
+          "explanation": "Als Betreiberin ist die Schweizerische Bundesbahnen SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 3 Perrons liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 486 Meter, das kürzeste 276 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 3,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 486,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 276,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Vevey?",
+          "options": [
+            "276 m",
+            "424 m",
+            "466 m",
+            "486 m"
+          ],
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron (Nr. 1) misst 486 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 1",
+              "rechts": "486 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 2/4",
+              "rechts": "466 m",
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "links": "Perron 5/7",
+              "rechts": "276 m",
+              "factRef": "perrons.items[2].laenge_m"
+            }
+          ],
+          "explanation": "Perron 1 misst 486 Meter, Perron 2/4 misst 466 Meter und Perron 5/7 misst 276 Meter.",
+          "factRef": "perrons.items"
+        },
+        {
+          "type": "true_false",
+          "prompt": "Alle 3 erfassten Perrons in Vevey sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Von 3 erfassten Perrons sind 3 niveaufrei erreichbar.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 4 Gleisen liegen offene Daten vor. Die Perronkanten reichen von 137 bis 425 Meter, die erfassten Perronhöhen betragen 35, 42 und 55 Zentimeter.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 4,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Länge der Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 4",
+              "value": 425,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 2",
+              "value": 424,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 367,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 5",
+              "value": 137,
+              "factRef": "gleise.items[3].perronkante_m"
+            }
+          ],
+          "explanation": "Die Perronkanten messen 425 Meter (Gleis 4), 424 Meter (Gleis 2), 367 Meter (Gleis 1) und 137 Meter (Gleis 5).",
+          "factRef": "gleise.items"
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welches Gleis hat eine Perronkante von 137 Metern?",
+          "options": [
+            "Gleis 1",
+            "Gleis 2",
+            "Gleis 4",
+            "Gleis 5"
+          ],
+          "correct": 3,
+          "explanation": "Gleis 5 hat eine Perronkante von 137 Metern, die übrigen Gleise haben längere Kanten.",
+          "factRef": "gleise.items[3].nr",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Welcher Perrontyp gehört zu welchem Gleis?",
+          "pairs": [
+            {
+              "links": "Gleis 1",
+              "rechts": "Hausperron",
+              "factRef": "gleise.items[0].perrontyp"
+            },
+            {
+              "links": "Gleis 2",
+              "rechts": "Mittelperron",
+              "factRef": "gleise.items[1].perrontyp"
+            }
+          ],
+          "explanation": "Gleis 1 liegt an einem Hausperron, Gleis 2 an einem Mittelperron.",
+          "factRef": "gleise.items"
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Vevey sind 16 Perronsegmente erfasst. Davon liegen 11 auf einer Höhe von 55 Zentimetern. Ein Hilfstritt ist bei keinem der Segmente erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente",
+          "value": 16,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind für Vevey erfasst?",
+          "options": [
+            "9",
+            "14",
+            "16",
+            "19"
+          ],
+          "correct": 2,
+          "explanation": "Es sind 16 Perronsegmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele der erfassten Segmente liegen auf 55 Zentimetern Höhe?",
+          "min": 0,
+          "max": 16,
+          "step": 1,
+          "unit": "Segmente",
+          "correct": 11,
+          "explanation": "11 von 16 erfassten Segmenten liegen auf 55 Zentimetern Höhe.",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        },
+        {
+          "type": "true_false",
+          "prompt": "Es ist kein Segment mit Hilfstritt erfasst.",
+          "correct": true,
+          "explanation": "Die Zahl der Segmente mit Hilfstritt beträgt 0.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt St-Saphorin–Vevey verkehren im Personenverkehr rund 237 Züge pro Tag, beide Richtungen zusammen. Im Güterverkehr sind es auf diesem Abschnitt 26 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Abschnitt St-Saphorin–Vevey (Personenverkehr)",
+          "value": 237,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren pro Tag im Personenverkehr auf dem Abschnitt St-Saphorin–Vevey?",
+          "options": [
+            "95",
+            "130",
+            "170",
+            "237"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt St-Saphorin–Vevey verkehren rund 237 Züge pro Tag im Personenverkehr, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehrs-Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "St-Saphorin–Vevey",
+              "value": 86544,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Vevey–La Tour-de-Peilz",
+              "value": 84483,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Vevey-Funi–Vevey",
+              "value": 14141,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            }
+          ],
+          "explanation": "St-Saphorin–Vevey verzeichnet 86'544 Züge pro Jahr, Vevey–La Tour-de-Peilz 84'483 und Vevey-Funi–Vevey 14'141, jeweils im Personenverkehr 2025.",
+          "factRef": "zuege.abschnitte"
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Vevey–La Tour-de-Peilz verkehren im Güterverkehr rund 26 Züge pro Tag.",
+          "correct": true,
+          "explanation": "Der Abschnitt Vevey–La Tour-de-Peilz weist im Güterverkehr 26 Züge pro Tag auf, Stand 2025.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Vevey sind 2 Linien erfasst: die Linie 112 Vevey–Blonay und die Linie 100 Lausanne–Simplon Tunnel I–Iselle.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 2,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie heisst die Linie 112 in Vevey?",
+          "options": [
+            "Vevey - Blonay",
+            "Lausanne - Brig",
+            "Vevey - Chexbres",
+            "Montreux - Gstaad"
+          ],
+          "correct": 0,
+          "explanation": "Die Linie 112 trägt den Namen Vevey - Blonay.",
+          "factRef": "linien.items[0].name",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welcher Kilometerwert gehört zu welcher Linie?",
+          "pairs": [
+            {
+              "links": "Linie 112",
+              "rechts": "0 km",
+              "factRef": "linien.items[0].km_am_bahnhof"
+            },
+            {
+              "links": "Linie 100",
+              "rechts": "18.39805 km",
+              "factRef": "linien.items[1].km_am_bahnhof"
+            }
+          ],
+          "explanation": "Linie 112 beginnt bei Kilometer 0, Linie 100 liegt bei Kilometer 18.39805.",
+          "factRef": "linien.items"
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Vevey ist als WLAN-Standort erfasst. Es sind 4 Billettautomaten vom Typ ePOS und 10 Billettentwerter erfasst, dazu 1 Wartehalle.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 4,
+          "unit": "",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 10,
+          "unit": "",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 1,
+          "unit": "",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Vevey erfasst?",
+          "options": [
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 4 Billettautomaten vom Typ ePOS.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Vevey steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Für Vevey ist WLAN erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Billettentwerter sind in Vevey erfasst?",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "unit": "Stück",
+          "correct": 10,
+          "explanation": "Es sind 10 Billettentwerter erfasst.",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Vevey ist ein Bahnhofplan als A4- und Plakat-PDF veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": "",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Die Eigentümerin des Bahnhofplans von Vevey ist die SBB.",
+          "correct": true,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 4 Gleise (1, 2, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu Gleis 5 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

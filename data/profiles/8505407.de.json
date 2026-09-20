@@ -98,7 +98,7 @@
             "390 m"
           ],
           "correct": 1,
-          "explanation": "132 Meter.",
+          "explanation": "Das einzige Perron, zu dem für S. Nazzaro offene Daten vorliegen, ist 132 Meter lang. Ob der Bahnhof weitere Perrons hat, sagen die Daten nicht.",
           "factRef": "perrons.items[0].laenge_m",
           "difficulty": 1
         }

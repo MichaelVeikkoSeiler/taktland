@@ -1,0 +1,613 @@
+{
+  "uic": 8503110,
+  "name": "Rapperswil SG",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Rapperswil SG wird von SBB und SOB bedient, die Infrastruktur gehört der SBB. An einem Werktag steigen hier rund 27'000 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 25'300. An einem freien Tag sind es 21'400 Personen. Seit 2018 ist der Werktagsverkehr von 22'900 auf 27'000 Personen gestiegen.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 27000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Tagesmittel über das Jahr",
+          "value": 25300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Betreiberinnen der Züge",
+          "value": "SBB, SOB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Rapperswil SG ein und aus?",
+          "options": [
+            "14'500",
+            "27'000",
+            "41'000",
+            "58'000"
+          ],
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 27'000 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Personen steigen an einem freien Tag (Wochenende und Feiertage) in Rapperswil SG durchschnittlich ein und aus?",
+          "min": 0,
+          "max": 40000,
+          "step": 100,
+          "unit": "Personen",
+          "correct": 21400,
+          "explanation": "Der Wert für freie Tage liegt bei 21'400 Personen, Stand 2025.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Werktagsverkehrswerte nach Jahr, kleinster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 22900,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 24400,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 27000,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr stieg von 22'900 (2018) über 24'400 (2023) auf 27'000 Personen (2025)."
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Der Bahnhof liegt auf 408,6 Metern über Meer in der Gemeinde Rapperswil-Jona, Bezirk See-Gaster, Kanton St. Gallen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 408.6,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bezirk",
+          "value": "See-Gaster",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Rapperswil SG?",
+          "options": [
+            "298,4 m",
+            "408,6 m",
+            "512,1 m",
+            "623,0 m"
+          ],
+          "correct": 1,
+          "explanation": "Der Bahnhof liegt auf 408,6 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Rapperswil SG wird von den Schweizerischen Bundesbahnen SBB betrieben.",
+          "correct": true,
+          "explanation": "Als Betreiber ist die SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 4 Perrons liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 364 Meter, das kürzeste 151 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 4,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 364,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 151,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Rapperswil SG?",
+          "options": [
+            "222 m",
+            "288 m",
+            "364 m",
+            "412 m"
+          ],
+          "correct": 2,
+          "explanation": "Das Perron 1 misst 364 Meter, das längste in den erfassten Daten.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Das kürzeste erfasste Perron misst ___ Meter.",
+          "options": [
+            "60",
+            "83",
+            "110",
+            "151"
+          ],
+          "correct": 3,
+          "explanation": "Perron 6/7 misst 151 Meter und ist das kürzeste erfasste Perron.",
+          "factRef": "perrons.kuerzeste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 1",
+              "value": 364,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 2/3",
+              "value": 327,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 4/5",
+              "value": 288,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 6/7",
+              "value": 151,
+              "factRef": "perrons.items[3].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Nach Länge sortiert: Perron 1 mit 364 m, Perron 2/3 mit 327 m, Perron 4/5 mit 288 m und Perron 6/7 mit 151 m."
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Zu 4 Perrons mit Daten sind alle als niveaufrei erreichbar erfasst. Die BehiG-Erhebung verzeichnet 16 Perronabschnitte, davon 0 mit Hilfstritt. Zu 7 Gleisen liegen Daten zur Perronhöhe vor, alle mit 55 cm.",
+      "facts": [
+        {
+          "label": "Erfasste Perronabschnitte (Segmente)",
+          "value": 16,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 7,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronabschnitte (Segmente) sind in der BehiG-Erhebung für Rapperswil SG erfasst?",
+          "options": [
+            "9",
+            "14",
+            "16",
+            "19"
+          ],
+          "correct": 2,
+          "explanation": "Die Erhebung verzeichnet 16 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der erfassten Segmente verfügen über einen Hilfstritt?",
+          "options": [
+            "0",
+            "4",
+            "8",
+            "16"
+          ],
+          "correct": 0,
+          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Ordne die Kennzahlen der Hindernisfreiheit ihren Werten zu.",
+          "pairs": [
+            {
+              "links": "Gleise mit 55 cm Perronhöhe",
+              "rechts": "7",
+              "factRef": "hindernisfreiheit.gleise_mit_55cm"
+            },
+            {
+              "links": "Erfasste Segmente",
+              "rechts": "16",
+              "factRef": "hindernisfreiheit.segmente"
+            }
+          ],
+          "factRef": "hindernisfreiheit",
+          "explanation": "Erfasst sind 7 Gleise mit 55 cm Perronhöhe und 16 Perronabschnitte (Segmente) insgesamt."
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Rapperswil SG und Rapperswil West verkehren im Personenverkehr rund 185 Züge pro Tag, das entspricht 67'652 Zügen im Jahr 2025. Auf dem Abschnitt Rapperswil–Rapperswil Nordost sind es 156 Züge pro Tag, auf dem Abschnitt Rapperswil Ost–Rapperswil SG 153 und auf dem Abschnitt Rapperswil Nord–Rapperswil SG 76.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Rapperswil SG–Rapperswil West",
+          "value": 185,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Rapperswil SG–Rapperswil West",
+          "value": 67652,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge im Personenverkehr verkehren pro Tag auf dem Abschnitt Rapperswil SG–Rapperswil West?",
+          "options": [
+            "74",
+            "100",
+            "160",
+            "185"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt sind es rund 185 Züge pro Tag, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Streckenabschnitte nach Zügen pro Tag im Personenverkehr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Rapperswil SG–Rapperswil West",
+              "value": 185,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Rapperswil SG–Rapperswil Nordost",
+              "value": 156,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Rapperswil Ost–Rapperswil SG",
+              "value": 153,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            },
+            {
+              "label": "Rapperswil Nord–Rapperswil SG",
+              "value": 76,
+              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Im Personenverkehr verkehren pro Tag 185 Züge auf Rapperswil SG–West, 156 auf Rapperswil–Nordost, 153 auf Rapperswil Ost–Rapperswil SG und 76 auf Rapperswil Nord–Rapperswil SG."
+        },
+        {
+          "type": "cloze",
+          "prompt": "Der Abschnitt Rapperswil SG–Rapperswil West trägt die Streckennummer ___.",
+          "options": [
+            "350",
+            "480",
+            "600",
+            "864"
+          ],
+          "correct": 3,
+          "explanation": "Der Abschnitt gehört zur Strecke Nummer 864, Rapperswil–Pfäffikon.",
+          "factRef": "zuege.staerkster_abschnitt.strecke_nr",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen für Rapperswil SG beziffern die Züge, die auf einem Streckenabschnitt verkehren, nicht die Zahl der Züge, die im Bahnhof halten.",
+          "correct": true,
+          "explanation": "Die Zugzahlen zählen Züge auf einem Streckenabschnitt in beide Richtungen zusammen, nicht Halte am Bahnhof.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Rapperswil SG sind 3 Linien erfasst: die Linie 671 nach Pfäffikon Ost (SOB), die Linie 730 von Zürich Stadelhofen und die Linie 740 nach Wallisellen Ost.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 3,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung von Rapperswil SG auf der Linie 730",
+          "value": 35.97301,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien sind für Rapperswil SG erfasst?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 3 Linien erfasst: 671, 730 und 740.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Ordne die Liniennummern ihren Bezeichnungen zu.",
+          "pairs": [
+            {
+              "links": "671",
+              "rechts": "Rapperswil - Pfaffikon Ost (SOB)",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "730",
+              "rechts": "Zurich Stadelhofen - Rapperswil",
+              "factRef": "linien.items[1].name"
+            },
+            {
+              "links": "740",
+              "rechts": "Rapperswil - Uster - Wallisellen Ost",
+              "factRef": "linien.items[2].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Linie 671 führt nach Pfäffikon Ost (SOB), Linie 730 kommt von Zürich Stadelhofen und Linie 740 führt nach Wallisellen Ost."
+        },
+        {
+          "type": "cloze",
+          "prompt": "Auf der Linie 730 Zürich Stadelhofen - Rapperswil steht Rapperswil SG bei Kilometer ___.",
+          "options": [
+            "25.97301",
+            "35.97301",
+            "45.97301"
+          ],
+          "correct": 1,
+          "explanation": "Die Kilometrierung von Rapperswil SG auf der Linie 730 beträgt 35.97301. Der Wert zählt ab Zürich Stadelhofen und beschreibt den Standort des Bahnhofs.",
+          "factRef": "linien.items[1].km_am_bahnhof",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 2 Billettautomaten vom Typ ePOS, 11 Billettentwerter und 7 Wartehallen. Der Bahnhof steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 2,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 11,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 7,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Rapperswil SG erfasst?",
+          "options": [
+            "1",
+            "2",
+            "4",
+            "6"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Billettautomaten vom Typ ePOS.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind für Rapperswil SG erfasst?",
+          "options": [
+            "8",
+            "9",
+            "11",
+            "13"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 11 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Rapperswil SG steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "WLAN ist für diesen Bahnhof nicht erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Rapperswil SG ist ein Bahnhofplan als PDF veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Die SBB ist als Eigentümerin des Bahnhofplans für Rapperswil SG erfasst.",
+          "correct": true,
+          "explanation": "Als Eigentümerin ist die SBB eingetragen.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welcher Form ist der Bahnhofplan für Rapperswil SG verfügbar?",
+          "options": [
+            "Nur als gedruckte Broschüre",
+            "Als A4-PDF",
+            "Nur als interaktive Karte",
+            "Nicht verfügbar"
+          ],
+          "correct": 1,
+          "explanation": "Es ist ein A4-PDF des Bahnhofplans veröffentlicht.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 7 Gleise (1, 2, 3, 4, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

@@ -414,7 +414,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -429,7 +430,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -442,7 +444,8 @@
         "perronkante_m": 69,
         "sektoren": [
           "A"
-        ]
+        ],
+        "sektoren_anzahl": 1
       },
       {
         "nr": "5",
@@ -459,7 +462,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "7",
@@ -475,7 +479,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "8",
@@ -491,7 +496,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "9",
@@ -508,7 +514,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "10",
@@ -524,7 +531,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "11",
@@ -536,7 +544,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "12",
@@ -549,7 +558,8 @@
         "sektoren": [
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "13",
@@ -560,7 +570,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "14",
@@ -570,7 +581,8 @@
         "perronkante_m": 182,
         "sektoren": [
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 1
       }
     ]
   },
@@ -661,16 +673,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 920,
         "name": "Landquart RhB - Chur - Disentis",
-        "km": 13.87121
+        "km_am_bahnhof": 13.87121
       },
       {
         "nummer": 900,
         "name": "Sargans Ost - Chur West (Gleisende)",
-        "km": 25.71888
+        "km_am_bahnhof": 25.71888
       }
     ]
   },

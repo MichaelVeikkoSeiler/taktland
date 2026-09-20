@@ -107,7 +107,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "2",
@@ -122,7 +123,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -137,7 +139,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -225,11 +228,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 630,
         "name": "Giubiasco - Locarno",
-        "km": 159.48
+        "km_am_bahnhof": 159.48
       }
     ]
   },

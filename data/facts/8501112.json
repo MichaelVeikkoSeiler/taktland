@@ -116,7 +116,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 167,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -132,7 +133,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -147,7 +149,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -236,16 +239,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 210,
         "name": "Daillens - Biel/Bienne",
-        "km": 27.45883
+        "km_am_bahnhof": 27.45883
       },
       {
         "nummer": 9211,
         "name": "Chavornay - Les Granges (Orbe) Projet",
-        "km": 27.45883
+        "km_am_bahnhof": 27.45883
       }
     ]
   },

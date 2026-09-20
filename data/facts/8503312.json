@@ -111,7 +111,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "2",
@@ -128,7 +129,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -145,7 +147,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       }
     ]
   },
@@ -242,16 +245,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 760,
         "name": "Zurich Hardbrucke  - Bulach",
-        "km": 13.11183
+        "km_am_bahnhof": 13.11183
       },
       {
         "nummer": 761,
         "name": "Oberglatt - Niederweningen Gleisende",
-        "km": 13.12152
+        "km_am_bahnhof": 13.12152
       }
     ]
   },

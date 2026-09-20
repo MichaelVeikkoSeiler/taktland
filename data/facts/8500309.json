@@ -121,7 +121,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -137,7 +138,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -153,7 +155,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -169,7 +172,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "5",
@@ -185,7 +189,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -315,26 +320,27 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 4,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 647,
         "name": "Brugg - Hendschiken Nord",
-        "km": -0.00105
+        "km_am_bahnhof": -0.00105
       },
       {
         "nummer": 700,
         "name": "Brugg - Pratteln Ost",
-        "km": 31.27262
+        "km_am_bahnhof": 31.27262
       },
       {
         "nummer": 640,
         "name": "Brugg - Rupperswil",
-        "km": 31.27592
+        "km_am_bahnhof": 31.27592
       },
       {
         "nummer": 710,
         "name": "Zurich HB - Brugg AG",
-        "km": 31.26561
+        "km_am_bahnhof": 31.26561
       }
     ]
   },

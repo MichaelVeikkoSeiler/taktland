@@ -113,7 +113,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "4",
@@ -126,7 +127,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "5",
@@ -140,7 +142,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -248,21 +251,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 420,
         "name": "Solothurn West - Moutier",
-        "km": 22.08686
+        "km_am_bahnhof": 22.08686
       },
       {
         "nummer": 232,
         "name": "Moutier - Lengnau Ost",
-        "km": 0.00471
+        "km_am_bahnhof": 0.00471
       },
       {
         "nummer": 226,
         "name": "Sonceboz-Sombeval - Moutier - Delemont",
-        "km": 73.39849
+        "km_am_bahnhof": 73.39849
       }
     ]
   },

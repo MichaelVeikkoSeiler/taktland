@@ -1,0 +1,652 @@
+{
+  "uic": 8501506,
+  "name": "Sion",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Sion liegt im Kanton Wallis und wird von SBB als Infrastrukturbetreiberin sowie von RegionAlps und SBB als Bahnunternehmen bedient. An einem Werktag steigen hier 16'000 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 14'300. Zwischen 2018 und 2025 ist der Werktagsverkehr von 13'400 auf 16'000 Personen gestiegen.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 16000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 14300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 10400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "unit": "",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Sion ein und aus?",
+          "options": [
+            "8'000",
+            "16'000",
+            "24'000",
+            "32'000"
+          ],
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 16'000 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "An einem freien Tag steigen in Sion durchschnittlich 10'400 Personen ein und aus.",
+          "correct": true,
+          "explanation": "Der Wert für einen freien Tag (dnwv) beträgt 10'400 Personen, Stand 2025.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 12900,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 13400,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 14900,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 15500,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 16000,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr stieg von 12'900 Personen (2022) über 13'400 (2018), 14'900 (2023) und 15'500 (2024) auf 16'000 Personen (2025).",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "Im Tagesmittel über das ganze Jahr steigen in Sion ___ Personen ein und aus.",
+          "options": [
+            "5'700",
+            "7'900",
+            "14'300"
+          ],
+          "correct": 2,
+          "explanation": "Der Tagesmittelwert (dtv) beträgt 14'300 Personen, Stand 2025.",
+          "factRef": "steckbrief.dtv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Der Bahnhof Sion liegt auf 490.57 Metern über Meer in der Gemeinde Sion im Kanton Wallis. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 490.57,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiber",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Sion?",
+          "options": [
+            "390 m",
+            "490.57 m",
+            "590 m",
+            "690 m"
+          ],
+          "correct": 1,
+          "explanation": "Der Bahnhof liegt auf 490.57 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Betreiber des Bahnhofs Sion sind die Schweizerischen Bundesbahnen SBB.",
+          "correct": true,
+          "explanation": "Als Betreiber ist die Schweizerische Bundesbahnen SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu zwei Perrons in Sion liegen offene Daten vor. Das längste misst 443 Meter, das kürzeste 336 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 443,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 336,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Sion?",
+          "options": [
+            "336 m",
+            "398 m",
+            "443 m",
+            "460 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron (2/3) misst 443 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "443 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "336 m",
+              "factRef": "perrons.items[1].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 misst 443 Meter, Perron 1 misst 336 Meter.",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Sion sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Von den 2 erfassten Perrons sind 2 niveaufrei erreichbar.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu drei Gleisen in Sion liegen offene Daten vor. Gleis 1 hat eine Perronkante von 150 Metern mit Perronhöhen von 20, 30 und 55 Zentimetern. Gleis 2 und Gleis 3 haben je eine Perronkante von 443 Metern mit einer Perronhöhe von 55 Zentimetern.",
+      "facts": [
+        {
+          "label": "Perronkante Gleis 1",
+          "value": 150,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 2",
+          "value": 443,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat mit 443 Metern eine der längsten erfassten Perronkanten?",
+          "schema": "gleise",
+          "correct": "2",
+          "factRef": "gleise.items[1].nr",
+          "explanation": "Gleis 2 hat eine Perronkante von 443 Metern.",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Länge der Perronkante, kürzeste zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Gleis 1",
+              "value": 150,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 2",
+              "value": 443,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 443,
+              "factRef": "gleise.items[2].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 1 hat eine Perronkante von 150 Metern, Gleis 2 und Gleis 3 je 443 Meter.",
+          "difficulty": 2
+        },
+        {
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Sion erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "30 cm",
+            "55 cm",
+            "70 cm"
+          ],
+          "correct": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Für Gleis 1 sind die Perronhöhen 20, 30 und 55 cm erfasst.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Sion sind 8 Perronabschnitte (Segmente) erfasst. Bei 5 dieser Segmente beträgt die Perronhöhe 55 Zentimeter. Eine visuell-taktile Sicherheitslinie ist vorhanden, ein Hilfstritt ist bei keinem der erfassten Segmente vermerkt.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 8,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 3,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Visuell-taktile Sicherheitslinie",
+          "value": "Ja",
+          "unit": "",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronabschnitte (Segmente) sind für Sion erfasst?",
+          "options": [
+            "7",
+            "8",
+            "10",
+            "11"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 8 Segmente erfasst, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für Sion ist eine visuell-taktile Sicherheitslinie erfasst.",
+          "correct": true,
+          "explanation": "Die Sicherheitslinie ist mit 'Ja' erfasst.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Bei wie vielen der erfassten Gleise in Sion beträgt die Perronhöhe 55 cm?",
+          "min": 0,
+          "max": 3,
+          "step": 1,
+          "unit": "Gleise",
+          "correct": 3,
+          "explanation": "Alle 3 Gleise mit Daten weisen eine Perronhöhe von 55 cm auf.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Châteauneuf-Conthey–Sion der Strecke St. Maurice–Visp verkehren im Personenverkehr täglich rund 154 Züge in beiden Richtungen zusammen. Auf dem Abschnitt Sion–St-Léonard sind es im Güterverkehr täglich rund 15 Züge.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Châteauneuf-Conthey–Sion",
+          "value": 154,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Tag, Güterverkehr Sion–St-Léonard",
+          "value": 15,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren pro Tag im Personenverkehr auf dem Abschnitt Châteauneuf-Conthey–Sion (beide Richtungen zusammen)?",
+          "options": [
+            "88",
+            "120",
+            "154",
+            "180"
+          ],
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt verkehren im Personenverkehr rund 154 Züge pro Tag, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Sion–St-Léonard verkehren im Güterverkehr täglich rund 15 Züge.",
+          "correct": true,
+          "explanation": "Für diesen Abschnitt sind im Güterverkehr rund 15 Züge pro Tag erfasst, Stand 2025.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Sion ist eine Linie mit offenen Daten erfasst: die Linie 100 von Lausanne über den Simplontunnel I nach Iselle.",
+      "facts": [
+        {
+          "label": "Liniennummer",
+          "value": 100,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        },
+        {
+          "label": "Linienname",
+          "value": "Lausanne - Simplon Tunnel I - Iselle",
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].name"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Liniennummer ist für Sion erfasst?",
+          "options": [
+            "40",
+            "70",
+            "85",
+            "100"
+          ],
+          "correct": 3,
+          "explanation": "Es ist die Linie 100 erfasst.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Die für Sion erfasste Linie trägt den Namen ___.",
+          "options": [
+            "Lausanne - Simplon Tunnel I - Iselle",
+            "Genève - Lausanne - Brig",
+            "St. Maurice - Visp"
+          ],
+          "correct": 0,
+          "explanation": "Die erfasste Linie 100 trägt den Namen 'Lausanne - Simplon Tunnel I - Iselle'.",
+          "factRef": "linien.items[0].name",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Für Sion sind 3 Billettautomaten und 6 Billettentwerter erfasst, dazu 2 Wartehallen. Sion steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 3,
+          "unit": "",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 6,
+          "unit": "",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Erfasste Wartehallen",
+          "value": 2,
+          "unit": "",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Sion erfasst?",
+          "options": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 3 Billettautomaten erfasst.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Sion steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "WLAN ist für Sion als vorhanden erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Billettentwerter sind für Sion erfasst?",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "unit": "Stück",
+          "correct": 6,
+          "explanation": "Es sind 6 Billettentwerter erfasst.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Sion liegt ein Bahnhofplan als PDF vor. Als Eigentümerin der Anlage ist die SBB erfasst.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": "",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wem gehört der Bahnhof Sion gemäss den Bahnhofplan-Daten?",
+          "options": [
+            "SBB",
+            "BLS",
+            "Kanton Wallis",
+            "Gemeinde Sion"
+          ],
+          "correct": 0,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        20,
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 150,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 443,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 443,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ]
+}

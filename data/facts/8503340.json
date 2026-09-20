@@ -97,7 +97,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 244,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -108,7 +109,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 246,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -217,16 +219,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 750,
         "name": "ZH Oerlikon Nord - Dorfnest",
-        "km": 7.18517
+        "km_am_bahnhof": 7.18517
       },
       {
         "nummer": 752,
         "name": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
-        "km": 7.18518
+        "km_am_bahnhof": 7.18518
       }
     ]
   },

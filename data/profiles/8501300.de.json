@@ -1,0 +1,668 @@
+{
+  "uic": 8501300,
+  "name": "Montreux",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "In Montreux betreibt die SBB die Infrastruktur, während MOB und SBB als Bahnunternehmen verkehren. An einem Werktag steigen hier 19'900 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 19'500. An einem freien Tag sind es 18'700 Personen.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 19900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Tagesmittel über das ganze Jahr",
+          "value": 19500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Verkehr an einem freien Tag",
+          "value": 18700,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "unit": "",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "MOB, SBB",
+          "unit": "",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Montreux ein und aus?",
+          "options": [
+            "9900",
+            "14900",
+            "19900",
+            "24900"
+          ],
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 19'900 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Das Tagesmittel über das ganze Jahr liegt in Montreux höher als der Wert an einem freien Tag.",
+          "correct": true,
+          "explanation": "Das Tagesmittel beträgt 19'500 Personen, an einem freien Tag sind es 18'700 Personen (2025).",
+          "factRef": "steckbrief.dtv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 15400,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 16500,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 17600,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 18100,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 19900,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die tiefste Werktagsfrequenz in der Reihe war 2022 mit 15'400 Personen, die höchste 2025 mit 19'900 Personen."
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche Bahnunternehmen sind in Montreux als EVU erfasst?",
+          "options": [
+            "MOB, SBB",
+            "SBB, BLS",
+            "MOB, SNCF",
+            "SBB, SNCF"
+          ],
+          "correct": 0,
+          "explanation": "Als Bahnunternehmen sind MOB und SBB gemeinsam erfasst.",
+          "factRef": "steckbrief.evu",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Montreux liegt auf 395.389 Metern über Meer in der Gemeinde Montreux, Bezirk Riviera-Pays-d'Enhaut, Kanton Vaud. Betrieben wird die Haltestelle von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 395.389,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Riviera-Pays-d'Enhaut",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        },
+        {
+          "label": "Betreiber",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Montreux (in Metern)?",
+          "min": 300,
+          "max": 500,
+          "step": 5,
+          "unit": "m",
+          "correct": 395,
+          "explanation": "Die Haltestelle liegt auf 395.389 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt Montreux?",
+          "options": [
+            "Riviera-Pays-d'Enhaut",
+            "Lausanne",
+            "Nyon",
+            "Morges"
+          ],
+          "correct": 0,
+          "explanation": "Montreux liegt im Bezirk Riviera-Pays-d'Enhaut.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Montreux wird von den Schweizerischen Bundesbahnen SBB betrieben.",
+          "correct": true,
+          "explanation": "Als Betreiber ist die Schweizerische Bundesbahnen SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 4 Perrons in Montreux liegen offene Daten vor. Das längste erfasste Perron misst 410 Meter, das kürzeste 170 Meter. Alle 4 Perrons mit Daten sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 4,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 410,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 170,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbar",
+          "value": 4,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Montreux?",
+          "options": [
+            "170 m",
+            "200 m",
+            "405 m",
+            "410 m"
+          ],
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 410 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 1",
+              "rechts": "410 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 3",
+              "rechts": "405 m",
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "links": "Perron 7",
+              "rechts": "200 m",
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "links": "Perron 4",
+              "rechts": "170 m",
+              "factRef": "perrons.items[3].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 1 misst 410 m, Perron 3 405 m, Perron 7 200 m und Perron 4 170 m."
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 1",
+              "value": 410,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 3",
+              "value": 405,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 7",
+              "value": 200,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 4",
+              "value": 170,
+              "factRef": "perrons.items[3].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Nach Länge geordnet folgen die Perrons 1 (410 m), 3 (405 m), 7 (200 m) und 4 (170 m) aufeinander."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu allen 4 erfassten Perrons in Montreux liegt ein niveaufreier Zugang vor.",
+          "correct": true,
+          "explanation": "Alle 4 Perrons mit Daten sind niveaufrei erreichbar.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Montreux sind 10 Perronsegmente erfasst, davon 6 mit einer Perronhöhe von 25 cm und 4 mit 55 cm. Zu keinem der Segmente ist ein Hilfstritt erfasst. Eine Sicherheitslinie ist vorhanden.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente",
+          "value": 10,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit 25 cm Perronhöhe",
+          "value": 6,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.25"
+        },
+        {
+          "label": "Segmente mit 55 cm Perronhöhe",
+          "value": 4,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Sicherheitslinie vorhanden",
+          "value": "Ja",
+          "unit": "",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind für Montreux erfasst?",
+          "options": [
+            "8",
+            "10",
+            "12",
+            "14"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 10 Segmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Es ist kein Segment mit Hilfstritt erfasst.",
+          "correct": true,
+          "explanation": "Segmente mit Hilfstritt: 0.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Von den erfassten Segmenten haben ___ eine Perronhöhe von 25 cm.",
+          "options": [
+            "5",
+            "6",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "6 Segmente sind mit 25 cm Perronhöhe erfasst.",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.25",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Montreux–Vernex (diag) der Strecke Lausanne–St. Maurice verkehren im Personenverkehr rund 231 Züge pro Tag in beide Richtungen zusammen. Im Güterverkehr sind es auf diesem Abschnitt rund 26 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Montreux–Vernex (diag)",
+          "value": 231,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Montreux–Vernex (diag)",
+          "value": 84483,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Tag, Güterverkehr Montreux–Vernex (diag)",
+          "value": 26,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren pro Tag im Personenverkehr auf dem Abschnitt Montreux–Vernex (diag)?",
+          "options": [
+            "92",
+            "130",
+            "160",
+            "231"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt sind es rund 231 Züge pro Tag im Personenverkehr (2025).",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Montreux–Vernex (diag) verkehren im Güterverkehr mehr Züge pro Tag als im Personenverkehr.",
+          "correct": false,
+          "explanation": "Im Güterverkehr sind es 26 Züge pro Tag, im Personenverkehr 231.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "Auf dem Abschnitt Montreux–Vernex (diag) verkehren im Personenverkehr rund ___ Züge pro Jahr.",
+          "options": [
+            "34'000",
+            "46'000",
+            "84'483"
+          ],
+          "correct": 2,
+          "explanation": "Im Personenverkehr sind es 84'483 Züge pro Jahr auf diesem Abschnitt.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Montreux ist eine Linie erfasst: die Linie 100, Lausanne–Simplon Tunnel I–Iselle, mit einer Kilometrierung von 24.5365 km am Bahnhof.",
+      "facts": [
+        {
+          "label": "Anzahl erfasster Linien",
+          "value": 1,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie 100",
+          "value": "Lausanne - Simplon Tunnel I - Iselle",
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].name"
+        },
+        {
+          "label": "Kilometrierung Linie 100",
+          "value": 24.5365,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie heisst die für Montreux erfasste Linie 100?",
+          "options": [
+            "Genève - Lausanne",
+            "Lausanne - Simplon Tunnel I - Iselle",
+            "Bern - Zürich",
+            "Montreux - Gstaad"
+          ],
+          "correct": 1,
+          "explanation": "Die Linie 100 führt von Lausanne über den Simplon Tunnel I nach Iselle.",
+          "factRef": "linien.items[0].name",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer liegt Montreux auf der Linie 100 (in km)?",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "km",
+          "correct": 25,
+          "explanation": "Der Wert beträgt 24.5365 km.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Für Montreux ist WLAN erfasst. Zudem sind 3 Billettautomaten des Typs ePOS, 6 Billettentwerter und 2 Wartehallen erfasst.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten",
+          "value": 3,
+          "unit": "",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 6,
+          "unit": "",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 2,
+          "unit": "",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Montreux ist WLAN erfasst.",
+          "correct": true,
+          "explanation": "Montreux steht in der Liste der WLAN-Standorte.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Montreux erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "5"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 3 Billettautomaten des Typs ePOS.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Billettentwerter sind für Montreux erfasst?",
+          "min": 0,
+          "max": 12,
+          "step": 1,
+          "unit": "Stück",
+          "correct": 6,
+          "explanation": "Erfasst sind 6 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Wartehallen sind für Montreux erfasst?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "4"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 2 Wartehallen.",
+          "factRef": "services.wartehallen_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Montreux ist ein Bahnhofplan als PDF veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": "",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wer ist gemäss den erfassten Daten Eigentümerin der Bahnhofsanlage in Montreux?",
+          "options": [
+            "MOB",
+            "SBB",
+            "Gemeinde Montreux",
+            "Kanton Vaud"
+          ],
+          "correct": 1,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu Gleis 2 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

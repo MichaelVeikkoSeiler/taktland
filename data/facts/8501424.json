@@ -132,11 +132,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 131,
         "name": "Les Paluds - St-Gingolph (Frontiere)",
-        "km": 16.14
+        "km_am_bahnhof": 16.14
       }
     ]
   },

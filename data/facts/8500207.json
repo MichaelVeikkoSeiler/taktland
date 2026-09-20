@@ -127,7 +127,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "2",
@@ -147,7 +148,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "3",
@@ -168,7 +170,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "5",
@@ -183,7 +186,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "6",
@@ -195,7 +199,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -326,26 +331,27 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 4,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 415,
         "name": "Wanzwil (Abzw) - Solothurn - Busswil",
-        "km": 80.29297
+        "km_am_bahnhof": 80.29297
       },
       {
         "nummer": 411,
         "name": "Solothurn - Niederbipp",
-        "km": 0
+        "km_am_bahnhof": 0
       },
       {
         "nummer": 410,
         "name": "Olten - Solothurn - Biel/Bienne",
-        "km": 73.81863
+        "km_am_bahnhof": 73.81863
       },
       {
         "nummer": 292,
         "name": "Solothurn - Bern RBS",
-        "km": 0
+        "km_am_bahnhof": 0
       }
     ]
   },

@@ -106,7 +106,8 @@
         "hilfstritt": true,
         "perrontyp": "Hausperron",
         "perronkante_m": 150,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -116,7 +117,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 219,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -126,7 +128,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 219,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -215,16 +218,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 9660,
         "name": "Sihlbrugg - Baar Projekt ZBT2",
-        "km": 43.57412
+        "km_am_bahnhof": 43.57412
       },
       {
         "nummer": 660,
         "name": "Thalwil - Zug - Fluhmuhle",
-        "km": 43.57412
+        "km_am_bahnhof": 43.57412
       }
     ]
   },

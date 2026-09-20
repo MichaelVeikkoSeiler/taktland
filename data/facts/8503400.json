@@ -131,7 +131,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -147,7 +148,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -164,7 +166,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -177,7 +180,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "5",
@@ -190,7 +194,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "6",
@@ -203,7 +208,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -313,21 +319,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 770,
         "name": "Bulach - Eglisau - Neuhausen",
-        "km": 16.25419
+        "km_am_bahnhof": 16.25419
       },
       {
         "nummer": 769,
         "name": "Winterthur West - Bulach",
-        "km": 16.25824
+        "km_am_bahnhof": 16.25824
       },
       {
         "nummer": 760,
         "name": "Zurich Hardbrucke  - Bulach",
-        "km": 20.27248
+        "km_am_bahnhof": 20.27248
       }
     ]
   },

@@ -118,7 +118,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 123,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -134,7 +135,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -150,7 +152,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -168,7 +171,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "5",
@@ -186,7 +190,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       }
     ]
   },
@@ -296,16 +301,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 825,
         "name": "Romanshorn Feld H - Rorschach",
-        "km": 97.26665
+        "km_am_bahnhof": 97.26665
       },
       {
         "nummer": 880,
         "name": "Sargans Ost - St.Gallen",
-        "km": 65.05045
+        "km_am_bahnhof": 65.05045
       }
     ]
   },

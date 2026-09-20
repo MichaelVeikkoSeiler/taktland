@@ -95,7 +95,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 150,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "4",
@@ -105,7 +106,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 150,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -193,21 +195,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 411,
         "name": "Solothurn - Niederbipp",
-        "km": 14.548
+        "km_am_bahnhof": 14.548
       },
       {
         "nummer": 413,
         "name": "Langenthal - Niederbipp",
-        "km": 10.986
+        "km_am_bahnhof": 10.986
       },
       {
         "nummer": 410,
         "name": "Olten - Solothurn - Biel/Bienne",
-        "km": 58.61059
+        "km_am_bahnhof": 58.61059
       }
     ]
   },

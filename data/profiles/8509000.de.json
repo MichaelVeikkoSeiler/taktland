@@ -459,7 +459,7 @@
             "14"
           ],
           "correct": 1,
-          "explanation": "5 Wartehallen.",
+          "explanation": "In den offenen Daten sind für Chur 5 Wartehallen erfasst. Die Zahl gibt wieder, was erfasst ist, nicht zwingend, was vor Ort steht.",
           "factRef": "services.wartehallen_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 1

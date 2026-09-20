@@ -110,7 +110,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -125,7 +126,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -233,21 +235,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 650,
         "name": "Killwangen West - Lenzburg - Daniken Ost",
-        "km": 35.6368
+        "km_am_bahnhof": 35.6368
       },
       {
         "nummer": 640,
         "name": "Brugg - Rupperswil",
-        "km": 43.50093
+        "km_am_bahnhof": 43.50093
       },
       {
         "nummer": 641,
         "name": "Rupperswil Ost - Rupperswil Gleis rechts",
-        "km": 43.49284
+        "km_am_bahnhof": 43.49284
       }
     ]
   },

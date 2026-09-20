@@ -107,7 +107,8 @@
         "hilfstritt": true,
         "perrontyp": "Aussenperron",
         "perronkante_m": 150,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -117,7 +118,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 150,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -127,7 +129,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 217,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "4",
@@ -137,7 +140,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 217,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -226,11 +230,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 660,
         "name": "Thalwil - Zug - Fluhmuhle",
-        "km": 58.58004
+        "km_am_bahnhof": 58.58004
       }
     ]
   },

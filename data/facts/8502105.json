@@ -112,7 +112,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -128,7 +129,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "4",
@@ -143,7 +145,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "5",
@@ -158,7 +161,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -286,16 +290,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 650,
         "name": "Killwangen West - Lenzburg - Daniken Ost",
-        "km": 27.68041
+        "km_am_bahnhof": 27.68041
       },
       {
         "nummer": 647,
         "name": "Brugg - Hendschiken Nord",
-        "km": 8.71671
+        "km_am_bahnhof": 8.71671
       }
     ]
   },

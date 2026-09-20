@@ -106,7 +106,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 151,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -117,7 +118,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 166,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -127,7 +129,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 152,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -236,16 +239,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 111,
         "name": "Vevey Ouest - Puidoux-Chexbres",
-        "km": 7.829
+        "km_am_bahnhof": 7.829
       },
       {
         "nummer": 250,
         "name": "Lausanne Est - Bern",
-        "km": 12.1579
+        "km_am_bahnhof": 12.1579
       }
     ]
   },

@@ -107,7 +107,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "2",
@@ -124,7 +125,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -141,7 +143,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       }
     ]
   },
@@ -249,16 +252,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 852,
         "name": "Sulgen - Gossau SG",
-        "km": 0.01
+        "km_am_bahnhof": 0.01
       },
       {
         "nummer": 840,
         "name": "Winterthur Nord - Romanshorn",
-        "km": 66.10733
+        "km_am_bahnhof": 66.10733
       }
     ]
   },

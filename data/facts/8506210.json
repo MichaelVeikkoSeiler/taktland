@@ -108,7 +108,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "3",
@@ -127,7 +128,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "4",
@@ -145,7 +147,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 7
       }
     ]
   },
@@ -253,16 +256,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 852,
         "name": "Sulgen - Gossau SG",
-        "km": 22.94553
+        "km_am_bahnhof": 22.94553
       },
       {
         "nummer": 850,
         "name": "St.Gallen - Winterthur Nord",
-        "km": 90.1274
+        "km_am_bahnhof": 90.1274
       }
     ]
   },

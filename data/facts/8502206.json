@@ -108,7 +108,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "2",
@@ -121,7 +122,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "3",
@@ -134,7 +136,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -222,16 +225,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 9660,
         "name": "Sihlbrugg - Baar Projekt ZBT2",
-        "km": 26.60834
+        "km_am_bahnhof": 26.60834
       },
       {
         "nummer": 660,
         "name": "Thalwil - Zug - Fluhmuhle",
-        "km": 26.60834
+        "km_am_bahnhof": 26.60834
       }
     ]
   },

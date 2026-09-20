@@ -108,7 +108,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -123,7 +124,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -211,16 +213,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 9210,
         "name": "La Neuveville - Tuscherz",
-        "km": 95.9766
+        "km_am_bahnhof": 95.9766
       },
       {
         "nummer": 210,
         "name": "Daillens - Biel/Bienne",
-        "km": 95.976
+        "km_am_bahnhof": 95.976
       }
     ]
   },

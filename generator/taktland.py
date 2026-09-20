@@ -40,6 +40,21 @@ FALSCHDEUTUNG = [
      "der Wert umfasst Wochenenden und Feiertage, nicht nur das Wochenende"),
 ]
 
+# In linie-mit-betriebspunkten steht die Kilometrierung des Bahnhofs auf der
+# Linie, nicht die Laenge der Linie. Beweis: Linie 100 steht in Lausanne bei
+# 0.0 km, in Brig bei 145.5 km. Das Modell hat das mehrfach als Laenge gelesen.
+LAENGE_STATT_STANDORT = r"Streckenl\u00e4nge|\bL\u00e4nge\b|\blang\b|\bmisst\b"
+
+# Ausstattung, die nur als Zahl erhoben ist: eine 0 heisst «nicht erfasst»,
+# nicht «steht nicht da». «vorhanden» waere eine Aussage ueber die Wirklichkeit.
+# Der Zwischenraum darf kein Satzzeichen enthalten, sonst trifft die Regel
+# ueber Teilsaetze hinweg: «Sicherheitslinie ist vorhanden, ein Hilfstritt ist
+# bei keinem Segment erfasst» ist korrekt und darf nicht anschlagen.
+NUR_ERFASST = (r"(Hilfstritt|Billettautomat\w*|Billettentwerter\w*|Wartehalle\w*)"
+               r"[^.,;]{0,40}\b(vorhanden|gibt es|existiert|fehlt)\b"
+               r"|\b(vorhanden|gibt es|existiert|fehlt)\b[^.,;]{0,40}"
+               r"(Hilfstritt|Billettautomat\w*|Billettentwerter\w*|Wartehalle\w*)")
+
 LEERFORMELN = [
     r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",
     r"ist unterschiedlich", r"variiert", r"in gewissem Masse", r"mehr oder weniger",
@@ -165,8 +180,8 @@ def _pruefe_frage(fr, i, kap_id, fb, fakten, b, raus):
                 b.fehlt(wo, f"items sind nicht absteigend sortiert: {werte}")
             if richtung == "aufsteigend" and not auf:
                 b.fehlt(wo, f"items sind nicht aufsteigend sortiert: {werte}")
-            if len(set(werte)) < len(werte):
-                b.warnt(wo, "gleiche Werte in der Reihenfolge, das ist nicht eindeutig")
+            if len(set(werte)) == 1 and len(werte) > 1:
+                b.fehlt(wo, "alle Werte sind gleich, es gibt nichts zu sortieren")
 
     elif typ == "match":
         paare = fr.get("pairs")
@@ -261,6 +276,27 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             if m := re.search(muster, kap.get("body", ""), re.I):
                 b.fehlt(f"{wo}/body", f"«{m.group(0)}» sagt nichts aus. "
                                       "Nenne den Wert statt ihn zu umschreiben")
+        for feld, text in [("body", kap.get("body", ""))] + [
+                (f"questions[{i}]/{f}", q.get(f) or "")
+                for i, q in enumerate(kap.get("questions", []))
+                for f in ("prompt", "explanation")]:
+            if m := re.search(NUR_ERFASST, text, re.I):
+                b.fehlt(f"{wo}/{feld}",
+                        f"«{m.group(0)[:50]}»: die Daten sagen nur, was erfasst ist. "
+                        "Schreibe «erfasst» oder «verzeichnet», nicht «vorhanden»")
+
+        if kid == "linien":
+            for feld, text in [("body", kap.get("body", ""))] + [
+                    (f"facts[{j}]/label", f.get("label") or "")
+                    for j, f in enumerate(kap.get("facts", []))] + [
+                    (f"questions[{i}]/{f}", q.get(f) or "")
+                    for i, q in enumerate(kap.get("questions", []))
+                    for f in ("prompt", "explanation")]:
+                if m := re.search(LAENGE_STATT_STANDORT, text, re.I):
+                    b.fehlt(f"{wo}/{feld}",
+                            f"«{m.group(0)}»: km_am_bahnhof ist die Kilometrierung "
+                            "des Bahnhofs auf der Linie, nicht die Länge der Linie. "
+                            "Die Länge steht in den offenen Daten nicht")
 
         if erl := kap.get("erlaeuterung"):
             REGELWERK.pruefe_allgemein(erl, f"{wo}/erlaeuterung", profil["name"], b)

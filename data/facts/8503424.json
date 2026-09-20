@@ -131,7 +131,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -146,7 +147,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -161,7 +163,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -177,7 +180,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "5",
@@ -193,7 +197,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "6",
@@ -207,7 +212,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -317,26 +323,27 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 4,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 763,
         "name": "Basel Bad Bhf - Waldshut - Schaffhausen",
-        "km": 364.421
+        "km_am_bahnhof": 364.421
       },
       {
         "nummer": 820,
         "name": "Etzwilen - Schaffhausen",
-        "km": 48.76002
+        "km_am_bahnhof": 48.76002
       },
       {
         "nummer": 762,
         "name": "Winterthur Nord - Schaffhausen RB Ost",
-        "km": 56.06425
+        "km_am_bahnhof": 56.06425
       },
       {
         "nummer": 764,
         "name": "Schaffhausen - Singen - Konstanz",
-        "km": 364.49167
+        "km_am_bahnhof": 364.49167
       }
     ]
   },

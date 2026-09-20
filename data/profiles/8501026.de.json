@@ -1,0 +1,524 @@
+{
+  "uic": 8501026,
+  "name": "Genève-Aéroport",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation, billetautomat, billetentwerter, haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Genève-Aéroport ist ein Bahnhof im Kanton Genf, betrieben von der SBB. An einem Werktag 2025 steigen hier 15'500 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 16'000. An einem freien Tag liegt der Wert mit 17'100 sogar höher.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 15500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Tagesmittel über das ganze Jahr",
+          "value": 16000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Verkehr an einem freien Tag",
+          "value": 17100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag 2025 in Genève-Aéroport ein und aus?",
+          "options": [
+            "8'000",
+            "11'500",
+            "15'500",
+            "20'000"
+          ],
+          "correct": 2,
+          "explanation": "An einem Werktag 2025 steigen 15'500 Personen ein und aus.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der Wert an einem freien Tag (dnwv) liegt 2025 höher als der Werktagswert (dwv).",
+          "correct": true,
+          "explanation": "An einem freien Tag liegt der Wert bei 17'100, an einem Werktag bei 15'500 Personen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Werktagswerte nach Jahr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 11900,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 14600,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 15500,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 15800,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 16300,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die Werktagswerte steigen von 11'900 im Jahr 2022 über 14'600 (2023), 15'500 (2025) und 15'800 (2024) bis zu 16'300 im Jahr 2018.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Der Bahnhof liegt auf 411 Metern über Meer in der Gemeinde Le Grand-Saconnex im Kanton Genf. Betreiberin ist die SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 411,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Le Grand-Saconnex",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Genève-Aéroport?",
+          "options": [
+            "380 m",
+            "411 m",
+            "450 m",
+            "500 m"
+          ],
+          "correct": 1,
+          "explanation": "Der Bahnhof liegt auf 411 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Genève-Aéroport?",
+          "options": [
+            "Genève",
+            "Vernier",
+            "Meyrin",
+            "Le Grand-Saconnex"
+          ],
+          "correct": 3,
+          "explanation": "Der Bahnhof liegt in der Gemeinde Le Grand-Saconnex.",
+          "factRef": "stammdaten.gemeinde",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Tagesrhythmus",
+      "body": "Die Bahnhofbenutzung 2025 erreicht ihren höchsten Anteil um 12 Uhr mit 7.9 Prozent des Tagesverkehrs. Über die Wochentage betrachtet ist der Sonntag mit 16.1 Prozent der stärkste Tag.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 12,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Stärkster Wochentag",
+          "value": "Sonntag",
+          "unit": "",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Zu welcher Stunde liegt 2025 der höchste Anteil der Bahnhofbenutzung?",
+          "min": 0,
+          "max": 23,
+          "step": 1,
+          "unit": "Uhr",
+          "correct": 12,
+          "explanation": "Die Spitzenstunde liegt bei 12 Uhr mit 7.9 Prozent des Tagesverkehrs.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag zeigt 2025 den höchsten Anteil an der Bahnhofbenutzung?",
+          "options": [
+            "Montag",
+            "Freitag",
+            "Samstag",
+            "Sonntag"
+          ],
+          "correct": 3,
+          "explanation": "Der Sonntag hat mit 16.1 Prozent den höchsten Anteil.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 6 Perrons liegen offene Daten vor. Das längste misst 1031 Meter, das kürzeste 175 Meter. Von den erfassten Perrons sind 5 niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 1031,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 175,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Genève-Aéroport?",
+          "options": [
+            "543 m",
+            "900 m",
+            "1031 m",
+            "1200 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron (Nr. 11) misst 1031 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Alle 6 erfassten Perrons sind niveaufrei erreichbar.",
+          "correct": false,
+          "explanation": "Von 6 erfassten Perrons sind 5 niveaufrei erreichbar, eines nicht.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 11",
+              "value": 1031,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 14",
+              "value": 900,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 12",
+              "value": 543,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 1/2",
+              "value": 481,
+              "factRef": "perrons.items[3].laenge_m"
+            },
+            {
+              "label": "Perron 3/4",
+              "value": 432,
+              "factRef": "perrons.items[4].laenge_m"
+            },
+            {
+              "label": "Perron 13",
+              "value": 175,
+              "factRef": "perrons.items[5].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Nach Länge geordnet folgen die Perrons 11 (1031 m), 14 (900 m), 12 (543 m), 1/2 (481 m), 3/4 (432 m) und 13 (175 m).",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Aus der BehiG-Erhebung sind 8 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. Für keines der Segmente ist ein Hilfstritt erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 8,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit erfasstem Hilfstritt",
+          "value": 0,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind gemäss BehiG-Erhebung erfasst?",
+          "options": [
+            "4",
+            "6",
+            "8",
+            "10"
+          ],
+          "correct": 2,
+          "explanation": "Es sind 8 Perronsegmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für die erfassten Segmente ist ein Hilfstritt erfasst.",
+          "correct": false,
+          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Genève-Aéroport und Châtelaine (bif) verkehren 2025 rund 184 Züge pro Tag in beiden Richtungen zusammen, was 67'066 Zügen im Jahr entspricht.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Genève-Aéroport – Châtelaine (bif)",
+          "value": 184,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Genève-Aéroport – Châtelaine (bif)",
+          "value": 67066,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren 2025 pro Tag auf dem Abschnitt Genève-Aéroport – Châtelaine (bif)?",
+          "options": [
+            "74",
+            "100",
+            "130",
+            "184"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt verkehren rund 184 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Auf dem Abschnitt Genève-Aéroport – Châtelaine (bif) verkehren 2025 pro Jahr rund ___ Züge.",
+          "options": [
+            "45'000",
+            "55'000",
+            "67'066",
+            "80'000"
+          ],
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt verkehren 2025 rund 67'066 Züge im Jahr.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Erfasst ist eine Linie: die Linie 150 zwischen Lausanne und Genève-Aéroport.",
+      "facts": [
+        {
+          "label": "Liniennummer",
+          "value": 150,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Liniennummer bedient gemäss offenen Daten Genève-Aéroport?",
+          "options": [
+            "150",
+            "160",
+            "170",
+            "180"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist die Linie 150, Lausanne - Genève-Aéroport.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1,
+          "optionen_aus_fakten": false
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 7 Billettautomaten und 6 Billettentwerter. Wartehallen sind für diesen Bahnhof keine erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 7,
+          "unit": "Stück",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Wartehallen",
+          "value": 0,
+          "unit": "Stück",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Genève-Aéroport erfasst?",
+          "options": [
+            "3",
+            "5",
+            "7",
+            "9"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 7 Billettautomaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für Genève-Aéroport ist eine Wartehalle erfasst.",
+          "correct": false,
+          "explanation": "Es sind 0 Wartehallen erfasst; das bedeutet nicht zwingend, dass keine vorhanden ist.",
+          "factRef": "services.wartehallen_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Genève-Aéroport liegen Bahnhofplan-Daten vor. Eigentümerin der Anlage ist gemäss diesen Daten die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin der Anlage",
+          "value": "SBB",
+          "unit": "",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wem gehört die Anlage Genève-Aéroport gemäss den Bahnhofplan-Daten?",
+          "options": [
+            "SBB",
+            "BLS",
+            "Kanton Genf",
+            "Flughafen Genf"
+          ],
+          "correct": 0,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 4 Gleise (1, 2, 3, 4). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 6 erfassten Perrons sind 5 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

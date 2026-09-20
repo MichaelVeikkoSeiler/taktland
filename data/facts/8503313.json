@@ -102,7 +102,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "6",
@@ -119,7 +120,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       }
     ]
   },
@@ -206,16 +208,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 760,
         "name": "Zurich Hardbrucke  - Bulach",
-        "km": 15.25639
+        "km_am_bahnhof": 15.25639
       },
       {
         "nummer": 768,
         "name": "Niederglatt - Tanklager Oberhasli West",
-        "km": 21.20365
+        "km_am_bahnhof": 21.20365
       }
     ]
   },

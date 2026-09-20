@@ -353,7 +353,7 @@
             "22"
           ],
           "correct": 2,
-          "explanation": "15 Automaten.",
+          "explanation": "15 Automaten, dazu 16 Billettentwerter.",
           "factRef": "services.billettautomaten_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 1

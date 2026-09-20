@@ -95,7 +95,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 199,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "8",
@@ -105,7 +106,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 199,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -213,21 +215,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 510,
         "name": "Mulhouse-Ville - Basel SBB",
-        "km": 137.81135
+        "km_am_bahnhof": 137.81135
       },
       {
         "nummer": 9497,
         "name": "Basel St.Johann - Basel SBB GB West(Spw)",
-        "km": 0
+        "km_am_bahnhof": 0
       },
       {
         "nummer": 9495,
         "name": "Basel St.Johann - Basel Mitte",
-        "km": 0
+        "km_am_bahnhof": 0
       }
     ]
   },

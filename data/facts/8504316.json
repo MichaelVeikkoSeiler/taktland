@@ -112,7 +112,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 232,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -122,7 +123,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 121,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -210,16 +212,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 224,
         "name": "Chambrelien Nord - Le Locle (Frontiere)",
-        "km": 37.06721
+        "km_am_bahnhof": 37.06721
       },
       {
         "nummer": 233,
         "name": "Le Locle - Les Brenets",
-        "km": 0
+        "km_am_bahnhof": 0
       }
     ]
   },

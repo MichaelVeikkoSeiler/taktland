@@ -118,7 +118,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "4",
@@ -135,7 +136,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       }
     ]
   },
@@ -224,11 +226,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 720,
         "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
-        "km": 5.80646
+        "km_am_bahnhof": 5.80646
       }
     ]
   },

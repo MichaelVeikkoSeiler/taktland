@@ -121,7 +121,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -137,7 +138,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -151,7 +153,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -261,16 +264,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 212,
         "name": "Yverdon - Ste-Croix",
-        "km": -0.095
+        "km_am_bahnhof": -0.095
       },
       {
         "nummer": 210,
         "name": "Daillens - Biel/Bienne",
-        "km": 39.1341
+        "km_am_bahnhof": 39.1341
       }
     ]
   },

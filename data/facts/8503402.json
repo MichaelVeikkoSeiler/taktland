@@ -115,7 +115,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "2",
@@ -134,7 +135,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -150,7 +152,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 5
       }
     ]
   },
@@ -260,16 +263,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 770,
         "name": "Bulach - Eglisau - Neuhausen",
-        "km": 22.24718
+        "km_am_bahnhof": 22.24718
       },
       {
         "nummer": 701,
         "name": "Eglisau - Koblenz - Stein Sackingen Ost",
-        "km": 22.24734
+        "km_am_bahnhof": 22.24734
       }
     ]
   },

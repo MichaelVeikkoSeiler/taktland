@@ -104,7 +104,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 120,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -119,7 +120,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -133,7 +135,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -230,16 +233,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 260,
         "name": "Zollikofen Nord - Biel/Bienne Aebistr.",
-        "km": 26.15786
+        "km_am_bahnhof": 26.15786
       },
       {
         "nummer": 415,
         "name": "Wanzwil (Abzw) - Solothurn - Busswil",
-        "km": 101.86418
+        "km_am_bahnhof": 101.86418
       }
     ]
   },

@@ -374,7 +374,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -391,7 +392,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "4",
@@ -408,7 +410,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "6",
@@ -425,7 +428,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "7",
@@ -442,7 +446,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       }
     ]
   },
@@ -650,26 +655,27 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 4,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 710,
         "name": "Zurich HB - Brugg AG",
-        "km": 4.1655
+        "km_am_bahnhof": 4.1655
       },
       {
         "nummer": 711,
         "name": "ZH Hardbrucke - Kollermuhle",
-        "km": 4.16414
+        "km_am_bahnhof": 4.16414
       },
       {
         "nummer": 708,
         "name": "Zurich Altstetten - Einfang",
-        "km": 4.1655
+        "km_am_bahnhof": 4.1655
       },
       {
         "nummer": 709,
         "name": "Zue Vorbahnhof Nord - Zurich Altstetten",
-        "km": 4.19283
+        "km_am_bahnhof": 4.19283
       }
     ]
   },

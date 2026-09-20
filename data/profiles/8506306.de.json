@@ -231,12 +231,12 @@
           "type": "cloze",
           "prompt": "Rorschach Hafen liegt an der Linie ___.",
           "options": [
-            "225",
+            "330",
             "450",
-            "825",
-            "910"
+            "580",
+            "825"
           ],
-          "correct": 2,
+          "correct": 3,
           "explanation": "Linie 825, von Romanshorn Feld H nach Rorschach.",
           "factRef": "linien.items[0].nummer",
           "difficulty": 1

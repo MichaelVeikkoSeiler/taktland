@@ -118,7 +118,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "4",
@@ -134,7 +135,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "5",
@@ -149,7 +151,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "6",
@@ -163,7 +166,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -273,21 +277,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 720,
         "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
-        "km": 12.09258
+        "km_am_bahnhof": 12.09258
       },
       {
         "nummer": 660,
         "name": "Thalwil - Zug - Fluhmuhle",
-        "km": 12.09403
+        "km_am_bahnhof": 12.09403
       },
       {
         "nummer": 721,
         "name": "Thalwil - Thalwil Sud",
-        "km": 12.09258
+        "km_am_bahnhof": 12.09258
       }
     ]
   },

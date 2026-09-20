@@ -12,6 +12,7 @@ Gleisnummern, Wochentage -, bleiben unangetastet: Sie tragen optionen_aus_fakten
     python generator/distraktoren_richten.py --alle
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -21,6 +22,34 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from belegt.fakten import Faktenbasis, zahl  # noqa: E402
 from distraktoren import vorschlaege  # noqa: E402
 from taktland import PROFILES, fakten_laden  # noqa: E402
+
+
+ZAHLTEIL = re.compile(r"-?\d[\d'\u2019.,]*")
+
+
+def formatierer(vorlage, wert):
+    """Baut aus der richtigen Antwort eine Schablone fuer die neuen Optionen.
+
+    Frueher wurde hier hart auf int() gerundet und die Einheit zeichenweise
+    zusammengeklaubt. Aus «35,97301 km» wurde so «35 ,» - die Frage war hin.
+    Darum: nur ganze Zahlen umformen, sonst nichts anfassen.
+    """
+    m = ZAHLTEIL.search(vorlage)
+    if not m:
+        return None
+    rumpf = m.group(0)
+    if "," in rumpf or "." in rumpf:      # Dezimalstellen bilden wir nicht nach
+        return None
+    if wert != int(wert):
+        return None
+    vor, nach = vorlage[:m.start()], vorlage[m.end():]
+    trenner = "'" in rumpf or "\u2019" in rumpf
+
+    def bauen(x):
+        z = f"{int(x):,}".replace(",", "'") if trenner else str(int(x))
+        return f"{vor}{z}{nach}"
+
+    return bauen
 
 
 def richten(profil, fakten):
@@ -49,11 +78,14 @@ def richten(profil, fakten):
                 fr["optionen_aus_fakten"] = True
                 geaendert += 1
                 continue
-            einheit = "".join(c for c in str(richtig) if not c.isdigit()
-                              and c not in "'’. ").strip()
+            form = formatierer(str(richtig), wert)
+            if form is None:
+                # die Schreibweise der richtigen Antwort laesst sich nicht sicher
+                # nachbilden, etwa bei «35,97301 km». Lieber stehen lassen als
+                # eine Frage zerstoeren.
+                continue
             neu = sorted([wert] + [float(f) for f in frei])
-            fr["options"] = [f"{int(x):,}".replace(",", "'") + (f" {einheit}" if einheit else "")
-                             for x in neu]
+            fr["options"] = [form(x) for x in neu]
             fr["correct"] = neu.index(wert)
             geaendert += 1
     return geaendert

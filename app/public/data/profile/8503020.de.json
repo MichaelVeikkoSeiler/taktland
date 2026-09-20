@@ -223,7 +223,7 @@
             "H"
           ],
           "correct": 2,
-          "explanation": "Von A bis F.",
+          "explanation": "Von A bis F, also 6 Sektoren.",
           "factRef": "gleise.items[0].sektoren[5]",
           "difficulty": 2
         },
@@ -237,7 +237,7 @@
             "9"
           ],
           "correct": 1,
-          "explanation": "4 Gleise.",
+          "explanation": "4 Gleise: 1, 2, 3, 4.",
           "factRef": "gleise.anzahl_mit_daten",
           "optionen_aus_fakten": true,
           "difficulty": 1
@@ -360,7 +360,7 @@
             "7"
           ],
           "correct": 2,
-          "explanation": "4 Linien.",
+          "explanation": "4 Linien: 710, 711, 716, 760.",
           "factRef": "linien.anzahl",
           "optionen_aus_fakten": true,
           "difficulty": 1
@@ -405,7 +405,7 @@
             "20"
           ],
           "correct": 1,
-          "explanation": "8 Automaten.",
+          "explanation": "8 Automaten, dazu 12 Billettentwerter.",
           "factRef": "services.billettautomaten_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 1

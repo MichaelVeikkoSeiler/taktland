@@ -1,0 +1,601 @@
+{
+  "uic": 8500023,
+  "name": "Liestal",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Liestal liegt im Kanton Basel-Landschaft und wird von der SBB als Infrastrukturbetreiberin geführt. Die Züge auf der Strecke werden von SBB und SOB betrieben. An einem Werktag steigen 18'600 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 16'200 und an einem freien Tag 11'000. Die Bemerkung zu den Zahlen: ohne BLT.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 18600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Tagesmittel über das ganze Jahr",
+          "value": 16200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 11000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "SBB, SOB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Liestal ein und aus?",
+          "options": [
+            "9'300",
+            "18'600",
+            "27'900",
+            "37'200"
+          ],
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 18'600 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der Wert für den freien Tag umfasst nur Sonntage.",
+          "correct": false,
+          "explanation": "Der Wert für den freien Tag umfasst Wochenenden und Feiertage zusammen, nicht nur Sonntage.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, kleinster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 17800,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 18500,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 18600,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 20500,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr lag 2022 bei 17'800, 2023 bei 18'500, 2024 bei 18'600 und 2018 bei 20'500 Personen."
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Liestal liegt auf 327.06 Metern über Meer, in der Gemeinde Liestal im Bezirk Liestal. Betrieben wird die Haltestelle von den Schweizerischen Bundesbahnen SBB, erschlossen ist sie mit dem Verkehrsmittel Zug.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 327.06,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiber",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Liestal?",
+          "options": [
+            "227.06 m",
+            "327.06 m",
+            "427.06 m",
+            "527.06 m"
+          ],
+          "correct": 1,
+          "explanation": "Liestal liegt auf 327.06 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Haltestelle Liestal wird von den Schweizerischen Bundesbahnen SBB betrieben.",
+          "correct": true,
+          "explanation": "Als Betreiber ist die Schweizerische Bundesbahnen SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu drei Perrons in Liestal liegen offene Daten vor. Das längste misst 494 Meter, das kürzeste 423 Meter. Ein Perron ist als niveaufrei erreichbar erfasst.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 3,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 494,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 423,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 1,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Liestal?",
+          "options": [
+            "423 m",
+            "424 m",
+            "494 m",
+            "550 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 494 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 1/40",
+              "rechts": "494 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 4/5",
+              "rechts": "423 m",
+              "factRef": "perrons.items[1].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 1/40 misst 494 Meter, Perron 4/5 misst 423 Meter."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für den Perron 4/5 ist ein niveaufreier Zugang erfasst.",
+          "correct": true,
+          "explanation": "Beim Perron 4/5 ist der niveaufreie Zugang mit 'ja' erfasst.",
+          "factRef": "perrons.items[1].niveaufreier_zugang",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu fünf Gleisen liegen in Liestal offene Daten vor. Für die Gleise 3 und 4 sind Perronkanten von 424 Metern bei einer Perronhöhe von 55 Zentimetern erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Perronhöhe",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        },
+        {
+          "label": "Perronkante Gleis 3",
+          "value": 424,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 4",
+          "value": 424,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[3].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe ist bei den Gleisen in Liestal erfasst?",
+          "options": [
+            "35 cm",
+            "55 cm",
+            "76 cm",
+            "90 cm"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist eine Perronhöhe von 55 Zentimetern.",
+          "factRef": "gleise.perronhoehen_cm[0]",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welcher Perrontyp gehört zu welchem Gleis?",
+          "pairs": [
+            {
+              "links": "Gleis 3",
+              "rechts": "Mittelperron",
+              "factRef": "gleise.items[2].perrontyp"
+            },
+            {
+              "links": "Gleis 4",
+              "rechts": "Aussenperron",
+              "factRef": "gleise.items[3].perrontyp"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 3 liegt an einem Mittelperron, Gleis 4 an einem Aussenperron."
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Von den drei Perrons mit Daten ist einer als niveaufrei erreichbar erfasst, eine Gleisquerung ist nötig. Von den vier erfassten Segmenten liegt keines mit Hilfstritt vor, zwei Gleise sind mit 55 Zentimetern Perronhöhe erfasst.",
+      "facts": [
+        {
+          "label": "Niveaufreie Perrons",
+          "value": 1,
+          "unit": null,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 2,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Liestal ist eine Gleisquerung nötig.",
+          "correct": true,
+          "explanation": "Das Feld Gleisquerung nötig ist mit 'true' erfasst.",
+          "factRef": "hindernisfreiheit.gleisquerung_noetig",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der vier erfassten Segmente verfügen über einen Hilfstritt?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "4"
+          ],
+          "correct": 0,
+          "explanation": "Es ist kein Segment mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Liestal Nord (Abzw) und Liestal verkehren im Personenverkehr rund 323 Züge pro Tag, im Güterverkehr rund 61 bis 62 Züge pro Tag. Die Angaben gelten für beide Richtungen zusammen.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr, Abschnitt Liestal Nord (Abzw)–Liestal",
+          "value": 323,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Tag, Güterverkehr, Abschnitt Liestal Nord (Abzw)–Liestal",
+          "value": 61,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren pro Tag im Personenverkehr auf dem Abschnitt Liestal Nord (Abzw)–Liestal, beide Richtungen zusammen?",
+          "options": [
+            "130",
+            "180",
+            "230",
+            "323"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt sind es rund 323 Züge pro Tag im Personenverkehr, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Streckenabschnitte nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Liestal Nord (Abzw)–Liestal, Personenverkehr",
+              "value": 323,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Liestal Süd (Spw)–Liestal, Personenverkehr",
+              "value": 320,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Liestal Süd (Spw)–Liestal, Güterverkehr",
+              "value": 62,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            },
+            {
+              "label": "Liestal Nord (Abzw)–Liestal, Güterverkehr",
+              "value": 61,
+              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Die Reihenfolge nach Zügen pro Tag: 323 (Personenverkehr Nord), 320 (Personenverkehr Süd), 62 (Güterverkehr Süd), 61 (Güterverkehr Nord)."
+        },
+        {
+          "type": "cloze",
+          "prompt": "Auf dem Abschnitt Liestal Süd (Spw)–Liestal verkehren im Güterverkehr rund ___ Züge pro Tag.",
+          "options": [
+            "25",
+            "34",
+            "43",
+            "62"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt sind es rund 62 Züge pro Tag im Güterverkehr, beide Richtungen zusammen.",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "In Liestal sind zwei Linien erfasst: die Linie 500 Basel SBB–Olten–Luzern mit einer Kilometrierung von 14.376 km sowie das Projekt Juradurchstich mit der Nummer 9501 bei 8 km.",
+      "facts": [
+        {
+          "label": "Anzahl erfasster Linien",
+          "value": 2,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung Linie 500",
+          "value": 14.376,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien sind für Liestal erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind zwei Linien: Nummer 500 und Nummer 9501.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Kilometrierung gehört zu welcher Linie?",
+          "pairs": [
+            {
+              "links": "Linie 500",
+              "rechts": "14.376 km",
+              "factRef": "linien.items[0].km_am_bahnhof"
+            },
+            {
+              "links": "Linie 9501",
+              "rechts": "8 km",
+              "factRef": "linien.items[1].km_am_bahnhof"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Linie 500 liegt bei Kilometer 14.376, Linie 9501 (Projekt Juradurchstich) bei Kilometer 8."
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Für Liestal ist WLAN erfasst. Zudem sind 5 Billettautomaten und 16 Billettentwerter registriert, sowie 2 Wartehallen.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 5,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 16,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 2,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Liestal ist WLAN erfasst.",
+          "correct": true,
+          "explanation": "Das Feld wlan_erfasst ist mit 'true' erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Liestal erfasst?",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "11"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 5 Billettautomaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Billettentwerter sind in Liestal erfasst?",
+          "min": 0,
+          "max": 30,
+          "step": 1,
+          "unit": "Stück",
+          "correct": 16,
+          "explanation": "Erfasst sind 16 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 5 Gleise (1, 2, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 4, 5 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 3 erfassten Perrons ist 1 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne BLT.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

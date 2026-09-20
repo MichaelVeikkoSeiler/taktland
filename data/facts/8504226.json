@@ -160,16 +160,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 210,
         "name": "Daillens - Biel/Bienne",
-        "km": 90.04861
+        "km_am_bahnhof": 90.04861
       },
       {
         "nummer": 9210,
         "name": "La Neuveville - Tuscherz",
-        "km": 90.04861
+        "km_am_bahnhof": 90.04861
       }
     ]
   },

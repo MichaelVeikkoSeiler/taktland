@@ -151,11 +151,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 820,
         "name": "Etzwilen - Schaffhausen",
-        "km": 38.18616
+        "km_am_bahnhof": 38.18616
       }
     ]
   },

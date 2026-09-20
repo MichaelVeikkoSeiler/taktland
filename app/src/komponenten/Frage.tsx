@@ -229,7 +229,7 @@ function Sortieren({ items, gezeigt, abschliessen }: {
   // items stehen in der richtigen Reihenfolge, deshalb wird zum Anzeigen gemischt
   const [reihe, setReihe] = useState<SortItem[]>(() => {
     const gemischt = mischen(items)
-    const gleich = gemischt.every((x, i) => x.label === items[i].label)
+    const gleich = gemischt.every((x, i) => x.value === items[i].value)
     return gleich && items.length > 1 ? [...gemischt].reverse() : gemischt
   })
 
@@ -245,7 +245,9 @@ function Sortieren({ items, gezeigt, abschliessen }: {
       <p className="mt-1 text-sm text-sbb-metal">Mit den Pfeilen in die richtige Reihenfolge bringen.</p>
       <ol className="mt-2 space-y-2">
         {reihe.map((it, i) => {
-          const amRichtigenPlatz = gezeigt && items[i]?.label === it.label
+          // nach Wert vergleichen, nicht nach Beschriftung: bei gleich langen
+          // Perronkanten sind mehrere Reihenfolgen richtig
+          const amRichtigenPlatz = gezeigt && items[i]?.value === it.value
           return (
             <li
               key={it.label}
@@ -289,7 +291,7 @@ function Sortieren({ items, gezeigt, abschliessen }: {
       {!gezeigt && (
         <button
           type="button"
-          onClick={() => abschliessen(reihe.every((x, i) => x.label === items[i].label))}
+          onClick={() => abschliessen(reihe.every((x, i) => x.value === items[i].value))}
           className={pruefKnopf(false)}
         >
           Reihenfolge prüfen

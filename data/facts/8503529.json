@@ -106,7 +106,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "3",
@@ -119,7 +120,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -227,16 +229,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 704,
         "name": "Wurenlos - Killwangen West (RBL)",
-        "km": 39.04548
+        "km_am_bahnhof": 39.04548
       },
       {
         "nummer": 703,
         "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
-        "km": 39.04548
+        "km_am_bahnhof": 39.04548
       }
     ]
   },

@@ -138,7 +138,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "2",
@@ -156,7 +157,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "3",
@@ -174,7 +176,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "4",
@@ -192,7 +195,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "5",
@@ -210,7 +214,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "7",
@@ -223,7 +228,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -311,11 +317,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 150,
         "name": "Lausanne - Geneve-Aeroport",
-        "km": 4.51005
+        "km_am_bahnhof": 4.51005
       }
     ]
   },

@@ -1,0 +1,617 @@
+{
+  "uic": 8503129,
+  "name": "Wallisellen",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-uhr",
+    "haltestelle-wartehallen",
+    "abfahrtsplakate0"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Wallisellen liegt im Kanton Zürich und wird von der SBB betrieben. An einem Werktag steigen hier 16'200 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 13'300. An einem freien Tag sind es 7'000 Personen.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 16200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Tagesmittel über das ganze Jahr",
+          "value": 13300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Kanton",
+          "value": "ZH",
+          "unit": "",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.kanton"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Wallisellen ein und aus?",
+          "options": [
+            "6'500",
+            "8'900",
+            "11'000",
+            "16'200"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 16'200 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der durchschnittliche Nicht-Werktagsverkehr in Wallisellen liegt bei 7'000 Personen.",
+          "correct": true,
+          "explanation": "An einem freien Tag (inklusive Wochenenden und Feiertagen) sind es 7'000 Personen, Stand 2025.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Werte des Werktagsverkehrs nach Jahr, älteste zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 2018,
+              "factRef": "steckbrief.verlauf[0].jahr"
+            },
+            {
+              "label": "2022",
+              "value": 2022,
+              "factRef": "steckbrief.verlauf[1].jahr"
+            },
+            {
+              "label": "2023",
+              "value": 2023,
+              "factRef": "steckbrief.verlauf[2].jahr"
+            },
+            {
+              "label": "2024",
+              "value": 2024,
+              "factRef": "steckbrief.verlauf[3].jahr"
+            },
+            {
+              "label": "2025",
+              "value": 2025,
+              "factRef": "steckbrief.verlauf[4].jahr"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die Jahre 2018, 2022, 2023, 2024 und 2025 sind in dieser Reihenfolge in der Verlaufsstatistik erfasst."
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Die offizielle Bezeichnung lautet Wallisellen, mit der Abkürzung WS. Der Bahnhof liegt auf 430.9 Metern über Meer in der Gemeinde Wallisellen, Bezirk Bülach. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Abkürzung",
+          "value": "WS",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 430.9,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Bülach",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Wallisellen?",
+          "options": [
+            "230.9 m",
+            "330.9 m",
+            "430.9 m",
+            "530.9 m"
+          ],
+          "correct": 2,
+          "explanation": "Wallisellen liegt auf 430.9 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Wallisellen lautet ___.",
+          "options": [
+            "WS",
+            "WA",
+            "WL"
+          ],
+          "correct": 0,
+          "explanation": "Die Abkürzung lautet WS.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu zwei Perrons liegen offene Daten vor. Beide sind Mittelperrons und niveaufrei erreichbar. Das längste erfasste Perron misst 369 Meter, das kürzeste 232 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 2,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 369,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 232,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Wallisellen?",
+          "options": [
+            "232 m",
+            "315 m",
+            "369 m",
+            "418 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 369 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 3/4",
+              "rechts": "369 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 5/6",
+              "rechts": "232 m",
+              "factRef": "perrons.items[1].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 3/4 misst 369 Meter, Perron 5/6 misst 232 Meter."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Wallisellen sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Beide erfassten Perrons sind niveaufrei erreichbar (2 von 2).",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu vier Gleisen liegen offene Daten vor: 3, 4, 5 und 6. Erfasst sind Perronhöhen von 25 und 55 Zentimetern.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 4,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist die Perronkante von Gleis 3 in Wallisellen?",
+          "options": [
+            "232 m",
+            "233 m",
+            "315 m",
+            "369 m"
+          ],
+          "correct": 2,
+          "explanation": "Die Perronkante von Gleis 3 misst 315 Meter.",
+          "factRef": "gleise.items[0].perronkante_m",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 3",
+              "value": 315,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 315,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 6",
+              "value": 233,
+              "factRef": "gleise.items[3].perronkante_m"
+            },
+            {
+              "label": "Gleis 5",
+              "value": 232,
+              "factRef": "gleise.items[2].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Die Perronkanten messen 315 m (Gleis 3 und 4), 233 m (Gleis 6) und 232 m (Gleis 5)."
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste Perronkante?",
+          "schema": "gleise",
+          "correct": "3",
+          "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 3 hat mit 315 Metern die längste erfasste Perronkante."
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "In Wallisellen sind 17 Perronsegmente erfasst. Davon liegen 14 auf 25 Zentimetern und 3 auf 55 Zentimetern Höhe. Für keines der Segmente ist ein Hilfstritt erfasst. Eine Sicherheitslinie ist vorhanden.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente",
+          "value": 17,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit 25 cm",
+          "value": 14,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.25"
+        },
+        {
+          "label": "Segmente mit 55 cm",
+          "value": 3,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind in Wallisellen insgesamt erfasst?",
+          "options": [
+            "7",
+            "9",
+            "12",
+            "17"
+          ],
+          "correct": 3,
+          "explanation": "Es sind 17 Perronsegmente erfasst, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Wallisellen ist bei mindestens einem Segment ein Hilfstritt erfasst.",
+          "correct": false,
+          "explanation": "Es ist kein Segment mit Hilfstritt erfasst (0 von 17).",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Zürich Oerlikon und Wallisellen verkehren im Personenverkehr rund 218 Züge pro Tag, beide Richtungen zusammen. Auf dem Abschnitt Wallisellen–Dietlikon sind es rund 140 Züge pro Tag, auf dem Abschnitt Wallisellen–Chriesbach rund 85.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Zürich Oerlikon–Wallisellen",
+          "value": 218,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Tag, Wallisellen–Dietlikon",
+          "value": 140,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren pro Tag auf dem Abschnitt Zürich Oerlikon–Wallisellen im Personenverkehr, beide Richtungen zusammen?",
+          "options": [
+            "87",
+            "120",
+            "150",
+            "218"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt sind es rund 218 Züge pro Tag, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Streckenabschnitte im Personenverkehr nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Zürich Oerlikon–Wallisellen",
+              "value": 218,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Wallisellen–Dietlikon",
+              "value": 140,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Wallisellen–Chriesbach (Abzw)",
+              "value": 85,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Im Personenverkehr sind pro Tag rund 218, 140 und 85 Züge auf den jeweiligen Abschnitten erfasst, Stand 2025."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Zürich Oerlikon–Wallisellen verkehren mehr Güter- als Personenzüge pro Tag.",
+          "correct": false,
+          "explanation": "Im Güterverkehr ist auf diesem Abschnitt rund 1 Zug pro Tag erfasst, im Personenverkehr rund 218.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Wallisellen ist eine Linie erfasst: die Linie 751 zwischen Zürich Langstrasse und Winterthur, mit Kilometrierung 8.36727 an dieser Stelle.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Liniennummer",
+          "value": 751,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Liniennummer ist für Wallisellen erfasst?",
+          "options": [
+            "300",
+            "410",
+            "530",
+            "751"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst ist die Linie 751 zwischen Zürich Langstrasse und Winterthur.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Wallisellen steht in der Liste der WLAN-Standorte. Erfasst sind 3 Billettautomaten der Typen S-POS und ePOS sowie 4 Billettentwerter und 1 Wartehalle.",
+      "facts": [
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 3,
+          "unit": "",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 4,
+          "unit": "",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 1,
+          "unit": "",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Wallisellen erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 3 Billettautomaten der Typen S-POS und ePOS.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Wallisellen steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Wallisellen ist als WLAN-Standort erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Billettentwerter sind in Wallisellen erfasst?",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "unit": "Stück",
+          "correct": 4,
+          "explanation": "Erfasst sind 4 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 4 Gleise (3, 4, 5, 6). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 5, 6 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        25,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 315,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        25,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 315,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        25
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 232,
+      "sektoren": []
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        25
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 233,
+      "sektoren": []
+    }
+  ]
+}

@@ -121,7 +121,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "2",
@@ -136,7 +137,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "3",
@@ -150,7 +152,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "5",
@@ -164,7 +167,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "6",
@@ -178,7 +182,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -308,16 +313,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 660,
         "name": "Thalwil - Zug - Fluhmuhle",
-        "km": 48.9998
+        "km_am_bahnhof": 48.9998
       },
       {
         "nummer": 653,
         "name": "Gexi Ost - Rotkreuz - Immensee West",
-        "km": 99.35989
+        "km_am_bahnhof": 99.35989
       }
     ]
   },

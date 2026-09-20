@@ -116,7 +116,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 71,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -127,7 +128,8 @@
         "hilfstritt": true,
         "perrontyp": "Zwischenperron",
         "perronkante_m": 119,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -137,7 +139,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 199,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "4",
@@ -147,7 +150,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 199,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -259,11 +263,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 600,
         "name": "Immensee - Bellinzona - Chiasso",
-        "km": 0.25695
+        "km_am_bahnhof": 0.25695
       }
     ]
   },

@@ -404,7 +404,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -421,7 +422,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -436,7 +438,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "4",
@@ -452,7 +455,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "7",
@@ -468,7 +472,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "8",
@@ -483,7 +488,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "9",
@@ -496,7 +502,8 @@
         "sektoren": [
           "A",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "10",
@@ -511,7 +518,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "11",
@@ -524,7 +532,8 @@
         "sektoren": [
           "A",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "12",
@@ -539,7 +548,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -690,26 +700,27 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 4,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 540,
         "name": "Olten - Woschnau",
-        "km": 39.30213
+        "km_am_bahnhof": 39.30213
       },
       {
         "nummer": 410,
         "name": "Olten - Solothurn - Biel/Bienne",
-        "km": 39.29156
+        "km_am_bahnhof": 39.29156
       },
       {
         "nummer": 500,
         "name": "Basel SBB - Olten - Luzern",
-        "km": 39.29245
+        "km_am_bahnhof": 39.29245
       },
       {
         "nummer": 503,
         "name": "Sissach - Laufelfingen - Olten",
-        "km": 39.29156
+        "km_am_bahnhof": 39.29156
       }
     ]
   },

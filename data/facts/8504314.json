@@ -122,7 +122,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "2",
@@ -136,7 +137,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "3",
@@ -152,7 +154,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "4",
@@ -167,7 +170,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "5",
@@ -182,7 +186,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "6",
@@ -197,7 +202,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -307,21 +313,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 224,
         "name": "Chambrelien Nord - Le Locle (Frontiere)",
-        "km": 29.457
+        "km_am_bahnhof": 29.457
       },
       {
         "nummer": 234,
         "name": "La Chaux-de-Fonds - Les Ponts-de-Martel",
-        "km": 0
+        "km_am_bahnhof": 0
       },
       {
         "nummer": 235,
         "name": "Tavannes - Le Noirmont",
-        "km": 44.033
+        "km_am_bahnhof": 44.033
       }
     ]
   },

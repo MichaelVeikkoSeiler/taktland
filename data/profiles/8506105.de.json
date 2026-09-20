@@ -1,0 +1,627 @@
+{
+  "uic": 8506105,
+  "name": "Weinfelden",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-uhr",
+    "haltestelle-wartehallen",
+    "abfahrtsplakate0"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Der Bahnhof Weinfelden liegt im Kanton Thurgau und wird von der SBB als Infrastrukturbetreiberin geführt. Züge fahren dort von SBB und Thurbo. An einem Werktag steigen 18'400 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 16'500, an einem freien Tag 12'200.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 18400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 16500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 12200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen in Weinfelden an einem Werktag ein und aus?",
+          "options": [
+            "9'200",
+            "18'400",
+            "24'600",
+            "36'800"
+          ],
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 18'400 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Werte des Werktagsverkehrs nach Jahr, älteste zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 2018,
+              "factRef": "steckbrief.verlauf[0].jahr"
+            },
+            {
+              "label": "2022",
+              "value": 2022,
+              "factRef": "steckbrief.verlauf[1].jahr"
+            },
+            {
+              "label": "2023",
+              "value": 2023,
+              "factRef": "steckbrief.verlauf[2].jahr"
+            },
+            {
+              "label": "2024",
+              "value": 2024,
+              "factRef": "steckbrief.verlauf[3].jahr"
+            },
+            {
+              "label": "2025",
+              "value": 2025,
+              "factRef": "steckbrief.verlauf[4].jahr"
+            }
+          ],
+          "explanation": "Die Werte des Werktagsverkehrs sind für die Jahre 2018, 2022, 2023, 2024 und 2025 erfasst, in dieser zeitlichen Reihenfolge.",
+          "factRef": "steckbrief.verlauf"
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Weinfelden verkehren Züge von SBB und Thurbo.",
+          "correct": true,
+          "explanation": "Als Bahnunternehmen sind SBB und Thurbo erfasst.",
+          "factRef": "steckbrief.evu",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Die offizielle Bezeichnung des Bahnhofs lautet Weinfelden, die Abkürzung ist WF. Der Bahnhof liegt auf 429.3 Metern über Meer in der Gemeinde Weinfelden im Kanton Thurgau. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Abkürzung",
+          "value": "WF",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 429.3,
+          "unit": "m ü. M.",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiberin",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Weinfelden?",
+          "options": [
+            "329.3 m",
+            "429.3 m",
+            "529.3 m",
+            "629.3 m"
+          ],
+          "correct": 1,
+          "explanation": "Der Bahnhof liegt auf 429.3 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Die Abkürzung des Bahnhofs Weinfelden lautet ___.",
+          "options": [
+            "WF",
+            "WI",
+            "WT"
+          ],
+          "correct": 0,
+          "explanation": "Die erfasste Abkürzung ist WF.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu drei Perrons liegen offene Daten vor. Das längste misst 420 Meter, das kürzeste 336 Meter. Alle drei erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 3,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 420,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 336,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 3,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Wie lang ist das längste erfasste Perron in Weinfelden (in Metern)?",
+          "min": 300,
+          "max": 500,
+          "step": 10,
+          "unit": "m",
+          "correct": 420,
+          "explanation": "Das längste erfasste Perron misst 420 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Ordne den Perrons ihren Typ zu.",
+          "pairs": [
+            {
+              "links": "Perron 3/4",
+              "rechts": "Mittelperron",
+              "factRef": "perrons.items[0].typ"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "Hausperron",
+              "factRef": "perrons.items[1].typ"
+            },
+            {
+              "links": "Perron 5",
+              "rechts": "Aussenperron",
+              "factRef": "perrons.items[2].typ"
+            }
+          ],
+          "explanation": "Perron 3/4 ist als Mittelperron erfasst, Perron 1 als Hausperron und Perron 5 als Aussenperron.",
+          "factRef": "perrons.items"
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu Perron 5 liegen offene Daten zu einer Fläche von 913.95 m² vor.",
+          "correct": true,
+          "explanation": "Die erfasste Nettofläche von Perron 5 beträgt 913.95 m².",
+          "factRef": "perrons.items[2].flaeche_netto_m2",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Weinfelden liegen Daten zu 13 Perronsegmenten vor, alle mit einer Perronhöhe von 55 cm. Ein Hilfstritt ist bei keinem dieser Segmente erfasst. Eine Sicherheitslinie ist vorhanden. Der Datenstand dieser Erhebung ist 2023.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 13,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Sicherheitslinie vorhanden",
+          "value": "Ja",
+          "unit": null,
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind für Weinfelden erfasst?",
+          "options": [
+            "7",
+            "9",
+            "11",
+            "13"
+          ],
+          "correct": 3,
+          "explanation": "Es sind 13 Perronsegmente erfasst, Datenstand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für Perronsegmente in Weinfelden ist ein Hilfstritt erfasst.",
+          "correct": false,
+          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu vier Gleisen liegen offene Daten vor: 1, 3, 4 und 5. Die erfassten Perronkanten weisen eine Höhe von 55 cm auf. Jedes dieser Gleise verfügt über die Sektoren A bis D.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 4,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Erfasste Perronhöhe",
+          "value": 55,
+          "unit": "cm",
+          "source": "sektortafel",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Länge der Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 1",
+              "value": 403,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 400,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 399,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 5",
+              "value": 336,
+              "factRef": "gleise.items[3].perronkante_m"
+            }
+          ],
+          "explanation": "Die Perronkanten messen 403 m (Gleis 1), 400 m (Gleis 4), 399 m (Gleis 3) und 336 m (Gleis 5).",
+          "factRef": "gleise.items"
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste Perronkante?",
+          "schema": "gleise",
+          "correct": "1",
+          "explanation": "Gleis 1 hat mit 403 Metern die längste erfasste Perronkante.",
+          "factRef": "gleise.items[0].nr"
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Weinfelden und Weinfelden KVA Thurgau (Abzw), Strecke Winterthur - Romanshorn, verkehren im Personenverkehr rund 224 Züge pro Tag, beide Richtungen zusammen. Auf dem Abschnitt zwischen Kehlhof West und Weinfelden, Strecke Wil - Weinfelden - Tägermoos, sind es 117 Züge pro Tag im Personenverkehr.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, stärkster Abschnitt (Personenverkehr)",
+          "value": 224,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, stärkster Abschnitt (Personenverkehr)",
+          "value": 81764,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren pro Tag im Personenverkehr auf dem Abschnitt zwischen Weinfelden und Weinfelden KVA Thurgau (Abzw)?",
+          "options": [
+            "90",
+            "120",
+            "160",
+            "224"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt sind es rund 224 Züge pro Tag im Personenverkehr, beide Richtungen zusammen, 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt zwischen Weinfelden und Weinfelden Süd verkehren im Güterverkehr mehr Züge pro Tag als im Personenverkehr.",
+          "correct": false,
+          "explanation": "Im Güterverkehr sind es 3 Züge pro Tag, im Personenverkehr 63 Züge pro Tag.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Weinfelden sind drei Linien erfasst: Wil - Weinfelden, Winterthur Nord - Romanshorn und Weinfelden - Tagermoos.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 3,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Ordne die Liniennummer dem Namen der Linie zu.",
+          "pairs": [
+            {
+              "links": "Linie 830",
+              "rechts": "Wil - Weinfelden",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "Linie 840",
+              "rechts": "Winterthur Nord - Romanshorn",
+              "factRef": "linien.items[1].name"
+            },
+            {
+              "links": "Linie 831",
+              "rechts": "Weinfelden - Tagermoos",
+              "factRef": "linien.items[2].name"
+            }
+          ],
+          "explanation": "Erfasst sind die Linien 830 (Wil - Weinfelden), 840 (Winterthur Nord - Romanshorn) und 831 (Weinfelden - Tagermoos).",
+          "factRef": "linien.items"
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Bei welchem Streckenkilometer der Linie 840 (Winterthur Nord - Romanshorn) ist Weinfelden eingetragen?",
+          "options": [
+            "29.17482 km",
+            "42.68 km",
+            "59.48791 km",
+            "81.76 km"
+          ],
+          "correct": 2,
+          "explanation": "Weinfelden steht auf der Linie 840 bei Kilometer 59.48791.",
+          "factRef": "linien.items[1].km_am_bahnhof",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Weinfelden sind 3 Billettautomaten erfasst, in den Typen S-POS und ePOS, sowie 15 Billettentwerter. Zwei Wartehallen sind erfasst, und WLAN ist als Standort verzeichnet.",
+      "facts": [
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 3,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 15,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Erfasste Wartehallen",
+          "value": 2,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Weinfelden erfasst?",
+          "options": [
+            "6",
+            "8",
+            "10",
+            "15"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 15 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Weinfelden steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "WLAN ist für diesen Bahnhof erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Weinfelden sind ___ Wartehallen erfasst.",
+          "options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 2 Wartehallen erfasst.",
+          "factRef": "services.wartehallen_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 4 Gleise (1, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 403,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 399,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 400,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 336,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ]
+}

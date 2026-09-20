@@ -67,12 +67,12 @@
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Arbon ein und aus?",
           "options": [
-            "1300",
-            "1900",
-            "2300",
-            "3100"
+            "920",
+            "1'300",
+            "1'600",
+            "2'300"
           ],
-          "correct": 2,
+          "correct": 3,
           "explanation": "Die Passagierfrequenz weist für 2025 2300 Ein- und Aussteigende pro Werktag aus.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
@@ -323,10 +323,10 @@
           "type": "single_choice",
           "prompt": "Wie viele der erfassten Segmente haben eine Perronhöhe von 55 Zentimetern?",
           "options": [
-            "2",
+            "3",
             "4",
             "6",
-            "8"
+            "7"
           ],
           "correct": 2,
           "explanation": "Von den 8 erfassten Segmenten tragen 6 die Perronhöhe 55 Zentimeter (Stand 2023).",
@@ -444,7 +444,7 @@
           "value": 90.28449,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].km"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [

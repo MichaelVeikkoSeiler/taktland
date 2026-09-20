@@ -107,7 +107,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "2",
@@ -121,7 +122,8 @@
           "A",
           "B",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -188,11 +190,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 257,
         "name": "Flamatt - Laupen - Gummenen",
-        "km": 1.72
+        "km_am_bahnhof": 1.72
       }
     ]
   },

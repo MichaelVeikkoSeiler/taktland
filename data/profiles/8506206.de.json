@@ -1,0 +1,651 @@
+{
+  "uic": 8506206,
+  "name": "Wil SG",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Wil SG rund 20'000 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 18'300, an einem freien Tag 14'300. Betrieben wird die Infrastruktur von der SBB, Züge verkehren von SBB und Thurbo.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 20000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 18300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 14300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "SBB, Thurbo",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Wil SG ein und aus?",
+          "options": [
+            "10'000",
+            "20'000",
+            "25'000",
+            "30'000"
+          ],
+          "correct": 1,
+          "explanation": "An einem Werktag steigen 20'000 Personen ein und aus, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "An einem freien Tag steigen in Wil SG durchschnittlich 14'300 Personen ein und aus.",
+          "correct": true,
+          "explanation": "Der Wert für einen freien Tag (dnwv) liegt bei 14'300 Personen, Stand 2025.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 16800,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 19200,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 19900,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 20000,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 20200,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr lag 2022 bei 16'800, 2023 bei 19'200, 2024 bei 19'900, 2025 bei 20'000 und 2018 bei 20'200 Personen.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Wil SG liegt auf 570.8 Metern über Meer im Bezirk Wil. Betreiberin der Anlage ist die Schweizerische Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 570.8,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiberin",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Wil",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Wil SG gemäss den erfassten Stammdaten?",
+          "options": [
+            "520.8 m",
+            "570.8 m",
+            "610.8 m",
+            "650.8 m"
+          ],
+          "correct": 1,
+          "explanation": "Die erfasste Höhe beträgt 570.8 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Schweizerische Bundesbahnen SBB ist als Betreiberin von Wil SG erfasst.",
+          "correct": true,
+          "explanation": "In den Stammdaten ist die SBB als Betreiberin eingetragen.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Wil SG liegt im Bezirk ___.",
+          "options": [
+            "Wil",
+            "Toggenburg",
+            "Rorschach"
+          ],
+          "correct": 0,
+          "explanation": "Die Stammdaten führen den Bezirk Wil.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 4 Perrons in Wil SG liegen offene Daten vor. Das längste erfasste Perron misst 435 Meter, das kürzeste 170 Meter. Alle 4 erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 4,
+          "unit": "Perrons",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 435,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 170,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 4,
+          "unit": "Perrons",
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Wil SG?",
+          "options": [
+            "170 m",
+            "209 m",
+            "423 m",
+            "435 m"
+          ],
+          "correct": 3,
+          "explanation": "Das Perron 2/3 misst 435 Meter, der längste erfasste Wert.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der erfassten Perrons in Wil SG sind niveaufrei erreichbar?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 3,
+          "explanation": "Alle 4 erfassten Perrons sind niveaufrei erreichbar.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Welcher Perrontyp gehört zu welcher Perronnummer?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "Mittelperron",
+              "factRef": "perrons.items[0].typ"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "Hausperron",
+              "factRef": "perrons.items[1].typ"
+            },
+            {
+              "links": "Perron 6",
+              "rechts": "Aussenperron",
+              "factRef": "perrons.items[3].typ"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 ist ein Mittelperron, Perron 1 ein Hausperron und Perron 6 ein Aussenperron.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Wil SG sind 56 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 cm. Ein Hilfstritt ist bei keinem dieser Segmente vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 56,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 6,
+          "unit": "Gleise",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Visuell-taktile Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind für Wil SG erfasst?",
+          "options": [
+            "36",
+            "46",
+            "56",
+            "66"
+          ],
+          "correct": 2,
+          "explanation": "Es sind 56 Perronsegmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für Wil SG ist eine visuell-taktile Sicherheitslinie erfasst.",
+          "correct": true,
+          "explanation": "Der Wert 'Ja' ist bei der Sicherheitslinie eingetragen.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Bei wie vielen Gleisen ist eine Perronhöhe von 55 cm erfasst?",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "unit": "Gleise",
+          "correct": 6,
+          "explanation": "Bei 6 Gleisen ist eine Perronhöhe von 55 cm erfasst.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Wil Matt (Abzw)–Wil SG verkehren im Personenverkehr täglich rund 296 Züge in beide Richtungen zusammen, das sind 107'951 Züge pro Jahr. Auf dem Abschnitt Wil SG–Wil Güterbahnhof sind es 216 Züge pro Tag, auf dem Abschnitt Wil SG–Wil Nord 61 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Wil Matt (Abzw)–Wil SG",
+          "value": 296,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Jahr, Wil Matt (Abzw)–Wil SG",
+          "value": 107951,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt Wil Matt (Abzw)–Wil SG, beide Richtungen zusammen?",
+          "options": [
+            "120",
+            "160",
+            "210",
+            "296"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt verkehren rund 296 Züge pro Tag im Personenverkehr, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge pro Jahr sind auf dem Abschnitt Wil Matt (Abzw)–Wil SG erfasst?",
+          "options": [
+            "43'000",
+            "59'000",
+            "76'000",
+            "107'951"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt sind 107'951 Personenzüge pro Jahr erfasst, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehr-Abschnitte nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Wil Matt (Abzw)–Wil SG",
+              "value": 296,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Wil SG–Wil Güterbahnhof",
+              "value": 216,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Wil SG–Wil Nord",
+              "value": 61,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Im Personenverkehr verkehren auf Wil Matt (Abzw)–Wil SG 296 Züge pro Tag, auf Wil SG–Wil Güterbahnhof 216 und auf Wil SG–Wil Nord 61 Züge pro Tag, Stand 2025.",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Wil SG–Wil Nord verkehren im Güterverkehr täglich rund 3 Züge.",
+          "correct": true,
+          "explanation": "Auf diesem Abschnitt sind im Güterverkehr rund 3 Züge pro Tag erfasst, Stand 2025.",
+          "factRef": "zuege.abschnitte[5].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "In Wil SG sind 2 Linien mit Betriebspunkten erfasst: Linie 830 Wil–Weinfelden und Linie 850 St.Gallen–Winterthur Nord.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 2,
+          "unit": "Linien",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie 830",
+          "value": "Wil - Weinfelden",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].name"
+        },
+        {
+          "label": "Linie 850",
+          "value": "St.Gallen - Winterthur Nord",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].name"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien mit Betriebspunkten sind für Wil SG erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 2 Linien erfasst.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Bezeichnung?",
+          "pairs": [
+            {
+              "links": "830",
+              "rechts": "Wil - Weinfelden",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "850",
+              "rechts": "St.Gallen - Winterthur Nord",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Linie 830 heisst Wil - Weinfelden, Linie 850 heisst St.Gallen - Winterthur Nord.",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Wil SG sind 4 Billettautomaten und 12 Billettentwerter erfasst, dazu 3 Wartehallen. In der Liste der WLAN-Standorte steht Wil SG nicht.",
+      "facts": [
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 4,
+          "unit": "Automaten",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 12,
+          "unit": "Entwerter",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Erfasste Wartehallen",
+          "value": 3,
+          "unit": "Wartehallen",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        },
+        {
+          "label": "In WLAN-Liste erfasst",
+          "value": false,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Wil SG erfasst?",
+          "options": [
+            "2",
+            "4",
+            "6",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 4 Billettautomaten erfasst.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Wil SG steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Wil SG ist nicht in der Liste der WLAN-Standorte erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Billettentwerter sind für Wil SG erfasst?",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "unit": "Entwerter",
+          "correct": 12,
+          "explanation": "Es sind 12 Billettentwerter erfasst.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Wartehallen sind für Wil SG erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 2,
+          "explanation": "Es sind 3 Wartehallen erfasst.",
+          "factRef": "services.wartehallen_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Wil SG ist ein Bahnhofplan als A4-PDF veröffentlicht. Als Eigentümerin ist die SBB erfasst.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Wil SG ist ein Bahnhofplan als A4-PDF veröffentlicht.",
+          "correct": true,
+          "explanation": "Es liegt ein A4-Bahnhofplan als PDF vor.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wer ist gemäss den Bahnhofplan-Daten Eigentümerin der Anlage in Wil SG?",
+          "options": [
+            "SBB",
+            "Kanton St. Gallen",
+            "Stadt Wil",
+            "Thurbo"
+          ],
+          "correct": 0,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (1, 2, 3, 4, 5, 6). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu Gleis 4 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne FW.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

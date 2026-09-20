@@ -127,7 +127,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "6",
@@ -142,7 +143,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "7",
@@ -156,7 +158,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "8",
@@ -171,7 +174,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "9",
@@ -185,7 +189,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "10",
@@ -200,7 +205,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -328,16 +334,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 890,
         "name": "Sargans Ost - Ziegelbrucke",
-        "km": 33.60528
+        "km_am_bahnhof": 33.60528
       },
       {
         "nummer": 720,
         "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
-        "km": 57.14637
+        "km_am_bahnhof": 57.14637
       }
     ]
   },

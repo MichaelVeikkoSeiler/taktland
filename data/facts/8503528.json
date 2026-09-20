@@ -109,7 +109,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "2",
@@ -123,7 +124,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -212,16 +214,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 703,
         "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
-        "km": 36.52178
+        "km_am_bahnhof": 36.52178
       },
       {
         "nummer": 7705,
         "name": "Tanklager O'fingen - O'fingen(abgebr.)",
-        "km": 33.83588
+        "km_am_bahnhof": 33.83588
       }
     ]
   },

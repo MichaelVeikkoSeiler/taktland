@@ -1,0 +1,868 @@
+{
+  "uic": 8502204,
+  "name": "Zug",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Der Bahnhof Zug liegt im Kanton Zug auf 425 Metern über Meer. Infrastrukturbetreiberin ist die SBB, die Züge von SBB und SOB verkehren hier. An einem Werktag steigen 47'200 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 42'100, an einem freien Tag 30'700.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 47200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Tagesmittel über das ganze Jahr",
+          "value": 42100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Verkehr an einem freien Tag",
+          "value": 30700,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "unit": "",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Zug ein und aus?",
+          "options": [
+            "19'000",
+            "26'000",
+            "33'000",
+            "47'200"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 47'200 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der durchschnittliche Tagesverkehr über das ganze Jahr liegt in Zug höher als der Werktagsverkehr.",
+          "correct": false,
+          "explanation": "Der Tagesmittelwert beträgt 42'100, der Werktagsverkehr 47'200 Personen.",
+          "factRef": "steckbrief.dtv",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche Bahnunternehmen verkehren laut Steckbrief in Zug?",
+          "options": [
+            "SBB, SOB",
+            "SBB, BLS",
+            "SBB, RhB",
+            "SOB, ZVV"
+          ],
+          "correct": 0,
+          "explanation": "Als EVU sind SBB und SOB erfasst.",
+          "factRef": "steckbrief.evu",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Werte des Werktagsverkehrs nach Jahr, älteste zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 2018,
+              "factRef": "steckbrief.verlauf[0].jahr"
+            },
+            {
+              "label": "2022",
+              "value": 2022,
+              "factRef": "steckbrief.verlauf[1].jahr"
+            },
+            {
+              "label": "2023",
+              "value": 2023,
+              "factRef": "steckbrief.verlauf[2].jahr"
+            },
+            {
+              "label": "2024",
+              "value": 2024,
+              "factRef": "steckbrief.verlauf[3].jahr"
+            },
+            {
+              "label": "2025",
+              "value": 2025,
+              "factRef": "steckbrief.verlauf[4].jahr"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die Jahre der erfassten Werktagsverkehrswerte sind 2018, 2022, 2023, 2024 und 2025, in dieser zeitlichen Reihenfolge."
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Der Bahnhof Zug liegt auf 425 Metern über Meer in der Gemeinde Zug. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB, als Verkehrsmittel ist der Zug erfasst.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 425,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Zug",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
+        },
+        {
+          "label": "Betreiber",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zug?",
+          "min": 350,
+          "max": 500,
+          "step": 5,
+          "unit": "m",
+          "correct": 425,
+          "explanation": "Der Bahnhof liegt auf 425 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wer betreibt den Bahnhof Zug?",
+          "options": [
+            "Schweizerische Bundesbahnen SBB",
+            "Zentralbahn",
+            "Südostbahn SOB",
+            "Kanton Zug"
+          ],
+          "correct": 0,
+          "explanation": "Als Betreiber ist die Schweizerische Bundesbahnen SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Tagesrhythmus",
+      "body": "Der Personenverkehr am Bahnhof Zug erreicht am Freitag mit 16.4 Prozent den höchsten Wochenanteil. Im Tagesverlauf liegt die Spitzenstunde bei 17 Uhr mit 9.8 Prozent des Tagesaufkommens.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 17,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil in der Spitzenstunde",
+          "value": 9.8,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Stärkster Wochentag",
+          "value": "Freitag",
+          "unit": "",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Zu welcher Stunde liegt die Spitze des Tagesverlaufs in Zug?",
+          "options": [
+            "8 Uhr",
+            "12 Uhr",
+            "17 Uhr",
+            "20 Uhr"
+          ],
+          "correct": 2,
+          "explanation": "Um 17 Uhr wird mit 9.8 Prozent der höchste Anteil des Tages erreicht.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag hat in Zug den höchsten Anteil am Wochenverkehr?",
+          "options": [
+            "Montag",
+            "Mittwoch",
+            "Freitag",
+            "Sonntag"
+          ],
+          "correct": 2,
+          "explanation": "Der Freitag hat mit 16.4 Prozent den höchsten Wochenanteil.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Wochentage nach Anteil am Wochenverkehr, tiefster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Sonntag",
+              "value": 9.9,
+              "factRef": "tagesrhythmus.wochentage[6].prozent"
+            },
+            {
+              "label": "Samstag",
+              "value": 13.2,
+              "factRef": "tagesrhythmus.wochentage[5].prozent"
+            },
+            {
+              "label": "Montag",
+              "value": 14.1,
+              "factRef": "tagesrhythmus.wochentage[0].prozent"
+            },
+            {
+              "label": "Dienstag",
+              "value": 15.3,
+              "factRef": "tagesrhythmus.wochentage[1].prozent"
+            },
+            {
+              "label": "Freitag",
+              "value": 16.4,
+              "factRef": "tagesrhythmus.wochentage[4].prozent"
+            }
+          ],
+          "factRef": "tagesrhythmus.wochentage",
+          "explanation": "Der Anteil steigt von Sonntag (9.9 %) über Samstag, Montag und Dienstag bis Freitag (16.4 %) an."
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 5 Perrons in Zug liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 576 Meter, das kürzeste 366 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 5,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 5,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 576,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 366,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "Das längste erfasste Perron in Zug misst ___ Meter.",
+          "options": [
+            "230",
+            "320",
+            "576"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron ist Perron 3 mit 576 Metern.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 3",
+              "rechts": "576 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 4",
+              "rechts": "520 m",
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "links": "Perron 1/2",
+              "rechts": "480 m",
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "links": "Perron 7",
+              "rechts": "366 m",
+              "factRef": "perrons.items[4].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Die Längen sind Perron 3: 576 m, Perron 4: 520 m, Perron 1/2: 480 m, Perron 7: 366 m."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Alle 5 erfassten Perrons in Zug sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Zu allen 5 erfassten Perrons ist ein niveaufreier Zugang erfasst.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 7 Gleisen in Zug liegen offene Daten vor. Die erfassten Perronhöhen reichen von 20 bis 55 Zentimeter.",
+      "facts": [],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welches Gleis hat laut offenen Daten die längste Perronkante in Zug?",
+          "options": [
+            "Gleis 1",
+            "Gleis 2",
+            "Gleis 5",
+            "Gleis 7"
+          ],
+          "correct": 1,
+          "explanation": "Gleis 2 hat mit 416 Metern die längste erfasste Perronkante.",
+          "factRef": "gleise.items[1].nr",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei Gleis 7 in Zug ist ein Hilfstritt erfasst.",
+          "correct": true,
+          "explanation": "Für Gleis 7 ist der Hilfstritt mit 'true' erfasst.",
+          "factRef": "gleise.items[6].hilfstritt",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 2",
+              "value": 416,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 372,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 5",
+              "value": 332,
+              "factRef": "gleise.items[4].perronkante_m"
+            },
+            {
+              "label": "Gleis 7",
+              "value": 277,
+              "factRef": "gleise.items[6].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 222,
+              "factRef": "gleise.items[3].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Die Perronkanten messen der Reihe nach 416, 372, 332, 277 und 222 Meter."
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die kürzeste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "1",
+          "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 1 hat mit 150 Metern die kürzeste erfasste Perronkante."
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Zu 47 Perronsegmenten in Zug liegen Daten zur Hindernisfreiheit vor. Am häufigsten ist eine Perronhöhe von 55 Zentimetern mit 28 Segmenten erfasst, bei 3 Segmenten ist ein Hilfstritt verzeichnet. Für den Bahnhof ist eine Sicherheitslinie erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente gesamt",
+          "value": 47,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 3,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 6,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie erfasst",
+          "value": "Ja",
+          "unit": "",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Zug sind zu ___ Perronsegmenten Daten zur Hindernisfreiheit erfasst.",
+          "options": [
+            "33",
+            "40",
+            "47"
+          ],
+          "correct": 2,
+          "explanation": "Insgesamt sind 47 Segmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe kommt bei den erfassten Segmenten in Zug am häufigsten vor?",
+          "options": [
+            "20 cm",
+            "30 cm",
+            "42 cm",
+            "55 cm"
+          ],
+          "correct": 3,
+          "explanation": "Mit 28 von 47 Segmenten ist 55 cm die häufigste erfasste Perronhöhe.",
+          "factRef": "gleise.perronhoehen_cm[4]",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für den Bahnhof Zug ist eine visuell-taktile Sicherheitslinie erfasst.",
+          "correct": true,
+          "explanation": "Der Wert für die Sicherheitslinie ist 'Ja'.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Baar Lindenpark–Zug verkehren im Personenverkehr rund 409 Züge pro Tag in beide Richtungen zusammen, das sind 149'387 Züge pro Jahr. Auf dem Abschnitt Zug–Zug Postplatz sind es 130 Züge pro Tag im Personenverkehr.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Baar Lindenpark–Zug",
+          "value": 409,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Baar Lindenpark–Zug",
+          "value": 149387,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Tag, Zug–Zug Postplatz",
+          "value": 130,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren pro Tag auf dem Abschnitt Baar Lindenpark–Zug (beide Richtungen zusammen)?",
+          "options": [
+            "160",
+            "220",
+            "290",
+            "409"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt verkehren rund 409 Personenzüge pro Tag.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Personenzüge verkehren pro Tag auf dem Abschnitt Baar Lindenpark–Zug (beide Richtungen)?",
+          "min": 100,
+          "max": 600,
+          "step": 10,
+          "unit": "Züge/Tag",
+          "correct": 409,
+          "explanation": "Auf diesem Abschnitt sind es rund 409 Züge pro Tag.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Zug Schutzengel–Zug verkehren im Güterverkehr mehr Züge pro Jahr als im Personenverkehr.",
+          "correct": false,
+          "explanation": "Im Güterverkehr sind es 603 Züge pro Jahr, im Personenverkehr 107'501.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Zug sind 2 Linien erfasst: die Linie 9660 Sihlbrugg–Baar Projekt ZBT2 und die Linie 660 Thalwil–Zug–Fluhmühle.",
+      "facts": [
+        {
+          "label": "Anzahl erfasster Linien",
+          "value": 2,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie 660",
+          "value": "Thalwil - Zug - Fluhmuhle",
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].name"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien sind für den Bahnhof Zug erfasst?",
+          "options": [
+            "1",
+            "2",
+            "4",
+            "6"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Linien, 9660 und 660.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Bezeichnung?",
+          "pairs": [
+            {
+              "links": "9660",
+              "rechts": "Sihlbrugg - Baar Projekt ZBT2",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "660",
+              "rechts": "Thalwil - Zug - Fluhmuhle",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Linie 9660 heisst Sihlbrugg - Baar Projekt ZBT2, Linie 660 heisst Thalwil - Zug - Fluhmuhle."
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Zug ist WLAN erfasst. Für Billettautomaten sind 6 Geräte des Typs ePOS erfasst, dazu 26 Billettentwerter und 3 Wartehallen.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 6,
+          "unit": "",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 26,
+          "unit": "",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 3,
+          "unit": "",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für den Bahnhof Zug ist WLAN erfasst.",
+          "correct": true,
+          "explanation": "Der Bahnhof steht in der Liste der WLAN-Standorte.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Zug erfasst?",
+          "options": [
+            "2",
+            "6",
+            "12",
+            "26"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 6 Billettautomaten vom Typ ePOS.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Wartehallen sind in Zug erfasst?",
+          "options": [
+            "1",
+            "3",
+            "5",
+            "7"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 3 Wartehallen erfasst.",
+          "factRef": "services.wartehallen_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Zug ist ein Bahnhofplan als A4- und Plakatversion veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": "",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wer ist laut Bahnhofplan Eigentümerin der Anlage Zug?",
+          "options": [
+            "SBB",
+            "Kanton Zug",
+            "Gemeinde Zug",
+            "SOB"
+          ],
+          "correct": 0,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 7 Gleise (1, 2, 3, 4, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 150,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 416,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 372,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        25,
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 222,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        25,
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 332,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 199,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        20,
+        30,
+        42
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 277,
+      "sektoren": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ]
+}

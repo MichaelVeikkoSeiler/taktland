@@ -97,7 +97,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 150,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -107,7 +108,8 @@
         "hilfstritt": true,
         "perrontyp": "Mittelperron",
         "perronkante_m": 153,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -120,7 +122,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -199,11 +202,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 240,
         "name": "Delemont - Delle",
-        "km": 123.35159
+        "km_am_bahnhof": 123.35159
       }
     ]
   },

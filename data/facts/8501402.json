@@ -111,7 +111,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "2",
@@ -128,7 +129,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -142,7 +144,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -229,16 +232,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 100,
         "name": "Lausanne - Simplon Tunnel I - Iselle",
-        "km": 47.56
+        "km_am_bahnhof": 47.56
       },
       {
         "nummer": 127,
         "name": "Bex - Villars",
-        "km": 0
+        "km_am_bahnhof": 0
       }
     ]
   },

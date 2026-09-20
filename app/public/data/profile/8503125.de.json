@@ -1,0 +1,623 @@
+{
+  "uic": 8503125,
+  "name": "Uster",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Der Bahnhof Uster liegt im Kanton Zürich auf 463.7 Metern über Meer. An einem Werktag steigen hier 29'500 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 25'500. An einem freien Tag liegt der Wert bei 16'600 Personen.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 29500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 25500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 16600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Wert im Jahr 2018",
+          "value": 27400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag 2025 in Uster ein und aus?",
+          "options": [
+            "12'000",
+            "16'000",
+            "21'000",
+            "29'500"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag im Jahr 2025 sind es 29'500 Personen.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der durchschnittliche Verkehr an einem freien Tag beträgt in Uster 16'600 Personen.",
+          "correct": true,
+          "explanation": "Der dnwv-Wert (freie Tage, inkl. Wochenenden und Feiertage) liegt 2025 bei 16'600 Personen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Im Tagesmittel über das ganze Jahr steigen in Uster ___ Personen ein und aus.",
+          "options": [
+            "10'000",
+            "14'000",
+            "25'500"
+          ],
+          "correct": 2,
+          "explanation": "Der dtv-Wert 2025 beträgt 25'500 Personen.",
+          "factRef": "steckbrief.dtv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 24300,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 27400,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 27600,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 28700,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 29500,
+              "factRef": "steckbrief.dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr stieg von 24'300 (2022) über 27'400 (2018), 27'600 (2023) und 28'700 (2024) auf 29'500 Personen (2025).",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Der Bahnhof Uster liegt auf 463.7 Metern über Meer in der Gemeinde Uster im Kanton Zürich. Infrastrukturbetreiberin und einziges erfasstes Eisenbahnverkehrsunternehmen ist die SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 463.7,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Uster?",
+          "options": [
+            "356.2 m",
+            "463.7 m",
+            "512.4 m",
+            "601.9 m"
+          ],
+          "correct": 1,
+          "explanation": "Der Bahnhof Uster liegt auf 463.7 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die SBB ist die Infrastrukturbetreiberin des Bahnhofs Uster.",
+          "correct": true,
+          "explanation": "Als Infrastrukturbetreiberin (isb) ist die SBB erfasst.",
+          "factRef": "steckbrief.isb",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Tagesrhythmus",
+      "body": "Der Anteil der Bahnhofbenutzenden am Tag erreicht in Uster in der Stunde ab 17 Uhr mit 11.3 Prozent seinen Höchststand. Unter den Wochentagen ist der Freitag mit 15.8 Prozent am stärksten frequentiert.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 17,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil in der Spitzenstunde",
+          "value": 11.3,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Stärkster Wochentag",
+          "value": "Freitag",
+          "unit": null,
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "In welcher Stunde ist der Anteil der Bahnhofbenutzenden in Uster am höchsten?",
+          "options": [
+            "7 Uhr",
+            "12 Uhr",
+            "17 Uhr",
+            "20 Uhr"
+          ],
+          "correct": 2,
+          "explanation": "Die Spitzenstunde liegt bei 17 Uhr mit einem Anteil von 11.3 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Der Wochentag mit dem höchsten Anteil an Bahnhofbenutzenden in Uster ist ___.",
+          "options": [
+            "Mittwoch",
+            "Freitag",
+            "Samstag"
+          ],
+          "correct": 1,
+          "explanation": "Der Freitag erreicht mit 15.8 Prozent den höchsten Anteil unter den Wochentagen.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viel Prozent der täglichen Bahnhofbenutzenden entfallen in Uster auf die Spitzenstunde?",
+          "min": 0,
+          "max": 20,
+          "step": 0.5,
+          "unit": "%",
+          "correct": 11.3,
+          "explanation": "In der Spitzenstunde (17 Uhr) liegt der Anteil bei 11.3 Prozent.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu zwei Perrons in Uster liegen offene Daten vor. Das Mittelperron 2/3 ist 331 Meter lang, der Hausperron 1 misst 326 Meter. Beide sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 331,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 326,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 2,
+          "unit": "Perrons",
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Uster?",
+          "options": [
+            "236 m",
+            "326 m",
+            "331 m",
+            "412 m"
+          ],
+          "correct": 2,
+          "explanation": "Das Mittelperron 2/3 misst 331 Meter, das längste erfasste Perron in Uster.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Uster sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Von 2 erfassten Perrons sind 2 niveaufrei erreichbar.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "331 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "326 m",
+              "factRef": "perrons.items[1].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 ist 331 Meter lang, Perron 1 misst 326 Meter.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Zu 3 Gleisen mit Daten in Uster sind insgesamt 6 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. Ein Hilfstritt ist bei keinem der Segmente erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 6,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Uster sind insgesamt ___ Perronsegmente erfasst.",
+          "options": [
+            "3",
+            "6",
+            "12"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 6 Perronsegmente erfasst, verteilt auf 3 Gleise.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für die Perronsegmente in Uster ist ein Hilfstritt erfasst.",
+          "correct": false,
+          "explanation": "Es ist kein Segment mit Hilfstritt erfasst, der Wert liegt bei 0.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe ist für die Gleise in Uster erfasst?",
+          "options": [
+            "35 cm",
+            "55 cm",
+            "76 cm",
+            "90 cm"
+          ],
+          "correct": 1,
+          "explanation": "Für die Gleise in Uster ist eine Perronhöhe von 55 Zentimetern erfasst.",
+          "factRef": "gleise.perronhoehen_cm[0]",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Nänikon-Greifensee–Uster verkehren im Personenverkehr rund 319 Züge pro Tag in beide Richtungen zusammen. Im Güterverkehr sind es auf demselben Abschnitt rund 5 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, Nänikon-Greifensee–Uster",
+          "value": 319,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag, Nänikon-Greifensee–Uster",
+          "value": 5,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag, Uster–Aathal",
+          "value": 236,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren rund pro Tag auf dem Abschnitt Nänikon-Greifensee–Uster (beide Richtungen)?",
+          "options": [
+            "130",
+            "180",
+            "220",
+            "319"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt verkehren 2025 rund 319 Personenzüge pro Tag.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Nänikon-Greifensee–Uster verkehren im Güterverkehr rund 5 Züge pro Tag.",
+          "correct": true,
+          "explanation": "Der Güterverkehr auf diesem Abschnitt umfasst 1'838 Züge pro Jahr, das entspricht rund 5 pro Tag.",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Verkehrsarten/Abschnitte nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Personenverkehr Nänikon-Greifensee–Uster",
+              "value": 319,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Personenverkehr Uster–Aathal",
+              "value": 236,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Güterverkehr Nänikon-Greifensee–Uster",
+              "value": 5,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Der Personenverkehr Nänikon-Greifensee–Uster verzeichnet 319 Züge pro Tag, gefolgt vom Personenverkehr Uster–Aathal mit 236 und dem Güterverkehr mit 5 Zügen pro Tag.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Zu einer Linie liegen für Uster offene Daten vor: die Linie 740 zwischen Rapperswil, Uster und Wallisellen Ost. Uster ist darauf bei Kilometer 81.35047 eingetragen.",
+      "facts": [
+        {
+          "label": "Liniennummer",
+          "value": 740,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        },
+        {
+          "label": "Kilometrierung von Uster auf der Linie 740",
+          "value": 81.35047,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Liniennummer ist für Uster erfasst?",
+          "options": [
+            "300",
+            "410",
+            "520",
+            "740"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst ist die Linie 740, Rapperswil - Uster - Wallisellen Ost.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Uster steht auf der Linie 740 bei Kilometer ___.",
+          "options": [
+            "64.4",
+            "81.35047",
+            "116.4"
+          ],
+          "correct": 1,
+          "explanation": "Die Kilometrierung von Uster auf der Linie 740 beträgt 81.35047.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Für Uster ist WLAN erfasst. In den offenen Daten sind 4 Billettautomaten vom Typ ePOS, 12 Billettentwerter und 2 Wartehallen verzeichnet.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 4,
+          "unit": "Automaten",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 12,
+          "unit": "Entwerter",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Erfasste Wartehallen",
+          "value": 2,
+          "unit": "Wartehallen",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für den Bahnhof Uster ist WLAN erfasst.",
+          "correct": true,
+          "explanation": "In den offenen Daten (wifistation) ist WLAN als vorhanden erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Uster erfasst?",
+          "options": [
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 4 Billettautomaten des Typs ePOS.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Billettentwerter sind für Uster erfasst?",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "unit": "Entwerter",
+          "correct": 12,
+          "explanation": "Erfasst sind 12 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Uster ist ein Bahnhofplan als A4- und als Plakatversion veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Die SBB ist als Eigentümerin des Bahnhofplans für Uster erfasst.",
+          "correct": true,
+          "explanation": "Als Eigentümerin ist die SBB verzeichnet.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

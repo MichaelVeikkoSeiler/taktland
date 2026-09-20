@@ -116,7 +116,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -132,7 +133,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       }
     ]
   },
@@ -219,11 +221,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 653,
         "name": "Gexi Ost - Rotkreuz - Immensee West",
-        "km": 71.7722
+        "km_am_bahnhof": 71.7722
       }
     ]
   },

@@ -477,7 +477,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "3",
@@ -491,7 +492,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "4",
@@ -507,7 +509,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "5",
@@ -523,7 +526,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "6",
@@ -539,7 +543,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "7",
@@ -555,7 +560,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "8",
@@ -570,7 +576,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "9",
@@ -585,7 +592,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "10",
@@ -600,7 +608,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "11",
@@ -615,7 +624,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "12",
@@ -630,7 +640,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "13",
@@ -645,7 +656,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "14",
@@ -660,7 +672,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "15",
@@ -673,7 +686,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -742,11 +756,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 500,
         "name": "Basel SBB - Olten - Luzern",
-        "km": 95.09297
+        "km_am_bahnhof": 95.09297
       }
     ]
   },

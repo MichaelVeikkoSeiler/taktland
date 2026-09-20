@@ -104,7 +104,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 180,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -114,7 +115,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 196,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -124,7 +126,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 197,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -231,16 +234,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 219,
         "name": "Auvernier - Les Verrieres frontiere",
-        "km": 4.9791
+        "km_am_bahnhof": 4.9791
       },
       {
         "nummer": 210,
         "name": "Daillens - Biel/Bienne",
-        "km": 70.34416
+        "km_am_bahnhof": 70.34416
       }
     ]
   },

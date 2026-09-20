@@ -98,7 +98,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "4",
@@ -111,7 +112,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -199,16 +201,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 752,
         "name": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
-        "km": 11.29461
+        "km_am_bahnhof": 11.29461
       },
       {
         "nummer": 757,
         "name": "Kloten - Dorfnest (Uberwerfung)",
-        "km": 11.29957
+        "km_am_bahnhof": 11.29957
       }
     ]
   },

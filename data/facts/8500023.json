@@ -115,7 +115,8 @@
         "sektoren": [
           "A",
           "J"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "2",
@@ -128,7 +129,8 @@
           "B",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -143,7 +145,8 @@
           "B",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -153,7 +156,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 424,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "5",
@@ -161,7 +165,8 @@
         "hilfstritt": false,
         "perrontyp": null,
         "perronkante_m": null,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -250,16 +255,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 500,
         "name": "Basel SBB - Olten - Luzern",
-        "km": 14.376
+        "km_am_bahnhof": 14.376
       },
       {
         "nummer": 9501,
         "name": "Projekt Juradurchstich",
-        "km": 8
+        "km_am_bahnhof": 8
       }
     ]
   },

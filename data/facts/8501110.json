@@ -105,7 +105,8 @@
         "hilfstritt": true,
         "perrontyp": "Aussenperron",
         "perronkante_m": 124,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -115,7 +116,8 @@
         "hilfstritt": true,
         "perrontyp": "Aussenperron",
         "perronkante_m": 172,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -203,11 +205,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 210,
         "name": "Daillens - Biel/Bienne",
-        "km": 32.69977
+        "km_am_bahnhof": 32.69977
       }
     ]
   },

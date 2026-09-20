@@ -256,7 +256,7 @@
             "K"
           ],
           "correct": 2,
-          "explanation": "Von A bis H.",
+          "explanation": "Von A bis H, also 8 Sektoren.",
           "factRef": "gleise.items[0].sektoren[7]",
           "difficulty": 2
         }

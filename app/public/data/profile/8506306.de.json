@@ -231,12 +231,12 @@
           "type": "cloze",
           "prompt": "Rorschach Hafen liegt an der Linie ___.",
           "options": [
-            "225",
+            "330",
             "450",
-            "825",
-            "910"
+            "580",
+            "825"
           ],
-          "correct": 2,
+          "correct": 3,
           "explanation": "Linie 825, von Romanshorn Feld H nach Rorschach.",
           "factRef": "linien.items[0].nummer",
           "difficulty": 1
@@ -281,7 +281,7 @@
             "15"
           ],
           "correct": 1,
-          "explanation": "4 Entwerter.",
+          "explanation": "4 Entwerter, dazu 1 Billettautomaten.",
           "factRef": "services.billettentwerter_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 2

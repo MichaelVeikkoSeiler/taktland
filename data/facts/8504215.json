@@ -91,7 +91,8 @@
         "hilfstritt": false,
         "perrontyp": "Zwischenperron",
         "perronkante_m": 173,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -101,7 +102,8 @@
         "hilfstritt": false,
         "perrontyp": "Zwischenperron",
         "perronkante_m": 175,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -190,16 +192,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 221,
         "name": "Travers limite RVT - Buttes",
-        "km": 0.00624
+        "km_am_bahnhof": 0.00624
       },
       {
         "nummer": 219,
         "name": "Auvernier - Les Verrieres frontiere",
-        "km": 22.44673
+        "km_am_bahnhof": 22.44673
       }
     ]
   },

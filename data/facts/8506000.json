@@ -392,7 +392,8 @@
           "G",
           "H",
           "J"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -407,7 +408,8 @@
           "G",
           "H",
           "J"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -426,7 +428,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "4",
@@ -445,7 +448,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "5",
@@ -463,7 +467,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "6",
@@ -482,7 +487,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "7",
@@ -500,7 +506,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "8",
@@ -517,7 +524,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "9",
@@ -533,7 +541,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       }
     ]
   },
@@ -641,11 +650,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 751,
         "name": "ZH Langstr. - Wallisellen - Winterthur",
-        "km": 26.14175
+        "km_am_bahnhof": 26.14175
       }
     ]
   },

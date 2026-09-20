@@ -399,7 +399,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "2",
@@ -410,7 +411,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 166,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -427,7 +429,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "4",
@@ -445,7 +448,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "5",
@@ -464,7 +468,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "6",
@@ -482,7 +487,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "7",
@@ -500,7 +506,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "8",
@@ -518,7 +525,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "70",
@@ -531,7 +539,8 @@
         "perronkante_m": 152,
         "sektoren": [
           "A"
-        ]
+        ],
+        "sektoren_anzahl": 1
       }
     ]
   },
@@ -651,16 +660,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 100,
         "name": "Lausanne - Simplon Tunnel I - Iselle",
-        "km": 0
+        "km_am_bahnhof": 0
       },
       {
         "nummer": 150,
         "name": "Lausanne - Geneve-Aeroport",
-        "km": 0
+        "km_am_bahnhof": 0
       }
     ]
   },

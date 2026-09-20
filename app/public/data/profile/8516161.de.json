@@ -1,0 +1,662 @@
+{
+  "uic": 8516161,
+  "name": "Bern Wankdorf",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Bern Wankdorf liegt im Kanton Bern. Die Infrastruktur wird von der SBB betrieben, Züge von BLS und SBB verkehren hier. An einem Werktag steigen 18'100 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 15'000. An einem freien Tag sind es 7'900 Personen.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 18100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 15000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 7900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "BLS, SBB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Bern Wankdorf ein und aus?",
+          "options": [
+            "7'200",
+            "10'000",
+            "13'000",
+            "18'100"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 18'100 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der Wert im Tagesmittel über das ganze Jahr liegt tiefer als der Wert an einem Werktag.",
+          "correct": true,
+          "explanation": "Im Tagesmittel sind es 15'000 Personen, an einem Werktag 18'100.",
+          "factRef": "steckbrief.dtv",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Personen steigen an einem freien Tag in Bern Wankdorf ein und aus?",
+          "min": 0,
+          "max": 20000,
+          "step": 100,
+          "unit": "Personen",
+          "correct": 7900,
+          "explanation": "An einem freien Tag sind es 7'900 Personen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 12800,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 15200,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 15900,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 16500,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 18100,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr stieg von 12'800 im Jahr 2022 über 15'200 (2018), 15'900 (2023) und 16'500 (2024) auf 18'100 im Jahr 2025."
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche Bahnunternehmen verkehren laut Fakten in Bern Wankdorf?",
+          "options": [
+            "BLS, SBB",
+            "SBB, SOB",
+            "BLS, RhB",
+            "SBB allein"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind BLS und SBB als Bahnunternehmen.",
+          "factRef": "steckbrief.evu",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Bern Wankdorf liegt auf 548.5 Metern über Meer in der Gemeinde Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 548.5,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Bern",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
+        },
+        {
+          "label": "Betreiberin",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Bern Wankdorf?",
+          "options": [
+            "498.5 m",
+            "548.5 m",
+            "598.5 m",
+            "648.5 m"
+          ],
+          "correct": 1,
+          "explanation": "Die erfasste Höhe beträgt 548.5 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bern Wankdorf wird von den Schweizerischen Bundesbahnen SBB betrieben.",
+          "correct": true,
+          "explanation": "Als Betreiberin ist die Schweizerische Bundesbahnen SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welcher Gemeinde liegt Bern Wankdorf laut Stammdaten?",
+          "options": [
+            "Ostermundigen",
+            "Bern",
+            "Muri bei Bern",
+            "Zollikofen"
+          ],
+          "correct": 1,
+          "explanation": "Die erfasste Gemeinde ist Bern.",
+          "factRef": "stammdaten.gemeinde",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu vier Perrons liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 295 Meter, das kürzeste 225 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 4,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 295,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 225,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 4,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Bern Wankdorf?",
+          "options": [
+            "225 m",
+            "258 m",
+            "295 m",
+            "310 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 295 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 1",
+              "rechts": "295 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 2/3",
+              "rechts": "258 m",
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "links": "Perron 7",
+              "rechts": "226 m",
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "links": "Perron 5/6",
+              "rechts": "225 m",
+              "factRef": "perrons.items[3].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 1 misst 295 m, Perron 2/3 misst 258 m, Perron 7 misst 226 m und Perron 5/6 misst 225 m."
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 1",
+              "value": 295,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 2/3",
+              "value": 258,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 7",
+              "value": 226,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 5/6",
+              "value": 225,
+              "factRef": "perrons.items[3].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Von lang zu kurz: Perron 1 mit 295 m, Perron 2/3 mit 258 m, Perron 7 mit 226 m, Perron 5/6 mit 225 m."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Alle vier erfassten Perrons in Bern Wankdorf sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Von 4 erfassten Perrons sind alle 4 niveaufrei erreichbar.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Bern Wankdorf ist eine Sicherheitslinie erfasst. Zu 6 Gleisen liegen Daten vor, keines davon ist mit einer Perronhöhe von 55 cm erfasst.",
+      "facts": [
+        {
+          "label": "Niveaufreie Perrons",
+          "value": 4,
+          "unit": null,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 0,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Gleise mit Daten",
+          "value": 6,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Bern Wankdorf ist eine Sicherheitslinie erfasst.",
+          "correct": true,
+          "explanation": "Die Sicherheitslinie ist mit «Ja» erfasst.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der 6 erfassten Gleise weisen eine Perronhöhe von 55 cm auf?",
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6"
+          ],
+          "correct": 0,
+          "explanation": "Es ist kein Gleis mit einer Perronhöhe von 55 cm erfasst.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Bern Wyler und Bern Wankdorf verkehren im Personenverkehr rund 896 Züge pro Tag. Im Güterverkehr sind es auf demselben Abschnitt rund 28 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr, Bern Wyler–Bern Wankdorf",
+          "value": 896,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr, Bern Wyler–Bern Wankdorf",
+          "value": 327111,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Tag auf dem Abschnitt Bern Wyler–Bern Wankdorf?",
+          "options": [
+            "360",
+            "490",
+            "630",
+            "896"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt verkehren rund 896 Züge pro Tag im Personenverkehr, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Im Güterverkehr verkehren auf dem Abschnitt Bern Wyler–Bern Wankdorf rund ___ Züge pro Tag.",
+          "options": [
+            "11",
+            "15",
+            "20",
+            "28"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt sind rund 28 Güterzüge pro Tag erfasst.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehrsabschnitte nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Bern Wyler–Bern Wankdorf",
+              "value": 896,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Löchligut Süd (Abzw)–Bern Wankdorf",
+              "value": 567,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Bern Wankdorf–Wankdorf (Abzw)",
+              "value": 329,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Bern Wyler–Bern Wankdorf hat 896 Züge pro Tag, Löchligut Süd (Abzw)–Bern Wankdorf hat 567 und Bern Wankdorf–Wankdorf (Abzw) hat 329."
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Zu Bern Wankdorf ist eine Linie erfasst: die Linie 450 Olten Süd–Bern. Bern Wankdorf ist darauf bei Kilometer 102.95 eingetragen.",
+      "facts": [
+        {
+          "label": "Anzahl erfasste Linien",
+          "value": 1,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Liniennummer",
+          "value": 450,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        },
+        {
+          "label": "Kilometrierung von Bern Wankdorf auf der Linie 450",
+          "value": 102.95,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Liniennummer ist für Bern Wankdorf erfasst?",
+          "options": [
+            "180",
+            "250",
+            "320",
+            "450"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst ist die Linie 450, Olten Süd–Bern.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 450 ist Bern Wankdorf eingetragen?",
+          "min": 0,
+          "max": 200,
+          "step": 1,
+          "unit": "km",
+          "correct": 102.95,
+          "explanation": "Bern Wankdorf steht auf der Linie 450 bei Kilometer 102.95. Der Wert zählt ab Olten Süd.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Für Bern Wankdorf ist WLAN erfasst. Zudem sind 3 Billettautomaten, 10 Billettentwerter und 2 Wartehallen erfasst.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 3,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 10,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Erfasste Wartehallen",
+          "value": 2,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Bern Wankdorf ist WLAN erfasst.",
+          "correct": true,
+          "explanation": "Der Bahnhof steht in der Liste der WLAN-Standorte.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Bern Wankdorf erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "5"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 3 Billettautomaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "cloze",
+          "prompt": "Für Bern Wankdorf sind ___ Wartehallen erfasst.",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Wartehallen.",
+          "factRef": "services.wartehallen_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind für Bern Wankdorf erfasst?",
+          "options": [
+            "8",
+            "10",
+            "12",
+            "14"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 10 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Bern Wankdorf liegt ein Bahnhofplan vor. Als Eigentümerin ist die SBB erfasst.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wer ist als Eigentümerin des Bahnhofplans für Bern Wankdorf erfasst?",
+          "options": [
+            "BLS",
+            "Stadt Bern",
+            "SBB",
+            "Kanton Bern"
+          ],
+          "correct": 2,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (1, 2, 3, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

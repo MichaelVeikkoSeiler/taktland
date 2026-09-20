@@ -134,7 +134,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "3",
@@ -153,7 +154,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "4",
@@ -173,7 +175,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "5",
@@ -192,7 +195,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "6",
@@ -211,7 +215,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "8",
@@ -229,7 +234,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       }
     ]
   },
@@ -358,16 +364,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 600,
         "name": "Immensee - Bellinzona - Chiasso",
-        "km": 8.86435
+        "km_am_bahnhof": 8.86435
       },
       {
         "nummer": 602,
         "name": "Arth Goldau - Rigi Kulm",
-        "km": 0
+        "km_am_bahnhof": 0
       }
     ]
   },

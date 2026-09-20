@@ -392,7 +392,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "2",
@@ -412,7 +413,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "3",
@@ -431,7 +433,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "4",
@@ -452,7 +455,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "5",
@@ -468,7 +472,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "6",
@@ -489,7 +494,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "7",
@@ -505,7 +511,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "8",
@@ -515,7 +522,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 403,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "10",
@@ -525,7 +533,8 @@
         "perronkante_m": null,
         "sektoren": [
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 1
       },
       {
         "nr": "5 quai 4/5",
@@ -535,7 +544,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 91,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "5 quai 5/6",
@@ -545,7 +555,8 @@
         "hilfstritt": false,
         "perrontyp": "Mittelperron",
         "perronkante_m": 91,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -635,16 +646,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 150,
         "name": "Lausanne - Geneve-Aeroport",
-        "km": 60.26063
+        "km_am_bahnhof": 60.26063
       },
       {
         "nummer": 158,
         "name": "Geneve Poste 1 - Geneve FB - Geneve",
-        "km": 60.23597
+        "km_am_bahnhof": 60.23597
       }
     ]
   },

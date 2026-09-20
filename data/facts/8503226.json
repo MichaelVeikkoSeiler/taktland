@@ -94,7 +94,8 @@
         "hilfstritt": true,
         "perrontyp": "Hilfskante",
         "perronkante_m": 170,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -182,11 +183,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 736,
         "name": "Ziegelbrucke Ost - Linthal Gleisende",
-        "km": 58.9095
+        "km_am_bahnhof": 58.9095
       }
     ]
   },

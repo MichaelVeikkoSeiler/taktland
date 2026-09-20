@@ -115,7 +115,8 @@
         "hilfstritt": true,
         "perrontyp": "Hausperron",
         "perronkante_m": 33,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -126,7 +127,8 @@
         "hilfstritt": true,
         "perrontyp": "Hilfskante",
         "perronkante_m": 36,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "4",
@@ -137,7 +139,8 @@
         "hilfstritt": true,
         "perrontyp": "Hilfskante",
         "perronkante_m": 129,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -227,16 +230,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 9794,
         "name": "W'thur West Unterquerung - W'thur Toss",
-        "km": 51.7178
+        "km_am_bahnhof": 51.7178
       },
       {
         "nummer": 769,
         "name": "Winterthur West - Bulach",
-        "km": 1.7178
+        "km_am_bahnhof": 1.7178
       }
     ]
   },

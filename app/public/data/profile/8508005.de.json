@@ -1,0 +1,632 @@
+{
+  "uic": 8508005,
+  "name": "Burgdorf",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Burgdorf 18'100 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 16'000. An einem freien Tag sind es 11'200 Personen. Betreiberin der Infrastruktur ist die SBB, es verkehren Züge von BLS, SBB und SOB.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 18100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 16000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 11200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Burgdorf ein und aus?",
+          "options": [
+            "7'200",
+            "10'000",
+            "13'000",
+            "18'100"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 18'100 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "An einem freien Tag steigen in Burgdorf 11'200 Personen ein und aus.",
+          "correct": true,
+          "explanation": "Der Wert für einen freien Tag (dnwv) beträgt 11'200 Personen, Stand 2025.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Werktagsverkehrswerte nach Jahr, das früheste zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 2018,
+              "factRef": "steckbrief.verlauf[0].jahr"
+            },
+            {
+              "label": "2022",
+              "value": 2022,
+              "factRef": "steckbrief.verlauf[1].jahr"
+            },
+            {
+              "label": "2023",
+              "value": 2023,
+              "factRef": "steckbrief.verlauf[2].jahr"
+            },
+            {
+              "label": "2024",
+              "value": 2024,
+              "factRef": "steckbrief.verlauf[3].jahr"
+            },
+            {
+              "label": "2025",
+              "value": 2025,
+              "factRef": "steckbrief.verlauf[4].jahr"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die Jahre der erfassten Werktagsverkehrswerte sind 2018, 2022, 2023, 2024 und 2025, aufsteigend sortiert."
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Burgdorf liegt auf 533 Metern über Meer, in der Gemeinde Burgdorf im Kanton Bern. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 533,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiberin",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Burgdorf?",
+          "options": [
+            "402 m",
+            "479 m",
+            "533 m",
+            "612 m"
+          ],
+          "correct": 2,
+          "explanation": "Burgdorf liegt auf 533 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Betreiberin von Burgdorf ist die Schweizerische Bundesbahnen SBB.",
+          "correct": true,
+          "explanation": "Als Betreiberin ist die Schweizerische Bundesbahnen SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 3 Perrons in Burgdorf liegen offene Daten vor. Das längste misst 354 Meter, das kürzeste 213 Meter. Die erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 3,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 354,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 213,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Burgdorf?",
+          "options": [
+            "213 m",
+            "275 m",
+            "354 m",
+            "410 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 354 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "354 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 1/11",
+              "rechts": "275 m",
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "links": "Perron 4/5",
+              "rechts": "213 m",
+              "factRef": "perrons.items[2].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 misst 354 m, Perron 1/11 misst 275 m und Perron 4/5 misst 213 m."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die drei erfassten Perrons in Burgdorf sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Erfasst sind 3 niveaufrei erreichbare Perrons von 3 erfassten Perrons.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 6 Gleisen in Burgdorf liegen offene Daten vor: 1, 2, 3, 4, 5 und 11. Die erfassten Perronhöhen betragen 20, 25 und 55 cm. Gleis 1 hat mit 275 Metern die längste erfasste Perronkante.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 6,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Kleinste erfasste Perronhöhe",
+          "value": 20,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        },
+        {
+          "label": "Mittlere erfasste Perronhöhe",
+          "value": 25,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[1]"
+        },
+        {
+          "label": "Grösste erfasste Perronhöhe",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[2]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welches Gleis hat in Burgdorf die längste erfasste Perronkante?",
+          "options": [
+            "Gleis 1",
+            "Gleis 2",
+            "Gleis 4",
+            "Gleis 11"
+          ],
+          "correct": 0,
+          "explanation": "Gleis 1 hat eine Perronkante von 275 Metern, die längste der erfassten Gleise.",
+          "factRef": "gleise.items[0].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Länge der Perronkante, die längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 1",
+              "value": 275,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 2",
+              "value": 253,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 11",
+              "value": 164,
+              "factRef": "gleise.items[5].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 102,
+              "factRef": "gleise.items[3].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Die Perronkanten messen 275 m (Gleis 1), 253 m (Gleis 2), 164 m (Gleis 11) und 102 m (Gleis 4)."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei Gleis 2 sind Perronhöhen von 20, 25 und 55 cm erfasst.",
+          "correct": true,
+          "explanation": "Für Gleis 2 sind die Perronhöhen 20, 25 und 55 cm erfasst.",
+          "factRef": "gleise.items[1].perronhoehen_cm",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Burgdorf sind 30 Perronsegmente erfasst, davon 16 mit einer Höhe von 25 cm. Für keines der Segmente ist ein Hilfstritt verzeichnet. Bei 6 Gleisen ist eine Perronhöhe von 55 cm erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente",
+          "value": 30,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit 25 cm Höhe",
+          "value": 16,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.25"
+        },
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 6,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind für Burgdorf erfasst?",
+          "options": [
+            "12",
+            "21",
+            "26",
+            "30"
+          ],
+          "correct": 3,
+          "explanation": "Für Burgdorf sind 30 Perronsegmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Segmente haben eine erfasste Perronhöhe von 25 cm?",
+          "options": [
+            "9",
+            "14",
+            "16",
+            "19"
+          ],
+          "correct": 2,
+          "explanation": "16 der erfassten Segmente haben eine Perronhöhe von 25 cm.",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.25",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für die erfassten Segmente in Burgdorf ist kein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Lyssach–Burgdorf verkehren im Personenverkehr rund 174 Züge pro Tag, das sind 63'657 Züge pro Jahr in beiden Richtungen zusammen. Auf dem Abschnitt Lyssach–Burgdorf verkehren im Güterverkehr rund 34 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Lyssach–Burgdorf, Personenverkehr",
+          "value": 174,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Lyssach–Burgdorf, Personenverkehr",
+          "value": 63657,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Tag, Lyssach–Burgdorf, Güterverkehr",
+          "value": 34,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[5].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Lyssach–Burgdorf?",
+          "options": [
+            "70",
+            "96",
+            "120",
+            "174"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt Lyssach–Burgdorf verkehren rund 174 Personenzüge pro Tag, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehrsabschnitte nach Zügen pro Tag, den stärksten zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Lyssach–Burgdorf",
+              "value": 174,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Burgdorf Steinhof West (Spw)–Burgdorf",
+              "value": 137,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Burgdorf–Wynigen",
+              "value": 91,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            },
+            {
+              "label": "Burgdorf Buchmatt–Burgdorf",
+              "value": 80,
+              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Auf den Personenverkehrsabschnitten verkehren 174, 137, 91 und 80 Züge pro Tag, jeweils in beiden Richtungen zusammen."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Lyssach–Burgdorf verkehren im Güterverkehr rund 34 Züge pro Tag.",
+          "correct": true,
+          "explanation": "Für den Güterverkehr sind auf diesem Abschnitt 34 Züge pro Tag erfasst.",
+          "factRef": "zuege.abschnitte[5].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Burgdorf ist 1 Linie erfasst: die Linie 450 Olten Süd–Bern. Die Kilometrierung an diesem Betriebspunkt beträgt 83.3908 km.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Liniennummer",
+          "value": 450,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        },
+        {
+          "label": "Kilometrierung",
+          "value": 83.3908,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Liniennummer ist für Burgdorf erfasst?",
+          "options": [
+            "180",
+            "250",
+            "320",
+            "450"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst ist die Linie 450, Olten Süd–Bern.",
+          "factRef": "linien.items[0].nummer",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Bei welcher Kilometrierung liegt der Betriebspunkt Burgdorf auf der Linie 450?",
+          "min": 0,
+          "max": 150,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 83.3908,
+          "explanation": "Die Kilometrierung beträgt 83.3908 km.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Burgdorf ist ein WLAN-Standort erfasst. Zudem sind 4 Billettautomaten und 10 Billettentwerter verzeichnet.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": null,
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 4,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 10,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Burgdorf ist ein WLAN-Standort erfasst.",
+          "correct": true,
+          "explanation": "Burgdorf steht in der Liste der WLAN-Standorte.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Burgdorf erfasst?",
+          "options": [
+            "4",
+            "7",
+            "9",
+            "12"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 4 Billettautomaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Burgdorf ist ein Bahnhofplan als A4- und Plakatversion veröffentlicht. Eigentümerin des Bahnhofs ist gemäss dieser Angabe die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Als Eigentümerin des Bahnhofplans ist die SBB angegeben.",
+          "correct": true,
+          "explanation": "Der Bahnhofplan führt die SBB als Eigentümerin.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (1, 2, 3, 4, 5, 11). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

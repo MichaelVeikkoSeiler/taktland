@@ -104,7 +104,8 @@
         "hilfstritt": true,
         "perrontyp": "Hausperron",
         "perronkante_m": 111,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -114,7 +115,8 @@
         "hilfstritt": false,
         "perrontyp": "Zwischenperron",
         "perronkante_m": 120,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -203,11 +205,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 631,
         "name": "Cadenazzo - Pino confine",
-        "km": 166.96358
+        "km_am_bahnhof": 166.96358
       }
     ]
   },

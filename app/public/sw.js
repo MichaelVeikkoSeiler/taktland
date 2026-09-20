@@ -10,7 +10,7 @@
  *
  * Es wird nichts an einen Server gemeldet. Der Cache liegt auf dem Gerät.
  */
-const VERSION = 'taktland-v2'
+const VERSION = 'taktland-v3'
 const SHELL = './'
 
 /** So viele Profile werden im Voraus gespeichert. Bei vielen Bahnhöfen ist
@@ -74,7 +74,25 @@ self.addEventListener('fetch', (e) => {
     return
   }
 
-  // Profile und Programmteile: aus dem Cache antworten, im Hintergrund erneuern
+  // Bahnhofsdaten: erst das Netz. Ein Profil, das eine Korrektur erhalten hat,
+  // soll nicht erst beim uebernaechsten Oeffnen ankommen. Ohne Empfang
+  // antwortet der Cache.
+  if (new URL(anfrage.url).pathname.includes('/data/')) {
+    e.respondWith(
+      fetch(anfrage)
+        .then((antwort) => {
+          if (antwort.ok) {
+            const kopie = antwort.clone()
+            caches.open(VERSION).then((c) => c.put(anfrage, kopie))
+          }
+          return antwort
+        })
+        .catch(() => caches.match(anfrage).then((t) => t ?? Response.error())),
+    )
+    return
+  }
+
+  // Programmteile: aus dem Cache antworten, im Hintergrund erneuern
   e.respondWith(
     caches.match(anfrage).then((treffer) => {
       const ausDemNetz = fetch(anfrage)

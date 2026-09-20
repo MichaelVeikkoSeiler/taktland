@@ -475,7 +475,7 @@
             "Linie 540"
           ],
           "correct": 1,
-          "explanation": "Die Linie 500.",
+          "explanation": "Die Linie 500, in der Quelle als «Basel SBB - Olten - Luzern» geführt.",
           "factRef": "linien.items[2].nummer",
           "optionen_aus_fakten": true,
           "difficulty": 2

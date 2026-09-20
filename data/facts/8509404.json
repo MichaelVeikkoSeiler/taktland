@@ -118,7 +118,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -133,7 +134,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -148,7 +150,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -163,7 +166,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -251,21 +255,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 882,
         "name": "Feldkirch - Buchs SG",
-        "km": 18.526
+        "km_am_bahnhof": 18.526
       },
       {
         "nummer": 880,
         "name": "Sargans Ost - St.Gallen",
-        "km": 15.86893
+        "km_am_bahnhof": 15.86893
       },
       {
         "nummer": 884,
         "name": "Buchs - Buchs RB",
-        "km": 18.526
+        "km_am_bahnhof": 18.526
       }
     ]
   },

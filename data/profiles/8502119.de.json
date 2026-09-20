@@ -1,0 +1,648 @@
+{
+  "uic": 8502119,
+  "name": "Lenzburg",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Lenzburg 31'500 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 27'600 und an einem freien Tag 18'900. Infrastrukturbetreiberin ist die SBB, Züge der SBB und der SOB verkehren hier.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 31500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 27600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 18900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Infrastrukturbetreiberin",
+          "value": "SBB",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.isb"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen in Lenzburg an einem Werktag ein und aus?",
+          "options": [
+            "13'000",
+            "17'000",
+            "22'000",
+            "31'500"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 31'500 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen in Lenzburg an einem freien Tag ein und aus?",
+          "options": [
+            "7'600",
+            "10'000",
+            "13'000",
+            "18'900"
+          ],
+          "correct": 3,
+          "explanation": "An einem freien Tag (Wochenende und Feiertage) sind es 18'900 Personen, Stand 2025.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 25100,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 26800,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 29500,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 31300,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 31500,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr stieg von 25'100 im Jahr 2022 über 26'800 (2018), 29'500 (2023) und 31'300 (2024) auf 31'500 im Jahr 2025."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die SBB ist Infrastrukturbetreiberin in Lenzburg.",
+          "correct": true,
+          "explanation": "Als Infrastrukturbetreiberin ist die SBB erfasst.",
+          "factRef": "steckbrief.isb",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Lenzburg liegt auf 406 Metern über Meer, in der Gemeinde Lenzburg im Kanton Aargau. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 406,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiberin",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Lenzburg?",
+          "options": [
+            "356 m",
+            "406 m",
+            "456 m",
+            "506 m"
+          ],
+          "correct": 1,
+          "explanation": "Lenzburg liegt auf 406 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 5 Perrons liegen offene Daten vor, alle niveaufrei erreichbar. Das längste erfasste Perron misst 401 Meter, das kürzeste 110 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 5,
+          "unit": "Perrons",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 401,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 110,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Lenzburg?",
+          "options": [
+            "180 m",
+            "348 m",
+            "401 m",
+            "433 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 401 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das kürzeste erfasste Perron in Lenzburg?",
+          "options": [
+            "110 m",
+            "160 m",
+            "180 m",
+            "111 m"
+          ],
+          "correct": 0,
+          "explanation": "Das kürzeste erfasste Perron misst 110 Meter.",
+          "factRef": "perrons.kuerzeste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Zu ___ Perrons liegen in Lenzburg offene Daten vor.",
+          "options": [
+            "3",
+            "5",
+            "7"
+          ],
+          "correct": 1,
+          "explanation": "Zu 5 Perrons liegen offene Daten vor.",
+          "factRef": "perrons.anzahl_mit_daten",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Welcher Perrontyp gehört zu welcher Perronnummer?",
+          "pairs": [
+            {
+              "links": "Perron 4/5",
+              "rechts": "Mittelperron",
+              "factRef": "perrons.items[0].typ"
+            },
+            {
+              "links": "Perron 6",
+              "rechts": "Hausperron",
+              "factRef": "perrons.items[2].typ"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "Aussenperron",
+              "factRef": "perrons.items[3].typ"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 4/5 ist ein Mittelperron, Perron 6 ein Hausperron und Perron 1 ein Aussenperron."
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 4/5",
+              "value": 401,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 2/3",
+              "value": 401,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 6",
+              "value": 180,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 160,
+              "factRef": "perrons.items[3].laenge_m"
+            },
+            {
+              "label": "Perron 7",
+              "value": 110,
+              "factRef": "perrons.items[4].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 4/5 und Perron 2/3 sind mit 401 Metern am längsten, gefolgt von Perron 6 (180 m), Perron 1 (160 m) und Perron 7 (110 m)."
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Von den 5 erfassten Perrons sind 5 niveaufrei erreichbar. Insgesamt liegen Daten zu 30 Perronsegmenten vor. Erfasst sind 0 Segmente mit Hilfstritt, und 2 Gleise weisen eine Perronhöhe von 55 cm auf.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente",
+          "value": 30,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 5,
+          "unit": "Perrons",
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind in Lenzburg erfasst?",
+          "options": [
+            "16",
+            "21",
+            "26",
+            "30"
+          ],
+          "correct": 3,
+          "explanation": "Es liegen Daten zu 30 Perronsegmenten vor, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Erfasst sind 0 Perronsegmente mit Hilfstritt.",
+          "correct": true,
+          "explanation": "In den offenen Daten sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Gleise in Lenzburg weisen eine Perronhöhe von 55 cm auf?",
+          "options": [
+            "0",
+            "2",
+            "5",
+            "7"
+          ],
+          "correct": 1,
+          "explanation": "2 Gleise weisen eine Perronhöhe von 55 cm auf.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele der erfassten Perrons sind niveaufrei erreichbar?",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "unit": "Perrons",
+          "correct": 5,
+          "explanation": "Alle 5 erfassten Perrons sind niveaufrei erreichbar.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Lenzburg und Gexi verkehren im Personenverkehr rund 528 Züge pro Tag, auf dem Abschnitt zwischen Rupperswil und Lenzburg rund 475. Im Güterverkehr sind es auf dem Abschnitt Lenzburg-Gexi 122 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Lenzburg - Gexi, Personenverkehr",
+          "value": 528,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Rupperswil - Lenzburg, Personenverkehr",
+          "value": 173284,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Tag, Lenzburg - Gexi, Güterverkehr",
+          "value": 122,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren auf dem Abschnitt Lenzburg-Gexi im Personenverkehr pro Tag?",
+          "options": [
+            "210",
+            "290",
+            "370",
+            "528"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt Lenzburg-Gexi verkehren rund 528 Züge pro Tag im Personenverkehr, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren pro Jahr auf dem Abschnitt Rupperswil-Lenzburg im Personenverkehr?",
+          "options": [
+            "69'000",
+            "95'000",
+            "120'000",
+            "173'284"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt Rupperswil-Lenzburg verkehren 173'284 Züge pro Jahr im Personenverkehr, Stand 2025.",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehrsabschnitte nach Zügen pro Tag, stärkster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Lenzburg - Gexi",
+              "value": 528,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Rupperswil - Lenzburg",
+              "value": 475,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Seon Nord - Lenzburg",
+              "value": 73,
+              "factRef": "zuege.abschnitte[4].zuege_pro_tag"
+            },
+            {
+              "label": "Hunzenschwil - Lenzburg",
+              "value": 68,
+              "factRef": "zuege.abschnitte[5].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Am stärksten befahren ist der Abschnitt Lenzburg-Gexi mit 528 Zügen pro Tag, gefolgt von Rupperswil-Lenzburg (475), Seon Nord-Lenzburg (73) und Hunzenschwil-Lenzburg (68)."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Lenzburg-Gexi verkehren im Güterverkehr 122 Züge pro Tag.",
+          "correct": true,
+          "explanation": "Im Güterverkehr sind es auf diesem Abschnitt 122 Züge pro Tag, Stand 2025.",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Zu Lenzburg liegt 1 Linie mit offenen Daten vor: die Linie 650 Killwangen West - Lenzburg - Daniken Ost. Lenzburg ist darauf bei Kilometer 31.93612 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "unit": "Linien",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung von Lenzburg auf der Linie 650",
+          "value": 31.93612,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien mit offenen Daten sind für Lenzburg erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "correct": 0,
+          "explanation": "Es ist 1 Linie erfasst: die Linie 650.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "cloze",
+          "prompt": "Auf der Linie 650 Killwangen West - Lenzburg - Daniken Ost steht Lenzburg bei Kilometer ___.",
+          "options": [
+            "21.93612",
+            "31.93612",
+            "41.93612"
+          ],
+          "correct": 1,
+          "explanation": "Die Kilometrierung von Lenzburg auf der Linie 650 beträgt 31.93612.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Lenzburg sind 4 Billettautomaten und 11 Billettentwerter erfasst, dazu 1 Wartehalle. WLAN ist als Standort erfasst.",
+      "facts": [
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 4,
+          "unit": "Automaten",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 11,
+          "unit": "Entwerter",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 1,
+          "unit": "Wartehallen",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Lenzburg erfasst?",
+          "options": [
+            "1",
+            "4",
+            "11",
+            "6"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 4 Billettautomaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Lenzburg steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "WLAN ist für diesen Standort erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Lenzburg erfasst?",
+          "options": [
+            "9",
+            "11",
+            "13",
+            "15"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 11 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Lenzburg ist ein Bahnhofplan veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Die SBB ist Eigentümerin der Bahnhofanlage in Lenzburg.",
+          "correct": true,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 7 Gleise (1, 2, 3, 4, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 7 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

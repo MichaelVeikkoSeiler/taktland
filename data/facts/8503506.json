@@ -115,7 +115,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 320,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -125,7 +126,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 324,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -142,7 +144,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "4",
@@ -159,7 +162,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "5",
@@ -175,7 +179,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "6",
@@ -191,7 +196,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       }
     ]
   },
@@ -359,16 +365,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 710,
         "name": "Zurich HB - Brugg AG",
-        "km": 16.1125
+        "km_am_bahnhof": 16.1125
       },
       {
         "nummer": 691,
         "name": "RBL Kopf Zurich - Killwangen West",
-        "km": 16.11166
+        "km_am_bahnhof": 16.11166
       }
     ]
   },

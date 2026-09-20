@@ -202,7 +202,7 @@
             "M"
           ],
           "correct": 2,
-          "explanation": "Von A bis H.",
+          "explanation": "Von A bis H, also 8 Sektoren.",
           "factRef": "gleise.items[0].sektoren[7]",
           "difficulty": 2
         }
@@ -425,7 +425,7 @@
             "16"
           ],
           "correct": 2,
-          "explanation": "8 Entwerter.",
+          "explanation": "8 Entwerter, dazu 4 Billettautomaten.",
           "factRef": "services.billettentwerter_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 1

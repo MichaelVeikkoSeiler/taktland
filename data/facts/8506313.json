@@ -107,7 +107,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "2",
@@ -121,7 +122,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -209,16 +211,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 858,
         "name": "Rheineck - Walzenhausen",
-        "km": 0.03434
+        "km_am_bahnhof": 0.03434
       },
       {
         "nummer": 880,
         "name": "Sargans Ost - St.Gallen",
-        "km": 57.8334
+        "km_am_bahnhof": 57.8334
       }
     ]
   },

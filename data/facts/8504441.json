@@ -180,16 +180,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 260,
         "name": "Zollikofen Nord - Biel/Bienne Aebistr.",
-        "km": 28.265
+        "km_am_bahnhof": 28.265
       },
       {
         "nummer": 263,
         "name": "Studen Auto - Studen",
-        "km": 28.119
+        "km_am_bahnhof": 28.119
       }
     ]
   },

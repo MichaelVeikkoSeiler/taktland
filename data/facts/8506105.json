@@ -118,7 +118,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "3",
@@ -133,7 +134,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "4",
@@ -148,7 +150,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "5",
@@ -163,7 +166,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -291,21 +295,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 830,
         "name": "Wil - Weinfelden",
-        "km": 19.17482
+        "km_am_bahnhof": 19.17482
       },
       {
         "nummer": 840,
         "name": "Winterthur Nord - Romanshorn",
-        "km": 59.48791
+        "km_am_bahnhof": 59.48791
       },
       {
         "nummer": 831,
         "name": "Weinfelden - Tagermoos",
-        "km": 19.17482
+        "km_am_bahnhof": 19.17482
       }
     ]
   },

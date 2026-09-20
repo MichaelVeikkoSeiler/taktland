@@ -373,7 +373,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "2",
@@ -388,7 +389,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -403,7 +405,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "4",
@@ -420,7 +423,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       }
     ]
   },
@@ -548,26 +552,27 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 4,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 710,
         "name": "Zurich HB - Brugg AG",
-        "km": 1.91834
+        "km_am_bahnhof": 1.91834
       },
       {
         "nummer": 711,
         "name": "ZH Hardbrucke - Kollermuhle",
-        "km": 1.91229
+        "km_am_bahnhof": 1.91229
       },
       {
         "nummer": 716,
         "name": "Zurich Hardbrucke - Zurich Herdern",
-        "km": 1.91834
+        "km_am_bahnhof": 1.91834
       },
       {
         "nummer": 760,
         "name": "Zurich Hardbrucke  - Bulach",
-        "km": 0.21124
+        "km_am_bahnhof": 0.21124
       }
     ]
   },

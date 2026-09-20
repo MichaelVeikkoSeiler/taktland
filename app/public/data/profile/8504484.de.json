@@ -67,12 +67,12 @@
           "type": "cloze",
           "prompt": "Müntschemier liegt auf ___ Metern über Meer.",
           "options": [
-            "220",
-            "436",
-            "677",
-            "980"
+            "170",
+            "240",
+            "370",
+            "436"
           ],
-          "correct": 1,
+          "correct": 3,
           "explanation": "436 Meter über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2

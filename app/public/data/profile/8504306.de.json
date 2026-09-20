@@ -133,7 +133,7 @@
             "440 m"
           ],
           "correct": 1,
-          "explanation": "150 Meter.",
+          "explanation": "Das einzige Perron, zu dem für Cortébert offene Daten vorliegen, ist 150 Meter lang. Ob der Bahnhof weitere Perrons hat, sagen die Daten nicht.",
           "factRef": "perrons.items[0].laenge_m",
           "difficulty": 1
         }

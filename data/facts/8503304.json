@@ -102,7 +102,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -114,7 +115,8 @@
         "perronkante_m": 312,
         "sektoren": [
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 1
       }
     ]
   },
@@ -202,11 +204,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 751,
         "name": "ZH Langstr. - Wallisellen - Winterthur",
-        "km": 20.49486
+        "km_am_bahnhof": 20.49486
       }
     ]
   },

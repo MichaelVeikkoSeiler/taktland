@@ -128,7 +128,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "2",
@@ -142,7 +143,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "3",
@@ -156,7 +158,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "4",
@@ -170,7 +173,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "5",
@@ -184,7 +188,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "6",
@@ -197,7 +202,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "7",
@@ -210,7 +216,8 @@
         "sektoren": [
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -338,21 +345,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 671,
         "name": "Rapperswil - Pfaffikon Ost (SOB)",
-        "km": 0.02101
+        "km_am_bahnhof": 0.02101
       },
       {
         "nummer": 730,
         "name": "Zurich Stadelhofen - Rapperswil",
-        "km": 35.97301
+        "km_am_bahnhof": 35.97301
       },
       {
         "nummer": 740,
         "name": "Rapperswil - Uster - Wallisellen Ost",
-        "km": 59.34854
+        "km_am_bahnhof": 59.34854
       }
     ]
   },

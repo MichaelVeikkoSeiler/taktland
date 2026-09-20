@@ -105,7 +105,8 @@
         "perronkante_m": 344,
         "sektoren": [
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 1
       },
       {
         "nr": "4",
@@ -118,7 +119,8 @@
         "sektoren": [
           "A",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -207,11 +209,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 890,
         "name": "Sargans Ost - Ziegelbrucke",
-        "km": 9.7298
+        "km_am_bahnhof": 9.7298
       }
     ]
   },

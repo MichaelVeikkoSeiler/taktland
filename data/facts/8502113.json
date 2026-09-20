@@ -385,7 +385,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 174,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "1",
@@ -400,7 +401,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       },
       {
         "nr": "2",
@@ -416,7 +418,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "3",
@@ -432,7 +435,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "4",
@@ -448,7 +452,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "5",
@@ -464,7 +469,8 @@
           "C",
           "D",
           "E"
-        ]
+        ],
+        "sektoren_anzahl": 5
       },
       {
         "nr": "6",
@@ -479,7 +485,8 @@
           "B",
           "C",
           "D"
-        ]
+        ],
+        "sektoren_anzahl": 4
       }
     ]
   },
@@ -567,16 +574,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 650,
         "name": "Killwangen West - Lenzburg - Daniken Ost",
-        "km": 41.50577
+        "km_am_bahnhof": 41.50577
       },
       {
         "nummer": 649,
         "name": "Aarau - Woschnau Tunnel alt",
-        "km": 41.50577
+        "km_am_bahnhof": 41.50577
       }
     ]
   },

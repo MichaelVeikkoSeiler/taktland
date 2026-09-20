@@ -107,7 +107,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "3",
@@ -120,7 +121,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       },
       {
         "nr": "4",
@@ -133,7 +135,8 @@
         "sektoren": [
           "A",
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 2
       }
     ]
   },
@@ -221,16 +224,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 869,
         "name": "Romanshorn Sud - St.Gallen St.Fiden",
-        "km": 19.12693
+        "km_am_bahnhof": 19.12693
       },
       {
         "nummer": 880,
         "name": "Sargans Ost - St.Gallen",
-        "km": 78.15556
+        "km_am_bahnhof": 78.15556
       }
     ]
   },

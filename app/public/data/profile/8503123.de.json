@@ -1,0 +1,628 @@
+{
+  "uic": 8503123,
+  "name": "Wetzikon ZH",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Wetzikon ZH 30'100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 26'000, an einem freien Tag 16'800. Zwischen 2018 und 2025 ist der Werktagsverkehr von 28'700 auf 30'100 gestiegen.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 30100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 26000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 16800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Wetzikon ZH ein und aus?",
+          "options": [
+            "15'100",
+            "30'100",
+            "45'100",
+            "60'100"
+          ],
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 30'100 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Im Tagesmittel über das ganze Jahr steigen in Wetzikon ZH 26'000 Personen ein und aus.",
+          "correct": true,
+          "explanation": "Der Wert für den Tagesmittelverkehr liegt bei 26'000 Personen, Stand 2025.",
+          "factRef": "steckbrief.dtv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 25800,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 28300,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 28700,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 29200,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 30100,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr stieg von 25'800 (2022) über 28'300 (2023) und 29'200 (2024) auf 30'100 (2025), 2018 lag er bei 28'700.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Wetzikon ZH liegt auf 531.6 Metern über Meer im Bezirk Hinwil. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 531.6,
+          "unit": "m ü. M.",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Hinwil",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Wetzikon ZH?",
+          "options": [
+            "Hinwil",
+            "Meilen",
+            "Bülach",
+            "Dietikon"
+          ],
+          "correct": 0,
+          "explanation": "Der Bahnhof liegt im Bezirk Hinwil.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Wetzikon ZH?",
+          "min": 480,
+          "max": 600,
+          "step": 0.1,
+          "unit": "m ü. M.",
+          "correct": 531.6,
+          "explanation": "Der Bahnhof liegt auf 531.6 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Für Wetzikon ZH liegen offene Daten zu 3 Perrons vor. Das längste erfasste Perron misst 329 Meter, das kürzeste 217 Meter. Alle drei erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Erfasste Perrons",
+          "value": 3,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 329,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 217,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Wetzikon ZH?",
+          "options": [
+            "217 m",
+            "269 m",
+            "329 m",
+            "410 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 329 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die 3 erfassten Perrons in Wetzikon ZH sind alle niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 3 erfassten Perrons ist der niveaufreie Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "1705.01 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 4/5",
+              "rechts": "1583.19 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "799.05 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 hat 1705.01 m², Perron 4/5 hat 1583.19 m² und Perron 1 hat 799.05 m² Nettofläche.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 5 Gleisen liegen offene Daten vor. Die erfassten Perronhöhen betragen 55 Zentimeter. Bei keinem der erfassten Gleise ist ein Hilfstritt verzeichnet.",
+      "facts": [
+        {
+          "label": "Erfasste Perronhöhe",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe ist bei den erfassten Gleisen in Wetzikon ZH verzeichnet?",
+          "options": [
+            "35 cm",
+            "55 cm",
+            "76 cm",
+            "90 cm"
+          ],
+          "correct": 1,
+          "explanation": "Für die erfassten Gleise ist eine Perronhöhe von 55 cm verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm[0]",
+          "difficulty": 1
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die kürzeste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "1",
+          "explanation": "Gleis 1 hat mit 218 Metern die kürzeste erfasste Perronkante.",
+          "factRef": "gleise.items[0].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei den erfassten Gleisen in Wetzikon ZH ist kein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Für keines der 5 erfassten Gleise ist ein Hilfstritt verzeichnet. Das heisst nicht, dass vor Ort keiner steht, sondern nur, dass die Erhebung keinen ausweist.",
+          "factRef": "gleise.items[0].hilfstritt",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Wetzikon ZH sind 12 Perronsegmente hinsichtlich Hindernisfreiheit erfasst, alle mit einer Perronhöhe von 55 Zentimetern. Bei keinem dieser Segmente ist ein Hilfstritt vermerkt. Eine Sicherheitslinie ist erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente",
+          "value": 12,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind für die Hindernisfreiheit in Wetzikon ZH erfasst?",
+          "options": [
+            "7",
+            "8",
+            "10",
+            "12"
+          ],
+          "correct": 3,
+          "explanation": "Es sind 12 Segmente erfasst, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für den Bahnhof Wetzikon ZH ist eine Sicherheitslinie erfasst.",
+          "correct": true,
+          "explanation": "Die Erhebung verzeichnet eine Sicherheitslinie.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Von den 12 erfassten Segmenten haben ___ einen Hilfstritt.",
+          "options": [
+            "0",
+            "3",
+            "6",
+            "12"
+          ],
+          "correct": 0,
+          "explanation": "Bei keinem der erfassten Segmente ist ein Hilfstritt vermerkt.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Aathal - Wetzikon ZH verkehren im Personenverkehr täglich rund 236 Züge in beide Richtungen zusammen, das sind 86'125 Züge pro Jahr. Auf dem Abschnitt Wetzikon ZH - Bubikon sind es rund 156 Züge pro Tag.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Aathal - Wetzikon ZH",
+          "value": 236,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr täglich auf dem Abschnitt Aathal - Wetzikon ZH?",
+          "options": [
+            "94",
+            "130",
+            "170",
+            "236"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt verkehren im Personenverkehr rund 236 Züge pro Tag, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehrs-Abschnitte nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Aathal - Wetzikon ZH",
+              "value": 236,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Wetzikon ZH - Bubikon",
+              "value": 156,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Wetzikon ZH - Hinwil",
+              "value": 83,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            },
+            {
+              "label": "Kempten - Wetzikon ZH",
+              "value": 77,
+              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Aathal - Wetzikon ZH hat 236 Züge pro Tag, gefolgt von Wetzikon ZH - Bubikon mit 156, Wetzikon ZH - Hinwil mit 83 und Kempten - Wetzikon ZH mit 77 Zügen pro Tag.",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Wetzikon ZH - Bubikon verkehren im Personenverkehr täglich rund 156 Züge.",
+          "correct": true,
+          "explanation": "Der Abschnitt Wetzikon ZH - Bubikon verzeichnet 156 Züge pro Tag, Stand 2025.",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Wetzikon ZH sind 2 Linien erfasst: die Linie 740 Rapperswil - Uster - Wallisellen Ost und die Linie 753 Effretikon - Wetzikon - Hinwil.",
+      "facts": [
+        {
+          "label": "Linie 740",
+          "value": "Rapperswil - Uster - Wallisellen Ost",
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].name"
+        },
+        {
+          "label": "Linie 753",
+          "value": "Effretikon - Wetzikon - Hinwil",
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].name"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Linienbezeichnung gehört zu welcher Liniennummer?",
+          "pairs": [
+            {
+              "links": "Linie 740",
+              "rechts": "Rapperswil - Uster - Wallisellen Ost",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "Linie 753",
+              "rechts": "Effretikon - Wetzikon - Hinwil",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Linie 740 führt Rapperswil - Uster - Wallisellen Ost, Linie 753 führt Effretikon - Wetzikon - Hinwil.",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 2 Billettautomaten und 9 Billettentwerter sowie 2 Wartehallen. Wetzikon ZH steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 2,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 9,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 2,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Wetzikon ZH erfasst?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "4"
+          ],
+          "correct": 2,
+          "explanation": "Es sind 2 Billettautomaten vom Typ ePOS erfasst.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Wetzikon ZH steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist nicht in den offenen WLAN-Daten erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Wetzikon ZH erfasst?",
+          "options": [
+            "6",
+            "8",
+            "9",
+            "11"
+          ],
+          "correct": 2,
+          "explanation": "Es sind 9 Billettentwerter erfasst.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 5 Gleise (1, 2, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 218,
+      "sektoren": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 329,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 329,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 329,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 329,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  ]
+}

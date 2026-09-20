@@ -102,7 +102,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 121,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -189,16 +190,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 600,
         "name": "Immensee - Bellinzona - Chiasso",
-        "km": 26.38269
+        "km_am_bahnhof": 26.38269
       },
       {
         "nummer": 605,
         "name": "Sisikon - Gruonbach (Gleis links)",
-        "km": 26.38272
+        "km_am_bahnhof": 26.38272
       }
     ]
   },

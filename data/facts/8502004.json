@@ -115,7 +115,8 @@
         "hilfstritt": false,
         "perrontyp": "Zwischenperron",
         "perronkante_m": 161,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "3",
@@ -125,7 +126,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 150,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -216,11 +218,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 500,
         "name": "Basel SBB - Olten - Luzern",
-        "km": 55.8035
+        "km_am_bahnhof": 55.8035
       }
     ]
   },

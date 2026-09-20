@@ -117,7 +117,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 151,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "2",
@@ -134,7 +135,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -152,7 +154,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "4",
@@ -162,7 +165,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 188,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "12",
@@ -172,7 +176,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 127,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "13",
@@ -183,7 +188,8 @@
         "hilfstritt": false,
         "perrontyp": "Hausperron",
         "perronkante_m": 90,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       },
       {
         "nr": "14",
@@ -193,7 +199,8 @@
         "hilfstritt": false,
         "perrontyp": "Aussenperron",
         "perronkante_m": 108,
-        "sektoren": []
+        "sektoren": [],
+        "sektoren_anzahl": 0
       }
     ]
   },
@@ -301,21 +308,22 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 3,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 450,
         "name": "Olten Sud - Bern",
-        "km": 59.19606
+        "km_am_bahnhof": 59.19606
       },
       {
         "nummer": 413,
         "name": "Langenthal - Niederbipp",
-        "km": 0
+        "km_am_bahnhof": 0
       },
       {
         "nummer": 441,
         "name": "Langenthal - Huttwil",
-        "km": -0.03513
+        "km_am_bahnhof": -0.03513
       }
     ]
   },

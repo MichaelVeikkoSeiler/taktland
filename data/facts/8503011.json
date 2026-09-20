@@ -111,7 +111,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "2",
@@ -128,7 +129,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "3",
@@ -145,7 +147,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       }
     ]
   },
@@ -233,16 +236,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 717,
         "name": "Zurich Giesshubel - Zurich Wiedikon",
-        "km": 1.06916
+        "km_am_bahnhof": 1.06916
       },
       {
         "nummer": 720,
         "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
-        "km": 2.93357
+        "km_am_bahnhof": 2.93357
       }
     ]
   },

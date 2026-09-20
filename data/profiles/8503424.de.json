@@ -1,0 +1,690 @@
+{
+  "uic": 8503424,
+  "name": "Schaffhausen",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Schaffhausen 2025 rund 27'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 25'100, an einem freien Tag 19'400. Die Infrastruktur gehört der SBB, Züge betreiben SBB, SBB GmbH und Thurbo.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 27600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 25100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 19400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag 2025 in Schaffhausen ein und aus?",
+          "options": [
+            "11'000",
+            "15'000",
+            "19'000",
+            "27'600"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 2025 rund 27'600 Personen.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der Wert für einen freien Tag (dnwv) ist in Schaffhausen höher als der Werktagswert (dwv).",
+          "correct": false,
+          "explanation": "An einem freien Tag sind es 19'400 Personen, an einem Werktag 27'600 - der Werktagswert ist höher.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 19400,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 21500,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 25200,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 26900,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 27600,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr stieg von 19'400 (2022) über 21'500 (2018), 25'200 (2023) und 26'900 (2024) auf 27'600 (2025)."
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Der Bahnhof Schaffhausen liegt auf 403.8 Metern über Meer. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 403.8,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiberin",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Schaffhausen?",
+          "options": [
+            "203.8 m",
+            "403.8 m",
+            "603.8 m",
+            "803.8 m"
+          ],
+          "correct": 1,
+          "explanation": "Die erfasste Höhe beträgt 403.8 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Infrastruktur des Bahnhofs Schaffhausen wird von der SBB betrieben.",
+          "correct": true,
+          "explanation": "Als Infrastrukturbetreiberin ist die SBB erfasst.",
+          "factRef": "steckbrief.isb",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 4 Perrons in Schaffhausen liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 345 Meter, das kürzeste 170 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 4,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 345,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 170,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Schaffhausen?",
+          "options": [
+            "170 m",
+            "274 m",
+            "316 m",
+            "345 m"
+          ],
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 345 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, kürzestes zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Perron 6",
+              "value": 170,
+              "factRef": "perrons.items[3].laenge_m"
+            },
+            {
+              "label": "Perron 4/5",
+              "value": 307,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 2/3",
+              "value": 316,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 345,
+              "factRef": "perrons.items[0].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Die Längen betragen 170, 307, 316 und 345 Meter, wie in den Perrondaten erfasst."
+        },
+        {
+          "type": "match",
+          "prompt": "Welcher Perrontyp gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 1",
+              "rechts": "Hausperron",
+              "factRef": "perrons.items[0].typ"
+            },
+            {
+              "links": "Perron 2/3",
+              "rechts": "Mittelperron",
+              "factRef": "perrons.items[1].typ"
+            },
+            {
+              "links": "Perron 6",
+              "rechts": "Aussenperron",
+              "factRef": "perrons.items[3].typ"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 1 ist ein Hausperron, Perron 2/3 ein Mittelperron und Perron 6 ein Aussenperron."
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 6 Gleisen liegen offene Daten vor. Die erfassten Perronhöhen betragen 30, 35 und 55 Zentimeter.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 6,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welches Gleis in Schaffhausen hat die längste erfasste Perronkante?",
+          "options": [
+            "Gleis 1",
+            "Gleis 3",
+            "Gleis 4",
+            "Gleis 6"
+          ],
+          "correct": 1,
+          "explanation": "Gleis 3 hat mit 316 Metern die längste erfasste Perronkante.",
+          "factRef": "gleise.items[2].nr",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 3",
+              "value": 316,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 2",
+              "value": 314,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 302,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 5",
+              "value": 276,
+              "factRef": "gleise.items[4].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 274,
+              "factRef": "gleise.items[3].perronkante_m"
+            },
+            {
+              "label": "Gleis 6",
+              "value": 142,
+              "factRef": "gleise.items[5].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Die Perronkanten messen der Reihe nach 316, 314, 302, 276, 274 und 142 Meter."
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die kürzeste Perronkante?",
+          "schema": "gleise",
+          "correct": "6",
+          "factRef": "gleise.items[5].nr",
+          "explanation": "Gleis 6 hat mit 142 Metern die kürzeste erfasste Perronkante."
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Von den 31 erfassten Perronsegmenten liegen 23 auf einer Höhe von 55 Zentimetern, 6 auf 35 Zentimetern und 2 auf 30 Zentimetern. Ein Hilfstritt ist bei keinem der Segmente erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 31,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der erfassten Perronsegmente in Schaffhausen liegen auf 55 Zentimeter Höhe?",
+          "options": [
+            "9",
+            "16",
+            "20",
+            "23"
+          ],
+          "correct": 3,
+          "explanation": "23 der 31 erfassten Segmente liegen auf 55 Zentimeter Höhe.",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei den erfassten Perronsegmenten in Schaffhausen ist mindestens ein Hilfstritt erfasst.",
+          "correct": false,
+          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Schaffhausen und Schaffhausen Süd verkehren im Personenverkehr rund 263 Züge pro Tag. Das entspricht 96'008 Zügen im Jahr 2025.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Abschnitt Schaffhausen–Schaffhausen Süd (Personenverkehr)",
+          "value": 263,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren 2025 auf dem Abschnitt Schaffhausen–Schaffhausen Süd im Personenverkehr pro Tag (beide Richtungen)?",
+          "min": 0,
+          "max": 400,
+          "step": 10,
+          "unit": "Züge/Tag",
+          "correct": 263,
+          "explanation": "Auf diesem Abschnitt verkehren 263 Züge pro Tag im Personenverkehr, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Streckennummer verkehren 2025 am meisten Personenzüge pro Tag?",
+          "options": [
+            "79",
+            "129",
+            "762",
+            "820"
+          ],
+          "correct": 1,
+          "explanation": "Die Strecke Nummer 129 (Schaffhausen–Schaffhausen Süd) hat mit 263 Zügen pro Tag den stärksten Personenverkehr.",
+          "factRef": "zuege.staerkster_personenverkehr.strecke_nr",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte im Güterverkehr nach Zügen pro Jahr, wenigste zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Schaffhausen–Feuerthalen",
+              "value": 143,
+              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
+            },
+            {
+              "label": "Schaffhausen–Schaffhausen GB E",
+              "value": 3046,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            },
+            {
+              "label": "Schaffhausen–Schaffhausen Süd",
+              "value": 3903,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Im Güterverkehr verkehren auf den Abschnitten 143, 3046 und 3903 Züge pro Jahr, Stand 2025."
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Schaffhausen sind 4 Linien erfasst, darunter die Linie 762 Winterthur Nord–Schaffhausen RB Ost und die Linie 764 Schaffhausen–Singen–Konstanz.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 4,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Strecke?",
+          "pairs": [
+            {
+              "links": "763",
+              "rechts": "Basel Bad Bhf - Waldshut - Schaffhausen",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "820",
+              "rechts": "Etzwilen - Schaffhausen",
+              "factRef": "linien.items[1].name"
+            },
+            {
+              "links": "764",
+              "rechts": "Schaffhausen - Singen - Konstanz",
+              "factRef": "linien.items[3].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Die Liniennummern 763, 820 und 764 gehören zu den jeweils genannten Streckenbezeichnungen."
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Bei welchem Streckenkilometer der Linie 762 ist Schaffhausen eingetragen?",
+          "options": [
+            "48.76002",
+            "56.06425",
+            "364.421",
+            "364.49167"
+          ],
+          "correct": 1,
+          "explanation": "Schaffhausen steht auf der Linie 762 bei Kilometer 56.06425.",
+          "factRef": "linien.items[2].km_am_bahnhof",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Schaffhausen sind 6 Billettautomaten und 13 Billettentwerter erfasst, ausserdem 2 Wartehallen. WLAN ist als Standort erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 6,
+          "unit": "",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 13,
+          "unit": "",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Schaffhausen erfasst?",
+          "options": [
+            "6",
+            "7",
+            "10",
+            "18"
+          ],
+          "correct": 0,
+          "explanation": "Es sind 6 Billettautomaten erfasst.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Schaffhausen steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist als WLAN-Standort erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Schaffhausen ist ein Bahnhofplan als A4- und Plakatversion veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": "",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Der veröffentlichte Bahnhofplan von Schaffhausen weist die SBB als Eigentümerin aus.",
+          "correct": true,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (1, 2, 3, 4, 5, 6). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 302,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 314,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 316,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 274,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 276,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 142,
+      "sektoren": [
+        "A",
+        "B"
+      ]
+    }
+  ]
+}

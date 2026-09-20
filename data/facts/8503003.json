@@ -361,7 +361,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "2",
@@ -375,7 +376,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       },
       {
         "nr": "3",
@@ -387,7 +389,8 @@
           "A",
           "B",
           "C"
-        ]
+        ],
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -495,16 +498,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 745,
         "name": "ZH Langstrasse - Dietlikon Sud (S-Bahn)",
-        "km": 101.59088
+        "km_am_bahnhof": 101.59088
       },
       {
         "nummer": 730,
         "name": "Zurich Stadelhofen - Rapperswil",
-        "km": 5.69924
+        "km_am_bahnhof": 5.69924
       }
     ]
   },

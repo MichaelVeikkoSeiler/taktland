@@ -1,0 +1,780 @@
+{
+  "uic": 8509411,
+  "name": "Sargans",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Sargans 16'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 16'000, an einem freien Tag 14'800. Infrastrukturbetreiberin ist die SBB, es verkehren Züge von SBB, SOB und Thurbo.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 16400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Tagesmittel über das ganze Jahr",
+          "value": 16000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Verkehr an einem freien Tag",
+          "value": 14800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "SBB, SOB, Thurbo",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Sargans ein und aus?",
+          "options": [
+            "6'600",
+            "9'000",
+            "11'000",
+            "16'400"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 16'400 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der Wert für einen freien Tag (dnwv) in Sargans umfasst ausschliesslich Samstage und Sonntage.",
+          "correct": false,
+          "explanation": "Der dnwv-Wert umfasst Wochenenden und Feiertage zusammen, nicht nur Samstage und Sonntage.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 11800,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 12200,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 12300,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 12800,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 16400,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die Werktagsverkehrswerte steigen von 11'800 im Jahr 2022 über 12'200 (2023), 12'300 (2018) und 12'800 (2024) auf 16'400 im Jahr 2025."
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Sargans liegt auf 481.6 Metern über Meer, in der Gemeinde Sargans im Bezirk Sarganserland, Kanton St. Gallen. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 481.6,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiberin",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Sargans?",
+          "min": 400,
+          "max": 600,
+          "step": 5,
+          "unit": "m",
+          "correct": 481.6,
+          "explanation": "Sargans liegt auf 481.6 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Schweizerische Bundesbahnen SBB betreibt den Bahnhof Sargans.",
+          "correct": true,
+          "explanation": "Als Betreiberin ist die Schweizerische Bundesbahnen SBB erfasst.",
+          "factRef": "stammdaten.betreiber",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 5 Perrons in Sargans liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 446 Meter, das kürzeste 300 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 5,
+          "unit": "Perrons",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 446,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 300,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste Perron mit offenen Daten in Sargans?",
+          "options": [
+            "300 m",
+            "355 m",
+            "420 m",
+            "446 m"
+          ],
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 446 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Das kürzeste erfasste Perron in Sargans misst ___ Meter.",
+          "options": [
+            "120",
+            "160",
+            "300"
+          ],
+          "correct": 2,
+          "explanation": "Das kürzeste erfasste Perron misst 300 Meter.",
+          "factRef": "perrons.kuerzeste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 5",
+              "rechts": "446 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 2",
+              "rechts": "436 m",
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "links": "Perron 3/4",
+              "rechts": "420 m",
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "links": "Perron 6",
+              "rechts": "355 m",
+              "factRef": "perrons.items[3].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Für die Perrons sind folgende Längen erfasst: Perron 5 mit 446 m, Perron 2 mit 436 m, Perron 3/4 mit 420 m und Perron 6 mit 355 m."
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 5",
+              "value": 446,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 2",
+              "value": 436,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 3/4",
+              "value": 420,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 6",
+              "value": 355,
+              "factRef": "perrons.items[3].laenge_m"
+            },
+            {
+              "label": "Perron 7",
+              "value": 300,
+              "factRef": "perrons.items[4].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Die erfassten Längen betragen 446, 436, 420, 355 und 300 Meter."
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 6 Gleisen in Sargans liegen offene Daten vor. Die erfassten Perronhöhen betragen 25, 35 und 55 Zentimeter.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 6,
+          "unit": "Gleise",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Erfasste Perronhöhe 1",
+          "value": 25,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        },
+        {
+          "label": "Erfasste Perronhöhe 2",
+          "value": 35,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[1]"
+        },
+        {
+          "label": "Erfasste Perronhöhe 3",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[2]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist die Perronkante an Gleis 2 in Sargans?",
+          "options": [
+            "300 m",
+            "333 m",
+            "356 m",
+            "377 m"
+          ],
+          "correct": 3,
+          "explanation": "Die Perronkante an Gleis 2 misst 377 Meter.",
+          "factRef": "gleise.items[0].perronkante_m",
+          "difficulty": 2
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "2",
+          "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 2 hat mit 377 Metern die längste erfasste Perronkante."
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Perronkante gehört zu welchem Gleis?",
+          "pairs": [
+            {
+              "links": "Gleis 2",
+              "rechts": "377 m",
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "links": "Gleis 3",
+              "rechts": "372 m",
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "links": "Gleis 5",
+              "rechts": "356 m",
+              "factRef": "gleise.items[3].perronkante_m"
+            },
+            {
+              "links": "Gleis 7",
+              "rechts": "300 m",
+              "factRef": "gleise.items[5].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Die erfassten Perronkanten messen 377 m an Gleis 2, 372 m an Gleis 3, 356 m an Gleis 5 und 300 m an Gleis 7."
+        },
+        {
+          "type": "true_false",
+          "prompt": "An Gleis 7 in Sargans ist nur eine Perronhöhe von 55 Zentimetern erfasst.",
+          "correct": true,
+          "explanation": "Für Gleis 7 ist ausschliesslich die Perronhöhe 55 cm erfasst.",
+          "factRef": "gleise.items[5].perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "5 der erfassten Perrons in Sargans sind niveaufrei erreichbar. Zu den Perronsegmenten liegen 26 Datensätze vor, davon 12 mit einer Perronhöhe von 55 Zentimetern. Für keines der Segmente ist ein Hilfstritt erfasst.",
+      "facts": [
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 5,
+          "unit": "Perrons",
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 26,
+          "unit": "Segmente",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit 55 cm Perronhöhe",
+          "value": 6,
+          "unit": "Gleise",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Sargans ist für keines der erfassten Perronsegmente ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente mit einer Höhe von 55 cm sind in Sargans erfasst?",
+          "options": [
+            "12",
+            "14",
+            "17",
+            "20"
+          ],
+          "correct": 0,
+          "explanation": "Für die Perronhöhe 55 cm sind 12 Segmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Perronsegmente sind in Sargans insgesamt erfasst?",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "Segmente",
+          "correct": 26,
+          "explanation": "Es sind 26 Perronsegmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Sargans - Bad Ragaz verkehren im Personenverkehr rund 201 Züge pro Tag, zusammen beide Richtungen. Das sind 73'476 Züge im Jahr 2025.",
+      "facts": [
+        {
+          "label": "Züge pro Tag Sargans - Bad Ragaz (Personenverkehr)",
+          "value": 201,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr Sargans - Bad Ragaz (Personenverkehr)",
+          "value": 73476,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren rund pro Tag auf dem Abschnitt Sargans - Bad Ragaz im Personenverkehr?",
+          "options": [
+            "80",
+            "110",
+            "140",
+            "201"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt Sargans - Bad Ragaz verkehren im Personenverkehr rund 201 Züge pro Tag.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Auf dem Abschnitt Sargans - Bad Ragaz verkehren im Personenverkehr im Jahr 2025 rund ___ Züge.",
+          "options": [
+            "29'000",
+            "40'000",
+            "73'476"
+          ],
+          "correct": 2,
+          "explanation": "Für das Jahr 2025 sind 73'476 Züge im Personenverkehr auf diesem Abschnitt erfasst.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehr-Abschnitte nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Sargans - Bad Ragaz",
+              "value": 201,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Mels - Sargans",
+              "value": 149,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Trübbach Süd - Sargans",
+              "value": 71,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            },
+            {
+              "label": "Sargans Schleife - Sargans",
+              "value": 58,
+              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Die Werte im Personenverkehr sind 201, 149, 71 und 58 Züge pro Tag für die jeweiligen Abschnitte."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Mels - Sargans verkehren im Güterverkehr mehr Züge pro Tag als im Personenverkehr.",
+          "correct": false,
+          "explanation": "Im Güterverkehr sind es 22 Züge pro Tag, im Personenverkehr 149.",
+          "factRef": "zuege.abschnitte[4].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Zu Sargans liegt eine Linie mit Betriebspunkten vor: die Linie 890 Sargans Ost - Ziegelbrücke.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "unit": "Linie",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie 890",
+          "value": "Sargans Ost - Ziegelbrucke",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].name"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Linie mit Betriebspunkten ist für Sargans erfasst?",
+          "options": [
+            "Sargans Ost - Ziegelbrucke",
+            "Sargans - Chur",
+            "Sargans - Buchs",
+            "Sargans - Mels"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist die Linie 890 Sargans Ost - Ziegelbrucke.",
+          "factRef": "linien.items[0].name",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für Sargans ist mehr als eine Linie mit Betriebspunkten erfasst.",
+          "correct": false,
+          "explanation": "Erfasst ist 1 Linie.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Sargans sind 2 Billettautomaten des Typs ePOS erfasst, dazu 13 Billettentwerter und 2 Wartehallen. Sargans steht zudem in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 2,
+          "unit": "Automaten",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 13,
+          "unit": "Entwerter",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 2,
+          "unit": "Wartehallen",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Sargans erfasst?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "4"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 2 Billettautomaten vom Typ ePOS.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "true_false",
+          "prompt": "Sargans steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "WLAN ist für Sargans erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Sargans sind ___ Billettentwerter erfasst.",
+          "options": [
+            "9",
+            "11",
+            "13"
+          ],
+          "correct": 2,
+          "explanation": "Es sind 13 Billettentwerter erfasst.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Sargans liegt ein Bahnhofplan als A4-PDF und als Plakat-PDF vor. Eigentümerin der Anlage ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Die SBB ist als Eigentümerin des Bahnhofplans für Sargans erfasst.",
+          "correct": true,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (2, 3, 4, 5, 6, 7). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        25,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 377,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 372,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 373,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        25,
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 356,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 333,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 300,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  ]
+}

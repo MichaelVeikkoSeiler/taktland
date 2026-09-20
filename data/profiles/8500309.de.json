@@ -1,0 +1,681 @@
+{
+  "uic": 8500309,
+  "name": "Brugg AG",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Brugg AG rund 26'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 22'800, an einem freien Tag 14'800. Infrastrukturbetreiberin und Bahnunternehmen sind hier gemäss den Fakten je die SBB. Seit 2018 ist der Werktagsverkehr von 24'500 auf 26'400 Personen im Jahr 2025 gestiegen, mit einem Rückgang auf 21'600 im Jahr 2022.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 26400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Tagesmittel über das Jahr",
+          "value": 22800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Verkehr an einem freien Tag",
+          "value": 14800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen in Brugg AG an einem Werktag ein und aus?",
+          "options": [
+            "11'000",
+            "15'000",
+            "18'000",
+            "26'400"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 26'400 Personen, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Im Tagesmittel über das ganze Jahr steigen in Brugg AG 22'800 Personen ein und aus.",
+          "correct": true,
+          "explanation": "Der Wert für das Tagesmittel (dtv) liegt 2025 bei 22'800 Personen.",
+          "factRef": "steckbrief.dtv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Werktagsverkehrswerte nach Jahr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 21600,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 24500,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 25200,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 25700,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 26400,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Werktagsverkehr war 2022 mit 21'600 am tiefsten und stieg über 24'500 (2018), 25'200 (2023) und 25'700 (2024) auf 26'400 im Jahr 2025."
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Brugg AG liegt auf 352.1 Metern über Meer in der Gemeinde Brugg im Kanton Aargau. Betreiberin ist die Schweizerische Bundesbahnen SBB, die offizielle Abkürzung lautet BG.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 352.1,
+          "unit": "m ü. M.",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Abkürzung",
+          "value": "BG",
+          "unit": "",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Auf welcher Höhe über Meer liegt Brugg AG?",
+          "options": [
+            "302.1 m",
+            "352.1 m",
+            "412.1 m",
+            "452.1 m"
+          ],
+          "correct": 1,
+          "explanation": "Die erfasste Höhe beträgt 352.1 m über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die offizielle Abkürzung von Brugg AG lautet BG.",
+          "correct": true,
+          "explanation": "Gemäss Stammdaten ist BG die erfasste Abkürzung.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu drei Perrons liegen offene Daten vor. Das längste misst 425 Meter, das kürzeste 339 Meter. Alle drei erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 3,
+          "unit": "",
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 425,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 339,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Brugg AG?",
+          "options": [
+            "339 m",
+            "414 m",
+            "425 m",
+            "460 m"
+          ],
+          "correct": 2,
+          "explanation": "Das Mittelperron 2/3 misst 425 Meter, das längste erfasste Perron.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Das kürzeste erfasste Perron in Brugg AG misst ___ Meter.",
+          "options": [
+            "140",
+            "190",
+            "339"
+          ],
+          "correct": 2,
+          "explanation": "Perron 4/5 misst 339 Meter, das kürzeste der erfassten Perrons.",
+          "factRef": "perrons.kuerzeste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Länge gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "425 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "414 m",
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "links": "Perron 4/5",
+              "rechts": "339 m",
+              "factRef": "perrons.items[2].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 misst 425 m, Perron 1 misst 414 m und Perron 4/5 misst 339 m."
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu fünf Gleisen liegen offene Daten vor. Die erfassten Perronhöhen betragen 25, 35 und 55 Zentimeter. Gleis 2 hat mit 317 Metern die längste erfasste Perronkante.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 5,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Erfasste Perronhöhe (1 von 3)",
+          "value": 25,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        },
+        {
+          "label": "Erfasste Perronhöhe (2 von 3)",
+          "value": 35,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[1]"
+        },
+        {
+          "label": "Erfasste Perronhöhe (3 von 3)",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[2]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante in Brugg AG?",
+          "options": [
+            "Gleis 1",
+            "Gleis 2",
+            "Gleis 4",
+            "Gleis 5"
+          ],
+          "correct": 1,
+          "explanation": "Gleis 2 hat mit 317 Metern die längste erfasste Perronkante.",
+          "factRef": "gleise.items[1].nr",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 2",
+              "value": 317,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 316,
+              "factRef": "gleise.items[3].perronkante_m"
+            },
+            {
+              "label": "Gleis 5",
+              "value": 315,
+              "factRef": "gleise.items[4].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 314,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 256,
+              "factRef": "gleise.items[0].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Die Perronkanten messen 317 m (Gleis 2), 316 m (Gleis 4), 315 m (Gleis 5), 314 m (Gleis 3) und 256 m (Gleis 1)."
+        },
+        {
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für die Gleise in Brugg AG erfasst?",
+          "options": [
+            "25 cm",
+            "35 cm",
+            "45 cm",
+            "55 cm"
+          ],
+          "correct": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "Erfasst sind die Perronhöhen 25, 35 und 55 Zentimeter.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Zu Brugg AG sind 28 Perronsegmente erfasst, davon 19 mit einer Perronhöhe von 55 Zentimetern. Ein Hilfstritt ist bei keinem der Segmente erfasst. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente",
+          "value": 28,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit 55 cm Perronhöhe",
+          "value": 19,
+          "unit": "",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind für Brugg AG erfasst?",
+          "options": [
+            "11",
+            "15",
+            "20",
+            "28"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 28 Perronsegmente.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele der erfassten Segmente haben eine Perronhöhe von 55 cm?",
+          "min": 0,
+          "max": 28,
+          "step": 1,
+          "unit": "Segmente",
+          "correct": 19,
+          "explanation": "19 der 28 erfassten Segmente haben eine Perronhöhe von 55 Zentimetern.",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei den erfassten Segmenten in Brugg AG ist ein Hilfstritt verzeichnet.",
+          "correct": false,
+          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Brugg AG Ost und Brugg AG verkehren im Personenverkehr rund 362 Züge pro Tag, das entspricht 132'113 Zügen pro Jahr in beiden Richtungen zusammen. Auf dem Abschnitt Brugg AG–Brugg AG West sind es 160 Züge pro Tag im Personenverkehr.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Abschnitt Brugg AG Ost–Brugg AG (Personenverkehr)",
+          "value": 362,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Abschnitt Brugg AG Ost–Brugg AG (Personenverkehr)",
+          "value": 132113,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren pro Tag auf dem Abschnitt Brugg AG Ost–Brugg AG im Personenverkehr?",
+          "options": [
+            "140",
+            "200",
+            "250",
+            "362"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt Brugg AG Ost–Brugg AG verkehren rund 362 Züge pro Tag im Personenverkehr, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehrsabschnitte nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Brugg AG Ost–Brugg AG",
+              "value": 362,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Brugg AG–Brugg AG West",
+              "value": 160,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Brugg AG–Brugg AG Süd (Abzw)",
+              "value": 79,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            },
+            {
+              "label": "Brugg AG Nord (Abzw)–Brugg AG",
+              "value": 78,
+              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Auf den Personenverkehrsabschnitten verkehren 362, 160, 79 und 78 Züge pro Tag, in dieser absteigenden Reihenfolge."
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren pro Jahr auf dem Abschnitt Brugg AG Ost–Brugg AG im Personenverkehr, beide Richtungen zusammen?",
+          "min": 0,
+          "max": 200000,
+          "step": 1000,
+          "unit": "Züge/Jahr",
+          "correct": 132113,
+          "explanation": "Auf diesem Abschnitt sind 2025 rund 132'113 Züge pro Jahr erfasst.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Zu vier Linien liegen für Brugg AG offene Daten vor: Linie 647 nach Hendschiken Nord, Linie 700 nach Pratteln Ost, Linie 640 nach Rupperswil und Linie 710 nach Zürich HB.",
+      "facts": [
+        {
+          "label": "Linien mit offenen Daten",
+          "value": 4,
+          "unit": "",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien mit offenen Daten sind für Brugg AG erfasst?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "6"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 4 Linien.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Linienbezeichnung?",
+          "pairs": [
+            {
+              "links": "647",
+              "rechts": "Brugg - Hendschiken Nord",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "700",
+              "rechts": "Brugg - Pratteln Ost",
+              "factRef": "linien.items[1].name"
+            },
+            {
+              "links": "640",
+              "rechts": "Brugg - Rupperswil",
+              "factRef": "linien.items[2].name"
+            },
+            {
+              "links": "710",
+              "rechts": "Zurich HB - Brugg AG",
+              "factRef": "linien.items[3].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Linie 647 heisst Brugg - Hendschiken Nord, Linie 700 Brugg - Pratteln Ost, Linie 640 Brugg - Rupperswil und Linie 710 Zurich HB - Brugg AG."
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Linien nach Kilometerangabe, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Linie 647",
+              "value": -0.00105,
+              "factRef": "linien.items[0].km_am_bahnhof"
+            },
+            {
+              "label": "Linie 710",
+              "value": 31.26561,
+              "factRef": "linien.items[3].km_am_bahnhof"
+            },
+            {
+              "label": "Linie 700",
+              "value": 31.27262,
+              "factRef": "linien.items[1].km_am_bahnhof"
+            },
+            {
+              "label": "Linie 640",
+              "value": 31.27592,
+              "factRef": "linien.items[2].km_am_bahnhof"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Unter den 4 für Brugg AG erfassten Linien hat nur die Linie 647 einen negativen Kilometerwert, sie steht daher an erster Stelle. Es folgen Linie 710, Linie 700 und Linie 640 mit steigenden Werten."
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Brugg AG steht in der Liste der WLAN-Standorte. Erfasst sind 4 Billettautomaten, 9 Billettentwerter und 3 Wartehallen.",
+      "facts": [
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 4,
+          "unit": "",
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 9,
+          "unit": "",
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 3,
+          "unit": "",
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Brugg AG steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist als WLAN-Standort erfasst.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind für Brugg AG erfasst?",
+          "options": [
+            "2",
+            "4",
+            "6",
+            "9"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 4 Billettautomaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind für Brugg AG erfasst?",
+          "options": [
+            "6",
+            "8",
+            "9",
+            "11"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 9 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Brugg AG ist ein Bahnhofplan als A4- und Plakatversion veröffentlicht. Eigentümerin der Anlage ist gemäss den Fakten die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin",
+          "value": "SBB",
+          "unit": "",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Eigentümerin des Bahnhofplans zufolge ist die SBB.",
+          "correct": true,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 5 Gleise (1, 2, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

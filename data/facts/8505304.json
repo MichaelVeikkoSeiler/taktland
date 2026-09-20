@@ -106,7 +106,8 @@
         "perronkante_m": 288,
         "sektoren": [
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 1
       },
       {
         "nr": "2",
@@ -118,7 +119,8 @@
         "perronkante_m": 221,
         "sektoren": [
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 1
       },
       {
         "nr": "3",
@@ -130,7 +132,8 @@
         "perronkante_m": 220,
         "sektoren": [
           "B"
-        ]
+        ],
+        "sektoren_anzahl": 1
       }
     ]
   },
@@ -218,16 +221,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 636,
         "name": "Capolago-Riva S. Vitale - Monte Generoso",
-        "km": 0
+        "km_am_bahnhof": 0
       },
       {
         "nummer": 600,
         "name": "Immensee - Bellinzona - Chiasso",
-        "km": 194.61388
+        "km_am_bahnhof": 194.61388
       }
     ]
   },

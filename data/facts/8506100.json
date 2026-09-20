@@ -113,7 +113,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       },
       {
         "nr": "2",
@@ -131,7 +132,8 @@
           "E",
           "F",
           "G"
-        ]
+        ],
+        "sektoren_anzahl": 7
       },
       {
         "nr": "3",
@@ -150,7 +152,8 @@
           "F",
           "G",
           "H"
-        ]
+        ],
+        "sektoren_anzahl": 8
       }
     ]
   },
@@ -258,16 +261,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 843,
         "name": "Frauenfeld - Frauenfeld Paketpost",
-        "km": 42.05133
+        "km_am_bahnhof": 42.05133
       },
       {
         "nummer": 840,
         "name": "Winterthur Nord - Romanshorn",
-        "km": 42.05133
+        "km_am_bahnhof": 42.05133
       }
     ]
   },

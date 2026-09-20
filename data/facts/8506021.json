@@ -152,11 +152,12 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 1,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 821,
         "name": "Oberwinterthur - Etzwilen West (Abzw)",
-        "km": 9.96916
+        "km_am_bahnhof": 9.96916
       }
     ]
   },

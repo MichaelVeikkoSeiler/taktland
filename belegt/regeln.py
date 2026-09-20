@@ -23,6 +23,14 @@ VERALLGEMEINERUNG = [
     r"jede[nrs]?", "keine weiteren", "total",
 ]
 
+# Wendungen, die eine Allaussage auf die Datenlage eingrenzen. Steht eine
+# davon im selben Satz, ist «alle 5 erfassten Perrons» korrekt und keine
+# Vollstaendigkeitsbehauptung ueber die Wirklichkeit.
+EINGRENZUNG = [
+    r"erfasst\w*", r"erhoben\w*", r"vermerkt\w*", r"eingetragen\w*",
+    r"\bDaten\b", r"laut (den )?Quellen", r"nach den Quellen",
+]
+
 # Superlative sind erlaubt, wenn sie sich auf die eigenen Daten beziehen
 # ("das längste erfasste Perron"), nicht aber im Vergleich mit anderen.
 VERGLEICH = (
@@ -35,12 +43,23 @@ VERGLEICH = (
 )
 
 
+def _satz_um(text, pos):
+    """Der Satz, in dem die Fundstelle liegt. Die Eingrenzung muss im selben
+    Satz stehen, sonst rechtfertigt ein «erfasst» drei Saetze weiter alles."""
+    anfang = max((text.rfind(z, 0, pos) for z in ".!?;"), default=-1) + 1
+    ende = min((e for e in (text.find(z, pos) for z in ".!?;") if e != -1),
+               default=len(text))
+    return text[anfang:ende + 1]
+
+
 @dataclass
 class Regelwerk:
     """Was in einem Text stehen darf und was nicht."""
 
     vermutung: list = field(default_factory=lambda: list(VERMUTUNG))
     verallgemeinerung: list = field(default_factory=lambda: list(VERALLGEMEINERUNG))
+    #: Wendungen, die eine Allaussage zulaessig auf die Datenlage eingrenzen
+    eingrenzung: list = field(default_factory=lambda: list(EINGRENZUNG))
     vergleich: str = VERGLEICH
     #: Zahlen ab dieser Stellenzahl brauchen ein Tausenderzeichen
     tausender_ab_stellen: int = 5
@@ -52,6 +71,8 @@ class Regelwerk:
             r"\b(" + "|".join(self.vermutung) + r")\b", re.I) if self.vermutung else None
         self._verallgemeinerung = re.compile(
             r"\b(" + "|".join(self.verallgemeinerung) + r")\b", re.I) if self.verallgemeinerung else None
+        self._eingrenzung = re.compile(
+            "|".join(self.eingrenzung), re.I) if self.eingrenzung else None
         self._vergleich = re.compile(self.vergleich, re.I) if self.vergleich else None
 
     def pruefe_text(self, text, wo, faktenbasis, bericht, zahlen_streng=True):
@@ -74,10 +95,17 @@ class Regelwerk:
         if self._vergleich and (m := self._vergleich.search(text)):
             bericht.fehlt(wo, f"«{m.group(0)}» vergleicht mit anderen, "
                               "ohne Vergleichswert in den Fakten")
-        if self._verallgemeinerung and ZAHL.search(text):
-            if m := self._verallgemeinerung.search(text):
+        if self._verallgemeinerung:
+            for m in self._verallgemeinerung.finditer(text):
+                satz = _satz_um(text, m.start())
+                if not ZAHL.search(satz):
+                    continue
+                if self._eingrenzung and self._eingrenzung.search(satz):
+                    continue
                 bericht.warnt(wo, f"«{m.group(0)}» zusammen mit einer Zahl "
-                                  "behauptet Vollständigkeit")
+                                  "behauptet Vollständigkeit, ohne die Aussage "
+                                  "auf die Datenlage einzugrenzen")
+                break
 
     def pruefe_allgemein(self, text, wo, gegenstand, bericht):
         """Eine allgemeine Erlaeuterung darf den Gegenstand nicht nennen.

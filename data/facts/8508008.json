@@ -110,7 +110,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       },
       {
         "nr": "2",
@@ -127,7 +128,8 @@
           "D",
           "E",
           "F"
-        ]
+        ],
+        "sektoren_anzahl": 6
       }
     ]
   },
@@ -214,16 +216,17 @@
   "linien": {
     "source": "linie-mit-betriebspunkten",
     "anzahl": 2,
+    "hinweis": "km_am_bahnhof ist die Kilometrierung dieses Bahnhofs auf der Linie, also der Standort. Es ist NICHT die Laenge der Linie. Die Laenge der Linie steht in den offenen Daten nicht.",
     "items": [
       {
         "nummer": 418,
         "name": "Anschlussgleis Herzogenbuchsee Nord",
-        "km": 66.71516
+        "km_am_bahnhof": 66.71516
       },
       {
         "nummer": 450,
         "name": "Olten Sud - Bern",
-        "km": 66.79461
+        "km_am_bahnhof": 66.79461
       }
     ]
   },
