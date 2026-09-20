@@ -1,0 +1,1007 @@
+{
+  "uic": 8500010,
+  "name": "Basel SBB",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Basel SBB liegt im Kanton Basel-Stadt, auf 277 Metern über Meer. An einem Werktag steigen hier 112'100 Personen ein und aus, an einem freien Tag 85'600. Als Bahnhofbenutzer sind 136'200 pro Tag erfasst. Die Quelle weist darauf hin, dass Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland nur zum Teil erfasst sind.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 112100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 85600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnhofbenutzer pro Tag",
+          "value": 136200,
+          "unit": "Personen",
+          "source": "anzahl-sbb-bahnhofbenutzer",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 277,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Basel SBB ein und aus?",
+          "options": [
+            "46'000",
+            "112'100",
+            "240'000",
+            "480'000"
+          ],
+          "correct": 1,
+          "explanation": "112'100 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden erfasst den Verkehr ins Ausland vollständig.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt, dass Einsteigende Richtung Ausland und Aussteigende aus dem Ausland nur zum Teil erfasst sind. Was darüber hinaus geht, steht nicht in den Daten.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "options": [
+            "2018",
+            "2022",
+            "2023",
+            "2025"
+          ],
+          "correct": 1,
+          "explanation": "2022, mit 90'900 Personen pro Werktag.",
+          "factRef": "steckbrief.verlauf[1].jahr",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Basel SBB?",
+          "min": 200,
+          "max": 700,
+          "step": 25,
+          "unit": "m",
+          "correct": 277,
+          "explanation": "277 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Der Tag am Bahnhof",
+      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 10.0 Prozent des Tagesaufkommens. Über die Woche ist der Freitag mit 15.4 Prozent der stärkste Tag, der Sonntag mit 12.3 Prozent der schwächste.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 17,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil der Spitzenstunde",
+          "value": 10.0,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Stärkster Wochentag",
+          "value": "Freitag",
+          "unit": null,
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil am Sonntag",
+          "value": 12.3,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "In welcher Stunde ist in Basel SBB der grösste Anteil der Bahnhofbenutzer unterwegs?",
+          "options": [
+            "8 Uhr",
+            "12 Uhr",
+            "17 Uhr",
+            "19 Uhr"
+          ],
+          "correct": 2,
+          "explanation": "Um 17 Uhr, mit 10.0 Prozent des Tagesaufkommens.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag ist der stärkste?",
+          "options": [
+            "Dienstag",
+            "Donnerstag",
+            "Freitag",
+            "Samstag"
+          ],
+          "correct": 2,
+          "explanation": "Der Freitag mit 15.4 Prozent.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Welcher Anteil der Wochenbesuche fällt auf den Sonntag?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 12.3,
+          "explanation": "12.3 Prozent, gegenüber 15.4 Prozent am Freitag.",
+          "factRef": "tagesrhythmus.wochentage[6].prozent",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 14 Perrons liegen Daten vor. Das längste misst 572 Meter, das kürzeste 197 Meter. Bei 14 von 14 erfassten Perrons ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 14,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 572,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 197,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 14,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Basel SBB?",
+          "options": [
+            "318 m",
+            "444 m",
+            "572 m",
+            "710 m"
+          ],
+          "correct": 2,
+          "explanation": "572 Meter, das Perron an den Gleisen 30 und 31.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 30/31",
+              "value": 572,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 19/20",
+              "value": 460,
+              "factRef": "perrons.items[4].laenge_m"
+            },
+            {
+              "label": "Perron 0",
+              "value": 197,
+              "factRef": "perrons.items[13].laenge_m"
+            }
+          ],
+          "correct": null,
+          "explanation": "Perron 30/31 ist mit 572 Metern das längste der erfassten, Perron 0 mit 197 Metern das kürzeste.",
+          "factRef": "perrons.items",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Jedes erfasste Perron in Basel SBB ist ohne Gleisquerung erreichbar.",
+          "correct": true,
+          "explanation": "Bei 14 von 14 erfassten Perrons ist der Zugang niveaufrei.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 23 Gleisen vor. Die längste Perronkante hat Gleis 8 mit 431 Metern. Die Sektoren sind unterschiedlich weit gefasst: an Gleis 6 reichen sie von A bis D, an Gleis 9 ist nur A erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 23,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 8",
+          "value": 431,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[7].perronkante_m"
+        },
+        {
+          "label": "Letzter Sektor an Gleis 6",
+          "value": "D",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[5].sektoren[3]"
+        },
+        {
+          "label": "Perronkante an Gleis 33",
+          "value": 423,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[21].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Basel SBB liegen Daten zu ___ Gleisen vor.",
+          "options": [
+            "12",
+            "16",
+            "23",
+            "34"
+          ],
+          "correct": 2,
+          "explanation": "23 Gleise. Ob der Bahnhof weitere hat, sagen die offenen Daten nicht.",
+          "factRef": "gleise.anzahl_mit_daten",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "8",
+          "explanation": "Gleis 8 mit 431 Metern, knapp vor Gleis 33 mit 423 Metern.",
+          "factRef": "gleise.items[7].nr",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 6?",
+          "options": [
+            "B",
+            "D",
+            "F",
+            "H"
+          ],
+          "correct": 1,
+          "explanation": "Von A bis D.",
+          "factRef": "gleise.items[5].sektoren[3]",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu einem Gleis mit der Nummer 13 liegen in diesen Daten keine Angaben vor.",
+          "correct": true,
+          "explanation": "Erfasst sind unter anderem die Gleise 1 bis 12, 14 bis 20 sowie 30, 31, 33 und 35.",
+          "factRef": "gleise.nummern",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist die Perronkante an Gleis 33?",
+          "options": [
+            "220 m",
+            "320 m",
+            "423 m",
+            "560 m"
+          ],
+          "correct": 2,
+          "explanation": "423 Meter.",
+          "factRef": "gleise.items[21].perronkante_m",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "65 Perronabschnitte sind erfasst: 45 auf 55 Zentimetern und 20 auf 30 Zentimetern. Von 23 erfassten Gleisen haben 16 einen Abschnitt auf 55 Zentimetern. An den Gleisen 30, 33 und 35 liegt die Kante auf 30 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe.",
+      "facts": [
+        {
+          "label": "Erfasste Perronabschnitte",
+          "value": 65,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Abschnitte mit 55 cm",
+          "value": 45,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 16,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Tiefste erfasste Perronhöhe",
+          "value": 30,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe kommt bei den erfassten Abschnitten am häufigsten vor?",
+          "options": [
+            "30 cm",
+            "55 cm"
+          ],
+          "correct": 1,
+          "explanation": "55 Zentimeter, bei 45 der 65 erfassten Abschnitte.",
+          "factRef": "gleise.perronhoehen_cm[1]",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der 23 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
+          "options": [
+            "11",
+            "16",
+            "20",
+            "23"
+          ],
+          "correct": 1,
+          "explanation": "16 von 23 Gleisen.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie hoch ist die Perronkante an Gleis 33?",
+          "options": [
+            "20 cm",
+            "30 cm",
+            "55 cm",
+            "76 cm"
+          ],
+          "correct": 1,
+          "explanation": "30 Zentimeter, wie auch an den Gleisen 30 und 35.",
+          "factRef": "gleise.items[21].perronhoehen_cm[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Basel SBB ist eine visuell-taktile Sicherheitslinie vorhanden.",
+          "correct": true,
+          "explanation": "Ja. Diese Linie führt sehbehinderte Reisende entlang der Perronkante.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Am stärksten befahren ist der Abschnitt Richtung Basel SBB Nordost: 215'543 Personenzüge pro Jahr, rund 591 pro Tag in beiden Richtungen zusammen. Von Basel Dreispitz her sind es 135 pro Tag, von Basel St. Johann her 87.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag Richtung Nordost",
+          "value": 591,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag von Basel Dreispitz her",
+          "value": 135,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Jahr Richtung Nordost",
+          "value": 215543,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Basel SBB?",
+          "options": [
+            "135",
+            "320",
+            "591",
+            "1'240"
+          ],
+          "correct": 2,
+          "explanation": "Rund 591 pro Tag Richtung Basel SBB Nordost, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen sagen, wie viele Züge in Basel SBB halten.",
+          "correct": false,
+          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt. Ob ein Zug hält oder durchfährt, steht nicht in diesen Daten.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich von Basel Dreispitz her?",
+          "options": [
+            "87",
+            "135",
+            "290",
+            "470"
+          ],
+          "correct": 1,
+          "explanation": "Rund 135 pro Tag.",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "In diesen Daten sind für Basel SBB 2 Linien erfasst: die Linie 500 nach Olten und Luzern und die Linie 510 von Mulhouse-Ville.",
+      "facts": [
+        {
+          "label": "Linien am Bahnhof",
+          "value": 2,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie Richtung Olten und Luzern",
+          "value": 500,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Strecke?",
+          "pairs": [
+            {
+              "links": "Basel SBB - Olten - Luzern",
+              "rechts": "500",
+              "factRef": "linien.items[0].nummer"
+            },
+            {
+              "links": "Mulhouse-Ville - Basel SBB",
+              "rechts": "510",
+              "factRef": "linien.items[1].nummer"
+            }
+          ],
+          "correct": null,
+          "explanation": "Zwei Linien sind für Basel SBB erfasst.",
+          "factRef": "linien.items",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Eine der erfassten Linien führt über die Landesgrenze.",
+          "correct": true,
+          "explanation": "Die Linie 510 ist als Mulhouse-Ville - Basel SBB erfasst.",
+          "factRef": "linien.items[1].nummer",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 19 Billettautomaten, 37 Billettentwerter und 14 Wartehallen. Bei den Automaten sind mehrere Bauarten verzeichnet, darunter solche der DB und der BVB. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 19,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 37,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 14,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettautomaten sind in Basel SBB erfasst?",
+          "options": [
+            "9",
+            "19",
+            "37",
+            "64"
+          ],
+          "correct": 1,
+          "explanation": "19 Automaten, in mehreren Bauarten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Basel SBB sind ___ Wartehallen erfasst.",
+          "options": [
+            "4",
+            "14",
+            "23",
+            "37"
+          ],
+          "correct": 1,
+          "explanation": "14 Wartehallen.",
+          "factRef": "services.wartehallen_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Unter den erfassten Billettautomaten sind auch solche anderer Bahnunternehmen.",
+          "correct": true,
+          "explanation": "Verzeichnet sind unter anderem Bauarten der DB und der BVB.",
+          "factRef": "services.automat_typen",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Basel SBB ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-basel-sbb-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Basel SBB gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 23 Gleise (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 30, 31, 33, 35). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 5, 12, 17 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 220,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 220,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 212,
+      "sektoren": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 322,
+      "sektoren": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 377,
+      "sektoren": []
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 327,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 280,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "8",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 431,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "9",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 296,
+      "sektoren": [
+        "A"
+      ]
+    },
+    {
+      "nr": "10",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 297,
+      "sektoren": [
+        "A"
+      ]
+    },
+    {
+      "nr": "11",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 202,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "12",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 341,
+      "sektoren": []
+    },
+    {
+      "nr": "14",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 227,
+      "sektoren": [
+        "A",
+        "F"
+      ]
+    },
+    {
+      "nr": "15",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 276,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F"
+      ]
+    },
+    {
+      "nr": "16",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 334,
+      "sektoren": [
+        "A",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "nr": "17",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 336,
+      "sektoren": []
+    },
+    {
+      "nr": "18",
+      "perronhoehen_cm": [],
+      "hilfstritt": false,
+      "perrontyp": null,
+      "perronkante_m": null,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    {
+      "nr": "19",
+      "perronhoehen_cm": [],
+      "hilfstritt": false,
+      "perrontyp": null,
+      "perronkante_m": null,
+      "sektoren": [
+        "H"
+      ]
+    },
+    {
+      "nr": "20",
+      "perronhoehen_cm": [],
+      "hilfstritt": false,
+      "perrontyp": null,
+      "perronkante_m": null,
+      "sektoren": [
+        "H"
+      ]
+    },
+    {
+      "nr": "30",
+      "perronhoehen_cm": [
+        30
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 320,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "31",
+      "perronhoehen_cm": [],
+      "hilfstritt": false,
+      "perrontyp": null,
+      "perronkante_m": null,
+      "sektoren": [
+        "A",
+        "B",
+        "D"
+      ]
+    },
+    {
+      "nr": "33",
+      "perronhoehen_cm": [
+        30
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 423,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "35",
+      "perronhoehen_cm": [
+        30
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 220,
+      "sektoren": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ]
+}

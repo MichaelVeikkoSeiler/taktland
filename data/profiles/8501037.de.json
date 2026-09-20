@@ -1,0 +1,562 @@
+{
+  "uic": 8501037,
+  "name": "Morges",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Morges liegt im Kanton Waadt, auf 382 Metern über Meer. An einem Werktag steigen hier 20'200 Personen ein und aus, an einem freien Tag 11'500. 2024 waren es noch 25'200 pro Werktag. Die Quelle vermerkt, dass die MBC nicht mitgezählt ist.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 20200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 11500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Wert 2024",
+          "value": 25200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 382,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Morges ein und aus?",
+          "options": [
+            "7'400",
+            "20'200",
+            "44'000",
+            "83'000"
+          ],
+          "correct": 1,
+          "explanation": "20'200 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "2024 wurden in Morges mehr Ein- und Aussteigende gezählt als 2025.",
+          "correct": true,
+          "explanation": "2024 waren es 25'200, 2025 sind es 20'200.",
+          "factRef": "steckbrief.verlauf[3].dwv",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Morges?",
+          "min": 200,
+          "max": 800,
+          "step": 25,
+          "unit": "m",
+          "correct": 382,
+          "explanation": "382 Meter über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 4 Perrons liegen Daten vor. Das längste misst 421 Meter, das kürzeste 88 Meter. Von diesen 4 Perrons sind 2 niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 4,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 421,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 88,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.niveaufrei_erreichbar"
+        }
+      ],
+      "questions": [
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 1",
+              "value": 421,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 4/5",
+              "value": 263,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 6",
+              "value": 88,
+              "factRef": "perrons.items[3].laenge_m"
+            }
+          ],
+          "correct": null,
+          "explanation": "Perron 1 ist mit 421 Metern das längste, Perron 6 mit 88 Metern das kürzeste der erfassten.",
+          "factRef": "perrons.items",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 5 Gleisen vor, den Nummern 1 bis 5. Die längste Perronkante hat Gleis 2 mit 336 Metern. An Gleis 1 reichen die Sektoren von A bis H, an Gleis 4 sind nur B und C erfasst, an Gleis 5 keine.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 5,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste Perronkante, Gleis 2",
+          "value": 336,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        },
+        {
+          "label": "Letzter Sektor an Gleis 1",
+          "value": "H",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren[7]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "2",
+          "explanation": "Gleis 2 mit 336 Metern.",
+          "factRef": "gleise.items[1].nr",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 1?",
+          "options": [
+            "C",
+            "E",
+            "H",
+            "M"
+          ],
+          "correct": 2,
+          "explanation": "Von A bis H.",
+          "factRef": "gleise.items[0].sektoren[7]",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "In Morges sind fünf verschiedene Perronhöhen erfasst: 20, 25, 30, 35 und 55 Zentimeter. Von 23 erfassten Abschnitten liegen 4 auf 55 Zentimetern, und 3 der 5 Gleise haben einen solchen Abschnitt. Von 4 Perrons sind 2 niveaufrei erreichbar, für die anderen ist mit einer Gleisquerung zu rechnen. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht, etwa über eine Unterführung.",
+      "facts": [
+        {
+          "label": "Tiefste erfasste Perronhöhe",
+          "value": 20,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 3,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 23,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Höchste erfasste Perronhöhe",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[4]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der 5 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": 1,
+          "explanation": "3 von 5 Gleisen. An den übrigen liegt die Kante tiefer.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Jedes erfasste Perron in Morges ist ohne Gleisquerung erreichbar.",
+          "correct": false,
+          "explanation": "Von 4 erfassten Perrons sind 2 niveaufrei erreichbar.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welche ist die tiefste in Morges erfasste Perronhöhe?",
+          "options": [
+            "20 cm",
+            "30 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": 0,
+          "explanation": "20 Zentimeter. Erfasst sind ausserdem 25, 30, 35 und 55 Zentimeter.",
+          "factRef": "gleise.perronhoehen_cm[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Richtung Morges-St-Jean verkehren 118'213 Personenzüge pro Jahr, rund 324 pro Tag in beiden Richtungen zusammen. Richtung St-Prex sind es 320 pro Tag. Dazu kommen 34 Güterzüge pro Tag Richtung St-Prex.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag Richtung Morges-St-Jean",
+          "value": 324,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Tag Richtung St-Prex",
+          "value": 320,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+        },
+        {
+          "label": "Güterzüge pro Tag Richtung St-Prex",
+          "value": 34,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Morges?",
+          "options": [
+            "86",
+            "180",
+            "324",
+            "720"
+          ],
+          "correct": 2,
+          "explanation": "Rund 324 pro Tag Richtung Morges-St-Jean, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf den Strecken bei Morges verkehren täglich mehr als 30 Güterzüge.",
+          "correct": true,
+          "explanation": "34 Güterzüge pro Tag Richtung St-Prex.",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "In diesen Daten laufen in Morges 3 Linien zusammen, darunter die Linie 150 von Lausanne nach Genève-Aéroport und die Linie 156 Richtung Bière.",
+      "facts": [
+        {
+          "label": "Linien am Bahnhof",
+          "value": 3,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie Richtung Bière",
+          "value": 156,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Strecke?",
+          "pairs": [
+            {
+              "links": "Lausanne - Geneve-Aeroport",
+              "rechts": "150",
+              "factRef": "linien.items[0].nummer"
+            },
+            {
+              "links": "Morges - Biere",
+              "rechts": "156",
+              "factRef": "linien.items[1].nummer"
+            }
+          ],
+          "correct": null,
+          "explanation": "Die Schreibweise der Streckennamen stammt unverändert aus der Quelle.",
+          "factRef": "linien.items",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 4 Billettautomaten, 8 Billettentwerter und 2 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 4,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 8,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 2,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Morges sind ___ Billettentwerter erfasst.",
+          "options": [
+            "2",
+            "4",
+            "8",
+            "16"
+          ],
+          "correct": 2,
+          "explanation": "8 Entwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 5 Gleise (1, 2, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu Gleis 5 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Zugang zum Perron",
+      "grund": "Von 4 erfassten Perrons sind 2 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "quelle": "perron"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne MBC.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        20,
+        30
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 243,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 336,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 331,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 241,
+      "sektoren": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        20,
+        25
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 242,
+      "sektoren": []
+    }
+  ]
+}

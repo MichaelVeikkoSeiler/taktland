@@ -31,6 +31,20 @@ Der Unterschied, um den es geht:
 Eine 0 in den Daten heisst «nicht erfasst», nicht «nicht vorhanden». Deshalb enden
 die betreffenden Felder auf `_erfasst`.
 
+## Häufigster Fehler: der factRef zeigt auf die falsche Grösse
+
+Bei einer Frage nach einem **Wert** muss der `factRef` auf diesen Wert zeigen,
+nicht auf seine Häufigkeit oder Anzahl.
+
+| Frage (Antwort) | Falsch | Richtig |
+|---|---|---|
+| Welche Perronhöhe kommt am häufigsten vor? (35 cm) | `...segmente_pro_perronhoehe_cm.35` → 61 | `gleise.perronhoehen_cm[1]` → 35 |
+| Welches Gleis hat die längste Kante? (Gleis 12) | `gleise.items[9].perronkante_m` → 269 | `gleise.items[9].nr` → «12» |
+
+Faustregel: Antwort und aufgelöster Wert müssen dasselbe bezeichnen. Zählt die
+Frage etwas, zeigt der Verweis auf die Zahl; nennt sie einen Wert, auf den Wert.
+Dieser Fehler ist beim Schreiben der ersten vierzehn Profile viermal aufgetreten.
+
 ## factRef
 
 Jeder Fakt und jede Frage trägt einen `factRef`: einen Pfad in die Faktendatei.
