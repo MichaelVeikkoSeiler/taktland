@@ -63,6 +63,13 @@ class Faktenbasis:
 
     def passt(self, wert, referenz):
         """Bezeichnet der Wert dasselbe wie die Referenz? Rundung erlaubt."""
+        if isinstance(wert, list) and isinstance(referenz, list):
+            # Frueher lief eine Liste in den Zweig darunter und wurde als
+            # Ganzes gegen jedes einzelne Element geprueft. [20, 25, 35, 55]
+            # passte dann nicht zu [20, 25, 35, 55], und ein richtiges Profil
+            # wurde zurueckgewiesen.
+            return (len(wert) == len(referenz)
+                    and all(any(self.passt(w, r) for r in referenz) for w in wert))
         if isinstance(referenz, list):
             return any(self.passt(wert, r) for r in referenz)
         a, b = zahl(wert), zahl(referenz)

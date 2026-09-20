@@ -199,6 +199,11 @@ tatsächlich sortiert ist. Damit kann keine falsche Reihenfolge entstehen.
 `pairs` mit `links`, `rechts` und `factRef` je Paar. Der Wert rechts muss dem Fakt
 entsprechen. Die App mischt die rechte Spalte.
 
+**Jeder Wert rechts darf nur einmal vorkommen.** Haben zwei Perrons dieselbe
+Länge, taugen sie nicht für eine Zuordnung: Es gäbe zwei richtige Lösungen, und
+die App könnte nur eine als richtig werten. Nimm dann andere Paare oder eine
+andere Frageform. Die Prüfung weist solche Fragen zurück.
+
 ```json
 { "type": "match", "prompt": "Welche Perronkante gehört zu welchem Gleis?",
   "pairs": [ { "links": "Gleis 12", "rechts": "269 m",
