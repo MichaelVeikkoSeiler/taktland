@@ -1,0 +1,633 @@
+{
+  "uic": 8503006,
+  "name": "Zürich Oerlikon",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "anzahl-sbb-bahnhofbenutzer",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
+    "haltestelle-haltekante",
+    "perron",
+    "sektortafel",
+    "21197_behig-haltekantesegment",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Zürich Oerlikon liegt in der Gemeinde Zürich, auf 442 Metern über Meer. An einem Werktag steigen hier 99'900 Personen ein und aus, an einem freien Tag 55'700. Als Bahnhofbenutzer sind 118'300 pro Tag erfasst. Züge fahren von SBB und SOB.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 99900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an freien Tagen",
+          "value": 55700,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnhofbenutzer pro Tag",
+          "value": 118300,
+          "unit": "Personen",
+          "source": "anzahl-sbb-bahnhofbenutzer",
+          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+        },
+        {
+          "label": "Höhe über Meer",
+          "value": 442,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Oerlikon ein und aus?",
+          "options": [
+            "36'000",
+            "99'900",
+            "215'000",
+            "410'000"
+          ],
+          "correct": 1,
+          "explanation": "99'900 Personen pro Werktag, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "An freien Tagen wird gut die Hälfte des Werktagsverkehrs erfasst.",
+          "correct": true,
+          "explanation": "55'700 an freien Tagen gegenüber 99'900 an Werktagen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "options": [
+            "2018",
+            "2022",
+            "2024",
+            "2025"
+          ],
+          "correct": 1,
+          "explanation": "2022, mit 84'000 Personen pro Werktag.",
+          "factRef": "steckbrief.verlauf[1].jahr",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Der Tag am Bahnhof",
+      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 11.6 Prozent des Tagesaufkommens. Über die Woche ist der Donnerstag mit 16.5 Prozent der stärkste Tag, der Sonntag mit 8.8 Prozent der schwächste.",
+      "facts": [
+        {
+          "label": "Spitzenstunde",
+          "value": 17,
+          "unit": "Uhr",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenstunde"
+        },
+        {
+          "label": "Anteil der Spitzenstunde",
+          "value": 11.6,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Anteil am Sonntag",
+          "value": 8.8,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Wochentag ist in Zürich Oerlikon der stärkste?",
+          "options": [
+            "Montag",
+            "Donnerstag",
+            "Samstag",
+            "Sonntag"
+          ],
+          "correct": 1,
+          "explanation": "Der Donnerstag mit 16.5 Prozent, der Sonntag mit 8.8 Prozent der schwächste.",
+          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Welcher Anteil der Wochenbesuche fällt auf den Sonntag?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 8.8,
+          "explanation": "8.8 Prozent, gegenüber 16.5 Prozent am Donnerstag.",
+          "factRef": "tagesrhythmus.wochentage[6].prozent",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 5 Perrons liegen Daten vor. Das längste misst 444 Meter, das kürzeste 334 Meter. Bei 5 von 5 ist der Zugang niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 5,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes Perron",
+          "value": 444,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes Perron",
+          "value": 334,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron?",
+          "options": [
+            "334 m",
+            "379 m",
+            "444 m",
+            "520 m"
+          ],
+          "correct": 2,
+          "explanation": "444 Meter, das Perron an den Gleisen 4 und 5.",
+          "factRef": "perrons.laengste_m",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Jedes erfasste Perron ist ohne Gleisquerung erreichbar.",
+          "correct": true,
+          "explanation": "Bei 5 von 5 erfassten Perrons ist der Zugang niveaufrei.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise und Sektoren",
+      "body": "Offene Daten liegen zu 8 Gleisen vor, den Nummern 1 bis 8. Die längsten erfassten Perronkanten haben die Gleise 4 und 5 mit je 447 Metern. An Gleis 1 und Gleis 8 sind die Sektoren B bis D erfasst, an den übrigen ab A.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "facts": [
+        {
+          "label": "Gleise mit Daten",
+          "value": 8,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Perronkante an Gleis 4",
+          "value": 447,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[3].perronkante_m"
+        },
+        {
+          "label": "Erster Sektor an Gleis 1",
+          "value": "B",
+          "unit": null,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren[0]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Mit welchem Buchstaben beginnen die Sektoren an Gleis 1?",
+          "options": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": 1,
+          "explanation": "Mit B. An Gleis 1 sind die Sektoren B, C und D erfasst.",
+          "factRef": "gleise.items[0].sektoren[0]",
+          "optionen_aus_fakten": true,
+          "difficulty": 3
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "4",
+          "explanation": "Gleis 4 mit 447 Metern, gleichauf mit Gleis 5.",
+          "factRef": "gleise.items[3].nr",
+          "difficulty": 3
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Zürich Oerlikon liegen Daten zu ___ Gleisen vor.",
+          "options": [
+            "4",
+            "6",
+            "8",
+            "12"
+          ],
+          "correct": 2,
+          "explanation": "8 Gleise, die Nummern 1 bis 8.",
+          "factRef": "gleise.anzahl_mit_daten",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreies Reisen",
+      "body": "48 Perronabschnitte sind erfasst: 46 auf 55 Zentimetern und 2 auf 35. An 8 von 8 erfassten Gleisen gibt es einen Abschnitt auf 55 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe.",
+      "facts": [
+        {
+          "label": "Erfasste Abschnitte",
+          "value": 48,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Abschnitte mit 55 cm",
+          "value": 46,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+        },
+        {
+          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "value": 8,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "An jedem erfassten Gleis liegt die Perronkante auf 55 Zentimetern.",
+          "correct": true,
+          "explanation": "8 von 8 erfassten Gleisen haben einen solchen Abschnitt.",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronabschnitte sind erfasst?",
+          "options": [
+            "18",
+            "32",
+            "48",
+            "64"
+          ],
+          "correct": 2,
+          "explanation": "48 Abschnitte, davon 46 auf 55 Zentimetern.",
+          "factRef": "hindernisfreiheit.segmente",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge auf den Strecken",
+      "body": "Am stärksten befahren ist der Abschnitt Richtung Zürich Birchstegstrasse: 390'389 Personenzüge pro Jahr, rund 1070 pro Tag in beiden Richtungen zusammen. Auf einem weiteren Abschnitt sind es 839 pro Tag, Richtung Wallisellen 218.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Personenzüge pro Tag, stärkster Abschnitt",
+          "value": 1070,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Personenzüge pro Jahr, stärkster Abschnitt",
+          "value": 390389,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Personenzüge pro Tag Richtung Wallisellen",
+          "value": 218,
+          "unit": "Züge",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Zürich Oerlikon?",
+          "options": [
+            "218",
+            "440",
+            "839",
+            "1'070"
+          ],
+          "correct": 3,
+          "explanation": "Rund 1070 pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zugzahlen sagen, wie viele Züge hier halten.",
+          "correct": false,
+          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
+          "factRef": "zuege.hinweis",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "In diesen Daten laufen 3 Linien über Zürich Oerlikon, darunter die Linie 760 Richtung Bülach und die Linie 751 Richtung Wallisellen.",
+      "facts": [
+        {
+          "label": "Linien am Bahnhof",
+          "value": 3,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie Richtung Bülach",
+          "value": 760,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].nummer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien führen in diesen Daten über Zürich Oerlikon?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "6"
+          ],
+          "correct": 2,
+          "explanation": "3 Linien.",
+          "factRef": "linien.anzahl",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Was es am Bahnhof gibt",
+      "body": "Erfasst sind 11 Billettautomaten, 25 Billettentwerter und 4 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "Billettautomaten",
+          "value": 11,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter",
+          "value": 25,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen",
+          "value": 4,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Zürich Oerlikon sind ___ Billettautomaten erfasst.",
+          "options": [
+            "4",
+            "11",
+            "18",
+            "25"
+          ],
+          "correct": 1,
+          "explanation": "11 Automaten.",
+          "factRef": "services.billettautomaten_erfasst",
+          "optionen_aus_fakten": true,
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Zürich Oerlikon ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "facts": [
+        {
+          "label": "Plan als A4",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zuerich-oerlikon-a4.pdf",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Zürich Oerlikon gibt es einen veröffentlichten Bahnhofplan.",
+          "correct": true,
+          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 8 Gleise (1, 2, 3, 4, 5, 6, 7, 8). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 274,
+      "sektoren": [
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 330,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 331,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 447,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 447,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 424,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "7",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 423,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "nr": "8",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 334,
+      "sektoren": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ]
+}

@@ -25,7 +25,14 @@ VERALLGEMEINERUNG = [
 
 # Superlative sind erlaubt, wenn sie sich auf die eigenen Daten beziehen
 # ("das längste erfasste Perron"), nicht aber im Vergleich mit anderen.
-VERGLEICH = r"\b(grösst|kleinst|wichtigst|bedeutendst|stärkst|schönst)\w*\s+(\w+bahnhof|Bahnhof|Station|Knoten)"
+VERGLEICH = (
+    # Superlativ im Vergleich mit anderen Gegenständen
+    r"\b(grösst|kleinst|wichtigst|bedeutendst|stärkst|schönst)\w*\s+(\w+bahnhof|Bahnhof|Station|Knoten)"
+    # oder ein ausdrücklicher Vergleich mit "anderen"
+    r"|\b(mehr|weniger|häufiger|seltener|öfter|besser|schlechter|länger|kürzer|höher|tiefer)"
+    r"\s+als\s+(bei\s+)?(anderen?|die\s+meisten|den\s+meisten|üblich|sonst)"
+    r"|\bals\s+(bei\s+)?(anderen?|den\s+meisten)\b"
+)
 
 
 @dataclass
