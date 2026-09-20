@@ -1,0 +1,615 @@
+{
+  "uic": 8503011,
+  "name": "Zürich Wiedikon",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Zürich Wiedikon 14'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 12'700, an einem freien Tag 8'300. Infrastruktur und Züge sind beide der SBB zugeordnet. Zwischen 2018 und 2025 stieg der Werktagsverkehr von 13'800 auf 14'600, mit einem Tiefpunkt von 12'000 im Jahr 2022.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 14600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 12700,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 8300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Wiedikon ein und aus?",
+          "options": [
+            "5'800",
+            "8'000",
+            "10'000",
+            "14'600"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 14'600 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Zürich Wiedikon ___ Personen ein und aus.",
+          "options": [
+            "5'100",
+            "7'000",
+            "8'300"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 8'300 Personen. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 12000,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 13800,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 13900,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 14500,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 14600,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der tiefste erfasste Wert stammt von 2022 mit 12'000, danach steigt die Reihe über 13'800 (2018), 13'900 (2023) und 14'500 (2024) auf 14'600 im Jahr 2025.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Zürich Wiedikon liegt auf 405.5 Metern über Meer in der Stadt Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet ZWIE.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 405.5,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "ZWIE",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zürich Wiedikon?",
+          "min": 360,
+          "max": 520,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 405.5,
+          "explanation": "Der Bahnhof liegt auf 405.5 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie lautet die offizielle Abkürzung von Zürich Wiedikon?",
+          "options": [
+            "ZUW",
+            "ZW",
+            "ZWDK",
+            "ZWIE"
+          ],
+          "correct": 3,
+          "explanation": "In den Stammdaten ist ZWIE als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 2 Perrons in Zürich Wiedikon liegen offene Daten vor, beide sind niveaufrei erreichbar. Perron 1 ist ein Aussenperron und misst 354 Meter, Perron 2/3 ist ein Mittelperron und misst 341 Meter. Das kürzere der beiden hat mit 2264.8 Quadratmetern die grössere Fläche.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 354,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche Perron 2/3",
+          "value": 2264.8,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Zürich Wiedikon?",
+          "options": [
+            "140 m",
+            "190 m",
+            "300 m",
+            "354 m"
+          ],
+          "correct": 3,
+          "explanation": "Perron 1 ist mit 354 Metern das längste erfasste Perron, Perron 2/3 misst 341 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 1",
+              "rechts": "1730.42 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 2/3",
+              "rechts": "2264.8 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 1 hat 1730.42 Quadratmeter, Perron 2/3 hat 2264.8. Perron 2/3 ist zwar kürzer, aber als Mittelperron breiter.",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Zürich Wiedikon sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Alle 3 erfassten Gleise haben eine Perronhöhe von 55 Zentimetern und tragen je 6 Sektoren von A bis F. Die erfassten Perronkanten messen 306 Meter an Gleis 1 und je 324 Meter an den Gleisen 2 und 3.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 3,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Perronkante Gleis 1",
+          "value": 306,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Sektoren je Gleis",
+          "value": 6,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die kürzeste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "1",
+          "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 1 hat mit 306 Metern die kürzeste erfasste Perronkante, die Gleise 2 und 3 messen je 324 Meter.",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "An jedem erfassten Gleis in Zürich Wiedikon sind ___ Sektoren verzeichnet.",
+          "options": [
+            "5",
+            "6",
+            "10"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Alle 3 erfassten Gleise tragen die Sektoren A bis F, also je 6 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Zürich Wiedikon kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Zürich Wiedikon sind 8 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 8,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Zürich Wiedikon sind ___ Perronsegmente erfasst.",
+          "options": [
+            "7",
+            "8",
+            "11"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 8 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 8 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt zwischen Zürich Aussersihl und Zürich Wiedikon: Im Personenverkehr verkehren dort 250 Züge pro Tag, das sind 91'220 im Jahr. Richtung Zürich Enge sind es 244 Züge pro Tag. Der Güterverkehr fällt mit 3 und 2 Zügen pro Tag kaum ins Gewicht.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Aussersihl–Wiedikon",
+          "value": 250,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Aussersihl–Wiedikon",
+          "value": 91220,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zürich Aussersihl–Zürich Wiedikon?",
+          "options": [
+            "100",
+            "140",
+            "180",
+            "250"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 250 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Aussersihl – Wiedikon, Personenverkehr",
+              "value": 91220,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Wiedikon – Zürich Enge, Personenverkehr",
+              "value": 89079,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Aussersihl – Wiedikon, Güterverkehr",
+              "value": 1220,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Wiedikon – Zürich Enge, Güterverkehr",
+              "value": 679,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Im Personenverkehr liegen die beiden Abschnitte mit 91'220 und 89'079 Zügen nahe beieinander. Der Güterverkehr kommt auf 1'220 und 679 Züge im Jahr.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Zürich Wiedikon sind 2 Linien erfasst: die Linie 717 Zürich Giesshübel–Zürich Wiedikon und die Linie 720 ZH Langstrasse–Thalwil–Ziegelbrücke. Auf der Linie 720 ist der Bahnhof bei Kilometer 2.93357 eingetragen, auf der Linie 717 bei Kilometer 1.06916.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 720",
+          "value": 2.93357,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Kilometrierung gehört zu welcher Linie?",
+          "pairs": [
+            {
+              "links": "Linie 717",
+              "rechts": "1.06916",
+              "factRef": "linien.items[0].km_am_bahnhof"
+            },
+            {
+              "links": "Linie 720",
+              "rechts": "2.93357",
+              "factRef": "linien.items[1].km_am_bahnhof"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Auf der Linie 717 steht der Bahnhof bei Kilometer 1.06916, auf der Linie 720 bei 2.93357. Jeder Wert zählt ab dem Anfang der jeweiligen Linie.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS und 6 Billettentwerter. Zürich Wiedikon steht nicht in der Liste der WLAN-Standorte, und Wartehallen sind keine verzeichnet.",
+      "facts": [
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 6,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Zürich Wiedikon steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Zürich Wiedikon sind ___ Billettentwerter erfasst.",
+          "options": [
+            "5",
+            "6",
+            "10"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Zürich Wiedikon 14 Sitzbänke sowie 4 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 14,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 4,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "10",
+            "12",
+            "14",
+            "17"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 14 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "4",
+            "5",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 4 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}
