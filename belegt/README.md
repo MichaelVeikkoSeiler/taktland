@@ -68,6 +68,20 @@ Für grössere Mengen gibt es `stapel_starten`, `stapel_abwarten` und
 `stapel_ergebnisse`: die Batch-API kostet die Hälfte und braucht bis zu
 24 Stunden.
 
+## Prüfstand
+
+`belegt/tests/test_erzeugung.py` fährt die ganze Schleife mit einem gestellten
+Modell: Die erste Antwort enthält eine erfundene Zahl, die zweite ist
+berichtigt. Der Test stellt fest, ob die Prüfung anschlägt, ob die Fehlerliste
+zurückgeht, ob genau eine Korrekturrunde stattfindet und ob am Ende nur
+Geprüftes gespeichert wird.
+
+```bash
+python belegt/tests/test_erzeugung.py
+```
+
+Er braucht keinen Schlüssel und kostet nichts.
+
 ## Grenzen
 
 Die Prüfung fängt, was sich mechanisch fassen lässt: nicht auflösbare Verweise,
