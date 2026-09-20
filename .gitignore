@@ -14,5 +14,11 @@ dist/
 dist-einzel/
 .vite/
 
+# Zugangsdaten - dürfen nie ins Repository
+.env
+.env.*
+*.key
+secrets*
+
 # OS
 .DS_Store
