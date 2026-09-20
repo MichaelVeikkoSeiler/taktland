@@ -8,6 +8,8 @@
 
 Braucht ANTHROPIC_API_KEY in der Umgebung (ausser bei --probelauf).
 
+Schalter: --modell claude-sonnet-5, --aufwand low|medium|high, --stapel, --limit 5
+
 Kostenbremse: Ohne --limit wird nie mehr als 2 Dollar ausgegeben. Schätzt der
 Lauf darüber, fragt das Programm nach; überschreitet der laufende Betrag die
 Grenze, bricht es ab. Mit --limit 10 setzt man sie höher.
@@ -49,14 +51,29 @@ Das Regelwerk im Wortlaut:
 """ + SCHEMA.read_text(encoding="utf-8")
 
 
-def kosten_schaetzen(auftraege, stapel=False):
-    """Was ein Lauf ungefähr kostet. Opus 5: 5 $ je Million Eingabe-,
-    25 $ je Million Ausgabe-Token; im Stapel die Hälfte."""
-    ein = sum(len(a.system) + len(a.anfrage) for a in auftraege) / 4
-    aus = sum(umfang_erwartet(fakten_laden(int(a.kennung)))[3] for a in auftraege) * 120
-    preis = ein / 1e6 * 5 + aus / 1e6 * 25
-    # ein Zuschlag für mögliche Korrekturrunden
-    preis *= 1.4
+#: Preise je Million Token (Eingabe, Ausgabe), Stand 2026-06
+PREISE = {"claude-opus-5": (5.0, 25.0), "claude-sonnet-5": (2.0, 10.0)}
+
+#: Gemessen an Arbon, dem ersten erzeugten Profil: 22'577 Eingabe- und
+#: 18'127 Ausgabe-Token über zwei Runden. Die Ausgabe ist weit höher als die
+#: reine Textlänge, weil Opus vor dem Schreiben denkt und diese Token
+#: mitzählen. Ein Aufwand unter "high" senkt das deutlich.
+GEMESSEN_EIN = 22_600
+GEMESSEN_AUS = 18_100
+AUFWAND_FAKTOR = {"low": 0.45, "medium": 0.7, "high": 1.0, "xhigh": 1.5, "max": 2.2}
+
+
+def kosten_schaetzen(auftraege, stapel=False, modell="claude-opus-5", aufwand="high"):
+    """Was ein Lauf ungefähr kostet, gerechnet mit gemessenen Werten.
+
+    Die frühere Schätzung ging von der Textlänge aus und lag um das Fünffache
+    daneben, weil die Denk-Token fehlten.
+    """
+    ein_preis, aus_preis = PREISE.get(modell, PREISE["claude-opus-5"])
+    f = AUFWAND_FAKTOR.get(aufwand, 1.0)
+    n = len(auftraege)
+    preis = (n * GEMESSEN_EIN / 1e6 * ein_preis
+             + n * GEMESSEN_AUS * f / 1e6 * aus_preis)
     return preis / 2 if stapel else preis
 
 
@@ -140,9 +157,13 @@ def main():
 
     # Kostenbremse: Ohne Rückfrage wird nie mehr als dieser Betrag ausgegeben.
     limit = float(args[args.index("--limit") + 1]) if "--limit" in args else 2.00
-    geschaetzt = kosten_schaetzen(auftraege, stapel)
-    print(f"Geschätzte Kosten: ${geschaetzt:.2f}"
-          + (" (Stapel, halber Preis)" if stapel else ""))
+    modell = args[args.index("--modell") + 1] if "--modell" in args else "claude-opus-5"
+    aufwand = args[args.index("--aufwand") + 1] if "--aufwand" in args else "high"
+    geschaetzt = kosten_schaetzen(auftraege, stapel, modell, aufwand)
+    print(f"Modell {modell}, Aufwand {aufwand}"
+          + (", im Stapel" if stapel else "")
+          + f" - geschätzt ${geschaetzt:.2f} "
+            f"(${geschaetzt / max(len(auftraege), 1):.2f} je Bahnhof)")
     if geschaetzt > limit:
         print(f"\nDas liegt über der eingebauten Grenze von ${limit:.2f}.")
         try:
@@ -161,7 +182,7 @@ def main():
               "abgerechnet. Mit --probelauf siehst du vorher, was ein Lauf kosten würde.")
         return 1
 
-    erzeuger = Erzeuger()
+    erzeuger = Erzeuger(modell=modell, effort=aufwand)
 
     if stapel:
         sid = erzeuger.stapel_starten(auftraege)
@@ -181,7 +202,9 @@ def main():
             print(f"[{i}/{len(auftraege)}] {name} …", end=" ", flush=True)
             e = erzeuger.erzeuge(a, pruefer)
             ergebnisse[a.kennung] = e
-            ausgegeben += e.kosten.get("eingabe", 0) / 1e6 * 5 + e.kosten.get("ausgabe", 0) / 1e6 * 25
+            ep, ap = PREISE.get(modell, PREISE["claude-opus-5"])
+            ausgegeben += (e.kosten.get("eingabe", 0) / 1e6 * ep
+                           + e.kosten.get("ausgabe", 0) / 1e6 * ap)
             print("ok" if e.ok else f"gescheitert ({e.fehlermeldung or 'Prüfung'})",
                   f"nach {e.runden} Runde(n)", f"[${ausgegeben:.2f} bisher]")
 
@@ -201,7 +224,8 @@ def main():
             for zeile in e.bericht.zeilen()[:6]:
                 print(zeile)
 
-    preis = kosten["eingabe"] / 1e6 * 5 + kosten["ausgabe"] / 1e6 * 25
+    ep, ap = PREISE.get(modell, PREISE["claude-opus-5"])
+    preis = kosten["eingabe"] / 1e6 * ep + kosten["ausgabe"] / 1e6 * ap
     if stapel:
         preis /= 2
     print(f"\n{gut} von {len(ergebnisse)} Profile geschrieben. "
