@@ -27,6 +27,12 @@ KAPITEL_REIHENFOLGE = ["steckbrief", "stammdaten", "tagesrhythmus", "perrons", "
 #: vorkommen, auch wenn sie bei diesem Bahnhof nicht erfasst sind.
 NORMHOEHEN = {20, 25, 30, 35, 42, 55, 76}
 
+#: Wendungen, die formal stimmen, aber nichts aussagen
+LEERFORMELN = [
+    r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",
+    r"ist unterschiedlich", r"variiert", r"in gewissem Masse", r"mehr oder weniger",
+]
+
 REGELWERK = Regelwerk(
     vermutung=Regelwerk().vermutung + ["Pendlerbahnhof", r"gilt \w+ als", r"gelten \w+ als"],
     normwerte=NORMHOEHEN,
@@ -179,7 +185,9 @@ def _pruefe_frage(fr, i, kap_id, fb, fakten, b, raus):
     REGELWERK.pruefe_text(fr.get("prompt", ""), f"{wo}/prompt", fb, b)
     REGELWERK.pruefe_text(fr.get("explanation", ""), f"{wo}/explanation", fb, b)
     if not fr.get("explanation"):
-        b.warnt(wo, "explanation fehlt")
+        b.fehlt(wo, "explanation fehlt. Wer falsch antwortet, muss erfahren warum")
+    elif len(fr["explanation"]) < 15:
+        b.warnt(wo, f"explanation ist sehr knapp: «{fr['explanation']}»")
 
 
 def pruefe(profil, fakten, fix=False, entfernen=False):
@@ -230,6 +238,10 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
         if not kap.get("title") or not kap.get("body"):
             b.fehlt(wo, "title oder body fehlt")
         REGELWERK.pruefe_text(kap.get("body", ""), f"{wo}/body", fb, b)
+        for muster in LEERFORMELN:
+            if m := re.search(muster, kap.get("body", ""), re.I):
+                b.fehlt(f"{wo}/body", f"«{m.group(0)}» sagt nichts aus. "
+                                      "Nenne den Wert statt ihn zu umschreiben")
 
         if erl := kap.get("erlaeuterung"):
             REGELWERK.pruefe_allgemein(erl, f"{wo}/erlaeuterung", profil["name"], b)
@@ -278,7 +290,10 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
     n_k = len(profil["chapters"])
     if not min_k <= n_k <= max_k:
         b.warnt("Umfang", f"{n_k} Kapitel, die Datenlage trägt {min_k}–{max_k}")
-    if not min_f <= fragen_gesamt <= max_f:
+    if fragen_gesamt > max_f * 1.15:
+        b.fehlt("Umfang", f"{fragen_gesamt} Fragen, die Datenlage trägt höchstens {max_f}. "
+                          "Mehr Fragen heisst hier, dieselben Werte mehrfach abzufragen")
+    elif not min_f <= fragen_gesamt <= max_f:
         b.warnt("Umfang", f"{fragen_gesamt} Fragen, die Datenlage trägt {min_f}–{max_f}")
 
     return b, profil

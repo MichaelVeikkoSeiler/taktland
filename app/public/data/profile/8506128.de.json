@@ -1,0 +1,600 @@
+{
+  "uic": 8506128,
+  "name": "Kreuzlingen Hafen",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Kreuzlingen Hafen liegt im Kanton Thurgau und wird von SBB und Thurbo bedient. Im Jahr 2025 stiegen an einem durchschnittlichen Werktag 2400 Personen ein und aus. Zwischen 2018 und 2025 ist dieser Wert von 2000 auf 2400 gestiegen.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag (DWV)",
+          "value": 2400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende pro Tag im Jahresmittel (DTV)",
+          "value": 2100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "EVU",
+          "value": "SBB, Thurbo",
+          "unit": null,
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem durchschnittlichen Werktag in Kreuzlingen Hafen ein und aus (2025)?",
+          "options": [
+            "960",
+            "1'300",
+            "1'700",
+            "2'400"
+          ],
+          "correct": 3,
+          "explanation": "2025 waren es 2400 Personen pro Werktag.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Werte des durchschnittlichen Werktagsverkehrs (DWV) nach Jahr, älteste zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 2018,
+              "factRef": "steckbrief.verlauf[0].jahr"
+            },
+            {
+              "label": "2022",
+              "value": 2022,
+              "factRef": "steckbrief.verlauf[1].jahr"
+            },
+            {
+              "label": "2023",
+              "value": 2023,
+              "factRef": "steckbrief.verlauf[2].jahr"
+            },
+            {
+              "label": "2024",
+              "value": 2024,
+              "factRef": "steckbrief.verlauf[3].jahr"
+            },
+            {
+              "label": "2025",
+              "value": 2025,
+              "factRef": "steckbrief.verlauf[4].jahr"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der Wert stieg von 2000 im Jahr 2018 auf 2400 im Jahr 2025."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der durchschnittliche Nichtwerktagsverkehr (DNWV) liegt bei 1400 Personen.",
+          "correct": true,
+          "explanation": "Der DNWV betrug 2025 1400 Personen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Kreuzlingen Hafen liegt auf 402.1 Metern über Meer in der Gemeinde Kreuzlingen, Bezirk Kreuzlingen, Kanton Thurgau. Betreiberin ist die SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 402.1,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Betreiber",
+          "value": "Schweizerische Bundesbahnen SBB",
+          "unit": null,
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.betreiber"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "In welchem Kanton liegt Kreuzlingen Hafen?",
+          "options": [
+            "Zürich",
+            "Thurgau",
+            "St. Gallen",
+            "Schaffhausen"
+          ],
+          "correct": 1,
+          "explanation": "Kreuzlingen Hafen liegt im Kanton Thurgau.",
+          "factRef": "stammdaten.kanton",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt Kreuzlingen Hafen (in Metern)?",
+          "min": 380,
+          "max": 420,
+          "step": 1,
+          "unit": "m",
+          "correct": 402,
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "explanation": "402 Meter über Meer."
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu zwei Perrons liegen offene Daten vor. Beide sind niveaufrei erreichbar. Das längste erfasste Perron misst 170 Meter, das kürzeste 139 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit Daten",
+          "value": 2,
+          "unit": null,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 170,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 139,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Kreuzlingen Hafen?",
+          "options": [
+            "139 m",
+            "150 m",
+            "170 m",
+            "200 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 170 Meter (Perron 3).",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Ordne die Perronnummer der Länge zu.",
+          "pairs": [
+            {
+              "links": "Perron 3",
+              "rechts": "170 m",
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "139 m",
+              "factRef": "perrons.items[1].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Das längere Perron misst 170 Meter, das kürzere 139 Meter."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Beide erfassten Perrons haben einen niveaufreien Zugang.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu den Gleisen 1 und 3 liegen offene Daten vor. Beide weisen eine Perronhöhe von 55 Zentimetern auf.",
+      "facts": [
+        {
+          "label": "Perronhöhe (erfasst)",
+          "value": 55,
+          "unit": "cm",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.perronhoehen_cm[0]"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Welche Perronhöhe ist bei Gleis 3 in Kreuzlingen Hafen erfasst?",
+          "options": [
+            "35 cm",
+            "40 cm",
+            "55 cm",
+            "76 cm"
+          ],
+          "correct": 2,
+          "explanation": "Für Gleis 3 ist eine Perronhöhe von 55 cm erfasst.",
+          "factRef": "gleise.items[1].perronhoehen_cm[0]",
+          "difficulty": 1
+        },
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längere Perronkante?",
+          "schema": "gleise",
+          "correct": "3",
+          "factRef": "gleise.items[1].nr",
+          "explanation": "Gleis 3. Die beiden erfassten Perronkanten sind unterschiedlich lang."
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Kreuzlingen Hafen sind sechs Segmente erfasst, die mit einer Perronhöhe von 55 Zentimetern. Eine Sicherheitslinie ist vorhanden. Hilfstritte sind bei keinem Segment erfasst.",
+      "facts": [
+        {
+          "label": "Erfasste Segmente",
+          "value": 6,
+          "unit": null,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "unit": null,
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Segmente sind für die Hindernisfreiheit in Kreuzlingen Hafen erfasst?",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "correct": 2,
+          "explanation": "Es sind 6 Segmente erfasst.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Für Kreuzlingen Hafen ist eine Sicherheitslinie erfasst.",
+          "correct": true,
+          "explanation": "Die Sicherheitslinie ist mit «Ja» erfasst.",
+          "factRef": "hindernisfreiheit.sicherheitslinie",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele der erfassten Segmente haben einen Hilfstritt?",
+          "options": [
+            "0",
+            "2",
+            "4",
+            "6"
+          ],
+          "correct": 0,
+          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt zwischen Kreuzlingen Hafen und Kurzrickenbach Seepark verkehren im Personenverkehr rund 117 Züge pro Tag (2025), auf der Strecke Schaffhausen - Kreuzlingen - Romanshorn. Auf demselben Abschnitt sind im Güterverkehr rund 2 Züge pro Tag erfasst.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Kreuzlingen Hafen–Kurzrickenbach Seepark",
+          "value": 117,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Kreuzlingen Hafen–Kurzrickenbach Seepark",
+          "value": 42697,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge verkehren rund pro Tag im Personenverkehr auf dem Abschnitt Kreuzlingen Hafen–Kurzrickenbach Seepark (2025)?",
+          "options": [
+            "47",
+            "64",
+            "82",
+            "117"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt sind rund 117 Züge pro Tag im Personenverkehr erfasst (2025).",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehrsabschnitte nach Zügen pro Tag, absteigend.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Kreuzlingen Hafen–Kurzrickenbach Seepark",
+              "value": 117,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Kreuzlingen–Kreuzlingen Hafen",
+              "value": 84,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Konstanz Grenze (Abzw)–Kreuzlingen Hafen",
+              "value": 35,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Der stärkste Abschnitt führt die meisten Personenzüge pro Tag."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Kreuzlingen Hafen–Kurzrickenbach Seepark verkehren im Güterverkehr rund 2 Züge pro Tag.",
+          "correct": true,
+          "explanation": "Im Güterverkehr sind auf diesem Abschnitt 2 Züge pro Tag erfasst.",
+          "factRef": "zuege.abschnitte[3].zuege_pro_tag",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Kreuzlingen Hafen sind zwei Linien erfasst: die Linie 824 Romanshorn–Konstanz und die Linie 823 Kreuzlingen–Kreuzlingen Hafen.",
+      "facts": [
+        {
+          "label": "Anzahl erfasste Linien",
+          "value": 2,
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie 824",
+          "value": "Romanshorn - Konstanz",
+          "unit": null,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].name"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie heisst die Linie 823 in den erfassten Daten für Kreuzlingen Hafen?",
+          "options": [
+            "Romanshorn - Konstanz",
+            "Kreuzlingen - Kreuzlingen Hafen",
+            "Schaffhausen - Romanshorn",
+            "Konstanz - Weinfelden"
+          ],
+          "correct": 1,
+          "explanation": "Linie 823 heisst Kreuzlingen - Kreuzlingen Hafen.",
+          "factRef": "linien.items[1].name",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Die Linie 824 heisst ___.",
+          "options": [
+            "Romanshorn - Konstanz",
+            "Schaffhausen - Romanshorn",
+            "Kreuzlingen - Weinfelden"
+          ],
+          "correct": 0,
+          "explanation": "Die Linie 824 heisst Romanshorn - Konstanz.",
+          "factRef": "linien.items[0].name",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Für Kreuzlingen Hafen ist ein Billettautomat vom Typ ePOS erfasst sowie drei Billettentwerter. Wartehallen sind keine erfasst, WLAN ist nicht in der Liste der erfassten Standorte enthalten.",
+      "facts": [
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 1,
+          "unit": null,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 3,
+          "unit": null,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Erfasste Wartehallen",
+          "value": 0,
+          "unit": null,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind für Kreuzlingen Hafen erfasst?",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "7"
+          ],
+          "correct": 0,
+          "explanation": "Es sind 3 Billettentwerter erfasst.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Kreuzlingen Hafen steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Automatentyp ist für den Billettautomaten in Kreuzlingen Hafen erfasst?",
+          "options": [
+            "ePOS",
+            "TVM",
+            "Rail Check-in",
+            "Kombiautomat"
+          ],
+          "correct": 0,
+          "explanation": "Der erfasste Automatentyp ist ePOS.",
+          "factRef": "services.automat_typen[0]",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Kreuzlingen Hafen liegen ein Bahnhofplan als PDF sowie ein Plakat-Bahnhofplan als PDF vor. Eigentümerin ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümer Bahnhofplan",
+          "value": "SBB",
+          "unit": null,
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für Kreuzlingen Hafen ist ein Bahnhofplan als PDF veröffentlicht.",
+          "correct": true,
+          "explanation": "Es liegt ein PDF des Bahnhofplans vor.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 3 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 140,
+      "sektoren": []
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 170,
+      "sektoren": []
+    }
+  ]
+}

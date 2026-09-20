@@ -10,8 +10,8 @@ import json
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from validate import alle_zahlen  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from belegt.fakten import Faktenbasis  # noqa: E402
 
 FACTS = Path(__file__).resolve().parent.parent / "data" / "facts"
 
@@ -24,8 +24,8 @@ def vorschlaege(uic, wert, anzahl=3, auffuellen=True):
     fast jede kleine Zahl irgendwo in den Fakten steht, etwa als Gleisnummer.
     Die Frage muss dann optionen_aus_fakten setzen.
     """
-    facts = json.loads((FACTS / f"{uic}.json").read_text(encoding="utf-8"))
-    belegt = alle_zahlen(facts)
+    fb = Faktenbasis.aus_datei(FACTS / f"{uic}.json")
+    belegt = fb.zahlen
     frei, ersatz = [], []
     for faktor in (0.4, 0.55, 0.7, 0.85, 1.2, 1.4, 1.7, 2.2, 3.0):
         kandidat = wert * faktor

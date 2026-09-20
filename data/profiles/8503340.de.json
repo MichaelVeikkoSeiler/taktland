@@ -1,0 +1,601 @@
+{
+  "uic": 8503340,
+  "name": "Opfikon",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-20",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-uhr",
+    "haltestelle-wartehallen",
+    "abfahrtsplakate0",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "Opfikon liegt im Kanton Zürich und wird von der SBB betrieben. Im Jahr 2025 stiegen an einem durchschnittlichen Werktag rund 2500 Personen ein oder aus. Der Wert hat sich seit 2018 verändert.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende pro Werktag",
+          "value": 2500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende pro Tag (DTV)",
+          "value": 2100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an Werktagen ohne Wochenende (DNWV)",
+          "value": 1400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem durchschnittlichen Werktag 2025 in Opfikon ein und aus?",
+          "options": [
+            "1'000",
+            "1'800",
+            "2'500",
+            "3'000"
+          ],
+          "correct": 2,
+          "explanation": "Der DWV betrug 2025 rund 2500 Personen.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr (DWV), absteigend beginnend beim höchsten Wert.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 2800,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 2500,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 2400,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2022",
+              "value": 2200,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "2025 war der Wert am höchsten, 2022 am tiefsten."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der Bahnhof Opfikon wird von der SBB betrieben.",
+          "correct": true,
+          "explanation": "Sowohl Infrastrukturbetreiberin (ISB) als auch Verkehrsunternehmen (EVU) sind laut Fakten die SBB.",
+          "factRef": "steckbrief.isb"
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Opfikon liegt auf einer Höhe von 427.3 Metern über Meer, in der Ortschaft Glattbrugg, Gemeinde Opfikon, Bezirk Bülach.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 427.3,
+          "unit": "m ü. M.",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Ortschaft",
+          "value": "Glattbrugg",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.ortschaft"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Bülach",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "In welcher Ortschaft liegt der Bahnhof Opfikon laut Stammdaten?",
+          "options": [
+            "Kloten",
+            "Glattbrugg",
+            "Bülach",
+            "Oerlikon"
+          ],
+          "correct": 1,
+          "explanation": "Die Ortschaft ist laut Stammdaten Glattbrugg.",
+          "factRef": "stammdaten.ortschaft",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Opfikon (in Metern)?",
+          "min": 400,
+          "max": 450,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 427.3,
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "explanation": "427 Meter über Meer."
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu einem Perron liegen offene Daten vor. Es handelt sich um ein Mittelperron mit 325 Metern Länge, das niveaufrei erreichbar ist.",
+      "facts": [
+        {
+          "label": "Erfasste Perrons",
+          "value": 1,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Länge des längsten erfassten Perrons",
+          "value": 325,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche des Perrons 1/2",
+          "value": 2263.22,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das erfasste Perron in Opfikon?",
+          "options": [
+            "130",
+            "180",
+            "230",
+            "325"
+          ],
+          "correct": 3,
+          "explanation": "Das erfasste Perron 1/2 misst 325 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zum Perron 1/2 in Opfikon liegt ein niveaufreier Zugang vor.",
+          "correct": true,
+          "explanation": "Der niveaufreie Zugang ist mit 'ja' erfasst.",
+          "factRef": "perrons.items[0].niveaufreier_zugang"
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Um welchen Perrontyp handelt es sich beim erfassten Perron in Opfikon?",
+          "options": [
+            "Seitenperron",
+            "Mittelperron",
+            "Kopfperron",
+            "Inselperron ohne Zugang"
+          ],
+          "correct": 1,
+          "explanation": "Der Perron 1/2 ist als Mittelperron erfasst.",
+          "factRef": "perrons.items[0].typ",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu zwei Gleisen liegen offene Daten vor, beide an einem Mittelperron. Die Perronkanten messen 244 und 246 Meter.",
+      "facts": [
+        {
+          "label": "Erfasste Gleise",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Perronkante Gleis 1",
+          "value": 244,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 2",
+          "value": 246,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "Die Perronkante von Gleis 2 in Opfikon misst ___ Meter.",
+          "options": [
+            "98",
+            "140",
+            "246"
+          ],
+          "correct": 2,
+          "factRef": "gleise.items[1].perronkante_m",
+          "explanation": "246 Meter. Die Perronkante an Gleis 1 misst 244 Meter."
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Perronkantenlänge gehört zu welchem Gleis?",
+          "pairs": [
+            {
+              "links": "Gleis 1",
+              "rechts": "244 m",
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "links": "Gleis 2",
+              "rechts": "246 m",
+              "factRef": "gleise.items[1].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Die beiden Gleise haben unterschiedlich lange Perronkanten."
+        },
+        {
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für die Gleise 1 und 2 in Opfikon erfasst?",
+          "options": [
+            "35 cm",
+            "42 cm",
+            "55 cm",
+            "76 cm"
+          ],
+          "correct": [
+            1,
+            2
+          ],
+          "explanation": "Erfasst sind die Perronhöhen 42 cm und 55 cm.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Das erfasste Perron ist niveaufrei erreichbar. Die 13 erfassten Segmente verteilen sich auf zwei Perronhöhen, eine Sicherheitslinie ist vorhanden.",
+      "facts": [
+        {
+          "label": "Niveaufreie Perrons",
+          "value": 1,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Erfasste Segmente",
+          "value": 13,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "In Opfikon ist eine Sicherheitslinie erfasst.",
+          "correct": true,
+          "explanation": "Das Feld 'sicherheitslinie' ist mit 'Ja' erfasst.",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Segmente sind insgesamt in der Hindernisfreiheit-Erfassung für Opfikon gezählt?",
+          "min": 0,
+          "max": 25,
+          "step": 1,
+          "unit": "Segmente",
+          "correct": 13,
+          "factRef": "hindernisfreiheit.segmente",
+          "explanation": "13 Segmente sind erfasst."
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Auf dem Abschnitt Opfikon Süd–Opfikon der Strecke Zürich Oerlikon-Nord/Zürich Seebach – Zürich Flughafen/Kloten – Winterthur West verkehren 2025 im Personenverkehr täglich rund 518 Züge in beide Richtungen zusammen.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Abschnitt Opfikon Süd–Opfikon (Personenverkehr)",
+          "value": 518,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Abschnitt Opfikon Süd–Opfikon (Personenverkehr)",
+          "value": 189200,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge des Personenverkehrs verkehren pro Tag auf dem Abschnitt Opfikon Süd–Opfikon (beide Richtungen zusammen)?",
+          "options": [
+            "210",
+            "280",
+            "360",
+            "518"
+          ],
+          "correct": 3,
+          "explanation": "Auf dem Abschnitt Opfikon Süd–Opfikon verkehren rund 518 Züge pro Tag im Personenverkehr.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Personenverkehr-Abschnitte nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Opfikon Süd – Opfikon",
+              "value": 518,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Opfikon – Zürich Flughafen",
+              "value": 435,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Opfikon – Riet (Verzw)",
+              "value": 84,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Der stärkste Abschnitt führt die meisten Personenzüge pro Tag."
+        },
+        {
+          "type": "true_false",
+          "prompt": "Auf dem Abschnitt Opfikon – Riet (Verzw) verkehren im Güterverkehr mehr Züge pro Tag als im Personenverkehr.",
+          "correct": false,
+          "explanation": "Im Güterverkehr sind es 35 Züge pro Tag, im Personenverkehr 84.",
+          "factRef": "zuege.abschnitte[4].zuege_pro_tag"
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Opfikon sind zwei Linien mit Betriebspunkten erfasst.",
+      "facts": [
+        {
+          "label": "Anzahl erfasste Linien",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Linie 750",
+          "value": "ZH Oerlikon Nord - Dorfnest",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].name"
+        },
+        {
+          "label": "Linie 752",
+          "value": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].name"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Liniennummer gehört zu welcher Linienbezeichnung?",
+          "pairs": [
+            {
+              "links": "750",
+              "rechts": "ZH Oerlikon Nord - Dorfnest",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "752",
+              "rechts": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Jede Liniennummer gehört zu genau einer Strecke."
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien mit Betriebspunkten sind für Opfikon erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 1,
+          "explanation": "Es sind 2 Linien erfasst.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "In Opfikon ist ein Billettautomat des Typs ePOS erfasst, ebenso drei Billettentwerter und eine Wartehalle. Zu WLAN liegen keine Daten vor.",
+      "facts": [
+        {
+          "label": "Erfasste Billettautomaten",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Erfasste Billettentwerter",
+          "value": 3,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Erfasste Wartehallen",
+          "value": 1,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind für Opfikon erfasst?",
+          "options": [
+            "3",
+            "4",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Billettentwerter.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Opfikon steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Für WLAN ist kein Eintrag erfasst.",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Typ Billettautomat ist für Opfikon erfasst?",
+          "options": [
+            "ePOS",
+            "Touch&Travel",
+            "Rail Check-in",
+            "Ticketcorner"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist der Automattyp ePOS.",
+          "factRef": "services.automat_typen[0]",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Opfikon liegen ein Bahnhofplan als PDF sowie ein Plakat-Bahnhofplan vor. Eigentümerin ist die SBB.",
+      "facts": [
+        {
+          "label": "Eigentümerin des Bahnhofplans",
+          "value": "SBB",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wer ist laut Bahnhofplan-Daten Eigentümerin des Bahnhofs Opfikon?",
+          "options": [
+            "SBB",
+            "Kanton Zürich",
+            "Gemeinde Opfikon",
+            "BLS"
+          ],
+          "correct": 0,
+          "explanation": "Als Eigentümerin ist die SBB erfasst.",
+          "factRef": "bahnhofplan.eigentuemer",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}
