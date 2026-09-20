@@ -7,6 +7,10 @@
     python generator/erzeuge.py 8503504 --probelauf     # nur den Auftrag zeigen
 
 Braucht ANTHROPIC_API_KEY in der Umgebung (ausser bei --probelauf).
+
+Kostenbremse: Ohne --limit wird nie mehr als 2 Dollar ausgegeben. Schätzt der
+Lauf darüber, fragt das Programm nach; überschreitet der laufende Betrag die
+Grenze, bricht es ab. Mit --limit 10 setzt man sie höher.
 Im Stapel kostet es die Hälfte, dauert aber bis zu 24 Stunden.
 Veröffentlicht wird nur, was die Prüfung besteht.
 """
@@ -43,6 +47,17 @@ Du antwortest ausschliesslich mit dem JSON-Dokument, ohne Text davor oder danach
 Das Regelwerk im Wortlaut:
 
 """ + SCHEMA.read_text(encoding="utf-8")
+
+
+def kosten_schaetzen(auftraege, stapel=False):
+    """Was ein Lauf ungefähr kostet. Opus 5: 5 $ je Million Eingabe-,
+    25 $ je Million Ausgabe-Token; im Stapel die Hälfte."""
+    ein = sum(len(a.system) + len(a.anfrage) for a in auftraege) / 4
+    aus = sum(umfang_erwartet(fakten_laden(int(a.kennung)))[3] for a in auftraege) * 120
+    preis = ein / 1e6 * 5 + aus / 1e6 * 25
+    # ein Zuschlag für mögliche Korrekturrunden
+    preis *= 1.4
+    return preis / 2 if stapel else preis
 
 
 def auftrag_bauen(fakten):
@@ -123,6 +138,21 @@ def main():
               f"(ohne Korrekturrunden)")
         return 0
 
+    # Kostenbremse: Ohne Rückfrage wird nie mehr als dieser Betrag ausgegeben.
+    limit = float(args[args.index("--limit") + 1]) if "--limit" in args else 2.00
+    geschaetzt = kosten_schaetzen(auftraege, stapel)
+    print(f"Geschätzte Kosten: ${geschaetzt:.2f}"
+          + (" (Stapel, halber Preis)" if stapel else ""))
+    if geschaetzt > limit:
+        print(f"\nDas liegt über der eingebauten Grenze von ${limit:.2f}.")
+        try:
+            antwort = input("Wirklich starten? Tippe JA und Enter: ").strip()
+        except EOFError:
+            antwort = ""
+        if antwort != "JA":
+            print("Abgebrochen. Es wurde nichts ausgegeben.")
+            return 1
+
     if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
         print("\nEs ist kein Schlüssel hinterlegt. Der Generator ruft die Claude-API auf\n"
               "und braucht dafür einen API-Schlüssel von console.anthropic.com:\n\n"
@@ -141,13 +171,19 @@ def main():
             sid, pruefer, {a.kennung: a.mitgabe for a in auftraege})
     else:
         ergebnisse = {}
+        ausgegeben = 0.0
         for i, a in enumerate(auftraege, 1):
+            if ausgegeben > limit:
+                print(f"\nGrenze von ${limit:.2f} erreicht (${ausgegeben:.2f} ausgegeben). "
+                      f"{len(auftraege) - i + 1} Bahnhöfe nicht bearbeitet.")
+                break
             name = fakten_laden(int(a.kennung))["name"]
             print(f"[{i}/{len(auftraege)}] {name} …", end=" ", flush=True)
             e = erzeuger.erzeuge(a, pruefer)
             ergebnisse[a.kennung] = e
+            ausgegeben += e.kosten.get("eingabe", 0) / 1e6 * 5 + e.kosten.get("ausgabe", 0) / 1e6 * 25
             print("ok" if e.ok else f"gescheitert ({e.fehlermeldung or 'Prüfung'})",
-                  f"nach {e.runden} Runde(n)")
+                  f"nach {e.runden} Runde(n)", f"[${ausgegeben:.2f} bisher]")
 
     gut = 0
     kosten = {"eingabe": 0, "ausgabe": 0}
