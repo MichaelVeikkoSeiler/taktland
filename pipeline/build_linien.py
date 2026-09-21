@@ -37,6 +37,9 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
 FACTS = ROOT / "data" / "facts"
 ZIEL = ROOT / "data" / "linien"
+#: Zahlen über alle Linien. Liegt ausserhalb von data/linien, dort ist jede
+#: Datei eine Linie.
+UEBERSICHT = ROOT / "data" / "linien_uebersicht.json"
 
 #: So viele Bahnhöfe aus Taktland braucht eine Linie ohne Tunnel für eine
 #: eigene Seite, und jede Linie für ein Kapitel Bahnhöfe. Mit einem allein
@@ -200,7 +203,7 @@ def main():
     for alt in ZIEL.glob("*.json"):
         alt.unlink()
 
-    geschrieben = 0
+    geschrieben = []
     for nr, gruppe in bp.groupby("linie"):
         eigene = gruppe[gruppe.uic.isin(namen)].sort_values("km")
         tu = tunnel[tunnel.linie == nr]
@@ -269,8 +272,22 @@ def main():
                                     if mit_kapitel[k]]
         (ZIEL / f"{nr}.json").write_text(json.dumps(f, ensure_ascii=False, indent=1) + "\n",
                                         encoding="utf-8")
-        geschrieben += 1
-    print(f"{geschrieben} Linien geschrieben nach data/linien")
+        geschrieben.append(int(nr))
+    print(f"{len(geschrieben)} Linien geschrieben nach data/linien")
+
+    # Was ohne eigene Seite bleibt, wird gezählt und in der App genannt
+    ohne = bruecken[~bruecken.linie.isin(geschrieben)]
+    uebersicht = {
+        "datenstand": stand,
+        "hinweis": "Brücken auf Linien ohne eigene Seite: weniger als zwei Bahnhöfe in "
+                   "Taktland und kein Tunnel.",
+        "bruecken_ohne_seite": int(len(ohne)),
+        "linien_ohne_seite_mit_bruecken": int(ohne.linie.nunique()),
+    }
+    UEBERSICHT.write_text(json.dumps(uebersicht, ensure_ascii=False, indent=1) + "\n",
+                          encoding="utf-8")
+    print(f"ohne Seite: {uebersicht['bruecken_ohne_seite']} Brücken auf "
+          f"{uebersicht['linien_ohne_seite_mit_bruecken']} Linien")
 
 
 if __name__ == "__main__":

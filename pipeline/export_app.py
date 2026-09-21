@@ -92,6 +92,13 @@ def linien():
             nach_bahnhof.setdefault(str(it["uic"]), []).append(d["linie"])
     verzeichnis = {"stand": max(staende) if staende else None, "linien": eintraege,
                    "nach_bahnhof": nach_bahnhof}
+    uebersicht = ROOT / "data" / "linien_uebersicht.json"
+    if uebersicht.exists():
+        u = json.loads(uebersicht.read_text(encoding="utf-8"))
+        verzeichnis["nicht_aufgefuehrt"] = {
+            "bruecken": u["bruecken_ohne_seite"],
+            "linien": u["linien_ohne_seite_mit_bruecken"],
+        }
     (ZIEL / "linien.json").write_text(json.dumps(verzeichnis, ensure_ascii=False), encoding="utf-8")
     print(f"linien.json: {len(eintraege)} Linien, {len(nach_bahnhof)} Bahnhöfe verknüpft")
 

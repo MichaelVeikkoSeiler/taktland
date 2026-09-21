@@ -36,6 +36,13 @@ export function Linien({ zurueck }: { zurueck: () => void }) {
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Aufgenommen sind Linien mit mindestens zwei Bahnhöfen in Taktland oder mit einem
         erfassten Tunnel.
+        {daten?.nicht_aufgefuehrt && daten.nicht_aufgefuehrt.bruecken > 0 && (
+          <> Nicht aufgeführt sind {daten.nicht_aufgefuehrt.bruecken.toLocaleString('de-CH')}{' '}
+            {daten.nicht_aufgefuehrt.bruecken === 1 ? 'Brücke' : 'Brücken'} auf{' '}
+            {daten.nicht_aufgefuehrt.linien}{' '}
+            {daten.nicht_aufgefuehrt.linien === 1 ? 'weiteren Linie' : 'weiteren Linien'}, die
+            weniger als zwei Bahnhöfe in Taktland und keinen Tunnel haben.</>
+        )}
       </p>
 
       {fehler && <p className="mt-6">Die Linien konnten nicht geladen werden. {fehler}</p>}
