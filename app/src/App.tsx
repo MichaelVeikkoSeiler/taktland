@@ -6,7 +6,8 @@ import { Duell } from './komponenten/Duell'
 import { Suche, type ListenStand } from './komponenten/Suche'
 import { indexLaden } from './daten'
 import type { BahnhofIndex } from './typen'
-import auftakt from './assets/auftakt.webp'
+import auftaktDunkel from './assets/auftakt-dunkel.webp'
+import auftaktHell from './assets/auftakt-hell.webp'
 
 /** Adresse im Format #/bahnhof/8503000, damit Seiten teilbar und zurücknavigierbar sind. */
 function uicAusAdresse(): number | null {
@@ -52,12 +53,16 @@ export default function App() {
       <div className="mx-auto max-w-2xl">
         {uic === null && !duell && !anleitung && (
           <header className="border-b border-sbb-cloud px-4 pb-5 pt-8 dark:border-sbb-iron">
-            {/* Auftaktbild von Michael: oben Dach und unten Schotter abgeschnitten */}
-            <img
-              src={auftakt} width={1344} height={628}
-              alt="Illustration: Am Perron steigen Menschen aus einem Zug aus, andere warten mit Gepäck aufs Einsteigen."
-              className="-mx-4 -mt-8 mb-6 block h-auto w-[calc(100%+2rem)] max-w-none"
-            />
+            {/* Auftaktbild von Michael, am Tag und in der Nacht. Die dunkle
+                Fassung folgt derselben Geräteeinstellung wie die dunkle Ansicht. */}
+            <picture>
+              <source srcSet={auftaktDunkel} media="(prefers-color-scheme: dark)" />
+              <img
+                src={auftaktHell} width={1344} height={664}
+                alt="Illustration: Am Perron steigen Menschen aus einem Zug aus, andere warten aufs Einsteigen."
+                className="-mx-4 -mt-8 mb-6 block h-auto w-[calc(100%+2rem)] max-w-none"
+              />
+            </picture>
             <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />
             <div className="mt-3 flex items-baseline justify-between gap-4">
               <h1 className="text-3xl font-bold tracking-tight">Taktland</h1>
