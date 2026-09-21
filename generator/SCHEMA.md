@@ -78,6 +78,31 @@ gesamt, jeder, keine weiteren*. `validate.py` prüft das.
 `zugzahlen` zählt Züge auf einem **Streckenabschnitt**, nicht Halte am Bahnhof.
 Jede Aussage dazu muss den Abschnitt nennen. «Züge, die hier halten» ist immer falsch.
 
+## Bauplan und Baubefehl
+
+Profile werden gebaut, nicht geschrieben:
+
+```
+data/facts/{uic}.json  +  data/bauplan.json  →  generator/bauen.py  →  data/profiles/{uic}.de.json
+```
+
+`bauen.py` führt alle Schritte in fester Reihenfolge aus: Kapitel aus dem
+Baukasten, Kürzen auf den Umfang, den die Daten tragen, Kapitel Ausstattung,
+Distraktoren richten, Gleisschema für die Gleisfrage, Quellenliste. Bei gleichen
+Fakten und gleichem Bauplan entsteht immer dasselbe Profil. Das Datum
+`generated` ändert sich nur, wenn sich der Inhalt ändert.
+
+Der Bauplan hält nur fest, was von Hand entschieden ist: die zweite
+Stammdaten-Frage mit ihren falschen Antworten, zusätzliche Sätze und Fragen im
+Steckbrief, ausgelassene Kapitel. Vorher lagen diese Entscheide in einer
+Zwischendatei ausserhalb des Projekts und gingen verloren. Darum musste jede
+neue Regel mit einem eigenen Skript in die alten Profile nachgetragen werden.
+
+Zwei Fehler, die der Baubefehl beseitigt hat: Bei 49 Bahnhöfen fehlte das
+Gleisschema, die Gleisfrage war in der App nicht zu beantworten. Und das
+Kapitel Ausstattung nutzte zwei Datensätze, die in `sources` fehlten, obwohl die
+Lizenz die Quellenangabe verlangt. Beides prüft jetzt der Validator.
+
 ## Aufbau eines Profils
 
 ```json
@@ -469,11 +494,19 @@ Validator kennt die Wendung jetzt als Fehldeutung.
 
 **Auch mit Ausstattung nicht mehr Fragen, als die Daten tragen.** Steinmaur
 hat ein Perron, ein Gleis und eine Linie. Der Baukasten baute 15 Fragen, das
-Kapitel Ausstattung brachte 2 dazu, die Daten tragen 14. `kuerzen()` zählt
+Kapitel Ausstattung brachte 2 dazu, erlaubt sind 16 (Richtzahl 14 plus 15 %
+Toleranz, dieselbe Grenze wie im Validator). `kuerzen()` zählt
 die Ausstattung schon beim Bauen mit und streicht nach `VERZICHTBAR`, zuerst
 was einen schon gefragten Wert wiederholt: Züge pro Jahr neben Zügen pro Tag
 auf demselben Abschnitt, den Jahresverlauf neben dem Werktagswert, die Frage
 nach einer Perronhöhe, wenn keine vermerkt ist.
+
+**Keine Gerätedaten ist nicht null Geräte.** Für Köniz und Müntschemier
+ordnet die Quelle keine Billettautomaten und Entwerter zu, das Feld
+`billettautomaten_erfasst` fehlt ganz. Da stand «Billettentwerter sind keine
+verzeichnet», eine erfundene 0. Richtig: «Zu Billettautomaten und
+Billettentwertern liegen für diesen Bahnhof keine Daten vor.» Der Validator
+meldet «keine verzeichnet», wenn das Feld fehlt.
 
 **Bahnhöfe ohne Stammdaten.** Jestetten und Lottstetten liegen in Deutschland
 und fehlen im Haltestellenverzeichnis. Höhe, Gemeinde, Bezirk und Abkürzung

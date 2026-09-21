@@ -6,18 +6,20 @@
   "dataYear": 2025,
   "generated": "2026-09-21",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "perron",
     "21197_behig-haltekantesegment",
-    "sektortafel",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
     "haltestelle-wartehallen",
-    "haltestelle-karte-trafimage"
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -757,6 +759,101 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 151,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        30
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 403,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "sektoren_anzahl": 6
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 402,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "sektoren_anzahl": 6
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 188,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "12",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 127,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "13",
+      "perronhoehen_cm": [
+        30,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 90,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "14",
+      "perronhoehen_cm": [
+        30
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 108,
+      "sektoren": [],
+      "sektoren_anzahl": 0
     }
   ]
 }

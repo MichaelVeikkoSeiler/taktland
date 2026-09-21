@@ -12,8 +12,10 @@
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
+    "perronoberflache",
     "sektortafel",
     "wifistation",
     "zugzahlen"
@@ -327,14 +329,14 @@
           "value": 304,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Lutry – Villette VD",
           "value": 110939,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -349,7 +351,7 @@
           ],
           "correct": 2,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 304 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
@@ -361,7 +363,7 @@
           "unit": "Züge/Jahr",
           "correct": 110939,
           "explanation": "Die Erhebung zählt 110'939 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
       ]

@@ -6,16 +6,18 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "perron",
     "21197_behig-haltekantesegment",
-    "haltestelle-visuell-taktile-sicherheitslinie",
-    "zugzahlen",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
-    "haltestelle-wartehallen"
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "haltestelle-wartehallen",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {

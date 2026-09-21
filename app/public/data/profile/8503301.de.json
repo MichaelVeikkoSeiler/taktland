@@ -12,8 +12,10 @@
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
+    "perronoberflache",
     "sektortafel",
     "wifistation",
     "zugzahlen"
@@ -317,14 +319,14 @@
           "value": 92,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Witzberg (Agl) – Pfäffikon ZH",
           "value": 33708,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -339,7 +341,7 @@
           ],
           "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 92 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {

@@ -12,8 +12,10 @@
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
+    "perronoberflache",
     "sektortafel",
     "wifistation",
     "zugzahlen"
@@ -381,14 +383,14 @@
           "value": 154,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Schmerikon – Uznach",
           "value": 56043,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -403,7 +405,7 @@
           ],
           "correct": 2,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 154 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
@@ -691,6 +693,74 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 291,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "sektoren_anzahl": 5
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 272,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "sektoren_anzahl": 5
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 271,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "sektoren_anzahl": 5
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 170,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ],
+      "sektoren_anzahl": 3
     }
   ]
 }

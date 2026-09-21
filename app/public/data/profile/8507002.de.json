@@ -11,8 +11,10 @@
     "billetentwerter",
     "haltestelle-haltekante",
     "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
+    "perronoberflache",
     "wifistation",
     "zugzahlen"
   ],
@@ -290,14 +292,14 @@
           "value": 334,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Wankdorf (Abzw) – Ostermundigen",
           "value": 122017,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -312,7 +314,7 @@
           ],
           "correct": 3,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 334 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
@@ -324,7 +326,7 @@
           "unit": "Züge/Jahr",
           "correct": 122017,
           "explanation": "Die Erhebung zählt 122'017 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -524,6 +526,43 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        20,
+        30
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 143,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        20,
+        35
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 142,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        42
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 214,
+      "sektoren": [],
+      "sektoren_anzahl": 0
     }
   ]
 }

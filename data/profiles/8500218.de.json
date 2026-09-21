@@ -6,20 +6,23 @@
   "dataYear": 2025,
   "generated": "2026-09-19",
   "sources": [
-    "passagierfrequenz",
+    "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
-    "haltestelle-haltekante",
-    "perron",
-    "sektortafel",
-    "21197_behig-haltekantesegment",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
-    "haltestelle-karte-trafimage"
+    "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
+    "haltestelle-wartehallen",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -716,7 +719,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "2",
@@ -733,7 +737,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "3",
@@ -748,7 +753,8 @@
         "A",
         "B",
         "C"
-      ]
+      ],
+      "sektoren_anzahl": 3
     },
     {
       "nr": "4",
@@ -764,7 +770,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "7",
@@ -780,7 +787,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "8",
@@ -795,7 +803,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "9",
@@ -808,7 +817,8 @@
       "sektoren": [
         "A",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 2
     },
     {
       "nr": "10",
@@ -823,7 +833,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "11",
@@ -836,7 +847,8 @@
       "sektoren": [
         "A",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 2
     },
     {
       "nr": "12",
@@ -851,7 +863,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     }
   ]
 }

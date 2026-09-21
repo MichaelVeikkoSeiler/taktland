@@ -72,8 +72,9 @@ pipeline/    Rohdaten laden und zu facts/{uic}.json verdichten (Python, pandas)
 generator/   Profile schreiben und prüfen
 app/         PWA (React, Vite, Tailwind)
 data/raw/    heruntergeladene CSV, nicht in Git
-data/facts/  geprüfte Fakten je Bahnhof, 769 SBB-Bahnhöfe
-data/profiles/ lernbare Profile je Bahnhof und Sprache
+data/facts/  geprüfte Fakten je Bahnhof, 771 SBB-Bahnhöfe
+data/bauplan.json  was pro Bahnhof von Hand entschieden ist
+data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand geändert
 ```
 
 ## Befehle
@@ -82,14 +83,23 @@ data/profiles/ lernbare Profile je Bahnhof und Sprache
 python pipeline/fetch.py                    # Datasets laden
 .venv/bin/python pipeline/build_facts.py --all   # Fakten für alle Bahnhöfe
 .venv/bin/python generator/validate.py --alle    # Profile prüfen
+.venv/bin/python generator/bauen.py 8502218 --zeigen   # Profil bauen und lesen
+.venv/bin/python generator/bauen.py --alle --pruefen   # was würde ein Neubau ändern?
+.venv/bin/python generator/bauen.py --alle             # alle Profile neu bauen
 python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne Profil
 .venv/bin/python generator/sortieren_richten.py --alle   # knappe Sortierfragen zeigen
 ```
 
-Neue Profile entstehen in Schüben von 20 mit `generator/baukasten.py`, gelesen
-in Gruppen von fünf. Jedes wird mit `zeigen()` gelesen, bevor es gespeichert
-wird. Was dabei auffällt,
-wird zur Prüfregel oder zum Abschnitt in `generator/SCHEMA.md`.
+**Ein Profil ist ein Ergebnis, kein Werkstück.** Es entsteht mit
+`generator/bauen.py` aus der Faktendatei und dem Eintrag in `data/bauplan.json`
+und wird nie von Hand geändert. Wer etwas ändern will, ändert den Baukasten,
+die Pipeline oder den Bauplan und baut neu. So wirkt jede neue Regel mit einem
+Befehl auf alle Bahnhöfe.
+
+Neue Profile entstehen in Schüben von 20, gelesen in Gruppen von fünf: Eintrag
+in den Bauplan, mit `bauen.py … --zeigen` lesen, dann bauen. Was dabei
+auffällt, wird zur Regel im Baukasten, zur Prüfregel oder zum Abschnitt in
+`generator/SCHEMA.md`, danach wird alles neu gebaut.
 
 ## Gestaltung
 

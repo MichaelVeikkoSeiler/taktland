@@ -6,21 +6,23 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
+    "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
-    "haltestelle-haltekante",
-    "perron",
-    "sektortafel",
-    "21197_behig-haltekantesegment",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
     "haltestelle-wartehallen",
-    "haltestelle-karte-trafimage"
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -642,7 +644,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 3
     },
     {
       "nr": "2",
@@ -657,7 +660,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "3",
@@ -673,7 +677,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "4",
@@ -688,7 +693,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "5",
@@ -703,7 +709,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "6",
@@ -718,7 +725,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "7",
@@ -733,7 +741,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "8",
@@ -747,7 +756,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 3
     }
   ]
 }

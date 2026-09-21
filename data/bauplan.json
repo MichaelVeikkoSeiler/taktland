@@ -1,0 +1,2481 @@
+{
+ "8500010": {},
+ "8500020": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Sissach",
+    "Waldenburg"
+   ]
+  }
+ },
+ "8500021": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arlesheim",
+    "Sissach",
+    "Waldenburg"
+   ]
+  },
+  "steckbrief": {
+   "extra_body": "Der höchste erfasste Werktagswert liegt mit 10'500 im Jahr 2024."
+  }
+ },
+ "8500022": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Füllinsdorf",
+    "Liestal",
+    "Pratteln"
+   ]
+  }
+ },
+ "8500023": {},
+ "8500024": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LA",
+    "LAU"
+   ]
+  }
+ },
+ "8500026": {},
+ "8500027": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arlesheim",
+    "Liestal",
+    "Waldenburg"
+   ]
+  }
+ },
+ "8500100": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "TAV",
+    "TV"
+   ]
+  }
+ },
+ "8500105": {
+  "stammdaten": {
+   "frage": "kanton",
+   "distraktoren": [
+    "Basel-Landschaft",
+    "Bern",
+    "Solothurn"
+   ]
+  }
+ },
+ "8500109": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DEL",
+    "DL"
+   ]
+  }
+ },
+ "8500113": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LAU",
+    "LF"
+   ]
+  }
+ },
+ "8500114": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZW",
+    "ZWI"
+   ]
+  }
+ },
+ "8500117": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Sissach",
+    "Waldenburg"
+   ]
+  }
+ },
+ "8500118": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Aesch (BL)",
+    "Arlesheim",
+    "Münchenstein"
+   ]
+  }
+ },
+ "8500126": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "PO",
+    "PRT"
+   ]
+  }
+ },
+ "8500131": {},
+ "8500136": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BDR",
+    "BSD"
+   ]
+  }
+ },
+ "8500202": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bucheggberg",
+    "Solothurn",
+    "Wasseramt"
+   ]
+  }
+ },
+ "8500206": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SO",
+    "SOW"
+   ]
+  }
+ },
+ "8500207": {},
+ "8500212": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thal",
+    "Thierstein",
+    "Wasseramt"
+   ]
+  }
+ },
+ "8500218": {},
+ "8500300": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KA",
+    "KAG"
+   ]
+  }
+ },
+ "8500301": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RHF",
+    "RN"
+   ]
+  }
+ },
+ "8500302": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MH",
+    "MOH"
+   ]
+  }
+ },
+ "8500305": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Brugg",
+    "Rheinfelden",
+    "Zurzach"
+   ]
+  }
+ },
+ "8500309": {},
+ "8500320": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Eiken",
+    "Münchwilen (AG)",
+    "Sisseln"
+   ]
+  }
+ },
+ "8500329": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Baden",
+    "Brugg",
+    "Laufenburg"
+   ]
+  }
+ },
+ "8501000": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Satigny",
+    "Vernier",
+    "Zimeysa"
+   ]
+  }
+ },
+ "8501001": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "La Plaine",
+    "Russin",
+    "Satigny"
+   ]
+  }
+ },
+ "8501003": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SAT",
+    "STG"
+   ]
+  }
+ },
+ "8501008": {},
+ "8501011": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Genthod",
+    "Pregny-Chambésy",
+    "Versoix"
+   ]
+  }
+ },
+ "8501013": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Collex-Bossy",
+    "Genthod",
+    "Pont-Céard"
+   ]
+  }
+ },
+ "8501021": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bellevue",
+    "Collex-Bossy",
+    "Versoix"
+   ]
+  }
+ },
+ "8501022": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "VER",
+    "VS"
+   ]
+  }
+ },
+ "8501023": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CO",
+    "CPT"
+   ]
+  }
+ },
+ "8501026": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Genève",
+    "Vernier",
+    "Meyrin"
+   ]
+  }
+ },
+ "8501030": {},
+ "8501031": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GL",
+    "GND"
+   ]
+  }
+ },
+ "8501033": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gros-de-Vaud",
+    "Lausanne",
+    "Morges"
+   ]
+  }
+ },
+ "8501035": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AL",
+    "ALM"
+   ]
+  }
+ },
+ "8501036": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SP",
+    "STX"
+   ]
+  }
+ },
+ "8501037": {},
+ "8501042": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ET",
+    "ETO"
+   ]
+  }
+ },
+ "8501112": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Broye-Vully",
+    "Gros-de-Vaud",
+    "Morges"
+   ]
+  }
+ },
+ "8501115": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Cossonay",
+    "Daillens",
+    "Penthaz"
+   ]
+  }
+ },
+ "8501117": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BSG",
+    "BU"
+   ]
+  }
+ },
+ "8501118": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lausanne",
+    "Morges",
+    "Nyon"
+   ]
+  }
+ },
+ "8501120": {},
+ "8501121": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "PUL",
+    "PY"
+   ]
+  }
+ },
+ "8501122": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LUT",
+    "LY"
+   ]
+  }
+ },
+ "8501124": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Cully",
+    "Lutry",
+    "Puidoux"
+   ]
+  }
+ },
+ "8501200": {},
+ "8501201": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LTP",
+    "TDP"
+   ]
+  }
+ },
+ "8501202": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Burier",
+    "Montreux",
+    "Vevey"
+   ]
+  }
+ },
+ "8501203": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Clarens",
+    "La Tour-de-Peilz",
+    "Vevey"
+   ]
+  }
+ },
+ "8501300": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lausanne",
+    "Nyon",
+    "Morges"
+   ]
+  }
+ },
+ "8501303": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Nyon",
+    "Riviera-Pays-d'Enhaut"
+   ]
+  }
+ },
+ "8501400": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AGL",
+    "AI"
+   ]
+  }
+ },
+ "8501402": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BE",
+    "BX"
+   ]
+  }
+ },
+ "8501403": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SMA",
+    "STM"
+   ]
+  }
+ },
+ "8501421": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MON",
+    "MY"
+   ]
+  }
+ },
+ "8501500": {},
+ "8501502": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Conthey",
+    "Entremont",
+    "Saint-Maurice"
+   ]
+  }
+ },
+ "8501506": {},
+ "8501509": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SI",
+    "SRE"
+   ]
+  }
+ },
+ "8501601": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LE",
+    "LEU"
+   ]
+  }
+ },
+ "8501605": {},
+ "8501609": {},
+ "8502000": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Oftringen",
+    "Rothrist",
+    "Zofingen"
+   ]
+  }
+ },
+ "8502001": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZFG",
+    "ZO"
+   ]
+  }
+ },
+ "8502003": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Entlebuch",
+    "Hochdorf",
+    "Sursee"
+   ]
+  }
+ },
+ "8502005": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NBK",
+    "NE"
+   ]
+  }
+ },
+ "8502007": {},
+ "8502009": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Nottwil",
+    "Rothenburg",
+    "Sempach"
+   ]
+  }
+ },
+ "8502021": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Emmenbrücke",
+    "Luzern",
+    "Rothenburg"
+   ]
+  }
+ },
+ "8502024": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HD",
+    "HOD"
+   ]
+  }
+ },
+ "8502028": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "EBG",
+    "GER"
+   ]
+  }
+ },
+ "8502034": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aarau",
+    "Lenzburg",
+    "Muri"
+   ]
+  }
+ },
+ "8502103": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SU",
+    "SUR"
+   ]
+  }
+ },
+ "8502105": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OT",
+    "OTS"
+   ]
+  }
+ },
+ "8502112": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gäu",
+    "Gösgen",
+    "Thal"
+   ]
+  }
+ },
+ "8502113": {},
+ "8502114": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RUP",
+    "RW"
+   ]
+  }
+ },
+ "8502115": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Holderbank (AG)",
+    "Lenzburg",
+    "Wildegg"
+   ]
+  }
+ },
+ "8502119": {},
+ "8502200": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "EB",
+    "EBK"
+   ]
+  }
+ },
+ "8502201": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Ebikon",
+    "Gisikon",
+    "Honau"
+   ]
+  }
+ },
+ "8502202": {},
+ "8502203": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CH",
+    "CM"
+   ]
+  }
+ },
+ "8502204": {},
+ "8502206": {},
+ "8502208": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HO",
+    "HOD"
+   ]
+  }
+ },
+ "8502209": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OBD",
+    "ORD"
+   ]
+  }
+ },
+ "8502212": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Dintikon",
+    "Dottikon",
+    "Wohlen (AG)"
+   ]
+  }
+ },
+ "8502213": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Baden",
+    "Lenzburg",
+    "Muri"
+   ]
+  }
+ },
+ "8502215": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MRI",
+    "MU"
+   ]
+  }
+ },
+ "8502218": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bremgarten",
+    "Kulm",
+    "Lenzburg"
+   ]
+  }
+ },
+ "8502220": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Birmensdorf (ZH)",
+    "Dietikon",
+    "Urdorf"
+   ]
+  }
+ },
+ "8502221": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Affoltern",
+    "Horgen",
+    "Zürich"
+   ]
+  }
+ },
+ "8502222": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hedingen",
+    "Stallikon",
+    "Wettswil am Albis"
+   ]
+  }
+ },
+ "8502223": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Dietikon",
+    "Horgen",
+    "Zürich"
+   ]
+  }
+ },
+ "8502224": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AA",
+    "AFA"
+   ]
+  }
+ },
+ "8502225": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MET",
+    "MST"
+   ]
+  }
+ },
+ "8502229": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Birmensdorf (ZH)",
+    "Dietikon",
+    "Schlieren"
+   ]
+  }
+ },
+ "8503000": {},
+ "8503001": {},
+ "8503003": {},
+ "8503004": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZTF",
+    "ZTI"
+   ]
+  }
+ },
+ "8503006": {},
+ "8503008": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZAFF",
+    "ZAL"
+   ]
+  }
+ },
+ "8503009": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZWH",
+    "ZWO"
+   ]
+  }
+ },
+ "8503010": {},
+ "8503011": {},
+ "8503015": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZWI",
+    "ZWK"
+   ]
+  }
+ },
+ "8503016": {},
+ "8503020": {},
+ "8503100": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZO",
+    "ZOL"
+   ]
+  }
+ },
+ "8503101": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KN",
+    "KUS"
+   ]
+  }
+ },
+ "8503102": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ERB",
+    "ERL"
+   ]
+  }
+ },
+ "8503103": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Erlenbach (ZH)",
+    "Feldmeilen",
+    "Herrliberg"
+   ]
+  }
+ },
+ "8503104": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Hinwil",
+    "Horgen",
+    "Uster"
+   ]
+  }
+ },
+ "8503105": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Meilen",
+    "Männedorf",
+    "Uetikon"
+   ]
+  }
+ },
+ "8503106": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MAN",
+    "MDF"
+   ]
+  }
+ },
+ "8503107": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "STA",
+    "STF"
+   ]
+  }
+ },
+ "8503108": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hombrechtikon",
+    "Männedorf",
+    "Uerikon"
+   ]
+  }
+ },
+ "8503110": {},
+ "8503116": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sarganserland",
+    "Toggenburg",
+    "Werdenberg"
+   ]
+  }
+ },
+ "8503120": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Eschenbach (SG)",
+    "Jona",
+    "Schmerikon"
+   ]
+  }
+ },
+ "8503121": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Dietikon",
+    "Meilen",
+    "Uster"
+   ]
+  }
+ },
+ "8503122": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Meilen",
+    "Pfäffikon",
+    "Uster"
+   ]
+  }
+ },
+ "8503123": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Meilen",
+    "Bülach",
+    "Dietikon"
+   ]
+  }
+ },
+ "8503125": {},
+ "8503126": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Greifensee",
+    "Nänikon",
+    "Volketswil"
+   ]
+  }
+ },
+ "8503127": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SBZ",
+    "SCHW"
+   ]
+  },
+  "steckbrief": {
+   "extra_body": "Der Abstand zwischen Werktag und freiem Tag ist hier gross."
+  }
+ },
+ "8503128": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DB",
+    "DBD"
+   ]
+  }
+ },
+ "8503129": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WA",
+    "WL"
+   ]
+  }
+ },
+ "8503130": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HIN",
+    "HW"
+   ]
+  }
+ },
+ "8503141": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KGB",
+    "KUG"
+   ]
+  }
+ },
+ "8503147": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Dübendorf",
+    "Wallisellen",
+    "Uster"
+   ]
+  }
+ },
+ "8503200": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KB",
+    "KIB"
+   ]
+  }
+ },
+ "8503201": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RSK",
+    "RUE"
+   ]
+  }
+ },
+ "8503202": {},
+ "8503203": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OBR",
+    "ORDD"
+   ]
+  }
+ },
+ "8503204": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HN",
+    "HOR"
+   ]
+  }
+ },
+ "8503206": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Meilen",
+    "Uster",
+    "Winterthur"
+   ]
+  }
+ },
+ "8503207": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Affoltern",
+    "Dietikon",
+    "Meilen"
+   ]
+  }
+ },
+ "8503209": {},
+ "8503220": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Einsiedeln",
+    "Höfe",
+    "Schwyz"
+   ]
+  }
+ },
+ "8503221": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lachen",
+    "Schübelbach",
+    "Siebnen"
+   ]
+  }
+ },
+ "8503225": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Näfels",
+    "Weesen"
+   ]
+  }
+ },
+ "8503227": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Mollis",
+    "Näfels"
+   ]
+  }
+ },
+ "8503230": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GLA",
+    "GS"
+   ]
+  }
+ },
+ "8503233": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Glarus Nord",
+    "Schwanden"
+   ]
+  }
+ },
+ "8503300": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bubikon",
+    "Hinwil",
+    "Kempten"
+   ]
+  }
+ },
+ "8503301": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "PF",
+    "PFK"
+   ]
+  }
+ },
+ "8503302": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Hinwil",
+    "Uster",
+    "Winterthur"
+   ]
+  }
+ },
+ "8503303": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Fehraltorf",
+    "Illnau",
+    "Lindau"
+   ]
+  }
+ },
+ "8503305": {},
+ "8503306": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Dielsdorf",
+    "Uster",
+    "Winterthur"
+   ]
+  }
+ },
+ "8503307": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Dielsdorf",
+    "Uster",
+    "Winterthur"
+   ]
+  }
+ },
+ "8503308": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KLO",
+    "KT"
+   ]
+  }
+ },
+ "8503310": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bülach",
+    "Kloten",
+    "Wallisellen"
+   ]
+  }
+ },
+ "8503311": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RL",
+    "RUM"
+   ]
+  }
+ },
+ "8503312": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bülach",
+    "Uster",
+    "Winterthur"
+   ]
+  }
+ },
+ "8503313": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NGL",
+    "NI"
+   ]
+  }
+ },
+ "8503314": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NH",
+    "NHA"
+   ]
+  }
+ },
+ "8503315": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DD",
+    "DIE"
+   ]
+  }
+ },
+ "8503316": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SMR",
+    "STM"
+   ]
+  }
+ },
+ "8503319": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NIW",
+    "NWE"
+   ]
+  }
+ },
+ "8503340": {},
+ "8503400": {},
+ "8503402": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "EG",
+    "EGS"
+   ]
+  }
+ },
+ "8503403": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Eglisau",
+    "Rafz",
+    "Wil (ZH)"
+   ]
+  }
+ },
+ "8503404": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RAF",
+    "RF"
+   ]
+  }
+ },
+ "8503409": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bad Zurzach",
+    "Döttingen",
+    "Rekingen"
+   ]
+  }
+ },
+ "8503423": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Feuerthalen",
+    "Neuhausen",
+    "Schaffhausen"
+   ]
+  }
+ },
+ "8503424": {},
+ "8503501": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DOT",
+    "DTG"
+   ]
+  }
+ },
+ "8503502": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Döttingen",
+    "Obersiggenthal",
+    "Untersiggenthal"
+   ]
+  }
+ },
+ "8503503": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Gebenstorf",
+    "Turgi",
+    "Untersiggenthal"
+   ]
+  }
+ },
+ "8503504": {},
+ "8503505": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WET",
+    "WG"
+   ]
+  }
+ },
+ "8503506": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Neuenhof",
+    "Spreitenbach",
+    "Würenlos"
+   ]
+  }
+ },
+ "8503508": {},
+ "8503509": {},
+ "8503512": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glanzenberg",
+    "Schlieren",
+    "Urdorf"
+   ]
+  }
+ },
+ "8503526": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Buchs (ZH)",
+    "Dällikon",
+    "Otelfingen"
+   ]
+  }
+ },
+ "8503527": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Dällikon",
+    "Otelfingen",
+    "Regensdorf"
+   ]
+  }
+ },
+ "8503528": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OT",
+    "OTE"
+   ]
+  }
+ },
+ "8504012": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "PUD",
+    "PX"
+   ]
+  }
+ },
+ "8504014": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Maracon",
+    "Palézieux",
+    "Puidoux"
+   ]
+  }
+ },
+ "8504023": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Gruyère",
+    "La Sarine",
+    "La Veveyse"
+   ]
+  }
+ },
+ "8504100": {},
+ "8504101": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DD",
+    "DUE"
+   ]
+  }
+ },
+ "8504102": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SCH",
+    "SMI"
+   ]
+  }
+ },
+ "8504103": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Düdingen",
+    "Flamatt",
+    "Neuenegg"
+   ]
+  }
+ },
+ "8504105": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Neuenegg",
+    "Niederwangen"
+   ]
+  }
+ },
+ "8504106": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BBS",
+    "BNB"
+   ]
+  }
+ },
+ "8504108": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BEP",
+    "BNE"
+   ]
+  }
+ },
+ "8504115": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Neuenegg",
+    "Thörishaus"
+   ]
+  }
+ },
+ "8504120": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MDN",
+    "MOU"
+   ]
+  }
+ },
+ "8504128": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MO",
+    "MUR"
+   ]
+  }
+ },
+ "8504132": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Cheyres-Châbles",
+    "Estavayer-le-Lac",
+    "Payerne"
+   ]
+  }
+ },
+ "8504134": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gros-de-Vaud",
+    "Jura-Nord vaudois",
+    "Lavaux-Oron"
+   ]
+  }
+ },
+ "8504200": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gros-de-Vaud",
+    "Lausanne",
+    "Broye-Vully"
+   ]
+  }
+ },
+ "8504221": {},
+ "8504226": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LN",
+    "LNV"
+   ]
+  }
+ },
+ "8504300": {},
+ "8504304": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Oberaargau",
+    "Seeland"
+   ]
+  }
+ },
+ "8504306": {},
+ "8504310": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Oberaargau",
+    "Seeland"
+   ]
+  }
+ },
+ "8504314": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CDF",
+    "LCF"
+   ]
+  }
+ },
+ "8504316": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LL",
+    "LLO"
+   ]
+  }
+ },
+ "8504400": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KE",
+    "KRZ"
+   ]
+  }
+ },
+ "8504410": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Ittigen",
+    "Zollikofen"
+   ]
+  }
+ },
+ "8504411": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MB",
+    "MUB"
+   ]
+  }
+ },
+ "8504412": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Biel/Bienne",
+    "Emmental"
+   ]
+  }
+ },
+ "8504414": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Oberaargau",
+    "Thun"
+   ]
+  }
+ },
+ "8504415": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Aarberg",
+    "Busswil",
+    "Büren an der Aare"
+   ]
+  }
+ },
+ "8504484": {},
+ "8505000": {},
+ "8505002": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KSN",
+    "KUS"
+   ]
+  }
+ },
+ "8505004": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schwyz",
+    "Goldau",
+    "Zug"
+   ]
+  }
+ },
+ "8505006": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SWZ",
+    "SZ"
+   ]
+  }
+ },
+ "8505007": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Brunnen",
+    "Morschach",
+    "Schwyz"
+   ]
+  }
+ },
+ "8505113": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AD",
+    "ALT"
+   ]
+  }
+ },
+ "8505119": {},
+ "8505209": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bellinzona",
+    "Blenio",
+    "Leventina"
+   ]
+  }
+ },
+ "8505212": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bellinzona",
+    "Castione",
+    "Lumino"
+   ]
+  }
+ },
+ "8505213": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Locarno",
+    "Lugano",
+    "Mendrisio"
+   ]
+  }
+ },
+ "8505214": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Arbedo-Castione",
+    "Giubiasco",
+    "Sant'Antonino"
+   ]
+  }
+ },
+ "8505219": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Cadempino",
+    "Lugano",
+    "Vezia"
+   ]
+  }
+ },
+ "8505300": {},
+ "8505301": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "PAR",
+    "PDS"
+   ]
+  }
+ },
+ "8505305": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MDR",
+    "MS"
+   ]
+  },
+  "steckbrief": {
+   "extra_body": "Der höchste erfasste Werktagswert liegt mit 12'400 im Jahr 2024."
+  }
+ },
+ "8505307": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bellinzona",
+    "Locarno",
+    "Lugano"
+   ]
+  }
+ },
+ "8505400": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Ascona",
+    "Locarno",
+    "Minusio"
+   ]
+  }
+ },
+ "8505401": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Gordola",
+    "Minusio",
+    "Tenero"
+   ]
+  }
+ },
+ "8505404": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CAD",
+    "CZ"
+   ]
+  }
+ },
+ "8505407": {},
+ "8506000": {},
+ "8506001": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WG",
+    "WGZ"
+   ]
+  }
+ },
+ "8506002": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WSE",
+    "WTS"
+   ]
+  }
+ },
+ "8506004": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Kollbrunn",
+    "Turbenthal",
+    "Winterthur"
+   ]
+  }
+ },
+ "8506007": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "TB",
+    "TUR"
+   ]
+  }
+ },
+ "8506011": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Frauenfeld",
+    "Weinfelden"
+   ]
+  }
+ },
+ "8506013": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Frauenfeld",
+    "Weinfelden"
+   ]
+  }
+ },
+ "8506014": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Andelfingen",
+    "Bülach",
+    "Pfäffikon"
+   ]
+  }
+ },
+ "8506016": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Oberwinterthur",
+    "Seuzach",
+    "Wiesendangen"
+   ]
+  }
+ },
+ "8506020": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SE",
+    "SZH"
+   ]
+  }
+ },
+ "8506041": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bülach",
+    "Freienstein-Teufen",
+    "Rorbas"
+   ]
+  }
+ },
+ "8506042": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "PF",
+    "PFG"
+   ]
+  }
+ },
+ "8506046": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HEN",
+    "HG"
+   ]
+  }
+ },
+ "8506047": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AF",
+    "AND"
+   ]
+  }
+ },
+ "8506048": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bülach",
+    "Pfäffikon",
+    "Winterthur"
+   ]
+  }
+ },
+ "8506100": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "FD",
+    "FRF"
+   ]
+  }
+ },
+ "8506105": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WI",
+    "WT"
+   ]
+  }
+ },
+ "8506109": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frauenfeld",
+    "Kreuzlingen",
+    "Weinfelden"
+   ]
+  }
+ },
+ "8506121": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frauenfeld",
+    "Kreuzlingen",
+    "Weinfelden"
+   ]
+  }
+ },
+ "8506128": {
+  "stammdaten": {
+   "frage": "kanton",
+   "distraktoren": [
+    "Zürich",
+    "St. Gallen",
+    "Schaffhausen"
+   ]
+  }
+ },
+ "8506131": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KL",
+    "KRL"
+   ]
+  }
+ },
+ "8506139": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Oberklettgau",
+    "Reiat",
+    "Schaffhausen"
+   ]
+  }
+ },
+ "8506206": {},
+ "8506208": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rorschach",
+    "St. Gallen",
+    "Toggenburg"
+   ]
+  }
+ },
+ "8506209": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "FL",
+    "FLW"
+   ]
+  }
+ },
+ "8506210": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rorschach",
+    "Toggenburg",
+    "Wil"
+   ]
+  }
+ },
+ "8506302": {},
+ "8506303": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SGS",
+    "STF"
+   ]
+  }
+ },
+ "8506305": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GLD",
+    "GO"
+   ]
+  }
+ },
+ "8506306": {},
+ "8506308": {},
+ "8506311": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RO",
+    "ROR"
+   ]
+  }
+ },
+ "8506313": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RH",
+    "RHE"
+   ]
+  }
+ },
+ "8506314": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SMA",
+    "STMG"
+   ]
+  }
+ },
+ "8506317": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Balgach",
+    "Heerbrugg",
+    "Widnau"
+   ]
+  }
+ },
+ "8506319": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rorschach",
+    "St. Gallen",
+    "Werdenberg"
+   ]
+  }
+ },
+ "8506322": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RSS",
+    "RST"
+   ]
+  }
+ },
+ "8507000": {},
+ "8507002": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OM",
+    "OSTM"
+   ]
+  }
+ },
+ "8507003": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Gümligen",
+    "Worb"
+   ]
+  }
+ },
+ "8507005": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RBG",
+    "RU"
+   ]
+  }
+ },
+ "8507006": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MSG",
+    "MU"
+   ]
+  }
+ },
+ "8507007": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WI",
+    "WTR"
+   ]
+  }
+ },
+ "8507083": {},
+ "8508001": {},
+ "8508005": {},
+ "8508006": {},
+ "8508008": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HE",
+    "HZB"
+   ]
+  }
+ },
+ "8508100": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Seeland",
+    "Thun"
+   ]
+  }
+ },
+ "8508202": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Oberaargau",
+    "Thun"
+   ]
+  }
+ },
+ "8508207": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LG",
+    "LNE"
+   ]
+  }
+ },
+ "8508211": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SCHP",
+    "SPH"
+   ]
+  }
+ },
+ "8508213": {},
+ "8508215": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Hochdorf",
+    "Sursee",
+    "Willisau"
+   ]
+  }
+ },
+ "8508218": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Entlebuch",
+    "Sursee",
+    "Willisau"
+   ]
+  }
+ },
+ "8509000": {},
+ "8509002": {},
+ "8509004": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rheintal",
+    "See-Gaster",
+    "Werdenberg"
+   ]
+  }
+ },
+ "8509404": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BS",
+    "BUS"
+   ]
+  }
+ },
+ "8509411": {},
+ "8509414": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WA",
+    "WSD"
+   ]
+  }
+ },
+ "8515993": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BAA",
+    "BLP"
+   ]
+  }
+ },
+ "8515995": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CHA",
+    "CHAM"
+   ]
+  }
+ },
+ "8516155": {
+  "steckbrief": {
+   "extra_body": "Die erfasste Reihe beginnt 2018 bei 1'600 und steigt seither stark."
+  }
+ },
+ "8516161": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Ostermundigen",
+    "Muri bei Bern",
+    "Zollikofen"
+   ]
+  }
+ },
+ "8516219": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Heitersberg",
+    "Niederrohrdorf",
+    "Wohlenschwil"
+   ]
+  }
+ },
+ "8516272": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GCH",
+    "GECH"
+   ]
+  }
+ },
+ "8516273": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GE",
+    "GEX"
+   ]
+  },
+  "steckbrief": {
+   "extra_body": "Die erfasste Reihe beginnt erst 2022 mit 7'700 und steigt seither."
+  }
+ },
+ "8516274": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CB",
+    "CHB"
+   ]
+  }
+ },
+ "8516283": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GES",
+    "GSE"
+   ]
+  }
+ },
+ "8516350": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Buchrain",
+    "Dierikon",
+    "Root"
+   ]
+  }
+ },
+ "8517142": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LAB",
+    "LBA"
+   ]
+  },
+  "steckbrief": {
+   "extra_body": "Die erfasste Reihe beginnt 2022 bei 6'300 und steigt seither."
+  }
+ },
+ "8518452": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gros-de-Vaud",
+    "Lausanne",
+    "Morges"
+   ]
+  }
+ }
+}

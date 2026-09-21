@@ -12,8 +12,10 @@
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
+    "perronoberflache",
     "wifistation",
     "zugzahlen"
   ],
@@ -508,6 +510,30 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Zwischenperron",
+      "perronkante_m": 216,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 181,
+      "sektoren": [],
+      "sektoren_anzahl": 0
     }
   ]
 }

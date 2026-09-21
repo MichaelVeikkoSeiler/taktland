@@ -6,15 +6,17 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "perron",
     "21197_behig-haltekantesegment",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
     "billetautomat",
     "billetentwerter",
-    "wifistation"
+    "haltestelle-haltekante",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {

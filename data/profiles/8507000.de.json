@@ -6,20 +6,22 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
+    "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
-    "haltestelle-haltekante",
-    "perron",
-    "sektortafel",
-    "21197_behig-haltekantesegment",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
-    "haltestelle-karte-trafimage"
+    "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -686,7 +688,8 @@
         "E",
         "F",
         "G"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "2",
@@ -705,7 +708,8 @@
         "E",
         "F",
         "G"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "3",
@@ -716,7 +720,8 @@
       "hilfstritt": false,
       "perrontyp": "Mittelperron",
       "perronkante_m": 311,
-      "sektoren": []
+      "sektoren": [],
+      "sektoren_anzahl": 0
     },
     {
       "nr": "4",
@@ -735,7 +740,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "5",
@@ -754,7 +760,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "6",
@@ -772,7 +779,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "7",
@@ -792,7 +800,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 8
     },
     {
       "nr": "8",
@@ -811,7 +820,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "9",
@@ -830,7 +840,8 @@
         "D",
         "E",
         "F"
-      ]
+      ],
+      "sektoren_anzahl": 6
     },
     {
       "nr": "10",
@@ -849,7 +860,8 @@
         "D",
         "E",
         "F"
-      ]
+      ],
+      "sektoren_anzahl": 6
     },
     {
       "nr": "12",
@@ -865,7 +877,8 @@
         "C",
         "D",
         "E"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "13",
@@ -882,7 +895,8 @@
         "C",
         "D",
         "E"
-      ]
+      ],
+      "sektoren_anzahl": 5
     },
     {
       "nr": "49",
@@ -899,7 +913,8 @@
         "L",
         "M",
         "N"
-      ]
+      ],
+      "sektoren_anzahl": 6
     },
     {
       "nr": "50",
@@ -916,7 +931,8 @@
         "L",
         "M",
         "N"
-      ]
+      ],
+      "sektoren_anzahl": 6
     }
   ]
 }

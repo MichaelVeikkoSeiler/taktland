@@ -32,7 +32,13 @@ jobs:
         working-directory: app
         run: npm ci
 
-      # Beide Skripte kommen mit der Standardbibliothek aus, kein pip nötig
+      # Baukasten, Validator und Baubefehl brauchen nur die Standardbibliothek,
+      # die Tests zusätzlich pytest
+      - name: Tests
+        run: |
+          python3 -m pip install --quiet pytest
+          python3 -m pytest -q generator/tests belegt/tests
+
       - name: Profile gegen die Fakten prüfen
         run: python3 generator/validate.py --alle
 

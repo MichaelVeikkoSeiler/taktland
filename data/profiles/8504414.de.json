@@ -6,18 +6,20 @@
   "dataYear": 2025,
   "generated": "2026-09-21",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "perron",
     "21197_behig-haltekantesegment",
-    "sektortafel",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "haltestelle-wartehallen",
-    "haltestelle-visuell-taktile-sicherheitslinie"
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -686,6 +688,89 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 361,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "sektoren_anzahl": 5
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        20,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 239,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "sektoren_anzahl": 5
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        20,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 240,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "sektoren_anzahl": 4
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 167,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ],
+      "sektoren_anzahl": 3
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 168,
+      "sektoren": [
+        "B",
+        "C"
+      ],
+      "sektoren_anzahl": 2
     }
   ]
 }

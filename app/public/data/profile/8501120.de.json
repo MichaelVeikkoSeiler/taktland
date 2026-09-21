@@ -6,21 +6,23 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
+    "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
-    "haltestelle-haltekante",
-    "perron",
-    "sektortafel",
-    "21197_behig-haltekantesegment",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
     "haltestelle-wartehallen",
-    "haltestelle-karte-trafimage"
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -657,7 +659,8 @@
         "E",
         "F",
         "G"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "2",
@@ -668,7 +671,8 @@
       "hilfstritt": false,
       "perrontyp": "Aussenperron",
       "perronkante_m": 166,
-      "sektoren": []
+      "sektoren": [],
+      "sektoren_anzahl": 0
     },
     {
       "nr": "3",
@@ -685,7 +689,8 @@
         "E",
         "F",
         "G"
-      ]
+      ],
+      "sektoren_anzahl": 6
     },
     {
       "nr": "4",
@@ -703,7 +708,8 @@
         "E",
         "F",
         "G"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "5",
@@ -722,7 +728,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 8
     },
     {
       "nr": "6",
@@ -740,7 +747,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "7",
@@ -758,7 +766,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "8",
@@ -776,7 +785,8 @@
         "E",
         "F",
         "G"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "70",
@@ -789,7 +799,8 @@
       "perronkante_m": 152,
       "sektoren": [
         "A"
-      ]
+      ],
+      "sektoren_anzahl": 1
     }
   ]
 }

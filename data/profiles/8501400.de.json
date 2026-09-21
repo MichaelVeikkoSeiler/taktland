@@ -6,18 +6,20 @@
   "dataYear": 2025,
   "generated": "2026-09-21",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "perron",
     "21197_behig-haltekantesegment",
-    "sektortafel",
-    "haltestelle-visuell-taktile-sicherheitslinie",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
-    "haltestelle-wartehallen"
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "haltestelle-wartehallen",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -656,6 +658,56 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 375,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "sektoren_anzahl": 4
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 325,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ],
+      "sektoren_anzahl": 3
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 325,
+      "sektoren": [
+        "A",
+        "B",
+        "C"
+      ],
+      "sektoren_anzahl": 3
     }
   ]
 }

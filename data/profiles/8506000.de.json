@@ -6,21 +6,23 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
+    "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
-    "haltestelle-haltekante",
-    "perron",
-    "sektortafel",
-    "21197_behig-haltekantesegment",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
     "haltestelle-wartehallen",
-    "haltestelle-karte-trafimage"
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -591,7 +593,8 @@
         "G",
         "H",
         "J"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "2",
@@ -606,7 +609,8 @@
         "G",
         "H",
         "J"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "3",
@@ -625,7 +629,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 8
     },
     {
       "nr": "4",
@@ -644,7 +649,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 8
     },
     {
       "nr": "5",
@@ -662,7 +668,8 @@
         "E",
         "F",
         "G"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "6",
@@ -681,7 +688,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 8
     },
     {
       "nr": "7",
@@ -699,7 +707,8 @@
         "E",
         "F",
         "G"
-      ]
+      ],
+      "sektoren_anzahl": 7
     },
     {
       "nr": "8",
@@ -716,7 +725,8 @@
         "D",
         "E",
         "F"
-      ]
+      ],
+      "sektoren_anzahl": 6
     },
     {
       "nr": "9",
@@ -732,7 +742,8 @@
         "C",
         "D",
         "E"
-      ]
+      ],
+      "sektoren_anzahl": 5
     }
   ]
 }

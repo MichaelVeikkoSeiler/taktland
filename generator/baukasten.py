@@ -29,7 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generator"))
 from distraktoren import vorschlaege  # noqa: E402
-from taktland import klar_getrennt, umfang_erwartet  # noqa: E402
+from taktland import hoechstens_fragen, klar_getrennt  # noqa: E402
 
 SEKTOR = ("Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten "
           "können, wo ihr Wagen zu stehen kommt.")
@@ -675,8 +675,12 @@ def linien(f):
 
 def services(f):
     sv = f["services"]; name = f["name"]; uic = f["uic"]
+    # Ohne Betriebspunkt-Kürzel ordnet die Quelle keine Automaten und
+    # Entwerter zu (Köniz, Müntschemier). Dann gibt es keine Zahl, auch keine 0,
+    # und «sind keine verzeichnet» wäre eine erfundene Tatsache.
+    ohne_geraete = "billettautomaten_erfasst" not in sv
     teile = []
-    if sv["billettautomaten_erfasst"]:
+    if sv.get("billettautomaten_erfasst"):
         typen = sv.get("automat_typen") or []
         t = f"{sv['billettautomaten_erfasst']} {'Billettautomat' if sv['billettautomaten_erfasst'] == 1 else 'Billettautomaten'}"
         if typen and not any(x.lower() in ("andere", "altri", "autres") for x in typen):
@@ -684,7 +688,7 @@ def services(f):
             # «der Typen BATS, S-POS und ePOS und 2 Billettentwerter»
             t += f" vom Typ {typen[0]}" if len(typen) == 1 else f" (Typen {aufzaehlung(typen)})"
         teile.append(t)
-    if sv["billettentwerter_erfasst"]:
+    if sv.get("billettentwerter_erfasst"):
         teile.append(f"{sv['billettentwerter_erfasst']} Billettentwerter")
     if sv["wartehallen_erfasst"]:
         teile.append(f"{sv['wartehallen_erfasst']} {'Wartehalle' if sv['wartehallen_erfasst'] == 1 else 'Wartehallen'}")
@@ -698,27 +702,31 @@ def services(f):
     # Jede fehlende Angabe wird genannt. Die Entwerter fehlten hier, und bei
     # Emmenbrücke Gersag verschwieg der Text, dass keine verzeichnet sind.
     fehlt = []
-    if not sv["billettautomaten_erfasst"]:
+    if not ohne_geraete and not sv["billettautomaten_erfasst"]:
         fehlt.append("Billettautomaten")
-    if not sv["billettentwerter_erfasst"]:
+    if not ohne_geraete and not sv["billettentwerter_erfasst"]:
         fehlt.append("Billettentwerter")
     if not sv["wartehallen_erfasst"]:
         fehlt.append("Wartehallen")
     if fehlt:
         satz.append(aufzaehlung(fehlt) + " sind keine verzeichnet.")
+    if ohne_geraete:
+        satz.append("Zu Billettautomaten und Billettentwertern liegen für diesen "
+                    "Bahnhof keine Daten vor.")
     if not sv["wlan_erfasst"]:
         satz.append(f"{name} steht nicht in der Liste der WLAN-Standorte.")
     facts = [{"label": "WLAN erfasst", "value": sv["wlan_erfasst"], "unit": "",
               "source": "wifistation", "factRef": "services.wlan_erfasst"}]
     for feld, lab, q in (("billettautomaten_erfasst", "Billettautomaten erfasst", "billetautomat"),
                          ("billettentwerter_erfasst", "Billettentwerter erfasst", "billetentwerter")):
-        facts.append({"label": lab, "value": sv[feld], "source": q, "factRef": f"services.{feld}"})
+        if feld in sv:
+            facts.append({"label": lab, "value": sv[feld], "source": q, "factRef": f"services.{feld}"})
     fr = [tf(f"{name} steht in der Liste der WLAN-Standorte.", bool(sv["wlan_erfasst"]),
              "Der Bahnhof ist in den offenen WLAN-Daten "
              + ("aufgeführt." if sv["wlan_erfasst"] else "nicht aufgeführt. Ob vor Ort WLAN "
                 "verfügbar ist, sagen die Daten nicht."),
              "services.wlan_erfasst", diff=1 if sv["wlan_erfasst"] else 2)]
-    if sv["billettentwerter_erfasst"]:
+    if sv.get("billettentwerter_erfasst"):
         w = sv["billettentwerter_erfasst"]
         texte, i, alle = auswahl(uic, w, 2)
         fr.append({"type": "cloze" if w > 1 else "single_choice",
@@ -761,7 +769,7 @@ BAUER = {"steckbrief": steckbrief, "stammdaten": stammdaten, "perrons": perrons,
 
 
 #: Was zuerst wegfällt, wenn die Daten weniger Fragen tragen, als gebaut
-#: sind (Steinmaur: 17 statt höchstens 14). Zuerst, was einen schon
+#: sind (Steinmaur: 17, erlaubt sind 16). Zuerst, was einen schon
 #: gefragten Wert wiederholt.
 VERZICHTBAR = [
     # Züge pro Jahr auf demselben Abschnitt wie die Frage nach Zügen pro Tag
@@ -779,7 +787,7 @@ def kuerzen(kap, f):
     """Streicht Fragen nach VERZICHTBAR, bis der Umfang zur Datenlage passt.
     Das Kapitel Ausstattung kommt später dazu und zählt schon mit."""
     from ausstattung_kapitel import kapitel_bauen
-    hoechst = umfang_erwartet(f)[3]
+    hoechst = hoechstens_fragen(f)
     a = kapitel_bauen(f["uic"], f["name"], f["ausstattung"]) if f.get("ausstattung") else None
     spaeter = len(a["questions"]) if a else 0
     zahl = lambda: sum(len(k["questions"]) for k in kap) + spaeter

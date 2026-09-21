@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from baukasten import fakten, perrons, profil, zuege  # noqa: E402
-from taktland import pruefe, umfang_erwartet  # noqa: E402
+from taktland import hoechstens_fragen, pruefe  # noqa: E402
 
 
 def test_staerkster_abschnitt_im_gueterverkehr_heisst_nicht_personenverkehr():
@@ -43,10 +43,10 @@ def test_einzelnes_perron_ausdruecklich_nicht_niveaufrei():
 
 
 def test_nicht_mehr_fragen_als_die_daten_tragen():
-    # Steinmaur: 15 gebaut + 2 Ausstattung, die Daten tragen 14
+    # Steinmaur: 15 gebaut + 2 Ausstattung, erlaubt sind 16
     from ausstattung_kapitel import kapitel_bauen
     f = fakten(8503316)
     d = profil(8503316)
     a = kapitel_bauen(f["uic"], f["name"], f["ausstattung"])
     n = sum(len(k["questions"]) for k in d["chapters"]) + len(a["questions"])
-    assert n <= umfang_erwartet(f)[3]
+    assert n <= hoechstens_fragen(f)

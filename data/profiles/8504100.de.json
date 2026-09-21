@@ -6,21 +6,23 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
+    "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
-    "haltestelle-haltekante",
-    "perron",
-    "sektortafel",
-    "21197_behig-haltekantesegment",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
     "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
     "haltestelle-wartehallen",
-    "haltestelle-karte-trafimage"
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -579,7 +581,8 @@
       "perronkante_m": 286,
       "sektoren": [
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 1
     },
     {
       "nr": "2",
@@ -598,7 +601,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 8
     },
     {
       "nr": "3",
@@ -618,7 +622,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 8
     },
     {
       "nr": "4",
@@ -628,7 +633,8 @@
       "hilfstritt": false,
       "perrontyp": "Mittelperron",
       "perronkante_m": 414,
-      "sektoren": []
+      "sektoren": [],
+      "sektoren_anzahl": 0
     },
     {
       "nr": "5",
@@ -640,7 +646,8 @@
       "perronkante_m": 418,
       "sektoren": [
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 1
     }
   ]
 }

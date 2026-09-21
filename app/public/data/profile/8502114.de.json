@@ -11,8 +11,10 @@
     "billetentwerter",
     "haltestelle-haltekante",
     "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
+    "perronoberflache",
     "sektortafel",
     "wifistation",
     "zugzahlen"
@@ -338,14 +340,14 @@
           "value": 635,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Rohr (Spw) – Rupperswil",
           "value": 231724,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -360,7 +362,7 @@
           ],
           "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 635 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
@@ -615,6 +617,41 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        25,
+        42
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 115,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "sektoren_anzahl": 4
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        25
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 251,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "sektoren_anzahl": 4
     }
   ]
 }

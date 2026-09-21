@@ -6,18 +6,21 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
-    "perron",
     "21197_behig-haltekantesegment",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
+    "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "billetautomat",
     "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "haltestelle-wartehallen",
-    "haltestelle-karte-trafimage"
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {

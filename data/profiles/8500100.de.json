@@ -11,8 +11,10 @@
     "billetentwerter",
     "haltestelle-haltekante",
     "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
+    "perronoberflache",
     "wifistation",
     "zugzahlen"
   ],
@@ -318,14 +320,14 @@
           "value": 55,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Sonceboz-Sombeval – Tavannes",
           "value": 20018,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -340,7 +342,7 @@
           ],
           "correct": 2,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 55 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
@@ -352,7 +354,7 @@
           "unit": "Züge/Jahr",
           "correct": 20018,
           "explanation": "Die Erhebung zählt 20'018 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -591,6 +593,32 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        20,
+        35
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Zwischenperron",
+      "perronkante_m": 77,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        20,
+        35
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Zwischenperron",
+      "perronkante_m": 176,
+      "sektoren": [],
+      "sektoren_anzahl": 0
     }
   ]
 }

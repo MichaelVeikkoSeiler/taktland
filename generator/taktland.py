@@ -119,6 +119,16 @@ def _stoff_ausstattung(fakten):
     return bestaende + min(belag, 3)
 
 
+#: So viel mehr Fragen als die Richtzahl sind noch erlaubt. Darüber fragt ein
+#: Profil dieselben Werte mehrfach ab. Gilt für den Validator und für
+#: kuerzen() im Baukasten, damit es nur eine Grenze gibt.
+TOLERANZ = 1.15
+
+
+def hoechstens_fragen(fakten):
+    return int(umfang_erwartet(fakten)[3] * TOLERANZ)
+
+
 def umfang_erwartet(fakten):
     """Wie viele Kapitel und Fragen die Datenlage eines Bahnhofs hergibt.
 
@@ -332,6 +342,21 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
         else:
             profil.pop("gleise", None)
 
+    # Die Gleisfrage zum Antippen braucht das Schema. Fehlte es, zeigte die
+    # App bei 49 Bahnhöfen «Zu diesem Bahnhof liegt kein Schema vor».
+    if any(f.get("type") == "hotspot"
+           for k in profil.get("chapters", []) for f in k.get("questions", [])):
+        if profil.get("gleise") != (fakten.get("gleise") or {}).get("items"):
+            b.fehlt("Profil", "Gleisfrage ohne passendes Gleisschema: 'gleise' fehlt "
+                              "oder weicht von den Fakten ab")
+
+    # Die Lizenz verlangt die Quellenangabe. Das Kapitel Ausstattung nutzte
+    # zwei Datensätze, die in 'sources' fehlten.
+    genutzt = {x.get("source") for k in profil.get("chapters", [])
+               for x in k.get("facts", []) if x.get("source")}
+    if fehlend := sorted(genutzt - set(profil.get("sources", []))):
+        b.fehlt("Profil", f"Quelle genutzt, aber nicht genannt: {', '.join(fehlend)}")
+
     soll = {l["thema"] for l in fakten.get("luecken", [])}
     ist = {l.get("thema") for l in profil.get("luecken", [])}
     if soll and not profil.get("luecken"):
@@ -443,6 +468,12 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                 if feld in sv and not sv[feld] and wort not in kap.get("body", ""):
                     b.fehlt(f"{wo}/body", f"{wort}: 0 erfasst, der Text verschweigt es. "
                                           "Schreibe «… sind keine verzeichnet»")
+                # Ohne Zahl (Köniz: keine Zuordnung in der Quelle) ist «keine
+                # verzeichnet» eine erfundene 0
+                if feld not in sv and feld != "wartehallen_erfasst" and (m := re.search(
+                        rf"{wort}\w*[^.]*\bkeine?\b[^.]*\b(verzeichnet|erfasst)\b", kap.get("body", ""))):
+                    b.fehlt(f"{wo}/body", f"«{m.group(0)}»: dazu liegen keine Daten vor, "
+                                          "auch keine 0. Schreibe das so")
 
         if kid == "perrons" and (pr := fakten.get("perrons")):
             # Ein Perron ohne Länge darf im Text nicht einfach fehlen (Zwingen)
@@ -511,7 +542,7 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
     n_k = len(profil["chapters"])
     if not min_k <= n_k <= max_k:
         b.warnt("Umfang", f"{n_k} Kapitel, die Datenlage trägt {min_k}–{max_k}")
-    if fragen_gesamt > max_f * 1.15:
+    if fragen_gesamt > hoechstens_fragen(fakten):
         b.fehlt("Umfang", f"{fragen_gesamt} Fragen, die Datenlage trägt höchstens {max_f}. "
                           "Mehr Fragen heisst hier, dieselben Werte mehrfach abzufragen")
     elif not min_f <= fragen_gesamt <= max_f:

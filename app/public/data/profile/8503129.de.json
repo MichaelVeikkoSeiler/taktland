@@ -6,19 +6,21 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "perron",
     "21197_behig-haltekantesegment",
-    "sektortafel",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
-    "wifistation",
+    "abfahrtsplakate0",
     "billetautomat",
     "billetentwerter",
+    "haltestelle-haltekante",
     "haltestelle-uhr",
     "haltestelle-wartehallen",
-    "abfahrtsplakate0"
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -613,7 +615,8 @@
         "A",
         "B",
         "C"
-      ]
+      ],
+      "sektoren_anzahl": 3
     },
     {
       "nr": "4",
@@ -628,7 +631,8 @@
         "A",
         "B",
         "C"
-      ]
+      ],
+      "sektoren_anzahl": 3
     },
     {
       "nr": "5",
@@ -638,7 +642,8 @@
       "hilfstritt": false,
       "perrontyp": "Mittelperron",
       "perronkante_m": 232,
-      "sektoren": []
+      "sektoren": [],
+      "sektoren_anzahl": 0
     },
     {
       "nr": "6",
@@ -648,7 +653,8 @@
       "hilfstritt": false,
       "perrontyp": "Mittelperron",
       "perronkante_m": 233,
-      "sektoren": []
+      "sektoren": [],
+      "sektoren_anzahl": 0
     }
   ]
 }

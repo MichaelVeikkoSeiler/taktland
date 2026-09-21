@@ -6,12 +6,12 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
     "21197_behig-haltekantesegment",
-    "zugzahlen",
+    "haltestelle-haltekante",
+    "haltestelle-wartehallen",
+    "passagierfrequenz",
     "wifistation",
-    "haltestelle-wartehallen"
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -226,7 +226,7 @@
     {
       "id": "services",
       "title": "Was es am Bahnhof gibt",
-      "body": "Müntschemier steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten liegen für diesen Bahnhof keine Daten vor. Billettentwerter sind keine verzeichnet.",
+      "body": "Müntschemier steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -316,7 +316,8 @@
       "hilfstritt": false,
       "perrontyp": "Hausperron",
       "perronkante_m": 220,
-      "sektoren": []
+      "sektoren": [],
+      "sektoren_anzahl": 0
     },
     {
       "nr": "2",
@@ -326,7 +327,8 @@
       "hilfstritt": false,
       "perrontyp": "Aussenperron",
       "perronkante_m": 220,
-      "sektoren": []
+      "sektoren": [],
+      "sektoren_anzahl": 0
     }
   ]
 }

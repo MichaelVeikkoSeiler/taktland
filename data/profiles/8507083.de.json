@@ -6,12 +6,12 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
     "21197_behig-haltekantesegment",
-    "zugzahlen",
+    "haltestelle-haltekante",
+    "haltestelle-wartehallen",
+    "passagierfrequenz",
     "wifistation",
-    "haltestelle-wartehallen"
+    "zugzahlen"
   ],
   "chapters": [
     {
@@ -225,7 +225,7 @@
     {
       "id": "services",
       "title": "Was es am Bahnhof gibt",
-      "body": "Köniz steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten liegen für diesen Bahnhof keine Daten vor. Billettentwerter sind keine verzeichnet.",
+      "body": "Köniz steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor.",
       "facts": [
         {
           "label": "WLAN erfasst",

@@ -6,12 +6,12 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "linie-mit-betriebspunkten",
-    "wifistation",
     "billetautomat",
-    "haltestelle-wartehallen"
+    "haltestelle-haltekante",
+    "haltestelle-wartehallen",
+    "linie-mit-betriebspunkten",
+    "passagierfrequenz",
+    "wifistation"
   ],
   "chapters": [
     {

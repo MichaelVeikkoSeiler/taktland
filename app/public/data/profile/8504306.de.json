@@ -6,15 +6,17 @@
   "dataYear": 2025,
   "generated": "2026-09-20",
   "sources": [
-    "passagierfrequenz",
-    "haltestelle-haltekante",
-    "perron",
-    "zugzahlen",
-    "linie-mit-betriebspunkten",
     "billetautomat",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "haltestelle-wartehallen",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
     "wifistation",
-    "haltestelle-visuell-taktile-sicherheitslinie"
+    "zugzahlen"
   ],
   "chapters": [
     {
