@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
@@ -359,6 +360,53 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 700 ist 1 Bahnübergang erfasst: BUe Neumatt, bei km 55.096. Als Sicherungsart ist «Schrankenanlage» eingetragen. Eingetragen ist 1 gekreuztes Gleis.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 1,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:92794dbe",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 700 erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist 1 Bahnübergang.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "id": "bahnuebergaenge:76d7bb16",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist beim Bahnübergang der Linie 700 eingetragen?",
+          "options": [
+            "Bedarfsschrankenanl",
+            "Schrankenanlage",
+            "VRA",
+            "unbewacht"
+          ],
+          "correct": 1,
+          "explanation": "Eingetragen ist «Schrankenanlage».",
+          "factRef": "bahnuebergaenge.items[0].sicherungsart",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -396,6 +444,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Züge auf der Linie",

@@ -171,6 +171,141 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 19,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 19
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 2,
+  "mit_meisten_gleisen": [
+   10,
+   18
+  ],
+  "anzahl_mit_meisten_gleisen": 2,
+  "items": [
+   {
+    "name": "BUe Bankstrasse",
+    "km": 82.365,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hafenstrasse",
+    "km": 82.42,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tobelmuli",
+    "km": 84.61,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schlatterstr.",
+    "km": 85.35,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Stickelbergerstr",
+    "km": 85.673,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kirchhalde",
+    "km": 85.8,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Seestrasse",
+    "km": 85.89,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wattlen",
+    "km": 87.687,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Seestrasse",
+    "km": 87.945,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Underi Sagi",
+    "km": 90.237,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Station",
+    "km": 90.519,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Staadweg",
+    "km": 90.784,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Beerliseggstr.",
+    "km": 92.352,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bahnhofstrasse",
+    "km": 92.895,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Seewiesenstrasse",
+    "km": 94.15,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Seedorfstrasse",
+    "km": 94.629,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Muhlegassli",
+    "km": 97.565,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Seestrasse",
+    "km": 97.92,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Promenadenstr.",
+    "km": 99.797,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -208,6 +343,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -221,6 +366,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

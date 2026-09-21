@@ -288,6 +288,147 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 18,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 13
+   },
+   {
+    "wert": "Blinklichtanlage",
+    "anzahl": 3
+   },
+   {
+    "wert": "Halbschrankeanlage",
+    "anzahl": 1
+   },
+   {
+    "wert": "unbewacht",
+    "anzahl": 1
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 2,
+  "mit_meisten_gleisen": [
+   8,
+   17
+  ],
+  "anzahl_mit_meisten_gleisen": 2,
+  "items": [
+   {
+    "name": "PN de Cottendart",
+    "km": 7.606,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Bole",
+    "km": 8.389,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN des Buges",
+    "km": 10.321,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "PN Champ-du-Moulin",
+    "km": 13.66,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Furcil",
+    "km": 17.384,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Noiraigue",
+    "km": 17.873,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Noiraigue 2",
+    "km": 19.564,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN224",
+    "km": 22.464,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Travers",
+    "km": 22.847,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN ch. de Boveresse",
+    "km": 27.802,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Boveresse 1",
+    "km": 29.271,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Haut de la Tour",
+    "km": 35.032,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Champs Berthoud",
+    "km": 35.519,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Les Bayards",
+    "km": 35.866,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Haut du Cret",
+    "km": 38.03,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN La Vy Rainaud",
+    "km": 38.492,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN La Vy Perroud",
+    "km": 39.036,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Les Cernets",
+    "km": 39.696,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -325,6 +466,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -334,6 +485,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

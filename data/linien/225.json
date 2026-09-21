@@ -379,6 +379,180 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 24,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 21
+   },
+   {
+    "wert": "Bedarfsschrankenanl",
+    "anzahl": 2
+   },
+   {
+    "wert": "Blinklichtanlage",
+    "anzahl": 1
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 2,
+  "mit_meisten_gleisen": [
+   5,
+   18,
+   23
+  ],
+  "anzahl_mit_meisten_gleisen": 3,
+  "items": [
+   {
+    "name": "PN Jagerstein",
+    "km": 35.156,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Aeschlimann",
+    "km": 42.519,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN La Heutte",
+    "km": 43.675,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de la Suze",
+    "km": 44.967,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 1
+   },
+   {
+    "name": "PN des Corneilles",
+    "km": 47.717,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Sonceboz",
+    "km": 48.59,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN de Corgemont",
+    "km": 50.132,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN des Rios",
+    "km": 52.335,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 1
+   },
+   {
+    "name": "PN rue des Cheseaux",
+    "km": 53.181,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN ch. des Isles",
+    "km": 53.452,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de l'Aerodrome",
+    "km": 54.977,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN des Covets 1",
+    "km": 56.036,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN des Covets 3",
+    "km": 56.077,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Courtelary",
+    "km": 56.378,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN des Pagres",
+    "km": 57.239,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Cormoret 1",
+    "km": 57.441,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Cormoret 2",
+    "km": 57.727,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Cormoret 3",
+    "km": 57.918,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN St-Imier-Gare",
+    "km": 62.15,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN de Briquetterie",
+    "km": 62.735,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN rue du Pont",
+    "km": 62.867,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Sonvilier 1",
+    "km": 65.198,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Renan 1",
+    "km": 68.539,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de la Gare",
+    "km": 68.975,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -416,6 +590,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -425,6 +609,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

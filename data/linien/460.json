@@ -1022,6 +1022,374 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 56,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 44
+   },
+   {
+    "wert": "Blinklichtanlage",
+    "anzahl": 6
+   },
+   {
+    "wert": "Halbschrankeanlage",
+    "anzahl": 4
+   },
+   {
+    "wert": "Bedarfsschrankenanl",
+    "anzahl": 2
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 4,
+  "mit_meisten_gleisen": [
+   5
+  ],
+  "anzahl_mit_meisten_gleisen": 1,
+  "items": [
+   {
+    "name": "BUe Rubigenstrasse",
+    "km": 12.828,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Hornstrasse",
+    "km": 13.433,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tagerishalde",
+    "km": 17.088,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Kehr",
+    "km": 22.057,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Thunstrasse",
+    "km": 24.158,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kirschacker",
+    "km": 24.433,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 4
+   },
+   {
+    "name": "BUe Inners Moos",
+    "km": 25.034,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Groggenmoos",
+    "km": 25.855,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wydenhubel",
+    "km": 26.424,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Imschmatt",
+    "km": 27.247,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Moos",
+    "km": 29.858,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Hauptstrasse",
+    "km": 31.262,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Niedermattstr.",
+    "km": 31.576,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ried",
+    "km": 32.377,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Badligassli",
+    "km": 38.18,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ilfisweg",
+    "km": 39.362,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Baraustrasse",
+    "km": 40.587,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Scharischache",
+    "km": 41.153,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bareggscheuer",
+    "km": 41.865,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bareggstalden",
+    "km": 42.252,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Dorfstrasse",
+    "km": 42.89,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Station",
+    "km": 43.087,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Hinterschwand",
+    "km": 43.581,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ilfisbrucke",
+    "km": 43.772,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Grauenstein",
+    "km": 44.593,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Station",
+    "km": 48.171,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Riedgass",
+    "km": 51.365,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Gigenstrasse",
+    "km": 51.582,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schulhausstr.",
+    "km": 51.871,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ebnetstrasse",
+    "km": 52.076,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Inner Guntere",
+    "km": 52.59,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Undergass",
+    "km": 52.882,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Waerterhaus",
+    "km": 53.85,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wissemme",
+    "km": 57.294,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Breitebuel 1",
+    "km": 57.773,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Breitebuel 2",
+    "km": 57.964,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bruegghof",
+    "km": 59.012,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schachlistrasse",
+    "km": 60.437,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wissenbach",
+    "km": 62.17,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Biberbrucke",
+    "km": 64.629,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe ECO",
+    "km": 66.46,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Franzweidli",
+    "km": 69.078,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rossei",
+    "km": 71.857,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Walzmuhle",
+    "km": 73.997,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Hakenruti",
+    "km": 74.66,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ringgei",
+    "km": 76.706,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Dietenei",
+    "km": 77.014,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ruetmatt",
+    "km": 77.427,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Warterhaus",
+    "km": 78.245,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hinter Langnau",
+    "km": 78.778,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Unter-Langnau",
+    "km": 79.599,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rumligsage",
+    "km": 80.573,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schutzenhausstr.",
+    "km": 82.646,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hellbuhlstrasse",
+    "km": 83.217,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Haselholz",
+    "km": 84.537,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Cheerstrasse",
+    "km": 89.149,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -1059,6 +1427,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -1068,6 +1446,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

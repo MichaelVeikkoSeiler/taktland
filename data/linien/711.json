@@ -336,6 +336,137 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 17,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 17
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 2,
+  "mit_meisten_gleisen": [
+   0,
+   1,
+   2,
+   3,
+   5,
+   7,
+   10,
+   11,
+   12,
+   13
+  ],
+  "anzahl_mit_meisten_gleisen": 10,
+  "items": [
+   {
+    "name": "BUe Stationsstrasse",
+    "km": 8.225,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Bahnhofstrasse",
+    "km": 8.733,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Im Keimler",
+    "km": 9.258,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Uitikonerstrasse",
+    "km": 10.081,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Kleinhaeuli",
+    "km": 11.062,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Zuercherstrasse",
+    "km": 12.877,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Landikonerstr.",
+    "km": 14.546,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Chriegmatt",
+    "km": 16.596,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Moosstrasse",
+    "km": 17.032,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Masstrasse",
+    "km": 18.583,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Arnistrasse",
+    "km": 22.222,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Zwillikerstrasse",
+    "km": 22.368,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Giessenstrasse",
+    "km": 23.976,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Bergstrasse",
+    "km": 24.68,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Eigi",
+    "km": 27.834,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Riedmatten",
+    "km": 28.483,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Maschwanderstr.",
+    "km": 29.061,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -373,6 +504,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -382,6 +523,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

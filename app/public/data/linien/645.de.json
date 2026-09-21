@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten"
@@ -152,6 +153,93 @@
           "difficulty": 1
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 645 sind 3 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «Schrankenanlage» bei 1 Bahnübergang, «VRA» bei 1 und «unbewacht» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 3, bei VRA Coop.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 3,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "«VRA»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+        },
+        {
+          "label": "«unbewacht»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+        },
+        {
+          "label": "VRA Coop",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[1].gleise"
+        },
+        {
+          "label": "BUe Bernstrasse Ost",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[2].gleise"
+        },
+        {
+          "label": "Coop 1",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[0].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:a4f9ee88",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 645 erfasst?",
+          "options": [
+            "3",
+            "7",
+            "9",
+            "12"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:a8ced426",
+          "type": "single_choice",
+          "prompt": "Bei welchem dieser Bahnübergänge sind die meisten gekreuzten Gleise eingetragen?",
+          "options": [
+            "BUe Bernstrasse Ost",
+            "Coop 1",
+            "VRA Coop"
+          ],
+          "correct": 2,
+          "explanation": "Bei VRA Coop sind 3 Gleise eingetragen, bei BUe Bernstrasse Ost 2 und bei Coop 1 1.",
+          "factRef": "bahnuebergaenge.items[1].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -189,6 +277,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Tunnel",

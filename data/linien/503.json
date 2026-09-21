@@ -265,6 +265,78 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 8,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 7
+   },
+   {
+    "wert": "Blinklichtanlage",
+    "anzahl": 1
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 3,
+  "mit_meisten_gleisen": [
+   7
+  ],
+  "anzahl_mit_meisten_gleisen": 1,
+  "items": [
+   {
+    "name": "BUe Hauptstrasse",
+    "km": 22.119,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rebgasse",
+    "km": 22.997,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Mettenberg",
+    "km": 26.425,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ischlag",
+    "km": 28.855,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Moosmatt",
+    "km": 30.763,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Miesern",
+    "km": 33.973,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Marenstrasse",
+    "km": 36.287,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Passerelle",
+    "km": 38.611,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 3
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -302,6 +374,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -311,6 +393,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

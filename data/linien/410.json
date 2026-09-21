@@ -791,6 +791,82 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 8,
+  "nach_sicherungsart": [
+   {
+    "wert": "unbewacht",
+    "anzahl": 4
+   },
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 2
+   },
+   {
+    "wert": "Blinklichtanlage",
+    "anzahl": 1
+   }
+  ],
+  "ohne_sicherungsart": 1,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 3,
+  "mit_meisten_gleisen": [
+   2
+  ],
+  "anzahl_mit_meisten_gleisen": 1,
+  "items": [
+   {
+    "name": "Zugang Stationsstr.",
+    "km": 40.437,
+    "sicherungsart": null,
+    "gleise": 1
+   },
+   {
+    "name": "BUe Solothurnerstr.",
+    "km": 56.471,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bahnhofallee",
+    "km": 56.63,
+    "sicherungsart": "unbewacht",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Zuchwilstrasse",
+    "km": 70.242,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Luterbachstrasse",
+    "km": 71.453,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "Industrie Bellach",
+    "km": 77.83,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Aareweg",
+    "km": 83.02,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN 981",
+    "km": 98.173,
+    "sicherungsart": "unbewacht",
+    "gleise": 2
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -828,6 +904,21 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Sicherungsart",
+   "grund": "Bei 1 der erfassten Bahnübergänge ist keine Sicherungsart eingetragen.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -841,6 +932,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

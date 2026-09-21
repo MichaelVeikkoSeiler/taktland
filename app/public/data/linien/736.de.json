@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
@@ -373,9 +374,9 @@
           "type": "single_choice",
           "prompt": "Wie viele Brücken sind für die Linie 736 erfasst?",
           "options": [
+            "15",
             "21",
             "27",
-            "32",
             "38"
           ],
           "correct": 3,
@@ -410,6 +411,115 @@
           "correct": 1,
           "explanation": "Linthbr Schwanden besteht aus 5 Baueinheiten, Du Glarnergiessen aus 2 und WU Stadel aus 2.",
           "factRef": "bruecken.items[19].name",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 736 sind 34 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «Schrankenanlage» bei 32 Bahnübergängen, «Bedarfsschrankenanl» bei 1 und «Blinklichtanlage» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 4, bei BUe Molliserstrasse (km 65.455). Die Liste zeigt die Bahnübergänge mit den meisten gekreuzten Gleisen.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 34,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 32,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "«Bedarfsschrankenanl»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+        },
+        {
+          "label": "«Blinklichtanlage»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+        },
+        {
+          "label": "BUe Molliserstrasse (km 65.455)",
+          "value": 4,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[8].gleise"
+        },
+        {
+          "label": "BUe Im Amerika",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[1].gleise"
+        },
+        {
+          "label": "BUe Schwarzistrasse",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[3].gleise"
+        },
+        {
+          "label": "BUe Linthbrucke (km 61.315)",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[4].gleise"
+        },
+        {
+          "label": "BUe Molliserstrasse (km 61.815)",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[5].gleise"
+        },
+        {
+          "label": "BUe Ennetbuhlerstr",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[12].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:f4d52646",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 736 erfasst?",
+          "options": [
+            "10",
+            "24",
+            "29",
+            "34"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 34 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:3fa763fb",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie 736 eingetragen?",
+          "options": [
+            "Bedarfsschrankenanl",
+            "Blinklichtanlage",
+            "Schrankenanlage",
+            "unbewacht"
+          ],
+          "correct": 2,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 32 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
           "difficulty": 2
         }
       ]
@@ -450,6 +560,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Züge auf der Linie",

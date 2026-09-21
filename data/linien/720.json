@@ -809,6 +809,121 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 15,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 11
+   },
+   {
+    "wert": "Bedarfsschrankenanl",
+    "anzahl": 4
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 4,
+  "mit_meisten_gleisen": [
+   7,
+   14
+  ],
+  "anzahl_mit_meisten_gleisen": 2,
+  "items": [
+   {
+    "name": "BUe Dorfgas./Sust",
+    "km": 16.999,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Hirsackerweg",
+    "km": 18.226,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Strandbad",
+    "km": 18.652,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Meilibach",
+    "km": 19.425,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Naglikon",
+    "km": 19.922,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Sagenrain",
+    "km": 23.304,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Privat 2",
+    "km": 23.557,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Hafenstrasse",
+    "km": 23.791,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 4
+   },
+   {
+    "name": "BUe Giessen",
+    "km": 24.981,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Carfa",
+    "km": 26.08,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Burgerheim",
+    "km": 26.76,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Pfarrmatte",
+    "km": 32.091,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Leumen",
+    "km": 49.716,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Laender",
+    "km": 50.664,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Hannegg",
+    "km": 56.636,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 4
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -846,6 +961,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -855,6 +980,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

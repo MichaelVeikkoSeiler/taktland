@@ -196,6 +196,198 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 28,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 27
+   },
+   {
+    "wert": "Halbschrankeanlage",
+    "anzahl": 1
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 1,
+  "meiste_gleise": 3,
+  "mit_meisten_gleisen": [
+   10
+  ],
+  "anzahl_mit_meisten_gleisen": 1,
+  "items": [
+   {
+    "name": "PN Chambovey",
+    "km": 2.127,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Massongex",
+    "km": 3.192,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Av. Industrie",
+    "km": 5.721,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Av. de la Gare",
+    "km": 6.018,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": null
+   },
+   {
+    "name": "PN Av. du Crochetan",
+    "km": 6.823,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Collombey",
+    "km": 7.589,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Les Iles",
+    "km": 8.776,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Raffineries",
+    "km": 9.645,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Pre-Geroux",
+    "km": 10.197,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Illarsaz",
+    "km": 12.016,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de la Gare / Vouvry",
+    "km": 16.233,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "PN du Fosseau",
+    "km": 16.696,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Porte du Scex",
+    "km": 17.749,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN des Evouettes",
+    "km": 19.509,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Rte des Iles",
+    "km": 20.181,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Belles Truches",
+    "km": 21.317,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN La Lanche",
+    "km": 22.301,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN en gare",
+    "km": 22.833,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Debarcadere",
+    "km": 23.059,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN Rte St-Gingolph 1",
+    "km": 23.909,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Rte St-Gingolph 2",
+    "km": 24.275,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Rte St-Gingolph 3",
+    "km": 24.513,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Rte St-Gingolph 4",
+    "km": 24.678,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Rte St-Gingolph 5",
+    "km": 24.974,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Rte St-Gingolph 6",
+    "km": 25.13,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Fenalet",
+    "km": 25.395,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Rte St-Gingolph 7",
+    "km": 25.904,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de St-Gingolph",
+    "km": 26.746,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -233,6 +425,21 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Zahl der Gleise",
+   "grund": "Bei 1 der erfassten Bahnübergänge ist keine Zahl der gekreuzten Gleise eingetragen, oder sie steht auf 0.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -246,6 +453,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

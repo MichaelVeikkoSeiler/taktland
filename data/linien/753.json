@@ -189,6 +189,143 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 19,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 19
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 2,
+  "mit_meisten_gleisen": [
+   3,
+   4,
+   5,
+   16
+  ],
+  "anzahl_mit_meisten_gleisen": 4,
+  "items": [
+   {
+    "name": "BUe Grauselstrasse",
+    "km": 3.275,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wiesentalweg",
+    "km": 3.575,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Oeliweg",
+    "km": 4.023,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Effretikerstr.",
+    "km": 4.251,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Zurcherstrasse",
+    "km": 7.333,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Usterstrasse",
+    "km": 7.867,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Wermatwilerstr.",
+    "km": 8.493,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kemptthalstrasse",
+    "km": 10.364,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hotzenweidstr.",
+    "km": 10.66,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Obermattstrasse",
+    "km": 10.88,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Russikerstrasse",
+    "km": 11.163,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hittnauerstrasse",
+    "km": 11.675,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hochstrasse",
+    "km": 11.91,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tumbelenstrasse",
+    "km": 11.985,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Burglenstrasse",
+    "km": 12.265,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Unter Hornli",
+    "km": 13.15,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Motorenstrasse",
+    "km": 15.617,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Asylstrasse",
+    "km": 17.169,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schwendiweg",
+    "km": 19.42,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -226,6 +363,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -239,6 +386,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

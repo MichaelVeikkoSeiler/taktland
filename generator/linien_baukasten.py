@@ -461,4 +461,127 @@ def bruecken(f):
             "erlaeuterung": BRUECKE, "questions": fr[:3]}
 
 
-BAUER = {"strecke": strecke, "bahnhoefe": bahnhoefe, "tunnel": tunnel, "bruecken": bruecken}
+# ------------------------------------------------------------------ Bahnübergänge
+
+#: Die Beschreibung der Quelle, sinngemäss. Allgemein, ohne Bezug auf die Linie.
+BAHNUEBERGANG = ("Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch "
+                 "gesichert, mit Blinklicht oder Schranken oder mit einer "
+                 "Verkehrsregelungsanlage, oder ungesichert.")
+
+#: Sicherungsarten, wie die Quelle sie schreibt, als falsche Antworten. «Andere»
+#: ist die Sammelangabe und taugt weder als Antwort noch als falsche Antwort.
+SICHERUNGSARTEN = ["Schrankenanlage", "Blinklichtanlage", "Halbschrankeanlage",
+                   "Bedarfsschrankenanl", "VRA", "unbewacht"]
+
+
+def uebergaenge_wort(n, dativ=False):
+    if n == 1:
+        return "Bahnübergang"
+    return "Bahnübergängen" if dativ else "Bahnübergänge"
+
+
+def bahnuebergaenge(f):
+    ue = f["bahnuebergaenge"]; nr = f["linie"]; items = ue["items"]
+    fb = Faktenbasis(f)
+    n = ue["anzahl_erfasst"]
+    arten = ue["nach_sicherungsart"]
+    namen = [it["name"] for it in items]
+    def nenne(i):
+        it = items[i]
+        return f"{it['name']} (km {km(it['km'])})" if namen.count(it["name"]) > 1 else it["name"]
+
+    if n == 1:
+        it = items[0]
+        body = f"Für die Linie {nr} ist 1 Bahnübergang erfasst: {it['name']}, bei km {km(it['km'])}."
+        if it["sicherungsart"]:
+            body += f" Als Sicherungsart ist «{it['sicherungsart']}» eingetragen."
+        if it["gleise"]:
+            body += f" Eingetragen {'ist 1 gekreuztes Gleis' if it['gleise'] == 1 else 'sind ' + str(it['gleise']) + ' gekreuzte Gleise'}."
+    else:
+        body = f"Für die Linie {nr} sind {n} Bahnübergänge erfasst."
+        if len(arten) == 1 and not ue["ohne_sicherungsart"]:
+            body += f" Als Sicherungsart ist bei jedem erfassten Bahnübergang «{arten[0]['wert']}» eingetragen."
+        elif arten:
+            erster = arten[0]
+            teile = [f"«{erster['wert']}» bei {erster['anzahl']} {uebergaenge_wort(erster['anzahl'], True)}"]
+            teile += [f"«{a['wert']}» bei {a['anzahl']}" for a in arten[1:]]
+            body += f" Als Sicherungsart eingetragen ist {aufzaehlung(teile)}."
+        if ue["ohne_sicherungsart"]:
+            body += (f" Bei {ue['ohne_sicherungsart']} der erfassten Bahnübergänge ist keine "
+                     "Sicherungsart eingetragen."
+                     if arten else " Eine Sicherungsart ist bei keinem eingetragen.")
+        mg, mit = ue["meiste_gleise"], ue["mit_meisten_gleisen"]
+        if mg and len(mit) <= 3:
+            body += " " + punkt(f"Die grösste eingetragene Zahl gekreuzter Gleise ist {mg}, bei "
+                                f"{aufzaehlung([nenne(i) for i in mit])}")
+        elif mg:
+            body += (f" Die grösste eingetragene Zahl gekreuzter Gleise ist {mg}, bei "
+                     f"{ue['anzahl_mit_meisten_gleisen']} der erfassten Bahnübergänge.")
+
+    facts = [{"label": "Erfasste Bahnübergänge", "value": n, "source": "bahnubergang",
+              "factRef": "bahnuebergaenge.anzahl_erfasst"}]
+    if n > 1:
+        facts += [{"label": f"«{a['wert']}»", "value": a["anzahl"], "unit": uebergaenge_wort(a["anzahl"]),
+                   "source": "bahnubergang", "factRef": f"bahnuebergaenge.nach_sicherungsart[{j}].anzahl"}
+                  for j, a in enumerate(arten)]
+        if ue["ohne_sicherungsart"]:
+            facts.append({"label": "Ohne eingetragene Sicherungsart", "value": ue["ohne_sicherungsart"],
+                          "source": "bahnubergang", "factRef": "bahnuebergaenge.ohne_sicherungsart"})
+    mg, mit = ue["meiste_gleise"], ue["mit_meisten_gleisen"]
+    gezeigt = []
+    if n > 1 and mg and mg > 1:
+        mit_zahl = [dict(it, baueinheiten=it["gleise"]) for it in items]   # gleiche Gruppierung wie bei den Brücken
+        gezeigt = gruppen_bis(mit_zahl, BRUECKEN_IN_LISTE)
+        facts += [{"label": nenne(i), "value": items[i]["gleise"], "unit": "Gleise",
+                   "source": "bahnubergang", "factRef": f"bahnuebergaenge.items[{i}].gleise"}
+                  for i in gezeigt]
+        if gezeigt and len(gezeigt) < n:
+            body += " Die Liste zeigt die Bahnübergänge mit den meisten gekreuzten Gleisen."
+
+    fr = []
+    frei, alle = vorschlaege(f"U{nr}", n, 3, fb=fb)
+    opts = [ch(x) for x in sorted({n, *frei})]
+    fr.append(auswahl_frage(f"Wie viele Bahnübergänge sind für die Linie {nr} erfasst?", opts, ch(n),
+                            f"Erfasst sind {n} Bahnübergänge. Die Zahl gibt wieder, was in den "
+                            "offenen Daten steht." if n > 1 else "Erfasst ist 1 Bahnübergang.",
+                            "bahnuebergaenge.anzahl_erfasst", aus_fakten=not alle))
+
+    # Sicherungsart: die häufigste, nur mit klarem Vorsprung und nie die Sammelangabe
+    oben = arten[0]["wert"] if arten else None
+    klar = len(arten) == 1 or (len(arten) > 1 and not zu_nah(arten[0]["anzahl"], arten[1]["anzahl"]))
+    if oben and oben in SICHERUNGSARTEN and klar and (n > 1 or len(fr) < 3):
+        eigene = [a["wert"] for a in arten if a["wert"] in SICHERUNGSARTEN]
+        ersatz = [x for x in SICHERUNGSARTEN if x not in eigene]
+        # Linie 650 hat alle sechs Sicherungsarten: dann bleibt nichts zu ergänzen
+        start = streuung(f"{nr}:sicherung", len(ersatz)) if ersatz else 0
+        dazu = [ersatz[(start + j) % len(ersatz)] for j in range(min(len(ersatz), max(0, 4 - len(eigene))))]
+        optionen = (eigene + dazu)[:4] if oben in (eigene + dazu)[:4] else [oben, *(eigene + dazu)[:3]]
+        if n == 1:
+            frage = f"Welche Sicherungsart ist beim Bahnübergang der Linie {nr} eingetragen?"
+        elif len(arten) == 1 and not ue["ohne_sicherungsart"]:
+            frage = f"Welche Sicherungsart ist bei den Bahnübergängen der Linie {nr} eingetragen?"
+        else:
+            frage = f"Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie {nr} eingetragen?"
+        fr.append(auswahl_frage(
+            frage, optionen, oben,
+            f"Eingetragen ist «{oben}»" + (f", bei {arten[0]['anzahl']} der erfassten Bahnübergänge."
+                                         if n > 1 else "."),
+            "bahnuebergaenge.nach_sicherungsart[0].wert" if n > 1 else "bahnuebergaenge.items[0].sicherungsart",
+            diff=2))
+
+    # der Bahnübergang mit den meisten gekreuzten Gleisen, gegen andere aus der Liste
+    if len(mit) == 1 and gezeigt and namen.count(items[mit[0]]["name"]) == 1:
+        andere = [i for i in gezeigt if i != mit[0] and namen.count(items[i]["name"]) == 1][:3]
+        if andere:
+            fr.append(auswahl_frage(
+                "Bei welchem dieser Bahnübergänge sind die meisten gekreuzten Gleise eingetragen?",
+                [items[i]["name"] for i in [mit[0], *andere]], items[mit[0]]["name"],
+                f"Bei {items[mit[0]]['name']} sind {mg} Gleise eingetragen, "
+                + aufzaehlung([f"bei {items[i]['name']} {items[i]['gleise']}" for i in andere]) + ".",
+                f"bahnuebergaenge.items[{mit[0]}].name", diff=2))
+    return {"id": "bahnuebergaenge", "title": "Bahnübergänge", "body": body, "facts": facts,
+            "erlaeuterung": BAHNUEBERGANG, "questions": fr[:3]}
+
+
+BAUER = {"strecke": strecke, "bahnhoefe": bahnhoefe, "tunnel": tunnel, "bruecken": bruecken,
+         "bahnuebergaenge": bahnuebergaenge}

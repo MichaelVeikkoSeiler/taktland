@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
@@ -521,6 +522,136 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 251 sind 65 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «Schrankenanlage» bei 54 Bahnübergängen, «VRA» bei 4, «unbewacht» bei 4, «Halbschrankeanlage» bei 2 und «Blinklichtanlage» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 4, bei PN de l'Estivage, BUe Zuckerfabrik 4 und BUe 955 Aarberg. Die Liste zeigt die Bahnübergänge mit den meisten gekreuzten Gleisen.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 65,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 54,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "«VRA»",
+          "value": 4,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+        },
+        {
+          "label": "«unbewacht»",
+          "value": 4,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+        },
+        {
+          "label": "«Halbschrankeanlage»",
+          "value": 2,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[3].anzahl"
+        },
+        {
+          "label": "«Blinklichtanlage»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[4].anzahl"
+        },
+        {
+          "label": "PN de l'Estivage",
+          "value": 4,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[28].gleise"
+        },
+        {
+          "label": "BUe Zuckerfabrik 4",
+          "value": 4,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[56].gleise"
+        },
+        {
+          "label": "BUe 955 Aarberg",
+          "value": 4,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[60].gleise"
+        },
+        {
+          "label": "PN de Moudon",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[7].gleise"
+        },
+        {
+          "label": "PN rue de Lausanne",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[19].gleise"
+        },
+        {
+          "label": "BUe Murten",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[37].gleise"
+        },
+        {
+          "label": "BUe Moosgasse (km 85.018)",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[46].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:490a8f0f",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 251 erfasst?",
+          "options": [
+            "65",
+            "78",
+            "91",
+            "110"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 65 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:6a9b758d",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie 251 eingetragen?",
+          "options": [
+            "Halbschrankeanlage",
+            "Schrankenanlage",
+            "VRA",
+            "unbewacht"
+          ],
+          "correct": 1,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 54 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -558,6 +689,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Züge auf der Linie",

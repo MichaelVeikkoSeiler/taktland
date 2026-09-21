@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
@@ -456,6 +457,86 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 660 sind 2 Bahnübergänge erfasst. Als Sicherungsart ist bei jedem erfassten Bahnübergang «Schrankenanlage» eingetragen. Die grösste eingetragene Zahl gekreuzter Gleise ist 3, bei BUe Solitude.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 2,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 2,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "BUe Solitude",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[1].gleise"
+        },
+        {
+          "label": "BUe Herti",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[0].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:4fd8def5",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 660 erfasst?",
+          "options": [
+            "2",
+            "4",
+            "6",
+            "8"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 2 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:d6c54927",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den Bahnübergängen der Linie 660 eingetragen?",
+          "options": [
+            "Bedarfsschrankenanl",
+            "Schrankenanlage",
+            "VRA",
+            "unbewacht"
+          ],
+          "correct": 1,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 2 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        },
+        {
+          "id": "bahnuebergaenge:a8ced426",
+          "type": "single_choice",
+          "prompt": "Bei welchem dieser Bahnübergänge sind die meisten gekreuzten Gleise eingetragen?",
+          "options": [
+            "BUe Herti",
+            "BUe Solitude"
+          ],
+          "correct": 1,
+          "explanation": "Bei BUe Solitude sind 3 Gleise eingetragen, bei BUe Herti 2.",
+          "factRef": "bahnuebergaenge.items[1].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -493,6 +574,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Züge auf der Linie",

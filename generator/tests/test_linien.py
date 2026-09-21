@@ -95,3 +95,21 @@ def test_brueckennamen_ohne_deutung():
     k = next(k for k in L.bauen("100")["chapters"] if k["id"] == "bruecken")
     for wort in ("Unterführung", "Personenunterführung", "Passage inférieur"):
         assert wort not in k["body"]
+
+
+def test_bahnuebergaenge_nur_klare_felder():
+    # Eigentum, Nutzung und Gleiskategorie beschreibt die Quelle falsch oder gar nicht
+    f = lb.fakten("410")
+    item = f["bahnuebergaenge"]["items"][0]
+    assert set(item) == {"name", "km", "sicherungsart", "gleise"}
+    k = next(k for k in L.bauen("410")["chapters"] if k["id"] == "bahnuebergaenge")
+    assert "Bei 1 der erfassten Bahnübergänge ist keine Sicherungsart eingetragen." in k["body"]
+    assert "«unbewacht» bei 4 Bahnübergängen" in k["body"]
+
+
+def test_bahnuebergang_null_gleise_ist_keine_angabe():
+    # 0 gekreuzte Gleise steht zweimal in der Quelle; eine 0 heisst «nicht erfasst»
+    for p in lb.LINIEN.glob("*.json"):
+        ue = json.loads(p.read_text(encoding="utf-8")).get("bahnuebergaenge")
+        if ue:
+            assert all(it["gleise"] != 0 for it in ue["items"])

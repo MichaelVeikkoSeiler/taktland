@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten"
@@ -279,6 +280,80 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 830 sind 13 Bahnübergänge erfasst. Als Sicherungsart ist bei jedem erfassten Bahnübergang «Schrankenanlage» eingetragen. Die grösste eingetragene Zahl gekreuzter Gleise ist 2, bei BUe Thurnstrasse, BUe Tobel-Affelt. und BUe Station. Die Liste zeigt die Bahnübergänge mit den meisten gekreuzten Gleisen.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 13,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 13,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "BUe Thurnstrasse",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[1].gleise"
+        },
+        {
+          "label": "BUe Tobel-Affelt.",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[3].gleise"
+        },
+        {
+          "label": "BUe Station",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[7].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:fb92032d",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 830 erfasst?",
+          "options": [
+            "9",
+            "13",
+            "16",
+            "18"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 13 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:948e5a33",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den Bahnübergängen der Linie 830 eingetragen?",
+          "options": [
+            "Bedarfsschrankenanl",
+            "Halbschrankeanlage",
+            "Schrankenanlage",
+            "VRA"
+          ],
+          "correct": 2,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 13 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -316,6 +391,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Tunnel",

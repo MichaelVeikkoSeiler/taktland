@@ -87,6 +87,7 @@ def linien():
             "bahnhoefe": f["bahnhoefe"]["anzahl_in_taktland"],
             "tunnel": (f.get("tunnel") or {}).get("anzahl_erfasst", 0),
             "bruecken": (f.get("bruecken") or {}).get("anzahl_erfasst", 0),
+            "bahnuebergaenge": (f.get("bahnuebergaenge") or {}).get("anzahl_erfasst", 0),
         })
         for it in f["bahnhoefe"]["items"]:
             nach_bahnhof.setdefault(str(it["uic"]), []).append(d["linie"])
@@ -97,7 +98,8 @@ def linien():
         u = json.loads(uebersicht.read_text(encoding="utf-8"))
         verzeichnis["nicht_aufgefuehrt"] = {
             "bruecken": u["bruecken_ohne_seite"],
-            "linien": u["linien_ohne_seite_mit_bruecken"],
+            "bahnuebergaenge": u["bahnuebergaenge_ohne_seite"],
+            "linien": u["linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen"],
         }
     (ZIEL / "linien.json").write_text(json.dumps(verzeichnis, ensure_ascii=False), encoding="utf-8")
     print(f"linien.json: {len(eintraege)} Linien, {len(nach_bahnhof)} Bahnhöfe verknüpft")

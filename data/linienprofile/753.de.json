@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten"
@@ -212,6 +213,87 @@
           "difficulty": 1
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 753 sind 19 Bahnübergänge erfasst. Als Sicherungsart ist bei jedem erfassten Bahnübergang «Schrankenanlage» eingetragen. Die grösste eingetragene Zahl gekreuzter Gleise ist 2, bei 4 der erfassten Bahnübergänge. Die Liste zeigt die Bahnübergänge mit den meisten gekreuzten Gleisen.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 19,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 19,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "BUe Effretikerstr.",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[3].gleise"
+        },
+        {
+          "label": "BUe Zurcherstrasse",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[4].gleise"
+        },
+        {
+          "label": "BUe Usterstrasse",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[5].gleise"
+        },
+        {
+          "label": "BUe Motorenstrasse",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[16].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:b6d35a7d",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 753 erfasst?",
+          "options": [
+            "19",
+            "23",
+            "27",
+            "32"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 19 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:4d5e17ca",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den Bahnübergängen der Linie 753 eingetragen?",
+          "options": [
+            "Blinklichtanlage",
+            "Schrankenanlage",
+            "VRA",
+            "unbewacht"
+          ],
+          "correct": 1,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 19 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -249,6 +331,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Tunnel",

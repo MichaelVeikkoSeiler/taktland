@@ -452,6 +452,11 @@
       "quelle": "brucken"
     },
     {
+      "thema": "Bahnübergänge",
+      "grund": "Für diese Linie ist kein Bahnübergang erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "bahnubergang"
+    },
+    {
       "thema": "Züge auf der Linie",
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"

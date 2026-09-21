@@ -20,6 +20,9 @@ Was die Daten nicht hergeben (geprüft im Katalog von data.sbb.ch):
   den Tunnel.
 - Länge und Baujahr einer Brücke. Erfasst sind Name, Kilometer, Kanton und
   die Zahl der Baueinheiten.
+- die Bedeutung einiger Felder bei den Bahnübergängen: Eigentum, Nutzung und
+  Gleiskategorie beschreibt die Quelle nicht oder mit Texten aus anderen
+  Datensätzen. Verwendet sind Sicherungsart und Zahl der gekreuzten Gleise.
 
     .venv/bin/python pipeline/build_linien.py
 """
@@ -46,7 +49,7 @@ UEBERSICHT = ROOT / "data" / "linien_uebersicht.json"
 #: gibt es nichts zu ordnen.
 MINDESTENS_BAHNHOEFE = 2
 
-QUELLEN = ["linie", "linie-mit-betriebspunkten", "tunnel", "brucken"]
+QUELLEN = ["linie", "linie-mit-betriebspunkten", "tunnel", "brucken", "bahnubergang"]
 
 
 def load(name):
@@ -118,6 +121,32 @@ def nach_kanton(items):
             for k, n in sorted(zaehler.items(), key=lambda x: (-x[1], x[0]))]
 
 
+def uebergang_items(df):
+    """Nur Felder, deren Bedeutung aus den Werten klar ist. Eigentum, Nutzung und
+    Gleiskategorie beschreibt die Quelle nicht oder mit Texten aus anderen
+    Datensätzen («Für wen ist die Treppe/Rampe vorgesehen»)."""
+    items = []
+    for _, r in df.sort_values("km").iterrows():
+        gleise = num(r.anz_kreuz_gleise)
+        items.append({
+            "name": txt(r["name"]),
+            "km": num(r.km),
+            "sicherungsart": txt(r.sicherungsart),
+            # 0 gekreuzte Gleise ist keine Angabe, sondern keine Zahl
+            "gleise": gleise if gleise else None,
+        })
+    return items
+
+
+def nach_feld(items, feld):
+    """Wie viele Einträge je Wert, die meisten zuerst. Gezählt hier, nicht im Text."""
+    zaehler = {}
+    for it in items:
+        if it[feld]:
+            zaehler[it[feld]] = zaehler.get(it[feld], 0) + 1
+    return [{"wert": k, "anzahl": n} for k, n in sorted(zaehler.items(), key=lambda x: (-x[1], x[0]))]
+
+
 def einzige_oder_alle(items, feld, beste):
     """Indizes der Einträge mit dem besten Wert. Gleichstand ist kein
     Vorsprung: Sind es mehrere, nennt der Text alle."""
@@ -176,6 +205,34 @@ def luecken(f):
                "Für diese Linie ist keine Brücke erfasst. Das schliesst nicht aus, "
                "dass es eine gibt.",
                "brucken")
+    bue = f.get("bahnuebergaenge")
+    if bue:
+        lueckt("Einträge zu den Bahnübergängen",
+               "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa "
+               "«VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit "
+               "Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der "
+               "Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der "
+               "gekreuzten Gleise.",
+               "bahnubergang")
+        if bue["ohne_sicherungsart"]:
+            lueckt("Sicherungsart",
+                   f"Bei {bue['ohne_sicherungsart']} der erfassten Bahnübergänge ist keine "
+                   "Sicherungsart eingetragen.",
+                   "bahnubergang")
+        if bue["ohne_gleiszahl"]:
+            lueckt("Zahl der Gleise",
+                   f"Bei {bue['ohne_gleiszahl']} der erfassten Bahnübergänge ist keine Zahl "
+                   "der gekreuzten Gleise eingetragen, oder sie steht auf 0.",
+                   "bahnubergang")
+        lueckt("Stand der Bahnübergänge",
+               "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und "
+               f"vervollständigt. Taktland zeigt den Stand vom {f['datenstand']}.",
+               "bahnubergang")
+    else:
+        lueckt("Bahnübergänge",
+               "Für diese Linie ist kein Bahnübergang erfasst. Das schliesst nicht aus, "
+               "dass es einen gibt.",
+               "bahnubergang")
     if not f.get("tunnel"):
         lueckt("Tunnel",
                "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, "
@@ -198,6 +255,8 @@ def main():
     tunnel["linie"] = pd.to_numeric(tunnel.linie, errors="coerce")
     bruecken = load("brucken")
     bruecken["linie"] = pd.to_numeric(bruecken.linie, errors="coerce")
+    uebergaenge = load("bahnubergang")
+    uebergaenge["linie"] = pd.to_numeric(uebergaenge.linie, errors="coerce")
 
     ZIEL.mkdir(parents=True, exist_ok=True)
     for alt in ZIEL.glob("*.json"):
@@ -264,12 +323,30 @@ def main():
                 "anzahl_mit_meisten": len(meiste),
                 "items": items,
             }
+        ue = uebergaenge[uebergaenge.linie == nr]
+        if not ue.empty:
+            items = uebergang_items(ue)
+            meiste = einzige_oder_alle(items, "gleise", max)
+            f["bahnuebergaenge"] = {
+                "source": "bahnubergang",
+                "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der "
+                           "gekreuzten Gleise; 0 und leere Felder stehen als null.",
+                "anzahl_erfasst": len(items),
+                "nach_sicherungsart": nach_feld(items, "sicherungsart"),
+                "ohne_sicherungsart": sum(1 for it in items if not it["sicherungsart"]),
+                "ohne_gleiszahl": sum(1 for it in items if not it["gleise"]),
+                "meiste_gleise": items[meiste[0]]["gleise"] if meiste else None,
+                "mit_meisten_gleisen": meiste,
+                "anzahl_mit_meisten_gleisen": len(meiste),
+                "items": items,
+            }
         f["luecken"] = luecken(f)
         mit_kapitel = {"strecke": True, "tunnel": bool(f.get("tunnel")),
                        "bruecken": bool(f.get("bruecken")),
+                       "bahnuebergaenge": bool(f.get("bahnuebergaenge")),
                        "bahnhoefe": f["bahnhoefe"]["anzahl_in_taktland"] >= MINDESTENS_BAHNHOEFE}
-        f["verfuegbare_kapitel"] = [k for k in ("strecke", "bahnhoefe", "tunnel", "bruecken")
-                                    if mit_kapitel[k]]
+        f["verfuegbare_kapitel"] = [k for k in ("strecke", "bahnhoefe", "tunnel", "bruecken",
+                                                "bahnuebergaenge") if mit_kapitel[k]]
         (ZIEL / f"{nr}.json").write_text(json.dumps(f, ensure_ascii=False, indent=1) + "\n",
                                         encoding="utf-8")
         geschrieben.append(int(nr))
@@ -277,17 +354,23 @@ def main():
 
     # Was ohne eigene Seite bleibt, wird gezählt und in der App genannt
     ohne = bruecken[~bruecken.linie.isin(geschrieben)]
+    ohne_ue = uebergaenge[~uebergaenge.linie.isin(geschrieben)]
     uebersicht = {
         "datenstand": stand,
-        "hinweis": "Brücken auf Linien ohne eigene Seite: weniger als zwei Bahnhöfe in "
-                   "Taktland und kein Tunnel.",
+        "hinweis": "Brücken und Bahnübergänge auf Linien ohne eigene Seite: weniger als zwei "
+                   "Bahnhöfe in Taktland und kein Tunnel.",
         "bruecken_ohne_seite": int(len(ohne)),
         "linien_ohne_seite_mit_bruecken": int(ohne.linie.nunique()),
+        "bahnuebergaenge_ohne_seite": int(len(ohne_ue)),
+        "linien_ohne_seite_mit_bahnuebergaengen": int(ohne_ue.linie.nunique()),
+        "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen":
+            int(len(set(ohne.linie) | set(ohne_ue.linie))),
     }
     UEBERSICHT.write_text(json.dumps(uebersicht, ensure_ascii=False, indent=1) + "\n",
                           encoding="utf-8")
-    print(f"ohne Seite: {uebersicht['bruecken_ohne_seite']} Brücken auf "
-          f"{uebersicht['linien_ohne_seite_mit_bruecken']} Linien")
+    print(f"ohne Seite: {uebersicht['bruecken_ohne_seite']} Brücken und "
+          f"{uebersicht['bahnuebergaenge_ohne_seite']} Bahnübergänge auf "
+          f"{uebersicht['linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen']} Linien")
 
 
 if __name__ == "__main__":

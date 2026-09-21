@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten"
@@ -240,6 +241,116 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 252 sind 18 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «Schrankenanlage» bei 17 Bahnübergängen und «Bedarfsschrankenanl» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 3, bei PN d'Yvonand. Die Liste zeigt die Bahnübergänge mit den meisten gekreuzten Gleisen.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 18,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 17,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "«Bedarfsschrankenanl»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+        },
+        {
+          "label": "PN d'Yvonand",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[6].gleise"
+        },
+        {
+          "label": "PN de Cheyres",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[7].gleise"
+        },
+        {
+          "label": "PN d'Estavayer",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[9].gleise"
+        },
+        {
+          "label": "PN Cugy ouest",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[12].gleise"
+        },
+        {
+          "label": "PN Cugy est",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[13].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:a46987f5",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 252 erfasst?",
+          "options": [
+            "18",
+            "22",
+            "25",
+            "31"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 18 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:6f54a0e2",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie 252 eingetragen?",
+          "options": [
+            "Bedarfsschrankenanl",
+            "Blinklichtanlage",
+            "Schrankenanlage",
+            "unbewacht"
+          ],
+          "correct": 2,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 17 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        },
+        {
+          "id": "bahnuebergaenge:16379771",
+          "type": "single_choice",
+          "prompt": "Bei welchem dieser Bahnübergänge sind die meisten gekreuzten Gleise eingetragen?",
+          "options": [
+            "PN Cugy ouest",
+            "PN d'Estavayer",
+            "PN d'Yvonand",
+            "PN de Cheyres"
+          ],
+          "correct": 2,
+          "explanation": "Bei PN d'Yvonand sind 3 Gleise eingetragen, bei PN de Cheyres 2, bei PN d'Estavayer 2 und bei PN Cugy ouest 2.",
+          "factRef": "bahnuebergaenge.items[6].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -277,6 +388,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Tunnel",

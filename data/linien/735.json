@@ -186,6 +186,134 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 18,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 18
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 3,
+  "mit_meisten_gleisen": [
+   9
+  ],
+  "anzahl_mit_meisten_gleisen": 1,
+  "items": [
+   {
+    "name": "BUe Windegg",
+    "km": 35.783,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Eichen",
+    "km": 36.498,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Biltenerstrasse",
+    "km": 37.239,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rufibach",
+    "km": 39.344,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kanal",
+    "km": 39.789,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Maseltrangen",
+    "km": 40.26,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wyden",
+    "km": 42.445,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kaltbrunnerstr.",
+    "km": 43.289,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Grafenaustrasse",
+    "km": 44.327,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Grynaustrasse",
+    "km": 46.324,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Bleicherweg",
+    "km": 47.235,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Aabach",
+    "km": 47.981,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Allmeindstrasse",
+    "km": 48.945,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bad",
+    "km": 49.476,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Ziegelhof",
+    "km": 50.729,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Campingplatz",
+    "km": 54.192,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Station",
+    "km": 54.425,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Wurmsbach",
+    "km": 55.508,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -223,6 +351,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -236,6 +374,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

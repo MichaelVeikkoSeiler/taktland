@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
@@ -291,6 +292,101 @@
           "difficulty": 1
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 769 sind 5 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «Schrankenanlage» bei 4 Bahnübergängen und «unbewacht» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 2, bei BUe Reutgasse und BUe Niederfeldstrasse.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 5,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 4,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "«unbewacht»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+        },
+        {
+          "label": "BUe Reutgasse",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[0].gleise"
+        },
+        {
+          "label": "BUe Niederfeldstrasse",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[2].gleise"
+        },
+        {
+          "label": "BUe Wieshofstrasse",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[1].gleise"
+        },
+        {
+          "label": "BUe Ziegelhutte",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[3].gleise"
+        },
+        {
+          "label": "BUe Lochacker",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[4].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:015ac606",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 769 erfasst?",
+          "options": [
+            "3",
+            "5",
+            "7",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 5 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:67532fa5",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie 769 eingetragen?",
+          "options": [
+            "Blinklichtanlage",
+            "Schrankenanlage",
+            "VRA",
+            "unbewacht"
+          ],
+          "correct": 1,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 4 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -328,6 +424,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Züge auf der Linie",

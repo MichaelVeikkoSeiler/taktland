@@ -157,6 +157,11 @@
       "quelle": "brucken"
     },
     {
+      "thema": "Bahnübergänge",
+      "grund": "Für diese Linie ist kein Bahnübergang erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "bahnubergang"
+    },
+    {
       "thema": "Tunnel",
       "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
       "quelle": "tunnel"

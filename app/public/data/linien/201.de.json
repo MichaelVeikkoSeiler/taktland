@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
@@ -177,6 +178,116 @@
           "difficulty": 1
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 201 sind 5 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «Schrankenanlage» bei 4 Bahnübergängen und «Blinklichtanlage» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 2, bei PN de la STEP.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 5,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 4,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "«Blinklichtanlage»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+        },
+        {
+          "label": "PN de la STEP",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[4].gleise"
+        },
+        {
+          "label": "PN du Day",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[0].gleise"
+        },
+        {
+          "label": "PN de Granges Neuve",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[1].gleise"
+        },
+        {
+          "label": "PN des Epoisats",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[2].gleise"
+        },
+        {
+          "label": "PN de la Torne",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[3].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:9f9ec4e7",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 201 erfasst?",
+          "options": [
+            "5",
+            "7",
+            "8",
+            "11"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 5 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:2ae705aa",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie 201 eingetragen?",
+          "options": [
+            "Bedarfsschrankenanl",
+            "Blinklichtanlage",
+            "Schrankenanlage",
+            "VRA"
+          ],
+          "correct": 2,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 4 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        },
+        {
+          "id": "bahnuebergaenge:9d19a90f",
+          "type": "single_choice",
+          "prompt": "Bei welchem dieser Bahnübergänge sind die meisten gekreuzten Gleise eingetragen?",
+          "options": [
+            "PN de Granges Neuve",
+            "PN de la STEP",
+            "PN des Epoisats",
+            "PN du Day"
+          ],
+          "correct": 1,
+          "explanation": "Bei PN de la STEP sind 2 Gleise eingetragen, bei PN du Day 1, bei PN de Granges Neuve 1 und bei PN des Epoisats 1.",
+          "factRef": "bahnuebergaenge.items[4].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -214,6 +325,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Züge auf der Linie",

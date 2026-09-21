@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "linie",
     "linie-mit-betriebspunkten"
   ],
@@ -156,6 +157,123 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 257 sind 6 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «Schrankenanlage» bei 5 Bahnübergängen und «Halbschrankeanlage» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 2, bei BUe 15 Dorfstrasse.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 6,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 5,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "«Halbschrankeanlage»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+        },
+        {
+          "label": "BUe 15 Dorfstrasse",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[2].gleise"
+        },
+        {
+          "label": "BUe 064 Flamatt Dorf",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[0].gleise"
+        },
+        {
+          "label": "BUe 13 Maeder",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[1].gleise"
+        },
+        {
+          "label": "BUe 18 Kirchgasse",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[3].gleise"
+        },
+        {
+          "label": "BUe 21 Schutzenhaus",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[4].gleise"
+        },
+        {
+          "label": "BUe 42 Freiburghaus",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[5].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:f8e98e51",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 257 erfasst?",
+          "options": [
+            "3",
+            "6",
+            "7",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 6 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:13734e10",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie 257 eingetragen?",
+          "options": [
+            "Halbschrankeanlage",
+            "Schrankenanlage",
+            "VRA",
+            "unbewacht"
+          ],
+          "correct": 1,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 5 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        },
+        {
+          "id": "bahnuebergaenge:f7bed5ba",
+          "type": "single_choice",
+          "prompt": "Bei welchem dieser Bahnübergänge sind die meisten gekreuzten Gleise eingetragen?",
+          "options": [
+            "BUe 064 Flamatt Dorf",
+            "BUe 13 Maeder",
+            "BUe 15 Dorfstrasse",
+            "BUe 18 Kirchgasse"
+          ],
+          "correct": 2,
+          "explanation": "Bei BUe 15 Dorfstrasse sind 2 Gleise eingetragen, bei BUe 064 Flamatt Dorf 1, bei BUe 13 Maeder 1 und bei BUe 18 Kirchgasse 1.",
+          "factRef": "bahnuebergaenge.items[2].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -183,6 +301,16 @@
       "thema": "Brücken",
       "grund": "Für diese Linie ist keine Brücke erfasst. Das schliesst nicht aus, dass es eine gibt.",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Tunnel",

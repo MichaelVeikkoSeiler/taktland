@@ -494,6 +494,434 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 65,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 54
+   },
+   {
+    "wert": "VRA",
+    "anzahl": 4
+   },
+   {
+    "wert": "unbewacht",
+    "anzahl": 4
+   },
+   {
+    "wert": "Halbschrankeanlage",
+    "anzahl": 2
+   },
+   {
+    "wert": "Blinklichtanlage",
+    "anzahl": 1
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 4,
+  "mit_meisten_gleisen": [
+   28,
+   56,
+   60
+  ],
+  "anzahl_mit_meisten_gleisen": 3,
+  "items": [
+   {
+    "name": "PN Palezieux-Village",
+    "km": 23.28,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN ch. de l'Arzelier",
+    "km": 24.982,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Ancienne Route",
+    "km": 25.514,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Chatillens",
+    "km": 25.855,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN rte de La Pierraz",
+    "km": 28.012,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Champ Pruneau",
+    "km": 28.737,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Ecublens",
+    "km": 30.719,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Moudon",
+    "km": 37.877,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "PN de Rod",
+    "km": 39.003,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Longevaux",
+    "km": 42.491,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Lucens",
+    "km": 43.324,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN des Iles",
+    "km": 45.191,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "PN Halte d'Henniez",
+    "km": 47.15,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN d'Henniez",
+    "km": 48.781,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Granges-Marnand",
+    "km": 50.486,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN de Perria",
+    "km": 51.823,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Trey",
+    "km": 53.443,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Boulex",
+    "km": 54.519,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Glatigny",
+    "km": 58.137,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN rue de Lausanne",
+    "km": 58.248,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "PN GdS-Longs-Champs",
+    "km": 60.061,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN rue du College",
+    "km": 60.508,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Corcelles-Nord",
+    "km": 60.822,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Rombosson",
+    "km": 61.205,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Dompierre",
+    "km": 63.752,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN des Erses",
+    "km": 64.963,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Domdidier",
+    "km": 66.242,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN d'Avenches",
+    "km": 68.965,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de l'Estivage",
+    "km": 69.551,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 4
+   },
+   {
+    "name": "PN de Salavaux",
+    "km": 72.01,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN du Port",
+    "km": 72.575,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de la Plage",
+    "km": 73.05,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN Paquier aux Oies",
+    "km": 73.59,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Greng",
+    "km": 74.571,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "PN de Meyriez",
+    "km": 75.796,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Recheraulazstr.",
+    "km": 75.968,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Freiburgstrasse",
+    "km": 76.23,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Murten",
+    "km": 76.64,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Prehlstrasse",
+    "km": 77.073,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Lowenberg",
+    "km": 79.021,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Muntelier",
+    "km": 79.908,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Galmiz",
+    "km": 80.714,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe von Erli",
+    "km": 82.065,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ried bei Kerzers",
+    "km": 83.584,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Industriestrasse",
+    "km": 84.263,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "PN usine electrique",
+    "km": 84.636,
+    "sicherungsart": "unbewacht",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Moosgasse",
+    "km": 85.018,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Bahnhof",
+    "km": 87.645,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Fraschels",
+    "km": 87.94,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kallnach BKW",
+    "km": 90.607,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kallnach",
+    "km": 91.313,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Moosgasse",
+    "km": 93.434,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bargen",
+    "km": 93.925,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Murtenstr.",
+    "km": 94.29,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Muhlauweg",
+    "km": 94.354,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Muhlaudamm",
+    "km": 94.633,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Zuckerfabrik 4",
+    "km": 94.977,
+    "sicherungsart": "VRA",
+    "gleise": 4
+   },
+   {
+    "name": "BUe Zuckerfabrik 3",
+    "km": 95.19,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Zuckerfabrik 2",
+    "km": 95.194,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Zuckerfabrik 1",
+    "km": 95.205,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 955 Aarberg",
+    "km": 95.547,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 4
+   },
+   {
+    "name": "BUe Spinsweg",
+    "km": 96.025,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Verzinkerei",
+    "km": 96.848,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Leimern",
+    "km": 97.345,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 1002 Steinweg",
+    "km": 100.254,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -531,6 +959,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -540,6 +978,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

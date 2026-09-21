@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
@@ -285,12 +286,12 @@
           "type": "single_choice",
           "prompt": "Wie viele Brücken sind für die Linie 223 erfasst?",
           "options": [
-            "4",
-            "5",
             "6",
-            "8"
+            "8",
+            "10",
+            "13"
           ],
-          "correct": 2,
+          "correct": 0,
           "explanation": "Erfasst sind 6 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
           "factRef": "bruecken.anzahl_erfasst",
           "difficulty": 1
@@ -308,6 +309,66 @@
           "correct": 0,
           "explanation": "PI Corcelles besteht aus 2 Baueinheiten, Pt sur le Seyon aus 1, PI voy Les Deurres aus 1 und PI de la Nicole aus 1.",
           "factRef": "bruecken.items[2].name",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 223 sind 5 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «Schrankenanlage» bei 4 Bahnübergängen und «unbewacht» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 1, bei 5 der erfassten Bahnübergänge.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 5,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 4,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "«unbewacht»",
+          "value": 1,
+          "unit": "Bahnübergang",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:4ce1a5a0",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 223 erfasst?",
+          "options": [
+            "5",
+            "8",
+            "11",
+            "15"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 5 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:19d1cdb2",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie 223 eingetragen?",
+          "options": [
+            "Blinklichtanlage",
+            "Schrankenanlage",
+            "VRA",
+            "unbewacht"
+          ],
+          "correct": 1,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 4 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
           "difficulty": 2
         }
       ]
@@ -348,6 +409,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Züge auf der Linie",

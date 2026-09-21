@@ -1,6 +1,9 @@
 {
  "datenstand": "2026-09-21",
- "hinweis": "Brücken auf Linien ohne eigene Seite: weniger als zwei Bahnhöfe in Taktland und kein Tunnel.",
+ "hinweis": "Brücken und Bahnübergänge auf Linien ohne eigene Seite: weniger als zwei Bahnhöfe in Taktland und kein Tunnel.",
  "bruecken_ohne_seite": 159,
- "linien_ohne_seite_mit_bruecken": 57
+ "linien_ohne_seite_mit_bruecken": 57,
+ "bahnuebergaenge_ohne_seite": 53,
+ "linien_ohne_seite_mit_bahnuebergaengen": 29,
+ "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen": 70
 }

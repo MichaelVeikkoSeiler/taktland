@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "bahnubergang",
     "brucken",
     "linie",
     "linie-mit-betriebspunkten"
@@ -216,6 +217,94 @@
           "difficulty": 1
         }
       ]
+    },
+    {
+      "id": "bahnuebergaenge",
+      "title": "Bahnübergänge",
+      "body": "Für die Linie 640 sind 3 Bahnübergänge erfasst. Als Sicherungsart ist bei jedem erfassten Bahnübergang «Schrankenanlage» eingetragen. Die grösste eingetragene Zahl gekreuzter Gleise ist 3, bei BUe Unterwerkstrasse.",
+      "facts": [
+        {
+          "label": "Erfasste Bahnübergänge",
+          "value": 3,
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.anzahl_erfasst"
+        },
+        {
+          "label": "«Schrankenanlage»",
+          "value": 3,
+          "unit": "Bahnübergänge",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+        },
+        {
+          "label": "BUe Unterwerkstrasse",
+          "value": 3,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[0].gleise"
+        },
+        {
+          "label": "BUe Hunziker 1",
+          "value": 2,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[1].gleise"
+        },
+        {
+          "label": "BUe Scheueracker",
+          "value": 1,
+          "unit": "Gleise",
+          "source": "bahnubergang",
+          "factRef": "bahnuebergaenge.items[2].gleise"
+        }
+      ],
+      "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
+      "questions": [
+        {
+          "id": "bahnuebergaenge:ce2a64a5",
+          "type": "single_choice",
+          "prompt": "Wie viele Bahnübergänge sind für die Linie 640 erfasst?",
+          "options": [
+            "3",
+            "4",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bahnuebergaenge:4d81bd42",
+          "type": "single_choice",
+          "prompt": "Welche Sicherungsart ist bei den Bahnübergängen der Linie 640 eingetragen?",
+          "options": [
+            "Bedarfsschrankenanl",
+            "Blinklichtanlage",
+            "Halbschrankeanlage",
+            "Schrankenanlage"
+          ],
+          "correct": 3,
+          "explanation": "Eingetragen ist «Schrankenanlage», bei 3 der erfassten Bahnübergänge.",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
+          "difficulty": 2
+        },
+        {
+          "id": "bahnuebergaenge:b1f95e64",
+          "type": "single_choice",
+          "prompt": "Bei welchem dieser Bahnübergänge sind die meisten gekreuzten Gleise eingetragen?",
+          "options": [
+            "BUe Hunziker 1",
+            "BUe Scheueracker",
+            "BUe Unterwerkstrasse"
+          ],
+          "correct": 2,
+          "explanation": "Bei BUe Unterwerkstrasse sind 3 Gleise eingetragen, bei BUe Hunziker 1 2 und bei BUe Scheueracker 1.",
+          "factRef": "bahnuebergaenge.items[0].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -253,6 +342,16 @@
       "thema": "Stand der Brückendaten",
       "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
       "quelle": "brucken"
+    },
+    {
+      "thema": "Einträge zu den Bahnübergängen",
+      "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+      "quelle": "bahnubergang"
+    },
+    {
+      "thema": "Stand der Bahnübergänge",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "quelle": "bahnubergang"
     },
     {
       "thema": "Tunnel",

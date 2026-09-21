@@ -113,8 +113,9 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
           </li>
           <li>
             Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach ihrem Kilometer geordnet,
-            die erfassten Tunnel mit Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem
-            und die erfassten Brücken mit Kanton und Zahl der Baueinheiten. Jeder Bahnhof in
+            die erfassten Tunnel mit Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem,
+            die erfassten Brücken mit Kanton und Zahl der Baueinheiten und die erfassten
+            Bahnübergänge mit Sicherungsart und Zahl der gekreuzten Gleise. Jeder Bahnhof in
             der Liste führt zu seiner Seite, und die Bahnhofsseite führt zu seinen Linien.
           </li>
           <li>

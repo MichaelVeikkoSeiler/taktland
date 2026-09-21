@@ -3756,6 +3756,81 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 7,
+  "nach_sicherungsart": [
+   {
+    "wert": "unbewacht",
+    "anzahl": 4
+   },
+   {
+    "wert": "Bedarfsschrankenanl",
+    "anzahl": 1
+   },
+   {
+    "wert": "Halbschrankeanlage",
+    "anzahl": 1
+   },
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 1
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 2,
+  "mit_meisten_gleisen": [
+   0,
+   3
+  ],
+  "anzahl_mit_meisten_gleisen": 2,
+  "items": [
+   {
+    "name": "PL Guterstrasse",
+    "km": 9.402,
+    "sicherungsart": "unbewacht",
+    "gleise": 2
+   },
+   {
+    "name": "BUe 368 Ruag 1",
+    "km": 36.796,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 368 Ruag 2",
+    "km": 36.827,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 52.690",
+    "km": 52.685,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 2
+   },
+   {
+    "name": "Passaggio pedonale",
+    "km": 147.332,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "PL St. L. Favre",
+    "km": 203.56,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "PL P+R",
+    "km": 203.592,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -3793,6 +3868,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -3802,6 +3887,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

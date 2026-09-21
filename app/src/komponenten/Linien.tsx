@@ -36,13 +36,7 @@ export function Linien({ zurueck }: { zurueck: () => void }) {
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Aufgenommen sind Linien mit mindestens zwei Bahnhöfen in Taktland oder mit einem
         erfassten Tunnel.
-        {daten?.nicht_aufgefuehrt && daten.nicht_aufgefuehrt.bruecken > 0 && (
-          <> Nicht aufgeführt sind {daten.nicht_aufgefuehrt.bruecken.toLocaleString('de-CH')}{' '}
-            {daten.nicht_aufgefuehrt.bruecken === 1 ? 'Brücke' : 'Brücken'} auf{' '}
-            {daten.nicht_aufgefuehrt.linien}{' '}
-            {daten.nicht_aufgefuehrt.linien === 1 ? 'weiteren Linie' : 'weiteren Linien'}, die
-            weniger als zwei Bahnhöfe in Taktland und keinen Tunnel haben.</>
-        )}
+        {daten?.nicht_aufgefuehrt && <NichtAufgefuehrt n={daten.nicht_aufgefuehrt} />}
       </p>
 
       {fehler && <p className="mt-6">Die Linien konnten nicht geladen werden. {fehler}</p>}
@@ -73,12 +67,29 @@ export function Linien({ zurueck }: { zurueck: () => void }) {
   )
 }
 
+/** Was ohne eigene Seite bleibt, gezählt in pipeline/build_linien.py */
+function NichtAufgefuehrt({ n }: { n: NonNullable<LinienVerzeichnis['nicht_aufgefuehrt']> }) {
+  const teile = [
+    ...(n.bruecken > 0 ? [`${n.bruecken} ${n.bruecken === 1 ? 'Brücke' : 'Brücken'}`] : []),
+    ...(n.bahnuebergaenge > 0
+      ? [`${n.bahnuebergaenge} ${n.bahnuebergaenge === 1 ? 'Bahnübergang' : 'Bahnübergänge'}`] : []),
+  ]
+  if (!teile.length) return null
+  return (
+    <> Nicht aufgeführt {teile.length > 1 || n.bruecken > 1 || n.bahnuebergaenge > 1 ? 'sind' : 'ist'}{' '}
+      {teile.join(' und ')} auf {n.linien} {n.linien === 1 ? 'weiteren Linie' : 'weiteren Linien'},
+      die weniger als zwei Bahnhöfe in Taktland und keinen Tunnel haben.</>
+  )
+}
+
 function Eintrag({ l }: { l: LinienEintrag }) {
   const teile = [
     l.bahnhoefe === 0 ? 'kein Bahnhof in Taktland'
       : l.bahnhoefe === 1 ? '1 Bahnhof' : `${l.bahnhoefe} Bahnhöfe`,
     ...(l.tunnel > 0 ? [`${l.tunnel} Tunnel`] : []),
     ...(l.bruecken > 0 ? [`${l.bruecken} ${l.bruecken === 1 ? 'Brücke' : 'Brücken'}`] : []),
+    ...(l.bahnuebergaenge > 0
+      ? [`${l.bahnuebergaenge} ${l.bahnuebergaenge === 1 ? 'Bahnübergang' : 'Bahnübergänge'}`] : []),
   ]
   return (
     <li>

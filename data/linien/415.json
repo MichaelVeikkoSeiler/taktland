@@ -231,6 +231,148 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 19,
+  "nach_sicherungsart": [
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 9
+   },
+   {
+    "wert": "unbewacht",
+    "anzahl": 8
+   },
+   {
+    "wert": "Halbschrankeanlage",
+    "anzahl": 2
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 3,
+  "mit_meisten_gleisen": [
+   6
+  ],
+  "anzahl_mit_meisten_gleisen": 1,
+  "items": [
+   {
+    "name": "BUe Kriegstettenstr.",
+    "km": 74.721,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Fabrikstrasse",
+    "km": 75.924,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Luterbacherstr.",
+    "km": 77.279,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 829 Hoberg",
+    "km": 82.972,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 830 Burenstrasse",
+    "km": 83.084,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 837 Neumatt",
+    "km": 83.724,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bahnhofstrasse",
+    "km": 84.062,
+    "sicherungsart": "unbewacht",
+    "gleise": 3
+   },
+   {
+    "name": "BUe Mosli",
+    "km": 91.171,
+    "sicherungsart": "unbewacht",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Erlenhof",
+    "km": 91.726,
+    "sicherungsart": "unbewacht",
+    "gleise": 2
+   },
+   {
+    "name": "BUe 926 Bahnhofstr.",
+    "km": 92.62,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Mosacher",
+    "km": 92.946,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ischlag",
+    "km": 93.464,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Trappeten 2",
+    "km": 95.418,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUeTrappeten",
+    "km": 95.442,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 960 Scheurenrain",
+    "km": 96.027,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 968 Sandreisi",
+    "km": 96.887,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 991 Bahnhofstr.",
+    "km": 99.173,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 1001 Bielstrasse",
+    "km": 100.11,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe 101 Bielstrasse",
+    "km": 101.154,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -268,6 +410,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -277,6 +429,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

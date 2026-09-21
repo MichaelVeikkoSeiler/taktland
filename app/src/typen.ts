@@ -111,6 +111,8 @@ export interface LinienEintrag {
   tunnel: number
   /** erfasste Brücken */
   bruecken: number
+  /** erfasste Bahnübergänge */
+  bahnuebergaenge: number
 }
 
 export interface LinienVerzeichnis {
@@ -119,7 +121,7 @@ export interface LinienVerzeichnis {
   /** UIC des Bahnhofs → Nummern der Linien mit Seite */
   nach_bahnhof: Record<string, number[]>
   /** Brücken auf Linien ohne eigene Seite, gezählt in pipeline/build_linien.py */
-  nicht_aufgefuehrt?: { bruecken: number; linien: number }
+  nicht_aufgefuehrt?: { bruecken: number; bahnuebergaenge: number; linien: number }
 }
 
 export interface IndexEintrag {

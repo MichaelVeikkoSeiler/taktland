@@ -310,6 +310,575 @@
    }
   ]
  },
+ "bahnuebergaenge": {
+  "source": "bahnubergang",
+  "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
+  "anzahl_erfasst": 88,
+  "nach_sicherungsart": [
+   {
+    "wert": "Blinklichtanlage",
+    "anzahl": 30
+   },
+   {
+    "wert": "VRA",
+    "anzahl": 23
+   },
+   {
+    "wert": "Schrankenanlage",
+    "anzahl": 20
+   },
+   {
+    "wert": "Halbschrankeanlage",
+    "anzahl": 11
+   },
+   {
+    "wert": "unbewacht",
+    "anzahl": 3
+   },
+   {
+    "wert": "Bedarfsschrankenanl",
+    "anzahl": 1
+   }
+  ],
+  "ohne_sicherungsart": 0,
+  "ohne_gleiszahl": 0,
+  "meiste_gleise": 2,
+  "mit_meisten_gleisen": [
+   6,
+   68
+  ],
+  "anzahl_mit_meisten_gleisen": 2,
+  "items": [
+   {
+    "name": "BUe Adligen",
+    "km": 2.652,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rotterswil",
+    "km": 4.972,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rotzigen 1",
+    "km": 6.783,
+    "sicherungsart": "Bedarfsschrankenanl",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rotzigen",
+    "km": 7.145,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Blatten",
+    "km": 7.615,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rothlistrasse",
+    "km": 8.131,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bahnhofstrasse",
+    "km": 8.536,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Gerligenstrasse",
+    "km": 8.888,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kleinfeld",
+    "km": 9.381,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Pfannenstiel",
+    "km": 10.254,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Galliker",
+    "km": 10.772,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Inwilerstrasse",
+    "km": 10.877,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tschupp 1",
+    "km": 11.156,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hochdorferstr.",
+    "km": 11.234,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Weiherhaus 2",
+    "km": 11.3,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Weiherhaus 3",
+    "km": 11.486,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wirtlen 2",
+    "km": 12.011,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wirtlen 3",
+    "km": 12.289,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ballwilerstr. 2",
+    "km": 12.675,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schonau",
+    "km": 12.913,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Spittlisbach 1",
+    "km": 16.333,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Spittlisbach 2",
+    "km": 16.438,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hohebach 1",
+    "km": 17.06,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hohebach 2",
+    "km": 17.15,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tschueppisbach",
+    "km": 17.41,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Seemoos",
+    "km": 17.901,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Haltestelle",
+    "km": 19.33,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ermenseerstrasse",
+    "km": 19.636,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Feldweg",
+    "km": 20.461,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Grunenburg",
+    "km": 20.59,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bahnhofstrasse",
+    "km": 20.7,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tampiteller",
+    "km": 21.303,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Langmatt",
+    "km": 21.513,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Leichwegstr.",
+    "km": 21.579,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Haltestelle",
+    "km": 21.88,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Krummgass",
+    "km": 22.227,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Grundacher",
+    "km": 22.577,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Zeinenmatt",
+    "km": 23.594,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schwarzenbach",
+    "km": 24.084,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Forststrasse",
+    "km": 25.149,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Reservoir",
+    "km": 25.57,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ryter",
+    "km": 26.029,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Museigenstrasse",
+    "km": 26.476,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Landhaus",
+    "km": 26.534,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Buhlstrasse",
+    "km": 26.814,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Fahnenversand",
+    "km": 26.948,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Lowenplatz",
+    "km": 27.108,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Gartenstrasse",
+    "km": 27.554,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Eggelerbachstr.",
+    "km": 27.848,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Widenmattstr.",
+    "km": 28.04,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Seetalstrasse",
+    "km": 29.2,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Wannerstrasse",
+    "km": 29.264,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Bahnhof",
+    "km": 29.49,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Spiegelfabrik",
+    "km": 29.795,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rankstrasse",
+    "km": 29.906,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Zwetschgenacker",
+    "km": 30.169,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kilchenmann",
+    "km": 30.483,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Hausergasse",
+    "km": 30.987,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Worben",
+    "km": 31.963,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schachen",
+    "km": 32.708,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Leutwilerstrasse",
+    "km": 32.941,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Weidweg",
+    "km": 33.293,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Rebenhubel",
+    "km": 34.015,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Statthalterhaus",
+    "km": 34.362,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kistenfabrik",
+    "km": 34.673,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Striegelstrasse",
+    "km": 35.296,
+    "sicherungsart": "Halbschrankeanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ausserdorfstr. 1",
+    "km": 36.033,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Ausserdorfstr.2/ Gassli",
+    "km": 36.447,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Oberdorfstr.",
+    "km": 36.787,
+    "sicherungsart": "VRA",
+    "gleise": 2
+   },
+   {
+    "name": "BUe Banziger",
+    "km": 36.981,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Talstrasse Sud",
+    "km": 37.081,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tal 2",
+    "km": 37.207,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tal 3",
+    "km": 37.245,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Tal 4",
+    "km": 37.283,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Talstrasse Mitte",
+    "km": 37.413,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Frohsinn",
+    "km": 37.57,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Aarauerstrasse",
+    "km": 37.723,
+    "sicherungsart": "VRA",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Pilatusstrasse",
+    "km": 37.957,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kahlofen/ Birren",
+    "km": 38.736,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Asp",
+    "km": 39.453,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Oberrain 4/ Tannlihag",
+    "km": 39.99,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Schragweg",
+    "km": 40.401,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Zopfgasse",
+    "km": 40.778,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Kulmerweg",
+    "km": 41.155,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Aarauerstrasse",
+    "km": 41.552,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Augustin Keller",
+    "km": 41.962,
+    "sicherungsart": "Schrankenanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Seetal",
+    "km": 42.118,
+    "sicherungsart": "Blinklichtanlage",
+    "gleise": 1
+   },
+   {
+    "name": "BUe Freiverlad",
+    "km": 42.368,
+    "sicherungsart": "unbewacht",
+    "gleise": 1
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -347,6 +916,16 @@
    "quelle": "brucken"
   },
   {
+   "thema": "Einträge zu den Bahnübergängen",
+   "grund": "Namen und Sicherungsart stehen wie in der Quelle, auch abgekürzt, etwa «VRA» oder «Bedarfsschrankenanl». Einige Felder beschreibt die Quelle mit Texten aus anderen Datensätzen, etwa den Namen als «Bezeichnung der Treppe/Rampe». Verwendet sind nur die Sicherungsart und die Zahl der gekreuzten Gleise.",
+   "quelle": "bahnubergang"
+  },
+  {
+   "thema": "Stand der Bahnübergänge",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "quelle": "bahnubergang"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -356,6 +935,7 @@
   "strecke",
   "bahnhoefe",
   "tunnel",
-  "bruecken"
+  "bruecken",
+  "bahnuebergaenge"
  ]
 }

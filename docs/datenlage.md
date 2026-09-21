@@ -87,7 +87,13 @@ Im Katalog von data.sbb.ch (60 Datensätze, geprüft 2026-09-21) steht zu Streck
   kleinen Linien ohne Bahnhof und ohne Tunnel. Die Namen tragen unerklärte Abkürzungen
   (PI, PU, WU, Du, SU …). Die Beschreibung nennt als letzte Aktualisierung auf Deutsch
   «Januar 24», auf Englisch «Jan 2026».
-- `bahnubergang` (1064, mit Sicherungsart und Zahl der gekreuzten Gleise) – noch nicht verwendet.
+- `bahnubergang` – 1064 Bahnübergänge, 1011 davon auf Linien mit Seite. Verwendet sind
+  Name, Kilometer, Sicherungsart (das deutsche Feld `sicherungsart`, nicht das
+  mehrsprachige `sicherungsart_text`) und die Zahl der gekreuzten Gleise. Nicht verwendet:
+  Eigentum, Nutzung, Gleiskategorie und `andreaskreuz_ohne_signale`. Ihre Beschreibungen
+  fehlen oder stammen aus anderen Datensätzen («Bezeichnung der Treppe/Rampe», «Art der
+  Rückmeldung der effektiven Ankunftszeit»). Zweimal steht 0 gekreuzte Gleise, das gilt
+  als nicht erfasst. Laut Beschreibung wöchentlich aktualisiert.
 
 **Nicht in den offenen Daten:** die Länge einer Linie, ein Bau- oder Eröffnungsjahr der
 Linie, ob sie ein- oder mehrspurig ist (nur das Tunnelsystem sagt es, und nur für den

@@ -722,3 +722,14 @@ erfassten Brücke» (Linie 580).
 
 **Abkürzungspunkt am Satzende.** «U Winterthurerstr..» – Namen mit Punkt am Ende laufen
 durch `punkt()`.
+
+**Bahnübergänge.** Verwendet sind nur Felder, deren Bedeutung aus den Werten klar ist:
+Sicherungsart und Zahl der gekreuzten Gleise. Die Quelle beschreibt den Namen als
+«Bezeichnung der Treppe/Rampe» und ein anderes Feld mit einem Text über Ankunftszeiten;
+das sind kopierte Beschreibungen, keine Angaben. Sicherungsarten stehen im Wortlaut,
+auch gekürzt («Bedarfsschrankenanl», «VRA»); die Erläuterung gibt die Beschreibung der
+Quelle wieder, die Verkehrsregelungsanlagen nennt. 0 gekreuzte Gleise heisst nicht
+erfasst. Fehlt die Sicherungsart, sagt der Text wie oft («Bei 1 der erfassten
+Bahnübergänge ist keine Sicherungsart eingetragen»), und «bei jedem» steht nur, wenn
+keiner fehlt. Linie 650 hat alle sechs Sicherungsarten: Dann gibt es keine weitere
+falsche Antwort zu ergänzen (der Baukasten stürzte dabei ab).

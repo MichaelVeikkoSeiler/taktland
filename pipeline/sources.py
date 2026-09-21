@@ -88,6 +88,11 @@ DATASETS = {
         join="linie", tier="linien",
         beschreibung="Bruecken mit Name, Kilometer, Kanton und Zahl der Baueinheiten. "
                      "Ohne Laenge und Baujahr."),
+    "bahnubergang": dict(
+        join="linie", tier="linien",
+        beschreibung="Bahnuebergaenge mit Sicherungsart, Strassenart und Zahl der "
+                     "gekreuzten Gleise. Einige Feldbeschreibungen der Quelle sind aus "
+                     "anderen Datensaetzen kopiert (Treppe/Rampe, Prognose)."),
 }
 
 # Nicht verwendet, aber geprueft:
