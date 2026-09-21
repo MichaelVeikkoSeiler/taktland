@@ -22,7 +22,9 @@ export default function App() {
   const [uic, setUic] = useState<number | null>(uicAusAdresse())
   const [duell, setDuell] = useState(istDuell())
   // bleibt stehen, während ein Bahnhof offen ist: zurück auf derselben Seite
-  const [liste, setListe] = useState<ListenStand>({ begriff: '', nurMitProfil: true, seite: 0 })
+  const [liste, setListe] = useState<ListenStand>({
+    begriff: '', nurMitProfil: true, seite: 0, sortierung: 'alphabet',
+  })
 
   useEffect(() => {
     indexLaden().then(setIndex).catch((e: Error) => setFehler(e.message))

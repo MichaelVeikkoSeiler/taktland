@@ -15,6 +15,7 @@ export interface ListenStand {
   begriff: string
   nurMitProfil: boolean
   seite: number
+  sortierung: 'alphabet' | 'frequenz'
 }
 
 /** Umlaute und Akzente ignorieren, damit «Zurich» auch «Zürich» findet. */
@@ -28,7 +29,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
   stand: ListenStand
   aendern: (neu: ListenStand) => void
 }) {
-  const { begriff, nurMitProfil } = stand
+  const { begriff, nurMitProfil, sortierung } = stand
   const listeOben = useRef<HTMLDivElement>(null)
 
   const treffer = useMemo(() => {
@@ -38,13 +39,24 @@ export function Suche({ index, oeffnen, stand, aendern }: {
     if (b) liste = liste.filter((e) => vereinfachen(e.name).includes(b) ||
                                        String(e.uic).startsWith(b) ||
                                        vereinfachen(e.kanton ?? '').includes(b))
+    // Der Index kommt nach Ein- und Aussteigenden geordnet, grösste zuerst
+    if (sortierung === 'alphabet') {
+      liste = [...liste].sort((a, b) => a.name.localeCompare(b.name, 'de-CH', { sensitivity: 'base' }))
+    }
     return liste
-  }, [begriff, nurMitProfil, index.bahnhoefe])
+  }, [begriff, nurMitProfil, sortierung, index.bahnhoefe])
 
   const seiten = Math.max(1, Math.ceil(treffer.length / PRO_SEITE))
   const seite = Math.min(stand.seite, seiten - 1)
   const von = seite * PRO_SEITE
   const sichtbar = treffer.slice(von, von + PRO_SEITE)
+
+  // Wie die Kopfzeile im Wörterbuch: erster und letzter Bahnhof jeder Seite
+  const bereiche = useMemo(() => Array.from({ length: seiten }, (_, i) => {
+    const erster = treffer[i * PRO_SEITE]?.name ?? ''
+    const letzter = treffer[Math.min((i + 1) * PRO_SEITE, treffer.length) - 1]?.name ?? ''
+    return erster === letzter ? erster : `${erster} – ${letzter}`
+  }), [treffer, seiten])
 
   function blaettern(neu: number, nachOben = false) {
     const ziel = Math.max(0, Math.min(seiten - 1, neu))
@@ -65,7 +77,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
     return () => window.removeEventListener('keydown', taste)
   })
 
-  const leiste = { seite, seiten, von, bis: von + sichtbar.length, gesamt: treffer.length }
+  const leiste = { seite, seiten, bereiche }
 
   return (
     <div className="px-4 pb-16">
@@ -91,6 +103,19 @@ export function Suche({ index, oeffnen, stand, aendern }: {
           className="size-4 accent-sbb-red"
         />
         Nur Bahnhöfe mit Lerninhalten
+      </label>
+
+      <label className="mt-3 flex items-center gap-2 text-sm text-sbb-metal dark:text-sbb-storm">
+        Sortierung
+        <select
+          value={sortierung}
+          onChange={(e) => aendern({ ...stand, sortierung: e.target.value as ListenStand['sortierung'], seite: 0 })}
+          className="min-w-0 border border-sbb-cloud bg-white px-2 py-1 text-sbb-black
+                     dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
+        >
+          <option value="alphabet">Alphabetisch</option>
+          <option value="frequenz">Meiste Ein- und Aussteigende zuerst</option>
+        </select>
       </label>
 
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -135,13 +160,12 @@ export function Suche({ index, oeffnen, stand, aendern }: {
   )
 }
 
-/** Pfeile in beide Richtungen, dazwischen die Seitenwahl zum direkten Springen. */
-function Blaettern({ seite, seiten, von, bis, gesamt, blaettern, name }: {
+/** Pfeile in beide Richtungen. Dazwischen erster und letzter Bahnhof der
+ *  Seite; ein Tipp darauf öffnet die Seitenwahl mit den Bereichen aller Seiten. */
+function Blaettern({ seite, seiten, bereiche, blaettern, name }: {
   seite: number
   seiten: number
-  von: number
-  bis: number
-  gesamt: number
+  bereiche: string[]
   blaettern: (neu: number) => void
   name: string
 }) {
@@ -159,24 +183,29 @@ function Blaettern({ seite, seiten, von, bis, gesamt, blaettern, name }: {
       >
         ←
       </button>
-      <label className="flex min-w-0 flex-1 cursor-pointer flex-col items-center justify-center
-                        border border-sbb-cloud bg-white px-2 py-1 hover:border-sbb-black
-                        dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white">
-        <span className="sr-only">Seite wählen</span>
+      <div className="relative flex min-w-0 flex-1 flex-col items-center justify-center border
+                      border-sbb-cloud bg-white px-2 py-1 focus-within:border-sbb-black
+                      hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
+                      dark:focus-within:border-sbb-white dark:hover:border-sbb-white">
+        <span className="block w-full text-center leading-tight font-medium text-balance
+                         break-words text-sbb-black dark:text-sbb-white">
+          {bereiche[seite]}
+        </span>
+        <span className="text-xs text-sbb-metal dark:text-sbb-storm">
+          Seite {seite + 1} von {seiten}
+        </span>
+        {/* unsichtbar über dem Feld: ein Tipp öffnet die Auswahl des Geräts */}
         <select
+          aria-label="Seite wählen"
           value={seite}
           onChange={(e) => blaettern(Number(e.target.value))}
-          className="cursor-pointer appearance-none bg-transparent text-center font-medium
-                     text-sbb-black dark:text-sbb-white"
+          className="absolute inset-0 size-full cursor-pointer opacity-0"
         >
-          {Array.from({ length: seiten }, (_, i) => (
-            <option key={i} value={i}>Seite {i + 1} von {seiten}</option>
+          {bereiche.map((b, i) => (
+            <option key={i} value={i}>Seite {i + 1}: {b}</option>
           ))}
         </select>
-        <span className="text-xs text-sbb-metal dark:text-sbb-storm">
-          {von + 1}–{bis} von {gesamt}
-        </span>
-      </label>
+      </div>
       <button
         type="button" className={pfeil} disabled={seite === seiten - 1}
         onClick={() => blaettern(seite + 1)} aria-label="Nächste Seite"
