@@ -5,6 +5,10 @@ const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
 }
 
+/** So viele Einträge zeigt die Liste auf einmal. Früher war hier Schluss,
+ *  ohne Hinweis: Oben stand «145 Bahnhöfe», unten erschienen 60. */
+const SCHRITT = 60
+
 /** Umlaute und Akzente ignorieren, damit «Zurich» auch «Zürich» findet. */
 function vereinfachen(text: string) {
   return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
@@ -13,6 +17,7 @@ function vereinfachen(text: string) {
 export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: number) => void }) {
   const [begriff, setBegriff] = useState('')
   const [nurMitProfil, setNurMitProfil] = useState(true)
+  const [anzahl, setAnzahl] = useState(SCHRITT)
 
   const treffer = useMemo(() => {
     const b = vereinfachen(begriff.trim())
@@ -21,8 +26,10 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
     if (b) liste = liste.filter((e) => vereinfachen(e.name).includes(b) ||
                                        String(e.uic).startsWith(b) ||
                                        vereinfachen(e.kanton ?? '').includes(b))
-    return liste.slice(0, 60)
+    return liste
   }, [begriff, nurMitProfil, index.bahnhoefe])
+  const sichtbar = treffer.slice(0, anzahl)
+  const rest = treffer.length - sichtbar.length
 
   return (
     <div className="px-4 pb-16">
@@ -31,7 +38,7 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
         <input
           type="search"
           value={begriff}
-          onChange={(e) => setBegriff(e.target.value)}
+          onChange={(e) => { setBegriff(e.target.value); setAnzahl(SCHRITT) }}
           placeholder="Bahnhof suchen"
           autoComplete="off"
           className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg
@@ -44,7 +51,7 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
         <input
           type="checkbox"
           checked={nurMitProfil}
-          onChange={(e) => setNurMitProfil(e.target.checked)}
+          onChange={(e) => { setNurMitProfil(e.target.checked); setAnzahl(SCHRITT) }}
           className="size-4 accent-sbb-red"
         />
         Nur Bahnhöfe mit Lerninhalten
@@ -72,8 +79,20 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
       </a>
 
       <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
-        {treffer.map((e) => <Eintrag key={e.uic} e={e} oeffnen={oeffnen} />)}
+        {sichtbar.map((e) => <Eintrag key={e.uic} e={e} oeffnen={oeffnen} />)}
       </ul>
+
+      {rest > 0 && (
+        <button
+          type="button"
+          onClick={() => setAnzahl((a) => a + SCHRITT)}
+          className="mt-4 w-full border border-sbb-cloud bg-white px-4 py-3 text-sbb-black
+                     transition hover:border-sbb-black dark:border-sbb-iron
+                     dark:bg-sbb-midnight dark:text-sbb-white dark:hover:border-sbb-white"
+        >
+          Weitere anzeigen ({sichtbar.length} von {treffer.length}, noch {rest})
+        </button>
+      )}
 
       {treffer.length === 0 && (
         <p className="mt-8 text-center text-sbb-metal dark:text-sbb-storm">
