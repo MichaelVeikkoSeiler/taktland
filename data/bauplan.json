@@ -114,6 +114,16 @@
    ]
   }
  },
+ "8500032": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rümlingen",
+    "Diepflingen",
+    "Tecknau"
+   ]
+  }
+ },
  "8500033": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3154,6 +3164,16 @@
    ]
   }
  },
+ "8503235": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Glarus Nord",
+    "Schänis"
+   ]
+  }
+ },
  "8503236": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3961,6 +3981,16 @@
     "Sense",
     "La Broye",
     "La Glâne"
+   ]
+  }
+ },
+ "8504040": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
    ]
   }
  },
@@ -5309,6 +5339,16 @@
    ]
   }
  },
+ "8505406": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Tenero-Contra",
+    "Minusio",
+    "Gordola"
+   ]
+  }
+ },
  "8505407": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -5316,6 +5356,16 @@
     "Muralto",
     "Minusio",
     "Tenero-Contra"
+   ]
+  }
+ },
+ "8505410": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lugano",
+    "Bellinzona",
+    "Mendrisio"
    ]
   }
  },
