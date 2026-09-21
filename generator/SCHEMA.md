@@ -570,6 +570,13 @@ Bituminöses Mischgut sowie Stahl. Dazu führt die Quelle Belag unter der
 Sammelangabe «Andere»». Die Liste der Sammelangaben steht einmal, in
 `taktland.SAMMELANGABEN`.
 
+**Segmente ohne Perronhöhe werden genannt.** Blumenau hat 2 Segmente ohne
+jede Höhenangabe, daraus wurde «erfasst: .». Chur hat 72 Segmente, nur 58 mit
+Höhe, und der Text verschwieg die übrigen 14. Jetzt heisst es «zu 14 ist keine
+Perronhöhe vermerkt» oder «Eine Perronhöhe ist zu keinem davon vermerkt». Der
+Validator meldet beides: eine leere Aufzählung nach dem Doppelpunkt und
+Segmente ohne Höhe, die der Text übergeht.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:

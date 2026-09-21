@@ -623,14 +623,21 @@ def hindernisfreiheit(f):
     seg = hf.get("segmente")
     if seg:
         proh = hf["segmente_pro_perronhoehe_cm"]
-        if len(proh) == 1:
+        # Blumenau: zu keinem Segment eine Höhe («erfasst: .»), Chur: zu 14
+        # von 72 keine. Beides wird genannt, nicht übergangen.
+        ohne_hoehe = seg - sum(proh.values())
+        if not proh:
+            satz.append(f"Für {name} sind {seg} Perronsegmente erfasst. Eine Perronhöhe ist "
+                        "zu keinem davon vermerkt.")
+        elif len(proh) == 1 and not ohne_hoehe:
             satz.append(f"Für {name} sind {seg} Perronsegmente erfasst, "
                         f"{'beide' if seg == 2 else 'alle'} mit einer "
                         f"Perronhöhe von {next(iter(proh))} Zentimetern.")
         else:
             teile = sorted(proh.items(), key=lambda t: -t[1])
             satz.append(f"Für {name} sind {seg} Perronsegmente erfasst: "
-                        + ", ".join(f"{a} mit {h} Zentimetern" for h, a in teile) + ".")
+                        + ", ".join(f"{a} mit {h} Zentimetern" for h, a in teile)
+                        + (f", zu {ohne_hoehe} ist keine Perronhöhe vermerkt." if ohne_hoehe > 0 else "."))
         g55, gd = hf.get("gleise_mit_55cm", 0), hf.get("gleise_mit_daten", 0)
         if gd:
             if g55 == gd:

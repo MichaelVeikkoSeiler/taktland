@@ -161,6 +161,15 @@
    ]
   }
  },
+ "8500120": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CFV",
+    "DMT"
+   ]
+  }
+ },
  "8500122": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -276,6 +285,16 @@
    ]
   }
  },
+ "8500213": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Olten",
+    "Gösgen",
+    "Wasseramt"
+   ]
+  }
+ },
  "8500214": {
   "stammdaten": {
    "frage": "bezirk",
@@ -302,6 +321,16 @@
    "distraktoren": [
     "OLH",
     "TRI"
+   ]
+  }
+ },
+ "8500221": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Jura bernois",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -358,6 +387,15 @@
    "distraktoren": [
     "TG",
     "LUPF"
+   ]
+  }
+ },
+ "8500313": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RF",
+    "KAU"
    ]
   }
  },
@@ -817,6 +855,16 @@
    ]
   }
  },
+ "8501507": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sion",
+    "Conthey",
+    "Leuk"
+   ]
+  }
+ },
  "8501509": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -841,6 +889,16 @@
    "distraktoren": [
     "LE",
     "LEU"
+   ]
+  }
+ },
+ "8501603": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Leuk",
+    "Visp",
+    "Sierre"
    ]
   }
  },
@@ -1036,6 +1094,16 @@
    ]
   }
  },
+ "8502030": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aarau",
+    "Bremgarten",
+    "Kulm"
+   ]
+  }
+ },
  "8502034": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1221,6 +1289,16 @@
    "distraktoren": [
     "OBD",
     "ORD"
+   ]
+  }
+ },
+ "8502211": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bremgarten",
+    "Baden",
+    "Brugg"
    ]
   }
  },
@@ -1592,6 +1670,26 @@
    ]
   }
  },
+ "8503112": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hombrechtikon",
+    "Bubikon",
+    "Rüti (ZH)"
+   ]
+  }
+ },
+ "8503113": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Altendorf",
+    "Lachen",
+    "Rüti (ZH)"
+   ]
+  }
+ },
  "8503115": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1822,6 +1920,16 @@
    ]
   }
  },
+ "8503211": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Höfe",
+    "Schwyz",
+    "Küssnacht (SZ)"
+   ]
+  }
+ },
  "8503220": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1927,6 +2035,16 @@
     "Fehraltorf",
     "Illnau",
     "Lindau"
+   ]
+  }
+ },
+ "8503304": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Illnau-Effretikon",
+    "Winterthur",
+    "Zell (ZH)"
    ]
   }
  },
@@ -2303,6 +2421,16 @@
    ]
   }
  },
+ "8504000": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lausanne",
+    "Ouest lausannois",
+    "Morges"
+   ]
+  }
+ },
  "8504010": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -2496,6 +2624,36 @@
    ]
   }
  },
+ "8504138": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Broye",
+    "Sense",
+    "See"
+   ]
+  }
+ },
+ "8504181": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sense",
+    "La Broye",
+    "See"
+   ]
+  }
+ },
+ "8504192": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Seeland",
+    "Thun",
+    "Jura bernois"
+   ]
+  }
+ },
  "8504194": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2568,6 +2726,16 @@
    "distraktoren": [
     "LN",
     "LNV"
+   ]
+  }
+ },
+ "8504228": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura bernois",
+    "Seeland",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -3235,6 +3403,16 @@
    ]
   }
  },
+ "8506049": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bülach",
+    "Winterthur",
+    "Dielsdorf"
+   ]
+  }
+ },
  "8506100": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3544,6 +3722,16 @@
    ]
   }
  },
+ "8507009": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Emmental",
+    "Seeland"
+   ]
+  }
+ },
  "8507083": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3639,6 +3827,16 @@
    "distraktoren": [
     "LG",
     "LNE"
+   ]
+  }
+ },
+ "8508210": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sursee",
+    "Luzern-Land",
+    "Luzern-Stadt"
    ]
   }
  },

@@ -421,6 +421,9 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             if m := re.search(r"(?:^|[.;:!?] )0 (?:sind|ist)\b", text):
                 b.fehlt(f"{wo}/{feld}", f"«{m.group(0).strip()}»: sag, was erfasst ist, "
                                         "nicht wie viele nicht")
+            # «Für Blumenau sind 2 Perronsegmente erfasst: .» - leere Aufzählung
+            if m := re.search(r"\S{0,30}:\s*[.,]", text):
+                b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: nach dem Doppelpunkt fehlt die Aufzählung")
             if m := re.search(EINZAHL, text):
                 b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: bei genau einem passt die Mehrzahl nicht")
             # Namen aus den Daten enden manchmal mit einem Abkürzungspunkt
@@ -489,6 +492,14 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                 b.fehlt(f"{wo}", f"«{m.group(0)}»: pro Tag zählt die Erhebung auf "
                                  f"{gleich[0]['von']} – {gleich[0]['bis']} gleich viele Züge "
                                  f"({st['zuege_pro_tag']}). Nenne die Werte, ohne einen Abschnitt vorzuziehen")
+
+        if kid == "hindernisfreiheit" and (hf := fakten.get("hindernisfreiheit")) and hf.get("segmente"):
+            # Chur: 72 Segmente, nur 58 mit Höhe. Der Rest ist eine Lücke.
+            ohne = hf["segmente"] - sum((hf.get("segmente_pro_perronhoehe_cm") or {}).values())
+            if ohne > 0 and "keine Perronhöhe" not in kap.get("body", "") \
+                    and "Perronhöhe ist zu keinem" not in kap.get("body", ""):
+                b.fehlt(f"{wo}/body", f"Zu {ohne} Segmenten ist keine Perronhöhe erfasst, "
+                                      "der Text verschweigt es")
 
         if kid == "stammdaten":
             # Keine geschenkten Fragen: Steckt die Antwort im Namen, muss auch
