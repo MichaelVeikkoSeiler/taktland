@@ -268,6 +268,11 @@ def perrons(f):
         beschr = ", ".join(f"Perron {it['nr']} misst {it['laenge_m']} Meter"
                            for _, it in sorted(mit_laenge, key=lambda t: -t[1]["laenge_m"])[:4])
         satz.append(beschr[0].upper() + beschr[1:] + ".")
+        # Ein Perron ohne Länge wird genannt, nicht übergangen (Zwingen)
+        ohne_l = [str(it["nr"]) for it in items if not it.get("laenge_m")]
+        if ohne_l:
+            satz.append(f"Zu {'Perron' if len(ohne_l) == 1 else 'den Perrons'} "
+                        f"{aufzaehlung(ohne_l)} ist keine Länge erfasst.")
         for x in sorted(doppelt):
             satz.append(f"Die Nummer {x} kommt in den Daten zweimal vor.")
     if ja == n:
@@ -377,7 +382,8 @@ def gleise(f):
         satz.append(f"Zu {'Gleis' if len(ohne_sektor) == 1 else 'den Gleisen'} {liste} "
                     "sind keine Sektortafeln erfasst.")
     elif not mit_sektor:
-        satz.append("Sektortafeln sind zu keinem dieser Gleise erfasst.")
+        satz.append("Zu diesem Gleis ist keine Sektortafel erfasst." if n == 1
+                    else "Sektortafeln sind zu keinem dieser Gleise erfasst.")
     facts = [{"label": "Gleise mit offenen Daten", "value": n,
               "source": "21197_behig-haltekantesegment", "factRef": "gleise.anzahl_mit_daten"}]
     fr = []
@@ -508,7 +514,9 @@ def hindernisfreiheit(f):
                 satz.append(f"An {g55} der {gd} erfassten Gleise liegt ein Abschnitt auf "
                             "55 Zentimetern.")
         satz.append("Bei keinem Segment ist ein Hilfstritt verzeichnet." if not hf["segmente_mit_hilfstritt"]
-                    else f"Bei {hf['segmente_mit_hilfstritt']} Segmenten ist ein Hilfstritt verzeichnet.")
+                    else f"Bei {hf['segmente_mit_hilfstritt']} "
+                         f"{'Segment' if hf['segmente_mit_hilfstritt'] == 1 else 'Segmenten'} "
+                         "ist ein Hilfstritt verzeichnet.")
         facts.append({"label": "Erfasste Perronsegmente", "value": seg,
                       "source": "21197_behig-haltekantesegment", "factRef": "hindernisfreiheit.segmente"})
         facts.append({"label": "Gleise mit Perronhöhe 55 cm", "value": g55,

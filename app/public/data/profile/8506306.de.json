@@ -281,7 +281,7 @@
             "15"
           ],
           "correct": 1,
-          "explanation": "4 Entwerter, dazu 1 Billettautomaten.",
+          "explanation": "4 Entwerter, dazu 1 Billettautomat.",
           "factRef": "services.billettentwerter_erfasst",
           "optionen_aus_fakten": true,
           "difficulty": 2

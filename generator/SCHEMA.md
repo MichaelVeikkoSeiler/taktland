@@ -391,6 +391,11 @@ keine verzeichnet sind, bei Zürich HB nichts über Wartehallen. Fünf ältere
 Profile waren betroffen. Der Validator prüft jetzt für alle drei Bestände,
 dass eine 0 im Text vorkommt.
 
+Dasselbe gilt für Perrons ohne Länge: «Zu 2 Perrons liegen Daten vor.
+Perron 3/4 misst 221 Meter.» liess das zweite Perron einfach weg (Zwingen,
+dazu Renens VD und Aarau). Jetzt steht «Zu Perron 1 ist keine Länge
+erfasst», und der Validator prüft es.
+
 **Namen aus den Daten können mit einem Punkt enden.** «Biel/Bienne
 Aebistr.» plus Satzpunkt ergab «Aebistr..». Der Baukasten schliesst Sätze
 mit `punkt()`, der Validator meldet doppelte Punkte.

@@ -94,7 +94,7 @@ MEHRZAHL_NACH_LUECKE = (r"___ (Sektoren|Perrons|Gleise[n]?|Züge[n]?|Personen|Li
 
 #: Sätze, die für mehrere geschrieben sind und bei genau einem nicht passen
 #: (Pont-Céard: ein Gleis, ein Perron, ein Entwerter)
-EINZAHL = r"\b[Dd]en 1 \w+|\b[Ee]rfasst sind 1 [\wäöüÄÖÜ-]+\.|\bsind 1 [\wäöüÄÖÜ-]+ (erfasst|verzeichnet|vermerkt)\b"
+EINZAHL = r"\b1 (Segmenten|Gleisen|Abschnitten|Zügen|Wartehallen|Billettautomaten)\b|\b[Dd]en 1 \w+|\b[Ee]rfasst sind 1 [\wäöüÄÖÜ-]+\.|\bsind 1 [\wäöüÄÖÜ-]+ (erfasst|verzeichnet|vermerkt)\b"
 
 LEERFORMELN = [
     r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",
@@ -407,6 +407,13 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                 if feld in sv and not sv[feld] and wort not in kap.get("body", ""):
                     b.fehlt(f"{wo}/body", f"{wort}: 0 erfasst, der Text verschweigt es. "
                                           "Schreibe «… sind keine verzeichnet»")
+
+        if kid == "perrons" and (pr := fakten.get("perrons")):
+            # Ein Perron ohne Länge darf im Text nicht einfach fehlen (Zwingen)
+            if any(not it.get("laenge_m") for it in pr.get("items") or []) \
+                    and "Länge" not in kap.get("body", ""):
+                b.fehlt(f"{wo}/body", "zu einem Perron ist keine Länge erfasst, "
+                                      "der Text verschweigt es")
 
         if kid == "linien":
             for feld, text in [("body", kap.get("body", ""))] + [

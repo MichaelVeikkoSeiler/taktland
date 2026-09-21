@@ -226,7 +226,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 5 Perrons in Aarau liegen offene Daten vor. Das längste erfasste Perron misst 486 Meter, das kürzeste erfasste 428 Meter.",
+      "body": "Zu 5 Perrons in Aarau liegen offene Daten vor. Das längste erfasste Perron misst 486 Meter, das kürzeste erfasste 428 Meter. Zu Perron 0 ist keine Länge erfasst.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
