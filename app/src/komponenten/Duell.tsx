@@ -5,6 +5,7 @@ import {
 import { vergleichLaden } from '../daten'
 import type { Kategorie, Vergleichsdaten } from '../typen'
 import { kantonText } from '../kanton'
+import { Zurueck } from './Zurueck'
 
 /**
  * Bahnhöfe gegeneinander. Die Fragen entstehen hier aus den Werten in
@@ -234,11 +235,7 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
 
   return (
     <div className="px-4 pb-16">
-      <button
-        type="button" onClick={zurueck}
-        className="mt-6 text-sm text-sbb-metal hover:text-sbb-black dark:text-sbb-storm
-                   dark:hover:text-sbb-white"
-      >← Alle Bahnhöfe</button>
+      <Zurueck onClick={zurueck} text="Alle Bahnhöfe" />
 
       <div className="mt-4 flex items-baseline justify-between border-b border-sbb-cloud
                       pb-3 dark:border-sbb-iron">

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { HERAUSGEBER, KONTAKT } from '../kontakt'
 import type { BahnhofIndex } from '../typen'
+import { Zurueck } from './Zurueck'
 
 /**
  * So funktioniert Taktland, und woher die Daten stammen.
@@ -13,11 +14,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
   const stand = index ? datum(index.stand) : null
   return (
     <div className="px-4 pb-16">
-      <button
-        type="button" onClick={zurueck}
-        className="mt-6 text-sm text-sbb-metal hover:text-sbb-black dark:text-sbb-storm
-                   dark:hover:text-sbb-white"
-      >← Alle Bahnhöfe</button>
+      <Zurueck onClick={zurueck} text="Alle Bahnhöfe" />
 
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">

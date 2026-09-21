@@ -4,6 +4,7 @@ import { antwortSpeichern, antwortenLesen, bahnhofZuruecksetzen } from '../forts
 import type { Fakt, Gleis, Kapitel, LinienEintrag, Profil } from '../typen'
 import { Frage } from './Frage'
 import { Luecken } from './Luecken'
+import { Zurueck } from './Zurueck'
 
 const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
@@ -264,14 +265,10 @@ export function Rahmen({ children, zurueck, zurueckText = 'Alle Bahnhöfe' }: {
 }) {
   return (
     <div className="pb-16">
-      <button
-        type="button"
-        onClick={zurueck}
-        className="mx-4 mb-4 mt-2 text-sbb-metal underline underline-offset-2 dark:text-sbb-storm"
-      >
-        ← {zurueckText}
-      </button>
-      {children}
+      <div className="px-4">
+        <Zurueck onClick={zurueck} text={zurueckText} />
+      </div>
+      <div className="mt-4">{children}</div>
     </div>
   )
 }

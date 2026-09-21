@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { linienLaden } from '../daten'
 import type { LinienEintrag, LinienVerzeichnis } from '../typen'
+import { Zurueck } from './Zurueck'
 
 /** Übersicht der Linien mit eigener Seite, nach Nummer geordnet. */
 export function Linien({ zurueck }: { zurueck: () => void }) {
@@ -22,11 +23,7 @@ export function Linien({ zurueck }: { zurueck: () => void }) {
 
   return (
     <div className="px-4 pb-16">
-      <button
-        type="button" onClick={zurueck}
-        className="mt-6 text-sm text-sbb-metal hover:text-sbb-black dark:text-sbb-storm
-                   dark:hover:text-sbb-white"
-      >← Alle Bahnhöfe</button>
+      <Zurueck onClick={zurueck} text="Alle Bahnhöfe" />
 
       <h1 className="mt-4 text-2xl font-bold tracking-tight">Linien</h1>
       <p className="mt-2 leading-relaxed">
