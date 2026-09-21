@@ -1,0 +1,518 @@
+{
+  "uic": 8504133,
+  "name": "Cugy FR",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "21197_behig-haltekantesegment",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "linie-mit-betriebspunkten",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Cugy FR 840 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 680, an einem freien Tag 320. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 840,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 680,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 320,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:a77ea729",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Cugy FR ein und aus?",
+          "options": [
+            "840",
+            "1'000",
+            "1'200",
+            "1'400"
+          ],
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 840 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 460,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2022",
+              "value": 630,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 750,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 840,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 460 (2018), 630 (2022), 750 (2024), 840 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:161e002a",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Cugy FR ___ Personen ein und aus.",
+          "options": [
+            "270",
+            "320",
+            "380"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 320 Personen, an einem Werktag 840. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Cugy FR liegt auf 468.94 Metern über Meer in der Gemeinde Cugy (FR), Bezirk La Broye. Als Kanton ist in den Stammdaten Fribourg eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet CGY.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 468.94,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "CGY",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "La Broye",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:7c788dfc",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Cugy FR?",
+          "min": 380,
+          "max": 680,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 468.94,
+          "explanation": "Der Bahnhof liegt auf 468.94 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:4abb5414",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Cugy FR?",
+          "options": [
+            "La Broye",
+            "La Glâne",
+            "La Sarine",
+            "See"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Bezirk ist La Broye eingetragen.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 1 Perron in Cugy FR liegen offene Daten vor. Perron 1 ist ein Hausperron von 170 Metern. Es ist niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 1,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 170,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "perrons:333323b1",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das erfasste Perron in Cugy FR?",
+          "options": [
+            "170 m",
+            "200 m",
+            "240 m",
+            "290 m"
+          ],
+          "correct": 0,
+          "explanation": "Das erfasste Perron misst 170 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:91be502b",
+          "type": "true_false",
+          "prompt": "Das erfasste Perron in Cugy FR ist niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu Gleis 1 liegen offene Daten vor. An dem erfassten Gleis ist eine Perronhöhe von 55 Zentimetern verzeichnet. Zu diesem Gleis ist keine Sektortafel erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 1,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:77fba892",
+          "type": "true_false",
+          "prompt": "Zum erfassten Gleis in Cugy FR sind Sektortafeln verzeichnet.",
+          "correct": false,
+          "explanation": "Zum erfassten Gleis ist keine Sektortafel in den Daten. Ob vor Ort Sektoren angeschrieben sind, sagen die offenen Daten nicht.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Cugy FR sind 2 Perronsegmente erfasst, beide mit einer Perronhöhe von 55 Zentimetern. An dem erfassten Gleis liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 1,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:97fdf6a2",
+          "type": "cloze",
+          "prompt": "In Cugy FR sind ___ Perronsegmente erfasst.",
+          "options": [
+            "2",
+            "3",
+            "6"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 2 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:333e7d65",
+          "type": "true_false",
+          "prompt": "Bei keinem der 2 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 2 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Cugy FR – Payerne 76 Züge pro Tag, das sind 27'874 im Jahr. Auf dem Abschnitt Sévaz (embr) – Cugy FR sind es ebenfalls 76 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Cugy FR – Payerne",
+          "value": 76,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Cugy FR – Payerne",
+          "value": 27874,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "id": "zuege:287e84c6",
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Cugy FR – Payerne?",
+          "options": [
+            "42",
+            "53",
+            "65",
+            "76"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 76 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Cugy FR – Payerne, Personenverkehr",
+              "value": 27874,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Cugy FR – Payerne, Güterverkehr",
+              "value": 1589,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Sévaz (embr) – Cugy FR, Güterverkehr",
+              "value": 1509,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Cugy FR – Payerne (Personenverkehr) 27'874, Cugy FR – Payerne (Güterverkehr) 1'589, Sévaz (embr) – Cugy FR (Güterverkehr) 1'509 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Cugy FR ist 1 Linie erfasst: die Linie 252 Yverdon Est - Payerne. Der Bahnhof ist darauf bei Kilometer 23.68366 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 252",
+          "value": 23.68366,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:2c72a99b",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 252 ist Cugy FR eingetragen?",
+          "min": 19,
+          "max": 35,
+          "step": 1,
+          "unit": "km",
+          "correct": 23.68366,
+          "explanation": "Die Kilometrierung von Cugy FR auf der Linie 252 beträgt 23.68366. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 1 Billettentwerter und 1 Wartehalle. Cugy FR steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 1,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:c80680aa",
+          "type": "true_false",
+          "prompt": "Cugy FR steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "id": "services:90f80f43",
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Cugy FR erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst ist 1 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 1,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "ausstattung:f5b7373c",
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für das erfasste Perron verzeichnet?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für das Perron mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 1 Gleise (1). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu Gleis 1 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

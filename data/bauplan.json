@@ -315,6 +315,15 @@
    ]
   }
  },
+ "8500216": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HAE",
+    "OLH"
+   ]
+  }
+ },
  "8500218": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -826,6 +835,16 @@
    ]
   }
  },
+ "8501501": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Saxon",
+    "Vernayaz",
+    "Riddes"
+   ]
+  }
+ },
  "8501502": {
   "stammdaten": {
    "frage": "bezirk",
@@ -843,6 +862,16 @@
     "Conthey",
     "Sion",
     "Saint-Maurice"
+   ]
+  }
+ },
+ "8501505": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Martigny",
+    "Sion",
+    "Sierre"
    ]
   }
  },
@@ -1066,6 +1095,16 @@
    ]
   }
  },
+ "8502023": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Luzern-Land",
+    "Sursee",
+    "Luzern-Stadt"
+   ]
+  }
+ },
  "8502024": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1120,6 +1159,26 @@
    "distraktoren": [
     "HO",
     "BLL"
+   ]
+  }
+ },
+ "8502100": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aarau",
+    "Lenzburg",
+    "Kulm"
+   ]
+  }
+ },
+ "8502101": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aarau",
+    "Lenzburg",
+    "Kulm"
    ]
   }
  },
@@ -1747,6 +1806,16 @@
     "Meilen",
     "Bülach",
     "Dietikon"
+   ]
+  }
+ },
+ "8503124": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wetzikon (ZH)",
+    "Pfäffikon",
+    "Uster"
    ]
   }
  },
@@ -2470,6 +2539,16 @@
    ]
   }
  },
+ "8504027": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Broye",
+    "La Glâne",
+    "Sense"
+   ]
+  }
+ },
  "8504028": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -2546,6 +2625,16 @@
    ]
   }
  },
+ "8504113": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Sarine",
+    "See",
+    "La Broye"
+   ]
+  }
+ },
  "8504115": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -2611,6 +2700,16 @@
     "Cheyres-Châbles",
     "Estavayer-le-Lac",
     "Payerne"
+   ]
+  }
+ },
+ "8504133": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Sarine",
+    "La Glâne",
+    "See"
    ]
   }
  },
@@ -2736,6 +2835,16 @@
     "Jura bernois",
     "Seeland",
     "Bern-Mittelland"
+   ]
+  }
+ },
+ "8504234": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Boudry",
+    "Milvignes",
+    "La Grande Béroche"
    ]
   }
  },
@@ -2881,6 +2990,15 @@
     "Seeland",
     "Jura bernois",
     "Bern-Mittelland"
+   ]
+  }
+ },
+ "8504419": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BIBD",
+    "BGG"
    ]
   }
  },
@@ -3113,6 +3231,16 @@
    ]
   }
  },
+ "8505306": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lugano",
+    "Bellinzona",
+    "Locarno"
+   ]
+  }
+ },
  "8505307": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3140,6 +3268,16 @@
     "Gordola",
     "Minusio",
     "Tenero"
+   ]
+  }
+ },
+ "8505402": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bellinzona",
+    "Lugano",
+    "Riviera"
    ]
   }
  },
@@ -3470,6 +3608,16 @@
    ]
   }
  },
+ "8506136": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kreuzlingen",
+    "Weinfelden",
+    "Münchwilen"
+   ]
+  }
+ },
  "8506139": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3563,6 +3711,15 @@
    "distraktoren": [
     "SGBR",
     "GSS"
+   ]
+  }
+ },
+ "8506301": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SGWI",
+    "SG"
    ]
   }
  },
@@ -3821,6 +3978,16 @@
    ]
   }
  },
+ "8508205": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Thun",
+    "Seeland"
+   ]
+  }
+ },
  "8508207": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -4026,6 +4193,16 @@
    ]
   }
  },
+ "8516176": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Baden",
+    "Brugg",
+    "Laufenburg"
+   ]
+  }
+ },
  "8516187": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -4119,6 +4296,15 @@
    ]
   }
  },
+ "8517336": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LZ",
+    "MEGZ"
+   ]
+  }
+ },
  "8517519": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4163,6 +4349,16 @@
    "distraktoren": [
     "SLF",
     "NH"
+   ]
+  }
+ },
+ "8519133": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sense",
+    "La Broye",
+    "See"
    ]
   }
  }

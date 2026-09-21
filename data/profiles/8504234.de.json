@@ -1,0 +1,543 @@
+{
+  "uic": 8504234,
+  "name": "Chambrelien",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "21197_behig-haltekantesegment",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Chambrelien 910 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 770, an einem freien Tag 470. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS und SBB erfasst.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 910,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 770,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 470,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:a4317149",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Chambrelien ein und aus?",
+          "options": [
+            "640",
+            "910",
+            "1'100",
+            "1'300"
+          ],
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 910 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 610,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2022",
+              "value": 650,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 810,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 860,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 910,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 610 (2018), 650 (2022), 810 (2023), 860 (2024), 910 (2025).",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:b0646deb",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Chambrelien ___ Personen ein und aus.",
+          "options": [
+            "400",
+            "470",
+            "560"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 470 Personen, an einem Werktag 910. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Chambrelien liegt auf 684.74 Metern über Meer in der Gemeinde Rochefort. Als Kanton ist in den Stammdaten Neuchâtel eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet CHN.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 684.74,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "CHN",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Rochefort",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:05a2ce3c",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Chambrelien?",
+          "min": 560,
+          "max": 1000,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 684.74,
+          "explanation": "Der Bahnhof liegt auf 684.74 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:184419ab",
+          "type": "single_choice",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Chambrelien?",
+          "options": [
+            "Boudry",
+            "La Grande Béroche",
+            "Milvignes",
+            "Rochefort"
+          ],
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Rochefort eingetragen.",
+          "factRef": "stammdaten.gemeinde",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 2 Perrons in Chambrelien liegen offene Daten vor. Perron 2 misst 192 Meter, Perron 1 misst 120 Meter. 1 ist als niveaufrei vermerkt, 1 ausdrücklich als nicht niveaufrei.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 192,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "perrons:255814a4",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Chambrelien?",
+          "options": [
+            "192 m",
+            "230 m",
+            "270 m",
+            "330 m"
+          ],
+          "correct": 0,
+          "explanation": "Das längste erfasste Perron misst 192 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:e7e06146",
+          "type": "true_false",
+          "prompt": "Zu beiden erfassten Perrons in Chambrelien ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Für 1 der 2 erfassten Perrons ist ein niveaufreier Zugang vermerkt. 1 ist ausdrücklich als nicht niveaufrei erfasst.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. Erfasst sind Perronhöhen von 20 und 35 Zentimetern. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante",
+          "value": 193,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:61ecaaf5",
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "2",
+          "factRef": "gleise.items[1].nr",
+          "explanation": "Gleis 2 hat mit 193 Metern die längste erfasste Perronkante, die nächste misst 60 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:5f54f9cb",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Chambrelien erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "30 cm",
+            "35 cm"
+          ],
+          "correct": [
+            0,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 1 sind 20 und 35 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Chambrelien sind 7 Perronsegmente erfasst: 4 mit 35 Zentimetern, 3 mit 20 Zentimetern. Bei 4 Segmenten ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 7,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 0,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:500a87c9",
+          "type": "cloze",
+          "prompt": "In Chambrelien sind ___ Perronsegmente erfasst.",
+          "options": [
+            "6",
+            "7",
+            "8"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 7 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Chambrelien – Les Geneveys-sur-Coffrane: Im Personenverkehr verkehren dort 76 Züge pro Tag, das sind 27'683 im Jahr. Auf dem Abschnitt Chambrelien – Corcelles-Peseux sind es 74 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 32 Züge im Jahr auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Chambrelien – Les Geneveys-sur-Coffrane",
+          "value": 76,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Chambrelien – Les Geneveys-sur-Coffrane",
+          "value": 27683,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "id": "zuege:d5d1b0ff",
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Chambrelien – Les Geneveys-sur-Coffrane?",
+          "options": [
+            "65",
+            "76",
+            "91",
+            "110"
+          ],
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 76 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:52a8cef0",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Chambrelien – Les Geneveys-sur-Coffrane?",
+          "min": 22500,
+          "max": 40500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 27683,
+          "explanation": "Die Erhebung zählt 27'683 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Chambrelien ist 1 Linie erfasst: die Linie 223 Neuchatel-Vauseyon - Chambrelien. Der Bahnhof ist darauf bei Kilometer 10.3982 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 223",
+          "value": 10.3982,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:638a8d01",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 223 ist Chambrelien eingetragen?",
+          "min": 8.5,
+          "max": 15.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 10.3982,
+          "explanation": "Die Kilometrierung von Chambrelien auf der Linie 223 beträgt 10.3982. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS und 1 Wartehalle. Billettentwerter sind keine verzeichnet. Chambrelien steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 0,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:9bcf9df5",
+          "type": "true_false",
+          "prompt": "Chambrelien steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Chambrelien 2 Sitzbänke erfasst. Zu 2 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Kiessandbelag. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 2,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "ausstattung:e6085503",
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "1",
+            "2",
+            "6",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        20,
+        35
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 60,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        20
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Zwischenperron",
+      "perronkante_m": 193,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    }
+  ]
+}
