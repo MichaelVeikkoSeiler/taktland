@@ -295,7 +295,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Von den drei Perrons mit Daten ist einer als niveaufrei erreichbar erfasst, eine Gleisquerung ist nötig. Von den vier erfassten Segmenten liegt keines mit Hilfstritt vor, zwei Gleise sind mit 55 Zentimetern Perronhöhe erfasst.",
+      "body": "Von den drei Perrons mit Daten ist einer als niveaufrei erreichbar vermerkt. Zu den beiden übrigen steht keine Angabe zum Zugang in den Daten. Von den vier erfassten Segmenten liegt keines mit Hilfstritt vor, zwei Gleise sind mit 55 Zentimetern Perronhöhe erfasst.",
       "facts": [
         {
           "label": "Niveaufreie Perrons",
@@ -322,11 +322,11 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "In Liestal ist eine Gleisquerung nötig.",
-          "correct": true,
-          "explanation": "Das Feld Gleisquerung nötig ist mit 'true' erfasst.",
-          "factRef": "hindernisfreiheit.gleisquerung_noetig",
-          "difficulty": 1
+          "prompt": "Zu allen 3 erfassten Perrons in Liestal ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Nur für 1 der 3 erfassten Perrons ist ein niveaufreier Zugang vermerkt. Zu den beiden anderen steht in den Daten nichts - das heisst nicht, dass sie nicht niveaufrei erreichbar sind.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "difficulty": 2
         },
         {
           "type": "single_choice",

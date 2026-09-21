@@ -4,7 +4,7 @@
   "kanton": "AG",
   "bps": "BWL",
   "tier": "S",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-21",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -115,7 +115,7 @@
     "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
     "perrons_niveaufrei": 0,
     "perrons_mit_daten": 1,
-    "gleisquerung_noetig": true,
+    "perrons_ohne_zugangsangabe": 1,
     "segmente": 8,
     "segmente_pro_perronhoehe_cm": {
       "35": 8
@@ -251,7 +251,7 @@
     },
     {
       "thema": "Zugang zum Perron",
-      "grund": "Von 1 erfassten Perrons sind 0 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "grund": "Von 1 erfassten Perrons sind 0 als niveaufrei erreichbar vermerkt. Zu den übrigen 1 steht in den Daten keine Angabe zum Zugang. Wie man dorthin gelangt, sagen die offenen Daten nicht.",
       "quelle": "perron"
     },
     {

@@ -38,6 +38,9 @@ FALSCHDEUTUNG = [
      "dnwv heisst Nicht-Werktagsverkehr, nicht Werktagsverkehr an Nichtwerktagen"),
     (r"(dnwv|Nicht-?Werktag\w*)[^.]{0,40}\bam Wochenende\b|\bam Wochenende\b[^.]{0,40}(dnwv)",
      "der Wert umfasst Wochenenden und Feiertage, nicht nur das Wochenende"),
+    (r"Gleisquerung (ist )?(nötig|notwendig|erforderlich)|mit einer Gleisquerung zu rechnen",
+     "eine fehlende Zugangsangabe heisst nicht, dass man die Gleise queren muss. "
+     "Die Daten sagen nur, dass zu diesem Perron nichts vermerkt ist"),
 ]
 
 # In linie-mit-betriebspunkten steht die Kilometrierung des Bahnhofs auf der

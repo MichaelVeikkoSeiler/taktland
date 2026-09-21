@@ -38,6 +38,7 @@ class Faktenbasis:
         self.daten = daten
         self._uebergehen = set(uebergehen)
         self._zahlen = None
+        self._texte = None
 
     @classmethod
     def aus_datei(cls, pfad, **kw):
@@ -82,6 +83,30 @@ class Faktenbasis:
                 return True
             return any(round(b / stelle) * stelle == a for stelle in (1, 10, 100, 1000))
         return str(wert).strip().lower() == str(referenz).strip().lower()
+
+    @property
+    def texte(self):
+        """Jede Zeichenkette, die in den Fakten vorkommt.
+
+        Gebraucht fuer Bezeichnungen, die Zahlen enthalten, ohne welche zu
+        sein: Ein Perron «1/11» steht so in den Daten. Zerlegt man es in 1 und
+        11, sieht 11 unbelegt aus, obwohl die Bezeichnung wortwoertlich dasteht.
+        """
+        if self._texte is None:
+            self._texte = self._sammeln_texte(self.daten, set())
+        return self._texte
+
+    def _sammeln_texte(self, obj, raus):
+        if isinstance(obj, str):
+            raus.add(obj.strip())
+        elif isinstance(obj, dict):
+            for k, v in obj.items():
+                raus.add(str(k))
+                self._sammeln_texte(v, raus)
+        elif isinstance(obj, list):
+            for v in obj:
+                self._sammeln_texte(v, raus)
+        return raus
 
     @property
     def zahlen(self):

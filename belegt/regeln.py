@@ -43,6 +43,22 @@ VERGLEICH = (
 )
 
 
+#: Zeichen, aus denen eine Bezeichnung wie «1/11» oder «4/5» bestehen kann
+BEZEICHNUNG = re.compile(r"[\w/.'’-]+")
+
+
+def _teil_einer_bezeichnung(text, treffer, faktenbasis):
+    """Steht die gefundene Zahl in einer Bezeichnung, die so in den Fakten steht?"""
+    texte = getattr(faktenbasis, "texte", None)
+    if not texte:
+        return False
+    for m in BEZEICHNUNG.finditer(text):
+        if m.start() <= treffer.start() and m.end() >= treffer.end():
+            wort = m.group(0)
+            return wort != treffer.group(0) and wort in texte
+    return False
+
+
 def _satz_um(text, pos):
     """Der Satz, in dem die Fundstelle liegt. Die Eingrenzung muss im selben
     Satz stehen, sonst rechtfertigt ein «erfasst» drei Saetze weiter alles."""
@@ -78,9 +94,14 @@ class Regelwerk:
     def pruefe_text(self, text, wo, faktenbasis, bericht, zahlen_streng=True):
         """Prueft einen Text auf unbelegte Zahlen und unzulaessige Wendungen."""
         text = text or ""
-        for roh in ZAHL.findall(text):
+        for m in ZAHL.finditer(text):
+            roh = m.group(0)
             n = zahl(roh)
             if n is None:
+                continue
+            # Zahlen, die Teil einer Bezeichnung aus den Fakten sind, zaehlen
+            # als belegt: «Perron 1/11» ist eine Bezeichnung, keine Rechnung.
+            if _teil_einer_bezeichnung(text, m, faktenbasis):
                 continue
             if roh.isdigit() and len(roh) >= self.tausender_ab_stellen:
                 lesbar = f"{int(roh):,}".replace(",", "'")

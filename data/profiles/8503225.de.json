@@ -1,0 +1,690 @@
+{
+  "uic": 8503225,
+  "name": "Ziegelbrücke",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Ziegelbrücke 12'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 12'000, an einem freien Tag 11'100. Die Infrastruktur gehört der SBB, Züge fahren hier von SBB und SOB. Zwischen 2018 und 2025 stieg der Werktagsverkehr von 10'100 auf 12'400.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 12400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 12000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 11100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "SBB, SOB",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Ziegelbrücke ein und aus?",
+          "options": [
+            "5'000",
+            "6'800",
+            "8'700",
+            "12'400"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 12'400 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "In Ziegelbrücke liegt der Wert für einen freien Tag nahe beim Werktagswert.",
+          "correct": true,
+          "explanation": "An einem Werktag sind es 12'400 Personen, an einem freien Tag 11'100. Der Abstand ist damit kleiner als an vielen anderen erfassten Bahnhöfen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 10000,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 10100,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 12100,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 12400,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der tiefste erfasste Wert stammt von 2022 mit 10'000, danach folgen 10'100 (2018), 12'100 (2023) und 12'400 (2025). Für 2024 ist derselbe Wert wie für 2023 erfasst.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Ziegelbrücke liegt auf 425 Metern über Meer. Die Ortschaft heisst Ziegelbrücke, die politische Gemeinde ist Schänis im Bezirk See-Gaster, Kanton St. Gallen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 425,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Schänis",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
+        },
+        {
+          "label": "Bezirk",
+          "value": "See-Gaster",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "In welcher politischen Gemeinde liegt der Bahnhof Ziegelbrücke?",
+          "options": [
+            "Glarus",
+            "Näfels",
+            "Schänis",
+            "Weesen"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Schänis eingetragen, die Ortschaft heisst Ziegelbrücke.",
+          "factRef": "stammdaten.gemeinde",
+          "difficulty": 3
+        },
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Ziegelbrücke?",
+          "min": 380,
+          "max": 560,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 425,
+          "explanation": "Der Bahnhof liegt auf 425 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 4 Perrons in Ziegelbrücke liegen offene Daten vor, alle 4 sind niveaufrei erreichbar. Perron 9/10 ist mit 429 Metern das längste, Perron 5/6 misst 425 Meter und Perron 7/8 misst 384 Meter. Dazu kommt ein Dienstperron von 140 Metern.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 4,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 429,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 140,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 9/10",
+              "value": 429,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 5/6",
+              "value": 425,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 7/8",
+              "value": 384,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 140,
+              "factRef": "perrons.items[3].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 9/10 misst 429 Meter, Perron 5/6 misst 425, Perron 7/8 misst 384 und das Dienstperron 1 misst 140 Meter.",
+          "difficulty": 3
+        },
+        {
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 9/10",
+              "rechts": "1955.54 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 5/6",
+              "rechts": "2032.04 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 7/8",
+              "rechts": "1833.2 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 9/10 hat 1955.54 Quadratmeter, Perron 5/6 hat 2032.04 und Perron 7/8 hat 1833.2. Perron 5/6 ist kürzer als Perron 9/10, aber flächenmässig grösser.",
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu allen 4 erfassten Perrons in Ziegelbrücke ist ein niveaufreier Zugang vermerkt.",
+          "correct": true,
+          "explanation": "Für alle 4 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet, auch für das Dienstperron.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 6 Gleisen liegen offene Daten vor: 5 bis 10. An allen 6 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Die Gleise 6, 8 und 10 tragen je 4 Sektoren, die Gleise 5, 7 und 9 je 3. Bei keinem ist ein Hilfstritt verzeichnet.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 6,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Perronkante Gleis 7",
+          "value": 336,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Sektoren an Gleis 6",
+          "value": 4,
+          "source": "sektortafel",
+          "factRef": "gleise.items[1].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Zu wie vielen Gleisen in Ziegelbrücke liegen offene Daten vor?",
+          "options": [
+            "3",
+            "4",
+            "6",
+            "9"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 6 Gleise, die Nummern 5 bis 10. Ob der Bahnhof weitere Gleise hat, sagen die offenen Daten nicht.",
+          "factRef": "gleise.anzahl_mit_daten",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "An Gleis 6 sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "4",
+            "6"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 6 trägt die Sektoren A bis D, also 4 Stück. Gleis 5 hat nur die Sektoren A bis C.",
+          "factRef": "gleise.items[1].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Ziegelbrücke kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 6 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Ziegelbrücke sind 17 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 6 erfassten Gleisen liegt diese Höhe vor. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 17,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 6,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind in Ziegelbrücke erfasst?",
+          "options": [
+            "7",
+            "11",
+            "14",
+            "17"
+          ],
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 17 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei keinem der 17 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 17 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Ziegelbrücke ist ein Knoten aus vier Richtungen. Am stärksten befahren ist der Abschnitt von Bilten her: Im Personenverkehr verkehren dort 232 Züge pro Tag, das sind 84'654 im Jahr. Richtung Weesen sind es 149 Züge pro Tag, Richtung Nieder- und Oberurnen 81 und von Schänis her 77.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Bilten–Ziegelbrücke",
+          "value": 232,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Bilten–Ziegelbrücke",
+          "value": 84654,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bilten–Ziegelbrücke?",
+          "options": [
+            "93",
+            "130",
+            "170",
+            "232"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 232 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte im Personenverkehr nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Bilten – Ziegelbrücke",
+              "value": 232,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Ziegelbrücke – Weesen",
+              "value": 149,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Ziegelbrücke – Nieder- und Oberurnen",
+              "value": 81,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            },
+            {
+              "label": "Schänis – Ziegelbrücke",
+              "value": 77,
+              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Von Bilten her sind es 232 Züge pro Tag, Richtung Weesen 149, Richtung Nieder- und Oberurnen 81 und von Schänis her 77.",
+          "difficulty": 3
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Bilten–Ziegelbrücke?",
+          "min": 45000,
+          "max": 140000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 84654,
+          "explanation": "Die Erhebung zählt 84'654 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Ziegelbrücke sind 2 Linien erfasst: die Linie 890 Sargans Ost–Ziegelbrücke und die Linie 720 ZH Langstrasse–Thalwil–Ziegelbrücke. Auf der Linie 720 ist der Bahnhof bei Kilometer 57.14637 eingetragen, auf der Linie 890 bei Kilometer 33.60528.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 720",
+          "value": 57.14637,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Kilometrierung gehört zu welcher Linie?",
+          "pairs": [
+            {
+              "links": "Linie 890",
+              "rechts": "33.60528",
+              "factRef": "linien.items[0].km_am_bahnhof"
+            },
+            {
+              "links": "Linie 720",
+              "rechts": "57.14637",
+              "factRef": "linien.items[1].km_am_bahnhof"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Auf der Linie 890 steht der Bahnhof bei Kilometer 33.60528, auf der Linie 720 bei 57.14637. Jeder Wert zählt ab dem Anfang der jeweiligen Linie.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Ziegelbrücke steht in der Liste der WLAN-Standorte. Erfasst sind 1 Billettautomat vom Typ ePOS, 6 Billettentwerter und 5 Wartehallen.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 5,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Ziegelbrücke steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Ziegelbrücke sind ___ Wartehallen erfasst.",
+          "options": [
+            "2",
+            "5",
+            "8"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 5 Wartehallen. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort steht.",
+          "factRef": "services.wartehallen_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Ziegelbrücke 26 Sitzbänke, 7 Infopunkte sowie 4 Schliessfächer erfasst. Zu 4 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut, Kiessandbelag sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 26,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 7,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 4,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 4,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "14",
+            "18",
+            "26",
+            "31"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 26 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "7",
+            "12",
+            "15",
+            "21"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 7 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "12"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 4 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 5/6",
+              "value": 2681,
+              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+            },
+            {
+              "label": "Perron 9/10",
+              "value": 2581,
+              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
+            },
+            {
+              "label": "Perron 7/8",
+              "value": 2466,
+              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
+            },
+            {
+              "label": "Perron 1",
+              "value": 278,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 5/6 hat mit 2'681 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 278 die kleinste der gezeigten.",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (5, 6, 7, 8, 9, 10). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

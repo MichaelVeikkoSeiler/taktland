@@ -236,7 +236,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Von 5 erfassten Perrons in Renens VD sind 4 niveaufrei erreichbar, eine Gleisquerung ist nötig. Von den 17 erfassten Perronsegmenten ist keines mit Hilfstritt ausgestattet.",
+      "body": "Von 5 erfassten Perrons in Renens VD sind 4 als niveaufrei erreichbar vermerkt, zum fünften fehlt die Angabe zum Zugang. Von den 17 erfassten Perronsegmenten ist keines mit Hilfstritt ausgestattet.",
       "facts": [
         {
           "label": "Perronsegmente insgesamt erfasst",
@@ -256,11 +256,11 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Um zu anderen Perrons in Renens VD zu gelangen, ist eine Gleisquerung nötig.",
-          "correct": true,
-          "explanation": "Die Daten weisen eine nötige Gleisquerung aus.",
-          "factRef": "hindernisfreiheit.gleisquerung_noetig",
-          "difficulty": 1
+          "prompt": "Zu allen 5 erfassten Perrons in Renens VD ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Für 4 der 5 erfassten Perrons ist ein niveaufreier Zugang vermerkt, zum fünften steht in den Daten nichts.",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "difficulty": 2
         },
         {
           "type": "single_choice",

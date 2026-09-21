@@ -1,0 +1,736 @@
+{
+  "uic": 8506121,
+  "name": "Romanshorn",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Romanshorn 12'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 11'800, an einem freien Tag 9'600. Die Infrastruktur gehört der SBB, Züge fahren hier von SBB und Thurbo. Zwischen 2018 und 2025 stieg der Werktagsverkehr von 11'300 auf 12'900.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 12900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 11800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 9600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Bahnunternehmen",
+          "value": "SBB, Thurbo",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.evu"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Romanshorn ein und aus?",
+          "options": [
+            "5'200",
+            "7'100",
+            "9'000",
+            "12'900"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 12'900 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Romanshorn ___ Personen ein und aus.",
+          "options": [
+            "6'500",
+            "8'300",
+            "9'600"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 9'600 Personen. Der Abstand zum Werktagswert ist hier kleiner als an vielen anderen Bahnhöfen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Der Werktagsverkehr in Romanshorn lag 2024 und 2025 beide Male bei 12'900 Personen.",
+          "correct": true,
+          "explanation": "Für 2024 und 2025 ist derselbe Wert von 12'900 erfasst. Davor waren es 12'000 im Jahr 2023.",
+          "factRef": "steckbrief.verlauf[4].dwv",
+          "difficulty": 3
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 11200,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 11300,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 12000,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 12900,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der tiefste erfasste Wert stammt von 2022 mit 11'200, danach folgen 11'300 (2018), 12'000 (2023) und 12'900 (2025).",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Romanshorn liegt auf 398.5 Metern über Meer in der Gemeinde Romanshorn, Bezirk Arbon, Kanton Thurgau. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 398.5,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Arbon",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "RH",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Romanshorn?",
+          "min": 350,
+          "max": 530,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 398.5,
+          "explanation": "Der Bahnhof liegt auf 398.5 Metern über Meer, am Bodensee.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Romanshorn?",
+          "options": [
+            "Arbon",
+            "Frauenfeld",
+            "Kreuzlingen",
+            "Weinfelden"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Romanshorn liegt im Bezirk Arbon, Kanton Thurgau.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 3 Perrons in Romanshorn liegen offene Daten vor, alle 3 sind niveaufrei erreichbar. Perron 2/3 ist mit 448 Metern das längste, Perron 4/5 misst 282 Meter und Perron 1 misst 223 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 3,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 448,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 223,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Romanshorn?",
+          "options": [
+            "180 m",
+            "250 m",
+            "310 m",
+            "448 m"
+          ],
+          "correct": 3,
+          "explanation": "Perron 2/3 ist mit 448 Metern das längste erfasste Perron.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 2/3",
+              "value": 448,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 4/5",
+              "value": 282,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 223,
+              "factRef": "perrons.items[2].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 misst 448 Meter, Perron 4/5 misst 282 und Perron 1 misst 223 Meter.",
+          "difficulty": 2
+        },
+        {
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "2557.13 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 4/5",
+              "rechts": "1145.58 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "1252.49 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 hat 2557.13 Quadratmeter, Perron 4/5 hat 1145.58 und Perron 1 hat 1252.49. Perron 1 ist kürzer als Perron 4/5, aber flächenmässig grösser.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 5 Gleisen liegen offene Daten vor: 1 bis 5. Die erfassten Perronkanten reichen von 224 bis 449 Metern. An allen 5 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet, an Gleis 5 zusätzlich eine von 35 Zentimetern. Bei keinem ist ein Hilfstritt verzeichnet.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 5,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante",
+          "value": 449,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Sektoren an Gleis 3",
+          "value": 4,
+          "source": "sektortafel",
+          "factRef": "gleise.items[2].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "3",
+          "factRef": "gleise.items[2].nr",
+          "explanation": "Gleis 3 hat mit 449 Metern die längste erfasste Perronkante, deutlich vor Gleis 2 mit 265 Metern.",
+          "difficulty": 2
+        },
+        {
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 5 in Romanshorn erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "35 cm",
+            "55 cm",
+            "76 cm"
+          ],
+          "correct": [
+            1,
+            2
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 5 sind 35 und 55 Zentimeter verzeichnet. Es ist das einzige erfasste Gleis mit zwei Höhen.",
+          "factRef": "gleise.items[4].perronhoehen_cm",
+          "difficulty": 3
+        },
+        {
+          "type": "cloze",
+          "prompt": "An Gleis 1 sind ___ Sektoren erfasst.",
+          "options": [
+            "2",
+            "4",
+            "6"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A und B, also 2 Stück. Gleis 3 hat mit 4 Sektoren am meisten.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Romanshorn sind 13 Perronsegmente erfasst: 11 mit einer Perronhöhe von 55 Zentimetern und 2 mit 35 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 13,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Segmente mit Hilfstritt",
+          "value": 0,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind in Romanshorn erfasst?",
+          "options": [
+            "7",
+            "9",
+            "13",
+            "16"
+          ],
+          "correct": 2,
+          "explanation": "Die BehiG-Erhebung führt 13 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "Von den 13 erfassten Segmenten weisen ___ eine Perronhöhe von 55 Zentimetern auf.",
+          "options": [
+            "2",
+            "9",
+            "11"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "11 der 13 Segmente sind mit 55 Zentimetern erfasst, die übrigen 2 mit 35 Zentimetern.",
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei keinem der 13 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 13 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt zwischen Romanshorn und Romanshorn GB: Im Personenverkehr verkehren dort 194 Züge pro Tag, das sind 70'635 im Jahr. Richtung Romanshorn West sind es 143 Züge pro Tag, von Uttwil her 117.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Romanshorn–Romanshorn GB",
+          "value": 194,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Romanshorn–Romanshorn GB",
+          "value": 70635,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Romanshorn–Romanshorn GB?",
+          "options": [
+            "78",
+            "110",
+            "140",
+            "194"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 194 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte im Personenverkehr nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Romanshorn – Romanshorn GB",
+              "value": 194,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "Romanshorn West – Romanshorn",
+              "value": 143,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "Uttwil – Romanshorn",
+              "value": 117,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Romanshorn–Romanshorn GB führt mit 194 Zügen pro Tag, dann folgen Romanshorn West mit 143 und Uttwil mit 117.",
+          "difficulty": 2
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Romanshorn–Romanshorn GB?",
+          "min": 35000,
+          "max": 120000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 70635,
+          "explanation": "Die Erhebung zählt 70'635 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Romanshorn sind 2 Linien erfasst: die Linie 840 Winterthur Nord–Romanshorn und die Linie 824 Romanshorn–Konstanz. Beide treffen sich hier bei rund Kilometer 82.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 840",
+          "value": 82.15072,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
+          "pairs": [
+            {
+              "links": "Linie 840",
+              "rechts": "Winterthur Nord - Romanshorn",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "Linie 824",
+              "rechts": "Romanshorn - Konstanz",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Die Linie 840 führt von Winterthur Nord nach Romanshorn, die Linie 824 von Romanshorn nach Konstanz.",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "Auf der Linie 840 Winterthur Nord–Romanshorn steht Romanshorn bei Kilometer ___.",
+          "options": [
+            "42.15072",
+            "82.15072",
+            "102.15072"
+          ],
+          "correct": 1,
+          "explanation": "Die Kilometrierung von Romanshorn auf der Linie 840 beträgt 82.15072. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Romanshorn steht in der Liste der WLAN-Standorte. Erfasst sind 3 Billettautomaten der Typen S-POS und ePOS, 6 Billettentwerter und 3 Wartehallen.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 3,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 6,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 3,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Romanshorn steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Romanshorn sind ___ Billettentwerter erfasst.",
+          "options": [
+            "6",
+            "8",
+            "10"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Romanshorn 24 Sitzbänke, 1 Infopunkt sowie 18 Schliessfächer erfasst. Zu 3 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 24,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 1,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 18,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 3,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "10",
+            "17",
+            "20",
+            "24"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 24 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "1",
+            "2",
+            "3"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 1 Infopunkt. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 11,
+          "max": 32,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 18,
+          "explanation": "Erfasst sind 18 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 3,
+          "explanation": "Für alle Perrons mit Daten ist Verbundstein-Pflästerung erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 2/3",
+              "value": 2926,
+              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+            },
+            {
+              "label": "Perron 4/5",
+              "value": 1470,
+              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
+            },
+            {
+              "label": "Perron 1",
+              "value": 1402,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 2/3 hat mit 2'926 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 1'402 die kleinste der gezeigten.",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 5 Gleise (1, 2, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

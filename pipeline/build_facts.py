@@ -288,7 +288,11 @@ def hindernisfreiheit(d, uic, gl, pr):
         out["perrons_niveaufrei"] = frei
         out["perrons_mit_daten"] = gesamt
         if frei < gesamt:
-            out["gleisquerung_noetig"] = True
+            # Frueher hiess dieses Feld gleisquerung_noetig. Der Name behauptete
+            # etwas ueber die Wirklichkeit, was die Daten nicht hergeben: Zu
+            # diesen Perrons fehlt schlicht die Angabe zum Zugang. Daraus folgt
+            # nicht, dass man die Gleise queren muss.
+            out["perrons_ohne_zugangsangabe"] = gesamt - frei
     seg = d.behig[d.behig.uic == uic]
     if not seg.empty:
         out["segmente"] = int(len(seg))
@@ -528,12 +532,14 @@ def luecken(d, uic, f):
                    f"{', '.join(ohne)} sind keine Sektortafeln erfasst.",
                    "sektortafel")
     hf = f.get("hindernisfreiheit") or {}
-    if hf.get("gleisquerung_noetig"):
+    if hf.get("perrons_ohne_zugangsangabe"):
         frei, gesamt = hf.get("perrons_niveaufrei", 0), hf.get("perrons_mit_daten", 0)
+        offen = hf["perrons_ohne_zugangsangabe"]
         lueckt("Zugang zum Perron",
                f"Von {gesamt} erfassten Perrons {'ist' if frei == 1 else 'sind'} "
-               f"{frei} niveaufrei erreichbar. Für die übrigen ist in den Daten kein "
-               "niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+               f"{frei} als niveaufrei erreichbar vermerkt. Zu den übrigen "
+               f"{offen} steht in den Daten keine Angabe zum Zugang. Wie man dorthin "
+               "gelangt, sagen die offenen Daten nicht.",
                "perron")
     if hf and hf.get("gleise_mit_daten") and hf.get("gleise_mit_55cm") == 0:
         lueckt("Stufenfreier Einstieg",
