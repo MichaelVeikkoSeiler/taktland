@@ -96,7 +96,7 @@ export default function App() {
             <a href={`mailto:${KONTAKT}`} className="underline underline-offset-2
                                                   hover:text-sbb-black dark:hover:text-sbb-white">
               {KONTAKT}
-            </a>.
+            </a>. Entstanden mit Unterstützung von KI (Claude Code).
           </p>
           <p className="mt-2 font-medium text-sbb-black dark:text-sbb-white">
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet

@@ -228,6 +228,18 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
           </li>
         </Punkte>
       </Abschnitt>
+
+      <Abschnitt titel="Über Taktland">
+        <Punkte>
+          <li>Der Name spielt auf den Taktfahrplan der Schweiz an.</li>
+          <li>
+            Taktland ist mit Unterstützung von KI entstanden: Programm, Textbausteine und
+            Prüfregeln wurden mit Claude Code geschrieben. Die Texte zu Bahnhöfen und Linien
+            setzt ein Programm aus den offenen Daten zusammen, und vor jeder Veröffentlichung
+            gleicht ein Prüfprogramm sie mit den Daten ab.
+          </li>
+        </Punkte>
+      </Abschnitt>
     </div>
   )
 }
