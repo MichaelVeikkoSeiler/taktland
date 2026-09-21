@@ -1,6 +1,6 @@
 {
-  "uic": 8504012,
-  "name": "Puidoux",
+  "uic": 8502022,
+  "name": "Eschenbach LU",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -23,25 +23,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Puidoux 2'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 2'100, an einem freien Tag 1'300. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Eschenbach LU 1'100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 1'000, an einem freien Tag 750. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 2400,
+          "value": 1100,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 2100,
+          "value": 1000,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 1300,
+          "value": 750,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -49,17 +49,17 @@
       ],
       "questions": [
         {
-          "id": "steckbrief:f484daf9",
+          "id": "steckbrief:0d7308b6",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Puidoux ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Eschenbach LU ein und aus?",
           "options": [
-            "2'400",
-            "2'900",
-            "3'400",
-            "4'100"
+            "770",
+            "940",
+            "1'100",
+            "1'300"
           ],
-          "correct": 0,
-          "explanation": "An einem Werktag sind es 2'400 Ein- und Aussteigende, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 1'100 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -71,40 +71,35 @@
           "items": [
             {
               "label": "2018",
-              "value": 1800,
+              "value": 850,
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
-              "label": "2022",
-              "value": 1900,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
               "label": "2023",
-              "value": 2200,
+              "value": 950,
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
               "label": "2025",
-              "value": 2400,
+              "value": 1100,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 1'800 (2018), 1'900 (2022), 2'200 (2023), 2'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 850 (2018), 950 (2023), 1'100 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:7a313511",
+          "id": "steckbrief:c13649bc",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Puidoux ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Eschenbach LU ___ Personen ein und aus.",
           "options": [
-            "1'300",
-            "1'600",
-            "2'900"
+            "520",
+            "640",
+            "750"
           ],
-          "correct": 0,
-          "explanation": "An einem freien Tag sind es 1'300 Personen, an einem Werktag 2'400. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 750 Personen, an einem Werktag 1'100. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -113,49 +108,56 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Puidoux liegt auf 617.56 Metern über Meer in der Gemeinde Puidoux, Bezirk Lavaux-Oron. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet PUI.",
+      "body": "Eschenbach LU liegt auf 468 Metern über Meer in der Gemeinde Eschenbach (LU), Bezirk Hochdorf, Kanton Luzern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet ESB.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 617.56,
+          "value": 468,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "PUI",
+          "value": "ESB",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Hochdorf",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:123491ce",
+          "id": "stammdaten:5e1e8b77",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Puidoux?",
-          "min": 500,
-          "max": 900,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Eschenbach LU?",
+          "min": 380,
+          "max": 680,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 617.56,
-          "explanation": "Der Bahnhof liegt auf 617.56 Metern über Meer.",
+          "correct": 468,
+          "explanation": "Der Bahnhof liegt auf 468 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:ffb83482",
-          "type": "cloze",
-          "prompt": "Die offizielle Abkürzung des Bahnhofs Puidoux lautet ___.",
+          "id": "stammdaten:c68e88d7",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Eschenbach LU?",
           "options": [
-            "PUD",
-            "PUI",
-            "PX"
+            "Hochdorf",
+            "Luzern-Land",
+            "Luzern-Stadt",
+            "Sursee"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "In den Stammdaten ist PUI als Abkürzung erfasst.",
-          "factRef": "stammdaten.abkuerzung",
+          "explanation": "Als Bezirk ist Hochdorf eingetragen.",
+          "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
       ]
@@ -163,7 +165,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Puidoux liegen offene Daten vor. Perron 2/3 misst 244 Meter, Perron 1 misst 225 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Eschenbach LU liegen offene Daten vor. Perron 3 misst 126 Meter, Perron 2 misst 107 Meter. 1 ist als niveaufrei vermerkt, 1 ausdrücklich als nicht niveaufrei.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -173,7 +175,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 244,
+          "value": 126,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -181,55 +183,35 @@
       ],
       "questions": [
         {
-          "id": "perrons:e32d8af0",
+          "id": "perrons:56d0e806",
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Puidoux?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Eschenbach LU?",
           "options": [
-            "210 m",
-            "244 m",
-            "290 m",
-            "340 m"
+            "69 m",
+            "88 m",
+            "110 m",
+            "126 m"
           ],
-          "correct": 1,
-          "explanation": "Das längste erfasste Perron misst 244 Meter.",
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 126 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:57221352",
-          "type": "match",
-          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
-          "pairs": [
-            {
-              "links": "Perron 2/3",
-              "rechts": "662.19 m²",
-              "factRef": "perrons.items[0].flaeche_netto_m2"
-            },
-            {
-              "links": "Perron 1",
-              "rechts": "962.53 m²",
-              "factRef": "perrons.items[1].flaeche_netto_m2"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 2/3 hat 662.19 Quadratmeter, Perron 1 hat 962.53 Quadratmeter.",
-          "difficulty": 3
-        },
-        {
-          "id": "perrons:e2d0dc69",
+          "id": "perrons:d88c2ab6",
           "type": "true_false",
-          "prompt": "Beide erfassten Perrons in Puidoux sind niveaufrei erreichbar.",
-          "correct": true,
-          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "prompt": "Zu beiden erfassten Perrons in Eschenbach LU ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Für 1 der 2 erfassten Perrons ist ein niveaufreier Zugang vermerkt. 1 ist ausdrücklich als nicht niveaufrei erfasst.",
           "factRef": "perrons.niveaufrei_erreichbar",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 20 und 55 Zentimetern. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 20, 25 und 35 Zentimetern. Sektortafeln sind zu keinem dieser Gleise erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -240,40 +222,66 @@
         },
         {
           "label": "Längste erfasste Perronkante",
-          "value": 166,
+          "value": 113,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
+          "factRef": "gleise.items[0].perronkante_m"
         }
       ],
       "questions": [
         {
-          "id": "gleise:61ecaaf5",
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
-          "correct": "2",
-          "factRef": "gleise.items[1].nr",
-          "explanation": "Gleis 2 hat mit 166 Metern die längste erfasste Perronkante, die nächste misst 152 Meter.",
+          "correct": "1",
+          "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 1 hat mit 113 Metern die längste erfasste Perronkante, die nächste misst 78 Meter.",
           "difficulty": 2
         },
         {
-          "id": "gleise:23a144ce",
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 1",
+              "value": 113,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 78,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 2",
+              "value": 50,
+              "factRef": "gleise.items[1].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 1 misst 113 Meter, Gleis 3 misst 78 Meter, Gleis 2 misst 50 Meter.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:2d8b240e",
           "type": "multiple_choice",
-          "prompt": "Welche Perronhöhen sind für Gleis 1 in Puidoux erfasst? (Mehrfachauswahl)",
+          "prompt": "Welche Perronhöhen sind für Gleis 2 in Eschenbach LU erfasst? (Mehrfachauswahl)",
           "options": [
             "20 cm",
             "25 cm",
             "30 cm",
-            "55 cm"
+            "35 cm"
           ],
           "correct": [
             0,
             3
           ],
           "optionen_aus_fakten": true,
-          "explanation": "An Gleis 1 sind 20 und 55 Zentimeter verzeichnet.",
-          "factRef": "gleise.items[0].perronhoehen_cm",
+          "explanation": "An Gleis 2 sind 20 und 35 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[1].perronhoehen_cm",
           "difficulty": 3
         }
       ]
@@ -281,7 +289,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Puidoux sind 13 Perronsegmente erfasst: 9 mit 55 Zentimetern, 4 mit 20 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Eschenbach LU sind 13 Perronsegmente erfasst: 7 mit 35 Zentimetern, 4 mit 20 Zentimetern, 2 mit 25 Zentimetern. Bei 2 Segmenten ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -292,7 +300,7 @@
         },
         {
           "label": "Gleise mit Perronhöhe 55 cm",
-          "value": 3,
+          "value": 0,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
@@ -305,47 +313,38 @@
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:f7856443",
+          "id": "hindernisfreiheit:06b868e5",
           "type": "cloze",
-          "prompt": "In Puidoux sind ___ Perronsegmente erfasst.",
+          "prompt": "In Eschenbach LU sind ___ Perronsegmente erfasst.",
           "options": [
-            "7",
-            "11",
-            "13"
+            "13",
+            "16",
+            "18"
           ],
-          "correct": 2,
+          "correct": 0,
           "optionen_aus_fakten": true,
           "explanation": "Die BehiG-Erhebung führt 13 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
-        },
-        {
-          "id": "hindernisfreiheit:8fc3c778",
-          "type": "true_false",
-          "prompt": "Bei keinem der 13 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
-          "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 13 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Puidoux – Moreillon: Im Personenverkehr verkehren dort 255 Züge pro Tag, das sind 93'214 im Jahr. Auf dem Abschnitt Grandvaux – Puidoux sind es 216 und auf dem Abschnitt Puidoux – Le Verney (embr) sind es 39 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 10 Züge pro Tag auf einem Abschnitt.",
+      "body": "Am stärksten befahren ist der Abschnitt Eschenbach LU – Waldibrücke: Im Personenverkehr verkehren dort 79 Züge pro Tag, das sind 28'670 im Jahr. Auf dem Abschnitt Ballwil – Eschenbach LU sind es 78 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Puidoux – Moreillon",
-          "value": 255,
+          "label": "Züge pro Tag, Personenverkehr Eschenbach LU – Waldibrücke",
+          "value": 79,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Puidoux – Moreillon",
-          "value": 93214,
+          "label": "Züge pro Jahr, Personenverkehr Eschenbach LU – Waldibrücke",
+          "value": 28670,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -353,49 +352,31 @@
       ],
       "questions": [
         {
-          "id": "zuege:905d3bdf",
+          "id": "zuege:905d7154",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Puidoux – Moreillon?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Eschenbach LU – Waldibrücke?",
           "options": [
-            "255",
-            "310",
-            "360",
-            "430"
+            "67",
+            "79",
+            "95",
+            "110"
           ],
-          "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 255 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 79 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:d38de786",
-          "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Puidoux – Moreillon, Personenverkehr",
-              "value": 93214,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Grandvaux – Puidoux, Personenverkehr",
-              "value": 78781,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
-              "label": "Puidoux – Le Verney (embr), Personenverkehr",
-              "value": 14145,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Puidoux – Moreillon, Güterverkehr",
-              "value": 3644,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Puidoux – Moreillon (Personenverkehr) 93'214, Grandvaux – Puidoux (Personenverkehr) 78'781, Puidoux – Le Verney (embr) (Personenverkehr) 14'145, Puidoux – Moreillon (Güterverkehr) 3'644 Züge im Jahr.",
+          "id": "zuege:4d31f2a9",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Eschenbach LU – Waldibrücke?",
+          "min": 23500,
+          "max": 42000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 28670,
+          "explanation": "Die Erhebung zählt 28'670 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -403,62 +384,42 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Puidoux sind 2 Linien erfasst: die Linie 111 Vevey Ouest - Puidoux-Chexbres und die Linie 250 Lausanne Est - Bern.",
+      "body": "Für Eschenbach LU ist 1 Linie erfasst: die Linie 651 Hubeli - Beinwil - Lenzburg. Der Bahnhof ist darauf bei Kilometer 8.567 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
-          "value": 2,
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 250",
-          "value": 12.1579,
+          "label": "Kilometrierung auf der Linie 651",
+          "value": 8.567,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[1].km_am_bahnhof"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "id": "linien:39ce7c09",
+          "id": "linien:278106ae",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Puidoux eingetragen?",
-          "min": 9.5,
-          "max": 18.0,
+          "prompt": "Bei welchem Streckenkilometer der Linie 651 ist Eschenbach LU eingetragen?",
+          "min": 7.0,
+          "max": 12.5,
           "step": 0.1,
           "unit": "km",
-          "correct": 12.1579,
-          "explanation": "Die Kilometrierung von Puidoux auf der Linie 250 beträgt 12.1579. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
-          "factRef": "linien.items[1].km_am_bahnhof",
+          "correct": 8.567,
+          "explanation": "Die Kilometrierung von Eschenbach LU auf der Linie 651 beträgt 8.567. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
-        },
-        {
-          "id": "linien:f57243ca",
-          "type": "match",
-          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
-          "pairs": [
-            {
-              "links": "Linie 111",
-              "rechts": "Vevey Ouest - Puidoux-Chexbres",
-              "factRef": "linien.items[0].name"
-            },
-            {
-              "links": "Linie 250",
-              "rechts": "Lausanne Est - Bern",
-              "factRef": "linien.items[1].name"
-            }
-          ],
-          "factRef": "linien.items",
-          "explanation": "Die Linie 111 heisst Vevey Ouest - Puidoux-Chexbres, die Linie 250 heisst Lausanne Est - Bern.",
-          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 1 Billettentwerter und 1 Wartehalle. Puidoux steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS und 1 Wartehalle. Billettentwerter sind keine verzeichnet. Eschenbach LU steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -475,34 +436,19 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 1,
+          "value": 0,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
-          "id": "services:245450c4",
+          "id": "services:081dba11",
           "type": "true_false",
-          "prompt": "Puidoux steht in der Liste der WLAN-Standorte.",
+          "prompt": "Eschenbach LU steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
-          "difficulty": 2
-        },
-        {
-          "id": "services:935c8054",
-          "type": "single_choice",
-          "prompt": "Wie viele Billettentwerter sind in Puidoux erfasst?",
-          "options": [
-            "1",
-            "2",
-            "3"
-          ],
-          "correct": 0,
-          "optionen_aus_fakten": true,
-          "explanation": "Erfasst ist 1 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
-          "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
       ]
@@ -510,11 +456,11 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Puidoux 5 Sitzbänke sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist Bituminöses Mischgut. Dazu führt die Quelle Belag unter der Sammelangabe «Andere». Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Eschenbach LU 2 Sitzbänke sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Kiessandbelag. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 5,
+          "value": 2,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
@@ -537,15 +483,16 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "5",
+            "1",
+            "2",
             "6",
-            "7",
             "8"
           ],
-          "correct": 0,
-          "explanation": "Erfasst sind 5 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
-          "difficulty": 1
+          "difficulty": 1,
+          "optionen_aus_fakten": true
         },
         {
           "id": "ausstattung:05728d58",
@@ -593,6 +540,11 @@
       "quelle": "sektortafel"
     },
     {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
@@ -612,12 +564,11 @@
     {
       "nr": "1",
       "perronhoehen_cm": [
-        20,
-        55
+        35
       ],
       "hilfstritt": false,
       "perrontyp": "Aussenperron",
-      "perronkante_m": 151,
+      "perronkante_m": 113,
       "sektoren": [],
       "sektoren_anzahl": 0
     },
@@ -625,22 +576,23 @@
       "nr": "2",
       "perronhoehen_cm": [
         20,
-        55
+        35
       ],
       "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 166,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 50,
       "sektoren": [],
       "sektoren_anzahl": 0
     },
     {
       "nr": "3",
       "perronhoehen_cm": [
-        55
+        20,
+        25
       ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 152,
+      "hilfstritt": true,
+      "perrontyp": "Hilfskante",
+      "perronkante_m": 78,
       "sektoren": [],
       "sektoren_anzahl": 0
     }

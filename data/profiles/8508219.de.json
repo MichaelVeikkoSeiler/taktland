@@ -1,0 +1,595 @@
+{
+  "uic": 8508219,
+  "name": "Luzern Littau",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "21197_behig-haltekantesegment",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Luzern Littau 1'100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 940, an einem freien Tag 530. Die Infrastruktur gehört der SBB, als Bahnunternehmen ist BLS erfasst.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 1100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 940,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 530,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:4409daa7",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Luzern Littau ein und aus?",
+          "options": [
+            "440",
+            "600",
+            "770",
+            "1'100"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 1'100 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 1000,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 1100,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 1200,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 1'000 (2022), 1'100 (2025), 1'200 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:639c90fd",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Luzern Littau ___ Personen ein und aus.",
+          "options": [
+            "450",
+            "530",
+            "640"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 530 Personen, an einem Werktag 1'100. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Luzern Littau liegt auf 456 Metern über Meer in der Gemeinde Luzern, Bezirk Luzern-Stadt, Kanton Luzern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LIT.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 456,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "LIT",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:80f57de7",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Luzern Littau?",
+          "min": 370,
+          "max": 670,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 456,
+          "explanation": "Der Bahnhof liegt auf 456 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:a69e1192",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Luzern Littau lautet ___.",
+          "options": [
+            "EBR",
+            "GSAG",
+            "LIT"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist LIT als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 2 Perrons in Luzern Littau liegen offene Daten vor. Perron 2 misst 226 Meter, Perron 1 misst 225 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 226,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "perrons:5b19f06b",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Luzern Littau?",
+          "options": [
+            "160 m",
+            "190 m",
+            "226 m",
+            "270 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 226 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:ed14e750",
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Luzern Littau sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 25 und 30 Zentimetern. Zu den Gleisen 2 und 3 sind keine Sektortafeln erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 3,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante",
+          "value": 138,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:61ecaaf5",
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "2",
+          "factRef": "gleise.items[1].nr",
+          "explanation": "Gleis 2 hat mit 138 Metern die längste erfasste Perronkante, die nächste misst 123 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:7b0b3c48",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Luzern Littau sind ___ Sektoren erfasst.",
+          "options": [
+            "4",
+            "5",
+            "6"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Luzern Littau sind 4 Perronsegmente erfasst: 2 mit 25 Zentimetern, 2 mit 30 Zentimetern. Bei 4 Segmenten ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 4,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 0,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:4ae31b0f",
+          "type": "cloze",
+          "prompt": "In Luzern Littau sind ___ Perronsegmente erfasst.",
+          "options": [
+            "4",
+            "5",
+            "6"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 4 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Malters – Luzern Littau 86 Züge pro Tag, das sind 31'545 im Jahr. Auf dem Abschnitt Luzern Littau – Fluhmühle (Abzw) sind es ebenfalls 86 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Malters – Luzern Littau",
+          "value": 86,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Malters – Luzern Littau",
+          "value": 31545,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "id": "zuege:c9197849",
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Malters – Luzern Littau?",
+          "options": [
+            "60",
+            "73",
+            "86",
+            "100"
+          ],
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 86 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:b31facdd",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Malters – Luzern Littau?",
+          "min": 25500,
+          "max": 46000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 31545,
+          "explanation": "Die Erhebung zählt 31'545 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Luzern Littau ist 1 Linie erfasst: die Linie 460 Gumligen Sud - Fluhmuhle. Der Bahnhof ist darauf bei Kilometer 89.17591 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 460",
+          "value": 89.17591,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:602a4acd",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 460 ist Luzern Littau eingetragen?",
+          "min": 73,
+          "max": 130,
+          "step": 1,
+          "unit": "km",
+          "correct": 89.17591,
+          "explanation": "Die Kilometrierung von Luzern Littau auf der Linie 460 beträgt 89.17591. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 2 Billettautomaten, 4 Billettentwerter und 1 Wartehalle. Luzern Littau steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 2,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 4,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:df1b339c",
+          "type": "true_false",
+          "prompt": "Luzern Littau steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "id": "services:607490ee",
+          "type": "cloze",
+          "prompt": "In Luzern Littau sind ___ Billettentwerter erfasst.",
+          "options": [
+            "4",
+            "5",
+            "6"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 4 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Luzern Littau 2 Sitzbänke sowie 2 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 2,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 2,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "ausstattung:e6085503",
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "1",
+            "2",
+            "6",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "id": "ausstattung:a8529c11",
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "1",
+            "2",
+            "6",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "id": "ausstattung:92d1d5cd",
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 2, 3 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [],
+      "hilfstritt": false,
+      "perrontyp": null,
+      "perronkante_m": null,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "sektoren_anzahl": 4
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        25
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Zwischenperron",
+      "perronkante_m": 138,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        30
+      ],
+      "hilfstritt": true,
+      "perrontyp": "Zwischenperron",
+      "perronkante_m": 123,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    }
+  ]
+}

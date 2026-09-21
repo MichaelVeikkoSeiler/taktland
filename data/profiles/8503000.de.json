@@ -589,7 +589,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Zürich HB 48 Sitzbänke sowie 29 Infopunkte erfasst. Zu 9 Perrons liegt der Belag vor, erfasst sind Andere sowie Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Zürich HB 48 Sitzbänke sowie 29 Infopunkte erfasst. Zu 9 Perrons liegt der Belag vor, erfasst ist Bituminöses Mischgut. Dazu führt die Quelle Belag unter der Sammelangabe «Andere». Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",

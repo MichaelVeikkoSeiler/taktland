@@ -1,6 +1,6 @@
 {
-  "uic": 8504012,
-  "name": "Puidoux",
+  "uic": 8504010,
+  "name": "La Conversion",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -10,12 +10,12 @@
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
-    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
     "perronoberflache",
+    "sektortafel",
     "wifistation",
     "zugzahlen"
   ],
@@ -23,25 +23,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Puidoux 2'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 2'100, an einem freien Tag 1'300. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in La Conversion 1'100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 970, an einem freien Tag 650. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 2400,
+          "value": 1100,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 2100,
+          "value": 970,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 1300,
+          "value": 650,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -49,17 +49,17 @@
       ],
       "questions": [
         {
-          "id": "steckbrief:f484daf9",
+          "id": "steckbrief:a2f354c1",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Puidoux ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in La Conversion ein und aus?",
           "options": [
-            "2'400",
-            "2'900",
-            "3'400",
-            "4'100"
+            "600",
+            "770",
+            "1'100",
+            "1'300"
           ],
-          "correct": 0,
-          "explanation": "An einem Werktag sind es 2'400 Ein- und Aussteigende, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 1'100 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -71,40 +71,40 @@
           "items": [
             {
               "label": "2018",
-              "value": 1800,
+              "value": 890,
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
               "label": "2022",
-              "value": 1900,
+              "value": 940,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2023",
-              "value": 2200,
-              "factRef": "steckbrief.verlauf[2].dwv"
+              "label": "2025",
+              "value": 1100,
+              "factRef": "steckbrief.verlauf[4].dwv"
             },
             {
-              "label": "2025",
-              "value": 2400,
-              "factRef": "steckbrief.verlauf[4].dwv"
+              "label": "2024",
+              "value": 1200,
+              "factRef": "steckbrief.verlauf[3].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 1'800 (2018), 1'900 (2022), 2'200 (2023), 2'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 890 (2018), 940 (2022), 1'100 (2025), 1'200 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:7a313511",
+          "id": "steckbrief:1a1292e0",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Puidoux ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in La Conversion ___ Personen ein und aus.",
           "options": [
-            "1'300",
-            "1'600",
-            "2'900"
+            "650",
+            "780",
+            "910"
           ],
           "correct": 0,
-          "explanation": "An einem freien Tag sind es 1'300 Personen, an einem Werktag 2'400. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "explanation": "An einem freien Tag sind es 650 Personen, an einem Werktag 1'100. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -113,49 +113,56 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Puidoux liegt auf 617.56 Metern über Meer in der Gemeinde Puidoux, Bezirk Lavaux-Oron. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet PUI.",
+      "body": "La Conversion liegt auf 501.042 Metern über Meer in der Gemeinde Lutry, Bezirk Lavaux-Oron. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet CVN.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 617.56,
+          "value": 501.042,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "PUI",
+          "value": "CVN",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Lutry",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:123491ce",
+          "id": "stammdaten:ba99b6b6",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Puidoux?",
-          "min": 500,
-          "max": 900,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof La Conversion?",
+          "min": 410,
+          "max": 730,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 617.56,
-          "explanation": "Der Bahnhof liegt auf 617.56 Metern über Meer.",
+          "correct": 501.042,
+          "explanation": "Der Bahnhof liegt auf 501.042 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:ffb83482",
-          "type": "cloze",
-          "prompt": "Die offizielle Abkürzung des Bahnhofs Puidoux lautet ___.",
+          "id": "stammdaten:5a24cd17",
+          "type": "single_choice",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof La Conversion?",
           "options": [
-            "PUD",
-            "PUI",
-            "PX"
+            "Bourg-en-Lavaux",
+            "Lausanne",
+            "Lutry",
+            "Pully"
           ],
-          "correct": 1,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "In den Stammdaten ist PUI als Abkürzung erfasst.",
-          "factRef": "stammdaten.abkuerzung",
+          "explanation": "Als Gemeinde ist Lutry eingetragen.",
+          "factRef": "stammdaten.gemeinde",
           "difficulty": 2
         }
       ]
@@ -163,7 +170,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Puidoux liegen offene Daten vor. Perron 2/3 misst 244 Meter, Perron 1 misst 225 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in La Conversion liegen offene Daten vor. Perron 1 misst 160 Meter, Perron 2 misst 160 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -173,7 +180,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 244,
+          "value": 160,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -181,17 +188,17 @@
       ],
       "questions": [
         {
-          "id": "perrons:e32d8af0",
+          "id": "perrons:91915c19",
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Puidoux?",
+          "prompt": "Wie lang ist das längste erfasste Perron in La Conversion?",
           "options": [
-            "210 m",
-            "244 m",
-            "290 m",
-            "340 m"
+            "140 m",
+            "160 m",
+            "190 m",
+            "220 m"
           ],
           "correct": 1,
-          "explanation": "Das längste erfasste Perron misst 244 Meter.",
+          "explanation": "Das längste erfasste Perron misst 160 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
@@ -201,24 +208,24 @@
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
             {
-              "links": "Perron 2/3",
-              "rechts": "662.19 m²",
+              "links": "Perron 1",
+              "rechts": "534.38 m²",
               "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
-              "links": "Perron 1",
-              "rechts": "962.53 m²",
+              "links": "Perron 2",
+              "rechts": "450.09 m²",
               "factRef": "perrons.items[1].flaeche_netto_m2"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/3 hat 662.19 Quadratmeter, Perron 1 hat 962.53 Quadratmeter.",
+          "explanation": "Perron 1 hat 534.38 Quadratmeter, Perron 2 hat 450.09 Quadratmeter.",
           "difficulty": 3
         },
         {
-          "id": "perrons:e2d0dc69",
+          "id": "perrons:d93fd6bc",
           "type": "true_false",
-          "prompt": "Beide erfassten Perrons in Puidoux sind niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in La Conversion sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -229,7 +236,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 20 und 55 Zentimetern. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 20, 25 und 55 Zentimetern. Zu Gleis 3 sind keine Sektortafeln erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -239,28 +246,32 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste erfasste Perronkante",
-          "value": 166,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
+          "label": "Sektoren an Gleis 1",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "id": "gleise:61ecaaf5",
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "2",
-          "factRef": "gleise.items[1].nr",
-          "explanation": "Gleis 2 hat mit 166 Metern die längste erfasste Perronkante, die nächste misst 152 Meter.",
+          "id": "gleise:a29d3eca",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in La Conversion sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "5",
+            "7"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         },
         {
-          "id": "gleise:23a144ce",
+          "id": "gleise:59a0e8ea",
           "type": "multiple_choice",
-          "prompt": "Welche Perronhöhen sind für Gleis 1 in Puidoux erfasst? (Mehrfachauswahl)",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in La Conversion erfasst? (Mehrfachauswahl)",
           "options": [
             "20 cm",
             "25 cm",
@@ -281,12 +292,12 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Puidoux sind 13 Perronsegmente erfasst: 9 mit 55 Zentimetern, 4 mit 20 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für La Conversion sind 16 Perronsegmente erfasst: 10 mit 55 Zentimetern, 3 mit 20 Zentimetern, 3 mit 25 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 13,
+          "value": 16,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
@@ -295,36 +306,30 @@
           "value": 3,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
-        },
-        {
-          "label": "Sicherheitslinie",
-          "value": "Ja",
-          "source": "haltestelle-visuell-taktile-sicherheitslinie",
-          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:f7856443",
+          "id": "hindernisfreiheit:1732acbb",
           "type": "cloze",
-          "prompt": "In Puidoux sind ___ Perronsegmente erfasst.",
+          "prompt": "In La Conversion sind ___ Perronsegmente erfasst.",
           "options": [
-            "7",
-            "11",
-            "13"
+            "16",
+            "19",
+            "22"
           ],
-          "correct": 2,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 13 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 16 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "id": "hindernisfreiheit:8fc3c778",
+          "id": "hindernisfreiheit:5ed3ab56",
           "type": "true_false",
-          "prompt": "Bei keinem der 13 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 16 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 13 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 16 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -333,19 +338,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Puidoux – Moreillon: Im Personenverkehr verkehren dort 255 Züge pro Tag, das sind 93'214 im Jahr. Auf dem Abschnitt Grandvaux – Puidoux sind es 216 und auf dem Abschnitt Puidoux – Le Verney (embr) sind es 39 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 10 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt La Conversion – Bossière 216 Züge pro Tag, das sind 78'781 im Jahr. Auf dem Abschnitt Pully-Nord – La Conversion sind es ebenfalls 216 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 9 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Puidoux – Moreillon",
-          "value": 255,
+          "label": "Züge pro Tag, Personenverkehr La Conversion – Bossière",
+          "value": 216,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Puidoux – Moreillon",
-          "value": 93214,
+          "label": "Züge pro Jahr, Personenverkehr La Conversion – Bossière",
+          "value": 78781,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -353,49 +358,31 @@
       ],
       "questions": [
         {
-          "id": "zuege:905d3bdf",
+          "id": "zuege:5987db3d",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Puidoux – Moreillon?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt La Conversion – Bossière?",
           "options": [
-            "255",
-            "310",
-            "360",
-            "430"
+            "120",
+            "150",
+            "180",
+            "216"
           ],
-          "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 255 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 216 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:d38de786",
-          "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Puidoux – Moreillon, Personenverkehr",
-              "value": 93214,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Grandvaux – Puidoux, Personenverkehr",
-              "value": 78781,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
-              "label": "Puidoux – Le Verney (embr), Personenverkehr",
-              "value": 14145,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Puidoux – Moreillon, Güterverkehr",
-              "value": 3644,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Puidoux – Moreillon (Personenverkehr) 93'214, Grandvaux – Puidoux (Personenverkehr) 78'781, Puidoux – Le Verney (embr) (Personenverkehr) 14'145, Puidoux – Moreillon (Güterverkehr) 3'644 Züge im Jahr.",
+          "id": "zuege:821c9c12",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt La Conversion – Bossière?",
+          "min": 64500,
+          "max": 114500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 78781,
+          "explanation": "Die Erhebung zählt 78'781 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -403,62 +390,42 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Puidoux sind 2 Linien erfasst: die Linie 111 Vevey Ouest - Puidoux-Chexbres und die Linie 250 Lausanne Est - Bern.",
+      "body": "Für La Conversion ist 1 Linie erfasst: die Linie 250 Lausanne Est - Bern. Der Bahnhof ist darauf bei Kilometer 4.0037 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
-          "value": 2,
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
           "label": "Kilometrierung auf der Linie 250",
-          "value": 12.1579,
+          "value": 4.0037,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[1].km_am_bahnhof"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "id": "linien:39ce7c09",
+          "id": "linien:edea251e",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Puidoux eingetragen?",
-          "min": 9.5,
-          "max": 18.0,
+          "prompt": "Bei welchem Streckenkilometer der Linie 250 ist La Conversion eingetragen?",
+          "min": 3.0,
+          "max": 6.0,
           "step": 0.1,
           "unit": "km",
-          "correct": 12.1579,
-          "explanation": "Die Kilometrierung von Puidoux auf der Linie 250 beträgt 12.1579. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
-          "factRef": "linien.items[1].km_am_bahnhof",
+          "correct": 4.0037,
+          "explanation": "Die Kilometrierung von La Conversion auf der Linie 250 beträgt 4.0037. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
-        },
-        {
-          "id": "linien:f57243ca",
-          "type": "match",
-          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
-          "pairs": [
-            {
-              "links": "Linie 111",
-              "rechts": "Vevey Ouest - Puidoux-Chexbres",
-              "factRef": "linien.items[0].name"
-            },
-            {
-              "links": "Linie 250",
-              "rechts": "Lausanne Est - Bern",
-              "factRef": "linien.items[1].name"
-            }
-          ],
-          "factRef": "linien.items",
-          "explanation": "Die Linie 111 heisst Vevey Ouest - Puidoux-Chexbres, die Linie 250 heisst Lausanne Est - Bern.",
-          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 1 Billettentwerter und 1 Wartehalle. Puidoux steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 3 Billettentwerter und 1 Wartehalle. La Conversion steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -475,33 +442,33 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 1,
+          "value": 3,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
-          "id": "services:245450c4",
+          "id": "services:1c90b6c7",
           "type": "true_false",
-          "prompt": "Puidoux steht in der Liste der WLAN-Standorte.",
+          "prompt": "La Conversion steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:935c8054",
-          "type": "single_choice",
-          "prompt": "Wie viele Billettentwerter sind in Puidoux erfasst?",
+          "id": "services:873cb6eb",
+          "type": "cloze",
+          "prompt": "In La Conversion sind ___ Billettentwerter erfasst.",
           "options": [
-            "1",
-            "2",
-            "3"
+            "3",
+            "5",
+            "7"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst ist 1 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -510,11 +477,11 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Puidoux 5 Sitzbänke sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist Bituminöses Mischgut. Dazu führt die Quelle Belag unter der Sammelangabe «Andere». Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für La Conversion 4 Sitzbänke sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 5,
+          "value": 4,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
@@ -537,13 +504,13 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
+            "4",
             "5",
             "6",
-            "7",
-            "8"
+            "7"
           ],
           "correct": 0,
-          "explanation": "Erfasst sind 5 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "explanation": "Erfasst sind 4 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
@@ -562,6 +529,22 @@
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1,
           "optionen_aus_fakten": true
+        },
+        {
+          "id": "ausstattung:92d1d5cd",
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
         }
       ]
     }
@@ -589,7 +572,7 @@
     },
     {
       "thema": "Sektoren",
-      "grund": "Zu den Gleisen 1, 2, 3 sind keine Sektortafeln erfasst.",
+      "grund": "Zu Gleis 3 sind keine Sektortafeln erfasst.",
       "quelle": "sektortafel"
     },
     {
@@ -606,43 +589,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        20,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Aussenperron",
-      "perronkante_m": 151,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        20,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 166,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 152,
-      "sektoren": [],
-      "sektoren_anzahl": 0
     }
   ]
 }

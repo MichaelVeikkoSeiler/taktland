@@ -29,7 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generator"))
 from distraktoren import vorschlaege  # noqa: E402
-from taktland import hoechstens_fragen, klar_getrennt, zu_nah  # noqa: E402
+from taktland import SAMMELANGABEN, hoechstens_fragen, klar_getrennt, zu_nah  # noqa: E402
 
 SEKTOR = ("Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten "
           "können, wo ihr Wagen zu stehen kommt.")
@@ -794,10 +794,6 @@ def linien(f):
     return {"id": "linien", "title": "Linien", "body": body, "facts": facts, "questions": fr}
 
 
-#: Automatentypen, die keinen Typ nennen, sondern «andere»
-SAMMELTYPEN = {"andere", "autre", "autres", "altri", "altro"}
-
-
 def services(f):
     sv = f["services"]; name = f["name"]; uic = f["uic"]
     # Ohne Betriebspunkt-Kürzel ordnet die Quelle keine Automaten und
@@ -809,7 +805,7 @@ def services(f):
         typen = sv.get("automat_typen") or []
         t = f"{sv['billettautomaten_erfasst']} {'Billettautomat' if sv['billettautomaten_erfasst'] == 1 else 'Billettautomaten'}"
         # Sammelbezeichnungen in drei Sprachen, «Autre» bei Le Day
-        if typen and not any(x.lower() in SAMMELTYPEN for x in typen):
+        if typen and not any(x.lower() in SAMMELANGABEN for x in typen):
             # mehrere Typen in Klammern, sonst verschachteln sich zwei Listen:
             # «der Typen BATS, S-POS und ePOS und 2 Billettentwerter»
             t += f" vom Typ {typen[0]}" if len(typen) == 1 else f" (Typen {aufzaehlung(typen)})"

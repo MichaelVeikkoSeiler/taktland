@@ -26,7 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from distraktoren import vorschlaege  # noqa: E402
-from taktland import PROFILES, fakten_laden, klar_getrennt  # noqa: E402
+from taktland import PROFILES, SAMMELANGABEN, fakten_laden, klar_getrennt  # noqa: E402
 
 #: Wie die Bestände im Text heissen. Immer «erfasst», nie «vorhanden»:
 #: ein fehlender Eintrag heisst nicht, dass der Gegenstand fehlt.
@@ -58,17 +58,26 @@ def body_text(name, a):
                       f"{aufzaehlen(teile)} erfasst.")
     pb = a.get("perronbelag")
     if pb:
-        arten = pb["belagsarten"]
+        # «Andere» ist die Sammelangabe der Quelle, kein Belag (Wiesendangen)
+        alle = pb["belagsarten"]
+        arten = [x for x in alle if x.lower() not in SAMMELANGABEN]
+        sammel = [x for x in alle if x.lower() in SAMMELANGABEN]
         n = pb["anzahl_perrons_mit_daten"]
         # Sissach: «Zu 1 Perrons liegt der Belag vor, erfasst ist überall: …»
         zu = "Zu 1 Perron" if n == 1 else f"Zu {n} Perrons"
-        if len(arten) == 1:
+        if not arten:
+            saetze.append(f"{zu} liegt der Belag vor, erfasst ist nur die Sammelangabe "
+                          f"«{sammel[0]}».")
+        elif len(arten) == 1 and not sammel:
             # Nominativ, weil sich die Belagsnamen nicht zuverlaessig beugen
             # lassen: «aus Bituminöses Mischgut» war falsch.
             saetze.append(f"{zu} liegt der Belag vor: {arten[0]}." if n == 1 else
                           f"{zu} liegt der Belag vor, erfasst ist überall: {arten[0]}.")
         else:
-            saetze.append(f"{zu} liegt der Belag vor, erfasst sind {aufzaehlen(arten)}.")
+            saetze.append(f"{zu} liegt der Belag vor, erfasst "
+                          + (f"ist {arten[0]}." if len(arten) == 1 else f"sind {aufzaehlen(arten)}.")
+                          + (f" Dazu führt die Quelle Belag unter der Sammelangabe «{sammel[0]}»."
+                             if sammel else ""))
     saetze.append("Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt "
                   "in den Daten und nicht zwingend vor Ort.")
     return " ".join(saetze)
@@ -138,7 +147,7 @@ def frage_bestand(uic, a, feld, einz, mehrz, nummer=0):
 def frage_belag(a):
     """Single Choice auf den Belag, wenn es nur einen gibt."""
     pb = a.get("perronbelag")
-    if not pb or len(pb["belagsarten"]) != 1:
+    if not pb or len(pb["belagsarten"]) != 1 or pb["belagsarten"][0].lower() in SAMMELANGABEN:
         return None
     richtig = pb["belagsarten"][0]
     andere = ["Bituminöses Mischgut", "Verbundstein-Pflästerung", "Beton-Belag",

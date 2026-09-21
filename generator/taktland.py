@@ -72,6 +72,12 @@ NUR_ERFASST = (r"(Hilfstritt|Billettautomat\w*|Billettentwerter\w*|Wartehalle\w*
 MINDESTABSTAND = 0.05
 
 
+#: Sammelangaben der Quellen in drei Sprachen. Sie nennen keinen Typ und
+#: keinen Belag, sondern «anderes» (Le Day: «Typen Autre», Wiesendangen:
+#: «erfasst sind Andere, Bituminöses Mischgut sowie Stahl»).
+SAMMELANGABEN = {"andere", "autre", "autres", "altri", "altro"}
+
+
 def geschenkt(antwort, name):
     """Steckt die Antwort im Namen des Bahnhofs? «In welchem Bezirk liegt
     Meilen?» mit der Antwort Meilen prüft nichts."""
@@ -499,6 +505,11 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                         geschenkt(o, name) for j, o in enumerate(opts) if j != c):
                     b.fehlt(f"{wo}/questions[{i}]", f"«{opts[c]}» steckt im Namen {name}. "
                                                      "Die Frage verrät ihre Antwort")
+
+        if kid == "ausstattung" and (m := re.search(r"\b(Andere|Autres?|Altri|Altro)\b",
+                                                    re.sub(r"«[^»]*»", "", kap.get("body", "")))):
+            b.fehlt(f"{wo}/body", f"«{m.group(0)}» ist kein Belag, sondern die Sammelangabe "
+                                  "der Quelle. Als Zitat nennen, nicht aufzählen")
 
         if kid == "services" and (m := re.search(r"\bTyp(?:en)? [^.]*\b(Andere|Autres?|Altri|Altro)\b",
                                                  kap.get("body", ""), re.I)):

@@ -131,6 +131,16 @@
    ]
   }
  },
+ "8500115": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arlesheim",
+    "Liestal",
+    "Sissach"
+   ]
+  }
+ },
  "8500117": {
   "stammdaten": {
    "frage": "bezirk",
@@ -185,6 +195,16 @@
    "distraktoren": [
     "BDR",
     "BSD"
+   ]
+  }
+ },
+ "8500200": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Seeland",
+    "Jura bernois",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -405,6 +425,15 @@
     "Collex-Bossy",
     "Genthod",
     "Pont-Céard"
+   ]
+  }
+ },
+ "8501020": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "TUI",
+    "GDBE"
    ]
   }
  },
@@ -911,6 +940,16 @@
    ]
   }
  },
+ "8502022": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Luzern-Land",
+    "Luzern-Stadt",
+    "Sursee"
+   ]
+  }
+ },
  "8502024": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -949,6 +988,16 @@
    ]
   }
  },
+ "8502102": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Zofingen",
+    "Lenzburg",
+    "Kulm"
+   ]
+  }
+ },
  "8502103": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -964,6 +1013,16 @@
    "distraktoren": [
     "OT",
     "OTS"
+   ]
+  }
+ },
+ "8502106": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lenzburg",
+    "Brugg",
+    "Bremgarten"
    ]
   }
  },
@@ -2148,6 +2207,16 @@
    ]
   }
  },
+ "8504010": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Pully",
+    "Bourg-en-Lavaux",
+    "Lausanne"
+   ]
+  }
+ },
  "8504012": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2174,6 +2243,16 @@
     "La Gruyère",
     "La Sarine",
     "La Veveyse"
+   ]
+  }
+ },
+ "8504028": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Neyruz (FR)",
+    "Matran",
+    "Cottens (FR)"
    ]
   }
  },
@@ -2263,6 +2342,16 @@
   }
  },
  "8504121": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura-Nord vaudois",
+    "Lavaux-Oron",
+    "Morges"
+   ]
+  }
+ },
+ "8504126": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -2364,6 +2453,16 @@
    "distraktoren": [
     "LN",
     "LNV"
+   ]
+  }
+ },
+ "8504236": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Neuchâtel",
+    "Milvignes",
+    "Rochefort"
    ]
   }
  },
@@ -2559,6 +2658,15 @@
    ]
   }
  },
+ "8505112": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AL",
+    "SK"
+   ]
+  }
+ },
  "8505113": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2651,6 +2759,26 @@
    "distraktoren": [
     "PAR",
     "PDS"
+   ]
+  }
+ },
+ "8505302": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Mendrisio",
+    "Bellinzona",
+    "Locarno"
+   ]
+  }
+ },
+ "8505303": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Melide",
+    "Mendrisio",
+    "Paradiso"
    ]
   }
  },
@@ -2838,6 +2966,16 @@
    ]
   }
  },
+ "8506017": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Andelfingen",
+    "Pfäffikon",
+    "Bülach"
+   ]
+  }
+ },
  "8506018": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2845,6 +2983,16 @@
     "Andelfingen",
     "Pfäffikon",
     "Bülach"
+   ]
+  }
+ },
+ "8506019": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Frauenfeld",
+    "Rickenbach (ZH)",
+    "Elgg"
    ]
   }
  },
@@ -2882,6 +3030,16 @@
    "distraktoren": [
     "PF",
     "PFG"
+   ]
+  }
+ },
+ "8506045": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Andelfingen",
+    "Bülach",
+    "Pfäffikon"
    ]
   }
  },
@@ -3348,6 +3506,15 @@
    ]
   }
  },
+ "8508219": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "EBR",
+    "GSAG"
+   ]
+  }
+ },
  "8509000": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3409,6 +3576,16 @@
    "distraktoren": [
     "WA",
     "WSD"
+   ]
+  }
+ },
+ "8509416": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Walenstadt",
+    "Glarus Nord",
+    "Flums"
    ]
   }
  },
@@ -3560,6 +3737,16 @@
    ]
   }
  },
+ "8517519": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lugano",
+    "Locarno",
+    "Bellinzona"
+   ]
+  }
+ },
  "8518452": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3567,6 +3754,15 @@
     "Gros-de-Vaud",
     "Lausanne",
     "Morges"
+   ]
+  }
+ },
+ "8518475": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MEN",
+    "CAP"
    ]
   }
  },

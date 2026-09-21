@@ -1,7 +1,7 @@
 {
-  "uic": 8504134,
-  "name": "Payerne",
-  "tier": "M",
+  "uic": 8506045,
+  "name": "Hettlingen",
+  "tier": "S",
   "lang": "de",
   "dataYear": 2025,
   "generated": "2026-09-21",
@@ -23,25 +23,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Payerne 7'800 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 6'700, an einem freien Tag 4'200. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS und SBB erfasst.",
+      "body": "An einem Werktag steigen in Hettlingen 1'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 1'100, an einem freien Tag 770. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 7800,
+          "value": 1200,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 6700,
+          "value": 1100,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 4200,
+          "value": 770,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -49,17 +49,17 @@
       ],
       "questions": [
         {
-          "id": "steckbrief:e71c5baa",
+          "id": "steckbrief:3b7c687c",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Payerne ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Hettlingen ein und aus?",
           "options": [
-            "6'600",
-            "7'800",
-            "9'400",
-            "11'000"
+            "1'000",
+            "1'200",
+            "1'400",
+            "1'700"
           ],
           "correct": 1,
-          "explanation": "An einem Werktag sind es 7'800 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 1'200 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -71,40 +71,35 @@
           "items": [
             {
               "label": "2018",
-              "value": 5400,
+              "value": 730,
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
               "label": "2022",
-              "value": 6100,
+              "value": 1100,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2024",
-              "value": 7200,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
-              "value": 7800,
+              "value": 1200,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 5'400 (2018), 6'100 (2022), 7'200 (2024), 7'800 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 730 (2018), 1'100 (2022), 1'200 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:5313204b",
+          "id": "steckbrief:481ff684",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Payerne ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Hettlingen ___ Personen ein und aus.",
           "options": [
-            "2'900",
-            "3'600",
-            "4'200"
+            "770",
+            "920",
+            "1'300"
           ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 4'200 Personen, an einem Werktag 7'800. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 770 Personen, an einem Werktag 1'200. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -113,55 +108,55 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Payerne liegt auf 451.96 Metern über Meer in der Gemeinde Payerne, Bezirk Broye-Vully. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet PAY.",
+      "body": "Hettlingen liegt auf 425.1 Metern über Meer in der Gemeinde Hettlingen, Bezirk Winterthur, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet HET.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 451.96,
+          "value": 425.1,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "PAY",
+          "value": "HET",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
           "label": "Bezirk",
-          "value": "Broye-Vully",
+          "value": "Winterthur",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:5501e87d",
+          "id": "stammdaten:7acc3312",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Payerne?",
-          "min": 370,
-          "max": 660,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Hettlingen?",
+          "min": 340,
+          "max": 620,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 451.96,
-          "explanation": "Der Bahnhof liegt auf 451.96 Metern über Meer.",
+          "correct": 425.1,
+          "explanation": "Der Bahnhof liegt auf 425.1 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:3624f8de",
+          "id": "stammdaten:fbae1b60",
           "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Payerne?",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Hettlingen?",
           "options": [
-            "Broye-Vully",
-            "Gros-de-Vaud",
-            "Jura-Nord vaudois",
-            "Lavaux-Oron"
+            "Andelfingen",
+            "Bülach",
+            "Pfäffikon",
+            "Winterthur"
           ],
-          "correct": 0,
+          "correct": 3,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Broye-Vully eingetragen.",
+          "explanation": "Als Bezirk ist Winterthur eingetragen.",
           "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
@@ -170,7 +165,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons in Payerne liegen offene Daten vor. Perron 1 misst 220 Meter, Perron 2/3 misst 219 Meter, Perron 4/5 misst 179 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 3 Perrons in Hettlingen liegen offene Daten vor. Perron 1 misst 222 Meter, Perron 2 misst 221 Meter, Perron 33 misst 54 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -180,7 +175,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 220,
+          "value": 222,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -188,24 +183,44 @@
       ],
       "questions": [
         {
-          "id": "perrons:3b454403",
+          "id": "perrons:f93f3f93",
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Payerne?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Hettlingen?",
           "options": [
-            "150 m",
+            "120 m",
+            "160 m",
             "190 m",
-            "220 m",
-            "260 m"
+            "222 m"
           ],
-          "correct": 2,
-          "explanation": "Das längste erfasste Perron misst 220 Meter.",
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 222 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:5ef2e0cb",
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 1",
+              "rechts": "522.79 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 2",
+              "rechts": "592.38 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 1 hat 522.79 Quadratmeter, Perron 2 hat 592.38 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:92109f1f",
           "type": "true_false",
-          "prompt": "Alle 3 erfassten Perrons in Payerne sind niveaufrei erreichbar.",
+          "prompt": "Alle 3 erfassten Perrons in Hettlingen sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -216,23 +231,40 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 3, 4 und 5. An allen 5 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. An beiden erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
-          "value": 5,
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante",
+          "value": 222,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
         }
       ],
       "questions": [
         {
-          "id": "gleise:f0dcd92d",
+          "id": "gleise:61ecaaf5",
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "2",
+          "factRef": "gleise.items[1].nr",
+          "explanation": "Gleis 2 hat mit 222 Metern die längste erfasste Perronkante, die nächste misst 118 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:7bf8afc6",
           "type": "true_false",
-          "prompt": "An den erfassten Gleisen in Payerne kommt nur eine einzige Perronhöhe vor.",
+          "prompt": "An den erfassten Gleisen in Hettlingen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
-          "explanation": "Für alle 5 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
           "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
@@ -241,18 +273,18 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Payerne sind 12 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 5 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Hettlingen sind 4 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 12,
+          "value": 4,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
           "label": "Gleise mit Perronhöhe 55 cm",
-          "value": 5,
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
@@ -265,26 +297,26 @@
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:aa9285fe",
+          "id": "hindernisfreiheit:e73a49b9",
           "type": "cloze",
-          "prompt": "In Payerne sind ___ Perronsegmente erfasst.",
+          "prompt": "In Hettlingen sind ___ Perronsegmente erfasst.",
           "options": [
-            "12",
-            "14",
-            "20"
+            "4",
+            "5",
+            "6"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 12 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 4 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "id": "hindernisfreiheit:d46a5e4f",
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
-          "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 12 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 4 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -293,19 +325,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Cugy FR – Payerne: Im Personenverkehr verkehren dort 76 Züge pro Tag, das sind 27'874 im Jahr. Auf dem Abschnitt Payerne – Corcelles-Sud sind es 74 und auf dem Abschnitt Payerne – Corcelles-Nord sind es 51 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Henggart – Hettlingen 110 Züge pro Tag, das sind 40'212 im Jahr. Auf dem Abschnitt Hettlingen – Lantig (B) sind es ebenfalls 110 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 46 Züge im Jahr auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Cugy FR – Payerne",
-          "value": 76,
+          "label": "Züge pro Tag, Personenverkehr Henggart – Hettlingen",
+          "value": 110,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Cugy FR – Payerne",
-          "value": 27874,
+          "label": "Züge pro Jahr, Personenverkehr Henggart – Hettlingen",
+          "value": 40212,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -313,49 +345,31 @@
       ],
       "questions": [
         {
-          "id": "zuege:287e84c6",
+          "id": "zuege:16293154",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Cugy FR – Payerne?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Henggart – Hettlingen?",
           "options": [
-            "42",
-            "53",
-            "65",
-            "76"
+            "61",
+            "77",
+            "94",
+            "110"
           ],
           "correct": 3,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 76 Züge pro Tag, beide Richtungen zusammen.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 110 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:d38de786",
-          "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Cugy FR – Payerne, Personenverkehr",
-              "value": 27874,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Payerne – Corcelles-Nord, Personenverkehr",
-              "value": 18658,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Cugy FR – Payerne, Güterverkehr",
-              "value": 1589,
-              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
-            },
-            {
-              "label": "Payerne – Corcelles-Nord, Güterverkehr",
-              "value": 1181,
-              "factRef": "zuege.abschnitte[5].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Cugy FR – Payerne (Personenverkehr) 27'874, Payerne – Corcelles-Nord (Personenverkehr) 18'658, Cugy FR – Payerne (Güterverkehr) 1'589, Payerne – Corcelles-Nord (Güterverkehr) 1'181 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "id": "zuege:ee259d57",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Henggart – Hettlingen?",
+          "min": 32500,
+          "max": 58500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 40212,
+          "explanation": "Die Erhebung zählt 40'212 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -363,17 +377,17 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Payerne sind 2 Linien erfasst: die Linie 251 Palezieux Est - Lyss Nord und die Linie 252 Yverdon Est - Payerne.",
+      "body": "Für Hettlingen ist 1 Linie erfasst: die Linie 762 Winterthur Nord - Schaffhausen RB Ost. Der Bahnhof ist darauf bei Kilometer 32.70651 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
-          "value": 2,
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 251",
-          "value": 58.4689,
+          "label": "Kilometrierung auf der Linie 762",
+          "value": 32.70651,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -381,44 +395,24 @@
       ],
       "questions": [
         {
-          "id": "linien:a61f2852",
+          "id": "linien:972b24a2",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 251 ist Payerne eingetragen?",
-          "min": 47,
-          "max": 85,
+          "prompt": "Bei welchem Streckenkilometer der Linie 762 ist Hettlingen eingetragen?",
+          "min": 26,
+          "max": 48,
           "step": 1,
           "unit": "km",
-          "correct": 58.4689,
-          "explanation": "Die Kilometrierung von Payerne auf der Linie 251 beträgt 58.4689. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 32.70651,
+          "explanation": "Die Kilometrierung von Hettlingen auf der Linie 762 beträgt 32.70651. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
-        },
-        {
-          "id": "linien:f57243ca",
-          "type": "match",
-          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
-          "pairs": [
-            {
-              "links": "Linie 251",
-              "rechts": "Palezieux Est - Lyss Nord",
-              "factRef": "linien.items[0].name"
-            },
-            {
-              "links": "Linie 252",
-              "rechts": "Yverdon Est - Payerne",
-              "factRef": "linien.items[1].name"
-            }
-          ],
-          "factRef": "linien.items",
-          "explanation": "Die Linie 251 heisst Palezieux Est - Lyss Nord, die Linie 252 heisst Yverdon Est - Payerne.",
-          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 3 Billettentwerter und 2 Wartehallen. Payerne steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS und 3 Billettentwerter. Wartehallen sind keine verzeichnet. Hettlingen steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -442,22 +436,22 @@
       ],
       "questions": [
         {
-          "id": "services:92c94cef",
+          "id": "services:df54046e",
           "type": "true_false",
-          "prompt": "Payerne steht in der Liste der WLAN-Standorte.",
+          "prompt": "Hettlingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:10538680",
+          "id": "services:c1d57955",
           "type": "cloze",
-          "prompt": "In Payerne sind ___ Billettentwerter erfasst.",
+          "prompt": "In Hettlingen sind ___ Billettentwerter erfasst.",
           "options": [
             "3",
-            "7",
-            "9"
+            "5",
+            "7"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
@@ -470,11 +464,11 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Payerne 11 Sitzbänke sowie 4 Infopunkte erfasst. Zu 3 Perrons liegt der Belag vor, erfasst ist Bituminöses Mischgut. Dazu führt die Quelle Belag unter der Sammelangabe «Andere». Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Hettlingen 4 Sitzbänke sowie 4 Infopunkte erfasst. Zu 3 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 11,
+          "value": 4,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
@@ -497,13 +491,13 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "11",
-            "13",
-            "15",
-            "19"
+            "4",
+            "5",
+            "6",
+            "7"
           ],
           "correct": 0,
-          "explanation": "Erfasst sind 11 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "explanation": "Erfasst sind 4 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
@@ -513,9 +507,9 @@
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
             "4",
+            "5",
             "6",
-            "7",
-            "9"
+            "7"
           ],
           "correct": 0,
           "explanation": "Erfasst sind 4 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
@@ -523,29 +517,19 @@
           "difficulty": 1
         },
         {
-          "id": "ausstattung:6c3be6e5",
-          "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Perron 2/3",
-              "value": 1625,
-              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
-            },
-            {
-              "label": "Perron 4/5",
-              "value": 1193,
-              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
-            },
-            {
-              "label": "Perron 1",
-              "value": 1108,
-              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
-            }
+          "id": "ausstattung:92d1d5cd",
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
           ],
-          "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 1'625 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 1'108 die kleinste der gezeigten.",
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
           "difficulty": 2
         }
       ]
@@ -569,12 +553,12 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 5 Gleise (1, 2, 3, 4, 5). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {
       "thema": "Sektoren",
-      "grund": "Zu den Gleisen 1, 2, 3, 4, 5 sind keine Sektortafeln erfasst.",
+      "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
       "quelle": "sektortafel"
     },
     {
@@ -588,9 +572,38 @@
       "quelle": "21197_behig-haltekantesegment"
     },
     {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 118,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 222,
+      "sektoren": [],
+      "sektoren_anzahl": 0
     }
   ]
 }

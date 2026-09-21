@@ -563,7 +563,12 @@ bleibt «sind» richtig, die Prüfregel unterscheidet das.
 **«Andere» ist kein Automatentyp.** Die Quelle führt Sammelangaben in drei
 Sprachen: «Andere», «Autre», «Altri». Bei Le Day und Genève stand «Typen Autre
 und ePOS». Steht eine Sammelangabe unter den Typen, nennt der Text keine Typen.
-Der Validator meldet sie, wenn sie trotzdem im Text steht.
+Der Validator meldet sie, wenn sie trotzdem im Text steht. Dasselbe beim
+Perronbelag: «erfasst sind Andere, Bituminöses Mischgut sowie Stahl»
+(Wiesendangen, auch Zürich HB, Payerne, Puidoux) heisst jetzt «erfasst sind
+Bituminöses Mischgut sowie Stahl. Dazu führt die Quelle Belag unter der
+Sammelangabe «Andere»». Die Liste der Sammelangaben steht einmal, in
+`taktland.SAMMELANGABEN`.
 
 ## Sprache
 
