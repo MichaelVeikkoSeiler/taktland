@@ -2,7 +2,7 @@
   "linie": 9660,
   "name": "Sihlbrugg - Baar Projekt ZBT2",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "linie-mit-betriebspunkten"
@@ -23,7 +23,8 @@
           "label": "Ende",
           "value": "Cham",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8502203
         },
         {
           "label": "Kilometer am Anfang",

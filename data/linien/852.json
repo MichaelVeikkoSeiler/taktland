@@ -8,7 +8,9 @@
   "anfang": "Sulgen",
   "ende": "Gossau SG",
   "km_anfang": 0.01,
-  "km_ende": 22.946
+  "km_ende": 22.946,
+  "anfang_uic": 8506217,
+  "ende_uic": 8506210
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Aarau",
   "ende": "Woschnau Tunnel",
   "km_anfang": 41.506,
-  "km_ende": 42.556
+  "km_ende": 42.556,
+  "anfang_uic": 8502113,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

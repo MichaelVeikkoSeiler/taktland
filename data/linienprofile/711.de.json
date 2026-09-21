@@ -20,7 +20,8 @@
           "label": "Anfang",
           "value": "Zurich Hardbrucke",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8503020
         },
         {
           "label": "Ende",

@@ -8,7 +8,9 @@
   "anfang": "Zurich Oerlikon Nord (Abzw)",
   "ende": "Gruemet (Abzw)",
   "km_anfang": 22.596,
-  "km_ende": 50.647
+  "km_ende": 50.647,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

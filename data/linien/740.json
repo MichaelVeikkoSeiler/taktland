@@ -8,7 +8,9 @@
   "anfang": "Rapperswil SG",
   "ende": "Wallisellen Ost (Abzw)",
   "km_anfang": 59.349,
-  "km_ende": 92.589
+  "km_ende": 92.589,
+  "anfang_uic": 8503110,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Sihlbrugg",
   "ende": "Cham",
   "km_anfang": 19.912,
-  "km_ende": 43.574
+  "km_ende": 43.574,
+  "anfang_uic": null,
+  "ende_uic": 8502203
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

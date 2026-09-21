@@ -8,7 +8,9 @@
   "anfang": "Sisikon",
   "ende": "Gruonbach (Spw)",
   "km_anfang": 26.383,
-  "km_ende": 30.384
+  "km_ende": 30.384,
+  "anfang_uic": 8505111,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

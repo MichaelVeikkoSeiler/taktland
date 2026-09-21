@@ -19,7 +19,8 @@
           "label": "Anfang",
           "value": "Olten",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8500218
         },
         {
           "label": "Ende",

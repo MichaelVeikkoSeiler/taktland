@@ -8,7 +8,9 @@
   "anfang": "Sonceboz-Sombeval Ouest",
   "ende": "Delemont",
   "km_anfang": 49.496,
-  "km_ende": 84.607
+  "km_ende": 84.607,
+  "anfang_uic": null,
+  "ende_uic": 8500109
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

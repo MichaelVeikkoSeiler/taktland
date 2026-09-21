@@ -8,7 +8,9 @@
   "anfang": "Balerna per Smistamento (bif)",
   "ende": "Chiasso Smistamento",
   "km_anfang": 203.051,
-  "km_ende": 205.315
+  "km_ende": 205.315,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

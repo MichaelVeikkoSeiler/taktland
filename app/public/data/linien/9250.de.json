@@ -2,7 +2,7 @@
   "linie": 9250,
   "name": "Bern Bumpliz Sud - Bern",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "linie-mit-betriebspunkten"
@@ -17,13 +17,15 @@
           "label": "Anfang",
           "value": "Bern Bumpliz Sud",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8504106
         },
         {
           "label": "Ende",
           "value": "Bern",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8507000
         },
         {
           "label": "Kilometer am Anfang",

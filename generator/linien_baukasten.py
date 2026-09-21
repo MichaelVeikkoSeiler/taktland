@@ -89,6 +89,11 @@ def strecke(f):
         {"label": "Kilometer am Ende", "value": s["km_ende"], "unit": "km",
          "source": "linie", "factRef": "strecke.km_ende"},
     ]
+    # Ist der Anfang oder das Ende ein Bahnhof aus Taktland, führt die Kachel zu
+    # seiner Seite. «bahnhof» statt «uic»: sonst stünde sie in der Bahnhofsliste
+    for x, feld in ((facts[0], "anfang_uic"), (facts[1], "ende_uic")):
+        if s.get(feld):
+            x["bahnhof"] = s[feld]
     # Ein einzelner Bahnhof hat kein eigenes Kapitel, er steht hier
     bh = f["bahnhoefe"]
     if bh["anzahl_in_taktland"] == 1:

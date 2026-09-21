@@ -25,7 +25,8 @@
           "label": "Ende",
           "value": "Romanshorn",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8506121
         },
         {
           "label": "Kilometer am Anfang",

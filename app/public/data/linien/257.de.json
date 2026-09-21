@@ -18,7 +18,8 @@
           "label": "Anfang",
           "value": "Flamatt",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8504103
         },
         {
           "label": "Ende",

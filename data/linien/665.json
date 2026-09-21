@@ -8,7 +8,9 @@
   "anfang": "Zug Sud",
   "ende": "Arth-Goldau Nordwest",
   "km_anfang": 0.003,
-  "km_ende": 15.758
+  "km_ende": 15.758,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

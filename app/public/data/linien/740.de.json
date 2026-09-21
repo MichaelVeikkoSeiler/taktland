@@ -20,7 +20,8 @@
           "label": "Anfang",
           "value": "Rapperswil SG",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8503110
         },
         {
           "label": "Ende",

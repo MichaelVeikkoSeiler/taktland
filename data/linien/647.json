@@ -8,7 +8,9 @@
   "anfang": "Brugg AG",
   "ende": "Hendschiken Nord (Abzw)",
   "km_anfang": -0.001,
-  "km_ende": 10.815
+  "km_ende": 10.815,
+  "anfang_uic": 8500309,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Zurich Langstrasse",
   "ende": "Dietlikon Sud (Abzw)",
   "km_anfang": 99.052,
-  "km_ende": 109.848
+  "km_ende": 109.848,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

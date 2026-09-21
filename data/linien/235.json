@@ -8,7 +8,9 @@
   "anfang": "Tavannes",
   "ende": "La Chaux-de-Fonds",
   "km_anfang": 0,
-  "km_ende": 44.033
+  "km_ende": 44.033,
+  "anfang_uic": 8500100,
+  "ende_uic": 8504314
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

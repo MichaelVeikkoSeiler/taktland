@@ -8,7 +8,9 @@
   "anfang": "Massagno Nord",
   "ende": "Lugano Nord",
   "km_anfang": 178.617,
-  "km_ende": 179.804
+  "km_ende": 179.804,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

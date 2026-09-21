@@ -18,7 +18,8 @@
           "label": "Anfang",
           "value": "Aarau",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8502113
         },
         {
           "label": "Ende",

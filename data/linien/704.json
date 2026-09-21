@@ -8,7 +8,9 @@
   "anfang": "Wurenlos",
   "ende": "Killwangen West (Abzw)",
   "km_anfang": 39.045,
-  "km_ende": 40.992
+  "km_ende": 40.992,
+  "anfang_uic": 8503529,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

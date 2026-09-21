@@ -2,7 +2,7 @@
   "linie": 9210,
   "name": "La Neuveville - Tuscherz",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "linie-mit-betriebspunkten"
@@ -17,13 +17,15 @@
           "label": "Anfang",
           "value": "La Neuveville",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8504226
         },
         {
           "label": "Ende",
           "value": "Tuscherz",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8504229
         },
         {
           "label": "Kilometer am Anfang",

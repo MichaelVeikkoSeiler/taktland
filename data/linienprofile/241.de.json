@@ -18,13 +18,15 @@
           "label": "Anfang",
           "value": "Courtemaiche",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8500127
         },
         {
           "label": "Ende",
           "value": "Bure-Casernes",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8500131
         },
         {
           "label": "Kilometer am Anfang",

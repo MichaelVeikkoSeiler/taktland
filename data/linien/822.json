@@ -8,7 +8,9 @@
   "anfang": "Etzwilen",
   "ende": "Konstanz",
   "km_anfang": 31.809,
-  "km_ende": 61.847
+  "km_ende": 61.847,
+  "anfang_uic": 8506025,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

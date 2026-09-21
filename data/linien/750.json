@@ -8,7 +8,9 @@
   "anfang": "Zurich Oerlikon Nord (Abzw)",
   "ende": "Dorfnest (Abzw)",
   "km_anfang": 5.33,
-  "km_ende": 13.374
+  "km_ende": 13.374,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

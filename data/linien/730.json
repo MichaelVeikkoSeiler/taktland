@@ -8,7 +8,9 @@
   "anfang": "Zurich Stadelhofen",
   "ende": "Rapperswil SG",
   "km_anfang": 5.699,
-  "km_ende": 35.973
+  "km_ende": 35.973,
+  "anfang_uic": 8503003,
+  "ende_uic": 8503110
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

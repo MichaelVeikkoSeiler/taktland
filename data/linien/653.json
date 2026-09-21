@@ -8,7 +8,9 @@
   "anfang": "Gexi Ost (Abzw)",
   "ende": "Immensee West (Abzw)",
   "km_anfang": 64.083,
-  "km_ende": 106.935
+  "km_ende": 106.935,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

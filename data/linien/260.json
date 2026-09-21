@@ -8,7 +8,9 @@
   "anfang": "Zollikofen Nord (Abzw)",
   "ende": "Biel/Bienne Aebistrasse",
   "km_anfang": 8.152,
-  "km_ende": 33.069
+  "km_ende": 33.069,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

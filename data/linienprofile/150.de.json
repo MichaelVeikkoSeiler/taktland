@@ -20,7 +20,8 @@
           "label": "Anfang",
           "value": "Lausanne",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8501120
         },
         {
           "label": "Ende",

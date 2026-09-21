@@ -19,7 +19,8 @@
           "label": "Anfang",
           "value": "Oberwinterthur",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8506016
         },
         {
           "label": "Ende",

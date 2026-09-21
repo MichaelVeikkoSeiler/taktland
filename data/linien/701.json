@@ -8,7 +8,9 @@
   "anfang": "Eglisau",
   "ende": "Stein-Sackingen Ost (Abzw)",
   "km_anfang": 22.247,
-  "km_ende": 73.97
+  "km_ende": 73.97,
+  "anfang_uic": 8503402,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

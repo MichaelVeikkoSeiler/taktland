@@ -8,7 +8,9 @@
   "anfang": "Auvernier",
   "ende": "Les Verrieres-Frontiere",
   "km_anfang": 4.979,
-  "km_ende": 41.065
+  "km_ende": 41.065,
+  "anfang_uic": 8504219,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

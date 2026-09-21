@@ -8,7 +8,9 @@
   "anfang": "Rynacht (Abzw)",
   "ende": "Pozzo Negro (dira)",
   "km_anfang": 198.882,
-  "km_ende": 256.838
+  "km_ende": 256.838,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

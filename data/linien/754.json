@@ -8,7 +8,9 @@
   "anfang": "Winterthur Gruze",
   "ende": "Ruti ZH West (Abzw)",
   "km_anfang": 2.519,
-  "km_ende": 45.858
+  "km_ende": 45.858,
+  "anfang_uic": 8506001,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Les Paluds",
   "ende": "St-Gingolph (Frontiere)",
   "km_anfang": 1.472,
-  "km_ende": 26.988
+  "km_ende": 26.988,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

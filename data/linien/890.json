@@ -8,7 +8,9 @@
   "anfang": "Sargans Ost",
   "ende": "Ziegelbrucke",
   "km_anfang": -0.098,
-  "km_ende": 33.605
+  "km_ende": 33.605,
+  "anfang_uic": null,
+  "ende_uic": 8503225
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

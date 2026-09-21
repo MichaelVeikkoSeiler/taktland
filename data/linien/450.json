@@ -8,7 +8,9 @@
   "anfang": "Olten Sud (Abzw)",
   "ende": "Bern",
   "km_anfang": 40,
-  "km_ende": 106.156
+  "km_ende": 106.156,
+  "anfang_uic": null,
+  "ende_uic": 8507000
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -20,7 +20,8 @@
           "label": "Anfang",
           "value": "Thalwil",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8503202
         },
         {
           "label": "Ende",

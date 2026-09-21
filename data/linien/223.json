@@ -8,7 +8,9 @@
   "anfang": "Neuchatel-Vauseyon (bif)",
   "ende": "Chambrelien (cul-de-sac)",
   "km_anfang": 1.373,
-  "km_ende": 10.735
+  "km_ende": 10.735,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

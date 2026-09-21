@@ -8,7 +8,9 @@
   "anfang": "Hinwil",
   "ende": "Bauma",
   "km_anfang": 13.966,
-  "km_ende": 25.263
+  "km_ende": 25.263,
+  "anfang_uic": 8503130,
+  "ende_uic": 8503134
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

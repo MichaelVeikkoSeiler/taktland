@@ -19,13 +19,15 @@
           "label": "Anfang",
           "value": "Effretikon",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8503305
         },
         {
           "label": "Ende",
           "value": "Hinwil",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8503130
         },
         {
           "label": "Kilometer am Anfang",

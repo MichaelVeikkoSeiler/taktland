@@ -19,13 +19,15 @@
           "label": "Anfang",
           "value": "Olten",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8500218
         },
         {
           "label": "Ende",
           "value": "Biel/Bienne",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8504300
         },
         {
           "label": "Kilometer am Anfang",

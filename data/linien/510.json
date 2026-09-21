@@ -8,7 +8,9 @@
   "anfang": "Mulhouse",
   "ende": "Basel SBB",
   "km_anfang": 108.32,
-  "km_ende": 142.203
+  "km_ende": 142.203,
+  "anfang_uic": null,
+  "ende_uic": 8500010
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

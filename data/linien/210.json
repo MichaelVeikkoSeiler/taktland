@@ -8,7 +8,9 @@
   "anfang": "Daillens (bif)",
   "ende": "Biel/Bienne",
   "km_anfang": 19.115,
-  "km_ende": 104.5
+  "km_ende": 104.5,
+  "anfang_uic": null,
+  "ende_uic": 8504300
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

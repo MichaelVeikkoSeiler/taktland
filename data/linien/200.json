@@ -8,7 +8,9 @@
   "anfang": "Renens VD Ouest (bif)",
   "ende": "Vallorbe",
   "km_anfang": 5.18,
-  "km_ende": 46.306
+  "km_ende": 46.306,
+  "anfang_uic": null,
+  "ende_uic": 8501103
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

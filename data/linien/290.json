@@ -8,7 +8,9 @@
   "anfang": "Bern Wyler West (Abzw)",
   "ende": "Thun Schadau",
   "km_anfang": 107.638,
-  "km_ende": 137.593
+  "km_ende": 137.593,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

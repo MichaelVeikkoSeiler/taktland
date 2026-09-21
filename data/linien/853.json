@@ -8,7 +8,9 @@
   "anfang": "Wil Sud (Abzw)",
   "ende": "Uznach",
   "km_anfang": 1.304,
-  "km_ende": 34.387
+  "km_ende": 34.387,
+  "anfang_uic": null,
+  "ende_uic": 8503116
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

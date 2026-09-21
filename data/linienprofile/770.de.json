@@ -20,13 +20,15 @@
           "label": "Anfang",
           "value": "Bulach",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8503400
         },
         {
           "label": "Ende",
           "value": "Neuhausen",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8503423
         },
         {
           "label": "Kilometer am Anfang",

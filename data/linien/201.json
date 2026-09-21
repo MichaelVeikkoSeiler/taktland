@@ -8,7 +8,9 @@
   "anfang": "Le Day Sud (bif)",
   "ende": "Le Brassus",
   "km_anfang": 3.005,
-  "km_ende": 24.438
+  "km_ende": 24.438,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Sissach",
   "ende": "Olten",
   "km_anfang": 21.104,
-  "km_ende": 39.292
+  "km_ende": 39.292,
+  "anfang_uic": 8500026,
+  "ende_uic": 8500218
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

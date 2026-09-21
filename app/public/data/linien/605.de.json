@@ -19,7 +19,8 @@
           "label": "Anfang",
           "value": "Sisikon",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8505111
         },
         {
           "label": "Ende",

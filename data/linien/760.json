@@ -8,7 +8,9 @@
   "anfang": "Zurich Hardbrucke",
   "ende": "Bulach",
   "km_anfang": 0.211,
-  "km_ende": 20.272
+  "km_ende": 20.272,
+  "anfang_uic": 8503020,
+  "ende_uic": 8503400
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

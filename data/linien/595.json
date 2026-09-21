@@ -8,7 +8,9 @@
   "anfang": "Rynacht (Spw)",
   "ende": "Giustizia (dira)",
   "km_anfang": 99.451,
-  "km_ende": 164.016
+  "km_ende": 164.016,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Etzwilen",
   "ende": "Schaffhausen",
   "km_anfang": 31.809,
-  "km_ende": 48.76
+  "km_ende": 48.76,
+  "anfang_uic": 8506025,
+  "ende_uic": 8503424
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

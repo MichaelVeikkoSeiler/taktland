@@ -8,7 +8,9 @@
   "anfang": "Oberwinterthur",
   "ende": "Etzwilen West (Abzw)",
   "km_anfang": 3.603,
-  "km_ende": 31.556
+  "km_ende": 31.556,
+  "anfang_uic": 8506016,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

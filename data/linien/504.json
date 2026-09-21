@@ -8,7 +8,9 @@
   "anfang": "Zofingen Nord (Abzw)",
   "ende": "Suhr",
   "km_anfang": 0.412,
-  "km_ende": 16.719
+  "km_ende": 16.719,
+  "anfang_uic": null,
+  "ende_uic": 8502103
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

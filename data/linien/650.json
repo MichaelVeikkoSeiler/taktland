@@ -8,7 +8,9 @@
   "anfang": "Killwangen West (Abzw)",
   "ende": "Daniken Ost",
   "km_anfang": 16.519,
-  "km_ende": 48.119
+  "km_ende": 48.119,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

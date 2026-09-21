@@ -750,3 +750,10 @@ Brücken und Bahnübergänge der Linie, unverändert aus den Fakten. Kacheln mit
 führen in der App zu diesen Listen. Die Prüfung verlangt: Die Liste ist gleich den
 Fakten, und die Zahl auf der Kachel ist die Zahl der Einträge nach dem Filter.
 Fehlende Werte zeigt die Liste als «keine Angabe».
+
+**Anfang und Ende als Link.** `linie.csv` nennt Anfang und Ende nur mit Namen. Die
+Pipeline sucht die Nummer in der Liste der Betriebspunkte derselben Linie; steht der
+Name dort zweimal (Biel/Bienne auf Linie 210), entscheidet der Kilometer. Ist es ein
+Bahnhof aus Taktland, trägt die Kachel `bahnhof` (nicht `uic`, sonst stünde sie in der
+Bahnhofsliste) und führt zu seiner Seite. So findet auch «Zurich Oerlikon» (Quelle)
+zu Zürich Oerlikon. 87 von 222 Endpunkten; die übrigen sind meist Abzweigungen.

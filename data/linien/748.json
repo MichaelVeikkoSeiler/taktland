@@ -8,7 +8,9 @@
   "anfang": "Zurich Altstetten Ost (Abzw)",
   "ende": "Zurich Oerlikon",
   "km_anfang": 197.16,
-  "km_ende": 206.72
+  "km_ende": 206.72,
+  "anfang_uic": null,
+  "ende_uic": 8503006
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

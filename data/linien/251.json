@@ -8,7 +8,9 @@
   "anfang": "Palezieux Est (bif)",
   "ende": "Lyss Nord",
   "km_anfang": 21.203,
-  "km_ende": 100.421
+  "km_ende": 100.421,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

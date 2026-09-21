@@ -19,13 +19,15 @@
           "label": "Anfang",
           "value": "Sulgen",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8506217
         },
         {
           "label": "Ende",
           "value": "Gossau SG",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8506210
         },
         {
           "label": "Kilometer am Anfang",

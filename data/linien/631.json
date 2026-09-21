@@ -8,7 +8,9 @@
   "anfang": "Cadenazzo Ovest (bif)",
   "ende": "Pino confine",
   "km_anfang": 161.129,
-  "km_ende": 175.894
+  "km_ende": 175.894,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

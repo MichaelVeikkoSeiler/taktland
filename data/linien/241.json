@@ -8,7 +8,9 @@
   "anfang": "Courtemaiche",
   "ende": "Bure-Casernes",
   "km_anfang": 0,
-  "km_ende": 4.935
+  "km_ende": 4.935,
+  "anfang_uic": 8500127,
+  "ende_uic": 8500131
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

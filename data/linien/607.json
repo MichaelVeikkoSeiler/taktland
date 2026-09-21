@@ -8,7 +8,9 @@
   "anfang": "Monte Ceneri Nord",
   "ende": "Rivera-Bironico Nord",
   "km_anfang": 162.683,
-  "km_ende": 164.749
+  "km_ende": 164.749,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

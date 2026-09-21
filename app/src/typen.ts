@@ -15,6 +15,8 @@ export interface Fakt {
   factRef: string
   /** Linienseite: der Bahnhof zu dieser Zeile, die App verlinkt ihn */
   uic?: number
+  /** Linienseite: Anfang oder Ende ist dieser Bahnhof, die Kachel führt zu ihm */
+  bahnhof?: number
   /** Linienseite: Die Kachel führt zur ganzen Liste, auf Wunsch gefiltert */
   liste?: ListenArt
   filter?: { feld: string; wert: string | null }

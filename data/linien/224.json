@@ -8,7 +8,9 @@
   "anfang": "Chambrelien Nord (bif)",
   "ende": "Le Locle-Frontiere",
   "km_anfang": 10.585,
-  "km_ende": 39.58
+  "km_ende": 39.58,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

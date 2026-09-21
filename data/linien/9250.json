@@ -8,7 +8,9 @@
   "anfang": "Bern Bumpliz Sud",
   "ende": "Bern",
   "km_anfang": 92.995,
-  "km_ende": 97.103
+  "km_ende": 97.103,
+  "anfang_uic": 8504106,
+  "ende_uic": 8507000
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

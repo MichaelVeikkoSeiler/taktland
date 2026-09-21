@@ -8,7 +8,9 @@
   "anfang": "St-Jean (bif)",
   "ende": "Annemasse",
   "km_anfang": 61.59,
-  "km_ende": 76.39
+  "km_ende": 76.39,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -25,7 +25,8 @@
           "label": "Ende",
           "value": "Vallorbe",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8501103
         },
         {
           "label": "Kilometer am Anfang",

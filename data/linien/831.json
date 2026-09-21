@@ -8,7 +8,9 @@
   "anfang": "Weinfelden",
   "ende": "Tagermoos (Abzw)",
   "km_anfang": 19.175,
-  "km_ende": 39.594
+  "km_ende": 39.594,
+  "anfang_uic": 8506105,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

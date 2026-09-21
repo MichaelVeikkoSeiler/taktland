@@ -8,7 +8,9 @@
   "anfang": "Flamatt",
   "ende": "Laupen BE Gleisende",
   "km_anfang": -0.044,
-  "km_ende": 6.8
+  "km_ende": 6.8,
+  "anfang_uic": 8504103,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

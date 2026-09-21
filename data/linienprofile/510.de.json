@@ -25,7 +25,8 @@
           "label": "Ende",
           "value": "Basel SBB",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8500010
         },
         {
           "label": "Kilometer am Anfang",

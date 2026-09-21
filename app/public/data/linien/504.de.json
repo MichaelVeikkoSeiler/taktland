@@ -25,7 +25,8 @@
           "label": "Ende",
           "value": "Suhr",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8502103
         },
         {
           "label": "Kilometer am Anfang",

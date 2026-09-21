@@ -8,7 +8,9 @@
   "anfang": "Zurich Limmatquai Verl. Km-Axe",
   "ende": "Brugg AG",
   "km_anfang": -0.1,
-  "km_ende": 31.266
+  "km_ende": 31.266,
+  "anfang_uic": null,
+  "ende_uic": 8500309
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

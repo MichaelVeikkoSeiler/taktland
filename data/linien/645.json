@@ -8,7 +8,9 @@
   "anfang": "Lenzburg West (Abzw)",
   "ende": "Suhr",
   "km_anfang": 60.18,
-  "km_ende": 67.485
+  "km_ende": 67.485,
+  "anfang_uic": null,
+  "ende_uic": 8502103
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

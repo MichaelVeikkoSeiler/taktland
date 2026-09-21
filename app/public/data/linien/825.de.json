@@ -25,7 +25,8 @@
           "label": "Ende",
           "value": "Rorschach",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8506311
         },
         {
           "label": "Kilometer am Anfang",

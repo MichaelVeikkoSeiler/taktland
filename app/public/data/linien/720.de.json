@@ -26,7 +26,8 @@
           "label": "Ende",
           "value": "Ziegelbrucke",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8503225
         },
         {
           "label": "Kilometer am Anfang",

@@ -20,13 +20,15 @@
           "label": "Anfang",
           "value": "Sissach",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8500026
         },
         {
           "label": "Ende",
           "value": "Olten",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8500218
         },
         {
           "label": "Kilometer am Anfang",

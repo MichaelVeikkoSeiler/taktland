@@ -8,7 +8,9 @@
   "anfang": "Zurich Langstrasse",
   "ende": "Ziegelbrucke",
   "km_anfang": 1.213,
-  "km_ende": 57.146
+  "km_ende": 57.146,
+  "anfang_uic": null,
+  "ende_uic": 8503225
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

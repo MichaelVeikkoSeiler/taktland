@@ -8,7 +8,9 @@
   "anfang": "Brugg AG",
   "ende": "Rupperswil",
   "km_anfang": 31.276,
-  "km_ende": 43.501
+  "km_ende": 43.501,
+  "anfang_uic": 8500309,
+  "ende_uic": 8502114
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

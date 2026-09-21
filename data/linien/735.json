@@ -8,7 +8,9 @@
   "anfang": "Ziegelbrucke West (Abzw)",
   "ende": "Rapperswil Ost (Abzw)",
   "km_anfang": 34.798,
-  "km_ende": 58.735
+  "km_ende": 58.735,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

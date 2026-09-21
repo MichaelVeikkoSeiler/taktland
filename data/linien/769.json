@@ -8,7 +8,9 @@
   "anfang": "Winterthur West (Abzw)",
   "ende": "Bulach",
   "km_anfang": 1.002,
-  "km_ende": 16.258
+  "km_ende": 16.258,
+  "anfang_uic": null,
+  "ende_uic": 8503400
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

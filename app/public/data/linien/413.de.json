@@ -2,7 +2,7 @@
   "linie": 413,
   "name": "Langenthal - Niederbipp",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "linie-mit-betriebspunkten"
@@ -17,13 +17,15 @@
           "label": "Anfang",
           "value": "Langenthal",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8508100
         },
         {
           "label": "Ende",
           "value": "Niederbipp",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8500211
         },
         {
           "label": "Kilometer am Anfang",

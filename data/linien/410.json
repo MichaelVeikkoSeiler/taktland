@@ -8,7 +8,9 @@
   "anfang": "Olten",
   "ende": "Biel/Bienne",
   "km_anfang": 39.292,
-  "km_ende": 99.369
+  "km_ende": 99.369,
+  "anfang_uic": 8500218,
+  "ende_uic": 8504300
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -20,7 +20,8 @@
           "label": "Anfang",
           "value": "Brugg AG",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8500309
         },
         {
           "label": "Ende",

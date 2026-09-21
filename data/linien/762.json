@@ -8,7 +8,9 @@
   "anfang": "Winterthur Nord",
   "ende": "Schaffhausen RB Ost (Ende SBB)",
   "km_anfang": 26.489,
-  "km_ende": 58.834
+  "km_ende": 58.834,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

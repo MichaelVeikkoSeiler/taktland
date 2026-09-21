@@ -26,7 +26,8 @@
           "label": "Ende",
           "value": "Puidoux",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8504012
         },
         {
           "label": "Kilometer am Anfang",

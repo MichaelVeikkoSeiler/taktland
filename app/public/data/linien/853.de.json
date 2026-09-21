@@ -26,7 +26,8 @@
           "label": "Ende",
           "value": "Uznach",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8503116
         },
         {
           "label": "Kilometer am Anfang",

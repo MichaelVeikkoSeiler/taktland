@@ -8,7 +8,9 @@
   "anfang": "Romanshorn Feld H (Abzw)",
   "ende": "Rorschach",
   "km_anfang": 82.57,
-  "km_ende": 97.267
+  "km_ende": 97.267,
+  "anfang_uic": null,
+  "ende_uic": 8506311
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

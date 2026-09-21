@@ -8,7 +8,9 @@
   "anfang": "Yverdon Est (bif)",
   "ende": "Payerne",
   "km_anfang": 0.485,
-  "km_ende": 27.895
+  "km_ende": 27.895,
+  "anfang_uic": null,
+  "ende_uic": 8504134
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

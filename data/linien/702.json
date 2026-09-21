@@ -8,7 +8,9 @@
   "anfang": "Turgi",
   "ende": "Waldshut",
   "km_anfang": 27.433,
-  "km_ende": 44.435
+  "km_ende": 44.435,
+  "anfang_uic": 8503503,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

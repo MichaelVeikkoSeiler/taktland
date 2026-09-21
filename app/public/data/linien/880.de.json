@@ -26,7 +26,8 @@
           "label": "Ende",
           "value": "St. Gallen",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8506302
         },
         {
           "label": "Kilometer am Anfang",

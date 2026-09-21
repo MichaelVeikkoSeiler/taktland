@@ -8,7 +8,9 @@
   "anfang": "Delemont Est",
   "ende": "Basel SBB Ost (Abzw)",
   "km_anfang": 84.965,
-  "km_ende": 122.464
+  "km_ende": 122.464,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

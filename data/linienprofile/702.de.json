@@ -20,7 +20,8 @@
           "label": "Anfang",
           "value": "Turgi",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8503503
         },
         {
           "label": "Ende",

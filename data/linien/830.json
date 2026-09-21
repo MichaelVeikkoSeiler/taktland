@@ -8,7 +8,9 @@
   "anfang": "Wil SG",
   "ende": "Weinfelden",
   "km_anfang": -0.003,
-  "km_ende": 19.175
+  "km_ende": 19.175,
+  "anfang_uic": 8506206,
+  "ende_uic": 8506105
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

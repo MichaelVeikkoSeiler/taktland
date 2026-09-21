@@ -8,7 +8,9 @@
   "anfang": "Solothurn",
   "ende": "Niederbipp",
   "km_anfang": 0,
-  "km_ende": 14.548
+  "km_ende": 14.548,
+  "anfang_uic": 8500207,
+  "ende_uic": 8500211
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

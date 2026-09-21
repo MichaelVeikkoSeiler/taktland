@@ -148,7 +148,13 @@ export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang, verwe
 
       {kaesten.length > 0 && (
         <dl className="mt-4 grid gap-2 sm:grid-cols-2">
-          {kaesten.map((f) => <FaktZeile key={f.factRef + f.label} fakt={f} href={verweis?.(f)} />)}
+          {kaesten.map((f) => {
+            // Liste (Linienseite) oder Bahnhof am Anfang oder Ende einer Linie
+            const liste = verweis?.(f)
+            const href = liste ?? (f.bahnhof ? `#/bahnhof/${f.bahnhof}` : undefined)
+            return <FaktZeile key={f.factRef + f.label} fakt={f} href={href}
+                              zielText={liste ? 'Alle anzeigen' : 'Zur Bahnhofsseite'} />
+          })}
         </dl>
       )}
 
@@ -220,7 +226,11 @@ function genau(wert: Fakt['value']) {
     : String(wert ?? '—')
 }
 
-function FaktZeile({ fakt, href }: { fakt: Fakt; href?: string }) {
+function FaktZeile({ fakt, href, zielText = 'Alle anzeigen' }: {
+  fakt: Fakt
+  href?: string
+  zielText?: string
+}) {
   const wert = typeof fakt.value === 'number'
     ? genau(fakt.value)
     : typeof fakt.value === 'boolean'
@@ -236,7 +246,7 @@ function FaktZeile({ fakt, href }: { fakt: Fakt; href?: string }) {
       {href && (
         <>
           <a href={href} className="absolute inset-0"
-             aria-label={`Alle anzeigen: ${fakt.label}, ${wert}${fakt.unit ? ` ${fakt.unit}` : ''}`} />
+             aria-label={`${zielText}: ${fakt.label}, ${wert}${fakt.unit ? ` ${fakt.unit}` : ''}`} />
           <span aria-hidden="true"
                 className="absolute right-3 top-2 text-sbb-metal dark:text-sbb-storm">→</span>
         </>

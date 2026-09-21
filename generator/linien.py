@@ -128,6 +128,17 @@ def pruefe_linie(profil, fakten):
                 if m := re.search(LAENGE_STATT_STANDORT, text, re.I):
                     b.fehlt(f"{wo}/{stelle}", f"«{m.group(0)}»: die Kilometrierung ist ein "
                                               "Standort. Die Länge der Linie steht nicht in den Daten")
+        # Anfang und Ende führen zum Bahnhof, den die Pipeline über die Nummer
+        # zugeordnet hat
+        for j, x in enumerate(kap.get("facts", [])):
+            if "bahnhof" not in x:
+                continue
+            feld = x.get("factRef", "").rsplit(".", 1)[-1]
+            if not (FACTS / f"{x['bahnhof']}.json").exists():
+                b.fehlt(f"{wo}/facts[{j}]", f"Bahnhof {x['bahnhof']} gibt es nicht")
+            elif (fakten.get("strecke") or {}).get(f"{feld}_uic") != x["bahnhof"]:
+                b.fehlt(f"{wo}/facts[{j}]", f"{x.get('value')} führt zu einem anderen Bahnhof "
+                                            "als in den Fakten")
         # Ein Bahnhof in der Liste führt zu seiner Seite: Er muss es geben,
         # und er muss der sein, auf den der factRef zeigt
         for j, x in enumerate(kap.get("facts", [])):

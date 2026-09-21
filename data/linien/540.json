@@ -8,7 +8,9 @@
   "anfang": "Olten",
   "ende": "Woschnau SBB",
   "km_anfang": 39.302,
-  "km_ende": 50.9
+  "km_ende": 50.9,
+  "anfang_uic": 8500218,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

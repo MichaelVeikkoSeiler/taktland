@@ -19,7 +19,8 @@
           "label": "Anfang",
           "value": "Oberglatt ZH",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8503312
         },
         {
           "label": "Ende",

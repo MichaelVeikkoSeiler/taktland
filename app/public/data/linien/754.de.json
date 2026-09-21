@@ -20,7 +20,8 @@
           "label": "Anfang",
           "value": "Winterthur Gruze",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8506001
         },
         {
           "label": "Ende",

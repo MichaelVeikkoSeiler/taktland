@@ -19,7 +19,8 @@
           "label": "Anfang",
           "value": "Etzwilen",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8506025
         },
         {
           "label": "Ende",

@@ -8,7 +8,9 @@
   "anfang": "Brugg AG",
   "ende": "Pratteln Ost (Abzw)",
   "km_anfang": 31.273,
-  "km_ende": 79.8
+  "km_ende": 79.8,
+  "anfang_uic": 8500309,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

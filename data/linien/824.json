@@ -8,7 +8,9 @@
   "anfang": "Romanshorn",
   "ende": "Konstanz",
   "km_anfang": 82.152,
-  "km_ende": 101.285
+  "km_ende": 101.285,
+  "anfang_uic": 8506121,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

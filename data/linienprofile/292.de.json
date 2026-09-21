@@ -2,7 +2,7 @@
   "linie": 292,
   "name": "Solothurn - Bern RBS",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "linie-mit-betriebspunkten"
@@ -17,7 +17,8 @@
           "label": "Anfang",
           "value": "Solothurn",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8500207
         },
         {
           "label": "Ende",

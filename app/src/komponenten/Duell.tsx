@@ -40,6 +40,9 @@ interface Gegenstand {
   /** Bemerkung der Quelle, etwa was eine Tunnellänge umfasst */
   bemerkung?: string | null
   werte: Record<string, number>
+  /** wohin «Mehr dazu» führt: Bahnhofsseite oder Linie des Tunnels */
+  link: string
+  linkText: string
 }
 
 /** Auswahl «alle Tunnel» im Feld oben, neben Schweiz und Kantonen */
@@ -50,6 +53,11 @@ interface Runde {
   eintraege: Gegenstand[]
   richtig: number
 }
+
+/** Stand des Duells, solange die Seite offen ist. Wer über «Mehr dazu» auf
+ *  eine Bahnhofsseite geht und zurückkommt, soll die Serie nicht verlieren. */
+let zwischenstand: { auswahl: string; serie: number; runde: Runde | null;
+                     gewaehlt: number | null } | null = null
 
 function zufall<T>(liste: T[]): T {
   return liste[Math.floor(Math.random() * liste.length)]
@@ -149,11 +157,15 @@ function mitPunkt(text: string) {
 export function Duell({ zurueck }: { zurueck: () => void }) {
   const [daten, setDaten] = useState<Vergleichsdaten | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
-  const [runde, setRunde] = useState<Runde | null>(null)
-  const [gewaehlt, setGewaehlt] = useState<number | null>(null)
-  const [serie, setSerie] = useState(0)
-  const [stand, setStand] = useState<Duellstand>(() => duellstandLesen())
   const [auswahl, setAuswahl] = useState<string>(() => auswahlLesen())
+  const gemerkt = zwischenstand?.auswahl === auswahl ? zwischenstand : null
+  const [runde, setRunde] = useState<Runde | null>(gemerkt?.runde ?? null)
+  const [gewaehlt, setGewaehlt] = useState<number | null>(gemerkt?.gewaehlt ?? null)
+  const [serie, setSerie] = useState(gemerkt?.serie ?? 0)
+  const [stand, setStand] = useState<Duellstand>(() => duellstandLesen())
+
+  useEffect(() => { zwischenstand = { auswahl, serie, runde, gewaehlt } },
+            [auswahl, serie, runde, gewaehlt])
   const tunnelFeld = auswahl === TUNNEL
 
   /** Die Kantone, die genug Bahnhöfe für faire Paare haben. */
@@ -175,6 +187,7 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
       return (daten.tunnel ?? []).map((t) => ({
         schluessel: t.id, name: t.name, unterzeile: `Linie ${t.linie}`,
         bemerkung: t.bemerkung, werte: t.werte,
+        link: `#/linie/${t.linie}`, linkText: `${t.name} (Linie ${t.linie})`,
       }))
     }
     return daten.bahnhoefe
@@ -182,6 +195,7 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
       .map((b) => ({
         schluessel: String(b.uic), name: b.name,
         unterzeile: b.kanton ? kantonText(b.kanton) : null, werte: b.werte,
+        link: `#/bahnhof/${b.uic}`, linkText: b.name,
       }))
   }, [daten, auswahl])
 
@@ -344,6 +358,17 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
                 {k.hinweis && <p className="mt-1">{k.hinweis}</p>}
                 <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
                   Quelle: {k.quelle}
+                </p>
+                <p className="mt-2">
+                  Mehr dazu:{' '}
+                  {runde.eintraege.map((b, i) => (
+                    <span key={b.schluessel}>
+                      {i > 0 && ' · '}
+                      <a href={b.link} className="underline underline-offset-2 hover:text-sbb-red">
+                        {b.linkText}
+                      </a>
+                    </span>
+                  ))}
                 </p>
               </div>
 

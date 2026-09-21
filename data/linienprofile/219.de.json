@@ -20,7 +20,8 @@
           "label": "Anfang",
           "value": "Auvernier",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8504219
         },
         {
           "label": "Ende",

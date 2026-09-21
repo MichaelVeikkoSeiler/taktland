@@ -8,7 +8,9 @@
   "anfang": "Oberglatt ZH",
   "ende": "Niederweningen (Gleisende)",
   "km_anfang": 13.122,
-  "km_ende": 25.389
+  "km_ende": 25.389,
+  "anfang_uic": 8503312,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

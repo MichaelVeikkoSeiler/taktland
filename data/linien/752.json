@@ -8,7 +8,9 @@
   "anfang": "Zurich Oerlikon Nord (Abzw)",
   "ende": "Hurlistein (Abzw)",
   "km_anfang": 5.325,
-  "km_ende": 18.255
+  "km_ende": 18.255,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Al Sasso",
   "ende": "Al Motto Est",
   "km_anfang": 160.014,
-  "km_ende": 160.929
+  "km_ende": 160.929,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Giubiasco Sud (bif)",
   "ende": "Locarno (fine binario)",
   "km_anfang": 154.358,
-  "km_ende": 172.009
+  "km_ende": 172.009,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

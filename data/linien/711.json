@@ -8,7 +8,9 @@
   "anfang": "Zurich Hardbrucke",
   "ende": "Kollermuhle (Abzw)",
   "km_anfang": 1.912,
-  "km_ende": 36.368
+  "km_ende": 36.368,
+  "anfang_uic": 8503020,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

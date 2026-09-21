@@ -19,7 +19,8 @@
           "label": "Anfang",
           "value": "Weinfelden",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8506105
         },
         {
           "label": "Ende",

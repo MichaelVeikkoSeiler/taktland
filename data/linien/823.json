@@ -8,7 +8,9 @@
   "anfang": "Kreuzlingen",
   "ende": "Kreuzlingen Hafen",
   "km_anfang": 60.688,
-  "km_ende": 61.802
+  "km_ende": 61.802,
+  "anfang_uic": 8506131,
+  "ende_uic": 8506128
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

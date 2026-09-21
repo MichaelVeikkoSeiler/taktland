@@ -8,7 +8,9 @@
   "anfang": "Lochligut (Abzw)",
   "ende": "Rothrist West (Abzw)",
   "km_anfang": 4.849,
-  "km_ende": 55.228
+  "km_ende": 55.228,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

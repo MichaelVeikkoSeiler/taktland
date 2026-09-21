@@ -8,7 +8,9 @@
   "anfang": "Gumligen Sud (Abzw)",
   "ende": "Fluhmuhle (Abzw)",
   "km_anfang": 8.44,
-  "km_ende": 91.831
+  "km_ende": 91.831,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

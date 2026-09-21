@@ -8,7 +8,9 @@
   "anfang": "Effretikon",
   "ende": "Hinwil",
   "km_anfang": -0.019,
-  "km_ende": 22.543
+  "km_ende": 22.543,
+  "anfang_uic": 8503305,
+  "ende_uic": 8503130
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

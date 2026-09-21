@@ -8,7 +8,9 @@
   "anfang": "Hubeli LU",
   "ende": "Lenzburg West (Abzw)",
   "km_anfang": 1.739,
-  "km_ende": 42.491
+  "km_ende": 42.491,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

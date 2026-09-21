@@ -8,7 +8,9 @@
   "anfang": "Furet (bif)",
   "ende": "Jonction (Geneve)",
   "km_anfang": 0,
-  "km_ende": 0.941
+  "km_ende": 0.941,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

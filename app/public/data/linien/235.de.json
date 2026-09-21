@@ -2,7 +2,7 @@
   "linie": 235,
   "name": "Tavannes - Le Noirmont",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "linie-mit-betriebspunkten"
@@ -17,13 +17,15 @@
           "label": "Anfang",
           "value": "Tavannes",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8500100
         },
         {
           "label": "Ende",
           "value": "La Chaux-de-Fonds",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8504314
         },
         {
           "label": "Kilometer am Anfang",

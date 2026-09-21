@@ -8,7 +8,9 @@
   "anfang": "Basel SBB",
   "ende": "Luzern",
   "km_anfang": 0,
-  "km_ende": 95.093
+  "km_ende": 95.093,
+  "anfang_uic": 8500010,
+  "ende_uic": 8505000
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

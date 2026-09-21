@@ -8,7 +8,9 @@
   "anfang": "Landquart",
   "ende": "Disentis Betriebsgrz. MGB/RhB",
   "km_anfang": 0,
-  "km_ende": 73.018
+  "km_ende": 73.018,
+  "anfang_uic": 8509002,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

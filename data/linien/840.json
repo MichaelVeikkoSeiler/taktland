@@ -8,7 +8,9 @@
   "anfang": "Winterthur Nord",
   "ende": "Romanshorn",
   "km_anfang": 26.393,
-  "km_ende": 82.151
+  "km_ende": 82.151,
+  "anfang_uic": null,
+  "ende_uic": 8506121
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

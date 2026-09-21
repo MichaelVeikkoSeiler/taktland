@@ -8,7 +8,9 @@
   "anfang": "Camorino Nord",
   "ende": "Vezia (bif)",
   "km_anfang": 227.243,
-  "km_ende": 243.021
+  "km_ende": 243.021,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

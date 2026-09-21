@@ -8,7 +8,9 @@
   "anfang": "Payerne Est (bif)",
   "ende": "Fribourg Nord",
   "km_anfang": 28.927,
-  "km_ende": 48.925
+  "km_ende": 48.925,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

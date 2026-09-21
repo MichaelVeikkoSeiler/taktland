@@ -8,7 +8,9 @@
   "anfang": "St. Gallen",
   "ende": "Winterthur Nord",
   "km_anfang": 80.456,
-  "km_ende": 137.463
+  "km_ende": 137.463,
+  "anfang_uic": 8506302,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

@@ -8,7 +8,9 @@
   "anfang": "Brunnen Sud (Abzw)",
   "ende": "Sisikon Nord",
   "km_anfang": 21.45,
-  "km_ende": 25.8
+  "km_ende": 25.8,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

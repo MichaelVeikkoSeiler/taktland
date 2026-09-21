@@ -8,7 +8,9 @@
   "anfang": "Zurich Langstrasse",
   "ende": "Nidelbad Sud (Abzw)",
   "km_anfang": 1.175,
-  "km_ende": 10.293
+  "km_ende": 10.293,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

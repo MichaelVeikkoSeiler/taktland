@@ -8,7 +8,9 @@
   "anfang": "La Neuveville",
   "ende": "Tuscherz",
   "km_anfang": 90.049,
-  "km_ende": 99.946
+  "km_ende": 99.946,
+  "anfang_uic": 8504226,
+  "ende_uic": 8504229
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

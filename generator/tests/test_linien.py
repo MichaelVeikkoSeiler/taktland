@@ -124,3 +124,15 @@ def test_kachel_fuehrt_zu_genau_so_vielen_eintraegen():
     assert ticino["value"] == len(treffer) == 325
     # die Listen sind die Einträge der Fakten, unverändert
     assert d["listen"]["tunnel"] == lb.fakten("600")["tunnel"]["items"]
+
+
+def test_anfang_und_ende_fuehren_zum_bahnhof():
+    # Zuordnung über die Nummer, nicht über den Namen: Linie 748 endet bei
+    # «Zurich Oerlikon» (so die Quelle), der Bahnhof heisst Zürich Oerlikon
+    strecke = next(k for k in L.bauen("500")["chapters"] if k["id"] == "strecke")
+    assert [x.get("bahnhof") for x in strecke["facts"][:2]] == [8500010, 8505000]
+    ende = next(k for k in L.bauen("748")["chapters"] if k["id"] == "strecke")["facts"][1]
+    assert ende["value"] == "Zurich Oerlikon" and ende["bahnhof"] == 8503006
+    # eine Abzweigung bleibt ohne Link
+    anfang = next(k for k in L.bauen("600")["chapters"] if k["id"] == "strecke")["facts"][0]
+    assert "bahnhof" not in anfang

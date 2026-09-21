@@ -8,7 +8,9 @@
   "anfang": "Zurich Langstrasse",
   "ende": "Winterthur Nord",
   "km_anfang": 0.276,
-  "km_ende": 26.487
+  "km_ende": 26.487,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

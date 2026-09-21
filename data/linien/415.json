@@ -8,7 +8,9 @@
   "anfang": "Wanzwil (Abzw)",
   "ende": "Busswil BE",
   "km_anfang": 67.957,
-  "km_ende": 101.864
+  "km_ende": 101.864,
+  "anfang_uic": null,
+  "ende_uic": 8504415
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

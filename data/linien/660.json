@@ -8,7 +8,9 @@
   "anfang": "Thalwil",
   "ende": "Fluhmuhle (Abzw)",
   "km_anfang": 12.094,
-  "km_ende": 64.009
+  "km_ende": 64.009,
+  "anfang_uic": 8503202,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

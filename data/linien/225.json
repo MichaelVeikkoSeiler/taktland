@@ -8,7 +8,9 @@
   "anfang": "Biel/Bienne West",
   "ende": "La Chaux-de-Fonds Nord",
   "km_anfang": 34.119,
-  "km_ende": 77.401
+  "km_ende": 77.401,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

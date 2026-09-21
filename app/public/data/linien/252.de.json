@@ -25,7 +25,8 @@
           "label": "Ende",
           "value": "Payerne",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8504134
         },
         {
           "label": "Kilometer am Anfang",

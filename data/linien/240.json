@@ -8,7 +8,9 @@
   "anfang": "Delemont",
   "ende": "Delle-Frontiere",
   "km_anfang": 84.607,
-  "km_ende": 124.534
+  "km_ende": 124.534,
+  "anfang_uic": 8500109,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

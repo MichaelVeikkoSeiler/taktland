@@ -8,7 +8,9 @@
   "anfang": "Aarburg-Oftringen",
   "ende": "Rothrist",
   "km_anfang": 43.005,
-  "km_ende": 46.198
+  "km_ende": 46.198,
+  "anfang_uic": 8502000,
+  "ende_uic": 8508103
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",

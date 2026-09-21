@@ -20,13 +20,15 @@
           "label": "Anfang",
           "value": "Etzwilen",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8506025
         },
         {
           "label": "Ende",
           "value": "Schaffhausen",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8503424
         },
         {
           "label": "Kilometer am Anfang",

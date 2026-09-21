@@ -19,13 +19,15 @@
           "label": "Anfang",
           "value": "Aarburg-Oftringen",
           "source": "linie",
-          "factRef": "strecke.anfang"
+          "factRef": "strecke.anfang",
+          "bahnhof": 8502000
         },
         {
           "label": "Ende",
           "value": "Rothrist",
           "source": "linie",
-          "factRef": "strecke.ende"
+          "factRef": "strecke.ende",
+          "bahnhof": 8508103
         },
         {
           "label": "Kilometer am Anfang",

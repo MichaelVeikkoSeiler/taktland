@@ -8,7 +8,9 @@
   "anfang": "Ziegelbrucke Ost (Abzw)",
   "ende": "Linthal (Gleisende)",
   "km_anfang": 57.545,
-  "km_ende": 84.846
+  "km_ende": 84.846,
+  "anfang_uic": null,
+  "ende_uic": null
  },
  "bahnhoefe": {
   "source": "linie-mit-betriebspunkten",
