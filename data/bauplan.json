@@ -85,6 +85,16 @@
    ]
   }
  },
+ "8500028": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Arlesheim",
+    "Laufen"
+   ]
+  }
+ },
  "8500035": {
   "stammdaten": {
    "frage": "bezirk",
@@ -217,6 +227,16 @@
    "distraktoren": [
     "CFV",
     "DMT"
+   ]
+  }
+ },
+ "8500121": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Courtételle",
+    "Delémont",
+    "Moutier"
    ]
   }
  },
@@ -440,6 +460,15 @@
    "distraktoren": [
     "HAE",
     "OLH"
+   ]
+  }
+ },
+ "8500217": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OL",
+    "TRI"
    ]
   }
  },
@@ -1033,6 +1062,16 @@
    ]
   }
  },
+ "8501404": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Martigny",
+    "Monthey",
+    "Conthey"
+   ]
+  }
+ },
  "8501405": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1069,6 +1108,16 @@
     "Saint-Gingolph",
     "Villeneuve (VD)",
     "Roche (VD)"
+   ]
+  }
+ },
+ "8501428": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Saint-Maurice",
+    "Martigny",
+    "Conthey"
    ]
   }
  },
@@ -1155,6 +1204,16 @@
    "distraktoren": [
     "ARD",
     "SIO"
+   ]
+  }
+ },
+ "8501600": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sierre",
+    "Raron",
+    "Sion"
    ]
   }
  },
@@ -1396,6 +1455,16 @@
     "Aarau",
     "Bremgarten",
     "Kulm"
+   ]
+  }
+ },
+ "8502032": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kulm",
+    "Bremgarten",
+    "Muri"
    ]
   }
  },
@@ -1808,6 +1877,16 @@
    "distraktoren": [
     "STRI",
     "CHAA"
+   ]
+  }
+ },
+ "8502237": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Baden",
+    "Lenzburg",
+    "Bremgarten"
    ]
   }
  },
@@ -2437,6 +2516,16 @@
    "frage": "gemeinde",
    "distraktoren": [
     "Glarus Süd",
+    "Glarus Nord",
+    "Schänis"
+   ]
+  }
+ },
+ "8503232": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
     "Glarus Nord",
     "Schänis"
    ]
@@ -3167,6 +3256,16 @@
    ]
   }
  },
+ "8504131": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Glâne",
+    "La Sarine",
+    "See"
+   ]
+  }
+ },
  "8504132": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3204,6 +3303,16 @@
     "Jura-Nord vaudois",
     "Lavaux-Oron",
     "Morges"
+   ]
+  }
+ },
+ "8504136": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Corcelles-près-Payerne",
+    "Belmont-Broye",
+    "Payerne"
    ]
   }
  },
@@ -3372,6 +3481,15 @@
    ]
   }
  },
+ "8504224": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CORN",
+    "LD"
+   ]
+  }
+ },
  "8504225": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3469,6 +3587,16 @@
    ]
   }
  },
+ "8504302": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504304": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3476,6 +3604,16 @@
     "Biel/Bienne",
     "Oberaargau",
     "Seeland"
+   ]
+  }
+ },
+ "8504305": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -3717,6 +3855,16 @@
     "Brunnen",
     "Morschach",
     "Schwyz"
+   ]
+  }
+ },
+ "8505018": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Luzern-Stadt",
+    "Hochdorf",
+    "Sursee"
    ]
   }
  },
@@ -4398,6 +4546,16 @@
    ]
   }
  },
+ "8506122": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kreuzlingen",
+    "Weinfelden",
+    "Münchwilen"
+   ]
+  }
+ },
  "8506128": {
   "stammdaten": {
    "frage": "kanton",
@@ -4473,6 +4631,15 @@
     "Münchwilen",
     "Frauenfeld",
     "Kreuzlingen"
+   ]
+  }
+ },
+ "8506197": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KR",
+    "KRH"
    ]
   }
  },
@@ -4681,6 +4848,16 @@
    "distraktoren": [
     "SMA",
     "STMG"
+   ]
+  }
+ },
+ "8506316": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rorschach",
+    "St. Gallen",
+    "Werdenberg"
    ]
   }
  },
@@ -5199,6 +5376,16 @@
    ]
   }
  },
+ "8516271": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "St. Gallen",
+    "Rheintal",
+    "Wil"
+   ]
+  }
+ },
  "8516272": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -5336,6 +5523,15 @@
    "distraktoren": [
     "SLF",
     "NH"
+   ]
+  }
+ },
+ "8518963": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SW",
+    "BELL"
    ]
   }
  },
