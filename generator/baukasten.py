@@ -170,6 +170,12 @@ def steckbrief(f, extra_body="", extra_fragen=()):
         # verdient eine eigene Frage. Nur die einfache Form wird automatisch
         # gebaut; längere Bemerkungen schreibe ich von Hand.
         import re
+        # Grenzbahnhöfe (Buchs SG, St. Margrethen): wörtlich dieselbe Bemerkung
+        ausland = "Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst."
+        if s["bemerkung"].strip() == ausland:
+            fr.append(tf(f"Die Zahl der Ein- und Aussteigenden in {name} erfasst den Verkehr "
+                         "ins und aus dem Ausland vollständig.", False,
+                         f"Die Quelle vermerkt: «{ausland}»", "steckbrief.bemerkung", diff=3))
         m = re.fullmatch(r"Ohne ([^.]+)\.", s["bemerkung"].strip())
         if m:
             wer = m.group(1)

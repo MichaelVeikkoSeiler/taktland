@@ -413,7 +413,9 @@ der nur teilweise erfasste Grenzverkehr in Chiasso grenzen die wichtigste
 Zahl des Steckbriefs ein. Sie verdienen eine eigene Frage. Der Baukasten
 setzt jede Bemerkung wörtlich in den Steckbrief-Text («Die Quelle vermerkt zu
 diesen Zahlen: «…»») und baut für «Ohne X.» die Frage selbst. Längere
-Bemerkungen wie in Buchs SG bekommen ihre Frage von Hand über `extra_fragen`.
+Bemerkungen bekommen ihre Frage von Hand über `extra_fragen`. Die Bemerkung
+zum Auslandverkehr an Grenzbahnhöfen (Buchs SG, St. Margrethen) kehrt wörtlich
+wieder, dafür baut der Baukasten die Frage selbst.
 
 ## Sprache
 
