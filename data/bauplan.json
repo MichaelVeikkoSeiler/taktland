@@ -114,6 +114,16 @@
    ]
   }
  },
+ "8500033": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Laufen",
+    "Arlesheim"
+   ]
+  }
+ },
  "8500034": {
   "stammdaten": {
    "frage": "bezirk",
@@ -324,6 +334,16 @@
    "distraktoren": [
     "PO",
     "PRT"
+   ]
+  }
+ },
+ "8500127": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Courchavon",
+    "Bure",
+    "Porrentruy"
    ]
   }
  },
@@ -1090,6 +1110,16 @@
     "Cully",
     "Lutry",
     "Puidoux"
+   ]
+  }
+ },
+ "8501125": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Puidoux",
+    "Chexbres",
+    "Rivaz"
    ]
   }
  },
@@ -1956,6 +1986,16 @@
     "Zofingen",
     "Aarburg",
     "Safenwil"
+   ]
+  }
+ },
+ "8502121": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Safenwil",
+    "Zofingen",
+    "Dulliken"
    ]
   }
  },
@@ -2916,6 +2956,16 @@
    ]
   }
  },
+ "8503222": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Höfe",
+    "Schwyz",
+    "Küssnacht (SZ)"
+   ]
+  }
+ },
  "8503223": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3005,7 +3055,27 @@
    ]
   }
  },
+ "8503234": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Glarus Nord",
+    "Schänis"
+   ]
+  }
+ },
  "8503236": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Glarus Nord",
+    "Schänis"
+   ]
+  }
+ },
+ "8503238": {
   "stammdaten": {
    "frage": "gemeinde",
    "distraktoren": [
@@ -3283,6 +3353,16 @@
    ]
   }
  },
+ "8503405": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hüntwangen",
+    "Eglisau",
+    "Zurzach"
+   ]
+  }
+ },
  "8503408": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3330,6 +3410,16 @@
     "Glattfelden",
     "Mellikon",
     "Niederweningen"
+   ]
+  }
+ },
+ "8503415": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Mellikon",
+    "Niederweningen",
+    "Glattfelden"
    ]
   }
  },
@@ -3557,6 +3647,16 @@
    ]
   }
  },
+ "8504003": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bourg-en-Lavaux",
+    "Pully",
+    "Puidoux"
+   ]
+  }
+ },
  "8504010": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3623,6 +3723,15 @@
     "Rue",
     "Ursy",
     "Puidoux"
+   ]
+  }
+ },
+ "8504020": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CHAT",
+    "PALV"
    ]
   }
  },
@@ -3858,6 +3967,16 @@
     "Jura-Nord vaudois",
     "Lavaux-Oron",
     "Morges"
+   ]
+  }
+ },
+ "8504124": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Corcelles-près-Payerne",
+    "Montagny (FR)",
+    "Payerne"
    ]
   }
  },
@@ -4262,6 +4381,16 @@
    ]
   }
  },
+ "8504229": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura bernois",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504231": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -4341,6 +4470,16 @@
    ]
   }
  },
+ "8504303": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504304": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4372,6 +4511,16 @@
   }
  },
  "8504307": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8504309": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -5747,6 +5896,16 @@
    ]
   }
  },
+ "8506193": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bürglen (TG)",
+    "Sulgen",
+    "Kemmental"
+   ]
+  }
+ },
  "8506194": {
   "stammdaten": {
    "frage": "bezirk",
@@ -5754,6 +5913,16 @@
     "Kreuzlingen",
     "Arbon",
     "Münchwilen"
+   ]
+  }
+ },
+ "8506195": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lengwil",
+    "Berg (TG)",
+    "Kreuzlingen"
    ]
   }
  },
@@ -6405,6 +6574,16 @@
    ]
   }
  },
+ "8508212": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sursee",
+    "Luzern-Land",
+    "Luzern-Stadt"
+   ]
+  }
+ },
  "8508213": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -6421,6 +6600,16 @@
     "Hochdorf",
     "Sursee",
     "Willisau"
+   ]
+  }
+ },
+ "8508216": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wolhusen",
+    "Werthenstein",
+    "Malters"
    ]
   }
  },
@@ -6801,6 +6990,15 @@
     "Sense",
     "La Broye",
     "La Sarine"
+   ]
+  }
+ },
+ "8517112": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WCHW",
+    "IM"
    ]
   }
  },
