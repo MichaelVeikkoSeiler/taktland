@@ -28,6 +28,65 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 6,
+  "nach_kanton": [
+   {
+    "kanton": "Aargau",
+    "anzahl": 6
+   }
+  ],
+  "meiste_baueinheiten": 1,
+  "mit_meisten": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "anzahl_mit_meisten": 6,
+  "items": [
+   {
+    "name": "PU Hunzenschwil",
+    "km": 63.184,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU OV Objekt 314",
+    "km": 63.454,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Oberbreitenloo",
+    "km": 65.378,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Wynentalstrasse",
+    "km": 66.113,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU und Radweg Wyna",
+    "km": 66.72,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Wyna-Brücke",
+    "km": 66.735,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -50,6 +109,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -62,6 +136,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

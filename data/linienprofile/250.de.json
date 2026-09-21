@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten",
     "tunnel"
@@ -476,6 +477,123 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 250 sind 116 Brücken erfasst. Als Kanton eingetragen ist «Fribourg» bei 56 Brücken, «Vaud» bei 41 und «Bern» bei 19. Aus den meisten Baueinheiten, 8, besteht PI Gare de Fribourg. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 116,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Fribourg",
+          "value": 56,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Vaud",
+          "value": 41,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "Bern",
+          "value": 19,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[2].anzahl"
+        },
+        {
+          "label": "PI Gare de Fribourg",
+          "value": 8,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[74].baueinheiten"
+        },
+        {
+          "label": "PI de Beauregard",
+          "value": 7,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[75].baueinheiten"
+        },
+        {
+          "label": "PI voy Conversion",
+          "value": 6,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[11].baueinheiten"
+        },
+        {
+          "label": "PI voy de Rosé",
+          "value": 6,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[68].baueinheiten"
+        },
+        {
+          "label": "PI voy Fribourg",
+          "value": 5,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[76].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:65099a5a",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 250 erfasst?",
+          "options": [
+            "64",
+            "81",
+            "99",
+            "116"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 116 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:9ed0a86d",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 250 eingetragen?",
+          "options": [
+            "Bern",
+            "Fribourg",
+            "Valais",
+            "Vaud"
+          ],
+          "correct": 1,
+          "explanation": "Bei «Fribourg» sind 56 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:c8250efc",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PI Gare de Fribourg",
+            "PI de Beauregard",
+            "PI voy Conversion",
+            "PI voy de Rosé"
+          ],
+          "correct": 0,
+          "explanation": "PI Gare de Fribourg besteht aus 8 Baueinheiten, PI de Beauregard aus 7, PI voy Conversion aus 6 und PI voy de Rosé aus 6.",
+          "factRef": "bruecken.items[74].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -498,6 +616,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 30 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 42 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Züge auf der Linie",

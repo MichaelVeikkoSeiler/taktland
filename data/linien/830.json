@@ -68,6 +68,155 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 21,
+  "nach_kanton": [
+   {
+    "kanton": "Thurgau",
+    "anzahl": 17
+   },
+   {
+    "kanton": "St. Gallen",
+    "anzahl": 4
+   }
+  ],
+  "meiste_baueinheiten": 2,
+  "mit_meisten": [
+   5,
+   17
+  ],
+  "anzahl_mit_meisten": 2,
+  "items": [
+   {
+    "name": "Bahnunterführung der MthB",
+    "km": 0.824,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Industriestrasse",
+    "km": 2.639,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Du Trungerbach",
+    "km": 3.045,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U AMP Bronschhofen",
+    "km": 3.156,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Winkelstrasse",
+    "km": 4.917,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Bettwiesen",
+    "km": 5.196,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Dorfbach",
+    "km": 5.336,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Tägerschen",
+    "km": 6.83,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Hartenauerbach",
+    "km": 8.526,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Flurstrasse",
+    "km": 8.92,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Rütibach",
+    "km": 9.696,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Br.ü.d. Lauchenbach",
+    "km": 11.62,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu Heldtobel",
+    "km": 13.118,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Oppikon",
+    "km": 13.957,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Gaistobelbach",
+    "km": 14.473,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu 15.825",
+    "km": 15.825,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Vi Bussnang",
+    "km": 16.11,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Waldweg",
+    "km": 17.076,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Thurbrücke",
+    "km": 17.262,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Br.ü. Mühlekanal",
+    "km": 17.754,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Walkestrasse",
+    "km": 18.793,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -90,6 +239,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -102,6 +266,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

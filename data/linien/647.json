@@ -38,6 +38,72 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 8,
+  "nach_kanton": [
+   {
+    "kanton": "Aargau",
+    "anzahl": 8
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   0
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PU Brugg",
+    "km": 0.044,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Scherzbach",
+    "km": 3.431,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Lupfig Süd",
+    "km": 4.256,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Birrfeld",
+    "km": 4.305,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Brunegg",
+    "km": 7.121,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U OV-Strasse 100",
+    "km": 9.007,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Bünz",
+    "km": 9.153,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Erlimoos",
+    "km": 10.279,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -60,6 +126,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -72,6 +153,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

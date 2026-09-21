@@ -194,6 +194,834 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 134,
+  "nach_kanton": [
+   {
+    "kanton": "Luzern",
+    "anzahl": 87
+   },
+   {
+    "kanton": "Bern",
+    "anzahl": 47
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   33,
+   35,
+   91
+  ],
+  "anzahl_mit_meisten": 3,
+  "items": [
+   {
+    "name": "PU Hünlirütti",
+    "km": 9.566,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Vielbringenstrasse",
+    "km": 10.173,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Laengeweid",
+    "km": 11.057,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Vielbringenmatt",
+    "km": 11.961,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Bachtelen",
+    "km": 15.289,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Tägertschi",
+    "km": 17.181,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Weinhalden",
+    "km": 17.854,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "WU Schlossweg",
+    "km": 18.749,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Haldenweg",
+    "km": 20.021,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Burgdorfstrasse",
+    "km": 20.448,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Konolfingen",
+    "km": 20.504,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Mühlebach",
+    "km": 22.469,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Dorfstrasse",
+    "km": 23.043,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "WU Mirchelgässli",
+    "km": 23.965,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Zäzibach",
+    "km": 24.172,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Zäziwil",
+    "km": 24.359,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "BDu Schwändigrabe",
+    "km": 25.915,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "BDu Liechtguetgraben",
+    "km": 29.328,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Gässli",
+    "km": 30.458,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Gässli",
+    "km": 30.467,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "WU Stuetzli",
+    "km": 31.498,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "BDu Nidermattgrabe",
+    "km": 31.698,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Ried",
+    "km": 32.015,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Mühle",
+    "km": 32.934,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Dorfstrasse",
+    "km": 34.261,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Emme-Ilfisbrücke",
+    "km": 34.486,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Obermatt",
+    "km": 34.756,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "WU March",
+    "km": 35.066,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PDu Hüselmatte",
+    "km": 35.542,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Frittenbach",
+    "km": 36.406,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Burgdorfstrasse",
+    "km": 36.702,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Stampfeweg",
+    "km": 36.864,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Hohle Gasse",
+    "km": 37.093,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Dorfbach",
+    "km": 37.254,
+    "baueinheiten": 3,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Hohgantweg",
+    "km": 37.396,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Langnau",
+    "km": 37.454,
+    "baueinheiten": 3,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Güterstrasse",
+    "km": 37.976,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Mühlekanal Langnau",
+    "km": 38.384,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Inseliweg",
+    "km": 38.688,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Gohlbach",
+    "km": 39.623,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Gewerbekanal",
+    "km": 39.645,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Bärau",
+    "km": 40.092,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Gewerbekanal",
+    "km": 40.527,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Bäreggstaldenstrasse",
+    "km": 41.997,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Sonnhaldeweg",
+    "km": 42.665,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Brücke über Trubbach",
+    "km": 42.964,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Hämelbach",
+    "km": 45.064,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Dürrenbach",
+    "km": 45.369,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Schächli",
+    "km": 45.72,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Kröschenbrunnen",
+    "km": 45.904,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Kröschenbrunnen",
+    "km": 46.094,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Gitzigraben",
+    "km": 46.208,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Ännetilfis",
+    "km": 46.567,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Oberänetilfis",
+    "km": 46.916,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Längmatten",
+    "km": 47.265,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU+BDu Laueli",
+    "km": 47.728,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Turnhalde",
+    "km": 48.601,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Spichermatt",
+    "km": 49.321,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Lusgut",
+    "km": 49.521,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Schnerlen",
+    "km": 50.029,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Hinterchnubel",
+    "km": 50.567,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Riedgass",
+    "km": 50.862,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Seltebach",
+    "km": 51.438,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Schwändibach",
+    "km": 54.639,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Schwandgut",
+    "km": 54.824,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Br üb. Oeschenbach",
+    "km": 55.034,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Leineten",
+    "km": 55.438,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Leineten",
+    "km": 55.576,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Tällebachmoos",
+    "km": 56.274,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Tällenbachmoos",
+    "km": 56.319,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Aegertenbach",
+    "km": 56.526,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Tällenbach Ägert.",
+    "km": 56.617,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu bei Wissämme",
+    "km": 57.603,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Waldemme",
+    "km": 58.328,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Br Waldemme",
+    "km": 58.352,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Flühlistrasse",
+    "km": 58.37,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Badschachen",
+    "km": 58.549,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Vormühlebach",
+    "km": 59.821,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Schüpfheim",
+    "km": 59.841,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Schüpfheim",
+    "km": 60.049,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Trubenbach",
+    "km": 60.237,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Kirchbachkanal",
+    "km": 60.457,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Wissenbach",
+    "km": 62.216,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Bodnig-Hasle",
+    "km": 63.78,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Habschwandenstrasse",
+    "km": 64.322,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Biberbachbrücke",
+    "km": 64.336,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WDu Biberhölle",
+    "km": 64.383,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Entlenbr. Entlebuch",
+    "km": 66.046,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Gruobenlochbach",
+    "km": 66.14,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Gerbe Entlebuch",
+    "km": 66.221,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Gerbe Entlebuch",
+    "km": 66.229,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Vi Russachergraben",
+    "km": 66.851,
+    "baueinheiten": 3,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Emmenmatt",
+    "km": 68.154,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Mosigenbach",
+    "km": 68.744,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Schächelitunnel",
+    "km": 69.493,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Mühlebach",
+    "km": 69.85,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Meischwandbach",
+    "km": 70.439,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Kappelenbodenbach",
+    "km": 71.044,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu+WU Chappelboden",
+    "km": 71.447,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Strählhüslibach",
+    "km": 72.28,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Emsern",
+    "km": 72.565,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Emsern",
+    "km": 73.064,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU b. Wolhusen Markt",
+    "km": 73.5,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Br über Kleine Emme",
+    "km": 73.89,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Br über Mühlekanal",
+    "km": 73.963,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Geistlich",
+    "km": 74.135,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Wolhusen",
+    "km": 74.333,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Ey",
+    "km": 75.645,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Bielbach",
+    "km": 76.055,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Emmenbr.b.Werthenstein",
+    "km": 77.223,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Langnauwald",
+    "km": 77.923,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Schafgraben",
+    "km": 78.208,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Alkoholverwaltung",
+    "km": 80.21,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Rümligbachbrücke",
+    "km": 80.54,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Spiessmättli",
+    "km": 81.142,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Chesselbach",
+    "km": 81.711,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Ettisbühl",
+    "km": 81.795,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Malters",
+    "km": 83.124,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Muoshof Malters",
+    "km": 83.359,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Dorfbach Malters",
+    "km": 83.469,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU im Feld",
+    "km": 83.536,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU in Dreiangel",
+    "km": 83.746,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Stegmättli",
+    "km": 85.49,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U OV-Strasse Blatten",
+    "km": 86.003,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Blatten",
+    "km": 86.295,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Grundbach",
+    "km": 87.196,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Breitschachen",
+    "km": 87.337,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Renggbach-Brücke",
+    "km": 87.522,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Renggschachen I",
+    "km": 87.746,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Schachenried",
+    "km": 88.019,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Renggschachen II",
+    "km": 88.273,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Ober Bodenhof",
+    "km": 89.595,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Bodenhof Littau",
+    "km": 89.814,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U alte Kantonsstr.",
+    "km": 91.571,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -216,6 +1044,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -224,6 +1067,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

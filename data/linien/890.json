@@ -119,6 +119,347 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 53,
+  "nach_kanton": [
+   {
+    "kanton": "St. Gallen",
+    "anzahl": 38
+   },
+   {
+    "kanton": "Glarus",
+    "anzahl": 15
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   11,
+   21
+  ],
+  "anzahl_mit_meisten": 2,
+  "items": [
+   {
+    "name": "PU Sargans",
+    "km": 0.242,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Ragazerstrasse",
+    "km": 0.444,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U neue Stadtergasse",
+    "km": 1.515,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu Bahnweg",
+    "km": 2.106,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Mels",
+    "km": 2.535,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Vord.Stationsstr.",
+    "km": 2.784,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Flums",
+    "km": 9.71,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu Speisekanal",
+    "km": 11.02,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Walenstadt",
+    "km": 13.484,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Br über die Seez",
+    "km": 14.211,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Mols",
+    "km": 15.742,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Kirchenbach-Brücke",
+    "km": 16.163,
+    "baueinheiten": 3,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Du Talbach",
+    "km": 16.389,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu Hornen",
+    "km": 16.783,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu Röhrli",
+    "km": 17.391,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WDu Gosten",
+    "km": 17.7,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Unterterzen",
+    "km": 18.071,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Du Chammenbach",
+    "km": 18.283,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Haab",
+    "km": 18.433,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Du Rütibach",
+    "km": 18.769,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu Grütt",
+    "km": 19.319,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Du Lauibach",
+    "km": 19.368,
+    "baueinheiten": 3,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Br über Talbach",
+    "km": 19.717,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Sitenstauden",
+    "km": 20.092,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu + WU Rotsand",
+    "km": 20.383,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Murgbach-Brücke",
+    "km": 20.961,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Murg",
+    "km": 21.001,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Murg",
+    "km": 21.23,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Strandboden",
+    "km": 21.373,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU zur Haab",
+    "km": 21.473,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu nach Murg",
+    "km": 21.829,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Rossau",
+    "km": 22.376,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU + BDu ARA",
+    "km": 22.78,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Rüfi",
+    "km": 22.973,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU beim Rötibach",
+    "km": 23.279,
+    "baueinheiten": 2,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "Rötibach-Brücke",
+    "km": 23.32,
+    "baueinheiten": 2,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "WU 1 im Teufwinkel",
+    "km": 23.486,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "WU 2 im Teufwinkel",
+    "km": 23.523,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "WU Mühlehorn",
+    "km": 24.323,
+    "baueinheiten": 2,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "Meerenbach-Brücke",
+    "km": 24.716,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "Vi im Hinterdörfli",
+    "km": 24.796,
+    "baueinheiten": 2,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "WU Hinterdörfli",
+    "km": 24.891,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "Escherkanal-Brücke",
+    "km": 28.96,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "WU im Gäsi",
+    "km": 29.396,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "BDu + PDu Seegraben",
+    "km": 29.926,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "WU Hüttenböschen",
+    "km": 30.36,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "PU Weesen",
+    "km": 30.723,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "WU Linthsteg",
+    "km": 32.38,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "Linthkanal-Brücke",
+    "km": 32.48,
+    "baueinheiten": 1,
+    "kanton": "Glarus"
+   },
+   {
+    "name": "U Treidelweg",
+    "km": 32.526,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Tunnelportal Ost",
+    "km": 32.635,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Tunnelportal West",
+    "km": 33.02,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu Dorlenbach",
+    "km": 33.241,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -141,6 +482,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -149,6 +505,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

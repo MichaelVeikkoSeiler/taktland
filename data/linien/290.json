@@ -53,6 +53,264 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 40,
+  "nach_kanton": [
+   {
+    "kanton": "Bern",
+    "anzahl": 40
+   }
+  ],
+  "meiste_baueinheiten": 5,
+  "mit_meisten": [
+   20
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "U Moosweg",
+    "km": 110.469,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Ostermundigen",
+    "km": 110.788,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "prov. Hilfsbrücke Gl. 1",
+    "km": 110.858,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "prov. Hilfsbrücke GL. 2",
+    "km": 110.862,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Bernstrasse",
+    "km": 110.872,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Obere Zollgasse",
+    "km": 111.585,
+    "baueinheiten": 3,
+    "kanton": "Bern"
+   },
+   {
+    "name": "WU Dennigkofengässli",
+    "km": 112.231,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Alpenstrasse",
+    "km": 113.304,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Gümligen",
+    "km": 113.97,
+    "baueinheiten": 4,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Worbstrasse",
+    "km": 114.284,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Allmendingenweg",
+    "km": 114.884,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Aegleren",
+    "km": 117.016,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Schwarzbachstrasse",
+    "km": 118.167,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Worbstrasse",
+    "km": 118.858,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Rubigen",
+    "km": 118.981,
+    "baueinheiten": 3,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Einschlaggasse",
+    "km": 119.395,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Thunstrasse",
+    "km": 119.86,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Pfarrstutz",
+    "km": 121.406,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Schlossstrasse",
+    "km": 121.952,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Münsingen Nord",
+    "km": 122.048,
+    "baueinheiten": 3,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Münsingen",
+    "km": 122.103,
+    "baueinheiten": 5,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Belpbergstrasse",
+    "km": 122.436,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Moosacherweg",
+    "km": 123.889,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Siedlungsstrasse",
+    "km": 124.3,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Lischmattweg",
+    "km": 125.252,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Wichtrach",
+    "km": 125.785,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Chlinau",
+    "km": 127.879,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Jabergstrasse",
+    "km": 128.197,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Chisebachbrücke",
+    "km": 128.251,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Bahnhofstrasse",
+    "km": 128.564,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "SU Kiesen",
+    "km": 128.621,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Zälgstrasse",
+    "km": 128.877,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Rotachebrücke",
+    "km": 129.475,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Rotachenweg",
+    "km": 129.507,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Tannenhofstrasse",
+    "km": 129.957,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "WU Rohrmatt",
+    "km": 130.622,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Aarebrücke Uttigen",
+    "km": 130.753,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "WU untere Au",
+    "km": 130.803,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Uttigen",
+    "km": 131.082,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Thunstrasse",
+    "km": 131.413,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -75,6 +333,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -87,6 +360,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

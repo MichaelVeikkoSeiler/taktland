@@ -53,6 +53,145 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 20,
+  "nach_kanton": [
+   {
+    "kanton": "Thurgau",
+    "anzahl": 20
+   }
+  ],
+  "meiste_baueinheiten": 2,
+  "mit_meisten": [
+   14,
+   19
+  ],
+  "anzahl_mit_meisten": 2,
+  "items": [
+   {
+    "name": "Giessenbrücke",
+    "km": 20.087,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Gontershofen",
+    "km": 21.1,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Unterhard",
+    "km": 21.733,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Schwarzweihertobel",
+    "km": 22.125,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu Schalmentobel",
+    "km": 23.008,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Prestenbergtobel",
+    "km": 23.229,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu Prestenbergtobel",
+    "km": 23.273,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Kehlhof",
+    "km": 24.275,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Buchtobel",
+    "km": 24.728,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Berg",
+    "km": 27.269,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Siegershausen",
+    "km": 30.313,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Lengwil",
+    "km": 33.283,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Tillenbrunnenstr.",
+    "km": 33.72,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Vi Jakobshöhe",
+    "km": 35.84,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U + PU Bergstrasse",
+    "km": 35.934,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Vi Sauloch",
+    "km": 36.736,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Lohstrasse",
+    "km": 36.8,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Egelbachstrasse",
+    "km": 38.323,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Poststrasse",
+    "km": 38.879,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU ARA Süd",
+    "km": 39.271,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -75,6 +214,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -87,6 +241,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

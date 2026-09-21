@@ -116,6 +116,278 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 41,
+  "nach_kanton": [
+   {
+    "kanton": "Basel-Landschaft",
+    "anzahl": 27
+   },
+   {
+    "kanton": "Jura",
+    "anzahl": 10
+   },
+   {
+    "kanton": "Solothurn",
+    "anzahl": 4
+   }
+  ],
+  "meiste_baueinheiten": 9,
+  "mit_meisten": [
+   19
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "Pt sur la Sorne",
+    "km": 86.01,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt sur canal Von Roll",
+    "km": 87.29,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt Canal Rondez",
+    "km": 87.515,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI Piet de Soyhières",
+    "km": 88.191,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI rte de Soyhières",
+    "km": 88.211,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI voy de Soyhières",
+    "km": 88.526,
+    "baueinheiten": 5,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt du Mettember",
+    "km": 88.576,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Birsbrücke Soyhières",
+    "km": 90.671,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "WU Mitlerfeld",
+    "km": 90.773,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "WU Riedes-Dessus",
+    "km": 91.748,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PU Liesberg",
+    "km": 94.187,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Birsbrücke Liesberg",
+    "km": 94.776,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Birsbrücke Bärschwil",
+    "km": 96.432,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Du Stürmenbach",
+    "km": 97.56,
+    "baueinheiten": 3,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "Du Wahlenbach",
+    "km": 100.282,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Bahnhofstrasse Laufen",
+    "km": 100.447,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Bahnhof Laufen",
+    "km": 100.633,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Schliffistrasse",
+    "km": 100.918,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Du Diebach",
+    "km": 101.374,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Lüsselbrücke Zwingen",
+    "km": 103.349,
+    "baueinheiten": 9,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Bahnhof Zwingen",
+    "km": 103.481,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "WU Steinriesel",
+    "km": 104.907,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Kessilochbrücke West",
+    "km": 106.971,
+    "baueinheiten": 3,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Kessilochbrücke Ost",
+    "km": 107.206,
+    "baueinheiten": 3,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "WU Dägenauer",
+    "km": 107.291,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Du Chastelbach",
+    "km": 108.152,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Grellingen",
+    "km": 108.892,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Du Seebach",
+    "km": 109.425,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "SU Lätten",
+    "km": 111.47,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Aesch",
+    "km": 112.971,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PDu Lolibach",
+    "km": 113.257,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Weidenstrasse",
+    "km": 114.431,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PDu Brühlweg",
+    "km": 114.7,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Süd Dornach-Arlesheim",
+    "km": 115.401,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Dornach-Arlesheim",
+    "km": 115.518,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "WU Oberwiden",
+    "km": 116.425,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Weidenhofweg",
+    "km": 116.862,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PDu Griebengasse",
+    "km": 117.519,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Münchenstein",
+    "km": 118.285,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Elektra",
+    "km": 118.612,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Birsbrücke Münchenstein",
+    "km": 118.804,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -138,6 +410,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -146,6 +433,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

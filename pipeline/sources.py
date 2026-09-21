@@ -84,6 +84,10 @@ DATASETS = {
     "tunnel": dict(
         join="linie", tier="linien",
         beschreibung="Tunnel mit Laenge, Jahr der ersten Inbetriebnahme, Roehren und Spuren"),
+    "brucken": dict(
+        join="linie", tier="linien",
+        beschreibung="Bruecken mit Name, Kilometer, Kanton und Zahl der Baueinheiten. "
+                     "Ohne Laenge und Baujahr."),
 }
 
 # Nicht verwendet, aber geprueft:

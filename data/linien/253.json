@@ -48,6 +48,104 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 11,
+  "nach_kanton": [
+   {
+    "kanton": "Fribourg",
+    "anzahl": 8
+   },
+   {
+    "kanton": "Vaud",
+    "anzahl": 3
+   }
+  ],
+  "meiste_baueinheiten": 1,
+  "mit_meisten": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "anzahl_mit_meisten": 11,
+  "items": [
+   {
+    "name": "Pt Planchettaz sud",
+    "km": 29.263,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt Corcelles sud",
+    "km": 29.891,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur le Motelon",
+    "km": 29.982,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur l'Arbogne",
+    "km": 32.363,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI Montagny-la-Ville",
+    "km": 33.853,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI de Léchelles",
+    "km": 35.728,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI de Poteret",
+    "km": 36.984,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI voy de Grolley",
+    "km": 40.091,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "Pt sur la Sonnaz",
+    "km": 43.227,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI de Belfaux",
+    "km": 43.606,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "Aq Bois d'En La",
+    "km": 45.169,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -70,6 +168,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -82,6 +195,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

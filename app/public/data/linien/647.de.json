@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten"
   ],
@@ -156,6 +157,108 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 647 sind 8 Brücken erfasst. Als Kanton ist bei jeder erfassten Brücke «Aargau» eingetragen. Aus den meisten Baueinheiten, 3, besteht PU Brugg.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 8,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "PU Brugg",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "U OV-Strasse 100",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[5].baueinheiten"
+        },
+        {
+          "label": "Du Bünz",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[6].baueinheiten"
+        },
+        {
+          "label": "Du Scherzbach",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[1].baueinheiten"
+        },
+        {
+          "label": "PU Lupfig Süd",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[2].baueinheiten"
+        },
+        {
+          "label": "SU Birrfeld",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[3].baueinheiten"
+        },
+        {
+          "label": "SU Brunegg",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[4].baueinheiten"
+        },
+        {
+          "label": "SU Erlimoos",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[7].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:67e21a2b",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 647 erfasst?",
+          "options": [
+            "6",
+            "7",
+            "8",
+            "10"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 8 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:84ab1edb",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "Du Bünz",
+            "Du Scherzbach",
+            "PU Brugg",
+            "U OV-Strasse 100"
+          ],
+          "correct": 2,
+          "explanation": "PU Brugg besteht aus 3 Baueinheiten, U OV-Strasse 100 aus 2, Du Bünz aus 2 und Du Scherzbach aus 1.",
+          "factRef": "bruecken.items[0].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -178,6 +281,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 4 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 8 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Tunnel",

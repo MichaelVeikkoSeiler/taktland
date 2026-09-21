@@ -99,6 +99,504 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 79,
+  "nach_kanton": [
+   {
+    "kanton": "Aargau",
+    "anzahl": 73
+   },
+   {
+    "kanton": "Basel-Landschaft",
+    "anzahl": 6
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   14,
+   45,
+   60
+  ],
+  "anzahl_mit_meisten": 3,
+  "items": [
+   {
+    "name": "U Aarauerstrasse",
+    "km": 31.737,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Aarebrücke Brugg",
+    "km": 32.674,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Baslerstr. (alt Bözbergstr.)",
+    "km": 32.817,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Strassenunterführung K116",
+    "km": 33.381,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Stockacher",
+    "km": 34.327,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Chesslerweg",
+    "km": 35.444,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Villnachern",
+    "km": 35.922,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Aegerten",
+    "km": 36.065,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "BDu Rädlibrumbach",
+    "km": 36.13,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Bözbergstrasse",
+    "km": 36.257,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Aegerten",
+    "km": 36.373,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "BDu Buechbach",
+    "km": 36.477,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Buech",
+    "km": 36.536,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Sommerhalde",
+    "km": 36.879,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Mannlehen",
+    "km": 37.043,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Linnstrasse",
+    "km": 38.163,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Ihegi",
+    "km": 38.998,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Schinznach-Dorf",
+    "km": 39.262,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Effingen",
+    "km": 42.457,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K480",
+    "km": 43.023,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K482",
+    "km": 44.13,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Luzadellen",
+    "km": 44.738,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Weidhof",
+    "km": 45.225,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Oeschenbrunnen",
+    "km": 46.085,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WDu Höll Hornussen",
+    "km": 46.395,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Bahnhofstrasse",
+    "km": 46.789,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Hornussen",
+    "km": 46.95,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Buchhalde",
+    "km": 47.959,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Startlebach",
+    "km": 48.735,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K107",
+    "km": 48.879,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Königweg",
+    "km": 49.675,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Kirchmatten",
+    "km": 50.122,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K488",
+    "km": 51.285,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Durchlass Gipferbach",
+    "km": 51.468,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Frick",
+    "km": 51.825,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU nach Frick",
+    "km": 52.597,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Wegunterführung Zelgli",
+    "km": 53.125,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Wegunterführung Steigruebe",
+    "km": 53.675,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Bachdurchlass vor Eiken",
+    "km": 53.841,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Unterführung Kantonsstr. K292",
+    "km": 54.412,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Eiken",
+    "km": 55.393,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Landstrasse K295",
+    "km": 55.612,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstrasse K292",
+    "km": 57.549,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Münchwilerbach",
+    "km": 57.577,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Stein-Säckingen",
+    "km": 58.238,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Stein-Säckingen",
+    "km": 58.783,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Mühlebachbrücke Mumpf",
+    "km": 60.815,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Graubüel",
+    "km": 61.064,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU vor Mumpf BW 304",
+    "km": 61.539,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Wallbach",
+    "km": 63.158,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Unterforstweg",
+    "km": 66.955,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Anschlussgleisbrücke 1 Miniera",
+    "km": 67.414,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstrasse 495",
+    "km": 67.687,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du für Möhlinbach",
+    "km": 67.776,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Anschlussgleisbrücke 3 Miniera",
+    "km": 67.792,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PDu 2 vor Möhlin",
+    "km": 67.799,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Dammstrasse",
+    "km": 68.068,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Möhlin",
+    "km": 68.291,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU NK 495",
+    "km": 68.836,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U der Spitalstrasse",
+    "km": 70.92,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU drei Könige",
+    "km": 71.256,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Magdenerbach-Brücke",
+    "km": 71.328,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Ost Rheinfelden",
+    "km": 71.42,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Rheinfelden",
+    "km": 71.612,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kloosfeldstrasse",
+    "km": 72.408,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kieshübelweg",
+    "km": 72.956,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Büchliweg",
+    "km": 73.344,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Augarten",
+    "km": 73.55,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU im Dokter",
+    "km": 75.619,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Allmendgasse",
+    "km": 76.687,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Kaiseraugst",
+    "km": 77.01,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Mühlegasse",
+    "km": 77.158,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Ergolz-Brücke",
+    "km": 77.531,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstrasse",
+    "km": 77.656,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "WU Kaiseraugst",
+    "km": 77.8,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Frenkendörferstr.",
+    "km": 77.992,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Salina Raurica",
+    "km": 78.384,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Lohagstrasse",
+    "km": 78.839,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Götzisbodenweg",
+    "km": 79.226,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -121,6 +619,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -129,6 +642,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

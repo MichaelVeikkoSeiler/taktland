@@ -147,6 +147,576 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 91,
+  "nach_kanton": [
+   {
+    "kanton": "Zürich",
+    "anzahl": 86
+   },
+   {
+    "kanton": "St. Gallen",
+    "anzahl": 5
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   28,
+   43,
+   58
+  ],
+  "anzahl_mit_meisten": 3,
+  "items": [
+   {
+    "name": "U Bauistrasse",
+    "km": 9.071,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Gstadstrasse",
+    "km": 9.304,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Zentral",
+    "km": 9.507,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Annastrasse",
+    "km": 9.599,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Guggerweg",
+    "km": 9.892,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Johanniterstrasse",
+    "km": 10.073,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu Düggelbach",
+    "km": 10.156,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Goldbachstrasse",
+    "km": 10.648,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Goldbachstrasse",
+    "km": 10.655,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Kusen",
+    "km": 11.27,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Kohlrainstrasse",
+    "km": 11.507,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Küsnacht",
+    "km": 11.755,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Dorfstrasse",
+    "km": 11.898,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Dorfbach-Brücke",
+    "km": 11.95,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Wiltisgasse",
+    "km": 12.101,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Gartenstrasse",
+    "km": 12.72,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Freihofstrasse",
+    "km": 12.905,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Heslibach-Brücke",
+    "km": 12.964,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Heslibach",
+    "km": 13.198,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Drusbergstrasse",
+    "km": 13.345,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Erlenbach",
+    "km": 13.479,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Br über Dorfbach",
+    "km": 13.81,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Zollerstrasse",
+    "km": 14.297,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Islergasse",
+    "km": 14.591,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Mariahalde",
+    "km": 14.815,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu 1 im Schipfgut",
+    "km": 14.953,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu 2 im Schipfgut",
+    "km": 15.096,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Steinradstrasse",
+    "km": 15.421,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Seehalde 1",
+    "km": 15.591,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Seehalde 2",
+    "km": 15.667,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Rabengasse links",
+    "km": 15.858,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Seehalde 3",
+    "km": 15.873,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Pfarrgasse",
+    "km": 15.917,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi bei der Kirche",
+    "km": 16.207,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Forchstrasse",
+    "km": 16.446,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Forchstrasse",
+    "km": 16.512,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Herrliberg",
+    "km": 16.608,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WDu Haldengässli",
+    "km": 16.968,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Rebbergstrasse",
+    "km": 17.123,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Bodenackerstrasse",
+    "km": 17.615,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Schwabach",
+    "km": 17.903,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Bogenberg",
+    "km": 18.044,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U General-Wille-Str.",
+    "km": 18.348,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu 1 Burgstrasse",
+    "km": 19.228,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Meilen",
+    "km": 19.438,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Bruech",
+    "km": 19.846,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Bergstrasse",
+    "km": 20.112,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Beugenbach",
+    "km": 20.27,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Seidengasse",
+    "km": 20.4,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Schulweg",
+    "km": 20.531,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Alte Landstrasse",
+    "km": 20.753,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Grübweg",
+    "km": 20.983,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Dollikerstrasse",
+    "km": 21.139,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Dollikerbach",
+    "km": 21.174,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Hotel Krone",
+    "km": 22.217,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU+PDu Bergstrasse",
+    "km": 22.266,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Uetikon",
+    "km": 22.456,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Weiern",
+    "km": 22.659,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Langacker Teil 1",
+    "km": 23.266,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Kugelgasse",
+    "km": 23.513,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu Männedorf",
+    "km": 23.553,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Brunngasse",
+    "km": 23.672,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu beim Spital",
+    "km": 24.075,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU im Herrweg",
+    "km": 24.506,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U alte Landstrasse",
+    "km": 24.57,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Ramensteinweg",
+    "km": 24.766,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu Ausserfeld",
+    "km": 24.985,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WDu Buchhaldenstr.",
+    "km": 25.004,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Unt.Lattenbergstr.",
+    "km": 25.251,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Wiesengrundstrasse",
+    "km": 25.424,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Bergstrasse",
+    "km": 26.374,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Stäfa",
+    "km": 26.507,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Harmoniestrasse",
+    "km": 26.69,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Kreuzstrasse",
+    "km": 27.116,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Müliweg",
+    "km": 27.638,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Ebnetstrasse",
+    "km": 27.687,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Sternenhalde",
+    "km": 27.933,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Versuchsanstalt",
+    "km": 28.455,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Uerikon",
+    "km": 28.982,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Ritterhausstrasse",
+    "km": 29.297,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Torlentobel",
+    "km": 29.39,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Ober-Schirmensee",
+    "km": 30.756,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Feldbach",
+    "km": 31.372,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Feldbach",
+    "km": 31.644,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Eggrütistrasse",
+    "km": 31.72,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Goldenberg",
+    "km": 32.37,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU 1 im Gubel",
+    "km": 32.588,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU 2 im Gubel",
+    "km": 33.238,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU im Gubelfeld",
+    "km": 33.627,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu & U Rütistrasse",
+    "km": 34.325,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Seehof",
+    "km": 34.645,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -169,6 +739,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -177,6 +762,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

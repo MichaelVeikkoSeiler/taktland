@@ -111,6 +111,208 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 30,
+  "nach_kanton": [
+   {
+    "kanton": "Luzern",
+    "anzahl": 17
+   },
+   {
+    "kanton": "Schwyz",
+    "anzahl": 13
+   }
+  ],
+  "meiste_baueinheiten": 4,
+  "mit_meisten": [
+   0
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "Reussbrücke Geissmatt",
+    "km": 2.517,
+    "baueinheiten": 4,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Halde",
+    "km": 6.059,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU+Du Würzenbach",
+    "km": 6.337,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Ober-Seeburg",
+    "km": 6.721,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Seeburg",
+    "km": 6.89,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Salzfass",
+    "km": 7.151,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Hermitage",
+    "km": 7.699,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Hermitage",
+    "km": 7.709,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Stampfibach",
+    "km": 9.36,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Habsburgerstrasse",
+    "km": 9.623,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Benzeholzstrasse",
+    "km": 9.94,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Vi Mühletobel",
+    "km": 10.074,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Eiholzweg",
+    "km": 10.177,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Rainhof",
+    "km": 11.101,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Herrenfahrstrasse",
+    "km": 11.531,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WDu Gottlieben",
+    "km": 11.588,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WDu Grosshusmatt",
+    "km": 11.692,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU nach Bärgiswil",
+    "km": 12.451,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "Vi Eichbach",
+    "km": 12.645,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "WU Rebmatt",
+    "km": 13.066,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "U Bahnhofstrasse",
+    "km": 13.497,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "WU Grossmatt",
+    "km": 13.9,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "WU Bischofswil",
+    "km": 14.808,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "WU Rainhof",
+    "km": 15.124,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "WU Langweid",
+    "km": 15.389,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "WU Winkel",
+    "km": 15.855,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "PU Küssnacht am Rigi",
+    "km": 16.143,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "U Haltikonerstrasse",
+    "km": 16.358,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "U Talstrasse",
+    "km": 16.735,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   },
+   {
+    "name": "WU Bürgenstock",
+    "km": 17.328,
+    "baueinheiten": 1,
+    "kanton": "Schwyz"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -133,6 +335,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -141,6 +358,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

@@ -58,6 +58,144 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 20,
+  "nach_kanton": [
+   {
+    "kanton": "Valais",
+    "anzahl": 20
+   }
+  ],
+  "meiste_baueinheiten": 4,
+  "mit_meisten": [
+   6
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PI Vers-chez-Delherse",
+    "km": 2.721,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI rte des Tardys",
+    "km": 4.411,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI du Pont Rouge",
+    "km": 4.467,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "Pt sur la Vièze",
+    "km": 4.983,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI des Bans",
+    "km": 5.012,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "Pt sur canal",
+    "km": 5.066,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI Rte de Monthéolo",
+    "km": 6.394,
+    "baueinheiten": 4,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI Collombey Muraz",
+    "km": 7.35,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI Piet de Collombey",
+    "km": 7.89,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI des Gorres",
+    "km": 12.943,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "AQ de la Vellette",
+    "km": 16.076,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI de Vouvry",
+    "km": 16.228,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "Pt des Varzis",
+    "km": 16.592,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "Pt sur le Fosseau",
+    "km": 16.687,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "Pt Sur le canal Stockalper",
+    "km": 18.59,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI de la Tuilerie",
+    "km": 18.822,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI du Fenalet",
+    "km": 25.544,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI Carrière Bussien",
+    "km": 26.021,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI des Vignoles",
+    "km": 26.444,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   },
+   {
+    "name": "PI du Cheney",
+    "km": 26.478,
+    "baueinheiten": 1,
+    "kanton": "Valais"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -80,6 +218,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -92,6 +245,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

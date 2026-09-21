@@ -61,6 +61,128 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 17,
+  "nach_kanton": [
+   {
+    "kanton": "Zürich",
+    "anzahl": 17
+   }
+  ],
+  "meiste_baueinheiten": 2,
+  "mit_meisten": [
+   8,
+   14,
+   15
+  ],
+  "anzahl_mit_meisten": 3,
+  "items": [
+   {
+    "name": "Überw. Grubenacker 1",
+    "km": 5.738,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Br 2 Glattalstrasse",
+    "km": 5.977,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Rampenbauwerk OHR",
+    "km": 6.126,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi über die Glatt",
+    "km": 7.796,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Riethofstrasse",
+    "km": 8.213,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU Platten",
+    "km": 8.563,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Balsberg",
+    "km": 8.886,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU 1 Kloten",
+    "km": 9.794,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU 2 Kloten",
+    "km": 9.999,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU Flughafen",
+    "km": 12.799,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Bassersdorf",
+    "km": 14.74,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Baltenswilerstr.",
+    "km": 15.634,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Baltenswilerstr.",
+    "km": 15.66,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Schienenwiesenweg",
+    "km": 16.077,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Steinackerweg",
+    "km": 16.456,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Winterthurerstr.",
+    "km": 16.814,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Götschenrain",
+    "km": 17.091,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -83,6 +205,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -91,6 +228,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

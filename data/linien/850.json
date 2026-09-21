@@ -98,6 +98,464 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 72,
+  "nach_kanton": [
+   {
+    "kanton": "St. Gallen",
+    "anzahl": 37
+   },
+   {
+    "kanton": "Thurgau",
+    "anzahl": 20
+   },
+   {
+    "kanton": "Zürich",
+    "anzahl": 15
+   }
+  ],
+  "meiste_baueinheiten": 4,
+  "mit_meisten": [
+   39
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PU West St.Gallen",
+    "km": 80.566,
+    "baueinheiten": 3,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Kabelkanal St.Gallen",
+    "km": 80.668,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu LRZ",
+    "km": 81.261,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu Tunnelweg",
+    "km": 82.013,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Ahornstrasse",
+    "km": 82.497,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Haggenstrasse",
+    "km": 83.436,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu Haggenstrasse",
+    "km": 83.656,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU St.Gallen Bruggen",
+    "km": 84.03,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Vi über die Sitter",
+    "km": 84.758,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Neuhof",
+    "km": 85.508,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Scheidweg",
+    "km": 85.699,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Du Hafnersbergbach",
+    "km": 87.795,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Bruggwies",
+    "km": 88.052,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Du Oberdorfbach 3",
+    "km": 88.657,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Du Oberdorfbach 1",
+    "km": 89.99,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Gossau",
+    "km": 90.093,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Bühl",
+    "km": 90.898,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Ifangstrasse",
+    "km": 91.677,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Espelwies",
+    "km": 92.008,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Glattbrücke",
+    "km": 92.974,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Burgau",
+    "km": 93.597,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu Goldbach",
+    "km": 95.09,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Flawil",
+    "km": 95.155,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU 1 Flawil",
+    "km": 95.263,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU 2 Flawil",
+    "km": 95.369,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Privatweg-Unterführung",
+    "km": 97.176,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Wegunterführung Halden",
+    "km": 99.25,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Rossmoos",
+    "km": 99.547,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Uze-Viadukt",
+    "km": 100.604,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Bahnhofstrasse",
+    "km": 100.914,
+    "baueinheiten": 3,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Uzwil",
+    "km": 100.925,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Friedbergstrasse",
+    "km": 101.502,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Schwarzenbach",
+    "km": 106.745,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Viadukt über die Thur",
+    "km": 107.132,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Br über den Alpbach",
+    "km": 108.494,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU bei Alpbach",
+    "km": 108.539,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Hubstrasse",
+    "km": 110.159,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Gepäcktunnel Wil",
+    "km": 110.342,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Wil Ost",
+    "km": 110.362,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU 2 Wil",
+    "km": 110.676,
+    "baueinheiten": 4,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Sirnachberg",
+    "km": 112.964,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Sirnach",
+    "km": 113.871,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Sirnach",
+    "km": 113.906,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Hochwachtstrasse",
+    "km": 114.163,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du bei der Weberei",
+    "km": 114.864,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Fischingerstrasse",
+    "km": 114.991,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Br über die Murg",
+    "km": 115.256,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Sonnhaldenstrasse",
+    "km": 115.487,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PDu Sondertyp",
+    "km": 116.453,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Eschlikon",
+    "km": 117.488,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Wallenwil",
+    "km": 117.999,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Lützelmurg-Brücke",
+    "km": 119.825,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Maischhausen",
+    "km": 120.064,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu Lützelmurg",
+    "km": 120.8,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU Tänikon",
+    "km": 121.817,
+    "baueinheiten": 3,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Aadorf",
+    "km": 122.953,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU im Grüntal",
+    "km": 123.527,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Haggenbergstr.",
+    "km": 123.737,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U HV-Strasse",
+    "km": 125.111,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Elgg",
+    "km": 126.134,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Schneitbach",
+    "km": 127.54,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu Fulauer Tobel",
+    "km": 129.513,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Unterschottikon",
+    "km": 130.472,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Br über die Eulach",
+    "km": 131.433,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Räterschen",
+    "km": 131.828,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Rümikon",
+    "km": 132.855,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Ohrbühlstrasse",
+    "km": 133.878,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Seenerstrasse",
+    "km": 134.416,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Winterthur Grüze",
+    "km": 135.326,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Eulach-Brücke Süd",
+    "km": 135.517,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Schwalmenackerstr.",
+    "km": 136.684,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDuTrollstrasse",
+    "km": 136.818,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -120,6 +578,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -132,6 +605,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

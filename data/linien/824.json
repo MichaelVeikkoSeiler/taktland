@@ -73,6 +73,104 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 13,
+  "nach_kanton": [
+   {
+    "kanton": "Thurgau",
+    "anzahl": 13
+   }
+  ],
+  "meiste_baueinheiten": 2,
+  "mit_meisten": [
+   4,
+   8,
+   9
+  ],
+  "anzahl_mit_meisten": 3,
+  "items": [
+   {
+    "name": "SU Hinterloh",
+    "km": 83.311,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Holzenstein",
+    "km": 83.626,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu Tobelmühle",
+    "km": 84.671,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Zufahrt Strandbad",
+    "km": 86.532,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu Underbach",
+    "km": 86.91,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PDu Seedorf",
+    "km": 87.84,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu Hornbach",
+    "km": 90.117,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Weidhof",
+    "km": 94.871,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Seebach",
+    "km": 95.072,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Töbelibach",
+    "km": 97.018,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Bottighoferbach",
+    "km": 97.787,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Kogenbach",
+    "km": 98.761,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Kreuzlingen Hafen",
+    "km": 100.142,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -95,6 +193,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -107,6 +220,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

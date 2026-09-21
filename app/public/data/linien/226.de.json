@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten",
     "tunnel"
@@ -320,6 +321,123 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 226 sind 34 Brücken erfasst. Als Kanton eingetragen ist «Bern» bei 18 Brücken und «Jura» bei 16. Aus den meisten Baueinheiten, 5, besteht PI voy Delémont. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 34,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Bern",
+          "value": 18,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Jura",
+          "value": 16,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "PI voy Delémont",
+          "value": 5,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[33].baueinheiten"
+        },
+        {
+          "label": "PI de Courrendlin",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[31].baueinheiten"
+        },
+        {
+          "label": "Pt sur la Suze Bottière",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "PI voy Moutier",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[24].baueinheiten"
+        },
+        {
+          "label": "Pont sur la Rauss",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[25].baueinheiten"
+        },
+        {
+          "label": "PI Pertuisat",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[30].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:5b283e73",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 226 erfasst?",
+          "options": [
+            "24",
+            "34",
+            "41",
+            "48"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 34 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:680d5802",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 226 eingetragen?",
+          "options": [
+            "Bern",
+            "Graubünden",
+            "Jura",
+            "Valais"
+          ],
+          "correct": 0,
+          "explanation": "Bei «Bern» sind 18 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:eca195d3",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PI de Courrendlin",
+            "PI voy Delémont",
+            "PI voy Moutier",
+            "Pt sur la Suze Bottière"
+          ],
+          "correct": 1,
+          "explanation": "PI voy Delémont besteht aus 5 Baueinheiten, PI de Courrendlin aus 3, Pt sur la Suze Bottière aus 2 und PI voy Moutier aus 2.",
+          "factRef": "bruecken.items[33].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -342,6 +460,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 11 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Züge auf der Linie",

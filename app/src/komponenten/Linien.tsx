@@ -71,6 +71,7 @@ function Eintrag({ l }: { l: LinienEintrag }) {
     l.bahnhoefe === 0 ? 'kein Bahnhof in Taktland'
       : l.bahnhoefe === 1 ? '1 Bahnhof' : `${l.bahnhoefe} Bahnhöfe`,
     ...(l.tunnel > 0 ? [`${l.tunnel} Tunnel`] : []),
+    ...(l.bruecken > 0 ? [`${l.bruecken} ${l.bruecken === 1 ? 'Brücke' : 'Brücken'}`] : []),
   ]
   return (
     <li>

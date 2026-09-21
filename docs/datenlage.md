@@ -82,8 +82,12 @@ Im Katalog von data.sbb.ch (60 Datensätze, geprüft 2026-09-21) steht zu Streck
   Tunnelsystem (Röhren und Spuren), Linie und Kilometer. Neun haben eine Bemerkung zur
   Länge oder zum Umfang («Länge der Oströhre», «4947m gehört Frankreich»). Das Feld
   Kanton ist nicht verlässlich («St.AuslandGallen») und wird nicht verwendet.
-- `brucken` (4057, ohne Länge und Baujahr), `bahnubergang` (1064, mit Sicherungsart und
-  Zahl der gekreuzten Gleise) – noch nicht verwendet.
+- `brucken` – 4057 Brücken mit Name, Linie, Kilometer, Kanton und Zahl der Baueinheiten,
+  ohne Länge und Baujahr. 3898 davon liegen auf den 111 Linien mit Seite, 159 auf 57
+  kleinen Linien ohne Bahnhof und ohne Tunnel. Die Namen tragen unerklärte Abkürzungen
+  (PI, PU, WU, Du, SU …). Die Beschreibung nennt als letzte Aktualisierung auf Deutsch
+  «Januar 24», auf Englisch «Jan 2026».
+- `bahnubergang` (1064, mit Sicherungsart und Zahl der gekreuzten Gleise) – noch nicht verwendet.
 
 **Nicht in den offenen Daten:** die Länge einer Linie, ein Bau- oder Eröffnungsjahr der
 Linie, ob sie ein- oder mehrspurig ist (nur das Tunnelsystem sagt es, und nur für den

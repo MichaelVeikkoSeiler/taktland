@@ -87,6 +87,276 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 42,
+  "nach_kanton": [
+   {
+    "kanton": "Aargau",
+    "anzahl": 42
+   }
+  ],
+  "meiste_baueinheiten": 4,
+  "mit_meisten": [
+   29
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PU Hst. Mellingen",
+    "km": 22.274,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Vi Fislisbach",
+    "km": 22.556,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Reussbr. Mellingen",
+    "km": 23.349,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Landstrasse OIC",
+    "km": 23.996,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Hünerwadel",
+    "km": 24.482,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Wiege",
+    "km": 25.079,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Mägenwil",
+    "km": 25.93,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Cholacher",
+    "km": 26.09,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Lindfeld",
+    "km": 26.437,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Büntli",
+    "km": 26.638,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Othmarsingen",
+    "km": 27.702,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Überwerfung Erlimoos",
+    "km": 29.251,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Ueberwerfung Gexi",
+    "km": 29.728,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Niederlenzerstrasse",
+    "km": 31.14,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Lenzburg",
+    "km": 31.26,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Aabach",
+    "km": 31.456,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU HERO",
+    "km": 31.79,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Lenzburg",
+    "km": 31.932,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Ringstrasse",
+    "km": 32.342,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Rupperswilerweg",
+    "km": 32.876,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU K112 Obj. 4 T5",
+    "km": 34.356,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Stockhard",
+    "km": 34.739,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Schweizi",
+    "km": 35.007,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Überwerf. Bannhalde",
+    "km": 35.148,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Rupperswil",
+    "km": 35.626,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Kätherli",
+    "km": 36.181,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Surhard I",
+    "km": 36.459,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Surhard II",
+    "km": 37.287,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Surhard 3",
+    "km": 38.067,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU K469 Objekt 195",
+    "km": 39.055,
+    "baueinheiten": 4,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Pilatusstrasse",
+    "km": 39.45,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Obermatt",
+    "km": 39.55,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Suhrebrücke",
+    "km": 39.703,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PDu im Grien",
+    "km": 39.783,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Neubuchsstrasse",
+    "km": 39.929,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Gais",
+    "km": 41.143,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Gais",
+    "km": 41.157,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Gepäcktunnel",
+    "km": 41.398,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Aarau Ost",
+    "km": 41.448,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Aarau West",
+    "km": 41.553,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Dammweg",
+    "km": 42.463,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Wöschnauring",
+    "km": 42.984,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -109,6 +379,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -117,6 +402,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

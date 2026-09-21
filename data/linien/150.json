@@ -174,6 +174,808 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 130,
+  "nach_kanton": [
+   {
+    "kanton": "Vaud",
+    "anzahl": 86
+   },
+   {
+    "kanton": "Genève",
+    "anzahl": 44
+   }
+  ],
+  "meiste_baueinheiten": 8,
+  "mit_meisten": [
+   0
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PI voy Lausanne ouest",
+    "km": 0.054,
+    "baueinheiten": 8,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Parking du Simplon LS",
+    "km": 0.086,
+    "baueinheiten": 4,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Tunnel de Montriond",
+    "km": 0.092,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI à bagae ouest 1",
+    "km": 0.115,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI à bagage ouest 2",
+    "km": 0.146,
+    "baueinheiten": 7,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de l'av. Fraisse",
+    "km": 0.201,
+    "baueinheiten": 5,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI des Epinettes",
+    "km": 0.305,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Martinet",
+    "km": 2.064,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Voûtage du Galicien",
+    "km": 2.282,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Malley",
+    "km": 2.313,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy Prilly-Malley",
+    "km": 2.343,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Trait d'union",
+    "km": 2.527,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Saut-de-Mouton",
+    "km": 2.98,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Léman",
+    "km": 3.54,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Renens",
+    "km": 4.314,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Piétons 1er août",
+    "km": 4.321,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur la Mebre",
+    "km": 4.332,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Gal Larges-Pièces 1",
+    "km": 6.692,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Viad de la Poudrière",
+    "km": 7.244,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "SM des Lécheires",
+    "km": 7.523,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Aq sur le Bief à Lonay",
+    "km": 9.428,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Lonay",
+    "km": 10.058,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI des Philosophes",
+    "km": 11.203,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Piétons des Paquis",
+    "km": 11.772,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte des Paquis",
+    "km": 11.785,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rue de Yersin",
+    "km": 12.158,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy de Morges",
+    "km": 12.469,
+    "baueinheiten": 5,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rue de la Gare",
+    "km": 12.549,
+    "baueinheiten": 5,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur la Morges",
+    "km": 12.6,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Bonjean",
+    "km": 13.557,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI des Uttins",
+    "km": 13.952,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Monivert II",
+    "km": 15.077,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Monivert",
+    "km": 15.329,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Perreret",
+    "km": 16.311,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte du Prêt",
+    "km": 16.696,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Voy. de St Prex",
+    "km": 16.886,
+    "baueinheiten": 5,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI des Saugettes",
+    "km": 17.976,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte d'Etoy",
+    "km": 19.269,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy d' Etoy",
+    "km": 19.438,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Viaduc sur l'Aubonne",
+    "km": 20.931,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte d'Allaman 1",
+    "km": 21.055,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte d'Allaman 2",
+    "km": 21.365,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy d'Allaman",
+    "km": 21.458,
+    "baueinheiten": 4,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de la Gordanne",
+    "km": 22.94,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur la Gordanne",
+    "km": 23.763,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte de Perroy",
+    "km": 23.856,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy Perroy",
+    "km": 24.434,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur le Rupalet",
+    "km": 25.45,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Bellefontaine",
+    "km": 25.841,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Jolimont",
+    "km": 26.505,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy de Rolle",
+    "km": 26.674,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Gimel",
+    "km": 26.688,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur la Biguaire",
+    "km": 26.801,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Biguaire",
+    "km": 26.84,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Creux du Mas",
+    "km": 27.12,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Rosey",
+    "km": 27.715,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de la Combe",
+    "km": 27.91,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Burtigny",
+    "km": 28.367,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Viaduc de Beaulieu",
+    "km": 28.856,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Voy Gilly-Bursinel",
+    "km": 29.709,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Vernay",
+    "km": 31.222,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PT sur le Lavasson",
+    "km": 32.489,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Voyageurs de Gland",
+    "km": 33.716,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte de Gland",
+    "km": 33.983,
+    "baueinheiten": 4,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur Promenthouse",
+    "km": 34.886,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte de Prangins",
+    "km": 37.017,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de l¿Etraz",
+    "km": 38.049,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur l'Asse",
+    "km": 38.119,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy Nyon",
+    "km": 38.571,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de la Morâche",
+    "km": 38.712,
+    "baueinheiten": 5,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PT sur le Boiron",
+    "km": 39.332,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Céligny",
+    "km": 43.264,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Aq de Céligny, mi",
+    "km": 43.431,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI voy de Céligny",
+    "km": 43.439,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de Founex",
+    "km": 44.801,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI piétons de Founex",
+    "km": 44.991,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Au Pralet",
+    "km": 45.563,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Chemin Bleu",
+    "km": 46.691,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI rte de Coppet",
+    "km": 46.913,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy de Coppet",
+    "km": 46.977,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Signal",
+    "km": 47.494,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Duvillard",
+    "km": 48.06,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Voy de Tannay",
+    "km": 48.262,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur le Torry",
+    "km": 48.514,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy de Vy à Vaux",
+    "km": 48.759,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Piét de la Crota",
+    "km": 49.108,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Routier de Mies",
+    "km": 49.494,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Piéton Mies",
+    "km": 49.574,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de la Druvière",
+    "km": 49.779,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur la Braille",
+    "km": 50.301,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de Pont-Ceard",
+    "km": 51.029,
+    "baueinheiten": 3,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI voy de Versoix",
+    "km": 51.988,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI piét de Richelien",
+    "km": 52.126,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de Richelien",
+    "km": 52.135,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Pont / Canal Favarger",
+    "km": 52.209,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de Brisselonne",
+    "km": 52.24,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Pt sur la Versoix",
+    "km": 52.317,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI piét du Dézallay",
+    "km": 54.457,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI Genthod-Bellevue",
+    "km": 54.794,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI piét de Valavran",
+    "km": 55.256,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Pt sur le Vengeron",
+    "km": 56.086,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI Nord",
+    "km": 56.647,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI Centre",
+    "km": 56.715,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI sud Chambésy",
+    "km": 56.877,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI des Chèvres",
+    "km": 57.225,
+    "baueinheiten": 3,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de Pregny",
+    "km": 58.135,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de la S.D.N.",
+    "km": 58.336,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI Rue du Valais",
+    "km": 59.314,
+    "baueinheiten": 7,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Liaison CEG-Dépôt",
+    "km": 59.511,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Tunnel à bagages II",
+    "km": 60.222,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PT s/Kiosque Naville",
+    "km": 60.239,
+    "baueinheiten": 2,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Tunnel à bagages III",
+    "km": 60.247,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de l'Aéroport",
+    "km": 60.287,
+    "baueinheiten": 3,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Local Swissair",
+    "km": 60.304,
+    "baueinheiten": 3,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de Montbrillant",
+    "km": 60.337,
+    "baueinheiten": 6,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de Rialto",
+    "km": 60.362,
+    "baueinheiten": 6,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI des Grottes",
+    "km": 60.375,
+    "baueinheiten": 6,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Estacade HEAA",
+    "km": 60.383,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI du Cul de Sac",
+    "km": 60.389,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "LOC Garage IV",
+    "km": 60.399,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Passage des Arcades",
+    "km": 60.41,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI Rue de la Servette",
+    "km": 60.498,
+    "baueinheiten": 3,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI St Gervais (Estacade)",
+    "km": 60.516,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI quai 4 - Malatrex",
+    "km": 60.535,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI Rue de la Bautte",
+    "km": 60.595,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de la rue Voltaire",
+    "km": 60.679,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI de Colombier",
+    "km": 60.862,
+    "baueinheiten": 3,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PI J.-Ph. De-Sauvage",
+    "km": 63.711,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "PT sur l'Avanchet",
+    "km": 64.213,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   },
+   {
+    "name": "Pt Autoroute OA 411",
+    "km": 64.279,
+    "baueinheiten": 1,
+    "kanton": "Genève"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -196,6 +998,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -204,6 +1021,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

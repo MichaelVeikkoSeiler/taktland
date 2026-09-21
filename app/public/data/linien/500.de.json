@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten",
     "tunnel"
@@ -453,6 +454,137 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 500 sind 147 Brücken erfasst. Als Kanton eingetragen ist «Luzern» bei 65 Brücken, «Basel-Landschaft» bei 49, «Aargau» bei 19, «Solothurn» bei 8 und «Basel-Stadt» bei 6. Aus den meisten Baueinheiten, 8, besteht PU Basel PB. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 147,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Luzern",
+          "value": 65,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Basel-Landschaft",
+          "value": 49,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "Aargau",
+          "value": 19,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[2].anzahl"
+        },
+        {
+          "label": "Solothurn",
+          "value": 8,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[3].anzahl"
+        },
+        {
+          "label": "Basel-Stadt",
+          "value": 6,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[4].anzahl"
+        },
+        {
+          "label": "PU Basel PB",
+          "value": 8,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "Viadukt Gelterkinden",
+          "value": 7,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[47].baueinheiten"
+        },
+        {
+          "label": "Unterführungsstrasse",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[60].baueinheiten"
+        },
+        {
+          "label": "SU Kreuzstutz",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[141].baueinheiten"
+        },
+        {
+          "label": "PU und Gepäcktunnel",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[145].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:5d15c7fe",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 500 erfasst?",
+          "options": [
+            "120",
+            "147",
+            "180",
+            "210"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 147 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:4d24c5b3",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 500 eingetragen?",
+          "options": [
+            "Aargau",
+            "Basel-Landschaft",
+            "Luzern",
+            "Solothurn"
+          ],
+          "correct": 2,
+          "explanation": "Bei «Luzern» sind 65 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:84ab1edb",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PU Basel PB",
+            "SU Kreuzstutz",
+            "Unterführungsstrasse",
+            "Viadukt Gelterkinden"
+          ],
+          "correct": 0,
+          "explanation": "PU Basel PB besteht aus 8 Baueinheiten, Viadukt Gelterkinden aus 7, Unterführungsstrasse aus 4 und SU Kreuzstutz aus 4.",
+          "factRef": "bruecken.items[0].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -475,6 +607,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 28 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 48 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Züge auf der Linie",

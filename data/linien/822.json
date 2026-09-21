@@ -73,6 +73,190 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 27,
+  "nach_kanton": [
+   {
+    "kanton": "Thurgau",
+    "anzahl": 26
+   },
+   {
+    "kanton": "Schaffhausen",
+    "anzahl": 1
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   5
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "SU Chlingenriet",
+    "km": 34.133,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Hofacker",
+    "km": 34.325,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Stein am Rhein",
+    "km": 34.883,
+    "baueinheiten": 1,
+    "kanton": "Schaffhausen"
+   },
+   {
+    "name": "BDu Höflerwies",
+    "km": 36.016,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PDu im Bühl",
+    "km": 36.443,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "BDu Eschenz",
+    "km": 37.094,
+    "baueinheiten": 3,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Mammern",
+    "km": 40.063,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Neuburg",
+    "km": 41.595,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Krebsbach-Brücke",
+    "km": 42.056,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Ibtobelbach-Brücke",
+    "km": 42.771,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Chesselbach-Brücke",
+    "km": 43.504,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Bollanderstrasse",
+    "km": 44.781,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "WU Feldbach",
+    "km": 44.987,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PDu Steckborn",
+    "km": 45.463,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Dorfbach",
+    "km": 45.863,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Bachstrasse",
+    "km": 48.523,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Berlingen",
+    "km": 48.783,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Eschlibach",
+    "km": 50.078,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Mannenbach",
+    "km": 51.074,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Anderbach",
+    "km": 53.803,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Post",
+    "km": 53.859,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Agerstenbach",
+    "km": 55.177,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Br ü. Dorfbach",
+    "km": 57.953,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "U Seetalstrasse",
+    "km": 58.07,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "SU ARA Nord",
+    "km": 58.863,
+    "baueinheiten": 1,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "PU Alleestrasse",
+    "km": 60.719,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   },
+   {
+    "name": "Du Schoderbach",
+    "km": 60.734,
+    "baueinheiten": 2,
+    "kanton": "Thurgau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -95,6 +279,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -107,6 +306,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

@@ -43,6 +43,149 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 18,
+  "nach_kanton": [
+   {
+    "kanton": "St. Gallen",
+    "anzahl": 18
+   }
+  ],
+  "meiste_baueinheiten": 1,
+  "mit_meisten": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ],
+  "anzahl_mit_meisten": 18,
+  "items": [
+   {
+    "name": "U Rietstr.",
+    "km": 37.501,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu Wüschlengraben",
+    "km": 38.203,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Br über Rüfibach",
+    "km": 39.354,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu Maseltrangerbach",
+    "km": 39.776,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Br über den Aubach",
+    "km": 40.753,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU vor Uznach",
+    "km": 46.113,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Steinenbach-Br.",
+    "km": 46.168,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Uznach",
+    "km": 46.487,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Br Ernetschwilerbach",
+    "km": 47.074,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Aabach-Br.",
+    "km": 48.004,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PDu Härti",
+    "km": 48.356,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Schmerikon",
+    "km": 49.278,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu bei der Werft",
+    "km": 51.162,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "SU Bollingen",
+    "km": 53.084,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu 55.095",
+    "km": 55.096,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Brücke ü. Wurmsbach",
+    "km": 55.927,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "WU Langrüti",
+    "km": 56.866,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Br über die Jona",
+    "km": 56.982,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -65,6 +208,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -77,6 +235,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

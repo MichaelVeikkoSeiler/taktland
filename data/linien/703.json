@@ -58,6 +58,152 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 20,
+  "nach_kanton": [
+   {
+    "kanton": "Aargau",
+    "anzahl": 10
+   },
+   {
+    "kanton": "Zürich",
+    "anzahl": 10
+   }
+  ],
+  "meiste_baueinheiten": 2,
+  "mit_meisten": [
+   0,
+   2,
+   4,
+   5,
+   7
+  ],
+  "anzahl_mit_meisten": 5,
+  "items": [
+   {
+    "name": "U Schaffhauserstrasse",
+    "km": 23.123,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Seebach",
+    "km": 23.275,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Seebacherstrasse",
+    "km": 24.955,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Seebacherstrasse",
+    "km": 24.982,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Wehntalerstrasse",
+    "km": 27.014,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Wehntalerstrasse",
+    "km": 27.134,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Oststrasse",
+    "km": 29.473,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Furtbach",
+    "km": 32.121,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Brühlbach",
+    "km": 36.381,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Ottelfingen",
+    "km": 36.4,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Aspäcker",
+    "km": 37.243,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Zelgli",
+    "km": 38.667,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Würenlos",
+    "km": 39.036,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Ausfallstr. Baden",
+    "km": 43.892,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Mellingerstrasse",
+    "km": 44.357,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Segelhof",
+    "km": 46.624,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Breitler",
+    "km": 48.503,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Zwischenweg",
+    "km": 48.758,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Mellingen",
+    "km": 50.311,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU OV5 zum Tanklager",
+    "km": 50.405,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -80,6 +226,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -92,6 +253,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

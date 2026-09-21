@@ -43,6 +43,534 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 85,
+  "nach_kanton": [
+   {
+    "kanton": "Ticino",
+    "anzahl": 85
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   62
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "Sot. Rusc km 161.508",
+    "km": 161.513,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Attr Rusc km 161.724",
+    "km": 161.732,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot sent km 162.707",
+    "km": 162.708,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot S Cadepezzo",
+    "km": 162.931,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Attr C Riale Trodo",
+    "km": 163.246,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. sent. Riale Trodo",
+    "km": 163.273,
+    "baueinheiten": 2,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot S Via Monte Ceneri",
+    "km": 163.509,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. Trodoarm",
+    "km": 163.726,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. Quartino",
+    "km": 163.953,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. sent. km 164.224",
+    "km": 164.229,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km164.577",
+    "km": 164.575,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 164.658",
+    "km": 164.66,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 164.849",
+    "km": 164.856,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. riale di San Giacomo",
+    "km": 164.92,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 165.003",
+    "km": 165.006,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 165.074",
+    "km": 165.076,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 165.154",
+    "km": 165.159,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 165.373",
+    "km": 165.369,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Ponte Gallaredo",
+    "km": 165.591,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 165.870",
+    "km": 165.868,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 165.957",
+    "km": 165.96,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 166.089",
+    "km": 166.089,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 166.140",
+    "km": 166.143,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 166.269",
+    "km": 166.273,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Vi Ronco",
+    "km": 166.306,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. riale Molina",
+    "km": 166.432,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 166.799",
+    "km": 166.798,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 166.927",
+    "km": 166.932,
+    "baueinheiten": 2,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 167.237",
+    "km": 167.24,
+    "baueinheiten": 2,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot Rusc km 167.346",
+    "km": 167.347,
+    "baueinheiten": 2,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. Vira Indemini",
+    "km": 167.589,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Ponte di Vira",
+    "km": 167.782,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot pers. km 168.005",
+    "km": 168.002,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 168.077",
+    "km": 168.075,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 168.200",
+    "km": 168.198,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. Vira",
+    "km": 168.271,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 168.382",
+    "km": 168.396,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 168.558",
+    "km": 168.563,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 168.944",
+    "km": 168.936,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 168.995",
+    "km": 168.99,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 169.189",
+    "km": 169.178,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 169.276",
+    "km": 169.276,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 169.740",
+    "km": 169.744,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 169.821",
+    "km": 169.82,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. Alabardia",
+    "km": 169.913,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 169.954",
+    "km": 169.955,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 170.225",
+    "km": 170.255,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot Via Vairano",
+    "km": 170.814,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 170.980",
+    "km": 170.977,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 171.133",
+    "km": 171.125,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Ponte Molinetto",
+    "km": 171.296,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 171.370",
+    "km": 171.364,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Al Cantone",
+    "km": 171.408,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 171.572",
+    "km": 171.572,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 171.802",
+    "km": 171.803,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 171.885",
+    "km": 171.888,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 172.098",
+    "km": 172.095,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 172.252",
+    "km": 172.254,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 172.345",
+    "km": 172.348,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 172.500",
+    "km": 172.498,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Vi Riva",
+    "km": 172.585,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 172.730",
+    "km": 172.729,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Ponte Gerra-Gambarogno",
+    "km": 172.858,
+    "baueinheiten": 3,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. Gerra Gambarogno",
+    "km": 172.964,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 173.174",
+    "km": 173.179,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 173.261",
+    "km": 173.26,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 173.422",
+    "km": 173.423,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 173.495",
+    "km": 173.5,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 173.580",
+    "km": 173.569,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 173.771",
+    "km": 173.76,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 174.124",
+    "km": 174.12,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 174.245",
+    "km": 174.244,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 174.394",
+    "km": 174.387,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 174.438",
+    "km": 174.437,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 174.580",
+    "km": 174.573,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. riale Ranzo",
+    "km": 174.653,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 174.735",
+    "km": 174.733,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 174.830",
+    "km": 174.829,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus. km 174.950",
+    "km": 174.951,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. pers. km 175.050",
+    "km": 175.046,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. str. km 175.158",
+    "km": 175.161,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus km 175.427",
+    "km": 175.424,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus km 175.479",
+    "km": 175.48,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Sot. rus km 175.702",
+    "km": 175.699,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   },
+   {
+    "name": "Vi Dirinella",
+    "km": 175.867,
+    "baueinheiten": 1,
+    "kanton": "Ticino"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -65,6 +593,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -77,6 +620,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten"
   ],
@@ -217,6 +218,123 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 653 sind 61 Brücken erfasst. Als Kanton eingetragen ist «Aargau» bei 52 Brücken, «Zug» bei 7 und «Schwyz» bei 2. Aus den meisten Baueinheiten, 4, besteht WU und Du Scheckenbach. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 61,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Aargau",
+          "value": 52,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Zug",
+          "value": 7,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "Schwyz",
+          "value": 2,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[2].anzahl"
+        },
+        {
+          "label": "WU und Du Scheckenbach",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[44].baueinheiten"
+        },
+        {
+          "label": "Du Holzbach",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[3].baueinheiten"
+        },
+        {
+          "label": "PDu Wohlen Süd",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[11].baueinheiten"
+        },
+        {
+          "label": "Du Katzbach",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[22].baueinheiten"
+        },
+        {
+          "label": "PU Eggstrasse",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[24].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:702a760b",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 653 erfasst?",
+          "options": [
+            "61",
+            "73",
+            "85",
+            "100"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 61 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:78b35a84",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 653 eingetragen?",
+          "options": [
+            "Aargau",
+            "Schwyz",
+            "Zug",
+            "Zürich"
+          ],
+          "correct": 0,
+          "explanation": "Bei «Aargau» sind 52 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:61d2d6be",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "Du Holzbach",
+            "Du Katzbach",
+            "PDu Wohlen Süd",
+            "WU und Du Scheckenbach"
+          ],
+          "correct": 3,
+          "explanation": "WU und Du Scheckenbach besteht aus 4 Baueinheiten, Du Holzbach aus 3, PDu Wohlen Süd aus 3 und Du Katzbach aus 3.",
+          "factRef": "bruecken.items[44].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -239,6 +357,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 10 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 18 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Tunnel",

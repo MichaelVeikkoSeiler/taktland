@@ -86,6 +86,7 @@ def linien():
             "name": d["name"],
             "bahnhoefe": f["bahnhoefe"]["anzahl_in_taktland"],
             "tunnel": (f.get("tunnel") or {}).get("anzahl_erfasst", 0),
+            "bruecken": (f.get("bruecken") or {}).get("anzahl_erfasst", 0),
         })
         for it in f["bahnhoefe"]["items"]:
             nach_bahnhof.setdefault(str(it["uic"]), []).append(d["linie"])

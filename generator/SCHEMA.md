@@ -706,3 +706,19 @@ Umlaute und auch die Abschnitte des Namens.
 **Die Form verrät die Antwort.** Stand nur die richtige Antwort mit Klammer da
 («Pozzo Negro (dira)» neben Bahnhofsnamen), war sie ohne Wissen zu erkennen. Die
 falschen Antworten haben jetzt dieselbe Form.
+
+**Brücken.** Die Quelle nennt Name, Kilometer, Kanton und die Zahl der Baueinheiten,
+keine Länge und kein Baujahr. Die Namen stehen wie in der Quelle; Abkürzungen wie
+«PI» oder «WU» werden nicht gedeutet, die Lücke «Namen der Brücken» sagt das. Die
+Erläuterung gibt die Beschreibung der Quelle wieder («Durchlass» bis zwei Meter).
+Zählungen je Kanton macht die Pipeline (`nach_kanton`), nicht der Text. Bei den
+meisten Baueinheiten gilt der Gleichstand wie bei den Tunneln, und die Faktenliste
+schneidet eine Gruppe mit gleich vielen nie an.
+
+**Einzahl am Satzende.** «Als Kanton eingetragen sind «Bern» bei 80, … und «Aargau /
+Bern» bei 1 Brücken» (Linie 450): Das Wort am Ende galt für alle Zahlen, auch die 1.
+Es steht jetzt beim ersten Wert. Bei einer einzigen Brücke heisst es nicht «bei jeder
+erfassten Brücke» (Linie 580).
+
+**Abkürzungspunkt am Satzende.** «U Winterthurerstr..» – Namen mit Punkt am Ende laufen
+durch `punkt()`.

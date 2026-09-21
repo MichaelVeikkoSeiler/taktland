@@ -43,6 +43,84 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 10,
+  "nach_kanton": [
+   {
+    "kanton": "Aargau",
+    "anzahl": 10
+   }
+  ],
+  "meiste_baueinheiten": 5,
+  "mit_meisten": [
+   6
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "Du Süssbach",
+    "km": 31.541,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstrasse",
+    "km": 33.35,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Bru KDu Schinznach Bad",
+    "km": 34.685,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PDu Widacker",
+    "km": 37.986,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Holderbank",
+    "km": 39.415,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "KDu Mühlematt",
+    "km": 39.976,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Bünz Wildegg",
+    "km": 40.17,
+    "baueinheiten": 5,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Hard",
+    "km": 41.184,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstrasse",
+    "km": 41.996,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Braechli",
+    "km": 42.759,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -65,6 +143,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -77,6 +170,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

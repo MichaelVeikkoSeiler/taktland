@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten"
   ],
@@ -321,6 +322,130 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 410 sind 106 Brücken erfasst. Als Kanton eingetragen ist «Solothurn» bei 74 Brücken und «Bern» bei 32. Aus den meisten Baueinheiten, 8, besteht PI voy Bienne. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 106,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Solothurn",
+          "value": 74,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Bern",
+          "value": 32,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "PI voy Bienne",
+          "value": 8,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[105].baueinheiten"
+        },
+        {
+          "label": "Dünnernbrücke (km 41.115)",
+          "value": 6,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[6].baueinheiten"
+        },
+        {
+          "label": "PU Olten Süd",
+          "value": 5,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "Dünnernbrücke (km 45.971)",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[14].baueinheiten"
+        },
+        {
+          "label": "Unterführungsstrasse",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[17].baueinheiten"
+        },
+        {
+          "label": "PU Solothurn",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[62].baueinheiten"
+        },
+        {
+          "label": "PU Lengnau",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[91].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:11f0cd07",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 410 erfasst?",
+          "options": [
+            "106",
+            "130",
+            "150",
+            "180"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 106 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:4059e035",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 410 eingetragen?",
+          "options": [
+            "Aargau",
+            "Bern",
+            "Solothurn",
+            "Thurgau"
+          ],
+          "correct": 2,
+          "explanation": "Bei «Solothurn» sind 74 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:8bfb14bb",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PI voy Bienne",
+            "PU Olten Süd",
+            "PU Solothurn",
+            "Unterführungsstrasse"
+          ],
+          "correct": 0,
+          "explanation": "PI voy Bienne besteht aus 8 Baueinheiten, PU Olten Süd aus 5, Unterführungsstrasse aus 4 und PU Solothurn aus 4.",
+          "factRef": "bruecken.items[105].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -343,6 +468,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 23 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 30 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Tunnel",

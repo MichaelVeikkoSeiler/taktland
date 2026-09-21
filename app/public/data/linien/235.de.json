@@ -141,6 +141,11 @@
       "quelle": "linie, tunnel"
     },
     {
+      "thema": "Brücken",
+      "grund": "Für diese Linie ist keine Brücke erfasst. Das schliesst nicht aus, dass es eine gibt.",
+      "quelle": "brucken"
+    },
+    {
       "thema": "Tunnel",
       "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
       "quelle": "tunnel"

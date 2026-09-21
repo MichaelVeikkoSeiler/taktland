@@ -70,3 +70,28 @@ def test_bahnhof_in_der_liste_fuehrt_zu_seiner_seite():
     links = [x for x in bh["facts"] if "uic" in x]
     assert links and all(x["label"] for x in links)
     assert [x["value"] for x in links] == sorted(x["value"] for x in links)
+
+
+def test_bruecken_mit_kantonen_und_baueinheiten():
+    k = next(k for k in L.bauen("600")["chapters"] if k["id"] == "bruecken")
+    assert "Für die Linie 600 sind 511 Brücken erfasst." in k["body"]
+    assert "«Ticino» bei 325 Brücken" in k["body"]
+    assert "besteht Viadukt in Brunnen" in k["body"]
+
+
+def test_bruecken_einzahl_und_mehrzahl():
+    # Linie 450: am Ende stand «bei 1 Brücken»
+    k = next(k for k in L.bauen("450")["chapters"] if k["id"] == "bruecken")
+    assert "bei 1 Brücken" not in k["body"]
+    # Linie 580: eine einzige Brücke, also nicht «bei jeder erfassten Brücke»
+    k = next(k for k in L.bauen("580")["chapters"] if k["id"] == "bruecken")
+    assert "jeder" not in k["body"]
+
+
+def test_brueckennamen_ohne_deutung():
+    # Abkürzungen wie PI, PU, WU erklärt die Quelle nicht, also auch Taktland nicht
+    f = lb.fakten("100")
+    assert any(l["thema"] == "Namen der Brücken" for l in f["luecken"])
+    k = next(k for k in L.bauen("100")["chapters"] if k["id"] == "bruecken")
+    for wort in ("Unterführung", "Personenunterführung", "Passage inférieur"):
+        assert wort not in k["body"]

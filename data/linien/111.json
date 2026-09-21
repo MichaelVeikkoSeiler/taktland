@@ -79,6 +79,72 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 8,
+  "nach_kanton": [
+   {
+    "kanton": "Vaud",
+    "anzahl": 8
+   }
+  ],
+  "meiste_baueinheiten": 4,
+  "mit_meisten": [
+   4
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PI de la Bergère",
+    "km": 0.778,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de Burignon",
+    "km": 3.432,
+    "baueinheiten": 3,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt de la Salance",
+    "km": 3.83,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt de Chardonne",
+    "km": 4.614,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt de Chexbres",
+    "km": 5.481,
+    "baueinheiten": 4,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt du Forestay 1",
+    "km": 5.87,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt du Forestay 2",
+    "km": 6.083,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt du Forestay 3",
+    "km": 6.645,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -101,6 +167,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -109,6 +190,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

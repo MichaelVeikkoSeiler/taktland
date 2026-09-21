@@ -101,6 +101,241 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 35,
+  "nach_kanton": [
+   {
+    "kanton": "Zürich",
+    "anzahl": 32
+   },
+   {
+    "kanton": "Zug",
+    "anzahl": 3
+   }
+  ],
+  "meiste_baueinheiten": 2,
+  "mit_meisten": [
+   0,
+   10,
+   25,
+   26
+  ],
+  "anzahl_mit_meisten": 4,
+  "items": [
+   {
+    "name": "PU West Hardbrücke",
+    "km": 1.992,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Rahmenbauwerk Hard",
+    "km": 2.092,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Badenerstrasse",
+    "km": 5.037,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Pestalozziweg",
+    "km": 6.101,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Brunnackersteig",
+    "km": 7.203,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Uitikonerstrasse",
+    "km": 7.509,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Urdorf",
+    "km": 8.546,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Bahnhofstrasse",
+    "km": 8.771,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Fadmatt",
+    "km": 9.618,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Weihermatt",
+    "km": 9.935,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U alte Urdorfstrasse",
+    "km": 12.506,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Birmensdorf",
+    "km": 12.702,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu alte Zürcherstr.",
+    "km": 13.221,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Landikon",
+    "km": 14.649,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du für die Reppisch",
+    "km": 15.239,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu Friedgraben",
+    "km": 16.555,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Bonstetten",
+    "km": 18.018,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Dorfbach",
+    "km": 18.92,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Breitestrasse",
+    "km": 21.91,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Hedingen",
+    "km": 22.091,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Dorfbach",
+    "km": 22.244,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Hausackerstrasse",
+    "km": 22.495,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Blitzgbach",
+    "km": 23.691,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Jonenbach-Brücke",
+    "km": 23.979,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Zwillikerstrasse",
+    "km": 24.279,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Dammgasse",
+    "km": 24.488,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Affoltern am Albis",
+    "km": 24.87,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Schlifistrasse",
+    "km": 26.043,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du 1 Haselbach",
+    "km": 29.309,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du 2 Haselbach",
+    "km": 30.035,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu Wattbach",
+    "km": 31.415,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Knonau",
+    "km": 31.69,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU Bibersee",
+    "km": 33.372,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Rigiblick",
+    "km": 35.49,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "SU Sumpf",
+    "km": 35.694,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -123,6 +358,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -131,6 +381,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

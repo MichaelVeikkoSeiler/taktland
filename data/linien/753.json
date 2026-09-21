@@ -53,6 +53,142 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 17,
+  "nach_kanton": [
+   {
+    "kanton": "Zürich",
+    "anzahl": 17
+   }
+  ],
+  "meiste_baueinheiten": 1,
+  "mit_meisten": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "anzahl_mit_meisten": 17,
+  "items": [
+   {
+    "name": "SU Baumeisterzentrum",
+    "km": 0.568,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Grendelbach",
+    "km": 0.688,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Sagirain",
+    "km": 3.772,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Illnau",
+    "km": 4.517,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Usterstrasse",
+    "km": 4.634,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Grindelweg",
+    "km": 6.254,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Fehraltorf",
+    "km": 7.997,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Pfäffikon",
+    "km": 11.282,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Mettlenbrunnen",
+    "km": 12.682,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU zum Strandbad",
+    "km": 14.458,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Kempterbach-Brücke",
+    "km": 15.302,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Binzackerstrasse",
+    "km": 16.058,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Strandbadstrasse",
+    "km": 16.502,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Usterstrasse",
+    "km": 16.737,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Talstrasse",
+    "km": 16.843,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Wildbachbrücke",
+    "km": 17.515,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U untere Bahnhofstr.",
+    "km": 22.362,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -75,6 +211,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -87,6 +238,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

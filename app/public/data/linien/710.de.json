@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten",
     "tunnel"
@@ -288,6 +289,130 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 710 sind 65 Brücken erfasst. Als Kanton eingetragen ist «Zürich» bei 37 Brücken und «Aargau» bei 28. Aus den meisten Baueinheiten, 5, besteht U HVS C. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 65,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Zürich",
+          "value": 37,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Aargau",
+          "value": 28,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "U HVS C",
+          "value": 5,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[34].baueinheiten"
+        },
+        {
+          "label": "Querkanal K2",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[12].baueinheiten"
+        },
+        {
+          "label": "Querkanal K5",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[15].baueinheiten"
+        },
+        {
+          "label": "PU Mitte Hardbrücke",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[19].baueinheiten"
+        },
+        {
+          "label": "Lehnenviadukt Killwangen",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[41].baueinheiten"
+        },
+        {
+          "label": "Untere Limmatbrücke",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[51].baueinheiten"
+        },
+        {
+          "label": "U Zürcherstrasse",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[63].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:6c0e0e80",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 710 erfasst?",
+          "options": [
+            "36",
+            "46",
+            "55",
+            "65"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 65 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:5516b305",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 710 eingetragen?",
+          "options": [
+            "Aargau",
+            "Luzern",
+            "Valais",
+            "Zürich"
+          ],
+          "correct": 3,
+          "explanation": "Bei «Zürich» sind 37 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:f59d1262",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PU Mitte Hardbrücke",
+            "Querkanal K2",
+            "Querkanal K5",
+            "U HVS C"
+          ],
+          "correct": 3,
+          "explanation": "U HVS C besteht aus 5 Baueinheiten, Querkanal K2 aus 3, Querkanal K5 aus 3 und PU Mitte Hardbrücke aus 3.",
+          "factRef": "bruecken.items[34].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -310,6 +435,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 12 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 21 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Züge auf der Linie",

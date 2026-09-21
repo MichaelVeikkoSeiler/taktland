@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten"
   ],
@@ -265,6 +266,130 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 850 sind 72 Brücken erfasst. Als Kanton eingetragen ist «St. Gallen» bei 37 Brücken, «Thurgau» bei 20 und «Zürich» bei 15. Aus den meisten Baueinheiten, 4, besteht PU 2 Wil. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 72,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "St. Gallen",
+          "value": 37,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Thurgau",
+          "value": 20,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "Zürich",
+          "value": 15,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[2].anzahl"
+        },
+        {
+          "label": "PU 2 Wil",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[39].baueinheiten"
+        },
+        {
+          "label": "PU West St.Gallen",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "U Bahnhofstrasse",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[29].baueinheiten"
+        },
+        {
+          "label": "SU Tänikon",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[54].baueinheiten"
+        },
+        {
+          "label": "U Ohrbühlstrasse",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[66].baueinheiten"
+        },
+        {
+          "label": "Eulach-Brücke Süd",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[69].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:b0db080b",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 850 erfasst?",
+          "options": [
+            "72",
+            "86",
+            "100",
+            "120"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 72 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:72286bae",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 850 eingetragen?",
+          "options": [
+            "St. Gallen",
+            "Thurgau",
+            "Ticino",
+            "Zürich"
+          ],
+          "correct": 0,
+          "explanation": "Bei «St. Gallen» sind 37 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:e1712bfb",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PU 2 Wil",
+            "PU West St.Gallen",
+            "SU Tänikon",
+            "U Bahnhofstrasse"
+          ],
+          "correct": 0,
+          "explanation": "PU 2 Wil besteht aus 4 Baueinheiten, PU West St.Gallen aus 3, U Bahnhofstrasse aus 3 und SU Tänikon aus 3.",
+          "factRef": "bruecken.items[39].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -287,6 +412,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 24 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Tunnel",

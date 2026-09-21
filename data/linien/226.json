@@ -217,6 +217,232 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 34,
+  "nach_kanton": [
+   {
+    "kanton": "Bern",
+    "anzahl": 18
+   },
+   {
+    "kanton": "Jura",
+    "anzahl": 16
+   }
+  ],
+  "meiste_baueinheiten": 5,
+  "mit_meisten": [
+   33
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "Pt sur la Suze Bottière",
+    "km": 49.558,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Corgémont",
+    "km": 49.87,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Pierre-Pertuis",
+    "km": 51.945,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de la Doux",
+    "km": 54.333,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Tavannes",
+    "km": 55.381,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Birse TA",
+    "km": 55.997,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt s/Birse \"La Vauche\"",
+    "km": 56.597,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Birse REC-1",
+    "km": 57.051,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Birse Boillat 1",
+    "km": 57.486,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Birse REC-2",
+    "km": 57.974,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Loveresse",
+    "km": 58.782,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt s/Birse Beau Site",
+    "km": 59.11,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Birse Sapin",
+    "km": 59.645,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt du Pontenet",
+    "km": 60.04,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Birse à Court",
+    "km": 67.417,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "AQ de la Queue",
+    "km": 67.666,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI piét du Chaluet",
+    "km": 67.74,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Le Chaluet",
+    "km": 67.795,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI des Neuf Prés",
+    "km": 69.061,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI Roches de Court",
+    "km": 69.234,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI des Evalins",
+    "km": 71.187,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de la Creuse",
+    "km": 72.271,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI du Pont",
+    "km": 72.562,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de Sur Chaux",
+    "km": 72.788,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI voy Moutier",
+    "km": 73.401,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pont sur la Rauss",
+    "km": 73.558,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de la Charrue",
+    "km": 73.588,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt de Penne",
+    "km": 74.51,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Aq de Roches BE",
+    "km": 75.898,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Aq de Combe-Pierre",
+    "km": 78.216,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI Pertuisat",
+    "km": 80.422,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de Courrendlin",
+    "km": 80.978,
+    "baueinheiten": 3,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de la Ballastière",
+    "km": 81.65,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI voy Delémont",
+    "km": 84.564,
+    "baueinheiten": 5,
+    "kanton": "Jura"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -239,6 +465,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -247,6 +488,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

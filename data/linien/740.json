@@ -99,6 +99,262 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 39,
+  "nach_kanton": [
+   {
+    "kanton": "Zürich",
+    "anzahl": 30
+   },
+   {
+    "kanton": "St. Gallen",
+    "anzahl": 9
+   }
+  ],
+  "meiste_baueinheiten": 4,
+  "mit_meisten": [
+   0
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PU Rapperswil",
+    "km": 59.391,
+    "baueinheiten": 4,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Schönbodenstr.",
+    "km": 60.28,
+    "baueinheiten": 3,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Eichfeldstrasse",
+    "km": 60.618,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Werkstrasse",
+    "km": 61.188,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U + BDu Lattenhofweg",
+    "km": 61.467,
+    "baueinheiten": 2,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu für Fabrikkanal",
+    "km": 61.652,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "Jonabrücke",
+    "km": 61.729,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "U Holzwiesstrasse",
+    "km": 61.771,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "BDu Fabrikkanal",
+    "km": 62.893,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   },
+   {
+    "name": "PU Wiesentalstrasse",
+    "km": 65.793,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU C. Honegger",
+    "km": 65.958,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Jonaviadukt Rüti",
+    "km": 66.135,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du für die Schwarz",
+    "km": 67.954,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Weidlistrasse",
+    "km": 68.051,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Mitte Bubikon",
+    "km": 68.479,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Br Wändhüslebach",
+    "km": 68.891,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Wändhüslen",
+    "km": 69.514,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Zentrum Wetzikon",
+    "km": 74.526,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Morgenstrasse",
+    "km": 74.662,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Aathal",
+    "km": 77.334,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Br über Fabrikkanal",
+    "km": 78.106,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Unterwasser-Kanal",
+    "km": 79.728,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Aabach-Brücke",
+    "km": 79.823,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Brunnenstrasse",
+    "km": 81.259,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Mitte Uster",
+    "km": 81.443,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU West Uster",
+    "km": 81.593,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Dammstrasse",
+    "km": 81.745,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Dammstrasse",
+    "km": 81.75,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Werrikerbach",
+    "km": 83.953,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Stationsstrasse",
+    "km": 84.562,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Verbindungsstrasse",
+    "km": 84.809,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Br über Chimlibach",
+    "km": 86.831,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Schwerzenbach",
+    "km": 87.24,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Schulstrasse",
+    "km": 87.453,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu Klostergraben",
+    "km": 88.377,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Dübendorf",
+    "km": 90.492,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Ueberlandstrasse",
+    "km": 90.688,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Chriesbach-Br.",
+    "km": 91.477,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Winterthurerstr.",
+    "km": 92.377,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -121,6 +377,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -129,6 +400,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

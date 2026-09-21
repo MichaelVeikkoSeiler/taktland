@@ -156,6 +156,138 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 19,
+  "nach_kanton": [
+   {
+    "kanton": "Neuchâtel",
+    "anzahl": 19
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   9
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PI du Ceylard",
+    "km": 6.554,
+    "baueinheiten": 2,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI de Cottendard",
+    "km": 6.979,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI de la Mairesse",
+    "km": 7.689,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI des Trois Rods",
+    "km": 9.36,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI François",
+    "km": 10.374,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "Pt de la Baleine",
+    "km": 16.882,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "Pt du Furcil",
+    "km": 17.273,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "Pt sur Canal du Furcil",
+    "km": 17.326,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "Pt sur La Noiraigue",
+    "km": 17.766,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI de Travers",
+    "km": 22.576,
+    "baueinheiten": 3,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI de la Combe-Bayon",
+    "km": 23.961,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI du Bois de Croix",
+    "km": 24.707,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "Viaduc de Couvet",
+    "km": 26.333,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI de Boveresse",
+    "km": 29.146,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "Viaduc de l'Huguenaz",
+    "km": 32.078,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "Viaduc de la Prise Milord",
+    "km": 32.789,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI des Parcs",
+    "km": 34.48,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI du Haut de la Tour",
+    "km": 36.842,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   },
+   {
+    "name": "PI de Meudon",
+    "km": 40.519,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -178,6 +310,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -186,6 +333,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten",
     "tunnel"
@@ -277,6 +278,130 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 740 sind 39 Brücken erfasst. Als Kanton eingetragen ist «Zürich» bei 30 Brücken und «St. Gallen» bei 9. Aus den meisten Baueinheiten, 4, besteht PU Rapperswil. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 39,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Zürich",
+          "value": 30,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "St. Gallen",
+          "value": 9,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "PU Rapperswil",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "U Schönbodenstr.",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[1].baueinheiten"
+        },
+        {
+          "label": "PU Dübendorf",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[35].baueinheiten"
+        },
+        {
+          "label": "U + BDu Lattenhofweg",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[4].baueinheiten"
+        },
+        {
+          "label": "PU Brunnenstrasse",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[23].baueinheiten"
+        },
+        {
+          "label": "U Dammstrasse",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[27].baueinheiten"
+        },
+        {
+          "label": "Du Werrikerbach",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[28].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:69a76bc5",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 740 erfasst?",
+          "options": [
+            "21",
+            "27",
+            "33",
+            "39"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 39 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:3614fe0a",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 740 eingetragen?",
+          "options": [
+            "Luzern",
+            "St. Gallen",
+            "Vaud",
+            "Zürich"
+          ],
+          "correct": 3,
+          "explanation": "Bei «Zürich» sind 30 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:84ab1edb",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PU Dübendorf",
+            "PU Rapperswil",
+            "U + BDu Lattenhofweg",
+            "U Schönbodenstr."
+          ],
+          "correct": 1,
+          "explanation": "PU Rapperswil besteht aus 4 Baueinheiten, U Schönbodenstr. aus 3, PU Dübendorf aus 3 und U + BDu Lattenhofweg aus 2.",
+          "factRef": "bruecken.items[0].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -299,6 +424,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 10 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 14 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Züge auf der Linie",

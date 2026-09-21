@@ -18,10 +18,13 @@ Was die Daten nicht hergeben (geprüft im Katalog von data.sbb.ch):
 - ein Bau- oder Eröffnungsjahr der Linie. Ein Jahr gibt es nur für Tunnel.
 - ob eine Linie ein- oder mehrspurig ist. Das Tunnelsystem sagt es nur für
   den Tunnel.
+- Länge und Baujahr einer Brücke. Erfasst sind Name, Kilometer, Kanton und
+  die Zahl der Baueinheiten.
 
     .venv/bin/python pipeline/build_linien.py
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -40,7 +43,7 @@ ZIEL = ROOT / "data" / "linien"
 #: gibt es nichts zu ordnen.
 MINDESTENS_BAHNHOEFE = 2
 
-QUELLEN = ["linie", "linie-mit-betriebspunkten", "tunnel"]
+QUELLEN = ["linie", "linie-mit-betriebspunkten", "tunnel", "brucken"]
 
 
 def load(name):
@@ -55,9 +58,10 @@ def num(v):
 
 
 def txt(v):
+    """Text wie in der Quelle, doppelte Leerschläge zu einem («WU Obere  Bauelhaustr.»)."""
     if v is None or pd.isna(v):
         return None
-    s = str(v).strip()
+    s = re.sub(r"\s+", " ", str(v)).strip()
     return s or None
 
 
@@ -86,6 +90,29 @@ def tunnel_items(df):
             "bemerkung": txt(r.bemerkung),
         })
     return items
+
+
+def bruecken_items(df):
+    items = []
+    for _, r in df.sort_values("km").iterrows():
+        items.append({
+            "name": txt(r["name"]),
+            "km": num(r.km),
+            "baueinheiten": num(r.anzahl_baueinheit),
+            "kanton": txt(r.kanton),
+        })
+    return items
+
+
+def nach_kanton(items):
+    """Wie viele Brücken je Eintrag im Feld Kanton, die meisten zuerst.
+    Gezählt hier, nicht im Text."""
+    zaehler = {}
+    for it in items:
+        if it["kanton"]:
+            zaehler[it["kanton"]] = zaehler.get(it["kanton"], 0) + 1
+    return [{"kanton": k, "anzahl": n}
+            for k, n in sorted(zaehler.items(), key=lambda x: (-x[1], x[0]))]
 
 
 def einzige_oder_alle(items, feld, beste):
@@ -128,6 +155,24 @@ def luecken(f):
                f"Die Liste der Betriebspunkte führt für diese Linie {bh['betriebspunkte_erfasst']} "
                "Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
                "linie-mit-betriebspunkten")
+    if f.get("bruecken"):
+        lueckt("Länge und Baujahr der Brücken",
+               "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst "
+               "sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+               "brucken")
+        lueckt("Namen der Brücken",
+               "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder "
+               "«WU». Was diese bedeuten, erklärt die Quelle nicht.",
+               "brucken")
+        lueckt("Stand der Brückendaten",
+               "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch "
+               "«Januar 24», auf Englisch «Jan 2026».",
+               "brucken")
+    else:
+        lueckt("Brücken",
+               "Für diese Linie ist keine Brücke erfasst. Das schliesst nicht aus, "
+               "dass es eine gibt.",
+               "brucken")
     if not f.get("tunnel"):
         lueckt("Tunnel",
                "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, "
@@ -148,6 +193,8 @@ def main():
     bp["uic"] = pd.to_numeric(bp.bpuic, errors="coerce")
     tunnel = load("tunnel")
     tunnel["linie"] = pd.to_numeric(tunnel.linie, errors="coerce")
+    bruecken = load("brucken")
+    bruecken["linie"] = pd.to_numeric(bruecken.linie, errors="coerce")
 
     ZIEL.mkdir(parents=True, exist_ok=True)
     for alt in ZIEL.glob("*.json"):
@@ -199,10 +246,27 @@ def main():
                 "anzahl_aelteste": len(aelteste),
                 "items": items,
             }
+        br = bruecken[bruecken.linie == nr]
+        if not br.empty:
+            items = bruecken_items(br)
+            meiste = einzige_oder_alle(items, "baueinheiten", max)
+            f["bruecken"] = {
+                "source": "brucken",
+                "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht "
+                           "aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+                "anzahl_erfasst": len(items),
+                "nach_kanton": nach_kanton(items),
+                "meiste_baueinheiten": items[meiste[0]]["baueinheiten"] if meiste else None,
+                "mit_meisten": meiste,
+                "anzahl_mit_meisten": len(meiste),
+                "items": items,
+            }
         f["luecken"] = luecken(f)
         mit_kapitel = {"strecke": True, "tunnel": bool(f.get("tunnel")),
+                       "bruecken": bool(f.get("bruecken")),
                        "bahnhoefe": f["bahnhoefe"]["anzahl_in_taktland"] >= MINDESTENS_BAHNHOEFE}
-        f["verfuegbare_kapitel"] = [k for k in ("strecke", "bahnhoefe", "tunnel") if mit_kapitel[k]]
+        f["verfuegbare_kapitel"] = [k for k in ("strecke", "bahnhoefe", "tunnel", "bruecken")
+                                    if mit_kapitel[k]]
         (ZIEL / f"{nr}.json").write_text(json.dumps(f, ensure_ascii=False, indent=1) + "\n",
                                         encoding="utf-8")
         geschrieben += 1

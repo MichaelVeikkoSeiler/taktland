@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten"
   ],
@@ -201,6 +202,86 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 703 sind 20 Brücken erfasst. Als Kanton eingetragen ist «Aargau» bei 10 Brücken und «Zürich» bei 10. Aus den meisten Baueinheiten, 2, bestehen 5 der erfassten Brücken. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 20,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Aargau",
+          "value": 10,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Zürich",
+          "value": 10,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "U Schaffhauserstrasse",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "U Seebacherstrasse",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[2].baueinheiten"
+        },
+        {
+          "label": "PDu Wehntalerstrasse",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[4].baueinheiten"
+        },
+        {
+          "label": "U Wehntalerstrasse",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[5].baueinheiten"
+        },
+        {
+          "label": "Du Furtbach",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[7].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:c2ba0375",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 703 erfasst?",
+          "options": [
+            "17",
+            "20",
+            "24",
+            "28"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 20 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        }
+      ]
     }
   ],
   "luecken": [
@@ -223,6 +304,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 15 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Tunnel",

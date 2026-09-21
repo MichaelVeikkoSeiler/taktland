@@ -89,6 +89,204 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 29,
+  "nach_kanton": [
+   {
+    "kanton": "Zürich",
+    "anzahl": 22
+   },
+   {
+    "kanton": "Schaffhausen",
+    "anzahl": 7
+   }
+  ],
+  "meiste_baueinheiten": 2,
+  "mit_meisten": [
+   2,
+   14,
+   17
+  ],
+  "anzahl_mit_meisten": 3,
+  "items": [
+   {
+    "name": "PDu Weststrasse",
+    "km": 28.558,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Chrebsbach-Brücke",
+    "km": 31.314,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Wiesenbach",
+    "km": 32.419,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Hettlingen",
+    "km": 32.646,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Henggart",
+    "km": 35.033,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Bruggi",
+    "km": 37.402,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Post",
+    "km": 39.228,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Mühlebach",
+    "km": 39.343,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Thurbr. Andelfingen",
+    "km": 40.665,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Klein-Andelfingen",
+    "km": 40.788,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Ossingerstrasse",
+    "km": 41.315,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Steinigrund",
+    "km": 41.863,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU Stigli",
+    "km": 42.177,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Schiterberg",
+    "km": 43.43,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "BDu mit Gehsteg",
+    "km": 45.02,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU zum Talacker",
+    "km": 45.69,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Marthalen",
+    "km": 45.994,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU Fleudenbühl",
+    "km": 46.075,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Abistbach",
+    "km": 47.157,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU Abistbach",
+    "km": 47.178,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU Oberboden",
+    "km": 48.238,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Mülibach",
+    "km": 50.682,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Rheinbrücke b.Laufen",
+    "km": 52.718,
+    "baueinheiten": 1,
+    "kanton": "Schaffhausen"
+   },
+   {
+    "name": "PDu nach Rheinbrücke",
+    "km": 52.793,
+    "baueinheiten": 1,
+    "kanton": "Schaffhausen"
+   },
+   {
+    "name": "U Gaswerkstr.",
+    "km": 53.459,
+    "baueinheiten": 1,
+    "kanton": "Schaffhausen"
+   },
+   {
+    "name": "WU Charlottenfels",
+    "km": 54.755,
+    "baueinheiten": 1,
+    "kanton": "Schaffhausen"
+   },
+   {
+    "name": "Kreuz-Unterführung",
+    "km": 54.918,
+    "baueinheiten": 1,
+    "kanton": "Schaffhausen"
+   },
+   {
+    "name": "PU Schaffhausen Süd",
+    "km": 55.986,
+    "baueinheiten": 1,
+    "kanton": "Schaffhausen"
+   },
+   {
+    "name": "PU Zollrampe",
+    "km": 57.133,
+    "baueinheiten": 1,
+    "kanton": "Schaffhausen"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -111,6 +309,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -119,6 +332,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

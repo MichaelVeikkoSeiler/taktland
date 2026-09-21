@@ -205,6 +205,922 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 147,
+  "nach_kanton": [
+   {
+    "kanton": "Luzern",
+    "anzahl": 65
+   },
+   {
+    "kanton": "Basel-Landschaft",
+    "anzahl": 49
+   },
+   {
+    "kanton": "Aargau",
+    "anzahl": 19
+   },
+   {
+    "kanton": "Solothurn",
+    "anzahl": 8
+   },
+   {
+    "kanton": "Basel-Stadt",
+    "anzahl": 6
+   }
+  ],
+  "meiste_baueinheiten": 8,
+  "mit_meisten": [
+   0
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PU Basel PB",
+    "km": 0.017,
+    "baueinheiten": 8,
+    "kanton": "Basel-Stadt"
+   },
+   {
+    "name": "Leitungskanal",
+    "km": 0.292,
+    "baueinheiten": 1,
+    "kanton": "Basel-Stadt"
+   },
+   {
+    "name": "Zufahrt Postbahnhof Basel",
+    "km": 0.722,
+    "baueinheiten": 1,
+    "kanton": "Basel-Stadt"
+   },
+   {
+    "name": "U N2 Zeughaus",
+    "km": 1.703,
+    "baueinheiten": 1,
+    "kanton": "Basel-Stadt"
+   },
+   {
+    "name": "U Gellertstrasse Süd",
+    "km": 2.389,
+    "baueinheiten": 2,
+    "kanton": "Basel-Stadt"
+   },
+   {
+    "name": "Du+PDu St. Alban",
+    "km": 2.416,
+    "baueinheiten": 2,
+    "kanton": "Basel-Stadt"
+   },
+   {
+    "name": "Birsbrücke 4",
+    "km": 2.707,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Kabelstollen",
+    "km": 4.454,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Muttenz",
+    "km": 4.872,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Rothausstr. Süd 2",
+    "km": 6.061,
+    "baueinheiten": 3,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Überwerfung 03",
+    "km": 7.034,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Salinenstrasse",
+    "km": 8.265,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Pratteln",
+    "km": 8.37,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Schlossstrasse",
+    "km": 8.573,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Fröschmatt",
+    "km": 9.007,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Obermattstrasse",
+    "km": 9.241,
+    "baueinheiten": 3,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Hülftenbachbrücke",
+    "km": 10.729,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Kapellenweg",
+    "km": 11.928,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Frenkendorf",
+    "km": 12.132,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Liestalerstrasse",
+    "km": 12.351,
+    "baueinheiten": 3,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Schauenburgerstrasse",
+    "km": 13.39,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Spitalstrasse",
+    "km": 13.629,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Sichtern",
+    "km": 14.249,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Oristalstrasse",
+    "km": 14.324,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Liestal",
+    "km": 14.347,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Oristalstrasse",
+    "km": 14.443,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Gepäcktunnel",
+    "km": 14.482,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Orisbach",
+    "km": 14.556,
+    "baueinheiten": 3,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Gitterlistrasse",
+    "km": 15.277,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Frenkebrücke",
+    "km": 15.519,
+    "baueinheiten": 3,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "SU Altmarkt",
+    "km": 15.727,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Wiedliackerstrasse",
+    "km": 16.551,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Furlenstrasse",
+    "km": 17.055,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Itingen",
+    "km": 19.139,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Zunzgerstrasse",
+    "km": 20.909,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Diegterbach",
+    "km": 20.941,
+    "baueinheiten": 2,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "SU Burgenrain links",
+    "km": 21.672,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Du Homburgerbach",
+    "km": 22.252,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "SU Schwarze Brücke",
+    "km": 22.529,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "BDu Ergolz",
+    "km": 22.689,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "WU Weiermatt",
+    "km": 22.814,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Tiergartenweg",
+    "km": 23.046,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Bündtenweg",
+    "km": 23.591,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Gelterkinden",
+    "km": 24.063,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Badweg",
+    "km": 24.222,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "BDu Rickenbach",
+    "km": 24.269,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Rickenbacherstr.",
+    "km": 24.318,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Viadukt Gelterkinden",
+    "km": 24.877,
+    "baueinheiten": 7,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Breitiweg",
+    "km": 25.022,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Bodenacherweg",
+    "km": 25.6,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Rütschacherweg",
+    "km": 25.841,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Lettenweg",
+    "km": 26.244,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Tecknauerstrasse",
+    "km": 26.549,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "Du Eibach",
+    "km": 27.195,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "PU Tecknau",
+    "km": 28.142,
+    "baueinheiten": 1,
+    "kanton": "Basel-Landschaft"
+   },
+   {
+    "name": "U Winznauerstrasse",
+    "km": 36.945,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "Aarebrücke Olten",
+    "km": 37.051,
+    "baueinheiten": 3,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "U Industriestrasse",
+    "km": 37.446,
+    "baueinheiten": 2,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "Ueberwerfung Nord",
+    "km": 37.996,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "Gepäcktunnel",
+    "km": 39.403,
+    "baueinheiten": 2,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "Unterführungsstrasse",
+    "km": 39.568,
+    "baueinheiten": 4,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "Gleisstollen",
+    "km": 39.86,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "U Sälistrasse",
+    "km": 39.997,
+    "baueinheiten": 2,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Längacker",
+    "km": 41.443,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Höhe",
+    "km": 41.873,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Rindel",
+    "km": 42.273,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Aarburg",
+    "km": 42.987,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Landstrasse",
+    "km": 43.239,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Brauereiweg",
+    "km": 44.382,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Nigglishüserstrasse",
+    "km": 45.437,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Wirthüslistrasse",
+    "km": 45.545,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Heidgässli",
+    "km": 46.305,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Brühlgässli",
+    "km": 47.148,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Henzmannstrasse",
+    "km": 47.392,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Zofingen Nord",
+    "km": 47.423,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Zofingen Mitte",
+    "km": 47.486,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Zofingen Süd",
+    "km": 47.685,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Strengelbacherstrasse",
+    "km": 47.865,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Brittnauerstrasse",
+    "km": 48.287,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PDu Zelglistrasse",
+    "km": 48.769,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU K 307",
+    "km": 48.86,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Naglerbach",
+    "km": 48.953,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Höchmattstrasse",
+    "km": 50.023,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Bahnhofstrasse",
+    "km": 50.656,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Mehlsecken",
+    "km": 52.357,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Schlosserweg",
+    "km": 52.707,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Reiden",
+    "km": 53.031,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU oberi Wigere",
+    "km": 54.14,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Hürnbach",
+    "km": 55.677,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Dagmersellen",
+    "km": 55.778,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Neumatt",
+    "km": 56.553,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Santenberg",
+    "km": 57.277,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Stämpfelfeld",
+    "km": 57.779,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU K II 44 Nebikon",
+    "km": 58.396,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Nebikon",
+    "km": 58.591,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Judenmatt",
+    "km": 60.092,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Egolzwil",
+    "km": 61.872,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Wauwil",
+    "km": 62.487,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Eymatte",
+    "km": 64.185,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Mooshaag - Acker",
+    "km": 64.983,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Grossacker",
+    "km": 67.151,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Sursee",
+    "km": 69.076,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Wiberlist",
+    "km": 70.238,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU + BDu Oberhof",
+    "km": 70.452,
+    "baueinheiten": 3,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Oberkirch",
+    "km": 71.152,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Kneubühl",
+    "km": 72.266,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU St. Margrethen",
+    "km": 72.74,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Paraplegikerzentrum",
+    "km": 73.119,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Nottwil",
+    "km": 73.744,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Dorfbach Nottwil",
+    "km": 74.087,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Garage Nottwil",
+    "km": 74.397,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Meienbach",
+    "km": 75.813,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Eggerswil",
+    "km": 76.362,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu 76.498",
+    "km": 76.495,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Wartenseetobelbach",
+    "km": 77.563,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Büezwil",
+    "km": 77.671,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "BDu Röllbach",
+    "km": 77.712,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Seehüsli",
+    "km": 78.144,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Unterwalden",
+    "km": 78.328,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Sempach",
+    "km": 78.954,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Sellenbodenbach",
+    "km": 80.151,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Waldbach 1",
+    "km": 80.739,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Buzibach",
+    "km": 84.363,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Rothenburg",
+    "km": 84.566,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Stationsstrasse",
+    "km": 84.717,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WDu Häliswil",
+    "km": 85.224,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Rotbach",
+    "km": 85.46,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Weiherstr. Chörbli",
+    "km": 85.978,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WU Benziwil",
+    "km": 87.765,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Gersagstrasse",
+    "km": 89.087,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Nachtwächterweg",
+    "km": 89.424,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Rüeggisingerstr.",
+    "km": 89.631,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Schützenmattstr.",
+    "km": 89.756,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Emmenbrücke",
+    "km": 90.157,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Seetalstrasse",
+    "km": 90.298,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Brücke üb. Kleine Emme",
+    "km": 90.634,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Reusszopfbrücke",
+    "km": 90.676,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "WDu Reusszopf",
+    "km": 90.707,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Kanaldurchlass",
+    "km": 90.831,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU zur Reussfähre",
+    "km": 91.002,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PDu Reussinsel/ Krienbachkanal",
+    "km": 92.167,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Kreuzstutz",
+    "km": 92.272,
+    "baueinheiten": 4,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Baselstrasse Senti",
+    "km": 92.776,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Gütschbahn",
+    "km": 92.8,
+    "baueinheiten": 3,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Kabelstollen zu HStw",
+    "km": 94.591,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU und Gepäcktunnel",
+    "km": 94.837,
+    "baueinheiten": 4,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "AG/UG Bahnhof Luzern",
+    "km": 95.093,
+    "baueinheiten": 3,
+    "kanton": "Luzern"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -227,6 +1143,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -235,6 +1166,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

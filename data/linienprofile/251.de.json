@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten",
     "tunnel"
@@ -389,6 +390,137 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 251 sind 52 Brücken erfasst. Als Kanton eingetragen ist «Vaud» bei 26 Brücken, «Fribourg» bei 17 und «Bern» bei 9. Aus den meisten Baueinheiten, 9, besteht PI voy Payerne. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 52,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Vaud",
+          "value": 26,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Fribourg",
+          "value": 17,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "Bern",
+          "value": 9,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[2].anzahl"
+        },
+        {
+          "label": "PI voy Payerne",
+          "value": 9,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[24].baueinheiten"
+        },
+        {
+          "label": "Viad de Villangeaux",
+          "value": 5,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[10].baueinheiten"
+        },
+        {
+          "label": "Brücke über Alte Aare",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[44].baueinheiten"
+        },
+        {
+          "label": "Pt de Bressonnaz",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[11].baueinheiten"
+        },
+        {
+          "label": "Aq d'Henniez",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[21].baueinheiten"
+        },
+        {
+          "label": "PU Morat",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[36].baueinheiten"
+        },
+        {
+          "label": "U Bielstrasse",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[50].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:ff812768",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 251 erfasst?",
+          "options": [
+            "44",
+            "52",
+            "62",
+            "73"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 52 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:e7ba733e",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 251 eingetragen?",
+          "options": [
+            "Bern",
+            "Fribourg",
+            "Thurgau",
+            "Vaud"
+          ],
+          "correct": 3,
+          "explanation": "Bei «Vaud» sind 26 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:760db358",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "Brücke über Alte Aare",
+            "PI voy Payerne",
+            "Pt de Bressonnaz",
+            "Viad de Villangeaux"
+          ],
+          "correct": 1,
+          "explanation": "PI voy Payerne besteht aus 9 Baueinheiten, Viad de Villangeaux aus 5, Brücke über Alte Aare aus 4 und Pt de Bressonnaz aus 2.",
+          "factRef": "bruecken.items[24].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -411,6 +543,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 23 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 31 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Züge auf der Linie",

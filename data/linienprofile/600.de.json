@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten",
     "tunnel"
@@ -499,6 +500,130 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 600 sind 511 Brücken erfasst. Als Kanton eingetragen ist «Ticino» bei 325 Brücken, «Uri» bei 116 und «Schwyz» bei 70. Aus den meisten Baueinheiten, 8, besteht Viadukt in Brunnen. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 511,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Ticino",
+          "value": 325,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Uri",
+          "value": 116,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "Schwyz",
+          "value": 70,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[2].anzahl"
+        },
+        {
+          "label": "Viadukt in Brunnen",
+          "value": 8,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[66].baueinheiten"
+        },
+        {
+          "label": "Du Dorfbach Flüelen",
+          "value": 6,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[84].baueinheiten"
+        },
+        {
+          "label": "Rus. sot. Riale Scaretta",
+          "value": 6,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[253].baueinheiten"
+        },
+        {
+          "label": "PU Arth-Goldau Süd",
+          "value": 5,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[41].baueinheiten"
+        },
+        {
+          "label": "Ponte Boggera",
+          "value": 5,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[321].baueinheiten"
+        },
+        {
+          "label": "Sot P Lugano",
+          "value": 5,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[446].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:1a526e6a",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 600 erfasst?",
+          "options": [
+            "360",
+            "430",
+            "511",
+            "610"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 511 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:2f8f2ff9",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 600 eingetragen?",
+          "options": [
+            "Schwyz",
+            "Ticino",
+            "Uri",
+            "Zürich"
+          ],
+          "correct": 1,
+          "explanation": "Bei «Ticino» sind 325 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:54b0ec5d",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "Du Dorfbach Flüelen",
+            "PU Arth-Goldau Süd",
+            "Rus. sot. Riale Scaretta",
+            "Viadukt in Brunnen"
+          ],
+          "correct": 3,
+          "explanation": "Viadukt in Brunnen besteht aus 8 Baueinheiten, Du Dorfbach Flüelen aus 6, Rus. sot. Riale Scaretta aus 6 und PU Arth-Goldau Süd aus 5.",
+          "factRef": "bruecken.items[66].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -521,6 +646,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 32 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 82 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Züge auf der Linie",

@@ -109,6 +109,8 @@ export interface LinienEintrag {
   bahnhoefe: number
   /** erfasste Tunnel */
   tunnel: number
+  /** erfasste Brücken */
+  bruecken: number
 }
 
 export interface LinienVerzeichnis {

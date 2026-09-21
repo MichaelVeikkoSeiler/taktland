@@ -25,7 +25,7 @@ sys.path.insert(0, str(ROOT))
 from baukasten import DATENJAHR, aufzaehlung, ch, punkt, schieber, sortier  # noqa: E402
 from belegt import Faktenbasis  # noqa: E402
 from distraktoren import vorschlaege  # noqa: E402
-from taktland import SAMMELANGABEN, geschenkt, klar_getrennt  # noqa: E402
+from taktland import SAMMELANGABEN, geschenkt, klar_getrennt, zu_nah  # noqa: E402
 
 LINIEN = ROOT / "data" / "linien"
 
@@ -282,8 +282,8 @@ def tunnel(f):
         jahr = items[alt[0]]["inbetriebnahme_jahr"] if alt else None
         # Tunnelnamen ohne Artikel: «bei Galleria Crocetto» statt «der Galleria»
         if alt and len(alt) <= 3 and alt != lang:
-            body += (f" Das früheste Jahr der ersten Inbetriebnahme ist {jahr}, bei "
-                     f"{aufzaehlung([items[i]['name'] for i in alt])}.")
+            body += " " + punkt(f"Das früheste Jahr der ersten Inbetriebnahme ist {jahr}, bei "
+                                f"{aufzaehlung([items[i]['name'] for i in alt])}")
         elif alt and len(alt) > 3:
             body += (f" Das früheste Jahr der ersten Inbetriebnahme ist {jahr}, bei "
                      f"{tu['anzahl_aelteste']} der erfassten Tunnel.")
@@ -336,4 +336,129 @@ def tunnel(f):
     return {"id": "tunnel", "title": "Tunnel", "body": body, "facts": facts, "questions": fr[:3]}
 
 
-BAUER = {"strecke": strecke, "bahnhoefe": bahnhoefe, "tunnel": tunnel}
+# ------------------------------------------------------------------ Brücken
+
+#: Die Beschreibung der Quelle, sinngemäss. Allgemein, ohne Bezug auf die Linie.
+BRUECKE = ("Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis "
+           "führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die "
+           "Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.")
+
+#: So viele Brücken zeigt die Faktenliste höchstens, die mit den meisten
+#: Baueinheiten zuerst. Eine Gruppe mit gleich vielen wird nie angeschnitten.
+BRUECKEN_IN_LISTE = 8
+
+#: Kantone als falsche Antworten, wenn die Linie weniger als vier berührt.
+#: Nur einzelne Kantone: «Aargau / Bern» und «Deutschland» stehen auch im Feld.
+KANTONE_ERSATZ = ["Aargau", "Bern", "Fribourg", "Graubünden", "Luzern", "Solothurn",
+                  "St. Gallen", "Thurgau", "Ticino", "Valais", "Vaud", "Zürich"]
+
+
+def einheiten(n):
+    return f"{n} Baueinheit" if n == 1 else f"{n} Baueinheiten"
+
+
+def gruppen_bis(items, grenze):
+    """Die Brücken mit den meisten Baueinheiten, ganze Gleichstandsgruppen,
+    höchstens `grenze`. Passt schon die erste Gruppe nicht, bleibt die Liste leer."""
+    werte = sorted({it["baueinheiten"] for it in items if it["baueinheiten"]}, reverse=True)
+    gewaehlt = []
+    for w in werte:
+        gruppe = [i for i, it in enumerate(items) if it["baueinheiten"] == w]
+        if len(gewaehlt) + len(gruppe) > grenze:
+            break
+        gewaehlt += gruppe
+    return gewaehlt
+
+
+def bruecken(f):
+    br = f["bruecken"]; nr = f["linie"]; items = br["items"]
+    fb = Faktenbasis(f)
+    n = br["anzahl_erfasst"]
+    kantone = br["nach_kanton"]
+    # zwei Brücken mit demselben Namen (Aarebrücke) trennt der Kilometer
+    namen = [it["name"] for it in items]
+    def nenne(i):
+        it = items[i]
+        return f"{it['name']} (km {km(it['km'])})" if namen.count(it["name"]) > 1 else it["name"]
+
+    if n == 1:
+        it = items[0]
+        body = (f"Für die Linie {nr} ist 1 Brücke erfasst: {it['name']}, "
+                f"{einheiten(it['baueinheiten'])}, bei km {km(it['km'])}.")
+    else:
+        body = f"Für die Linie {nr} sind {n} Brücken erfasst."
+    if len(kantone) == 1 and n == 1:
+        body += f" Als Kanton ist «{kantone[0]['kanton']}» eingetragen."
+    elif len(kantone) == 1:
+        body += f" Als Kanton ist bei jeder erfassten Brücke «{kantone[0]['kanton']}» eingetragen."
+    elif kantone:
+        # das Wort «Brücken» beim ersten Wert: am Ende hiess es «bei 1 Brücken» (Linie 450)
+        erster = kantone[0]
+        teile = [f"«{erster['kanton']}» bei {erster['anzahl']} "
+                 f"{'Brücke' if erster['anzahl'] == 1 else 'Brücken'}"]
+        teile += [f"«{k['kanton']}» bei {k['anzahl']}" for k in kantone[1:]]
+        body += f" Als Kanton eingetragen ist {aufzaehlung(teile)}."
+
+    meiste, mit = br["meiste_baueinheiten"], br["mit_meisten"]
+    if n > 1 and meiste == 1:
+        body += " Jede erfasste Brücke besteht aus 1 Baueinheit."
+    elif n > 1 and len(mit) == 1:
+        # Namen enden manchmal mit Abkürzungspunkt («Schaffhauserstr.»)
+        body += " " + punkt(f"Aus den meisten Baueinheiten, {meiste}, besteht {nenne(mit[0])}")
+    elif n > 1 and len(mit) <= 3:
+        body += " " + punkt(f"Aus den meisten Baueinheiten, {meiste}, bestehen "
+                            f"{aufzaehlung([nenne(i) for i in mit])}")
+    elif n > 1:
+        body += (f" Aus den meisten Baueinheiten, {meiste}, bestehen "
+                 f"{br['anzahl_mit_meisten']} der erfassten Brücken.")
+
+    facts = [{"label": "Erfasste Brücken", "value": n, "source": "brucken",
+              "factRef": "bruecken.anzahl_erfasst"}]
+    if len(kantone) > 1:
+        facts += [{"label": k["kanton"], "value": k["anzahl"], "unit": "Brücken",
+                   "source": "brucken", "factRef": f"bruecken.nach_kanton[{j}].anzahl"}
+                  for j, k in enumerate(kantone)]
+    gezeigt = gruppen_bis(items, BRUECKEN_IN_LISTE) if n > 1 and meiste and meiste > 1 else []
+    facts += [{"label": nenne(i), "value": items[i]["baueinheiten"], "unit": "Baueinheiten",
+               "source": "brucken", "factRef": f"bruecken.items[{i}].baueinheiten"}
+              for i in gezeigt]
+    if gezeigt and len(gezeigt) < n:
+        body += " Die Liste zeigt die Brücken mit den meisten Baueinheiten."
+
+    fr = []
+    frei, alle = vorschlaege(f"B{nr}", n, 3, fb=fb)
+    opts = [ch(x) for x in sorted({n, *frei})]
+    fr.append(auswahl_frage(f"Wie viele Brücken sind für die Linie {nr} erfasst?", opts, ch(n),
+                            f"Erfasst sind {n} Brücken. Die Zahl gibt wieder, was in den offenen "
+                            "Daten steht." if n > 1 else "Erfasst ist 1 Brücke.",
+                            "bruecken.anzahl_erfasst", aus_fakten=not alle))
+
+    # Kanton mit den meisten Brücken: nur mit klarem Vorsprung
+    if len(kantone) >= 2 and not zu_nah(kantone[0]["anzahl"], kantone[1]["anzahl"]):
+        eigene = [k["kanton"] for k in kantone]
+        ersatz = [k for k in KANTONE_ERSATZ if k not in eigene]
+        start = streuung(f"{nr}:kanton", len(ersatz))
+        dazu = [ersatz[(start + j * 5) % len(ersatz)] for j in range(max(0, 4 - len(eigene)))]
+        fr.append(auswahl_frage(
+            f"Welcher Kanton ist bei den meisten Brücken der Linie {nr} eingetragen?",
+            (eigene[:4] + dazu)[:4] if kantone[0]["kanton"] in eigene[:4] else eigene[:4],
+            kantone[0]["kanton"],
+            f"Bei «{kantone[0]['kanton']}» sind {kantone[0]['anzahl']} der erfassten Brücken eingetragen.",
+            "bruecken.nach_kanton[0].kanton", diff=2))
+
+    # Die Brücke mit den meisten Baueinheiten, gegen andere aus der Liste
+    if len(mit) == 1 and gezeigt:
+        andere = [i for i in gezeigt if i != mit[0] and namen.count(items[i]["name"]) == 1]
+        if len(andere) >= 1 and namen.count(items[mit[0]]["name"]) == 1:
+            wahl = andere[:3]
+            fr.append(auswahl_frage(
+                "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+                [items[i]["name"] for i in [mit[0], *wahl]], items[mit[0]]["name"],
+                f"{items[mit[0]]['name']} besteht aus {meiste} Baueinheiten, "
+                + aufzaehlung([f"{items[i]['name']} aus {items[i]['baueinheiten']}" for i in wahl]) + ".",
+                f"bruecken.items[{mit[0]}].name", diff=2))
+    return {"id": "bruecken", "title": "Brücken", "body": body, "facts": facts,
+            "erlaeuterung": BRUECKE, "questions": fr[:3]}
+
+
+BAUER = {"strecke": strecke, "bahnhoefe": bahnhoefe, "tunnel": tunnel, "bruecken": bruecken}

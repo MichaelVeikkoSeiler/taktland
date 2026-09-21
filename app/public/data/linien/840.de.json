@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten"
   ],
@@ -265,6 +266,137 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 840 sind 72 Brücken erfasst. Als Kanton eingetragen ist «Thurgau» bei 59 Brücken und «Zürich» bei 13. Aus den meisten Baueinheiten, 4, besteht Du Riedbach. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 72,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Thurgau",
+          "value": 59,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[0].anzahl"
+        },
+        {
+          "label": "Zürich",
+          "value": 13,
+          "unit": "Brücken",
+          "source": "brucken",
+          "factRef": "bruecken.nach_kanton[1].anzahl"
+        },
+        {
+          "label": "Du Riedbach",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[5].baueinheiten"
+        },
+        {
+          "label": "Du Kellenbinzbach",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[17].baueinheiten"
+        },
+        {
+          "label": "Murgbrücke",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[21].baueinheiten"
+        },
+        {
+          "label": "Thurbrücke Müllheim",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[37].baueinheiten"
+        },
+        {
+          "label": "PU Weinfelden",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[49].baueinheiten"
+        },
+        {
+          "label": "SU KVA Weinfelden",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[51].baueinheiten"
+        },
+        {
+          "label": "BDu Neumüli",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[64].baueinheiten"
+        },
+        {
+          "label": "Aach-Brücke",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[69].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:40a41702",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 840 erfasst?",
+          "options": [
+            "50",
+            "61",
+            "72",
+            "86"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 72 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:095ce535",
+          "type": "single_choice",
+          "prompt": "Welcher Kanton ist bei den meisten Brücken der Linie 840 eingetragen?",
+          "options": [
+            "Luzern",
+            "Thurgau",
+            "Vaud",
+            "Zürich"
+          ],
+          "correct": 1,
+          "explanation": "Bei «Thurgau» sind 59 der erfassten Brücken eingetragen.",
+          "factRef": "bruecken.nach_kanton[0].kanton",
+          "difficulty": 2
+        },
+        {
+          "id": "bruecken:4667f90a",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "Du Kellenbinzbach",
+            "Du Riedbach",
+            "Murgbrücke",
+            "Thurbrücke Müllheim"
+          ],
+          "correct": 1,
+          "explanation": "Du Riedbach besteht aus 4 Baueinheiten, Du Kellenbinzbach aus 2, Murgbrücke aus 2 und Thurbrücke Müllheim aus 2.",
+          "factRef": "bruecken.items[5].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -287,6 +419,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 22 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Tunnel",

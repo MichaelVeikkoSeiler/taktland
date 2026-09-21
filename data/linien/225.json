@@ -171,6 +171,214 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 31,
+  "nach_kanton": [
+   {
+    "kanton": "Bern",
+    "anzahl": 30
+   },
+   {
+    "kanton": "Neuchâtel",
+    "anzahl": 1
+   }
+  ],
+  "meiste_baueinheiten": 9,
+  "mit_meisten": [
+   0
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "Pt Canal de la Suze",
+    "km": 34.178,
+    "baueinheiten": 9,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI Lindenpromenade",
+    "km": 34.288,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI du Pasquart",
+    "km": 34.531,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI chemin d' Evilard",
+    "km": 35.453,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Höhenweg",
+    "km": 35.671,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI du Stand",
+    "km": 36.158,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Falbringen",
+    "km": 36.231,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Mahlenwald",
+    "km": 37.526,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt du Taubenloch",
+    "km": 37.829,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Frinvillier",
+    "km": 39.044,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Aq de Reuchenette II",
+    "km": 42.218,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt Suze le Paradis",
+    "km": 44.666,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt Suze Sessenais",
+    "km": 45.204,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Aq sur la Juste",
+    "km": 47.009,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt du Tournedos",
+    "km": 47.375,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Pourpoint",
+    "km": 47.995,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI voy Sonceboz",
+    "km": 48.291,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI d'Oupelière",
+    "km": 49.572,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Suze Les Rios",
+    "km": 52.484,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Courtelary",
+    "km": 56.485,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt sur Suze Raissette",
+    "km": 57.736,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Pt et PI sur La Doux",
+    "km": 58.772,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Villeret",
+    "km": 60.657,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI rte de Villeret",
+    "km": 61.182,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI des Longines",
+    "km": 62.396,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de St Imier",
+    "km": 62.537,
+    "baueinheiten": 4,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Viad de Fourchaux",
+    "km": 64.192,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI La Charbonnière",
+    "km": 66.324,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Renan I",
+    "km": 68.787,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI de Renan II",
+    "km": 70.319,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PI des Crosettes",
+    "km": 76.413,
+    "baueinheiten": 1,
+    "kanton": "Neuchâtel"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -193,6 +401,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -201,6 +424,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

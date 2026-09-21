@@ -147,6 +147,537 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 84,
+  "nach_kanton": [
+   {
+    "kanton": "Zug",
+    "anzahl": 38
+   },
+   {
+    "kanton": "Zürich",
+    "anzahl": 27
+   },
+   {
+    "kanton": "Luzern",
+    "anzahl": 19
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   30,
+   34
+  ],
+  "anzahl_mit_meisten": 2,
+  "items": [
+   {
+    "name": "Überwerf. Thalwil",
+    "km": 12.693,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Zehntenstrasse",
+    "km": 12.914,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Vogelbachweg",
+    "km": 13.171,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Bürgertobel",
+    "km": 13.497,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Tischenloostrasse",
+    "km": 13.542,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Grenzbach links",
+    "km": 13.917,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Grenzbach rechts",
+    "km": 13.935,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Grenzbach links",
+    "km": 13.984,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Bruggerstrasse",
+    "km": 14.098,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Vi Oberrieden rechts",
+    "km": 14.234,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Stünziweg links",
+    "km": 14.271,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Winkelhaldenstr.",
+    "km": 14.377,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Oberrieden Dorf",
+    "km": 14.505,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U alte Landstrasse",
+    "km": 14.748,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Püntstrasse",
+    "km": 14.834,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Bleierstrasse",
+    "km": 15.107,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU Tannenbach",
+    "km": 15.568,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Hernerholzgasse",
+    "km": 16.153,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Tödistrasse",
+    "km": 16.327,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Spätzstrasse",
+    "km": 16.559,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PU Horgen Oberdorf",
+    "km": 16.818,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Neugasse",
+    "km": 16.967,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Töbelibach",
+    "km": 19.179,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Steinkrattenweg",
+    "km": 19.508,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Sihlbrücke Gl rechts",
+    "km": 19.605,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Sihlbrücke Gl links",
+    "km": 19.612,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Kellerbodenbach",
+    "km": 19.946,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "WU und BDu Litti",
+    "km": 23.737,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PDu Bofeld",
+    "km": 24.259,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Lorzeviadukt",
+    "km": 25.478,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Du Mühlebach",
+    "km": 26.017,
+    "baueinheiten": 3,
+    "kanton": "Zug"
+   },
+   {
+    "name": "SU Mühlegasse",
+    "km": 26.054,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Vi alte Str. zugeschüttet",
+    "km": 26.086,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "SU Neugasse",
+    "km": 26.445,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Bahnhof Baar",
+    "km": 26.641,
+    "baueinheiten": 3,
+    "kanton": "Zug"
+   },
+   {
+    "name": "U Asylstrasse",
+    "km": 26.848,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "SU Altgasse",
+    "km": 27.272,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "WU Unterfeld",
+    "km": 27.791,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Baar Lindenpark",
+    "km": 28.193,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "U Feldstrasse",
+    "km": 28.513,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Zug West",
+    "km": 38.85,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "U Galerie West Zug",
+    "km": 38.867,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Zug Süd",
+    "km": 38.88,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "U Dammstrasse",
+    "km": 38.983,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Vi Aabachstrasse",
+    "km": 39.127,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Du Siehbach",
+    "km": 39.436,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "U Allmendstrasse",
+    "km": 39.558,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "U alte Chamerstrasse",
+    "km": 39.747,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "U neue Chamerstrasse",
+    "km": 39.791,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Br über Lorzemündung",
+    "km": 40.283,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "SU Lorzen",
+    "km": 40.593,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Chollermüli",
+    "km": 41.283,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU+BDu Lorze",
+    "km": 41.414,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "SU Kollermühle",
+    "km": 41.47,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Du Sumpfbach",
+    "km": 42.09,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "SU Hirsgarten / Seestrasse",
+    "km": 43.151,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Br über die Lorze",
+    "km": 43.207,
+    "baueinheiten": 2,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Cham",
+    "km": 43.554,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Cham Süd",
+    "km": 43.684,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "SU Chemleten",
+    "km": 44.371,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "U+LDu Dersbach",
+    "km": 45.394,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Rotkreuz",
+    "km": 48.986,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU für Kleinverkehr",
+    "km": 49.136,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Du Gemeindekanal",
+    "km": 49.408,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "Du km 50.348",
+    "km": 50.356,
+    "baueinheiten": 1,
+    "kanton": "Zug"
+   },
+   {
+    "name": "PU Gisikon-Root",
+    "km": 52.863,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Perlenstrasse",
+    "km": 53.599,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Rösslimatte",
+    "km": 53.752,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Root-Oberdorf",
+    "km": 53.983,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Morgenrotbach",
+    "km": 54.202,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Bäumlibach",
+    "km": 54.776,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Längenbold",
+    "km": 55.253,
+    "baueinheiten": 2,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Götzentalbach",
+    "km": 55.691,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Leisibach",
+    "km": 55.845,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Du Grenzbach",
+    "km": 56.742,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "U Moosstrasse",
+    "km": 57.176,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Weichlen",
+    "km": 58.33,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU K II 65",
+    "km": 58.45,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Ebikon",
+    "km": 58.594,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Mühlebach-Brücke",
+    "km": 58.722,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "PU Risch",
+    "km": 58.812,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Seehof",
+    "km": 61.114,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "SU Sedel",
+    "km": 62.781,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   },
+   {
+    "name": "Reussbrücke Luzern",
+    "km": 63.654,
+    "baueinheiten": 1,
+    "kanton": "Luzern"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -169,6 +700,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -177,6 +723,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

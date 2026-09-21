@@ -62,6 +62,72 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 8,
+  "nach_kanton": [
+   {
+    "kanton": "Zürich",
+    "anzahl": 8
+   }
+  ],
+  "meiste_baueinheiten": 7,
+  "mit_meisten": [
+   3
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "Letzigrabenbrücke",
+    "km": 197.38,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Güterverwaltung",
+    "km": 198.925,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Kohlendreieckbrücke",
+    "km": 199.112,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Längskanal 1",
+    "km": 200.295,
+    "baueinheiten": 7,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Querkanal K3",
+    "km": 200.433,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Gepäcktunnel 2",
+    "km": 200.555,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Halle Sihlpost",
+    "km": 200.571,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Querkanal K1",
+    "km": 200.639,
+    "baueinheiten": 3,
+    "kanton": "Zürich"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -84,6 +150,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -91,6 +172,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

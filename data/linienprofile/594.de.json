@@ -175,6 +175,11 @@
       "quelle": "linie-mit-betriebspunkten"
     },
     {
+      "thema": "Brücken",
+      "grund": "Für diese Linie ist keine Brücke erfasst. Das schliesst nicht aus, dass es eine gibt.",
+      "quelle": "brucken"
+    },
+    {
       "thema": "Züge auf der Linie",
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"

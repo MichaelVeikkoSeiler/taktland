@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten",
     "tunnel"
@@ -249,6 +250,108 @@
           "difficulty": 2
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 111 sind 8 Brücken erfasst. Als Kanton ist bei jeder erfassten Brücke «Vaud» eingetragen. Aus den meisten Baueinheiten, 4, besteht Pt de Chexbres.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 8,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "Pt de Chexbres",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[4].baueinheiten"
+        },
+        {
+          "label": "PI de Burignon",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[1].baueinheiten"
+        },
+        {
+          "label": "PI de la Bergère",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "Pt de la Salance",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[2].baueinheiten"
+        },
+        {
+          "label": "Pt de Chardonne",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[3].baueinheiten"
+        },
+        {
+          "label": "Pt du Forestay 1",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[5].baueinheiten"
+        },
+        {
+          "label": "Pt du Forestay 2",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[6].baueinheiten"
+        },
+        {
+          "label": "Pt du Forestay 3",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[7].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:7063d44c",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 111 erfasst?",
+          "options": [
+            "8",
+            "10",
+            "11",
+            "14"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 8 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:b101a534",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PI de Burignon",
+            "PI de la Bergère",
+            "Pt de Chexbres",
+            "Pt de la Salance"
+          ],
+          "correct": 2,
+          "explanation": "Pt de Chexbres besteht aus 4 Baueinheiten, PI de Burignon aus 3, PI de la Bergère aus 1 und Pt de la Salance aus 1.",
+          "factRef": "bruecken.items[4].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -271,6 +374,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 4 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 6 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Züge auf der Linie",

@@ -61,6 +61,139 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 19,
+  "nach_kanton": [
+   {
+    "kanton": "Solothurn",
+    "anzahl": 19
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   0,
+   6
+  ],
+  "anzahl_mit_meisten": 2,
+  "items": [
+   {
+    "name": "U Tannwaldstrasse",
+    "km": 40.798,
+    "baueinheiten": 3,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Hasliweg",
+    "km": 41.663,
+    "baueinheiten": 2,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "U Grundstrasse",
+    "km": 42.042,
+    "baueinheiten": 2,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Härdli",
+    "km": 42.64,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Dulliken",
+    "km": 42.93,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "SU Gösgerstrasse",
+    "km": 43.33,
+    "baueinheiten": 2,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "SU+PU Postzentrum",
+    "km": 44.717,
+    "baueinheiten": 3,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "U Zentralstrasse",
+    "km": 45.603,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "U Dorfbach",
+    "km": 45.99,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "SU Gretzenbach",
+    "km": 46.634,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "BDu Gretzenbach",
+    "km": 46.811,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "U Parkweg",
+    "km": 47.018,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "SU Bally AG",
+    "km": 48.051,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Schönenwerd",
+    "km": 48.143,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Bahnhofstrasse",
+    "km": 48.201,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "U Gösgerstrasse",
+    "km": 48.464,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Villenstrasse",
+    "km": 48.636,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "PU Weiermattstrasse",
+    "km": 48.946,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   },
+   {
+    "name": "SU Stauwehrstrasse",
+    "km": 49.368,
+    "baueinheiten": 1,
+    "kanton": "Solothurn"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -83,6 +216,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -91,6 +239,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

@@ -73,6 +73,341 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 52,
+  "nach_kanton": [
+   {
+    "kanton": "Aargau",
+    "anzahl": 46
+   },
+   {
+    "kanton": "Zürich",
+    "anzahl": 6
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   28,
+   48
+  ],
+  "anzahl_mit_meisten": 2,
+  "items": [
+   {
+    "name": "U Dachsbergstrasse",
+    "km": 22.627,
+    "baueinheiten": 2,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Wissengraben",
+    "km": 24.922,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Glattbrücke Zweidlen",
+    "km": 25.49,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "PDu Rheinsfelderstr.",
+    "km": 25.869,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "U Rheinsfelderstr.",
+    "km": 25.879,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "SU Kieswerk",
+    "km": 27.548,
+    "baueinheiten": 1,
+    "kanton": "Zürich"
+   },
+   {
+    "name": "Du Fisibach",
+    "km": 31.392,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K131",
+    "km": 31.485,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Studen",
+    "km": 33.212,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Bergstrasse",
+    "km": 34.418,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Steinbruch",
+    "km": 35.113,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U OV-Strasse 163",
+    "km": 35.644,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Tägerbach",
+    "km": 35.657,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "BDu in Mellikon",
+    "km": 36.222,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Rekingen",
+    "km": 38.11,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Chrüzlibach",
+    "km": 38.371,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PDu Längg",
+    "km": 38.583,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Landstrasse R Burg",
+    "km": 40.897,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Zurzach",
+    "km": 41.014,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Bad Zurzach",
+    "km": 41.425,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Landstrasse R",
+    "km": 42.042,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Im Dorf Rietheim",
+    "km": 43.316,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Landstr.R Rietheim",
+    "km": 43.936,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstrasse K131",
+    "km": 45.45,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Im Dorf Koblenz",
+    "km": 47.048,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Sägerei",
+    "km": 47.227,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Sägerei",
+    "km": 47.281,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Gütschhalde",
+    "km": 47.965,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Steingraben K701",
+    "km": 47.976,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "PU Koblenz",
+    "km": 48.358,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K113",
+    "km": 48.629,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du für Binnenkanal",
+    "km": 48.697,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Aarebrücke Koblenz",
+    "km": 49.055,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K448",
+    "km": 49.269,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Landstrasse E1",
+    "km": 50.281,
+    "baueinheiten": 2,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Grossacker",
+    "km": 52.817,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU im Seel",
+    "km": 53.351,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Burgäuli",
+    "km": 54.48,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU bei Leibstadt",
+    "km": 54.958,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Weihermatten",
+    "km": 58.576,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Mettauerbach",
+    "km": 61.029,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Rheintalstrasse",
+    "km": 61.17,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K456",
+    "km": 63.227,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Sulzerbach",
+    "km": 63.25,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Landstrasse E3",
+    "km": 64.727,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Kantonsstr. K463",
+    "km": 67.558,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Du Kaisterbach",
+    "km": 67.837,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "WU Im Bord",
+    "km": 71.219,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "Sisselnbachbrücke",
+    "km": 71.28,
+    "baueinheiten": 3,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "SU Zubringer N3",
+    "km": 71.401,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "U Rohrmattweg",
+    "km": 73.127,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   },
+   {
+    "name": "BDu Münchwilen",
+    "km": 73.258,
+    "baueinheiten": 1,
+    "kanton": "Aargau"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -95,6 +430,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Tunnel",
    "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
    "quelle": "tunnel"
@@ -107,6 +457,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "bruecken"
  ]
 }

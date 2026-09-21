@@ -112,14 +112,15 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Das sind keine Zuglinien wie eine S-Bahn.
           </li>
           <li>
-            Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach ihrem Kilometer geordnet
-            und die erfassten Tunnel mit Länge, Jahr der ersten Inbetriebnahme und
-            Tunnelsystem. Jeder Bahnhof in der Liste führt zu seiner Seite, und die
-            Bahnhofsseite führt zu seinen Linien.
+            Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach ihrem Kilometer geordnet,
+            die erfassten Tunnel mit Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem
+            und die erfassten Brücken mit Kanton und Zahl der Baueinheiten. Jeder Bahnhof in
+            der Liste führt zu seiner Seite, und die Bahnhofsseite führt zu seinen Linien.
           </li>
           <li>
             Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Länge, Baujahr und
-            Anzahl Gleise einer Linie stehen nicht in den offenen Daten.
+            Anzahl Gleise einer Linie stehen nicht in den offenen Daten, ebenso wenig Länge und
+            Baujahr der Brücken.
           </li>
         </Punkte>
       </Abschnitt>

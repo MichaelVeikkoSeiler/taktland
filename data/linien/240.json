@@ -151,6 +151,186 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 27,
+  "nach_kanton": [
+   {
+    "kanton": "Jura",
+    "anzahl": 27
+   }
+  ],
+  "meiste_baueinheiten": 3,
+  "mit_meisten": [
+   1
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "Pt sur le Chatillon dr",
+    "km": 87.657,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Aq Le Noir Bois",
+    "km": 89.342,
+    "baueinheiten": 3,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI Bassecourt",
+    "km": 93.523,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt de La Sorne",
+    "km": 93.994,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Aq sur le Tabeillon",
+    "km": 95.119,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI des Croisées",
+    "km": 95.395,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de Montmelon",
+    "km": 99.59,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Viad de Malvie",
+    "km": 100.389,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Viaduc de Combe Maran",
+    "km": 101.346,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI St Ursanne",
+    "km": 101.744,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI du Château",
+    "km": 102.445,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI du Borbet",
+    "km": 107.534,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de Courgenay",
+    "km": 108.572,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Aq de Voyeboeuf",
+    "km": 111.75,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Viad de Porrentruy",
+    "km": 112.536,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de St Germain",
+    "km": 112.637,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI voy Porrentruy",
+    "km": 112.892,
+    "baueinheiten": 2,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI de la Rochette",
+    "km": 113.309,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt de Bellevue",
+    "km": 113.444,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt Sous le Fahy",
+    "km": 115.117,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt de la Colombière",
+    "km": 119.272,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Aq sur Canal",
+    "km": 120.43,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Aq du Buix",
+    "km": 121.516,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI Prairie-Dessous",
+    "km": 121.962,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt Sous les Cantons",
+    "km": 122.536,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "PI voy Boncourt",
+    "km": 123.374,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   },
+   {
+    "name": "Pt Burrus",
+    "km": 124.136,
+    "baueinheiten": 1,
+    "kanton": "Jura"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -168,6 +348,21 @@
    "quelle": "linie, tunnel"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -176,6 +371,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }

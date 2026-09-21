@@ -4,6 +4,7 @@
   "lang": "de",
   "generated": "2026-09-21",
   "sources": [
+    "brucken",
     "linie",
     "linie-mit-betriebspunkten"
   ],
@@ -120,6 +121,87 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 451 sind 5 Brücken erfasst. Als Kanton ist bei jeder erfassten Brücke «Aargau» eingetragen. Aus den meisten Baueinheiten, 3, besteht PU Rothrist.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 5,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst"
+        },
+        {
+          "label": "PU Rothrist",
+          "value": 3,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[4].baueinheiten"
+        },
+        {
+          "label": "Wiggerbrücke",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[2].baueinheiten"
+        },
+        {
+          "label": "U Aarburgerstrasse",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[3].baueinheiten"
+        },
+        {
+          "label": "Tychbachbrücke",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten"
+        },
+        {
+          "label": "PU und Du Brühlbach",
+          "value": 1,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[1].baueinheiten"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:13f62f18",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 451 erfasst?",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 5 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "bruecken:b101a534",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PU Rothrist",
+            "Tychbachbrücke",
+            "U Aarburgerstrasse",
+            "Wiggerbrücke"
+          ],
+          "correct": 0,
+          "explanation": "PU Rothrist besteht aus 3 Baueinheiten, Wiggerbrücke aus 2, U Aarburgerstrasse aus 2 und Tychbachbrücke aus 1.",
+          "factRef": "bruecken.items[4].name",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -142,6 +224,21 @@
       "thema": "Weitere Betriebspunkte",
       "grund": "Aufgeführt sind die 2 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 4 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
       "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
     },
     {
       "thema": "Tunnel",

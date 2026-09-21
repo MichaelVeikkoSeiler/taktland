@@ -141,7 +141,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
         <span className="min-w-0">
           <span className="block font-medium text-sbb-black dark:text-sbb-white">Linien</span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-            Strecken mit ihren Bahnhöfen und Tunneln
+            Strecken mit ihren Bahnhöfen, Tunneln und Brücken
           </span>
         </span>
         <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">→</span>

@@ -156,6 +156,344 @@
    }
   ]
  },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 52,
+  "nach_kanton": [
+   {
+    "kanton": "Vaud",
+    "anzahl": 26
+   },
+   {
+    "kanton": "Fribourg",
+    "anzahl": 17
+   },
+   {
+    "kanton": "Bern",
+    "anzahl": 9
+   }
+  ],
+  "meiste_baueinheiten": 9,
+  "mit_meisten": [
+   24
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "PI de Teisigue",
+    "km": 22.092,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI des Charbonneyres",
+    "km": 22.918,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur la Mionnaz",
+    "km": 23.95,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt de Châtillens",
+    "km": 25.627,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt du Grenet",
+    "km": 26.182,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI d'Eschiens",
+    "km": 29.595,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "Pt de Parimbot",
+    "km": 29.943,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI d'Ecublens-Rue",
+    "km": 30.343,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI Voyageurs",
+    "km": 30.59,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI d'Écublens (FR)",
+    "km": 31.188,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "Viad de Villangeaux",
+    "km": 33.205,
+    "baueinheiten": 5,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "Pt de Bressonnaz",
+    "km": 35.881,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Bressonnaz",
+    "km": 36.112,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Grand Clos",
+    "km": 37.586,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur Broye à Moudon",
+    "km": 37.784,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Aq de la Maladaire",
+    "km": 41.165,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Aq de la Cerjaulaz",
+    "km": 43.222,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Voyageurs",
+    "km": 43.42,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI de la Caseine",
+    "km": 43.956,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PT s/Broye Aux Isles",
+    "km": 45.744,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt des XIII Cantons",
+    "km": 46.462,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "Aq d'Henniez",
+    "km": 48.502,
+    "baueinheiten": 2,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt de Granges-Marnand",
+    "km": 50.536,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt de Trey",
+    "km": 52.305,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI voy Payerne",
+    "km": 58.446,
+    "baueinheiten": 9,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI du Stade",
+    "km": 59.002,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt Planchettaz nord",
+    "km": 59.784,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Aqueduc de l'Arbogne",
+    "km": 59.803,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur Arbogne",
+    "km": 62.9,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur La Longeaigue",
+    "km": 67.632,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Piétons Villars-le-Grand",
+    "km": 68.25,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI RC 505 Avenches",
+    "km": 70.479,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "Pt sur le Chandon",
+    "km": 71.06,
+    "baueinheiten": 1,
+    "kanton": "Vaud"
+   },
+   {
+    "name": "PI Piet Greng",
+    "km": 74.031,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PI Obélisque",
+    "km": 75.21,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "U von Murten",
+    "km": 75.929,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PU Morat",
+    "km": 76.546,
+    "baueinheiten": 2,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "WU Schützenmatte",
+    "km": 77.507,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "WU Schintergässli",
+    "km": 78.608,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "WU Perreten",
+    "km": 81.407,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "U Biberenbach",
+    "km": 83.605,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "PU Kerzers SBB",
+    "km": 84.833,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "SU Aegerten",
+    "km": 85.391,
+    "baueinheiten": 1,
+    "kanton": "Fribourg"
+   },
+   {
+    "name": "Hagneckkanal-Brücke",
+    "km": 94.696,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Brücke über Alte Aare",
+    "km": 95.025,
+    "baueinheiten": 4,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Aarberg",
+    "km": 95.534,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Austrasse",
+    "km": 98.411,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Kappelenstrasse",
+    "km": 98.625,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "PU Lyss Grien",
+    "km": 99.068,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "WU Waffenplatz",
+    "km": 99.502,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   },
+   {
+    "name": "U Bielstrasse",
+    "km": 99.898,
+    "baueinheiten": 2,
+    "kanton": "Bern"
+   },
+   {
+    "name": "Du Lyssbach",
+    "km": 100.08,
+    "baueinheiten": 1,
+    "kanton": "Bern"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -178,6 +516,21 @@
    "quelle": "linie-mit-betriebspunkten"
   },
   {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
    "thema": "Züge auf der Linie",
    "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
    "quelle": "linie"
@@ -186,6 +539,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
-  "tunnel"
+  "tunnel",
+  "bruecken"
  ]
 }
