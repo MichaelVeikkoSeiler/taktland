@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -12,7 +12,6 @@
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -26,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Arth-Goldau rund 19'700 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es rund 20'100. An einem freien Tag liegt der Wert bei rund 21'000. Infrastrukturbetreiberin ist die SBB, Züge fahren hier von SBB und SOB.",
+      "body": "An einem Werktag steigen in Arth-Goldau 19'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 20'100, an einem freien Tag 21'000. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne RB.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -50,49 +49,30 @@
           "factRef": "steckbrief.dnwv"
         },
         {
-          "label": "Bahnunternehmen",
-          "value": "SBB, SOB",
+          "label": "Abgrenzung der Zahl",
+          "value": "Ohne RB.",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.evu"
+          "factRef": "steckbrief.bemerkung"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:c1b164e3",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Arth-Goldau ein und aus (2025)?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Arth-Goldau ein und aus?",
           "options": [
-            "7'900",
-            "11'000",
             "14'000",
-            "19'700"
+            "17'000",
+            "19'700",
+            "24'000"
           ],
-          "correct": 3,
-          "explanation": "An einem Werktag sind es rund 19'700 Personen, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 19'700 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "An einem freien Tag steigen in Arth-Goldau rund 21'000 Personen ein und aus.",
-          "correct": true,
-          "explanation": "Der Wert für freie Tage (dnwv) beträgt 21'000 Personen, Stand 2025.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 1
-        },
-        {
-          "type": "cloze",
-          "prompt": "Im Tagesmittel über das ganze Jahr steigen in Arth-Goldau rund ___ Personen ein und aus.",
-          "options": [
-            "8'000",
-            "11'000",
-            "20'100"
-          ],
-          "correct": 2,
-          "explanation": "Der Tagesmittelwert (dtv) liegt bei 20'100 Personen, Stand 2025.",
-          "factRef": "steckbrief.dtv",
-          "difficulty": 2
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -108,9 +88,9 @@
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2023",
+              "label": "2024",
               "value": 18500,
-              "factRef": "steckbrief.verlauf[2].dwv"
+              "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
               "label": "2025",
@@ -118,16 +98,39 @@
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
-          "explanation": "Die erfassten Werte, aufsteigend: 14'400 (2018), 16'800 (2022), 18'500 (2023), 19'700 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 14'400 (2018), 16'800 (2022), 18'500 (2024), 19'700 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:cda19a7e",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Arth-Goldau ___ Personen ein und aus.",
+          "options": [
+            "21'000",
+            "25'000",
+            "29'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 21'000 Personen, an einem Werktag 19'700. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
           "difficulty": 2
+        },
+        {
+          "id": "steckbrief:72c897ed",
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Arth-Goldau umfasst auch RB.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne RB.». Wofür RB steht, führt sie nicht aus.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Arth-Goldau liegt auf 510 Metern über Meer, in der Ortschaft Goldau der Gemeinde Arth. Die offizielle Abkürzung lautet GD, Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "body": "Arth-Goldau liegt auf 510 Metern über Meer in der Gemeinde Arth, Bezirk Schwyz, Kanton Schwyz. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet GD.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -137,7 +140,7 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Abkürzung",
+          "label": "Offizielle Abkürzung",
           "value": "GD",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
@@ -151,47 +154,40 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Auf welcher Höhe über Meer liegt Arth-Goldau?",
-          "options": [
-            "398 m",
-            "510 m",
-            "612 m",
-            "705 m"
-          ],
-          "correct": 1,
-          "explanation": "Arth-Goldau liegt auf 510 Metern über Meer.",
+          "id": "stammdaten:4478c971",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Arth-Goldau?",
+          "min": 410,
+          "max": 740,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 510,
+          "explanation": "Der Bahnhof liegt auf 510 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "Die offizielle Abkürzung von Arth-Goldau lautet GD.",
-          "correct": true,
-          "explanation": "Die Abkürzung in den Stammdaten lautet GD.",
-          "factRef": "stammdaten.abkuerzung",
-          "difficulty": 1
-        },
-        {
+          "id": "stammdaten:09c65def",
           "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt Arth-Goldau?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Arth-Goldau?",
           "options": [
-            "Schwyz",
             "Arth",
             "Goldau",
+            "Schwyz",
             "Zug"
           ],
-          "correct": 1,
-          "explanation": "Die Gemeinde ist Arth, die Ortschaft heisst Goldau.",
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Arth eingetragen.",
           "factRef": "stammdaten.gemeinde",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 4 Perrons liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 467 Meter, das kürzeste 425 Meter.",
+      "body": "Zu 4 Perrons in Arth-Goldau liegen offene Daten vor. Perron 4 misst 467 Meter, Perron 6/8 misst 441 Meter, Perron 5 misst 428 Meter, Perron 2/3 misst 425 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -205,79 +201,122 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 425,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 4,
-          "source": "perron",
-          "factRef": "perrons.niveaufrei_erreichbar"
         }
       ],
       "questions": [
         {
+          "id": "perrons:8403a103",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Arth-Goldau?",
           "options": [
-            "428 m",
-            "441 m",
-            "467 m",
-            "480 m"
+            "260 m",
+            "330 m",
+            "400 m",
+            "467 m"
           ],
-          "correct": 2,
+          "correct": 3,
           "explanation": "Das längste erfasste Perron misst 467 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
+          "id": "perrons:2bdb258d",
           "type": "true_false",
-          "prompt": "Zu allen 4 erfassten Perrons in Arth-Goldau liegt ein niveaufreier Zugang vor.",
+          "prompt": "Alle 4 erfassten Perrons in Arth-Goldau sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Alle 4 erfassten Perrons sind niveaufrei erreichbar.",
+          "explanation": "Für alle 4 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 6 Gleisen liegen offene Daten vor: 2, 3, 4, 5, 6 und 8. Erfasst sind Perronhöhen von 35 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 6,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "type": "match",
-          "prompt": "Welche Perronlänge gehört zu welchem Perron?",
-          "pairs": [
+          "label": "Sektoren an Gleis 2",
+          "value": 8,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
             {
-              "links": "Perron 4",
-              "rechts": "467 m",
-              "factRef": "perrons.items[0].laenge_m"
+              "label": "Gleis 6",
+              "value": 442,
+              "factRef": "gleise.items[4].perronkante_m"
             },
             {
-              "links": "Perron 6/8",
-              "rechts": "441 m",
-              "factRef": "perrons.items[1].laenge_m"
+              "label": "Gleis 4",
+              "value": 320,
+              "factRef": "gleise.items[2].perronkante_m"
             },
             {
-              "links": "Perron 5",
-              "rechts": "428 m",
-              "factRef": "perrons.items[2].laenge_m"
-            },
-            {
-              "links": "Perron 2/3",
-              "rechts": "425 m",
-              "factRef": "perrons.items[3].laenge_m"
+              "label": "Gleis 2",
+              "value": 234,
+              "factRef": "gleise.items[0].perronkante_m"
             }
           ],
-          "explanation": "Perron 4 misst 467 m, Perron 6/8 441 m, Perron 5 428 m und Perron 2/3 425 m.",
-          "factRef": "perrons.items",
+          "factRef": "gleise.items",
+          "explanation": "Gleis 6 misst 442 Meter, Gleis 4 misst 320 Meter, Gleis 2 misst 234 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:399d8cc0",
+          "type": "cloze",
+          "prompt": "An Gleis 2 in Arth-Goldau sind ___ Sektoren erfasst.",
+          "options": [
+            "8",
+            "10",
+            "14"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 2 trägt die Sektoren A, B, C, D, E, F, G und H, also 8 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
+        },
+        {
+          "id": "gleise:ed8293d2",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 2 in Arth-Goldau erfasst? (Mehrfachauswahl)",
+          "options": [
+            "30 cm",
+            "35 cm",
+            "42 cm",
+            "55 cm"
+          ],
+          "correct": [
+            1,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 2 sind 35 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Aus der BehiG-Erhebung sind 21 Perronsegmente erfasst, davon 18 mit einer Perronhöhe von 55 cm und 3 mit 35 cm. Ein Hilfstritt ist bei keinem der Segmente erfasst.",
+      "body": "Für Arth-Goldau sind 21 Perronsegmente erfasst: 18 mit 55 Zentimetern, 3 mit 35 Zentimetern. An allen 6 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
@@ -286,59 +325,41 @@
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit 55 cm Perronhöhe",
-          "value": 18,
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 6,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind in Arth-Goldau aus der BehiG-Erhebung erfasst?",
+          "id": "hindernisfreiheit:1491bf61",
+          "type": "cloze",
+          "prompt": "In Arth-Goldau sind ___ Perronsegmente erfasst.",
           "options": [
             "12",
             "21",
-            "25",
-            "29"
+            "25"
           ],
           "correct": 1,
-          "explanation": "Erfasst sind 21 Perronsegmente.",
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 21 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "Bei ___ Segmenten ist ein Hilfstritt erfasst.",
-          "options": [
-            "0",
-            "3",
-            "18"
-          ],
-          "correct": 0,
-          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "id": "hindernisfreiheit:c76ce7a0",
+          "type": "true_false",
+          "prompt": "Bei keinem der 21 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 21 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele der erfassten Segmente haben eine Perronhöhe von 55 cm?",
-          "options": [
-            "10",
-            "13",
-            "18",
-            "22"
-          ],
-          "correct": 2,
-          "explanation": "18 der 21 erfassten Segmente weisen eine Perronhöhe von 55 cm auf.",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
           "difficulty": 2
         }
       ]
@@ -346,187 +367,165 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt Arth-Goldau–Steinen Nord (Spw) verkehren im Personenverkehr täglich rund 191 Züge in beide Richtungen zusammen, das sind rund 69'576 pro Jahr. Es ist der stärkste erfasste Abschnitt ab Arth-Goldau.",
+      "body": "Am stärksten befahren ist der Abschnitt Arth-Goldau – Steinen Nord (Spw): Im Personenverkehr verkehren dort 191 Züge pro Tag, das sind 69'576 im Jahr. Auf dem Abschnitt Brunnmatt (Spw) – Arth-Goldau sind es 121 und auf dem Abschnitt Goldau Mühlefluh (Verzw) – Arth-Goldau sind es 109 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 101 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Stärkster Abschnitt, Züge pro Tag",
+          "label": "Züge pro Tag, Personenverkehr Arth-Goldau – Steinen Nord (Spw)",
           "value": 191,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Stärkster Abschnitt, Züge pro Jahr",
+          "label": "Züge pro Jahr, Personenverkehr Arth-Goldau – Steinen Nord (Spw)",
           "value": 69576,
-          "unit": "Züge",
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:6d2ba772",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren auf dem Abschnitt Arth-Goldau–Steinen Nord (Spw) täglich (beide Richtungen zusammen)?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Arth-Goldau – Steinen Nord (Spw)?",
           "options": [
-            "76",
-            "110",
             "130",
-            "191"
+            "160",
+            "191",
+            "230"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt verkehren rund 191 Züge pro Tag, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 191 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Auf dem stärksten Abschnitt ab Arth-Goldau handelt es sich um Personenverkehr.",
-          "correct": true,
-          "explanation": "Der Abschnitt Arth-Goldau–Steinen Nord (Spw) ist als Personenverkehr erfasst.",
-          "factRef": "zuege.staerkster_abschnitt.art",
-          "difficulty": 1
-        },
-        {
+          "id": "zuege:d38de786",
           "type": "sort",
-          "prompt": "Ordne die Personenverkehrs-Abschnitte ab Arth-Goldau nach Zügen pro Tag, meiste zuerst.",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Arth-Goldau – Steinen Nord (Spw)",
-              "value": 191,
-              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+              "label": "Arth-Goldau – Steinen Nord (Spw), Personenverkehr",
+              "value": 69576,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Brunnmatt (Spw) – Arth-Goldau",
-              "value": 121,
-              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+              "label": "Brunnmatt (Spw) – Arth-Goldau, Personenverkehr",
+              "value": 44012,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
-              "label": "Goldau Mühlefluh (Verzw) – Arth-Goldau",
-              "value": 109,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+              "label": "Goldau Mühlefluh (Verzw) – Arth-Goldau, Personenverkehr",
+              "value": 39645,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
             },
             {
-              "label": "Arth-Goldau – Eidg. Magazine",
-              "value": 70,
-              "factRef": "zuege.abschnitte[5].zuege_pro_tag"
+              "label": "Brunnmatt (Spw) – Arth-Goldau, Güterverkehr",
+              "value": 36724,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
-          "explanation": "Arth-Goldau–Steinen Nord (Spw) hat mit 191 Zügen pro Tag den höchsten Wert, gefolgt von Brunnmatt–Arth-Goldau (121), Goldau Mühlefluh–Arth-Goldau (109) und Arth-Goldau–Eidg. Magazine (70).",
           "factRef": "zuege.abschnitte",
-          "difficulty": 2
+          "explanation": "Arth-Goldau – Steinen Nord (Spw) (Personenverkehr) 69'576, Brunnmatt (Spw) – Arth-Goldau (Personenverkehr) 44'012, Goldau Mühlefluh (Verzw) – Arth-Goldau (Personenverkehr) 39'645, Brunnmatt (Spw) – Arth-Goldau (Güterverkehr) 36'724 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Arth-Goldau sind 2 Linien erfasst: die Linie 600 Immensee–Bellinzona–Chiasso und die Linie 602 Arth Goldau–Rigi Kulm.",
+      "body": "Für Arth-Goldau sind 2 Linien erfasst: die Linie 600 Immensee - Bellinzona - Chiasso und die Linie 602 Arth Goldau - Rigi Kulm.",
       "facts": [
         {
-          "label": "Anzahl erfasster Linien",
+          "label": "Erfasste Linien",
           "value": 2,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie 602",
-          "value": "Arth Goldau - Rigi Kulm",
+          "label": "Kilometrierung auf der Linie 600",
+          "value": 8.86435,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[1].name"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie heisst die Linie 602 ab Arth-Goldau?",
-          "options": [
-            "Immensee - Bellinzona - Chiasso",
-            "Arth Goldau - Rigi Kulm",
-            "Zug - Walchwil - Arth-Goldau",
-            "Biberbrugg - Arth-Goldau"
-          ],
-          "correct": 1,
-          "explanation": "Die Linie 602 führt von Arth Goldau nach Rigi Kulm.",
-          "factRef": "linien.items[1].name",
-          "difficulty": 1
+          "id": "linien:42b7dc40",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 600 ist Arth-Goldau eingetragen?",
+          "min": 7.0,
+          "max": 13.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 8.86435,
+          "explanation": "Die Kilometrierung von Arth-Goldau auf der Linie 600 beträgt 8.86435. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
-          "prompt": "Welche Liniennummer gehört zu welcher Bezeichnung?",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
             {
-              "links": "600",
+              "links": "Linie 600",
               "rechts": "Immensee - Bellinzona - Chiasso",
               "factRef": "linien.items[0].name"
             },
             {
-              "links": "602",
+              "links": "Linie 602",
               "rechts": "Arth Goldau - Rigi Kulm",
               "factRef": "linien.items[1].name"
             }
           ],
-          "explanation": "Linie 600 führt von Immensee über Bellinzona nach Chiasso, Linie 602 von Arth Goldau nach Rigi Kulm.",
           "factRef": "linien.items",
-          "difficulty": 1
+          "explanation": "Die Linie 600 heisst Immensee - Bellinzona - Chiasso, die Linie 602 heisst Arth Goldau - Rigi Kulm.",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "In Arth-Goldau ist WLAN erfasst. Erfasst sind 2 Billettautomaten, 8 Billettentwerter und 2 Wartehallen.",
+      "body": "Arth-Goldau steht in der Liste der WLAN-Standorte. Erfasst sind 2 Billettautomaten vom Typ BATS, 8 Billettentwerter und 2 Wartehallen.",
       "facts": [
         {
           "label": "WLAN erfasst",
           "value": true,
+          "unit": "",
           "source": "wifistation",
           "factRef": "services.wlan_erfasst"
         },
         {
-          "label": "Erfasste Billettautomaten",
+          "label": "Billettautomaten erfasst",
           "value": 2,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Erfasste Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 8,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Erfasste Wartehallen",
-          "value": 2,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:2fc8e655",
           "type": "true_false",
-          "prompt": "Für Arth-Goldau ist WLAN erfasst.",
+          "prompt": "Arth-Goldau steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Arth-Goldau steht in der Liste der WLAN-Standorte.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind in Arth-Goldau erfasst?",
-          "options": [
-            "0",
-            "1",
-            "2",
-            "4"
-          ],
-          "correct": 2,
-          "explanation": "Erfasst sind 2 Billettautomaten.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
+          "id": "services:3422b696",
           "type": "cloze",
           "prompt": "In Arth-Goldau sind ___ Billettentwerter erfasst.",
           "options": [
@@ -535,24 +534,10 @@
             "14"
           ],
           "correct": 0,
-          "explanation": "Erfasst sind 8 Billettentwerter.",
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 8 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
-          "difficulty": 1
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele Wartehallen sind für Arth-Goldau erfasst?",
-          "options": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "correct": 1,
-          "explanation": "Erfasst sind 2 Wartehallen.",
-          "factRef": "services.wartehallen_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 2
         }
       ]
     },
@@ -588,6 +573,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -602,6 +588,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -617,9 +604,10 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 3,
+          "min": 9,
           "max": 27,
           "step": 1,
           "unit": "Schliessfächer",
@@ -629,6 +617,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -644,8 +633,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -665,7 +655,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4 hat mit 2'709 Quadratmetern die grösste erfasste Fläche, Perron 5 mit 1'841 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 4 hat mit 2'709 Quadratmetern die grösste erfasste Belagsfläche, Perron 5 mit 1'841 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -673,22 +663,23 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Arth-Goldau liegt ein Bahnhofplan vor, Eigentümerin der Anlage ist die SBB.",
+      "body": "Für Arth-Goldau ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Eigentümerin",
-          "value": "SBB",
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-arth-goldau-a4.pdf",
           "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
+          "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:4396b994",
           "type": "true_false",
-          "prompt": "Die Anlage in Arth-Goldau gehört der SBB.",
+          "prompt": "Für Arth-Goldau ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Als Eigentümerin ist die SBB erfasst.",
-          "factRef": "bahnhofplan.eigentuemer",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
       ]

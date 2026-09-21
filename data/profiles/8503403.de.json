@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:7db70cfb",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Hüntwangen-Wil ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:51dd48a5",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Hüntwangen-Wil ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:dc08842d",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Hüntwangen-Wil?",
           "min": 320,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:6b5144b3",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Hüntwangen-Wil?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:beb0f4ce",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Hüntwangen-Wil?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:c32d8201",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Hüntwangen-Wil ist niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d679a196",
           "type": "cloze",
           "prompt": "An Gleis 3 in Hüntwangen-Wil sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:35b4ab31",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Hüntwangen-Wil kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -278,6 +287,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:a3dfe112",
           "type": "cloze",
           "prompt": "In Hüntwangen-Wil sind ___ Perronsegmente erfasst.",
           "options": [
@@ -292,6 +302,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -305,7 +316,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Rafz – Hüntwangen-Wil 149 Züge pro Tag, das sind 54'321 im Jahr. Auf dem Abschnitt Hüntwangen-Wil – Eglisau sind es ebenfalls 149 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 23 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rafz – Hüntwangen-Wil",
@@ -324,6 +335,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:999f5a4a",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rafz – Hüntwangen-Wil?",
           "options": [
@@ -338,6 +350,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -385,6 +398,7 @@
       ],
       "questions": [
         {
+          "id": "linien:fed105ca",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 770 ist Hüntwangen-Wil eingetragen?",
           "min": 19,
@@ -425,6 +439,7 @@
       ],
       "questions": [
         {
+          "id": "services:bd3ad8f0",
           "type": "true_false",
           "prompt": "Hüntwangen-Wil steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -433,6 +448,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:57fa0a2c",
           "type": "single_choice",
           "prompt": "Wie viele Billettentwerter sind in Hüntwangen-Wil erfasst?",
           "options": [
@@ -451,7 +467,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Hüntwangen-Wil 4 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Hüntwangen-Wil 4 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -474,6 +490,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -488,6 +505,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -502,6 +520,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

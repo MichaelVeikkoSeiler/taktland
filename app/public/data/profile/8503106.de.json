@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:e04357e5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Männedorf ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:2b053a86",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Männedorf ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:09203ae4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Männedorf?",
           "min": 340,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e8584128",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Männedorf lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:cc5a962b",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Männedorf?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:237bcc9f",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Männedorf ist niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:56c54cf6",
           "type": "cloze",
           "prompt": "An Gleis 1 in Männedorf sind ___ Sektoren erfasst.",
           "options": [
@@ -258,6 +266,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:09da6a0e",
           "type": "cloze",
           "prompt": "In Männedorf sind ___ Perronsegmente erfasst.",
           "options": [
@@ -272,6 +281,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:e26e8213",
           "type": "true_false",
           "prompt": "Bei keinem der 3 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -285,7 +295,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Männedorf – Stäfa 94 Züge pro Tag, das sind 34'308 im Jahr. Auf dem Abschnitt Uetikon – Männedorf sind es ebenfalls 94 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Männedorf – Stäfa",
@@ -304,6 +314,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:f19e8d0a",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Männedorf – Stäfa?",
           "options": [
@@ -318,6 +329,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:dac91466",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Männedorf – Stäfa?",
           "min": 28000,
@@ -352,6 +364,7 @@
       ],
       "questions": [
         {
+          "id": "linien:872e3e30",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Männedorf eingetragen?",
           "min": 19,
@@ -392,6 +405,7 @@
       ],
       "questions": [
         {
+          "id": "services:934af913",
           "type": "true_false",
           "prompt": "Männedorf steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -400,6 +414,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:9c87478f",
           "type": "cloze",
           "prompt": "In Männedorf sind ___ Billettentwerter erfasst.",
           "options": [
@@ -418,7 +433,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Männedorf 7 Sitzbänke, 5 Infopunkte sowie 12 Schliessfächer erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Männedorf 7 Sitzbänke, 5 Infopunkte sowie 12 Schliessfächer erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -447,6 +462,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -461,6 +477,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -475,6 +492,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -487,6 +505,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

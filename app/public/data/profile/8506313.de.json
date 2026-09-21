@@ -56,6 +56,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:e6ab78e4",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Rheineck ein und aus?",
           "options": [
@@ -70,6 +71,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -95,6 +97,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:2819ff47",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Rheineck ___ Personen ein und aus.",
           "options": [
@@ -108,6 +111,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:7db48afc",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Rheineck umfasst auch AB.",
           "correct": false,
@@ -138,6 +142,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:4d065480",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Rheineck?",
           "min": 320,
@@ -150,6 +155,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:5d9a4a57",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Rheineck lautet ___.",
           "options": [
@@ -186,6 +192,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:92cf7caf",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Rheineck?",
           "options": [
@@ -200,6 +207,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:9dd299c3",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Rheineck sind niveaufrei erreichbar.",
           "correct": true,
@@ -230,6 +238,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:1f80d276",
           "type": "cloze",
           "prompt": "An Gleis 1 in Rheineck sind ___ Sektoren erfasst.",
           "options": [
@@ -244,6 +253,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a011b060",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Rheineck kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -280,6 +290,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:1426e899",
           "type": "cloze",
           "prompt": "In Rheineck sind ___ Perronsegmente erfasst.",
           "options": [
@@ -294,6 +305,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -307,7 +319,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Rheineck – St. Margrethen SG 212 Züge pro Tag, das sind 77'450 im Jahr. Auf dem Abschnitt Altenrhein – Rheineck sind es ebenfalls 212 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 13 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rheineck – St. Margrethen SG",
@@ -326,6 +338,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:6b6a2ed9",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rheineck – St. Margrethen SG?",
           "options": [
@@ -340,6 +353,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:74020677",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Rheineck – St. Margrethen SG?",
           "min": 63500,
@@ -374,6 +388,7 @@
       ],
       "questions": [
         {
+          "id": "linien:a660f235",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 880 ist Rheineck eingetragen?",
           "min": 47,
@@ -386,6 +401,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -433,6 +449,7 @@
       ],
       "questions": [
         {
+          "id": "services:fea5c034",
           "type": "true_false",
           "prompt": "Rheineck steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -441,6 +458,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:7b7e219a",
           "type": "cloze",
           "prompt": "In Rheineck sind ___ Billettentwerter erfasst.",
           "options": [
@@ -482,6 +500,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -496,6 +515,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -511,6 +531,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

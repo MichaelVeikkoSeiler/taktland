@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:ffd6144b",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Kerzers ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:833eb18d",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Kerzers ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:d2d1506b",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Kerzers?",
           "min": 360,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:a827c1c3",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Kerzers lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:c1852817",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Kerzers?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -209,6 +216,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:c611a372",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Kerzers sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -249,6 +258,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:74935a81",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Kerzers erfasst? (Mehrfachauswahl)",
           "options": [
@@ -295,6 +305,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:c5c4c68f",
           "type": "cloze",
           "prompt": "In Kerzers sind ___ Perronsegmente erfasst.",
           "options": [
@@ -309,6 +320,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
           "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -322,7 +334,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Gümmenen – Kerzers: Im Personenverkehr verkehren dort 121 Züge pro Tag, das sind 44'099 im Jahr. Auf dem Abschnitt Müntschemier – Kerzers sind es 94 und auf dem Abschnitt Galmiz – Kerzers sind es 76 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Gümmenen – Kerzers",
@@ -341,6 +353,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:ec14e4d8",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Gümmenen – Kerzers?",
           "options": [
@@ -355,6 +368,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -407,6 +421,7 @@
       ],
       "questions": [
         {
+          "id": "linien:0fe002b7",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 251 ist Kerzers eingetragen?",
           "min": 69,
@@ -419,6 +434,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -466,6 +482,7 @@
       ],
       "questions": [
         {
+          "id": "services:c78c7f14",
           "type": "true_false",
           "prompt": "Kerzers steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -474,6 +491,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:81bbb1b7",
           "type": "single_choice",
           "prompt": "Wie viele Billettentwerter sind in Kerzers erfasst?",
           "options": [
@@ -515,6 +533,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -529,6 +548,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -543,6 +563,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

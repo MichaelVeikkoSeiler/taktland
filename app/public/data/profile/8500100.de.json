@@ -54,6 +54,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:6733e743",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Tavannes ein und aus?",
           "options": [
@@ -68,6 +69,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -98,6 +100,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:320148dc",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Tavannes ___ Personen ein und aus.",
           "options": [
@@ -111,6 +114,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:8e636926",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Tavannes umfasst auch CJ.",
           "correct": false,
@@ -141,6 +145,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:33ff1034",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Tavannes?",
           "min": 610,
@@ -153,6 +158,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e9dcf5ee",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Tavannes lautet ___.",
           "options": [
@@ -189,6 +195,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -214,6 +221,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:9375a4d5",
           "type": "true_false",
           "prompt": "Zu allen 3 erfassten Perrons in Tavannes ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -245,6 +253,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -254,6 +263,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:89926b3c",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 2 in Tavannes erfasst? (Mehrfachauswahl)",
           "options": [
@@ -294,6 +304,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:39b5220b",
           "type": "cloze",
           "prompt": "In Tavannes sind ___ Perronsegmente erfasst.",
           "options": [
@@ -313,7 +324,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Sonceboz-Sombeval – Tavannes 55 Züge pro Tag, das sind 20'018 im Jahr. Auf dem Abschnitt Tavannes – Reconvilier sind es ebenfalls 55 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 86 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Sonceboz-Sombeval – Tavannes",
@@ -332,6 +343,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:7a5c1ab3",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Sonceboz-Sombeval – Tavannes?",
           "options": [
@@ -346,6 +358,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:79abeae3",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Sonceboz-Sombeval – Tavannes?",
           "min": 16000,
@@ -380,6 +393,7 @@
       ],
       "questions": [
         {
+          "id": "linien:ef6a4e39",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 226 ist Tavannes eingetragen?",
           "min": 45,
@@ -392,6 +406,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -439,6 +454,7 @@
       ],
       "questions": [
         {
+          "id": "services:c554d10e",
           "type": "true_false",
           "prompt": "Tavannes steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -447,6 +463,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:a333a0ca",
           "type": "cloze",
           "prompt": "In Tavannes sind ___ Billettentwerter erfasst.",
           "options": [
@@ -482,6 +499,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -496,6 +514,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -511,8 +530,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -532,7 +552,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2 hat mit 410 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 214 die kleinste der gezeigten.",
+          "explanation": "Perron 2 hat mit 410 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 214 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

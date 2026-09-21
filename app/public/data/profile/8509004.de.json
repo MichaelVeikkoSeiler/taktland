@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:88232db6",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Bad Ragaz ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:676a97ee",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Bad Ragaz ___ Personen ein und aus.",
           "options": [
@@ -105,6 +107,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:2f6ffcca",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bad Ragaz?",
           "min": 410,
@@ -117,6 +120,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:c4acdda0",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Bad Ragaz?",
           "options": [
@@ -154,6 +158,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:4d34b1eb",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Bad Ragaz?",
           "options": [
@@ -168,6 +173,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:7dc09b79",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Bad Ragaz ist niveaufrei erreichbar.",
           "correct": true,
@@ -198,6 +204,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:887f0f4a",
           "type": "cloze",
           "prompt": "An Gleis 3 in Bad Ragaz sind ___ Sektoren erfasst.",
           "options": [
@@ -212,6 +219,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:32189147",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Bad Ragaz kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -248,6 +256,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:d6478a25",
           "type": "cloze",
           "prompt": "In Bad Ragaz sind ___ Perronsegmente erfasst.",
           "options": [
@@ -262,6 +271,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f366795b",
           "type": "true_false",
           "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -275,7 +285,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Sargans – Bad Ragaz 201 Züge pro Tag, das sind 73'476 im Jahr. Auf dem Abschnitt Bad Ragaz – Maienfeld sind es ebenfalls 201 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 19 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Sargans – Bad Ragaz",
@@ -294,6 +304,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:4e361b04",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Sargans – Bad Ragaz?",
           "options": [
@@ -308,6 +319,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:1064f8da",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Sargans – Bad Ragaz?",
           "min": 60000,
@@ -342,6 +354,7 @@
       ],
       "questions": [
         {
+          "id": "linien:60d0024c",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 900 ist Bad Ragaz eingetragen?",
           "min": 4.5,
@@ -382,6 +395,7 @@
       ],
       "questions": [
         {
+          "id": "services:a9ba0745",
           "type": "true_false",
           "prompt": "Bad Ragaz steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -390,6 +404,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:01815ea3",
           "type": "cloze",
           "prompt": "In Bad Ragaz sind ___ Billettentwerter erfasst.",
           "options": [
@@ -408,7 +423,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Bad Ragaz 19 Sitzbänke sowie 2 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Bad Ragaz 19 Sitzbänke sowie 2 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -431,6 +446,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -445,6 +461,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -460,6 +477,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

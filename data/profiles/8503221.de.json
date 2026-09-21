@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:875879a5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Siebnen-Wangen ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:5620ae61",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Siebnen-Wangen ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:13c371c5",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Siebnen-Wangen?",
           "min": 350,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:a14f5964",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Siebnen-Wangen?",
           "options": [
@@ -178,6 +183,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:dc4e602e",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Siebnen-Wangen?",
           "options": [
@@ -192,6 +198,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:86d01011",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Siebnen-Wangen ist niveaufrei erreichbar.",
           "correct": true,
@@ -222,6 +229,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:0cfc52fa",
           "type": "cloze",
           "prompt": "An Gleis 3 in Siebnen-Wangen sind ___ Sektoren erfasst.",
           "options": [
@@ -236,6 +244,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:f0ea8ead",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Siebnen-Wangen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -266,6 +275,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:729315d4",
           "type": "cloze",
           "prompt": "In Siebnen-Wangen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -285,7 +295,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Lachen SZ – Siebnen-Wangen 232 Züge pro Tag, das sind 84'623 im Jahr. Auf dem Abschnitt Siebnen-Wangen – Schübelbach-Buttikon sind es ebenfalls 232 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 20 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Lachen SZ – Siebnen-Wangen",
@@ -304,6 +314,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:13e49649",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Lachen SZ – Siebnen-Wangen?",
           "options": [
@@ -318,6 +329,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:49197625",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Lachen SZ – Siebnen-Wangen?",
           "min": 69000,
@@ -352,6 +364,7 @@
       ],
       "questions": [
         {
+          "id": "linien:822ddfe3",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 720 ist Siebnen-Wangen eingetragen?",
           "min": 35,
@@ -392,6 +405,7 @@
       ],
       "questions": [
         {
+          "id": "services:32bccd05",
           "type": "true_false",
           "prompt": "Siebnen-Wangen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -400,6 +414,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:5d79bac8",
           "type": "cloze",
           "prompt": "In Siebnen-Wangen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -418,7 +433,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Siebnen-Wangen 4 Sitzbänke sowie 10 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Siebnen-Wangen 4 Sitzbänke sowie 10 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -441,6 +456,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -455,6 +471,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -469,6 +486,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

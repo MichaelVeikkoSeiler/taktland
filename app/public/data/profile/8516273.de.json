@@ -7,14 +7,12 @@
   "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -27,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Genève-Eaux-Vives 11'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 9'900, an einem freien Tag 6'200. Infrastruktur und Züge sind der SBB zugeordnet. Die erfasste Reihe beginnt erst 2022 mit 7'700 und steigt seither.",
+      "body": "An einem Werktag steigen in Genève-Eaux-Vives 11'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 9'900, an einem freien Tag 6'200. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -49,17 +47,11 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 14100,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:67d99aa5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Genève-Eaux-Vives ein und aus?",
           "options": [
@@ -74,6 +66,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -99,19 +92,25 @@
           "difficulty": 3
         },
         {
-          "type": "true_false",
-          "prompt": "In Genève-Eaux-Vives sind mehr Bahnhofbenutzer erfasst als Ein- und Aussteigende.",
-          "correct": true,
-          "explanation": "14'100 gegenüber 11'700. Die beiden Zahlen kommen aus zwei verschiedenen Erhebungen: Die Bahnhofbenutzer zählen auch Personen ohne Zugfahrt.",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag",
-          "difficulty": 3
+          "id": "steckbrief:3748f88b",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Genève-Eaux-Vives ___ Personen ein und aus.",
+          "options": [
+            "4'300",
+            "5'300",
+            "6'200"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 6'200 Personen, an einem Werktag 11'700. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Genève-Eaux-Vives liegt auf 385.5 Metern über Meer in der Gemeinde Genève, Kanton Genève. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet GEV.",
+      "body": "Genève-Eaux-Vives liegt auf 385.5 Metern über Meer in der Gemeinde Genève. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet GEV.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -129,10 +128,11 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:952dcc3d",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Genève-Eaux-Vives?",
-          "min": 340,
-          "max": 510,
+          "min": 310,
+          "max": 560,
           "step": 1,
           "unit": "m ü. M.",
           "correct": 385.5,
@@ -141,6 +141,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:2b3bd961",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Genève-Eaux-Vives lautet ___.",
           "options": [
@@ -159,103 +160,94 @@
     {
       "id": "tagesrhythmus",
       "title": "Tagesrhythmus",
-      "body": "Für Genève-Eaux-Vives ist erfasst, wie sich die Bahnhofbenutzer über den Tag und über die Woche verteilen. Die stärkste Stunde ist 17 Uhr mit 10.7 Prozent, gefolgt von 8 Uhr mit 9.7 und 18 Uhr mit 9.1 Prozent. Über die Woche ist der Donnerstag mit 16.3 Prozent der stärkste Tag, der Sonntag mit 9.7 Prozent der schwächste.",
-      "erlaeuterung": "Der Tagesverlauf ist nur für wenige Bahnhöfe erhoben. Die Prozentwerte beziehen sich auf die Bahnhofbenutzer, also auch auf Personen ohne Zugfahrt.",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Genève-Eaux-Vives in der Stunde ab 17 Uhr: 10.7 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Donnerstag, 16.3 Prozent, der kleinste auf den Sonntag, 9.7 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Stärkste Stunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der stärksten Stunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 10.7,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Stärkster Wochentag",
+          "label": "Wochentag mit dem grössten Anteil",
           "value": "Donnerstag",
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
         },
         {
-          "label": "Anteil des stärksten Wochentags",
+          "label": "Anteil dieses Wochentags",
           "value": 16.3,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 9.7,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:37fc1202",
           "type": "single_choice",
-          "prompt": "In welcher Stunde ist der Anteil der Bahnhofbenutzer in Genève-Eaux-Vives am höchsten?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Genève-Eaux-Vives die meisten Bahnhofbenutzer?",
           "options": [
-            "7 Uhr",
-            "8 Uhr",
-            "12 Uhr",
-            "17 Uhr"
+            "ab 8 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
           ],
-          "correct": 3,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Die stärkste Stunde ist 17 Uhr mit 10.7 Prozent. Die Morgenspitze um 8 Uhr kommt auf 9.7 Prozent.",
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 10.7, ab 8 Uhr 9.7, ab 18 Uhr 9.1, ab 16 Uhr 8.1 Prozent.",
           "factRef": "tagesrhythmus.spitzenstunde",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Stunden nach ihrem Anteil an den Bahnhofbenutzern, höchster zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "17 Uhr",
-              "value": 10.7,
-              "factRef": "tagesrhythmus.stunden[17].prozent"
-            },
-            {
-              "label": "8 Uhr",
-              "value": 9.7,
-              "factRef": "tagesrhythmus.stunden[8].prozent"
-            },
-            {
-              "label": "18 Uhr",
-              "value": 9.1,
-              "factRef": "tagesrhythmus.stunden[18].prozent"
-            },
-            {
-              "label": "12 Uhr",
-              "value": 6.3,
-              "factRef": "tagesrhythmus.stunden[12].prozent"
-            }
-          ],
-          "factRef": "tagesrhythmus.stunden",
-          "explanation": "17 Uhr kommt auf 10.7 Prozent, 8 Uhr auf 9.7, 18 Uhr auf 9.1 und 12 Uhr auf 6.3 Prozent.",
+          "id": "tagesrhythmus:8341be1e",
+          "type": "slider",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Genève-Eaux-Vives auf die Stunde ab 17 Uhr?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 10.7,
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 10.7 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
           "difficulty": 3
         },
         {
-          "type": "cloze",
-          "prompt": "Der stärkste Wochentag in Genève-Eaux-Vives ist der ___.",
+          "id": "tagesrhythmus:7be422f5",
+          "type": "single_choice",
+          "prompt": "Auf welchen Wochentag entfällt in Genève-Eaux-Vives der grösste Anteil der Bahnhofbenutzer?",
           "options": [
-            "Dienstag",
+            "Montag",
             "Donnerstag",
-            "Freitag"
+            "Samstag",
+            "Sonntag"
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Auf den Donnerstag entfallen 16.3 Prozent, auf den Mittwoch 16.1 und auf den Dienstag 15.9 Prozent.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
-          "difficulty": 2
-        },
-        {
-          "type": "true_false",
-          "prompt": "Auf den Sonntag entfällt in Genève-Eaux-Vives der kleinste Wochenanteil.",
-          "correct": true,
-          "explanation": "Der Sonntag kommt auf 9.7 Prozent, der Samstag auf 11.2. Die fünf erfassten Werktage liegen zwischen 14.9 und 16.3 Prozent.",
-          "factRef": "tagesrhythmus.wochentage[6].prozent",
+          "explanation": "Anteil an der Woche: Donnerstag 16.3, Montag 14.9, Samstag 11.2, Sonntag 9.7 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[3].tag",
           "difficulty": 2
         }
       ]
@@ -263,7 +255,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Genève-Eaux-Vives liegen offene Daten vor: Perron 1/2, ein Mittelperron von 562 Metern mit 2619.36 Quadratmetern Nettofläche. Es ist niveaufrei erreichbar.",
+      "body": "Zu 1 Perron in Genève-Eaux-Vives liegen offene Daten vor. Perron 1/2 ist ein Mittelperron von 562 Metern. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -272,36 +264,31 @@
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Länge des erfassten Perrons",
+          "label": "Längstes erfasstes Perron",
           "value": 562,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Nettofläche",
-          "value": 2619.36,
-          "unit": "m²",
-          "source": "perron",
-          "factRef": "perrons.items[0].flaeche_netto_m2"
         }
       ],
       "questions": [
         {
+          "id": "perrons:fe45a0d2",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Genève-Eaux-Vives?",
           "options": [
-            "220 m",
-            "310 m",
-            "400 m",
-            "562 m"
+            "562 m",
+            "670 m",
+            "790 m",
+            "960 m"
           ],
-          "correct": 3,
-          "explanation": "Perron 1/2 ist mit 562 Metern erfasst. Es ist das einzige Perron, zu dem offene Daten vorliegen.",
+          "correct": 0,
+          "explanation": "Das erfasste Perron misst 562 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
+          "id": "perrons:76ff375c",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Genève-Eaux-Vives ist niveaufrei erreichbar.",
           "correct": true,
@@ -314,7 +301,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. Beide haben eine Perronhöhe von 55 Zentimetern und je 5 Sektoren von A bis E. Die erfassten Perronkanten messen 562 und 564 Meter.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. An beiden erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -324,14 +311,7 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Perronkante Gleis 2",
-          "value": 564,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
-        },
-        {
-          "label": "Sektoren je Gleis",
+          "label": "Sektoren an Gleis 1",
           "value": 5,
           "source": "sektortafel",
           "factRef": "gleise.items[0].sektoren_anzahl"
@@ -339,17 +319,27 @@
       ],
       "questions": [
         {
+          "id": "gleise:99dfa7f0",
           "type": "cloze",
-          "prompt": "An beiden erfassten Gleisen sind je ___ Sektoren verzeichnet.",
+          "prompt": "An Gleis 1 in Genève-Eaux-Vives sind ___ Sektoren erfasst.",
           "options": [
             "3",
-            "5",
-            "8"
+            "4",
+            "5"
           ],
-          "correct": 1,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Beide Gleise tragen die Sektoren A bis E, also je 5 Stück.",
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D und E, also 5 Stück.",
           "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:a3a56580",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Genève-Eaux-Vives kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
@@ -357,7 +347,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Genève-Eaux-Vives sind 5 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt diese Höhe vor. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Genève-Eaux-Vives sind 5 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -371,30 +361,26 @@
           "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
-        },
-        {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
         }
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:be606511",
           "type": "cloze",
           "prompt": "In Genève-Eaux-Vives sind ___ Perronsegmente erfasst.",
           "options": [
             "3",
-            "5",
-            "9"
+            "4",
+            "5"
           ],
-          "correct": 1,
+          "correct": 2,
           "optionen_aus_fakten": true,
           "explanation": "Die BehiG-Erhebung führt 5 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5eee92da",
           "type": "true_false",
           "prompt": "Bei keinem der 5 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -407,49 +393,51 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Genève-Eaux-Vives liegt zwischen Genève-Champel und Chêne-Bourg. Richtung Champel verkehren im Personenverkehr 225 Züge pro Tag, das sind 82'212 im Jahr. Richtung Chêne-Bourg sind es 224 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Am stärksten befahren ist der Abschnitt Genève-Champel – Genève-Eaux-Vives: Im Personenverkehr verkehren dort 225 Züge pro Tag, das sind 82'212 im Jahr. Auf dem Abschnitt Genève-Eaux-Vives – Chêne-Bourg sind es 224 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Richtung Genève-Champel",
+          "label": "Züge pro Tag, Personenverkehr Genève-Champel – Genève-Eaux-Vives",
           "value": 225,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Richtung Genève-Champel",
+          "label": "Züge pro Jahr, Personenverkehr Genève-Champel – Genève-Eaux-Vives",
           "value": 82212,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:e657607d",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr Richtung Genève-Champel?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Genève-Champel – Genève-Eaux-Vives?",
           "options": [
-            "90",
-            "130",
-            "170",
+            "120",
+            "160",
+            "190",
             "225"
           ],
           "correct": 3,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 225 Züge pro Tag, beide Richtungen zusammen. Richtung Chêne-Bourg sind es 224.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 225 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:08db14c0",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr Richtung Genève-Champel?",
-          "min": 50000,
-          "max": 150000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Genève-Champel – Genève-Eaux-Vives?",
+          "min": 67000,
+          "max": 119500,
           "step": 500,
           "unit": "Züge/Jahr",
           "correct": 82212,
           "explanation": "Die Erhebung zählt 82'212 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -457,7 +445,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Genève-Eaux-Vives ist 1 Linie erfasst: die Linie 152 St-Jean–Genève-Eaux-Vives–Annemasse. Der Bahnhof ist darauf bei Kilometer 70.45 eingetragen.",
+      "body": "Für Genève-Eaux-Vives ist 1 Linie erfasst: die Linie 152 St-Jean - Geneve-Eaux-Vives - Annemasse. Der Bahnhof ist darauf bei Kilometer 70.45 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -475,29 +463,14 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Linie ist für Genève-Eaux-Vives erfasst?",
-          "options": [
-            "Lausanne - Genève-Aéroport",
-            "Genève - Bellegarde",
-            "St-Jean - Geneve-Eaux-Vives - Annemasse",
-            "Genève - La Plaine"
-          ],
-          "correct": 2,
-          "optionen_aus_fakten": true,
-          "explanation": "Erfasst ist die Linie 152, St-Jean - Geneve-Eaux-Vives - Annemasse.",
-          "factRef": "linien.items[0].name",
-          "difficulty": 1
-        },
-        {
-          "type": "cloze",
-          "prompt": "Auf der Linie 152 steht Genève-Eaux-Vives bei Kilometer ___.",
-          "options": [
-            "40.45",
-            "70.45",
-            "90.45"
-          ],
-          "correct": 1,
+          "id": "linien:0e46fd96",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 152 ist Genève-Eaux-Vives eingetragen?",
+          "min": 57,
+          "max": 103,
+          "step": 1,
+          "unit": "km",
+          "correct": 70.45,
           "explanation": "Die Kilometrierung von Genève-Eaux-Vives auf der Linie 152 beträgt 70.45. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
@@ -507,13 +480,14 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 9 Billettentwerter. Billettautomaten und Wartehallen sind keine verzeichnet, und Genève-Eaux-Vives steht nicht in der Liste der WLAN-Standorte. Was davon vor Ort trotzdem da ist, sagen die offenen Daten nicht.",
+      "body": "Erfasst sind 9 Billettentwerter. Billettautomaten und Wartehallen sind keine verzeichnet. Genève-Eaux-Vives steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
-          "label": "Billettentwerter erfasst",
-          "value": 9,
-          "source": "billetentwerter",
-          "factRef": "services.billettentwerter_erfasst"
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
         },
         {
           "label": "Billettautomaten erfasst",
@@ -522,34 +496,35 @@
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "WLAN erfasst",
-          "value": false,
-          "unit": "",
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
+          "label": "Billettentwerter erfasst",
+          "value": 9,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "In Genève-Eaux-Vives sind ___ Billettentwerter erfasst.",
-          "options": [
-            "5",
-            "7",
-            "9"
-          ],
-          "correct": 2,
-          "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 9 Billettentwerter. Billettautomaten sind keine verzeichnet.",
-          "factRef": "services.billettentwerter_erfasst",
-          "difficulty": 2
-        },
-        {
+          "id": "services:431fb6e5",
           "type": "true_false",
           "prompt": "Genève-Eaux-Vives steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "id": "services:ef272540",
+          "type": "cloze",
+          "prompt": "In Genève-Eaux-Vives sind ___ Billettentwerter erfasst.",
+          "options": [
+            "9",
+            "27",
+            "36"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 9 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
       ]
@@ -574,30 +549,32 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "2",
-            "3",
             "4",
-            "6"
+            "5",
+            "6",
+            "24"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "Erfasst sind 6 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1,
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "2",
-            "3",
             "4",
-            "6"
+            "5",
+            "6",
+            "24"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "Erfasst sind 6 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1,
@@ -619,10 +596,11 @@
       ],
       "questions": [
         {
+          "id": "bahnhofplan:48d64c1b",
           "type": "true_false",
           "prompt": "Für Genève-Eaux-Vives ist ein Bahnhofplan als PDF hinterlegt.",
           "correct": false,
-          "explanation": "Der Bahnhof steht in der Planübersicht, aber weder ein A4-Blatt noch ein Plakat ist in den Daten verlinkt.",
+          "explanation": "Der Bahnhof steht in der Planübersicht, aber kein PDF ist in den Daten verlinkt.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 2
         }

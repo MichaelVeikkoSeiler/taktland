@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:ea013f69",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Kaiseraugst ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:6560285e",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Kaiseraugst ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:2dd6bdc3",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Kaiseraugst?",
           "min": 220,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:17c609b6",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Kaiseraugst lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:1c97c1ed",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Kaiseraugst?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:ce964bc0",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Kaiseraugst sind niveaufrei erreichbar.",
           "correct": true,
@@ -209,6 +216,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:2a481902",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 4 in Kaiseraugst erfasst? (Mehrfachauswahl)",
           "options": [
@@ -255,6 +263,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:e9da9e39",
           "type": "cloze",
           "prompt": "In Kaiseraugst sind ___ Perronsegmente erfasst.",
           "options": [
@@ -269,6 +278,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:cb4cc65b",
           "type": "true_false",
           "prompt": "Bei keinem der 10 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -282,7 +292,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Pratteln Salina Raurica – Kaiseraugst: Im Personenverkehr verkehren dort 173 Züge pro Tag, das sind 63'061 im Jahr. Auf dem Abschnitt Kaiseraugst – Rheinfelden Augarten sind es 170 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 118 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Pratteln Salina Raurica – Kaiseraugst",
@@ -301,6 +311,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:27f4a63f",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Pratteln Salina Raurica – Kaiseraugst?",
           "options": [
@@ -315,6 +326,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:8309594d",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Pratteln Salina Raurica – Kaiseraugst?",
           "min": 51500,
@@ -349,6 +361,7 @@
       ],
       "questions": [
         {
+          "id": "linien:5f8109e3",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 700 ist Kaiseraugst eingetragen?",
           "min": 63,
@@ -389,6 +402,7 @@
       ],
       "questions": [
         {
+          "id": "services:cf69fcbd",
           "type": "true_false",
           "prompt": "Kaiseraugst steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -397,6 +411,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:748c9a0e",
           "type": "cloze",
           "prompt": "In Kaiseraugst sind ___ Billettentwerter erfasst.",
           "options": [
@@ -438,6 +453,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -452,6 +468,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

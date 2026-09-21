@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:3538ac9f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Gisikon-Root ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:5251bfbe",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Gisikon-Root ___ Personen ein und aus.",
           "options": [
@@ -134,6 +137,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:7ccc842d",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Gisikon-Root?",
           "min": 340,
@@ -146,6 +150,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:7d74e091",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Gisikon-Root?",
           "options": [
@@ -183,6 +188,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f64f0929",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Gisikon-Root?",
           "options": [
@@ -197,6 +203,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -216,6 +223,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:855c6145",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Gisikon-Root sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:86bacb25",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Gisikon-Root kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -276,6 +285,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:debaf81e",
           "type": "cloze",
           "prompt": "In Gisikon-Root sind ___ Perronsegmente erfasst.",
           "options": [
@@ -290,6 +300,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
           "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -303,7 +314,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Rotkreuz Südwest – Gisikon-Root 199 Züge pro Tag, das sind 72'588 im Jahr. Auf dem Abschnitt Root D4 – Gisikon-Root sind es ebenfalls 199 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 9 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rotkreuz Südwest – Gisikon-Root",
@@ -322,6 +333,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:e6608cf5",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rotkreuz Südwest – Gisikon-Root?",
           "options": [
@@ -336,6 +348,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -383,6 +396,7 @@
       ],
       "questions": [
         {
+          "id": "linien:d65a60fd",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 660 ist Gisikon-Root eingetragen?",
           "min": 43,
@@ -423,6 +437,7 @@
       ],
       "questions": [
         {
+          "id": "services:f305f81c",
           "type": "true_false",
           "prompt": "Gisikon-Root steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -431,6 +446,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:a1a2f235",
           "type": "cloze",
           "prompt": "In Gisikon-Root sind ___ Billettentwerter erfasst.",
           "options": [
@@ -472,6 +488,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -486,6 +503,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -501,6 +519,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

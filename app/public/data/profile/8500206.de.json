@@ -48,6 +48,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:eb3050a6",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Solothurn West ein und aus?",
           "options": [
@@ -62,6 +63,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:6370e266",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Solothurn West ___ Personen ein und aus.",
           "options": [
@@ -97,6 +99,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:3f7ed951",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Solothurn West?",
           "min": 350,
@@ -109,6 +112,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:66384e9e",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Solothurn West lautet ___.",
           "options": [
@@ -145,6 +149,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:82b6677d",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Solothurn West?",
           "options": [
@@ -159,6 +164,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -178,6 +184,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:149f054e",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Solothurn West sind niveaufrei erreichbar.",
           "correct": true,
@@ -208,6 +215,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:8b4c8a0b",
           "type": "true_false",
           "prompt": "Für Solothurn West sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -221,7 +229,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Solothurn West – Solothurn: Im Personenverkehr verkehren dort 204 Züge pro Tag, das sind 74'507 im Jahr. Auf dem Abschnitt Solothurn West – Solothurn Allmend sind es 157 und auf dem Abschnitt Langendorf – Solothurn West sind es 47 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 69 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Solothurn West – Solothurn",
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:dcf5b318",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Solothurn West – Solothurn?",
           "options": [
@@ -254,6 +263,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -306,6 +316,7 @@
       ],
       "questions": [
         {
+          "id": "linien:f5ce6a36",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 410 ist Solothurn West eingetragen?",
           "min": 61,
@@ -346,6 +357,7 @@
       ],
       "questions": [
         {
+          "id": "services:11d3b67e",
           "type": "true_false",
           "prompt": "Solothurn West steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -354,6 +366,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:34d96396",
           "type": "cloze",
           "prompt": "In Solothurn West sind ___ Billettentwerter erfasst.",
           "options": [
@@ -395,6 +408,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -409,6 +423,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [

@@ -55,6 +55,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:2f210158",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zollikofen ein und aus?",
           "options": [
@@ -69,6 +70,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:bd230415",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Zollikofen ___ Personen ein und aus.",
           "options": [
@@ -107,6 +110,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:f93bb811",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Zollikofen umfasst auch RBS.",
           "correct": false,
@@ -143,6 +147,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:25c7ab8e",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zollikofen?",
           "min": 450,
@@ -155,6 +160,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:89c45386",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Zollikofen?",
           "options": [
@@ -192,6 +198,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -217,6 +224,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -236,6 +244,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:379f3b1e",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Zollikofen sind niveaufrei erreichbar.",
           "correct": true,
@@ -260,6 +269,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:fae99f7d",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Zollikofen erfasst? (Mehrfachauswahl)",
           "options": [
@@ -306,6 +316,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:c8fea739",
           "type": "cloze",
           "prompt": "In Zollikofen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -320,6 +331,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -333,7 +345,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Zollikofen – Zollikofen West (Spw): Im Personenverkehr verkehren dort 246 Züge pro Tag, das sind 89'912 im Jahr. Auf dem Abschnitt Münchenbuchsee – Zollikofen sind es 191 und auf dem Abschnitt Zollikofen – Schönbühl SBB sind es 56 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 44 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Zollikofen – Zollikofen West (Spw)",
@@ -352,6 +364,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:85836920",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zollikofen – Zollikofen West (Spw)?",
           "options": [
@@ -366,6 +379,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -418,6 +432,7 @@
       ],
       "questions": [
         {
+          "id": "linien:d6945dc2",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 450 ist Zollikofen eingetragen?",
           "min": 81,
@@ -430,6 +445,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -477,6 +493,7 @@
       ],
       "questions": [
         {
+          "id": "services:dd83ce88",
           "type": "true_false",
           "prompt": "Zollikofen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -485,6 +502,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:7523682d",
           "type": "cloze",
           "prompt": "In Zollikofen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -526,6 +544,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -540,6 +559,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -555,8 +575,9 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -576,7 +597,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1 hat mit 2'264 Quadratmetern die grösste erfasste Fläche, Perron 22 mit 688 die kleinste der gezeigten.",
+          "explanation": "Perron 1 hat mit 2'264 Quadratmetern die grösste erfasste Belagsfläche, Perron 22 mit 688 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

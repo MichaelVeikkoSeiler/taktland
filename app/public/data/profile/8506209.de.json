@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:0c4a25ac",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Flawil ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:86c6925a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Flawil ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:06449143",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Flawil?",
           "min": 500,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:0bd43d98",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Flawil lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b08068f8",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Flawil?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:1a432dc6",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Flawil ist niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:0ed3ef9f",
           "type": "cloze",
           "prompt": "An Gleis 1 in Flawil sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:56070228",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Flawil kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -266,6 +275,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:b98a8cf9",
           "type": "cloze",
           "prompt": "In Flawil sind ___ Perronsegmente erfasst.",
           "options": [
@@ -280,6 +290,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -293,7 +304,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Uzwil – Flawil 215 Züge pro Tag, das sind 78'622 im Jahr. Auf dem Abschnitt Flawil – Burgau Deponie ZAB (Agl) sind es ebenfalls 215 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 17 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Uzwil – Flawil",
@@ -312,6 +323,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:f31c3b55",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Uzwil – Flawil?",
           "options": [
@@ -326,6 +338,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:333500ed",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Uzwil – Flawil?",
           "min": 64000,
@@ -360,6 +373,7 @@
       ],
       "questions": [
         {
+          "id": "linien:e3262cae",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 850 ist Flawil eingetragen?",
           "min": 78,
@@ -400,6 +414,7 @@
       ],
       "questions": [
         {
+          "id": "services:3181607a",
           "type": "true_false",
           "prompt": "Flawil steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -408,6 +423,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:eac60419",
           "type": "cloze",
           "prompt": "In Flawil sind ___ Billettentwerter erfasst.",
           "options": [
@@ -426,7 +442,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Flawil 7 Sitzbänke sowie 1 Infopunkt erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Flawil 7 Sitzbänke sowie 1 Infopunkt erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -449,6 +465,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -463,6 +480,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -478,6 +496,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

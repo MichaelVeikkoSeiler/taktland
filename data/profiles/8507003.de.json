@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:3e5cbce5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Gümligen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ceb05366",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Gümligen ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:38c928e9",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Gümligen?",
           "min": 460,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:57e8d4f1",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Gümligen?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:3585f44f",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Gümligen?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -212,6 +219,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:32e29235",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Gümligen sind niveaufrei erreichbar.",
           "correct": true,
@@ -242,6 +250,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:c10debf5",
           "type": "cloze",
           "prompt": "An Gleis 1 in Gümligen sind ___ Sektoren erfasst.",
           "options": [
@@ -256,6 +265,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:8261019c",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Gümligen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -292,6 +302,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:2ab7b343",
           "type": "cloze",
           "prompt": "In Gümligen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -306,6 +317,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
           "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -319,7 +331,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Gümligen – Gümligen Süd (Abzw): Im Personenverkehr verkehren dort 333 Züge pro Tag, das sind 121'538 im Jahr. Auf dem Abschnitt Ostermundigen – Gümligen sind es 332 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 47 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Gümligen – Gümligen Süd (Abzw)",
@@ -338,6 +350,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:aec8499b",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Gümligen – Gümligen Süd (Abzw)?",
           "options": [
@@ -352,6 +365,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:b581674e",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Gümligen – Gümligen Süd (Abzw)?",
           "min": 99500,
@@ -386,6 +400,7 @@
       ],
       "questions": [
         {
+          "id": "linien:f9188725",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 290 ist Gümligen eingetragen?",
           "min": 93,
@@ -398,6 +413,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -445,6 +461,7 @@
       ],
       "questions": [
         {
+          "id": "services:8722c3a6",
           "type": "true_false",
           "prompt": "Gümligen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -453,6 +470,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:d26356c4",
           "type": "cloze",
           "prompt": "In Gümligen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -494,6 +512,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -508,6 +527,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [

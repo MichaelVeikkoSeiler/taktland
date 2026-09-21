@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:225e6cab",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Wettingen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:4e1b6dee",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Wettingen ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:9fbbc296",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Wettingen?",
           "min": 310,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:eb3b4380",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Wettingen lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -202,6 +208,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -226,6 +233,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:d25c02bd",
           "type": "true_false",
           "prompt": "Zu allen 4 erfassten Perrons in Wettingen ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -256,6 +264,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:989c3b02",
           "type": "cloze",
           "prompt": "An Gleis 3 in Wettingen sind ___ Sektoren erfasst.",
           "options": [
@@ -298,6 +307,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:6b3cfaae",
           "type": "cloze",
           "prompt": "In Wettingen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -317,7 +327,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Baden – Wettingen: Im Personenverkehr verkehren dort 321 Züge pro Tag, das sind 117'110 im Jahr. Auf dem Abschnitt Wettingen – Neuenhof sind es 210 und auf dem Abschnitt Wettingen – Würenlos sind es 78 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 56 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Baden – Wettingen",
@@ -336,6 +346,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:13fa6789",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Baden – Wettingen?",
           "options": [
@@ -350,6 +361,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -402,6 +414,7 @@
       ],
       "questions": [
         {
+          "id": "linien:d6014711",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 703 ist Wettingen eingetragen?",
           "min": 35,
@@ -414,6 +427,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -461,6 +475,7 @@
       ],
       "questions": [
         {
+          "id": "services:8a1cf449",
           "type": "true_false",
           "prompt": "Wettingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -469,6 +484,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:09e3ad7b",
           "type": "cloze",
           "prompt": "In Wettingen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -510,6 +526,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -524,6 +541,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -538,6 +556,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -553,8 +572,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -579,7 +599,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 3/4 hat mit 1'839 Quadratmetern die grösste erfasste Fläche, Perron 2 mit 391 die kleinste der gezeigten.",
+          "explanation": "Perron 3/4 hat mit 1'839 Quadratmetern die grösste erfasste Belagsfläche, Perron 2 mit 391 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

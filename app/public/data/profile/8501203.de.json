@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:fce9c055",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Clarens ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e61afb4d",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Clarens ___ Personen ein und aus.",
           "options": [
@@ -134,6 +137,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:8f5c536e",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Clarens?",
           "min": 320,
@@ -146,6 +150,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:d24c5a4d",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Clarens?",
           "options": [
@@ -183,6 +188,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:e9c59a37",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Clarens?",
           "options": [
@@ -197,6 +203,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:e5c23481",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Clarens sind niveaufrei erreichbar.",
           "correct": true,
@@ -227,6 +234,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:ce81778c",
           "type": "cloze",
           "prompt": "An Gleis 1 in Clarens sind ___ Sektoren erfasst.",
           "options": [
@@ -263,6 +271,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:52c96f20",
           "type": "cloze",
           "prompt": "In Clarens sind ___ Perronsegmente erfasst.",
           "options": [
@@ -277,6 +286,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:333e7d65",
           "type": "true_false",
           "prompt": "Bei keinem der 2 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -290,7 +300,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Clarens – Tunnel des Crêtes (diag) 231 Züge pro Tag, das sind 84'487 im Jahr. Auf dem Abschnitt Vernex (diag) – Clarens sind es ebenfalls 231 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 26 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Clarens – Tunnel des Crêtes (diag)",
@@ -309,6 +319,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:4ba6c34e",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Clarens – Tunnel des Crêtes (diag)?",
           "options": [
@@ -323,6 +334,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:01c2af43",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Clarens – Tunnel des Crêtes (diag)?",
           "min": 69000,
@@ -357,6 +369,7 @@
       ],
       "questions": [
         {
+          "id": "linien:e414a5a6",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Clarens eingetragen?",
           "min": 18,
@@ -397,6 +410,7 @@
       ],
       "questions": [
         {
+          "id": "services:7d03b538",
           "type": "true_false",
           "prompt": "Clarens steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -405,6 +419,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:0fbd8e7a",
           "type": "cloze",
           "prompt": "In Clarens sind ___ Billettentwerter erfasst.",
           "options": [
@@ -440,6 +455,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -454,6 +470,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

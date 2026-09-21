@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f0c41fc5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Rorschach Stadt ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:2237d081",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Rorschach Stadt ___ Personen ein und aus.",
           "options": [
@@ -99,6 +101,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:9c9b08f7",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Rorschach Stadt?",
           "min": 330,
@@ -111,6 +114,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:8c51c9a0",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Rorschach Stadt lautet ___.",
           "options": [
@@ -147,6 +151,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:7d4c202f",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Rorschach Stadt?",
           "options": [
@@ -161,6 +166,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:017bdeea",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Rorschach Stadt sind niveaufrei erreichbar.",
           "correct": true,
@@ -191,6 +197,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:e8f64c57",
           "type": "cloze",
           "prompt": "An Gleis 1 in Rorschach Stadt sind ___ Sektoren erfasst.",
           "options": [
@@ -205,6 +212,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:dfaaaf7b",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Rorschach Stadt ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -229,6 +237,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:324d2334",
           "type": "true_false",
           "prompt": "Für Rorschach Stadt sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -242,7 +251,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Rorschach Stadt – Rorschach 231 Züge pro Tag, das sind 84'240 im Jahr. Auf dem Abschnitt Goldach – Rorschach Stadt sind es ebenfalls 231 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 7 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rorschach Stadt – Rorschach",
@@ -261,6 +270,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:a2f0e7e9",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rorschach Stadt – Rorschach?",
           "options": [
@@ -275,6 +285,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:accb30d5",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Rorschach Stadt – Rorschach?",
           "min": 69000,
@@ -309,6 +320,7 @@
       ],
       "questions": [
         {
+          "id": "linien:2be4dbf5",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 880 ist Rorschach Stadt eingetragen?",
           "min": 54,
@@ -349,6 +361,7 @@
       ],
       "questions": [
         {
+          "id": "services:b07d92d1",
           "type": "true_false",
           "prompt": "Rorschach Stadt steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -357,6 +370,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:31b9f124",
           "type": "cloze",
           "prompt": "In Rorschach Stadt sind ___ Billettentwerter erfasst.",
           "options": [
@@ -392,6 +406,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -406,6 +421,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -436,10 +452,11 @@
       ],
       "questions": [
         {
+          "id": "bahnhofplan:5931306c",
           "type": "true_false",
           "prompt": "Für Rorschach Stadt ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

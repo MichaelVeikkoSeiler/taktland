@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:efb173c0",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Romont FR ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e63917b2",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Romont FR ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:191d5d78",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Romont FR?",
           "min": 570,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:8e5d3deb",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Romont FR?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -209,6 +215,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:fadb09d9",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Romont FR sind niveaufrei erreichbar.",
           "correct": true,
@@ -239,6 +246,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -264,6 +272,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:6a99d96e",
           "type": "cloze",
           "prompt": "An Gleis 1 in Romont FR sind ___ Sektoren erfasst.",
           "options": [
@@ -278,6 +287,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:0e5332b3",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Romont FR kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -314,6 +324,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:a8e68cd7",
           "type": "cloze",
           "prompt": "In Romont FR sind ___ Perronsegmente erfasst.",
           "options": [
@@ -328,6 +339,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:627960b7",
           "type": "true_false",
           "prompt": "Bei keinem der 14 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -341,7 +353,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Romont FR – Lussy FR: Im Personenverkehr verkehren dort 230 Züge pro Tag, das sind 83'902 im Jahr. Auf dem Abschnitt Siviriez – Romont FR sind es 153 und auf dem Abschnitt Vuisternens-devant-Romont – Romont FR sind es 77 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 8 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Romont FR – Lussy FR",
@@ -360,6 +372,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:31b8db28",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Romont FR – Lussy FR?",
           "options": [
@@ -374,6 +387,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -426,6 +440,7 @@
       ],
       "questions": [
         {
+          "id": "linien:5b6bda09",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Romont FR eingetragen?",
           "min": 32,
@@ -438,6 +453,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -490,6 +506,7 @@
       ],
       "questions": [
         {
+          "id": "services:0be6d569",
           "type": "true_false",
           "prompt": "Romont FR steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -498,6 +515,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:1dd2d5e1",
           "type": "cloze",
           "prompt": "In Romont FR sind ___ Billettentwerter erfasst.",
           "options": [
@@ -539,6 +557,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -553,6 +572,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -568,6 +588,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -583,8 +604,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -604,7 +626,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1 hat mit 2'030 Quadratmetern die grösste erfasste Fläche, Perron 4/6 mit 685 die kleinste der gezeigten.",
+          "explanation": "Perron 1 hat mit 2'030 Quadratmetern die grösste erfasste Belagsfläche, Perron 4/6 mit 685 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

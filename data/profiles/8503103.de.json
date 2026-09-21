@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:43d1f3f5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Herrliberg-Feldmeilen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e49c70ef",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Herrliberg-Feldmeilen ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:ebe6e572",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Herrliberg-Feldmeilen?",
           "min": 340,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:84d16e7b",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Herrliberg-Feldmeilen?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:adc91241",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Herrliberg-Feldmeilen?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:316070c4",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Herrliberg-Feldmeilen sind niveaufrei erreichbar.",
           "correct": true,
@@ -230,6 +237,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -239,6 +247,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:c6be9754",
           "type": "cloze",
           "prompt": "An Gleis 2 in Herrliberg-Feldmeilen sind ___ Sektoren erfasst.",
           "options": [
@@ -253,6 +262,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:ece6785f",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 3 in Herrliberg-Feldmeilen erfasst? (Mehrfachauswahl)",
           "options": [
@@ -299,6 +309,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:1db165bd",
           "type": "cloze",
           "prompt": "In Herrliberg-Feldmeilen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -313,6 +324,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -326,7 +338,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Winkel am Zürichsee – Herrliberg-Feldmeilen: Im Personenverkehr verkehren dort 233 Züge pro Tag, das sind 85'146 im Jahr. Auf dem Abschnitt Herrliberg-Feldmeilen – Feldmeilen Wendeanlage sind es 209 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Winkel am Zürichsee – Herrliberg-Feldmeilen",
@@ -345,6 +357,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:70c6d654",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Winkel am Zürichsee – Herrliberg-Feldmeilen?",
           "options": [
@@ -359,6 +372,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -406,6 +420,7 @@
       ],
       "questions": [
         {
+          "id": "linien:31fac825",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Herrliberg-Feldmeilen eingetragen?",
           "min": 13.5,
@@ -446,6 +461,7 @@
       ],
       "questions": [
         {
+          "id": "services:d918370d",
           "type": "true_false",
           "prompt": "Herrliberg-Feldmeilen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -454,6 +470,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:43680b4c",
           "type": "cloze",
           "prompt": "In Herrliberg-Feldmeilen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -495,6 +512,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -509,6 +527,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

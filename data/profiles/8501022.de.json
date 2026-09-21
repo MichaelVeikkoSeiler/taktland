@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:9202834d",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Versoix ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:62b3bac1",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Versoix ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:fad00b3a",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Versoix?",
           "min": 310,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:d7acf445",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Versoix lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:9414ab2c",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Versoix?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -210,6 +217,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:43160618",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Versoix sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:787517da",
           "type": "cloze",
           "prompt": "An Gleis 1 in Versoix sind ___ Sektoren erfasst.",
           "options": [
@@ -254,6 +263,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:05762dd4",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Versoix kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:db27e8e2",
           "type": "cloze",
           "prompt": "In Versoix sind ___ Perronsegmente erfasst.",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f641b667",
           "type": "true_false",
           "prompt": "Bei keinem der 9 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -317,7 +329,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Creux-de-Genthod – Versoix 413 Züge pro Tag, das sind 150'851 im Jahr. Auf dem Abschnitt Versoix – Pont-Céard sind es ebenfalls 413 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Creux-de-Genthod – Versoix",
@@ -336,6 +348,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:d992830d",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Creux-de-Genthod – Versoix?",
           "options": [
@@ -350,6 +363,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:5e4082a2",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Creux-de-Genthod – Versoix?",
           "min": 123500,
@@ -384,6 +398,7 @@
       ],
       "questions": [
         {
+          "id": "linien:9d2794c0",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Versoix eingetragen?",
           "min": 42,
@@ -424,6 +439,7 @@
       ],
       "questions": [
         {
+          "id": "services:a0dad4fa",
           "type": "true_false",
           "prompt": "Versoix steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -432,6 +448,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:af7f37c7",
           "type": "cloze",
           "prompt": "In Versoix sind ___ Billettentwerter erfasst.",
           "options": [
@@ -473,6 +490,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -487,6 +505,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -502,6 +521,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

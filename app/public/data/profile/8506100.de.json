@@ -12,7 +12,6 @@
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -26,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Frauenfeld 11'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'600, an einem freien Tag 7'800. Die Infrastruktur gehört der SBB, Züge fahren hier von SBB und Thurbo. Zwischen 2018 und 2025 bewegte sich der Werktagsverkehr zwischen 10'000 und 11'900.",
+      "body": "An einem Werktag steigen in Frauenfeld 11'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'600, an einem freien Tag 7'800. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne FW.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -58,20 +57,22 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:4d9ee144",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Frauenfeld ein und aus?",
           "options": [
-            "4'800",
             "6'500",
             "8'300",
-            "11'900"
+            "11'900",
+            "14'000"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "An einem Werktag sind es 11'900 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -97,8 +98,23 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:1bcafb5c",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Frauenfeld ___ Personen ein und aus.",
+          "options": [
+            "6'600",
+            "7'800",
+            "9'400"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 7'800 Personen, an einem Werktag 11'900. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "id": "steckbrief:83168839",
           "type": "true_false",
-          "prompt": "Die Zahl der Ein- und Aussteigenden in Frauenfeld umfasst auch die FW.",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Frauenfeld umfasst auch FW.",
           "correct": false,
           "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne FW.». Wofür FW steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
@@ -119,12 +135,6 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Bezirk",
-          "value": "Frauenfeld",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
-        },
-        {
           "label": "Offizielle Abkürzung",
           "value": "FF",
           "source": "haltestelle-haltekante",
@@ -133,10 +143,11 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:c85ad5cc",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Frauenfeld?",
-          "min": 360,
-          "max": 530,
+          "min": 330,
+          "max": 590,
           "step": 1,
           "unit": "m ü. M.",
           "correct": 404.6,
@@ -145,6 +156,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:6e2a3b19",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Frauenfeld lautet ___.",
           "options": [
@@ -163,7 +175,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Frauenfeld liegen offene Daten vor, beide sind niveaufrei erreichbar und beide messen 421 Meter. Perron 2/3 ist ein Mittelperron mit 2132.5 Quadratmetern, Perron 1 ein Hausperron mit 1412.2 Quadratmetern.",
+      "body": "Zu 2 Perrons in Frauenfeld liegen offene Daten vor. Perron 2/3 misst 421 Meter, Perron 1 misst 421 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -172,35 +184,31 @@
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Länge der erfassten Perrons",
+          "label": "Längstes erfasstes Perron",
           "value": 421,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Nettofläche Perron 2/3",
-          "value": 2132.5,
-          "unit": "m²",
-          "source": "perron",
-          "factRef": "perrons.items[0].flaeche_netto_m2"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Beide erfassten Perrons in Frauenfeld messen je ___ Meter.",
+          "id": "perrons:885b8018",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Frauenfeld?",
           "options": [
-            "280",
-            "350",
-            "421"
+            "421 m",
+            "510 m",
+            "590 m",
+            "720 m"
           ],
-          "correct": 2,
-          "explanation": "Sowohl Perron 2/3 als auch Perron 1 sind mit 421 Metern erfasst. Das längste und das kürzeste erfasste Perron sind hier also gleich lang.",
+          "correct": 0,
+          "explanation": "Das längste erfasste Perron misst 421 Meter.",
           "factRef": "perrons.laengste_m",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -216,10 +224,11 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/3 hat 2132.5 Quadratmeter, Perron 1 hat 1412.2. Beide sind gleich lang, das Mittelperron ist aber breiter.",
-          "difficulty": 2
+          "explanation": "Perron 2/3 hat 2132.5 Quadratmeter, Perron 1 hat 1412.2 Quadratmeter.",
+          "difficulty": 3
         },
         {
+          "id": "perrons:243d09d3",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Frauenfeld sind niveaufrei erreichbar.",
           "correct": true,
@@ -232,7 +241,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Die Gleise 1 und 3 tragen je 8 Sektoren von A bis H, Gleis 2 deren 7. Bei keinem ist ein Hilfstritt verzeichnet.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -242,54 +251,35 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Perronkante Gleis 1",
-          "value": 374,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronkante_m"
-        },
-        {
-          "label": "Sektoren an Gleis 2",
-          "value": 7,
+          "label": "Sektoren an Gleis 1",
+          "value": 8,
           "source": "sektortafel",
-          "factRef": "gleise.items[1].sektoren_anzahl"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
+          "id": "gleise:751cf947",
           "type": "cloze",
-          "prompt": "An Gleis 2 in Frauenfeld sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 1 in Frauenfeld sind ___ Sektoren erfasst.",
           "options": [
-            "5",
-            "7",
-            "8"
+            "8",
+            "10",
+            "11"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 2 trägt die Sektoren A bis G, also 7 Stück. Die Gleise 1 und 3 haben je 8.",
-          "factRef": "gleise.items[1].sektoren_anzahl",
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D, E, F, G und H, also 8 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         },
         {
+          "id": "gleise:5e21c47c",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Frauenfeld kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
           "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
           "factRef": "gleise.perronhoehen_cm",
-          "difficulty": 2
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie lang ist die erfasste Perronkante an Gleis 1?",
-          "options": [
-            "150 m",
-            "210 m",
-            "290 m",
-            "374 m"
-          ],
-          "correct": 3,
-          "explanation": "An Gleis 1 misst die erfasste Perronkante 374 Meter, an den Gleisen 2 und 3 je 375 Meter.",
-          "factRef": "gleise.items[0].perronkante_m",
           "difficulty": 2
         }
       ]
@@ -297,7 +287,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Frauenfeld sind 8 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt diese Höhe vor. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Frauenfeld sind 8 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -321,100 +311,97 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:55e7ee1c",
           "type": "cloze",
           "prompt": "In Frauenfeld sind ___ Perronsegmente erfasst.",
           "options": [
-            "6",
             "8",
-            "12"
+            "10",
+            "11"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
           "explanation": "Die BehiG-Erhebung führt 8 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
-          "prompt": "Für Frauenfeld ist eine visuell-taktile Sicherheitslinie erfasst.",
+          "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung verzeichnet eine Sicherheitslinie für diesen Bahnhof.",
-          "factRef": "hindernisfreiheit.sicherheitslinie",
-          "difficulty": 1
+          "explanation": "Die Erhebung weist bei 0 der 8 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Richtung Felben-Wellhausen 167 Züge pro Tag, das sind 60'917 im Jahr. Von Islikon her sind es ebenfalls 167 Züge pro Tag. Dazu kommt der Güterverkehr mit 26 und 21 Zügen pro Tag sowie ein Anschluss zur Frauenfeld Paketpost.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Frauenfeld – Felben-Wellhausen 167 Züge pro Tag, das sind 60'917 im Jahr. Auf dem Abschnitt Islikon – Frauenfeld sind es ebenfalls 167 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 26 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Richtung Felben-Wellhausen",
+          "label": "Züge pro Tag, Personenverkehr Frauenfeld – Felben-Wellhausen",
           "value": 167,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Richtung Felben-Wellhausen",
+          "label": "Züge pro Jahr, Personenverkehr Frauenfeld – Felben-Wellhausen",
           "value": 60917,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:e1801f48",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr Richtung Felben-Wellhausen?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Frauenfeld – Felben-Wellhausen?",
           "options": [
-            "67",
-            "93",
-            "120",
-            "167"
+            "167",
+            "200",
+            "230",
+            "280"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 167 Züge pro Tag, beide Richtungen zusammen. Von Islikon her ist es dieselbe Zahl.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 167 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Richtung Felben-Wellhausen, Personenverkehr",
+              "label": "Frauenfeld – Felben-Wellhausen, Personenverkehr",
               "value": 60917,
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Von Islikon, Güterverkehr",
+              "label": "Islikon – Frauenfeld, Güterverkehr",
               "value": 9640,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
             },
             {
-              "label": "Richtung Felben-Wellhausen, Güterverkehr",
+              "label": "Frauenfeld – Felben-Wellhausen, Güterverkehr",
               "value": 7766,
               "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            },
+            {
+              "label": "Frauenfeld – Frauenfeld Paketpost, Güterverkehr",
+              "value": 5577,
+              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Richtig ist diese Reihenfolge: Richtung Felben-Wellhausen im Personenverkehr mit 60'917, von Islikon im Güterverkehr mit 9'640 und Richtung Felben-Wellhausen im Güterverkehr mit 7'766 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
-          "difficulty": 3
-        },
-        {
-          "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr Richtung Felben-Wellhausen?",
-          "min": 35000,
-          "max": 110000,
-          "step": 500,
-          "unit": "Züge/Jahr",
-          "correct": 60917,
-          "explanation": "Die Erhebung zählt 60'917 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "explanation": "Frauenfeld – Felben-Wellhausen (Personenverkehr) 60'917, Islikon – Frauenfeld (Güterverkehr) 9'640, Frauenfeld – Felben-Wellhausen (Güterverkehr) 7'766, Frauenfeld – Frauenfeld Paketpost (Güterverkehr) 5'577 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -422,7 +409,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Frauenfeld sind 2 Linien erfasst: die Linie 843 Frauenfeld–Frauenfeld Paketpost und die Linie 840 Winterthur Nord–Romanshorn. Auf beiden ist der Bahnhof bei Kilometer 42.05133 eingetragen.",
+      "body": "Für Frauenfeld sind 2 Linien erfasst: die Linie 843 Frauenfeld - Frauenfeld Paketpost und die Linie 840 Winterthur Nord - Romanshorn.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -431,15 +418,29 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 840",
+          "label": "Kilometrierung auf der Linie 843",
           "value": 42.05133,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[1].km_am_bahnhof"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
+          "id": "linien:fa47e5eb",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 843 ist Frauenfeld eingetragen?",
+          "min": 34,
+          "max": 61,
+          "step": 1,
+          "unit": "km",
+          "correct": 42.05133,
+          "explanation": "Die Kilometrierung von Frauenfeld auf der Linie 843 beträgt 42.05133. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        },
+        {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -455,21 +456,8 @@
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Die Linie 843 führt zur Frauenfeld Paketpost, die Linie 840 von Winterthur Nord nach Romanshorn.",
+          "explanation": "Die Linie 843 heisst Frauenfeld - Frauenfeld Paketpost, die Linie 840 heisst Winterthur Nord - Romanshorn.",
           "difficulty": 2
-        },
-        {
-          "type": "cloze",
-          "prompt": "Auf der Linie 840 steht Frauenfeld bei Kilometer ___.",
-          "options": [
-            "22.05133",
-            "42.05133",
-            "62.05133"
-          ],
-          "correct": 1,
-          "explanation": "Die Kilometrierung von Frauenfeld auf der Linie 840 beträgt 42.05133. Auf der Linie 843 ist derselbe Wert eingetragen.",
-          "factRef": "linien.items[1].km_am_bahnhof",
-          "difficulty": 3
         }
       ]
     },
@@ -500,6 +488,7 @@
       ],
       "questions": [
         {
+          "id": "services:dc9c75c4",
           "type": "true_false",
           "prompt": "Frauenfeld steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -508,14 +497,15 @@
           "difficulty": 1
         },
         {
+          "id": "services:fe5c5e45",
           "type": "cloze",
           "prompt": "In Frauenfeld sind ___ Billettentwerter erfasst.",
           "options": [
+            "5",
             "6",
-            "9",
-            "12"
+            "9"
           ],
-          "correct": 1,
+          "correct": 2,
           "optionen_aus_fakten": true,
           "explanation": "Erfasst sind 9 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
@@ -555,34 +545,37 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "14",
-            "20",
-            "25",
-            "36"
+            "36",
+            "43",
+            "50",
+            "61"
           ],
-          "correct": 3,
+          "correct": 0,
           "explanation": "Erfasst sind 36 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "4",
             "5",
             "6",
-            "7"
+            "7",
+            "10"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "Erfasst sind 7 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 17,
@@ -595,6 +588,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -621,20 +615,15 @@
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-frauenfeld-a4.pdf",
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
-        },
-        {
-          "label": "Eigentümerin der Pläne",
-          "value": "SBB",
-          "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:f98eeb85",
           "type": "true_false",
           "prompt": "Für Frauenfeld ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

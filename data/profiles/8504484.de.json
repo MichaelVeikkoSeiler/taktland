@@ -4,11 +4,10 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "haltestelle-haltekante",
-    "haltestelle-wartehallen",
     "passagierfrequenz",
     "wifistation",
     "zugzahlen"
@@ -17,67 +16,79 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Müntschemier liegt in der gleichnamigen Gemeinde im Kanton Bern, auf 436 Metern über Meer. An einem Werktag steigen hier 350 Personen ein und aus, an einem freien Tag 180. Die Anlage gehört der BLS.",
+      "body": "An einem Werktag steigen in Müntschemier 350 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 300, an einem freien Tag 180. Infrastruktur und Züge sind der BLS zugeordnet.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 350,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 180,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Höhe über Meer",
-          "value": 436,
-          "unit": "m",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.hoehe_m_ue_m"
-        },
-        {
-          "label": "Infrastrukturbetreiberin",
-          "value": "BLS",
-          "unit": null,
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:e3afd097",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Müntschemier ein und aus?",
           "options": [
-            "140",
+            "190",
+            "240",
             "350",
-            "820",
-            "1700"
+            "420"
           ],
-          "correct": 1,
-          "explanation": "350 Personen pro Werktag, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 350 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "Müntschemier liegt auf ___ Metern über Meer.",
-          "options": [
-            "170",
-            "240",
-            "370",
-            "436"
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 290,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 310,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 330,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 350,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
           ],
-          "correct": 3,
-          "explanation": "436 Meter über Meer.",
-          "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 2
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 290 (2022), 310 (2023), 330 (2024), 350 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
         },
         {
+          "id": "steckbrief:b8cec777",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Müntschemier ___ Personen ein und aus.",
           "options": [
@@ -93,85 +104,128 @@
       ]
     },
     {
-      "id": "gleise",
-      "title": "Gleise",
-      "body": "Offene Daten liegen zu den Gleisen 1 und 2 vor. Beide Perronkanten sind 220 Meter lang. Gleis 1 liegt an einem Hausperron, Gleis 2 an einem Aussenperron.",
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Müntschemier liegt auf 435.6 Metern über Meer in der Gemeinde Müntschemier, Bezirk Seeland, Kanton Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet MM.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
-          "value": 2,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.anzahl_mit_daten"
-        },
-        {
-          "label": "Perronkante an Gleis 1",
-          "value": 220,
+          "label": "Höhe über Meer",
+          "value": 435.6,
           "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronkante_m"
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Perrontyp an Gleis 2",
-          "value": "Aussenperron",
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perrontyp"
+          "label": "Offizielle Abkürzung",
+          "value": "MM",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Seeland",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie lang sind die erfassten Perronkanten in Müntschemier?",
-          "options": [
-            "90 m",
-            "150 m",
-            "220 m",
-            "380 m"
-          ],
-          "correct": 2,
-          "explanation": "220 Meter, an beiden Gleisen gleich.",
-          "factRef": "gleise.items[0].perronkante_m",
-          "difficulty": 1
+          "id": "stammdaten:b49d8e1b",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Müntschemier?",
+          "min": 350,
+          "max": 640,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 435.6,
+          "explanation": "Der Bahnhof liegt auf 435.6 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
         },
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis liegt am Hausperron?",
-          "schema": "gleise",
-          "correct": "1",
-          "explanation": "Gleis 1. Ein Hausperron liegt direkt beim Aufnahmegebäude.",
-          "factRef": "gleise.items[0].nr",
+          "id": "stammdaten:3294d6fb",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Müntschemier?",
+          "options": [
+            "Bern-Mittelland",
+            "Biel/Bienne",
+            "Jura bernois",
+            "Seeland"
+          ],
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Bezirk ist Seeland eingetragen.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. An beiden erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:50702753",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Müntschemier kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "Die erfassten Perronkanten sind 55 Zentimeter hoch, an 2 von 2 Gleisen. Erfasst sind 6 Abschnitte, keiner davon braucht einen Hilfstritt.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, braucht es eine Rampe oder einen Hilfstritt.",
+      "title": "Hindernisfreiheit",
+      "body": "Für Müntschemier sind 6 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Perronhöhe",
-          "value": 55,
-          "unit": "cm",
+          "label": "Erfasste Perronsegmente",
+          "value": 6,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.perronhoehen_cm[0]"
+          "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Abschnitte mit Hilfstritt",
-          "value": 0,
-          "unit": null,
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         }
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:4f12d425",
+          "type": "cloze",
+          "prompt": "In Müntschemier sind ___ Perronsegmente erfasst.",
+          "options": [
+            "3",
+            "5",
+            "6"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 6 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
-          "prompt": "In Müntschemier braucht es an keinem erfassten Abschnitt einen Hilfstritt.",
+          "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die 6 erfassten Abschnitte liegen auf 55 Zentimetern.",
+          "explanation": "Die Erhebung weist bei 0 der 6 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -179,78 +233,91 @@
     },
     {
       "id": "zuege",
-      "title": "Züge auf der Strecke",
-      "body": "Richtung Kerzers verkehren 34'164 Personenzüge pro Jahr, rund 94 pro Tag in beiden Richtungen zusammen. Von Ins her sind es 34'159 im Jahr. Dazu kommen Güterzüge: 4 pro Tag von Ins her.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Müntschemier – Kerzers 94 Züge pro Tag, das sind 34'164 im Jahr. Auf dem Abschnitt Ins – Müntschemier sind es ebenfalls 94 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag Richtung Kerzers",
+          "label": "Züge pro Tag, Personenverkehr Müntschemier – Kerzers",
           "value": 94,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Güterzüge pro Tag von Ins her",
-          "value": 4,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Müntschemier – Kerzers",
+          "value": 34164,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:220bf2ed",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt Richtung Kerzers?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Müntschemier – Kerzers?",
           "options": [
-            "24",
+            "80",
             "94",
-            "260",
-            "510"
+            "110",
+            "130"
           ],
           "correct": 1,
-          "explanation": "Rund 94 pro Tag, beide Richtungen zusammen.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 94 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Auf der Strecke bei Müntschemier verkehren auch Güterzüge.",
-          "correct": true,
-          "explanation": "4 Güterzüge pro Tag von Ins her.",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
-          "difficulty": 2
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Müntschemier – Kerzers, Personenverkehr",
+              "value": 34164,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Ins – Müntschemier, Güterverkehr",
+              "value": 1584,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Müntschemier – Kerzers, Güterverkehr",
+              "value": 889,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Müntschemier – Kerzers (Personenverkehr) 34'164, Ins – Müntschemier (Güterverkehr) 1'584, Müntschemier – Kerzers (Güterverkehr) 889 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Müntschemier steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor.",
+      "title": "Services",
+      "body": "Wartehallen sind keine verzeichnet. Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor. Müntschemier steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
           "value": false,
-          "unit": null,
+          "unit": "",
           "source": "wifistation",
           "factRef": "services.wlan_erfasst"
-        },
-        {
-          "label": "Wartehallen erfasst",
-          "value": 0,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:f91cbaf4",
           "type": "true_false",
-          "prompt": "Müntschemier ist als WLAN-Standort erfasst.",
+          "prompt": "Müntschemier steht in der Liste der WLAN-Standorte.",
           "correct": false,
-          "explanation": "Der Bahnhof steht nicht in der Liste der WLAN-Standorte.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     }
@@ -310,30 +377,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 220,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Aussenperron",
-      "perronkante_m": 220,
-      "sektoren": [],
-      "sektoren_anzahl": 0
     }
   ]
 }

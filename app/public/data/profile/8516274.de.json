@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:c72e7a0e",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Chêne-Bourg ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:5604cc23",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Chêne-Bourg ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:9a5e9a19",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Chêne-Bourg?",
           "min": 330,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:98b682ef",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Chêne-Bourg lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:1b8100ae",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Chêne-Bourg?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:4a5cf698",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Chêne-Bourg sind niveaufrei erreichbar.",
           "correct": true,
@@ -220,6 +227,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:b4633eac",
           "type": "cloze",
           "prompt": "An Gleis 1 in Chêne-Bourg sind ___ Sektoren erfasst.",
           "options": [
@@ -234,6 +242,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:d9255676",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Chêne-Bourg ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -258,6 +267,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7036333a",
           "type": "true_false",
           "prompt": "Für Chêne-Bourg sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -271,7 +281,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Genève-Eaux-Vives – Chêne-Bourg: Im Personenverkehr verkehren dort 224 Züge pro Tag, das sind 81'669 im Jahr. Auf dem Abschnitt Chêne-Bourg – Chêne-Bourg-Frontière sind es 219 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Genève-Eaux-Vives – Chêne-Bourg",
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:70b8d5e4",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Genève-Eaux-Vives – Chêne-Bourg?",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:b5583894",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Genève-Eaux-Vives – Chêne-Bourg?",
           "min": 66500,
@@ -338,6 +350,7 @@
       ],
       "questions": [
         {
+          "id": "linien:40e88ab7",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 152 ist Chêne-Bourg eingetragen?",
           "min": 59,
@@ -378,6 +391,7 @@
       ],
       "questions": [
         {
+          "id": "services:4810af8d",
           "type": "true_false",
           "prompt": "Chêne-Bourg steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -386,6 +400,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:e493d730",
           "type": "cloze",
           "prompt": "In Chêne-Bourg sind ___ Billettentwerter erfasst.",
           "options": [
@@ -421,6 +436,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -435,6 +451,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

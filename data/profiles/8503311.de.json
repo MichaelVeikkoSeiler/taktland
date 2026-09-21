@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:79fad3d5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Rümlang ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:63f61352",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Rümlang ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:72e376e0",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Rümlang?",
           "min": 350,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:18db9775",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Rümlang lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:ea2d025c",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Rümlang?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:36c24556",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Rümlang ist niveaufrei erreichbar.",
           "correct": true,
@@ -215,6 +222,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:6595cbda",
           "type": "cloze",
           "prompt": "An Gleis 3 in Rümlang sind ___ Sektoren erfasst.",
           "options": [
@@ -229,6 +237,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:70d546ef",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Rümlang kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -259,6 +268,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:e1a39dc1",
           "type": "cloze",
           "prompt": "In Rümlang sind ___ Perronsegmente erfasst.",
           "options": [
@@ -273,6 +283,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -286,7 +297,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Rümlang – Tankanlage Rümlang 234 Züge pro Tag, das sind 85'251 im Jahr. Auf dem Abschnitt Oberglatt ZH – Rümlang sind es ebenfalls 234 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 34 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rümlang – Tankanlage Rümlang",
@@ -305,6 +316,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:5f2f22f9",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rümlang – Tankanlage Rümlang?",
           "options": [
@@ -319,6 +331,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:24c9e789",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Rümlang – Tankanlage Rümlang?",
           "min": 69500,
@@ -353,6 +366,7 @@
       ],
       "questions": [
         {
+          "id": "linien:61c72532",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 760 ist Rümlang eingetragen?",
           "min": 8.5,
@@ -393,6 +407,7 @@
       ],
       "questions": [
         {
+          "id": "services:6e05b1b9",
           "type": "true_false",
           "prompt": "Rümlang steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -401,6 +416,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:2c056245",
           "type": "cloze",
           "prompt": "In Rümlang sind ___ Billettentwerter erfasst.",
           "options": [
@@ -419,7 +435,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Rümlang 6 Sitzbänke sowie 15 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Rümlang 6 Sitzbänke sowie 15 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -442,6 +458,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -456,6 +473,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -470,6 +488,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

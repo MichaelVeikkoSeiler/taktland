@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -12,7 +12,6 @@
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -26,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Die Infrastruktur in Rotkreuz gehört der SBB, die Züge betreiben SBB und SOB. An einem Werktag steigen hier 17'800 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 15'300. An einem freien Tag sind es 9'700 Personen.",
+      "body": "An einem Werktag steigen in Rotkreuz 17'800 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 15'300, an einem freien Tag 9'700. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -48,39 +47,26 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Infrastrukturbetreiberin",
-          "value": "SBB",
-          "unit": "",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:c913217a",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Rotkreuz ein und aus?",
           "options": [
-            "7'100",
-            "9'800",
-            "12'000",
-            "17'800"
+            "15'000",
+            "17'800",
+            "21'000",
+            "25'000"
           ],
-          "correct": 3,
-          "explanation": "An einem Werktag sind es 17'800 Personen, Stand 2025.",
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 17'800 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "An einem freien Tag steigen in Rotkreuz 9'700 Personen ein und aus.",
-          "correct": true,
-          "explanation": "Der Wert für freie Tage (dnwv) beträgt 9'700 Personen, Stand 2025.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 1
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -102,14 +88,29 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 15'200 (2022), 17'000 (2023), 17'900 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
+          "explanation": "Die erfassten Werte, aufsteigend: 15'200 (2022), 17'000 (2023), 17'900 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:3cbe61cd",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Rotkreuz ___ Personen ein und aus.",
+          "options": [
+            "9'700",
+            "12'000",
+            "14'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 9'700 Personen, an einem Werktag 17'800. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Rotkreuz liegt auf 429 Metern über Meer, in der Gemeinde Risch im Kanton Zug. Betreiberin der Anlage ist die Schweizerische Bundesbahnen SBB.",
+      "body": "Rotkreuz liegt auf 429 Metern über Meer in der Gemeinde Risch, Kanton Zug. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet RK.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -119,69 +120,60 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Gemeinde",
-          "value": "Risch",
-          "unit": "",
+          "label": "Offizielle Abkürzung",
+          "value": "RK",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
+          "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Betreiberin",
-          "value": "Schweizerische Bundesbahnen SBB",
-          "unit": "",
+          "label": "Gemeinde",
+          "value": "Risch",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.betreiber"
+          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Auf welcher Höhe über Meer liegt Rotkreuz?",
-          "options": [
-            "329 m",
-            "429 m",
-            "529 m",
-            "629 m"
-          ],
-          "correct": 1,
-          "explanation": "Rotkreuz liegt auf 429 Metern über Meer.",
+          "id": "stammdaten:7dcc942d",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Rotkreuz?",
+          "min": 350,
+          "max": 630,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 429,
+          "explanation": "Der Bahnhof liegt auf 429 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
-          "type": "cloze",
-          "prompt": "Rotkreuz liegt in der Gemeinde ___.",
+          "id": "stammdaten:4b18ee8f",
+          "type": "single_choice",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Rotkreuz?",
           "options": [
+            "Hünenberg",
+            "Oberrüti",
             "Risch",
-            "Cham",
-            "Baar",
-            "Steinhausen"
+            "Root"
           ],
-          "correct": 0,
-          "explanation": "Die Gemeinde lautet Risch.",
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Risch eingetragen.",
           "factRef": "stammdaten.gemeinde",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons in Rotkreuz liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 458 Meter, das kürzeste 308 Meter.",
+      "body": "Zu 3 Perrons in Rotkreuz liegen offene Daten vor. Perron 2/3 misst 458 Meter, Perron 5/6 misst 448 Meter, Perron 1 misst 308 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
           "value": 3,
-          "unit": "",
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 3,
-          "unit": "",
-          "source": "perron",
-          "factRef": "perrons.niveaufrei_erreichbar"
         },
         {
           "label": "Längstes erfasstes Perron",
@@ -189,103 +181,59 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 308,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:e0777981",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Rotkreuz?",
           "options": [
-            "308 m",
-            "448 m",
+            "250 m",
+            "390 m",
             "458 m",
-            "500 m"
+            "550 m"
           ],
           "correct": 2,
-          "explanation": "Das Perron 2/3 misst 458 Meter.",
+          "explanation": "Das längste erfasste Perron misst 458 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "type": "match",
-          "prompt": "Welcher Perrontyp gehört zu welcher Perronnummer?",
-          "pairs": [
-            {
-              "links": "Perron 2/3",
-              "rechts": "Mittelperron",
-              "factRef": "perrons.items[0].typ"
-            },
-            {
-              "links": "Perron 1",
-              "rechts": "Hausperron",
-              "factRef": "perrons.items[2].typ"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 2/3 ist als Mittelperron erfasst, Perron 1 als Hausperron."
-        },
-        {
+          "id": "perrons:2c25ee3e",
           "type": "true_false",
-          "prompt": "Zu allen 3 erfassten Perrons in Rotkreuz liegt ein niveaufreier Zugang vor.",
+          "prompt": "Alle 3 erfassten Perrons in Rotkreuz sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Alle 3 erfassten Perrons sind niveaufrei erreichbar.",
+          "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
-          "difficulty": 2
+          "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 5 Gleisen in Rotkreuz liegen offene Daten vor. Die erfassten Perronhöhen betragen 20, 25 und 55 Zentimeter.",
+      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 3, 5 und 6. Erfasst sind Perronhöhen von 20, 25 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Erfasste Perronhöhe (tiefster Wert)",
-          "value": 20,
-          "unit": "cm",
+          "label": "Gleise mit offenen Daten",
+          "value": 5,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.perronhoehen_cm[0]"
+          "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Erfasste Perronhöhe (mittlerer Wert)",
-          "value": 25,
-          "unit": "cm",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.perronhoehen_cm[1]"
-        },
-        {
-          "label": "Erfasste Perronhöhe (höchster Wert)",
-          "value": 55,
-          "unit": "cm",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.perronhoehen_cm[2]"
+          "label": "Sektoren an Gleis 1",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Perronkantenlänge ist für Gleis 2 in Rotkreuz erfasst?",
-          "options": [
-            "150 m",
-            "180 m",
-            "319 m",
-            "320 m"
-          ],
-          "correct": 3,
-          "explanation": "Gleis 2 hat eine erfasste Perronkante von 320 Metern.",
-          "factRef": "gleise.items[1].perronkante_m",
-          "difficulty": 2
-        },
-        {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
-          "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -305,112 +253,123 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Richtig ist diese Reihenfolge: Gleis 2 mit 320, Gleis 5 mit 180 und Gleis 1 mit 150 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
+          "explanation": "Gleis 2 misst 320 Meter, Gleis 5 misst 180 Meter, Gleis 1 misst 150 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
         },
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "2",
-          "factRef": "gleise.items[1].nr",
-          "explanation": "Gleis 2 hat mit 320 Metern die längste erfasste Perronkante."
+          "id": "gleise:f2b3deb1",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Rotkreuz sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "4",
+            "7"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren B, C und D, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:a3378a27",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Rotkreuz erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "30 cm",
+            "55 cm"
+          ],
+          "correct": [
+            0,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 1 sind 20 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Rotkreuz sind 12 Perronsegmente erfasst, 10 davon mit einer Perronhöhe von 55 Zentimetern. Bei keinem der Segmente ist ein Hilfstritt erfasst. Eine Sicherheitslinie ist vorhanden.",
+      "body": "Für Rotkreuz sind 12 Perronsegmente erfasst: 10 mit 55 Zentimetern, 1 mit 20 Zentimetern, 1 mit 25 Zentimetern. An allen 5 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
           "value": 12,
-          "unit": "",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit 55 cm Perronhöhe",
-          "value": 10,
-          "unit": "",
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 5,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "unit": "",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
-        },
-        {
-          "label": "Sicherheitslinie vorhanden",
+          "label": "Sicherheitslinie",
           "value": "Ja",
-          "unit": "",
           "source": "haltestelle-visuell-taktile-sicherheitslinie",
           "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind für Rotkreuz erfasst?",
+          "id": "hindernisfreiheit:7bd33826",
+          "type": "cloze",
+          "prompt": "In Rotkreuz sind ___ Perronsegmente erfasst.",
           "options": [
             "7",
             "8",
-            "12",
-            "14"
+            "12"
           ],
           "correct": 2,
-          "explanation": "Es sind 12 Perronsegmente erfasst.",
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 12 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
-          "prompt": "Für Rotkreuz ist bei mindestens einem Perronsegment ein Hilfstritt erfasst.",
-          "correct": false,
-          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 12 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 1
-        },
-        {
-          "type": "slider",
-          "prompt": "Wie viele der 12 erfassten Perronsegmente in Rotkreuz haben eine Perronhöhe von 55 cm?",
-          "min": 0,
-          "max": 12,
-          "step": 1,
-          "unit": "Segmente",
-          "correct": 10,
-          "explanation": "10 der 12 erfassten Segmente weisen eine Perronhöhe von 55 cm auf.",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt zwischen Rotkreuz Nordost und Rotkreuz verkehren im Personenverkehr täglich rund 216 Züge, beide Richtungen zusammen. Auf dem Abschnitt zwischen Rotkreuz und Rotkreuz Südost verkehren im Güterverkehr täglich rund 101 Züge.",
+      "body": "Am stärksten befahren ist der Abschnitt Rotkreuz Nordost – Rotkreuz: Im Personenverkehr verkehren dort 216 Züge pro Tag, das sind 78'721 im Jahr. Auf dem Abschnitt Rotkreuz Südwest – Rotkreuz sind es 199 und auf dem Abschnitt Rotkreuz Nordwest – Rotkreuz sind es 84 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 101 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, stärkster Personenverkehrsabschnitt",
+          "label": "Züge pro Tag, Personenverkehr Rotkreuz Nordost – Rotkreuz",
           "value": 216,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Güterverkehr Rotkreuz–Rotkreuz Südost",
-          "value": 101,
-          "unit": "Züge pro Tag",
+          "label": "Züge pro Jahr, Personenverkehr Rotkreuz Nordost – Rotkreuz",
+          "value": 78721,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:fd6dbdda",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren pro Tag auf dem Abschnitt Rotkreuz Nordost–Rotkreuz im Personenverkehr, beide Richtungen zusammen?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rotkreuz Nordost – Rotkreuz?",
           "options": [
             "86",
             "120",
@@ -418,166 +377,147 @@
             "260"
           ],
           "correct": 2,
-          "explanation": "Auf diesem Abschnitt sind es rund 216 Züge pro Tag, Stand 2025.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 216 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Auf dem Abschnitt Rotkreuz–Rotkreuz Südost verkehren im Güterverkehr täglich rund 101 Züge, beide Richtungen zusammen.",
-          "correct": true,
-          "explanation": "Dieser Abschnitt weist 101 Güterzüge pro Tag auf, Stand 2025.",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
-          "difficulty": 2
-        },
-        {
+          "id": "zuege:d38de786",
           "type": "sort",
-          "prompt": "Ordne die Streckenabschnitte nach Zügen pro Tag, meiste zuerst.",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Rotkreuz Nordost–Rotkreuz (Personenverkehr)",
-              "value": 216,
-              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+              "label": "Rotkreuz Nordost – Rotkreuz, Personenverkehr",
+              "value": 78721,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Rotkreuz Südwest–Rotkreuz (Personenverkehr)",
-              "value": 199,
-              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+              "label": "Rotkreuz Südwest – Rotkreuz, Personenverkehr",
+              "value": 72588,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
-              "label": "Rotkreuz–Rotkreuz Südost (Güterverkehr)",
-              "value": 101,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+              "label": "Rotkreuz – Rotkreuz Südost, Güterverkehr",
+              "value": 36796,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Rotkreuz Nordwest – Rotkreuz, Personenverkehr",
+              "value": 30651,
+              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Die Zugzahlen pro Tag betragen 216, 199 und 101, absteigend nach Abschnitt geordnet."
+          "explanation": "Rotkreuz Nordost – Rotkreuz (Personenverkehr) 78'721, Rotkreuz Südwest – Rotkreuz (Personenverkehr) 72'588, Rotkreuz – Rotkreuz Südost (Güterverkehr) 36'796, Rotkreuz Nordwest – Rotkreuz (Personenverkehr) 30'651 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Rotkreuz sind 2 Linien erfasst: die Linie 660 Thalwil–Zug–Fluhmühle und die Linie 653 Gexi Ost–Rotkreuz–Immensee West.",
+      "body": "Für Rotkreuz sind 2 Linien erfasst: die Linie 660 Thalwil - Zug - Fluhmuhle und die Linie 653 Gexi Ost - Rotkreuz - Immensee West.",
       "facts": [
         {
-          "label": "Linie 660",
-          "value": "Thalwil - Zug - Fluhmuhle",
-          "unit": "",
+          "label": "Erfasste Linien",
+          "value": 2,
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].name"
+          "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie 653",
-          "value": "Gexi Ost - Rotkreuz - Immensee West",
-          "unit": "",
+          "label": "Kilometrierung auf der Linie 653",
+          "value": 99.35989,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[1].name"
+          "factRef": "linien.items[1].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Linie mit Nummer 660 ist für Rotkreuz erfasst?",
-          "options": [
-            "Gexi Ost - Rotkreuz - Immensee West",
-            "Thalwil - Zug - Fluhmuhle",
-            "Luzern - Zug - Zürich",
-            "Arth-Goldau - Rotkreuz"
-          ],
-          "correct": 1,
-          "explanation": "Die Linie 660 verläuft Thalwil - Zug - Fluhmuhle.",
-          "factRef": "linien.items[0].name",
-          "difficulty": 1
+          "id": "linien:50b480de",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 653 ist Rotkreuz eingetragen?",
+          "min": 81,
+          "max": 145,
+          "step": 1,
+          "unit": "km",
+          "correct": 99.35989,
+          "explanation": "Die Kilometrierung von Rotkreuz auf der Linie 653 beträgt 99.35989. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[1].km_am_bahnhof",
+          "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
-          "prompt": "Welche Kilometrierung gehört zu welcher Linie?",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
             {
               "links": "Linie 660",
-              "rechts": "48.9998 km",
-              "factRef": "linien.items[0].km_am_bahnhof"
+              "rechts": "Thalwil - Zug - Fluhmuhle",
+              "factRef": "linien.items[0].name"
             },
             {
               "links": "Linie 653",
-              "rechts": "99.35989 km",
-              "factRef": "linien.items[1].km_am_bahnhof"
+              "rechts": "Gexi Ost - Rotkreuz - Immensee West",
+              "factRef": "linien.items[1].name"
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Rotkreuz steht auf der Linie 660 bei Kilometer 48.9998 und auf der Linie 653 bei Kilometer 99.35989. Jeder Wert zählt ab dem Anfang der jeweiligen Linie."
+          "explanation": "Die Linie 660 heisst Thalwil - Zug - Fluhmuhle, die Linie 653 heisst Gexi Ost - Rotkreuz - Immensee West.",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "In Rotkreuz sind 5 Billettautomaten und 10 Billettentwerter erfasst, dazu 2 Wartehallen. Rotkreuz steht in der Liste der WLAN-Standorte.",
+      "body": "Rotkreuz steht in der Liste der WLAN-Standorte. Erfasst sind 5 Billettautomaten, 10 Billettentwerter und 2 Wartehallen.",
       "facts": [
-        {
-          "label": "Erfasste Billettautomaten",
-          "value": 5,
-          "unit": "",
-          "source": "billetautomat",
-          "factRef": "services.billettautomaten_erfasst"
-        },
-        {
-          "label": "Erfasste Billettentwerter",
-          "value": 10,
-          "unit": "",
-          "source": "billetentwerter",
-          "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Erfasste Wartehallen",
-          "value": 2,
-          "unit": "",
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
-        },
         {
           "label": "WLAN erfasst",
           "value": true,
           "unit": "",
           "source": "wifistation",
           "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 5,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 10,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind für Rotkreuz erfasst?",
-          "options": [
-            "4",
-            "5",
-            "7",
-            "8"
-          ],
-          "correct": 1,
-          "explanation": "Erfasst sind 5 Billettautomaten.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1
-        },
-        {
+          "id": "services:fc593fd6",
           "type": "true_false",
           "prompt": "Rotkreuz steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Für Rotkreuz ist WLAN erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
-          "type": "slider",
-          "prompt": "Wie viele Billettentwerter sind für Rotkreuz erfasst?",
-          "min": 0,
-          "max": 20,
-          "step": 1,
-          "unit": "Stück",
-          "correct": 10,
-          "explanation": "Erfasst sind 10 Billettentwerter.",
-          "factRef": "services.billettentwerter_erfasst"
+          "id": "services:78f1e8e5",
+          "type": "cloze",
+          "prompt": "In Rotkreuz sind ___ Billettentwerter erfasst.",
+          "options": [
+            "7",
+            "8",
+            "10"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 10 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -607,6 +547,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -621,6 +562,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -635,8 +577,9 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -656,7 +599,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 3'070 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 2'560 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 3'070 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 2'560 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -664,37 +607,23 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Rotkreuz ist ein Bahnhofplan als PDF veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "body": "Für Rotkreuz ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Eigentümerin",
-          "value": "SBB",
-          "unit": "",
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-rotkreuz-a4.pdf",
           "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
+          "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:53d8e0ae",
           "type": "true_false",
           "prompt": "Für Rotkreuz ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ein Bahnhofplan ist als PDF veröffentlicht.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
-          "difficulty": 1
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wem gehört die Bahnhofanlage in Rotkreuz laut Bahnhofplan?",
-          "options": [
-            "SOB",
-            "Kanton Zug",
-            "Gemeinde Risch",
-            "SBB"
-          ],
-          "correct": 3,
-          "explanation": "Die Eigentümerin ist laut Bahnhofplan die SBB.",
-          "factRef": "bahnhofplan.eigentuemer",
           "difficulty": 1
         }
       ]
@@ -725,85 +654,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        20,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 150,
-      "sektoren": [
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        25,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 320,
-      "sektoren": [
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 319,
-      "sektoren": [
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "5",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 180,
-      "sektoren": [
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "6",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 180,
-      "sektoren": [
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 3
     }
   ]
 }

@@ -12,7 +12,6 @@
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -26,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Martigny 12'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 12'200, an einem freien Tag 11'300. Die Infrastruktur gehört der SBB, Züge fahren hier von RegionAlps und SBB. Zwischen 2018 und 2025 stieg der Werktagsverkehr von 9'300 auf 12'600.",
+      "body": "An einem Werktag steigen in Martigny 12'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 12'200, an einem freien Tag 11'300. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind RegionAlps und SBB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne TMR.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -50,12 +49,6 @@
           "factRef": "steckbrief.dnwv"
         },
         {
-          "label": "Bahnunternehmen",
-          "value": "RegionAlps, SBB",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.evu"
-        },
-        {
           "label": "Abgrenzung der Zahl",
           "value": "Ohne TMR.",
           "source": "passagierfrequenz",
@@ -64,12 +57,13 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f176aa13",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Martigny ein und aus?",
           "options": [
-            "5'000",
             "6'900",
             "8'800",
+            "11'000",
             "12'600"
           ],
           "correct": 3,
@@ -78,14 +72,7 @@
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "In Martigny liegt der Wert für einen freien Tag nahe beim Werktagswert.",
-          "correct": true,
-          "explanation": "An einem Werktag sind es 12'600 Personen, an einem freien Tag 11'300. Der Abstand ist damit kleiner als an vielen anderen erfassten Bahnhöfen.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 2
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -116,8 +103,23 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e074ed33",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Martigny ___ Personen ein und aus.",
+          "options": [
+            "7'900",
+            "9'600",
+            "11'300"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 11'300 Personen, an einem Werktag 12'600. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "id": "steckbrief:d6fa13ec",
           "type": "true_false",
-          "prompt": "Die Zahl der Ein- und Aussteigenden in Martigny umfasst auch die TMR.",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Martigny umfasst auch TMR.",
           "correct": false,
           "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne TMR.». Wofür TMR steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
@@ -128,7 +130,7 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Martigny liegt auf 466.989 Metern über Meer in der Gemeinde Martigny, Bezirk Martigny. Als Kanton ist in den Stammdaten Valais eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "body": "Martigny liegt auf 466.989 Metern über Meer in der Gemeinde Martigny, Bezirk Martigny. Als Kanton ist in den Stammdaten Valais eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet MA.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -136,12 +138,6 @@
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
-        },
-        {
-          "label": "Kanton laut Stammdaten",
-          "value": "Valais",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.kanton"
         },
         {
           "label": "Offizielle Abkürzung",
@@ -152,10 +148,11 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:31ded16a",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Martigny?",
-          "min": 410,
-          "max": 620,
+          "min": 380,
+          "max": 680,
           "step": 1,
           "unit": "m ü. M.",
           "correct": 466.989,
@@ -164,15 +161,16 @@
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie lautet die offizielle Abkürzung des Bahnhofs Martigny?",
+          "id": "stammdaten:893ef2b0",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Martigny lautet ___.",
           "options": [
+            "CHAR",
             "MA",
-            "MAR",
-            "MGY",
-            "MTG"
+            "VERN"
           ],
-          "correct": 0,
+          "correct": 1,
+          "optionen_aus_fakten": true,
           "explanation": "In den Stammdaten ist MA als Abkürzung erfasst.",
           "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
@@ -182,7 +180,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 5 Perrons in Martigny liegen offene Daten vor, alle 5 sind niveaufrei erreichbar. Perron 2/3 ist mit 441 Metern das längste, Perron 1 misst 420 Meter. Dazu kommen Perron 50 mit 160 Metern und zwei Hilfskanten mit 100 und 52 Metern.",
+      "body": "Zu 5 Perrons in Martigny liegen offene Daten vor. Am längsten sind Perron 2/3 mit 441 Metern, Perron 1 mit 420 Metern, Perron 50 mit 160 Metern und Perron 20 mit 100 Metern. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -196,30 +194,11 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 52,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Das längste erfasste Perron in Martigny misst ___ Meter.",
-          "options": [
-            "240",
-            "310",
-            "441"
-          ],
-          "correct": 2,
-          "explanation": "Perron 2/3 ist mit 441 Metern das längste erfasste Perron, Perron 1 misst 420 Meter.",
-          "factRef": "perrons.laengste_m",
-          "difficulty": 2
-        },
-        {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -246,43 +225,40 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Richtig ist diese Reihenfolge: Perron 2/3 mit 441, Perron 50 mit 160, Perron 20 mit 100 und Perron 21 mit 52 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
-          "difficulty": 3
+          "explanation": "Perron 2/3 misst 441 Meter, Perron 50 misst 160 Meter, Perron 20 misst 100 Meter, Perron 21 misst 52 Meter. Perrons mit fast gleicher Länge bleiben weg.",
+          "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
-          "prompt": "Welcher Perrontyp gehört zu welchem Perron?",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
             {
               "links": "Perron 2/3",
-              "rechts": "Mittelperron",
-              "factRef": "perrons.items[0].typ"
+              "rechts": "2170.56 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
               "links": "Perron 1",
-              "rechts": "Hausperron",
-              "factRef": "perrons.items[1].typ"
+              "rechts": "1435.75 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
             },
             {
               "links": "Perron 50",
-              "rechts": "Aussenperron",
-              "factRef": "perrons.items[2].typ"
-            },
-            {
-              "links": "Perron 21",
-              "rechts": "Hilfskante",
-              "factRef": "perrons.items[4].typ"
+              "rechts": "336.46 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/3 ist ein Mittelperron, Perron 1 ein Hausperron, Perron 50 ein Aussenperron und Perron 21 eine Hilfskante.",
+          "explanation": "Perron 2/3 hat 2170.56 Quadratmeter, Perron 1 hat 1435.75 Quadratmeter, Perron 50 hat 336.46 Quadratmeter.",
           "difficulty": 3
         },
         {
+          "id": "perrons:720f1dfb",
           "type": "true_false",
-          "prompt": "Zu allen 5 erfassten Perrons in Martigny liegt ein niveaufreier Zugang vor.",
+          "prompt": "Alle 5 erfassten Perrons in Martigny sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Für alle 5 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet, auch für die beiden Hilfskanten.",
+          "explanation": "Für alle 5 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
@@ -291,7 +267,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 3, 50 und 57. Die erfassten Perronkanten messen 420, 444, 441 und 161 Meter, zu Gleis 50 liegt keine Länge vor. Die Gleise 1 und 2 tragen je 8 Sektoren, Gleis 3 deren 7. Bei keinem Gleis ist ein Hilfstritt verzeichnet.",
+      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 3, 50 und 57. Zu den Gleisen 1, 2, 3 und 57 ist eine Perronhöhe von 55 Zentimetern vermerkt, zu Gleis 50 keine. Zu Gleis 57 sind keine Sektortafeln erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -299,13 +275,6 @@
           "value": 5,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
-        },
-        {
-          "label": "Längste erfasste Perronkante",
-          "value": 444,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
         },
         {
           "label": "Sektoren an Gleis 1",
@@ -316,15 +285,7 @@
       ],
       "questions": [
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "2",
-          "factRef": "gleise.items[1].nr",
-          "explanation": "Gleis 2 hat mit 444 Metern die längste erfasste Perronkante, knapp vor Gleis 3 mit 441 Metern.",
-          "difficulty": 2
-        },
-        {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -346,21 +307,22 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Richtig ist diese Reihenfolge: Gleis 2 mit 444, Gleis 1 mit 420 und Gleis 57 mit 161 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Gleis 2 misst 444 Meter, Gleis 1 misst 420 Meter, Gleis 57 misst 161 Meter. Gleise mit fast gleicher Kante bleiben weg.",
           "difficulty": 3
         },
         {
+          "id": "gleise:422b3f6b",
           "type": "cloze",
-          "prompt": "An Gleis 3 sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 1 in Martigny sind ___ Sektoren erfasst.",
           "options": [
-            "3",
-            "7",
-            "8"
+            "6",
+            "8",
+            "10"
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 3 trägt die Sektoren A bis G, also 7 Stück. Die Gleise 1 und 2 haben je 8.",
-          "factRef": "gleise.items[2].sektoren_anzahl",
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D, E, F, G und H, also 8 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         }
       ]
@@ -368,7 +330,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Martigny sind 15 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An 4 der 5 erfassten Gleise liegt diese Höhe vor. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Martigny sind 15 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An 4 der 5 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -384,12 +346,6 @@
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
-        },
-        {
           "label": "Sicherheitslinie",
           "value": "Ja",
           "source": "haltestelle-visuell-taktile-sicherheitslinie",
@@ -398,34 +354,22 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind in Martigny erfasst?",
+          "id": "hindernisfreiheit:71b3959a",
+          "type": "cloze",
+          "prompt": "In Martigny sind ___ Perronsegmente erfasst.",
           "options": [
-            "6",
-            "10",
             "13",
-            "15"
+            "15",
+            "18"
           ],
-          "correct": 3,
+          "correct": 1,
+          "optionen_aus_fakten": true,
           "explanation": "Die BehiG-Erhebung führt 15 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "An ___ der 5 erfassten Gleise liegt eine Perronhöhe von 55 Zentimetern vor.",
-          "options": [
-            "2",
-            "3",
-            "4"
-          ],
-          "correct": 2,
-          "optionen_aus_fakten": true,
-          "explanation": "An 4 der 5 erfassten Gleise ist ein Abschnitt mit 55 Zentimetern verzeichnet. Zu Gleis 50 liegt keine Höhe vor.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
-          "difficulty": 2
-        },
-        {
+          "id": "hindernisfreiheit:1282a462",
           "type": "true_false",
           "prompt": "Bei keinem der 15 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -438,40 +382,42 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt zwischen Vernayaz und Martigny: Im Personenverkehr verkehren dort 183 Züge pro Tag, das sind 66'657 im Jahr. Von Ranconnex her sind es 155 Züge pro Tag. Im Güterverkehr kommen auf beiden Abschnitten je 15 Züge pro Tag dazu.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Am stärksten befahren ist der Abschnitt Vernayaz – Martigny: Im Personenverkehr verkehren dort 183 Züge pro Tag, das sind 66'657 im Jahr. Auf dem Abschnitt Ranconnex – Martigny sind es 155 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 15 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Vernayaz–Martigny",
+          "label": "Züge pro Tag, Personenverkehr Vernayaz – Martigny",
           "value": 183,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Vernayaz–Martigny",
+          "label": "Züge pro Jahr, Personenverkehr Vernayaz – Martigny",
           "value": 66657,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:a4332df2",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Vernayaz–Martigny?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Vernayaz – Martigny?",
           "options": [
-            "73",
-            "130",
             "183",
-            "220"
+            "220",
+            "260",
+            "310"
           ],
-          "correct": 2,
+          "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 183 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -493,7 +439,7 @@
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Richtig ist diese Reihenfolge: Vernayaz – Martigny im Personenverkehr mit 66'657, Ranconnex – Martigny im Personenverkehr mit 56'705 und Vernayaz – Martigny im Güterverkehr mit 5'644 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Vernayaz – Martigny (Personenverkehr) 66'657, Ranconnex – Martigny (Personenverkehr) 56'705, Vernayaz – Martigny (Güterverkehr) 5'644 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -501,7 +447,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Martigny sind 3 Linien erfasst: die Linie 132 Martigny–Le Châtelard-Frontière, die Linie 133 Martigny–Orsières und die Linie 100 Lausanne–Simplon Tunnel I–Iselle. Auf der Linie 100 ist der Bahnhof bei Kilometer 66.49553 eingetragen.",
+      "body": "Für Martigny sind 3 Linien erfasst: die Linie 132 Martigny - Le Chatelard-Frontiere, die Linie 133 Martigny - Orsieres und die Linie 100 Lausanne - Simplon Tunnel I - Iselle.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -519,21 +465,20 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Linien sind für Martigny erfasst?",
-          "options": [
-            "1",
-            "2",
-            "3",
-            "5"
-          ],
-          "correct": 2,
-          "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 3 Linien: 132, 133 und 100.",
-          "factRef": "linien.anzahl",
-          "difficulty": 1
+          "id": "linien:5693e44b",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Martigny eingetragen?",
+          "min": 54,
+          "max": 97,
+          "step": 1,
+          "unit": "km",
+          "correct": 66.49553,
+          "explanation": "Die Kilometrierung von Martigny auf der Linie 100 beträgt 66.49553. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[2].km_am_bahnhof",
+          "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -554,20 +499,8 @@
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Die Linie 132 führt nach Le Châtelard an der Grenze, die Linie 133 nach Orsières und die Linie 100 von Lausanne durch den Simplon nach Iselle.",
+          "explanation": "Die Linie 132 heisst Martigny - Le Chatelard-Frontiere, die Linie 133 heisst Martigny - Orsieres, die Linie 100 heisst Lausanne - Simplon Tunnel I - Iselle.",
           "difficulty": 2
-        },
-        {
-          "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Martigny eingetragen?",
-          "min": 40,
-          "max": 140,
-          "step": 1,
-          "unit": "km",
-          "correct": 66.49553,
-          "explanation": "Die Kilometrierung von Martigny auf der Linie 100 beträgt 66.49553. Der Wert zählt ab Lausanne und nennt den Standort des Bahnhofs auf der Linie.",
-          "factRef": "linien.items[2].km_am_bahnhof",
-          "difficulty": 3
         }
       ]
     },
@@ -594,16 +527,11 @@
           "value": 8,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen erfasst",
-          "value": 2,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:c98e9bae",
           "type": "true_false",
           "prompt": "Martigny steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -612,6 +540,7 @@
           "difficulty": 1
         },
         {
+          "id": "services:7f95f16e",
           "type": "cloze",
           "prompt": "In Martigny sind ___ Billettentwerter erfasst.",
           "options": [
@@ -659,34 +588,37 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "6",
-            "9",
             "11",
-            "13"
+            "13",
+            "19",
+            "24"
           ],
-          "correct": 2,
+          "correct": 0,
           "explanation": "Erfasst sind 11 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "6",
             "7",
             "10",
-            "12"
+            "12",
+            "28"
           ],
-          "correct": 1,
+          "correct": 0,
           "explanation": "Erfasst sind 7 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 101,
@@ -699,8 +631,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -725,7 +658,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'744 Quadratmetern die grösste erfasste Fläche, Perron 21 mit 170 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 2/3 hat mit 2'744 Quadratmetern die grösste erfasste Belagsfläche, Perron 21 mit 170 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -740,20 +673,15 @@
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-martigny-a4.pdf",
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
-        },
-        {
-          "label": "Eigentümerin der Pläne",
-          "value": "SBB",
-          "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:701e4567",
           "type": "true_false",
           "prompt": "Für Martigny ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
@@ -795,91 +723,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 420,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H"
-      ],
-      "sektoren_anzahl": 8
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 444,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H"
-      ],
-      "sektoren_anzahl": 8
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 441,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G"
-      ],
-      "sektoren_anzahl": 7
-    },
-    {
-      "nr": "50",
-      "perronhoehen_cm": [],
-      "hilfstritt": false,
-      "perrontyp": null,
-      "perronkante_m": null,
-      "sektoren": [
-        "F",
-        "G",
-        "H"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "57",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Aussenperron",
-      "perronkante_m": 161,
-      "sektoren": [],
-      "sektoren_anzahl": 0
     }
   ]
 }

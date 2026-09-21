@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:fac7e9bf",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Emmenbrücke ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e75c61cd",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Emmenbrücke ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:cbc7fdc6",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Emmenbrücke?",
           "min": 350,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:b9f97f58",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Emmenbrücke?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:0fcc1164",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Emmenbrücke?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:ec5e5e2a",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Emmenbrücke sind niveaufrei erreichbar.",
           "correct": true,
@@ -235,6 +242,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -244,6 +252,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -269,6 +278,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:b014d8f8",
           "type": "cloze",
           "prompt": "An Gleis 1 in Emmenbrücke sind ___ Sektoren erfasst.",
           "options": [
@@ -283,6 +293,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:43698368",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Emmenbrücke erfasst? (Mehrfachauswahl)",
           "options": [
@@ -329,6 +340,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:86fadd62",
           "type": "cloze",
           "prompt": "In Emmenbrücke sind ___ Perronsegmente erfasst.",
           "options": [
@@ -343,6 +355,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f366795b",
           "type": "true_false",
           "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -356,7 +369,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Emmenbrücke Gersag – Emmenbrücke: Im Personenverkehr verkehren dort 315 Züge pro Tag, das sind 114'973 im Jahr. Auf dem Abschnitt Emmenbrücke – Fluhmühle (Abzw) sind es 313 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 6 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Emmenbrücke Gersag – Emmenbrücke",
@@ -375,6 +388,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:1faaeeaa",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Emmenbrücke Gersag – Emmenbrücke?",
           "options": [
@@ -389,6 +403,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -436,6 +451,7 @@
       ],
       "questions": [
         {
+          "id": "linien:d986149e",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 500 ist Emmenbrücke eingetragen?",
           "min": 73,
@@ -476,6 +492,7 @@
       ],
       "questions": [
         {
+          "id": "services:829c2c98",
           "type": "true_false",
           "prompt": "Emmenbrücke steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -484,6 +501,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:8cc14f2e",
           "type": "cloze",
           "prompt": "In Emmenbrücke sind ___ Billettentwerter erfasst.",
           "options": [
@@ -525,6 +543,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -539,6 +558,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -554,6 +574,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

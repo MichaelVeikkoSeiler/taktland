@@ -56,6 +56,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:c00ed71f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Buchs SG ein und aus?",
           "options": [
@@ -70,6 +71,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -95,6 +97,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:c6a4b2c3",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Buchs SG ___ Personen ein und aus.",
           "options": [
@@ -108,6 +111,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:9501fac1",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Buchs SG erfasst den Verkehr ins und aus dem Ausland vollständig.",
           "correct": false,
@@ -138,6 +142,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:7f4f3fc7",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Buchs SG?",
           "min": 360,
@@ -150,6 +155,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:1bd52ce9",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Buchs SG lautet ___.",
           "options": [
@@ -186,6 +192,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b0b72abe",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Buchs SG?",
           "options": [
@@ -200,6 +207,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:63f85d82",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Buchs SG sind niveaufrei erreichbar.",
           "correct": true,
@@ -230,6 +238,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:039ce7fb",
           "type": "cloze",
           "prompt": "An Gleis 1 in Buchs SG sind ___ Sektoren erfasst.",
           "options": [
@@ -244,6 +253,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:0a18a0fe",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Buchs SG kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -280,6 +290,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:f7222bcb",
           "type": "cloze",
           "prompt": "In Buchs SG sind ___ Perronsegmente erfasst.",
           "options": [
@@ -294,6 +305,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -307,7 +319,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Buchs SG – Sevelen: Im Personenverkehr verkehren dort 129 Züge pro Tag, das sind 46'978 im Jahr. Auf dem Abschnitt Buchs SG Nord (Abzw) – Buchs SG sind es 111 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 12 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Buchs SG – Sevelen",
@@ -326,6 +338,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:a62755cf",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Buchs SG – Sevelen?",
           "options": [
@@ -340,6 +353,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -387,6 +401,7 @@
       ],
       "questions": [
         {
+          "id": "linien:9c8ca3b6",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 882 ist Buchs SG eingetragen?",
           "min": 15.0,
@@ -399,6 +414,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -451,6 +467,7 @@
       ],
       "questions": [
         {
+          "id": "services:ded9248d",
           "type": "true_false",
           "prompt": "Buchs SG steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -459,6 +476,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:43ce8192",
           "type": "cloze",
           "prompt": "In Buchs SG sind ___ Billettentwerter erfasst.",
           "options": [
@@ -506,6 +524,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -520,6 +539,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -534,6 +554,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 11,
@@ -546,6 +567,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -561,8 +583,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -582,7 +605,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 3/4 hat mit 3'141 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 1'526 die kleinste der gezeigten.",
+          "explanation": "Perron 3/4 hat mit 3'141 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 1'526 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

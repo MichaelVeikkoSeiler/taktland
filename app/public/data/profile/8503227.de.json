@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:a00a3f81",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Näfels-Mollis ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ac1636bb",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Näfels-Mollis ___ Personen ein und aus.",
           "options": [
@@ -134,6 +137,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:f8c6a31c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Näfels-Mollis?",
           "min": 350,
@@ -146,6 +150,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:599f2deb",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Näfels-Mollis?",
           "options": [
@@ -183,6 +188,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:103420c2",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Näfels-Mollis?",
           "options": [
@@ -197,6 +203,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:a3812657",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Näfels-Mollis ist niveaufrei erreichbar.",
           "correct": true,
@@ -221,6 +228,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:08a0f1d3",
           "type": "true_false",
           "prompt": "Zum erfassten Gleis in Näfels-Mollis sind Sektortafeln verzeichnet.",
           "correct": false,
@@ -257,6 +265,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:b9aa69db",
           "type": "cloze",
           "prompt": "In Näfels-Mollis sind ___ Perronsegmente erfasst.",
           "options": [
@@ -271,6 +280,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:333e7d65",
           "type": "true_false",
           "prompt": "Bei keinem der 2 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -284,7 +294,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Nieder- und Oberurnen – Näfels-Mollis: Im Personenverkehr verkehren dort 75 Züge pro Tag, das sind 27'381 im Jahr. Auf dem Abschnitt Näfels-Mollis – Netstal sind es 74 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Nieder- und Oberurnen – Näfels-Mollis",
@@ -303,6 +313,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:1ae2e66a",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Nieder- und Oberurnen – Näfels-Mollis?",
           "options": [
@@ -317,6 +328,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:9035cb69",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Nieder- und Oberurnen – Näfels-Mollis?",
           "min": 22000,
@@ -351,6 +363,7 @@
       ],
       "questions": [
         {
+          "id": "linien:e72ce433",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 736 ist Näfels-Mollis eingetragen?",
           "min": 50,
@@ -391,6 +404,7 @@
       ],
       "questions": [
         {
+          "id": "services:c367af84",
           "type": "true_false",
           "prompt": "Näfels-Mollis steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -399,6 +413,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:caedc306",
           "type": "cloze",
           "prompt": "In Näfels-Mollis sind ___ Billettentwerter erfasst.",
           "options": [
@@ -417,7 +432,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Näfels-Mollis 3 Sitzbänke erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Näfels-Mollis 3 Sitzbänke erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -434,6 +449,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -448,6 +464,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

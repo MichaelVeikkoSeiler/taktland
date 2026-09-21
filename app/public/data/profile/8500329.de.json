@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f2840e22",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Koblenz ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:9a39a7f3",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Koblenz ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:dba5d1e0",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Koblenz?",
           "min": 260,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e1350fa2",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Koblenz?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:ee871d0e",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Koblenz?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -217,6 +224,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:71565511",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Koblenz sind niveaufrei erreichbar.",
           "correct": true,
@@ -247,6 +255,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:8f20fde0",
           "type": "cloze",
           "prompt": "An Gleis 1 in Koblenz sind ___ Sektoren erfasst.",
           "options": [
@@ -261,6 +270,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:71e1c994",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Koblenz kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -297,6 +307,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:5ede82f8",
           "type": "cloze",
           "prompt": "In Koblenz sind ___ Perronsegmente erfasst.",
           "options": [
@@ -311,6 +322,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
           "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -324,7 +336,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Koblenz – Koblenz Süd: Im Personenverkehr verkehren dort 89 Züge pro Tag, das sind 32'601 im Jahr. Auf dem Abschnitt Koblenz – Koblenz Dorf sind es 79 und auf dem Abschnitt Koblenz Grenze – Koblenz sind es 4 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 6 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Koblenz – Koblenz Süd",
@@ -343,6 +355,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:5206c507",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Koblenz – Koblenz Süd?",
           "options": [
@@ -357,6 +370,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -409,6 +423,7 @@
       ],
       "questions": [
         {
+          "id": "linien:beadcaaa",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 701 ist Koblenz eingetragen?",
           "min": 39,
@@ -421,6 +436,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -468,6 +484,7 @@
       ],
       "questions": [
         {
+          "id": "services:6de7dd4e",
           "type": "true_false",
           "prompt": "Koblenz steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -476,6 +493,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:f025b5c9",
           "type": "cloze",
           "prompt": "In Koblenz sind ___ Billettentwerter erfasst.",
           "options": [
@@ -517,6 +535,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -531,6 +550,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -545,6 +565,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

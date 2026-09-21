@@ -56,6 +56,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:d0b7a76e",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Oensingen ein und aus?",
           "options": [
@@ -70,6 +71,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -95,6 +97,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:9410d45b",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Oensingen ___ Personen ein und aus.",
           "options": [
@@ -108,6 +111,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:5908bc9b",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Oensingen umfasst auch asm.",
           "correct": false,
@@ -144,6 +148,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:1f4e85f1",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Oensingen?",
           "min": 370,
@@ -156,6 +161,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:ac8a53d3",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Oensingen?",
           "options": [
@@ -193,6 +199,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f30d105d",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Oensingen?",
           "options": [
@@ -207,6 +214,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:113a44f9",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Oensingen sind niveaufrei erreichbar.",
           "correct": true,
@@ -237,6 +245,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:c8b07889",
           "type": "cloze",
           "prompt": "An Gleis 3 in Oensingen sind ___ Sektoren erfasst.",
           "options": [
@@ -251,6 +260,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a3d973ba",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Oensingen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -281,6 +291,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:127efe32",
           "type": "cloze",
           "prompt": "In Oensingen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -295,6 +306,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
           "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -308,7 +320,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Oensingen – Oberbuchsiten: Im Personenverkehr verkehren dort 121 Züge pro Tag, das sind 43'997 im Jahr. Auf dem Abschnitt Niederbipp – Oensingen sind es 119 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 92 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Oensingen – Oberbuchsiten",
@@ -327,6 +339,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:d130f613",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Oensingen – Oberbuchsiten?",
           "options": [
@@ -341,6 +354,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -388,6 +402,7 @@
       ],
       "questions": [
         {
+          "id": "linien:bf8cba78",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 410 ist Oensingen eingetragen?",
           "min": 46,
@@ -400,6 +415,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -447,6 +463,7 @@
       ],
       "questions": [
         {
+          "id": "services:34c3cefc",
           "type": "true_false",
           "prompt": "Oensingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -455,6 +472,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:3d1cf84f",
           "type": "cloze",
           "prompt": "In Oensingen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -496,6 +514,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -510,6 +529,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -525,6 +545,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -555,10 +576,11 @@
       ],
       "questions": [
         {
+          "id": "bahnhofplan:fcfad640",
           "type": "true_false",
           "prompt": "Für Oensingen ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

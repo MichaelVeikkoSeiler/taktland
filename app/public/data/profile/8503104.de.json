@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:bafe7e2e",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Meilen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:8aa472f9",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Meilen ___ Personen ein und aus.",
           "options": [
@@ -120,16 +123,11 @@
           "value": "ML",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
-        },
-        {
-          "label": "Bezirk",
-          "value": "Meilen",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:53e27ded",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Meilen?",
           "min": 340,
@@ -142,18 +140,18 @@
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Meilen?",
+          "id": "stammdaten:6e774e95",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Meilen lautet ___.",
           "options": [
-            "Hinwil",
-            "Horgen",
-            "Meilen",
-            "Uster"
+            "AU",
+            "HERL",
+            "ML"
           ],
           "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Meilen eingetragen.",
-          "factRef": "stammdaten.bezirk",
+          "explanation": "In den Stammdaten ist ML als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
@@ -179,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:8eedd1a3",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Meilen?",
           "options": [
@@ -193,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:d6efd3d4",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Meilen ist niveaufrei erreichbar.",
           "correct": true,
@@ -223,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:2609d275",
           "type": "cloze",
           "prompt": "An Gleis 2 in Meilen sind ___ Sektoren erfasst.",
           "options": [
@@ -237,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:ac1e0221",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Meilen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -273,6 +275,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:2b0ffc46",
           "type": "cloze",
           "prompt": "In Meilen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -287,6 +290,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5eee92da",
           "type": "true_false",
           "prompt": "Bei keinem der 5 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -300,25 +304,26 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Feldmeilen Wendeanlage – Meilen: Im Personenverkehr verkehren dort 170 Züge pro Tag, das sind 62'164 im Jahr. Auf dem Abschnitt Meilen – Uetikon sind es 160 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Feldmeilen Wendeanlage – Meilen",
           "value": 170,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Feldmeilen Wendeanlage – Meilen",
           "value": 62164,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:f2b3ba18",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Feldmeilen Wendeanlage – Meilen?",
           "options": [
@@ -329,10 +334,11 @@
           ],
           "correct": 2,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 170 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -385,11 +391,12 @@
       ],
       "questions": [
         {
+          "id": "linien:fd096b4c",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Meilen eingetragen?",
-          "min": 15,
-          "max": 29,
-          "step": 1,
+          "min": 15.5,
+          "max": 28.5,
+          "step": 0.1,
           "unit": "km",
           "correct": 19.46176,
           "explanation": "Die Kilometrierung von Meilen auf der Linie 730 beträgt 19.46176. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
@@ -425,6 +432,7 @@
       ],
       "questions": [
         {
+          "id": "services:1558b77e",
           "type": "true_false",
           "prompt": "Meilen steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -433,6 +441,7 @@
           "difficulty": 1
         },
         {
+          "id": "services:f46f2ffd",
           "type": "cloze",
           "prompt": "In Meilen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -451,7 +460,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Meilen 9 Sitzbänke sowie 7 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Meilen 9 Sitzbänke sowie 7 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -474,6 +483,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -488,6 +498,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -502,6 +513,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

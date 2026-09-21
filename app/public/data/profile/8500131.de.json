@@ -4,11 +4,11 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "billetautomat",
+    "billetentwerter",
     "haltestelle-haltekante",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "passagierfrequenz",
     "wifistation"
@@ -17,161 +17,187 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Bure-Casernes liegt in der Gemeinde Bure im Kanton Jura, auf 532 Metern über Meer. Die Quelle vermerkt seit 2022 unverändert 49 Ein- und Aussteigende pro Tag und erklärt dazu: weniger als 50. Zu diesem Bahnhof liegen ausserdem kaum Daten vor.",
+      "body": "An einem Werktag steigen in Bure-Casernes 49 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 49, an einem freien Tag 49. Infrastruktur und Züge sind der SBB zugeordnet. Die Quelle vermerkt zu diesen Zahlen: «49: weniger als 50 Ein- und Aussteigende.»",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 49,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 49,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 49,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Abgrenzung der Zahl",
+          "value": "49: weniger als 50 Ein- und Aussteigende.",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.bemerkung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:394af587",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Bure-Casernes ein und aus?",
+          "options": [
+            "49",
+            "59",
+            "69",
+            "83"
+          ],
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 49 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:8a9c6f29",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Bure-Casernes ___ Personen ein und aus.",
+          "options": [
+            "42",
+            "49",
+            "59"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 49 Personen, an einem Werktag 49. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Bure-Casernes liegt auf 531.961 Metern über Meer in der Gemeinde Bure, Bezirk Porrentruy, Kanton Jura. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BURE.",
+      "facts": [
+        {
           "label": "Höhe über Meer",
-          "value": 532,
+          "value": 531.961,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Gemeinde",
-          "value": "Bure",
-          "unit": null,
+          "label": "Offizielle Abkürzung",
+          "value": "BURE",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
-        },
-        {
-          "label": "Erfasst seit",
-          "value": 2022,
-          "unit": null,
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[0].jahr"
+          "factRef": "stammdaten.abkuerzung"
         }
       ],
       "questions": [
         {
-          "type": "true_false",
-          "prompt": "Die Zahl 49 bedeutet, dass genau 49 Personen pro Tag ein- und aussteigen.",
-          "correct": false,
-          "explanation": "Die Quelle schreibt dazu: weniger als 50 Ein- und Aussteigende. Die 49 steht stellvertretend für Werte unterhalb dieser Schwelle.",
-          "factRef": "steckbrief.bemerkung",
-          "difficulty": 2
-        },
-        {
+          "id": "stammdaten:d552fcfb",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt Bure-Casernes?",
-          "min": 300,
-          "max": 900,
-          "step": 25,
-          "unit": "m",
-          "correct": 532,
-          "explanation": "532 Meter über Meer.",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bure-Casernes?",
+          "min": 430,
+          "max": 780,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 531.961,
+          "explanation": "Der Bahnhof liegt auf 531.961 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "Ab welchem Jahr liegen für Bure-Casernes Frequenzdaten vor?",
+          "id": "stammdaten:15d81332",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Bure-Casernes lautet ___.",
           "options": [
-            "2018",
-            "2020",
-            "2022",
-            "2024"
+            "BURE",
+            "BX",
+            "GRA"
           ],
-          "correct": 2,
-          "explanation": "Ab 2022. Für die Jahre davor ist der Bahnhof in dieser Quelle nicht aufgeführt.",
-          "factRef": "steckbrief.verlauf[0].jahr",
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "difficulty": 3
+          "explanation": "In den Stammdaten ist BURE als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "linien",
-      "title": "Linie",
-      "body": "Bure-Casernes liegt an der Linie 241 von Courtemaîche her. Diese Linie endet hier.",
+      "title": "Linien",
+      "body": "Für Bure-Casernes ist 1 Linie erfasst: die Linie 241 Courtemaiche - Bure-Casernes. Der Bahnhof ist darauf bei Kilometer 4.935 eingetragen.",
       "facts": [
         {
-          "label": "Linie",
-          "value": 241,
-          "unit": null,
-          "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].nummer"
-        },
-        {
-          "label": "Linien am Bahnhof",
+          "label": "Erfasste Linien",
           "value": 1,
-          "unit": null,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 241",
+          "value": 4.935,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Bure-Casernes liegt an der Linie ___.",
-          "options": [
-            "225",
-            "241",
-            "450",
-            "600"
-          ],
-          "correct": 1,
-          "explanation": "Linie 241, in der Quelle als Courtemaiche - Bure-Casernes geführt.",
-          "factRef": "linien.items[0].nummer",
-          "difficulty": 1
+          "id": "linien:9f9b6ab4",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 241 ist Bure-Casernes eingetragen?",
+          "min": 4.0,
+          "max": 7.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 4.935,
+          "explanation": "Die Kilometrierung von Bure-Casernes auf der Linie 241 beträgt 4.935. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind weder Billettautomat noch Billettentwerter noch Wartehalle. Bure-Casernes steht auch nicht in der Liste der WLAN-Standorte. Das heisst nicht, dass es vor Ort nichts davon gibt, sondern nur, dass nichts erfasst ist.",
+      "title": "Services",
+      "body": "Billettautomaten, Billettentwerter und Wartehallen sind keine verzeichnet. Bure-Casernes steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
-          "label": "Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 0,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Wartehallen",
+          "label": "Billettentwerter erfasst",
           "value": 0,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
-        },
-        {
-          "label": "WLAN erfasst",
-          "value": false,
-          "unit": null,
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:a146d3c1",
           "type": "true_false",
-          "prompt": "Dass kein Billettautomat erfasst ist, beweist, dass vor Ort keiner steht.",
+          "prompt": "Bure-Casernes steht in der Liste der WLAN-Standorte.",
           "correct": false,
-          "explanation": "Die Daten sagen nur, was erfasst ist. Was nicht erfasst ist, kann trotzdem vorhanden sein.",
-          "factRef": "services.billettautomaten_erfasst",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
           "difficulty": 2
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele Wartehallen sind in Bure-Casernes erfasst?",
-          "options": [
-            "0",
-            "1",
-            "2"
-          ],
-          "correct": 0,
-          "explanation": "Keine. Zu diesem Bahnhof liegen insgesamt nur wenige Angaben vor.",
-          "factRef": "services.wartehallen_erfasst",
-          "optionen_aus_fakten": true,
-          "difficulty": 1
         }
       ]
     }

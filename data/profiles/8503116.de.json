@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:8ed21f5e",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Uznach ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:cc7167fd",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Uznach ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:61c759d5",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Uznach?",
           "min": 330,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:1005133d",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Uznach?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -204,6 +210,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -228,6 +235,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:d81796d7",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Uznach sind niveaufrei erreichbar.",
           "correct": true,
@@ -265,6 +273,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -274,6 +283,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -299,6 +309,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:8210d69c",
           "type": "cloze",
           "prompt": "An Gleis 1 in Uznach sind ___ Sektoren erfasst.",
           "options": [
@@ -313,6 +324,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:6cdf1d85",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Uznach kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -349,6 +361,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:d15a3bdd",
           "type": "cloze",
           "prompt": "In Uznach sind ___ Perronsegmente erfasst.",
           "options": [
@@ -363,6 +376,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5ed3ab56",
           "type": "true_false",
           "prompt": "Bei keinem der 16 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -376,7 +390,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Schmerikon – Uznach: Im Personenverkehr verkehren dort 154 Züge pro Tag, das sind 56'043 im Jahr. Auf dem Abschnitt Kaltbrunn – Uznach sind es 79 und auf dem Abschnitt Uznach – Benken SG sind es 77 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Schmerikon – Uznach",
@@ -395,6 +409,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:e08b1112",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Schmerikon – Uznach?",
           "options": [
@@ -409,6 +424,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -461,6 +477,7 @@
       ],
       "questions": [
         {
+          "id": "linien:627b623b",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 735 ist Uznach eingetragen?",
           "min": 38,
@@ -473,6 +490,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -520,6 +538,7 @@
       ],
       "questions": [
         {
+          "id": "services:b9957d25",
           "type": "true_false",
           "prompt": "Uznach steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -528,6 +547,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:789465f6",
           "type": "cloze",
           "prompt": "In Uznach sind ___ Billettentwerter erfasst.",
           "options": [
@@ -575,6 +595,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -589,6 +610,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -604,6 +626,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -616,6 +639,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -631,8 +655,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -652,7 +677,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 1'958 Quadratmetern die grösste erfasste Fläche, Perron 4 mit 660 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 1'958 Quadratmetern die grösste erfasste Belagsfläche, Perron 4 mit 660 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

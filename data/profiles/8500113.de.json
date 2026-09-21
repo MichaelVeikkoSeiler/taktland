@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f29b9fcc",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Laufen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:aebb7592",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Laufen ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:cabd023e",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Laufen?",
           "min": 290,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:c5300686",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Laufen lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:5e0f3c5e",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Laufen?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:775a0a4e",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Laufen sind niveaufrei erreichbar.",
           "correct": true,
@@ -223,6 +230,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -232,6 +240,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -257,6 +266,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:ca1261ff",
           "type": "cloze",
           "prompt": "An Gleis 2 in Laufen sind ___ Sektoren erfasst.",
           "options": [
@@ -271,6 +281,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:d75636ed",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 2 in Laufen erfasst? (Mehrfachauswahl)",
           "options": [
@@ -317,6 +328,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:c811a936",
           "type": "cloze",
           "prompt": "In Laufen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -331,6 +343,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:8fc3c778",
           "type": "true_false",
           "prompt": "Bei keinem der 13 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -344,7 +357,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Bärschwil – Laufen: Im Personenverkehr verkehren dort 80 Züge pro Tag, das sind 29'146 im Jahr. Auf dem Abschnitt Zwingen – Laufen sind es 72 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Bärschwil – Laufen",
@@ -363,6 +376,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:1b90297a",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bärschwil – Laufen?",
           "options": [
@@ -377,6 +391,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -424,6 +439,7 @@
       ],
       "questions": [
         {
+          "id": "linien:6a1305ed",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 230 ist Laufen eingetragen?",
           "min": 82,
@@ -464,6 +480,7 @@
       ],
       "questions": [
         {
+          "id": "services:e4a80ebb",
           "type": "true_false",
           "prompt": "Laufen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -472,6 +489,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c700ce03",
           "type": "cloze",
           "prompt": "In Laufen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -519,6 +537,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -533,6 +552,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -547,6 +567,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 9,
@@ -559,6 +580,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

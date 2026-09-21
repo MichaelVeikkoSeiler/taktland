@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:517f25ec",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Düdingen ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:604fe32a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Düdingen ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:31f2b963",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Düdingen?",
           "min": 480,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:fdf1f221",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Düdingen lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:a79b0fa5",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Düdingen?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -204,6 +211,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:734818b8",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Düdingen sind niveaufrei erreichbar.",
           "correct": true,
@@ -235,6 +243,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -244,6 +253,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:380518ed",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 2 in Düdingen erfasst? (Mehrfachauswahl)",
           "options": [
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:cf4ed573",
           "type": "cloze",
           "prompt": "In Düdingen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5f9b5852",
           "type": "true_false",
           "prompt": "Bei keinem der 19 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -317,7 +329,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Düdingen – Schmitten FR: Im Personenverkehr verkehren dort 171 Züge pro Tag, das sind 62'249 im Jahr. Auf dem Abschnitt Fribourg/Freiburg Poya – Düdingen sind es 170 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 10 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Düdingen – Schmitten FR",
@@ -336,6 +348,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:db3d601e",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Düdingen – Schmitten FR?",
           "options": [
@@ -350,6 +363,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -397,6 +411,7 @@
       ],
       "questions": [
         {
+          "id": "linien:4c041913",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Düdingen eingetragen?",
           "min": 59,
@@ -437,6 +452,7 @@
       ],
       "questions": [
         {
+          "id": "services:81ef8457",
           "type": "true_false",
           "prompt": "Düdingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -445,6 +461,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:0454b36e",
           "type": "single_choice",
           "prompt": "Wie viele Billettentwerter sind in Düdingen erfasst?",
           "options": [
@@ -486,6 +503,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -500,6 +518,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [

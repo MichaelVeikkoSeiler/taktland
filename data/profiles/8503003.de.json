@@ -4,17 +4,16 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,83 +27,194 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Zürich Stadelhofen liegt in der Gemeinde Zürich, auf 410 Metern über Meer. An einem Werktag steigen hier 86'700 Personen ein und aus, an einem freien Tag 49'500. Die Quelle vermerkt, dass die Forchbahn nicht mitgezählt ist.",
+      "body": "An einem Werktag steigen in Zürich Stadelhofen 86'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 75'200, an einem freien Tag 49'500. Infrastruktur und Züge sind der SBB zugeordnet. Die Quelle vermerkt zu diesen Zahlen: «Ohne FB.»",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 86700,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 75200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 49500,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
         },
         {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 82700,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
-        },
-        {
-          "label": "Höhe über Meer",
-          "value": 410,
-          "unit": "m",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.hoehe_m_ue_m"
+          "label": "Abgrenzung der Zahl",
+          "value": "Ohne FB.",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.bemerkung"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:f3033863",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Stadelhofen ein und aus?",
           "options": [
-            "31'000",
+            "48'000",
+            "74'000",
             "86'700",
-            "190'000",
-            "380'000"
+            "120'000"
           ],
-          "correct": 1,
-          "explanation": "86'700 Personen pro Werktag, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 86'700 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 71300,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 80400,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 86700,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 71'300 (2022), 80'400 (2023), 86'700 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:7cdb6973",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Zürich Stadelhofen ___ Personen ein und aus.",
+          "options": [
+            "42'000",
+            "49'500",
+            "59'000"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 49'500 Personen, an einem Werktag 86'700. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "id": "steckbrief:7220a5f7",
           "type": "true_false",
-          "prompt": "Die Zahl der Ein- und Aussteigenden umfasst auch die Reisenden der Forchbahn.",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Zürich Stadelhofen umfasst auch FB.",
           "correct": false,
-          "explanation": "Die Quelle vermerkt dazu ausdrücklich: ohne FB.",
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne FB.». Wofür FB steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
           "difficulty": 3
         }
       ]
     },
     {
-      "id": "tagesrhythmus",
-      "title": "Der Tag am Bahnhof",
-      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 11.6 Prozent des Tagesaufkommens. Über die Woche ist der Donnerstag mit 16.6 Prozent der stärkste Tag, der Sonntag mit 8.7 Prozent der schwächste.",
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Zürich Stadelhofen liegt auf 409.7 Metern über Meer in der Gemeinde Zürich, Bezirk Zürich, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet ZSTH.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Höhe über Meer",
+          "value": 409.7,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "ZSTH",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:b23581e1",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zürich Stadelhofen?",
+          "min": 330,
+          "max": 600,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 409.7,
+          "explanation": "Der Bahnhof liegt auf 409.7 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:7d5cb079",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Zürich Stadelhofen lautet ___.",
+          "options": [
+            "ZEN",
+            "ZSTH",
+            "ZUE"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist ZSTH als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tagesrhythmus",
+      "title": "Tagesrhythmus",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Zürich Stadelhofen in der Stunde ab 17 Uhr: 11.6 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Donnerstag, 16.6 Prozent, der kleinste auf den Sonntag, 8.7 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
+      "facts": [
+        {
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 11.6,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Anteil am Sonntag",
+          "label": "Wochentag mit dem grössten Anteil",
+          "value": "Donnerstag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.6,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
           "value": 8.7,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
@@ -113,20 +223,38 @@
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:eb63b7ad",
+          "type": "single_choice",
+          "prompt": "In welcher Stunde zählt die Erhebung in Zürich Stadelhofen die meisten Bahnhofbenutzer?",
+          "options": [
+            "ab 7 Uhr",
+            "ab 8 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr"
+          ],
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 11.6, ab 7 Uhr 9.4, ab 16 Uhr 8.9, ab 8 Uhr 8.5 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
+        },
+        {
+          "id": "tagesrhythmus:85bd88d8",
           "type": "slider",
-          "prompt": "Welcher Anteil der Wochenbesuche fällt auf den Sonntag?",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Zürich Stadelhofen auf die Stunde ab 17 Uhr?",
           "min": 0,
           "max": 25,
           "step": 0.1,
           "unit": "%",
-          "correct": 8.7,
-          "explanation": "8.7 Prozent, gegenüber 16.6 Prozent am Donnerstag.",
-          "factRef": "tagesrhythmus.wochentage[6].prozent",
+          "correct": 11.6,
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 11.6 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
           "difficulty": 3
         },
         {
+          "id": "tagesrhythmus:b84451f0",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag ist hier der stärkste?",
+          "prompt": "Auf welchen Wochentag entfällt in Zürich Stadelhofen der grösste Anteil der Bahnhofbenutzer?",
           "options": [
             "Montag",
             "Donnerstag",
@@ -134,8 +262,9 @@
             "Sonntag"
           ],
           "correct": 1,
-          "explanation": "Der Donnerstag mit 16.6 Prozent.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Donnerstag 16.6, Montag 14.7, Samstag 11.8, Sonntag 8.7 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[3].tag",
           "difficulty": 2
         }
       ]
@@ -143,17 +272,16 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Erfasst sind 2 Perrons, beide 333 Meter lang: ein Mittelperron und ein Hausperron. Bei 2 von 2 ist der Zugang niveaufrei.",
+      "body": "Zu 2 Perrons in Zürich Stadelhofen liegen offene Daten vor. Perron 2/3 misst 333 Meter, Perron 1 misst 333 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 2,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Länge der Perrons",
+          "label": "Längstes erfasstes Perron",
           "value": 333,
           "unit": "m",
           "source": "perron",
@@ -162,207 +290,313 @@
       ],
       "questions": [
         {
+          "id": "perrons:5610b3f1",
           "type": "single_choice",
-          "prompt": "Wie lang sind die erfassten Perrons?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Zürich Stadelhofen?",
           "options": [
-            "180 m",
-            "260 m",
+            "280 m",
             "333 m",
-            "420 m"
+            "400 m",
+            "470 m"
           ],
-          "correct": 2,
-          "explanation": "333 Meter, beide gleich lang.",
+          "correct": 1,
+          "explanation": "Das längste erfasste Perron misst 333 Meter.",
           "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "2350.9 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "1478.37 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 hat 2350.9 Quadratmeter, Perron 1 hat 1478.37 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:8804c2d2",
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Zürich Stadelhofen sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 3 Gleisen vor. Für die Gleise 1 und 2 ist eine Perronkante von je 333 Metern erfasst, für Gleis 3 fehlt die Angabe. An den drei Gleisen sind die Sektoren A bis C verzeichnet.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "title": "Gleise",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Zu den Gleisen 1 und 2 ist eine Perronhöhe von 55 Zentimetern vermerkt, zu Gleis 3 keine.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 3,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Perronkante an Gleis 1",
-          "value": 333,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronkante_m"
-        },
-        {
-          "label": "Letzter Sektor an Gleis 1",
-          "value": "C",
-          "unit": null,
+          "label": "Sektoren an Gleis 1",
+          "value": 3,
           "source": "sektortafel",
-          "factRef": "gleise.items[0].sektoren[2]"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 1?",
-          "options": [
-            "B",
-            "C",
-            "E",
-            "H"
-          ],
-          "correct": 1,
-          "explanation": "Von A bis C, also 3 Sektoren.",
-          "factRef": "gleise.items[0].sektoren[2]",
-          "difficulty": 2
-        },
-        {
+          "id": "gleise:044e3e01",
           "type": "cloze",
-          "prompt": "In Zürich Stadelhofen liegen Daten zu ___ Gleisen vor.",
-          "options": [
-            "2",
-            "3",
-            "5",
-            "8"
-          ],
-          "correct": 1,
-          "explanation": "3 Gleise: 1, 2, 3.",
-          "factRef": "gleise.anzahl_mit_daten",
-          "optionen_aus_fakten": true,
-          "difficulty": 1
-        }
-      ]
-    },
-    {
-      "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "Die 8 erfassten Perronabschnitte liegen auf 55 Zentimetern. Von 3 erfassten Gleisen haben 2 einen solchen Abschnitt, für das dritte fehlt die Angabe. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Ein Hilfstritt gleicht den Unterschied aus.",
-      "facts": [
-        {
-          "label": "Erfasste Abschnitte",
-          "value": 8,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente"
-        },
-        {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
-          "value": 2,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm"
-        }
-      ],
-      "questions": [
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele der 3 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
+          "prompt": "An Gleis 1 in Zürich Stadelhofen sind ___ Sektoren erfasst.",
           "options": [
             "1",
             "2",
             "3"
           ],
-          "correct": 1,
-          "explanation": "2 von 3. Für Gleis 3 fehlt die Angabe zur Perronhöhe.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "difficulty": 3
+          "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Zürich Stadelhofen sind 8 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An 2 der 3 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 8,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:79b79859",
+          "type": "cloze",
+          "prompt": "In Zürich Stadelhofen sind ___ Perronsegmente erfasst.",
+          "options": [
+            "8",
+            "24",
+            "32"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 8 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:023c3ba0",
+          "type": "true_false",
+          "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 8 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf den Strecken",
-      "body": "Von Zürich HB her verkehren 260'851 Personenzüge pro Jahr, rund 715 pro Tag in beiden Richtungen zusammen. Richtung Zürich Hottingen sind es 472 pro Tag, Richtung Zürich Tiefenbrunnen 241.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Zürich HB – Zürich Stadelhofen: Im Personenverkehr verkehren dort 715 Züge pro Tag, das sind 260'851 im Jahr. Auf dem Abschnitt Zürich Stadelhofen – Zürich Hottingen (Spw) sind es 472 und auf dem Abschnitt Zürich Stadelhofen – Zürich Tiefenbrunnen sind es 241 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 11 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, Abschnitt Zürich HB",
+          "label": "Züge pro Tag, Personenverkehr Zürich HB – Zürich Stadelhofen",
           "value": 715,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Personenzüge pro Tag Richtung Hottingen",
-          "value": 472,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Zürich HB – Zürich Stadelhofen",
+          "value": 260851,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
-        },
-        {
-          "label": "Personenzüge pro Tag Richtung Tiefenbrunnen",
-          "value": 241,
-          "unit": "Züge",
-          "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:859474e9",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zürich HB – Zürich Stadelhofen?",
           "options": [
-            "241",
-            "472",
+            "500",
+            "610",
             "715",
-            "1'400"
+            "860"
           ],
           "correct": 2,
-          "explanation": "Rund 715 pro Tag von Zürich HB her, beide Richtungen zusammen.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 715 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zugzahlen sagen, wie viele Züge hier halten.",
-          "correct": false,
-          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
-          "factRef": "zuege.hinweis",
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Zürich HB – Zürich Stadelhofen, Personenverkehr",
+              "value": 260851,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Zürich Stadelhofen – Zürich Hottingen (Spw), Personenverkehr",
+              "value": 172289,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Zürich Stadelhofen – Zürich Tiefenbrunnen, Personenverkehr",
+              "value": 87897,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Zürich HB – Zürich Stadelhofen, Güterverkehr",
+              "value": 3962,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Zürich HB – Zürich Stadelhofen (Personenverkehr) 260'851, Zürich Stadelhofen – Zürich Hottingen (Spw) (Personenverkehr) 172'289, Zürich Stadelhofen – Zürich Tiefenbrunnen (Personenverkehr) 87'897, Zürich HB – Zürich Stadelhofen (Güterverkehr) 3'962 Züge im Jahr.",
           "difficulty": 3
         }
       ]
     },
     {
-      "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 6 Billettautomaten und 9 Billettentwerter. Eine Wartehalle ist nicht erfasst. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Zürich Stadelhofen sind 2 Linien erfasst: die Linie 745 ZH Langstrasse - Dietlikon Sud (S-Bahn) und die Linie 730 Zurich Stadelhofen - Rapperswil.",
       "facts": [
         {
-          "label": "Billettautomaten",
-          "value": 6,
-          "unit": null,
-          "source": "billetautomat",
-          "factRef": "services.billettautomaten_erfasst"
+          "label": "Erfasste Linien",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
         },
         {
-          "label": "Billettentwerter",
-          "value": 9,
-          "unit": null,
-          "source": "billetentwerter",
-          "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen",
-          "value": 0,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
+          "label": "Kilometrierung auf der Linie 745",
+          "value": 101.59088,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
+          "id": "linien:4522b502",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 745 ist Zürich Stadelhofen eingetragen?",
+          "min": 83,
+          "max": 148,
+          "step": 1,
+          "unit": "km",
+          "correct": 101.59088,
+          "explanation": "Die Kilometrierung von Zürich Stadelhofen auf der Linie 745 beträgt 101.59088. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        },
+        {
+          "id": "linien:f57243ca",
+          "type": "match",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
+          "pairs": [
+            {
+              "links": "Linie 745",
+              "rechts": "ZH Langstrasse - Dietlikon Sud (S-Bahn)",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "Linie 730",
+              "rechts": "Zurich Stadelhofen - Rapperswil",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Die Linie 745 heisst ZH Langstrasse - Dietlikon Sud (S-Bahn), die Linie 730 heisst Zurich Stadelhofen - Rapperswil.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Zürich Stadelhofen steht in der Liste der WLAN-Standorte. Erfasst sind 6 Billettautomaten (Typen S-POS und ePOS) und 9 Billettentwerter. Wartehallen sind keine verzeichnet.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 6,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 9,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:a4f83928",
           "type": "true_false",
-          "prompt": "In Zürich Stadelhofen ist eine Wartehalle erfasst.",
-          "correct": false,
-          "explanation": "Es ist keine erfasst. Das schliesst nicht aus, dass es vor Ort geschützte Warteflächen gibt.",
-          "factRef": "services.wartehallen_erfasst",
+          "prompt": "Zürich Stadelhofen steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "id": "services:59d1bdfa",
+          "type": "cloze",
+          "prompt": "In Zürich Stadelhofen sind ___ Billettentwerter erfasst.",
+          "options": [
+            "9",
+            "27",
+            "36"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 9 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
       ]
@@ -399,25 +633,27 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "4",
-            "6",
+            "8",
             "10",
-            "30"
+            "30",
+            "40"
           ],
-          "correct": 2,
+          "correct": 1,
           "explanation": "Erfasst sind 10 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1,
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "4",
+            "9",
             "11",
             "24",
             "33"
@@ -429,9 +665,10 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 9,
+          "min": 26,
           "max": 79,
           "step": 1,
           "unit": "Schliessfächer",
@@ -441,6 +678,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -460,22 +698,22 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Zürich Stadelhofen ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "body": "Für Zürich Stadelhofen ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Plan als A4",
+          "label": "Plan als A4-Blatt",
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zuerich-stadelhofen-a4.pdf",
-          "unit": null,
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:23024ab6",
           "type": "true_false",
-          "prompt": "Für Zürich Stadelhofen gibt es einen veröffentlichten Bahnhofplan.",
+          "prompt": "Für Zürich Stadelhofen ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

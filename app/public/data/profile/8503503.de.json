@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:d9a4f906",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Turgi ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:7a9b4fde",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Turgi ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:718b916f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Turgi?",
           "min": 280,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:d695e577",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Turgi?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:6da34e51",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Turgi?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:ebd22ea1",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Turgi sind niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:edaa6f87",
           "type": "cloze",
           "prompt": "An Gleis 2 in Turgi sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:2e58161e",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Turgi kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -278,6 +287,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:81dc4d02",
           "type": "cloze",
           "prompt": "In Turgi sind ___ Perronsegmente erfasst.",
           "options": [
@@ -292,6 +302,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -305,7 +316,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Turgi – Baden: Im Personenverkehr verkehren dort 367 Züge pro Tag, das sind 134'126 im Jahr. Auf dem Abschnitt Turgi – Brugg AG Ost sind es 362 und auf dem Abschnitt Turgi – Siggenthal Industrie sind es 90 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 56 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Turgi – Baden",
@@ -324,6 +335,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:51019f92",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Turgi – Baden?",
           "options": [
@@ -338,6 +350,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -390,6 +403,7 @@
       ],
       "questions": [
         {
+          "id": "linien:6b299e2b",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 702 ist Turgi eingetragen?",
           "min": 22,
@@ -402,6 +416,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -449,6 +464,7 @@
       ],
       "questions": [
         {
+          "id": "services:a865bb57",
           "type": "true_false",
           "prompt": "Turgi steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -457,6 +473,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:49755c26",
           "type": "cloze",
           "prompt": "In Turgi sind ___ Billettentwerter erfasst.",
           "options": [
@@ -498,6 +515,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -512,6 +530,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -526,6 +545,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -541,8 +561,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -562,7 +583,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'221 Quadratmetern die grösste erfasste Fläche, Perron 4 mit 1'419 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 2'221 Quadratmetern die grösste erfasste Belagsfläche, Perron 4 mit 1'419 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

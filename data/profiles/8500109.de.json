@@ -51,6 +51,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:2ac8ebae",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Delémont ein und aus?",
           "options": [
@@ -65,6 +66,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:c884ecf2",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Delémont ___ Personen ein und aus.",
           "options": [
@@ -100,6 +102,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:b992c54c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Delémont?",
           "min": 330,
@@ -112,6 +115,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:93fd7010",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Delémont lautet ___.",
           "options": [
@@ -148,6 +152,22 @@
       ],
       "questions": [
         {
+          "id": "perrons:03728fa2",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Delémont?",
+          "options": [
+            "389 m",
+            "470 m",
+            "540 m",
+            "660 m"
+          ],
+          "correct": 0,
+          "explanation": "Das längste erfasste Perron misst 389 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -172,6 +192,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:782c51e8",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Delémont sind niveaufrei erreichbar.",
           "correct": true,
@@ -194,14 +215,15 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Sektoren an Gleis 1",
-          "value": 1,
+          "label": "Sektoren an Gleis 2",
+          "value": 4,
           "source": "sektortafel",
-          "factRef": "gleise.items[0].sektoren_anzahl"
+          "factRef": "gleise.items[1].sektoren_anzahl"
         }
       ],
       "questions": [
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -228,24 +250,26 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Richtig ist diese Reihenfolge: Gleis 2 mit 361, Gleis 1 mit 288, Gleis 4 mit 230 und Gleis 5 mit 149 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Gleis 2 misst 361 Meter, Gleis 1 misst 288 Meter, Gleis 4 misst 230 Meter, Gleis 5 misst 149 Meter. Gleise mit fast gleicher Kante bleiben weg.",
           "difficulty": 3
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Sektoren sind an Gleis 1 in Delémont erfasst?",
+          "id": "gleise:db961d3f",
+          "type": "cloze",
+          "prompt": "An Gleis 2 in Delémont sind ___ Sektoren erfasst.",
           "options": [
-            "1",
-            "2",
-            "3"
+            "4",
+            "6",
+            "7"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 1 trägt nur den Sektor A.",
-          "factRef": "gleise.items[0].sektoren_anzahl",
+          "explanation": "Gleis 2 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[1].sektoren_anzahl",
           "difficulty": 2
         },
         {
+          "id": "gleise:b83577df",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Delémont erfasst? (Mehrfachauswahl)",
           "options": [
@@ -293,6 +317,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:d448703a",
           "type": "cloze",
           "prompt": "In Delémont sind ___ Perronsegmente erfasst.",
           "options": [
@@ -307,6 +332,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1decbf85",
           "type": "true_false",
           "prompt": "Bei keinem der 22 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -320,25 +346,26 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Delémont – Courtételle: Im Personenverkehr verkehren dort 83 Züge pro Tag, das sind 30'171 im Jahr. Auf dem Abschnitt Delémont – Soyhières sind es 80 und auf dem Abschnitt Choindez – Delémont sind es 74 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Delémont – Courtételle",
           "value": 83,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Delémont – Courtételle",
           "value": 30171,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:903442db",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Delémont – Courtételle?",
           "options": [
@@ -349,10 +376,11 @@
           ],
           "correct": 3,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 83 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -371,10 +399,15 @@
               "label": "Delémont – Courtételle, Güterverkehr",
               "value": 1410,
               "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            },
+            {
+              "label": "Choindez – Delémont, Güterverkehr",
+              "value": 613,
+              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Richtig ist diese Reihenfolge: Delémont – Courtételle im Personenverkehr mit 30'171, Choindez – Delémont im Personenverkehr mit 27'127 und Delémont – Courtételle im Güterverkehr mit 1'410 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Delémont – Courtételle (Personenverkehr) 30'171, Choindez – Delémont (Personenverkehr) 27'127, Delémont – Courtételle (Güterverkehr) 1'410, Choindez – Delémont (Güterverkehr) 613 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -400,6 +433,7 @@
       ],
       "questions": [
         {
+          "id": "linien:7b388e1c",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 226 ist Delémont eingetragen?",
           "min": 69,
@@ -412,6 +446,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -435,7 +470,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Delémont steht in der Liste der WLAN-Standorte. Erfasst sind 3 Billettautomaten der Typen S-POS und ePOS, 8 Billettentwerter und 3 Wartehallen.",
+      "body": "Delémont steht in der Liste der WLAN-Standorte. Erfasst sind 3 Billettautomaten (Typen S-POS und ePOS), 8 Billettentwerter und 3 Wartehallen.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -459,6 +494,7 @@
       ],
       "questions": [
         {
+          "id": "services:f99cd534",
           "type": "true_false",
           "prompt": "Delémont steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -467,6 +503,7 @@
           "difficulty": 1
         },
         {
+          "id": "services:be3ea1cf",
           "type": "cloze",
           "prompt": "In Delémont sind ___ Billettentwerter erfasst.",
           "options": [
@@ -514,6 +551,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -528,6 +566,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -542,6 +581,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 9,
@@ -554,8 +594,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -575,7 +616,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1 hat mit 2'538 Quadratmetern die grösste erfasste Fläche, Perron 4/5 mit 1'555 die kleinste der gezeigten.",
+          "explanation": "Perron 1 hat mit 2'538 Quadratmetern die grösste erfasste Belagsfläche, Perron 4/5 mit 1'555 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -594,10 +635,11 @@
       ],
       "questions": [
         {
+          "id": "bahnhofplan:3167374c",
           "type": "true_false",
           "prompt": "Für Delémont ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

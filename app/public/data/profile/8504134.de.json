@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:e71c5baa",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Payerne ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:5313204b",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Payerne ___ Personen ein und aus.",
           "options": [
@@ -134,6 +137,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:5501e87d",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Payerne?",
           "min": 370,
@@ -146,6 +150,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:3624f8de",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Payerne?",
           "options": [
@@ -183,6 +188,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:3b454403",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Payerne?",
           "options": [
@@ -197,6 +203,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:5ef2e0cb",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Payerne sind niveaufrei erreichbar.",
           "correct": true,
@@ -221,6 +228,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:f0dcd92d",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Payerne kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -257,6 +265,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:aa9285fe",
           "type": "cloze",
           "prompt": "In Payerne sind ___ Perronsegmente erfasst.",
           "options": [
@@ -271,6 +280,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
           "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -284,7 +294,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Cugy FR – Payerne: Im Personenverkehr verkehren dort 76 Züge pro Tag, das sind 27'874 im Jahr. Auf dem Abschnitt Payerne – Corcelles-Sud sind es 74 und auf dem Abschnitt Payerne – Corcelles-Nord sind es 51 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Cugy FR – Payerne",
@@ -303,6 +313,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:287e84c6",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Cugy FR – Payerne?",
           "options": [
@@ -317,6 +328,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -369,6 +381,7 @@
       ],
       "questions": [
         {
+          "id": "linien:a61f2852",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 251 ist Payerne eingetragen?",
           "min": 47,
@@ -381,6 +394,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -428,6 +442,7 @@
       ],
       "questions": [
         {
+          "id": "services:92c94cef",
           "type": "true_false",
           "prompt": "Payerne steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -436,6 +451,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:10538680",
           "type": "cloze",
           "prompt": "In Payerne sind ___ Billettentwerter erfasst.",
           "options": [
@@ -477,6 +493,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -491,6 +508,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -505,8 +523,9 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -526,7 +545,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 1'625 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 1'108 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 1'625 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 1'108 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

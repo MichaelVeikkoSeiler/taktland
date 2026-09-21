@@ -51,6 +51,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:0ff6e894",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Kreuzlingen ein und aus?",
           "options": [
@@ -65,6 +66,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:1f140e06",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Kreuzlingen ___ Personen ein und aus.",
           "options": [
@@ -100,6 +102,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:841b6bb7",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Kreuzlingen?",
           "min": 330,
@@ -112,6 +115,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:5bff36cc",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Kreuzlingen lautet ___.",
           "options": [
@@ -148,6 +152,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:cdb27a34",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Kreuzlingen?",
           "options": [
@@ -162,6 +167,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -181,6 +187,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:48498c2e",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Kreuzlingen sind niveaufrei erreichbar.",
           "correct": true,
@@ -211,6 +218,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:796a0638",
           "type": "cloze",
           "prompt": "An Gleis 1 in Kreuzlingen sind ___ Sektoren erfasst.",
           "options": [
@@ -225,6 +233,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:5c81410c",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Kreuzlingen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -261,6 +270,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:5d8f9e02",
           "type": "cloze",
           "prompt": "In Kreuzlingen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -275,6 +285,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f366795b",
           "type": "true_false",
           "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -288,7 +299,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Tägermoos (Abzw) – Kreuzlingen: Im Personenverkehr verkehren dort 197 Züge pro Tag, das sind 71'735 im Jahr. Auf dem Abschnitt Konstanz Grenze (Abzw) – Kreuzlingen sind es 175 und auf dem Abschnitt Kreuzlingen – Kreuzlingen Hafen sind es 84 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Tägermoos (Abzw) – Kreuzlingen",
@@ -307,6 +318,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:2a8af7f5",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Tägermoos (Abzw) – Kreuzlingen?",
           "options": [
@@ -321,6 +333,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -373,6 +386,7 @@
       ],
       "questions": [
         {
+          "id": "linien:edd5fc77",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 823 ist Kreuzlingen eingetragen?",
           "min": 49,
@@ -385,6 +399,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -432,6 +447,7 @@
       ],
       "questions": [
         {
+          "id": "services:705f6c51",
           "type": "true_false",
           "prompt": "Kreuzlingen steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -440,6 +456,7 @@
           "difficulty": 1
         },
         {
+          "id": "services:1e5750d6",
           "type": "cloze",
           "prompt": "In Kreuzlingen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -487,6 +504,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -501,6 +519,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -516,6 +535,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 11,
@@ -528,6 +548,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -558,10 +579,11 @@
       ],
       "questions": [
         {
+          "id": "bahnhofplan:3d79f97d",
           "type": "true_false",
           "prompt": "Für Kreuzlingen ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

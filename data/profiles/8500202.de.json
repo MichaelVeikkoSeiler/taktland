@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f912d553",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Grenchen Süd ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:3412df09",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Grenchen Süd ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:87b8d993",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Grenchen Süd?",
           "min": 360,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:3143f72b",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Grenchen Süd?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:60ad30c0",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Grenchen Süd?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -217,6 +224,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:63aca589",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Grenchen Süd sind niveaufrei erreichbar.",
           "correct": true,
@@ -247,6 +255,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d0e8526f",
           "type": "cloze",
           "prompt": "An Gleis 1 in Grenchen Süd sind ___ Sektoren erfasst.",
           "options": [
@@ -261,6 +270,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:901ee028",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Grenchen Süd kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -297,6 +307,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:469d52a0",
           "type": "cloze",
           "prompt": "In Grenchen Süd sind ___ Perronsegmente erfasst.",
           "options": [
@@ -311,6 +322,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
           "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -324,7 +336,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Lengnau BE – Grenchen Süd 157 Züge pro Tag, das sind 57'287 im Jahr. Auf dem Abschnitt Grenchen Süd – Bettlach sind es ebenfalls 157 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 69 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Lengnau BE – Grenchen Süd",
@@ -343,6 +355,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:4fc2c448",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Lengnau BE – Grenchen Süd?",
           "options": [
@@ -357,6 +370,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:51dea7a6",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Lengnau BE – Grenchen Süd?",
           "min": 46500,
@@ -391,6 +405,7 @@
       ],
       "questions": [
         {
+          "id": "linien:b953c759",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 410 ist Grenchen Süd eingetragen?",
           "min": 69,
@@ -431,6 +446,7 @@
       ],
       "questions": [
         {
+          "id": "services:52992028",
           "type": "true_false",
           "prompt": "Grenchen Süd steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -439,6 +455,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:7afec44e",
           "type": "cloze",
           "prompt": "In Grenchen Süd sind ___ Billettentwerter erfasst.",
           "options": [
@@ -480,6 +497,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -494,6 +512,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

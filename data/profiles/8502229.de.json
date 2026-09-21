@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:e776ace5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Urdorf Weihermatt ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:10ef2636",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Urdorf Weihermatt ___ Personen ein und aus.",
           "options": [
@@ -97,14 +99,15 @@
           "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Gemeinde",
-          "value": "Urdorf",
+          "label": "Bezirk",
+          "value": "Dietikon",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:35bfac93",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Urdorf Weihermatt?",
           "min": 370,
@@ -117,18 +120,19 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:35168a4f",
           "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt der Bahnhof Urdorf Weihermatt?",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Urdorf Weihermatt?",
           "options": [
-            "Birmensdorf (ZH)",
+            "Affoltern",
+            "Dielsdorf",
             "Dietikon",
-            "Schlieren",
-            "Urdorf"
+            "Zürich"
           ],
-          "correct": 3,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Urdorf eingetragen.",
-          "factRef": "stammdaten.gemeinde",
+          "explanation": "Als Bezirk ist Dietikon eingetragen.",
+          "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
       ]
@@ -154,6 +158,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:70087851",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Urdorf Weihermatt?",
           "options": [
@@ -168,6 +173,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -187,6 +193,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:e45386de",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Urdorf Weihermatt sind niveaufrei erreichbar.",
           "correct": true,
@@ -217,6 +224,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:8a94d727",
           "type": "cloze",
           "prompt": "An Gleis 1 in Urdorf Weihermatt sind ___ Sektoren erfasst.",
           "options": [
@@ -231,6 +239,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:89f872a2",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Urdorf Weihermatt ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -261,6 +270,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:a0abd2ef",
           "type": "true_false",
           "prompt": "Für Urdorf Weihermatt sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -274,7 +284,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Urdorf – Urdorf Weihermatt 146 Züge pro Tag, das sind 53'186 im Jahr. Auf dem Abschnitt Urdorf Weihermatt – Birmensdorf Industrie sind es ebenfalls 146 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Urdorf – Urdorf Weihermatt",
@@ -293,6 +303,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:d07148e7",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Urdorf – Urdorf Weihermatt?",
           "options": [
@@ -307,6 +318,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:4d3301a5",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Urdorf – Urdorf Weihermatt?",
           "min": 43500,
@@ -341,6 +353,7 @@
       ],
       "questions": [
         {
+          "id": "linien:e5dac51f",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 711 ist Urdorf Weihermatt eingetragen?",
           "min": 8.0,
@@ -381,6 +394,7 @@
       ],
       "questions": [
         {
+          "id": "services:b5c4fdb8",
           "type": "true_false",
           "prompt": "Urdorf Weihermatt steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -389,6 +403,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:729e044a",
           "type": "cloze",
           "prompt": "In Urdorf Weihermatt sind ___ Billettentwerter erfasst.",
           "options": [
@@ -430,6 +445,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -444,6 +460,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -458,6 +475,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

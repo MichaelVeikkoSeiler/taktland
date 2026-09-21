@@ -4,21 +4,22 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
     "perronoberflache",
+    "sektortafel",
     "wifistation",
     "zugzahlen"
   ],
@@ -26,7 +27,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag im Jahr 2025 steigen in Aarau 46'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 40'100, an einem freien Tag 25'700. Die Infrastruktur gehört der SBB, Züge fahren hier von SBB und SOB.",
+      "body": "An einem Werktag steigen in Aarau 46'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 40'100, an einem freien Tag 25'700. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne AVA.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -50,54 +51,30 @@
           "factRef": "steckbrief.dnwv"
         },
         {
-          "label": "Infrastrukturbetreiberin",
-          "value": "SBB",
+          "label": "Abgrenzung der Zahl",
+          "value": "Ohne AVA.",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
-        },
-        {
-          "label": "Bahnunternehmen",
-          "value": "SBB, SOB",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.evu"
+          "factRef": "steckbrief.bemerkung"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:5002244a",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag 2025 in Aarau ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Aarau ein und aus?",
           "options": [
-            "19'000",
             "26'000",
             "33'000",
+            "40'000",
             "46'600"
           ],
           "correct": 3,
-          "explanation": "An einem Werktag 2025 sind es 46'600 Personen.",
+          "explanation": "An einem Werktag sind es 46'600 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "An einem freien Tag steigen in Aarau 25'700 Personen ein und aus.",
-          "correct": true,
-          "explanation": "Der Wert für einen freien Tag (dnwv) beträgt 25'700 Personen.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 1
-        },
-        {
-          "type": "slider",
-          "prompt": "Wie hoch ist der Wert im Tagesmittel über das ganze Jahr 2025 (in Personen)?",
-          "min": 20000,
-          "max": 60000,
-          "step": 500,
-          "unit": "Personen",
-          "correct": 40100,
-          "explanation": "Im Tagesmittel über das ganze Jahr sind es 40'100 Personen.",
-          "factRef": "steckbrief.dtv",
-          "difficulty": 2
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -121,13 +98,36 @@
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 38'200 (2022), 43'400 (2023), 46'600 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
+        },
+        {
+          "id": "steckbrief:9f15db1e",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Aarau ___ Personen ein und aus.",
+          "options": [
+            "22'000",
+            "25'700",
+            "31'000"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 25'700 Personen, an einem Werktag 46'600. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "id": "steckbrief:b10bcf86",
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Aarau umfasst auch AVA.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne AVA.». Wofür AVA steht, führt sie nicht aus.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Aarau liegt 383 Meter über Meer. Betreiberin ist die Schweizerische Bundesbahnen SBB, der Bahnhof liegt im Kanton Aargau.",
+      "body": "Aarau liegt auf 383 Metern über Meer in der Gemeinde Aarau, Bezirk Aarau, Kanton Aargau. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet AA.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -137,98 +137,142 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Betreiberin",
-          "value": "Schweizerische Bundesbahnen SBB",
+          "label": "Offizielle Abkürzung",
+          "value": "AA",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.betreiber"
+          "factRef": "stammdaten.abkuerzung"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Meter über Meer liegt Aarau?",
-          "options": [
-            "283",
-            "383",
-            "483",
-            "583"
-          ],
-          "correct": 1,
-          "explanation": "Aarau liegt auf 383 Metern über Meer.",
+          "id": "stammdaten:5d5e26b2",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Aarau?",
+          "min": 310,
+          "max": 560,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 383,
+          "explanation": "Der Bahnhof liegt auf 383 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "Betreiberin von Aarau ist die Schweizerische Bundesbahnen SBB.",
-          "correct": true,
-          "explanation": "Als Betreiberin ist die Schweizerische Bundesbahnen SBB erfasst.",
-          "factRef": "stammdaten.betreiber",
-          "difficulty": 1
+          "id": "stammdaten:4a030ab2",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Aarau lautet ___.",
+          "options": [
+            "AA",
+            "OEF",
+            "SUHR"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist AA als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
       "title": "Tagesrhythmus",
-      "body": "Die stärkste Stunde in Aarau ist die Stunde 17, mit 10.4 Prozent des Tagesaufkommens. Der stärkste Wochentag ist der Donnerstag mit 16.4 Prozent.",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Aarau in der Stunde ab 17 Uhr: 10.4 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Donnerstag, 16.4 Prozent, der kleinste auf den Sonntag, 8.9 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil in der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 10.4,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Stärkster Wochentag",
+          "label": "Wochentag mit dem grössten Anteil",
           "value": "Donnerstag",
-          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.4,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 8.9,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:d6163daf",
           "type": "single_choice",
-          "prompt": "In welcher Stunde ist das Aufkommen in Aarau am höchsten?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Aarau die meisten Bahnhofbenutzer?",
           "options": [
-            "7 Uhr",
-            "12 Uhr",
-            "17 Uhr",
-            "20 Uhr"
+            "ab 7 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
           ],
           "correct": 2,
-          "explanation": "Die Stunde 17 hat mit 10.4 Prozent den höchsten Anteil.",
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 10.4, ab 7 Uhr 9.4, ab 16 Uhr 9.3, ab 18 Uhr 7.0 Prozent.",
           "factRef": "tagesrhythmus.spitzenstunde",
           "difficulty": 1
         },
         {
+          "id": "tagesrhythmus:28322541",
+          "type": "slider",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Aarau auf die Stunde ab 17 Uhr?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 10.4,
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 10.4 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        },
+        {
+          "id": "tagesrhythmus:1957206e",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag hat in Aarau den höchsten Anteil am Wochenaufkommen?",
+          "prompt": "Auf welchen Wochentag entfällt in Aarau der grösste Anteil der Bahnhofbenutzer?",
           "options": [
             "Montag",
-            "Mittwoch",
             "Donnerstag",
-            "Samstag"
+            "Samstag",
+            "Sonntag"
           ],
-          "correct": 2,
-          "explanation": "Der Donnerstag hat mit 16.4 Prozent den höchsten Anteil.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
-          "difficulty": 1
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Donnerstag 16.4, Montag 15.3, Samstag 11.1, Sonntag 8.9 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[3].tag",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 5 Perrons in Aarau liegen offene Daten vor. Das längste erfasste Perron misst 486 Meter, das kürzeste erfasste 428 Meter. Zu Perron 0 ist keine Länge erfasst.",
+      "body": "Zu 5 Perrons in Aarau liegen offene Daten vor. Perron 1/10 misst 486 Meter, Perron 6 misst 480 Meter, Perron 4/5 misst 428 Meter, Perron 2/3 misst 428 Meter. Zu Perron 0 ist keine Länge erfasst. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -242,66 +286,128 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 428,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:737ed7b9",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Aarau?",
           "options": [
-            "428 m",
-            "480 m",
             "486 m",
-            "500 m"
+            "580 m",
+            "680 m",
+            "830 m"
           ],
-          "correct": 2,
+          "correct": 0,
           "explanation": "Das längste erfasste Perron misst 486 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie lang ist das kürzeste erfasste Perron in Aarau?",
-          "options": [
-            "380 m",
-            "428 m",
-            "480 m",
-            "486 m"
-          ],
-          "correct": 1,
-          "explanation": "Das kürzeste erfasste Perron misst 428 Meter.",
-          "factRef": "perrons.kuerzeste_m",
-          "difficulty": 1
-        },
-        {
+          "id": "perrons:57221352",
           "type": "match",
-          "prompt": "Welcher Perrontyp gehört zu welcher Perronnummer?",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
             {
               "links": "Perron 1/10",
-              "rechts": "Hausperron",
-              "factRef": "perrons.items[0].typ"
+              "rechts": "2539.35 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
               "links": "Perron 6",
-              "rechts": "Aussenperron",
-              "factRef": "perrons.items[1].typ"
+              "rechts": "1807.05 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
             },
             {
               "links": "Perron 4/5",
-              "rechts": "Mittelperron",
-              "factRef": "perrons.items[2].typ"
+              "rechts": "2140.17 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1/10 ist ein Hausperron, Perron 6 ein Aussenperron und Perron 4/5 ein Mittelperron.",
+          "explanation": "Perron 1/10 hat 2539.35 Quadratmeter, Perron 6 hat 1807.05 Quadratmeter, Perron 4/5 hat 2140.17 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:6172f205",
+          "type": "true_false",
+          "prompt": "Alle 5 erfassten Perrons in Aarau sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 5 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 7 Gleisen liegen offene Daten vor: 0, 1, 2, 3, 4, 5 und 6. An allen 7 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Zu Gleis 0 sind keine Sektortafeln erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 7,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
+          "source": "sektortafel",
+          "factRef": "gleise.items[1].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 1",
+              "value": 486,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 429,
+              "factRef": "gleise.items[3].perronkante_m"
+            },
+            {
+              "label": "Gleis 0",
+              "value": 174,
+              "factRef": "gleise.items[0].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 1 misst 486 Meter, Gleis 3 misst 429 Meter, Gleis 0 misst 174 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:9aa868c6",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Aarau sind ___ Sektoren erfasst.",
+          "options": [
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[1].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:3a181343",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Aarau kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 7 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
@@ -309,141 +415,124 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Aarau sind 17 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. Eine Sicherheitslinie ist vorhanden. Mit Hilfstritt sind 0 Segmente erfasst.",
+      "body": "Für Aarau sind 17 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 7 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Segmente",
+          "label": "Erfasste Perronsegmente",
           "value": 17,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 7,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
           "label": "Sicherheitslinie",
           "value": "Ja",
           "source": "haltestelle-visuell-taktile-sicherheitslinie",
           "factRef": "hindernisfreiheit.sicherheitslinie"
-        },
-        {
-          "label": "Segmente mit Hilfstritt erfasst",
-          "value": 0,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind für Aarau erfasst?",
+          "id": "hindernisfreiheit:609e5342",
+          "type": "cloze",
+          "prompt": "In Aarau sind ___ Perronsegmente erfasst.",
           "options": [
             "17",
             "24",
-            "29",
-            "37"
+            "29"
           ],
           "correct": 0,
-          "explanation": "Für Aarau sind 17 Perronsegmente erfasst.",
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 17 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:e0718f45",
           "type": "true_false",
-          "prompt": "Für Aarau ist eine Sicherheitslinie erfasst.",
+          "prompt": "Bei keinem der 17 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Sicherheitslinie ist mit «Ja» erfasst.",
-          "factRef": "hindernisfreiheit.sicherheitslinie",
-          "difficulty": 1
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele Segmente mit Hilfstritt sind für Aarau erfasst?",
-          "options": [
-            "0",
-            "3",
-            "7",
-            "17"
-          ],
-          "correct": 0,
-          "explanation": "Erfasst sind 0 Segmente mit Hilfstritt.",
+          "explanation": "Die Erhebung weist bei 0 der 17 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt Aarau – Aarau GB verkehren im Personenverkehr rund 635 Züge pro Tag, beide Richtungen zusammen. Auf demselben Abschnitt sind im Güterverkehr rund 120 Züge pro Tag erfasst.",
+      "body": "Am stärksten befahren ist der Abschnitt Aarau – Aarau GB: Im Personenverkehr verkehren dort 635 Züge pro Tag, das sind 231'715 im Jahr. Auf dem Abschnitt Wöschnau SBB – Aarau sind es 553 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 120 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Abschnitt Aarau–Aarau GB, Personenverkehr",
+          "label": "Züge pro Tag, Personenverkehr Aarau – Aarau GB",
           "value": 635,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Tag, Abschnitt Aarau–Aarau GB, Güterverkehr",
-          "value": 120,
-          "unit": "Züge/Tag",
+          "label": "Züge pro Jahr, Personenverkehr Aarau – Aarau GB",
+          "value": 231715,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:19f0e0e4",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren auf dem Abschnitt Aarau – Aarau GB im Personenverkehr täglich, beide Richtungen zusammen?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Aarau – Aarau GB?",
           "options": [
-            "250",
-            "350",
-            "440",
-            "635"
+            "635",
+            "760",
+            "890",
+            "1'100"
           ],
-          "correct": 3,
-          "explanation": "Auf dem Abschnitt Aarau – Aarau GB verkehren im Personenverkehr rund 635 Züge pro Tag.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 635 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
-          "prompt": "Ordne die Streckenabschnitte nach Zügen pro Tag, meiste zuerst.",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Aarau–Aarau GB, Personenverkehr",
-              "value": 635,
-              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+              "label": "Aarau – Aarau GB, Personenverkehr",
+              "value": 231715,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Wöschnau SBB–Aarau, Personenverkehr",
-              "value": 553,
-              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+              "label": "Wöschnau SBB – Aarau, Personenverkehr",
+              "value": 202019,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
-              "label": "Aarau–Aarau GB, Güterverkehr",
-              "value": 120,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+              "label": "Aarau – Aarau GB, Güterverkehr",
+              "value": 43694,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Richtig ist diese Reihenfolge: Aarau–Aarau GB im Personenverkehr mit 635, Wöschnau SBB–Aarau im Personenverkehr mit 553 und Aarau–Aarau GB im Güterverkehr mit 120 Zügen pro Tag. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
-          "difficulty": 2
-        },
-        {
-          "type": "true_false",
-          "prompt": "Auf dem Abschnitt Aarau – Aarau GB verkehren im Güterverkehr rund 120 Züge pro Tag.",
-          "correct": true,
-          "explanation": "Für den Güterverkehr auf diesem Abschnitt sind 120 Züge pro Tag erfasst.",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
-          "difficulty": 2
+          "explanation": "Aarau – Aarau GB (Personenverkehr) 231'715, Wöschnau SBB – Aarau (Personenverkehr) 202'019, Aarau – Aarau GB (Güterverkehr) 43'694 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Aarau sind 2 Linien erfasst: die Linie 650 Killwangen West – Lenzburg – Daniken Ost und die Linie 649 Aarau – Woschnau Tunnel alt.",
+      "body": "Für Aarau sind 2 Linien erfasst: die Linie 650 Killwangen West - Lenzburg - Daniken Ost und die Linie 649 Aarau - Woschnau Tunnel alt.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -452,28 +541,29 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie 650",
-          "value": "Killwangen West - Lenzburg - Daniken Ost",
+          "label": "Kilometrierung auf der Linie 650",
+          "value": 41.50577,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].name"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie lautet die Bezeichnung der Linie 650 in Aarau?",
-          "options": [
-            "Aarau - Woschnau Tunnel alt",
-            "Killwangen West - Lenzburg - Daniken Ost",
-            "Aarau - Zürich HB",
-            "Olten - Aarau - Baden"
-          ],
-          "correct": 1,
-          "explanation": "Die Linie 650 heisst Killwangen West - Lenzburg - Daniken Ost.",
-          "factRef": "linien.items[0].name",
-          "difficulty": 1
+          "id": "linien:8e8adef7",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 650 ist Aarau eingetragen?",
+          "min": 34,
+          "max": 61,
+          "step": 1,
+          "unit": "km",
+          "correct": 41.50577,
+          "explanation": "Die Kilometrierung von Aarau auf der Linie 650 beträgt 41.50577. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -489,7 +579,7 @@
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Linie 650 heisst Killwangen West - Lenzburg - Daniken Ost, Linie 649 heisst Aarau - Woschnau Tunnel alt.",
+          "explanation": "Die Linie 650 heisst Killwangen West - Lenzburg - Daniken Ost, die Linie 649 heisst Aarau - Woschnau Tunnel alt.",
           "difficulty": 2
         }
       ]
@@ -497,60 +587,50 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Für Aarau ist WLAN erfasst. Erfasst sind 7 Billettautomaten und 20 Billettentwerter.",
+      "body": "Aarau steht in der Liste der WLAN-Standorte. Erfasst sind 7 Billettautomaten vom Typ ePOS, 20 Billettentwerter und 6 Wartehallen.",
       "facts": [
         {
-          "label": "Erfasste Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 7,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Erfasste Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 20,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "WLAN erfasst",
-          "value": true,
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind für Aarau erfasst?",
-          "options": [
-            "3",
-            "5",
-            "7",
-            "10"
-          ],
-          "correct": 2,
-          "explanation": "Erfasst sind 7 Billettautomaten.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
+          "id": "services:38470f6f",
           "type": "true_false",
-          "prompt": "Für Aarau ist WLAN erfasst.",
+          "prompt": "Aarau steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "WLAN ist für Aarau in den offenen Daten erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
-          "type": "slider",
-          "prompt": "Wie viele Billettentwerter sind für Aarau erfasst?",
-          "min": 0,
-          "max": 40,
-          "step": 1,
-          "unit": "Stück",
-          "correct": 20,
-          "explanation": "Erfasst sind 20 Billettentwerter.",
+          "id": "services:a2932136",
+          "type": "cloze",
+          "prompt": "In Aarau sind ___ Billettentwerter erfasst.",
+          "options": [
+            "20",
+            "24",
+            "28"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 20 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -588,6 +668,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -602,6 +683,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -616,9 +698,10 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 18,
+          "min": 54,
           "max": 162,
           "step": 1,
           "unit": "Schliessfächer",
@@ -628,6 +711,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -643,8 +727,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -669,7 +754,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 3'329 Quadratmetern die grösste erfasste Fläche, Perron 0 mit 202 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 2/3 hat mit 3'329 Quadratmetern die grösste erfasste Belagsfläche, Perron 0 mit 202 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -677,30 +762,23 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Aarau ist ein Bahnhofplan als A4- und Plakat-PDF veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "body": "Für Aarau ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Eigentümerin",
-          "value": "SBB",
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-aarau-a4.pdf",
           "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
+          "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:dd8ae43b",
           "type": "true_false",
-          "prompt": "Eigentümerin der Bahnhofanlage in Aarau ist die SBB.",
+          "prompt": "Für Aarau ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Als Eigentümerin ist die SBB erfasst.",
-          "factRef": "bahnhofplan.eigentuemer",
-          "difficulty": 1
-        },
-        {
-          "type": "true_false",
-          "prompt": "Für Aarau ist ein Shopping-PDF des Bahnhofplans veröffentlicht.",
-          "correct": false,
-          "explanation": "Für das Shopping-PDF ist kein Verweis erfasst.",
-          "factRef": "bahnhofplan.shopping_pdf",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
       ]

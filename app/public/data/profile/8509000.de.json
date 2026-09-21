@@ -4,17 +4,16 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,125 +27,229 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Chur liegt im Kanton Graubünden, auf 585 Metern über Meer. An einem Werktag steigen hier 30'300 Personen ein und aus, an einem freien Tag 28'800 und damit fast gleich viele. Erfasst sind vier Bahnunternehmen: RhB, SBB, SOB und Thurbo.",
+      "body": "An einem Werktag steigen in Chur 30'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 29'800, an einem freien Tag 28'800. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind RhB, SBB, SOB und Thurbo erfasst.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 30300,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 29800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 28800,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnunternehmen",
-          "value": "RhB, SBB, SOB, Thurbo",
-          "unit": null,
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.evu"
-        },
-        {
-          "label": "Höhe über Meer",
-          "value": 585,
-          "unit": "m",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.hoehe_m_ue_m"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:6d890d3f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Chur ein und aus?",
           "options": [
-            "11'000",
+            "26'000",
             "30'300",
-            "64'000",
-            "130'000"
+            "36'000",
+            "42'000"
           ],
           "correct": 1,
-          "explanation": "30'300 Personen pro Werktag, Stand 2025.",
+          "explanation": "An einem Werktag sind es 30'300 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "In Chur unterscheidet sich die Zahl der Reisenden an Werktagen und an freien Tagen stark.",
-          "correct": false,
-          "explanation": "30'300 an Werktagen gegenüber 28'800 an freien Tagen.",
-          "factRef": "steckbrief.dnwv",
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 24900,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 28600,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 30300,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 24'900 (2018), 28'600 (2024), 30'300 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "type": "true_false",
-          "prompt": "In Chur sind Züge von vier Bahnunternehmen erfasst.",
-          "correct": true,
-          "explanation": "Erfasst sind RhB, SBB, SOB und Thurbo.",
-          "factRef": "steckbrief.evu",
+          "id": "steckbrief:75473295",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Chur ___ Personen ein und aus.",
+          "options": [
+            "24'000",
+            "28'800",
+            "35'000"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 28'800 Personen, an einem Werktag 30'300. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Chur liegt auf 584.6 Metern über Meer in der Gemeinde Chur, Bezirk Plessur, Kanton Graubünden. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet CH.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 584.6,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "CH",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:80441243",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Chur?",
+          "min": 470,
+          "max": 850,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 584.6,
+          "explanation": "Der Bahnhof liegt auf 584.6 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:235944c9",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Chur lautet ___.",
+          "options": [
+            "CH",
+            "LQ",
+            "MF"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist CH als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
-      "title": "Der Tag am Bahnhof",
-      "body": "Die stärkste Stunde beginnt um 16 Uhr mit 9.4 Prozent des Tagesaufkommens. Über die Woche ist der Freitag mit 16.2 Prozent der stärkste Tag, der Sonntag mit 11.2 Prozent der schwächste. Als Bahnhofbenutzer sind 41'000 pro Tag erfasst.",
+      "title": "Tagesrhythmus",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Chur in der Stunde ab 16 Uhr: 9.4 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Freitag, 16.2 Prozent, der kleinste auf den Sonntag, 11.2 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 16,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 9.4,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 41000,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+          "label": "Wochentag mit dem grössten Anteil",
+          "value": "Freitag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.2,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 11.2,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:5dddda39",
           "type": "single_choice",
-          "prompt": "In welcher Stunde ist in Chur der grösste Anteil der Bahnhofbenutzer unterwegs?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Chur die meisten Bahnhofbenutzer?",
           "options": [
-            "7 Uhr",
-            "12 Uhr",
-            "16 Uhr",
-            "19 Uhr"
+            "ab 7 Uhr",
+            "ab 12 Uhr",
+            "ab 15 Uhr",
+            "ab 16 Uhr"
           ],
-          "correct": 2,
-          "explanation": "Um 16 Uhr, mit 9.4 Prozent des Tagesaufkommens.",
-          "factRef": "tagesrhythmus.spitzenstunde",
+          "correct": 3,
           "optionen_aus_fakten": true,
-          "difficulty": 2
+          "explanation": "Anteil am ganzen Tag: ab 16 Uhr 9.4, ab 12 Uhr 8.4, ab 7 Uhr 8.1, ab 15 Uhr 7.2 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
         },
         {
+          "id": "tagesrhythmus:235fab7f",
+          "type": "slider",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Chur auf die Stunde ab 16 Uhr?",
+          "min": 0,
+          "max": 20,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 9.4,
+          "explanation": "In der Stunde ab 16 Uhr zählt die Erhebung 9.4 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        },
+        {
+          "id": "tagesrhythmus:6c47ef27",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag ist in Chur der stärkste?",
+          "prompt": "Auf welchen Wochentag entfällt in Chur der grösste Anteil der Bahnhofbenutzer?",
           "options": [
-            "Montag",
+            "Dienstag",
             "Mittwoch",
-            "Freitag",
-            "Sonntag"
+            "Donnerstag",
+            "Freitag"
           ],
-          "correct": 2,
-          "explanation": "Der Freitag mit 16.2 Prozent.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Freitag 16.2, Mittwoch 15.0, Donnerstag 14.9, Dienstag 14.6 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[4].tag",
           "difficulty": 2
         }
       ]
@@ -154,34 +257,27 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 7 Perrons liegen Daten vor. Das längste misst 533 Meter, das kürzeste 181 Meter. Bei 7 von 7 ist der Zugang niveaufrei.",
+      "body": "Zu 7 Perrons in Chur liegen offene Daten vor. Am längsten sind Perron 9/10 mit 533 Metern, Perron 4/5 mit 480 Metern, Perron 7/8 mit 416 Metern und Perron 11/12 mit 382 Metern. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 7,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Längstes Perron",
+          "label": "Längstes erfasstes Perron",
           "value": 533,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes Perron",
-          "value": 181,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -190,9 +286,19 @@
               "factRef": "perrons.items[0].laenge_m"
             },
             {
+              "label": "Perron 4/5",
+              "value": 480,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
               "label": "Perron 7/8",
               "value": 416,
               "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 11/12",
+              "value": 382,
+              "factRef": "perrons.items[3].laenge_m"
             },
             {
               "label": "Perron 1",
@@ -200,279 +306,351 @@
               "factRef": "perrons.items[4].laenge_m"
             }
           ],
-          "correct": null,
-          "explanation": "Perron 9/10 ist mit 533 Metern das längste der erfassten.",
           "factRef": "perrons.items",
+          "explanation": "Perron 9/10 misst 533 Meter, Perron 4/5 misst 480 Meter, Perron 7/8 misst 416 Meter, Perron 11/12 misst 382 Meter, Perron 1 misst 254 Meter.",
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Chur?",
-          "options": [
-            "254 m",
-            "416 m",
-            "533 m",
-            "720 m"
-          ],
-          "correct": 2,
-          "explanation": "533 Meter, das Perron an den Gleisen 9 und 10.",
-          "factRef": "perrons.laengste_m",
-          "optionen_aus_fakten": true,
+          "id": "perrons:acef0a16",
+          "type": "true_false",
+          "prompt": "Alle 7 erfassten Perrons in Chur sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 7 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 12 Gleisen vor: 1, 2, 4, 5, 7 bis 14. Die längste erfasste Perronkante hat Gleis 10 mit 497 Metern, die kürzeste Gleis 4 mit 69 Metern. An Gleis 12 sind nur die Sektoren C und D erfasst, an Gleis 14 nur C.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "title": "Gleise",
+      "body": "Zu 12 Gleisen liegen offene Daten vor: 1, 2, 4, 5, 7, 8, 9, 10, 11, 12, 13 und 14. Erfasst sind Perronhöhen von 20, 25, 35 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 12,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste Perronkante, Gleis 10",
+          "label": "Längste erfasste Perronkante",
           "value": 497,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.items[7].perronkante_m"
         },
         {
-          "label": "Kürzeste Perronkante, Gleis 4",
-          "value": 69,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[2].perronkante_m"
-        },
-        {
-          "label": "Erster Sektor an Gleis 12",
-          "value": "C",
-          "unit": null,
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
           "source": "sektortafel",
-          "factRef": "gleise.items[9].sektoren[0]"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
+          "id": "gleise:49c074d4",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
           "correct": "10",
-          "explanation": "Gleis 10 mit 497 Metern.",
           "factRef": "gleise.items[7].nr",
+          "explanation": "Gleis 10 hat mit 497 Metern die längste erfasste Perronkante, die nächste misst 433 Meter.",
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "Mit welchem Buchstaben beginnen die Sektoren an Gleis 12?",
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 10",
+              "value": 497,
+              "factRef": "gleise.items[7].perronkante_m"
+            },
+            {
+              "label": "Gleis 9",
+              "value": 433,
+              "factRef": "gleise.items[6].perronkante_m"
+            },
+            {
+              "label": "Gleis 11",
+              "value": 383,
+              "factRef": "gleise.items[8].perronkante_m"
+            },
+            {
+              "label": "Gleis 12",
+              "value": 336,
+              "factRef": "gleise.items[9].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 254,
+              "factRef": "gleise.items[0].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 10 misst 497 Meter, Gleis 9 misst 433 Meter, Gleis 11 misst 383 Meter, Gleis 12 misst 336 Meter, Gleis 1 misst 254 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:ba82db01",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Chur sind ___ Sektoren erfasst.",
           "options": [
-            "A",
-            "B",
-            "C",
-            "D"
+            "2",
+            "3",
+            "4"
           ],
           "correct": 2,
-          "explanation": "Mit C. An Gleis 12 sind nur die Sektoren C und D erfasst.",
-          "factRef": "gleise.items[9].sektoren[0]",
           "optionen_aus_fakten": true,
-          "difficulty": 3
-        },
-        {
-          "type": "true_false",
-          "prompt": "Zu Gleisen mit den Nummern 3 und 6 liegen in diesen Daten keine Angaben vor.",
-          "correct": true,
-          "explanation": "Erfasst sind die Gleise 1, 2, 4, 5 sowie 7 bis 14.",
-          "factRef": "gleise.nummern",
-          "difficulty": 3
-        },
-        {
-          "type": "single_choice",
-          "prompt": "An welchem Gleis ist die Perronkante am kürzesten?",
-          "options": [
-            "Gleis 1",
-            "Gleis 4",
-            "Gleis 10",
-            "Gleis 12"
-          ],
-          "correct": 1,
-          "explanation": "An Gleis 4 mit 69 Metern.",
-          "factRef": "gleise.items[2].nr",
-          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
-        }
-      ]
-    },
-    {
-      "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "In Chur sind vier verschiedene Perronhöhen erfasst: 20, 25, 35 und 55 Zentimeter. Von 72 Abschnitten liegen 26 auf 20 Zentimetern und 16 auf 55. Von 12 erfassten Gleisen haben 5 einen Abschnitt auf 55 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
-      "facts": [
-        {
-          "label": "Erfasste Abschnitte",
-          "value": 72,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Abschnitte mit 20 cm",
-          "value": 26,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.20"
-        },
-        {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
-          "value": 5,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm"
-        }
-      ],
-      "questions": [
-        {
-          "type": "single_choice",
-          "prompt": "Welche Perronhöhe kommt bei den erfassten Abschnitten am häufigsten vor?",
+          "id": "gleise:f41a21f8",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 4 in Chur erfasst? (Mehrfachauswahl)",
           "options": [
             "20 cm",
             "25 cm",
             "35 cm",
             "55 cm"
           ],
-          "correct": 0,
-          "explanation": "20 Zentimeter, bei 26 der 72 erfassten Abschnitte.",
-          "factRef": "gleise.perronhoehen_cm[0]",
-          "optionen_aus_fakten": true,
-          "difficulty": 3
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele der 12 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
-          "options": [
-            "3",
-            "5",
-            "8",
-            "12"
+          "correct": [
+            2,
+            3
           ],
-          "correct": 1,
-          "explanation": "5 von 12 Gleisen. An den übrigen liegt die Kante tiefer oder die Angabe fehlt.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
           "optionen_aus_fakten": true,
-          "difficulty": 2
+          "explanation": "An Gleis 4 sind 35 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[2].perronhoehen_cm",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Chur sind 72 Perronsegmente erfasst: 26 mit 20 Zentimetern, 16 mit 55 Zentimetern, 11 mit 35 Zentimetern, 5 mit 25 Zentimetern. An 5 der 12 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 72,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
         },
         {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 5,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:36874aa3",
+          "type": "cloze",
+          "prompt": "In Chur sind ___ Perronsegmente erfasst.",
+          "options": [
+            "72",
+            "86",
+            "100"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 72 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:1b3ebcb1",
           "type": "true_false",
-          "prompt": "Jedes erfasste Perron in Chur ist ohne Gleisquerung erreichbar.",
+          "prompt": "Bei keinem der 72 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Bei 7 von 7 erfassten Perrons ist der Zugang niveaufrei.",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei",
+          "explanation": "Die Erhebung weist bei 0 der 72 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf den Strecken",
-      "body": "Von Zizers her verkehren 73'388 Personenzüge pro Jahr, rund 201 pro Tag in beiden Richtungen zusammen. Dazu kommen 10 Güterzüge pro Tag von Zizers her.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Zizers SBB – Chur 201 Züge pro Tag, das sind 73'388 im Jahr. Im Güterverkehr zählt die Erhebung bis zu 10 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, Abschnitt Zizers",
+          "label": "Züge pro Tag, Personenverkehr Zizers SBB – Chur",
           "value": 201,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Güterzüge pro Tag, Abschnitt Zizers",
-          "value": 10,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Zizers SBB – Chur",
+          "value": 73388,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:5989ab9e",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt von Zizers her?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zizers SBB – Chur?",
           "options": [
-            "64",
+            "140",
+            "170",
             "201",
-            "410",
-            "820"
+            "240"
           ],
-          "correct": 1,
-          "explanation": "Rund 201 pro Tag, beide Richtungen zusammen.",
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 201 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zugzahlen erfassen sämtliche Bahnen, die in Chur verkehren.",
-          "correct": false,
-          "explanation": "Die Quelle zählt Fahrten auf Streckenabschnitten. Welche Bahnen dabei erfasst sind, geht aus diesen Daten nicht hervor.",
-          "factRef": "zuege.hinweis",
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Zizers SBB – Chur, Personenverkehr",
+              "value": 73388,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Zizers SBB – Chur, Güterverkehr",
+              "value": 3577,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Chur – Chur GB, Güterverkehr",
+              "value": 2972,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Zizers SBB – Chur (Personenverkehr) 73'388, Zizers SBB – Chur (Güterverkehr) 3'577, Chur – Chur GB (Güterverkehr) 2'972 Züge im Jahr.",
           "difficulty": 3
         }
       ]
     },
     {
-      "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 5 Billettautomaten, 11 Billettentwerter und 5 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Chur sind 2 Linien erfasst: die Linie 920 Landquart RhB - Chur - Disentis und die Linie 900 Sargans Ost - Chur West (Gleisende).",
       "facts": [
         {
-          "label": "Billettautomaten",
-          "value": 5,
-          "unit": null,
-          "source": "billetautomat",
-          "factRef": "services.billettautomaten_erfasst"
+          "label": "Erfasste Linien",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
         },
         {
-          "label": "Billettentwerter",
-          "value": 11,
-          "unit": null,
-          "source": "billetentwerter",
-          "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen",
-          "value": 5,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
+          "label": "Kilometrierung auf der Linie 900",
+          "value": 25.71888,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "In Chur sind ___ Wartehallen erfasst.",
-          "options": [
-            "2",
-            "5",
-            "9",
-            "14"
-          ],
-          "correct": 1,
-          "explanation": "In den offenen Daten sind für Chur 5 Wartehallen erfasst. Die Zahl gibt wieder, was erfasst ist, nicht zwingend, was vor Ort steht.",
-          "factRef": "services.wartehallen_erfasst",
-          "optionen_aus_fakten": true,
-          "difficulty": 1
+          "id": "linien:b0b7b870",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 900 ist Chur eingetragen?",
+          "min": 21,
+          "max": 38,
+          "step": 1,
+          "unit": "km",
+          "correct": 25.71888,
+          "explanation": "Die Kilometrierung von Chur auf der Linie 900 beträgt 25.71888. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[1].km_am_bahnhof",
+          "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
+          "type": "match",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
+          "pairs": [
+            {
+              "links": "Linie 920",
+              "rechts": "Landquart RhB - Chur - Disentis",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "Linie 900",
+              "rechts": "Sargans Ost - Chur West (Gleisende)",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Die Linie 920 heisst Landquart RhB - Chur - Disentis, die Linie 900 heisst Sargans Ost - Chur West (Gleisende).",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Chur steht in der Liste der WLAN-Standorte. Erfasst sind 5 Billettautomaten vom Typ ePOS, 11 Billettentwerter und 5 Wartehallen.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 5,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 11,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:17b3d4d4",
           "type": "true_false",
           "prompt": "Chur steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Ja, der Bahnhof ist als WLAN-Standort erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
+        },
+        {
+          "id": "services:3a201f59",
+          "type": "cloze",
+          "prompt": "In Chur sind ___ Billettentwerter erfasst.",
+          "options": [
+            "11",
+            "24",
+            "33"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 11 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -508,6 +686,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -522,6 +701,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -536,9 +716,10 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 22,
+          "min": 65,
           "max": 194,
           "step": 1,
           "unit": "Schliessfächer",
@@ -548,8 +729,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -574,7 +756,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 9/10 hat mit 4'300 Quadratmetern die grösste erfasste Fläche, Perron 13/14 mit 1'156 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 9/10 hat mit 4'300 Quadratmetern die grösste erfasste Belagsfläche, Perron 13/14 mit 1'156 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -582,22 +764,22 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Chur ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "body": "Für Chur ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Plan als A4",
+          "label": "Plan als A4-Blatt",
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-chur-a4.pdf",
-          "unit": null,
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:291fe726",
           "type": "true_false",
-          "prompt": "Für Chur gibt es einen veröffentlichten Bahnhofplan.",
+          "prompt": "Für Chur ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

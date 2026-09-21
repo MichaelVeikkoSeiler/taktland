@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:7caf4950",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Lamone-Cadempino ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:4ede69e1",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Lamone-Cadempino ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:d8df8ed7",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Lamone-Cadempino?",
           "min": 260,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e1c21ad7",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Lamone-Cadempino?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:decbf1c0",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Lamone-Cadempino?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -212,6 +219,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:bb5ad790",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Lamone-Cadempino sind niveaufrei erreichbar.",
           "correct": true,
@@ -242,6 +250,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:e70b115b",
           "type": "single_choice",
           "prompt": "Wie viele Sektoren sind an Gleis 1 in Lamone-Cadempino erfasst?",
           "options": [
@@ -256,6 +265,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:7ef3c509",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Lamone-Cadempino ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -286,6 +296,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:885f6bca",
           "type": "true_false",
           "prompt": "Für Lamone-Cadempino sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -299,7 +310,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Taverne-Torricella – Lamone-Cadempino 90 Züge pro Tag, das sind 32'854 im Jahr. Auf dem Abschnitt Vezia (bif) – Lamone-Cadempino sind es ebenfalls 90 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 5 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Taverne-Torricella – Lamone-Cadempino",
@@ -318,6 +329,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:4a945512",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Taverne-Torricella – Lamone-Cadempino?",
           "options": [
@@ -332,6 +344,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:509d2b2d",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Taverne-Torricella – Lamone-Cadempino?",
           "min": 26500,
@@ -366,6 +379,7 @@
       ],
       "questions": [
         {
+          "id": "linien:4a0df690",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 600 ist Lamone-Cadempino eingetragen?",
           "min": 144,
@@ -406,6 +420,7 @@
       ],
       "questions": [
         {
+          "id": "services:ecc61ba2",
           "type": "true_false",
           "prompt": "Lamone-Cadempino steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -414,6 +429,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:e5a69807",
           "type": "cloze",
           "prompt": "In Lamone-Cadempino sind ___ Billettentwerter erfasst.",
           "options": [
@@ -455,6 +471,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -469,6 +486,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -484,6 +502,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

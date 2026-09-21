@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:5acac8ea",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Oberwinterthur ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:dd397cf3",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Oberwinterthur ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:0ea99adf",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Oberwinterthur?",
           "min": 370,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:0c625053",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Oberwinterthur?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:601c9fad",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Oberwinterthur?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:4d614b39",
           "type": "true_false",
           "prompt": "Zu beiden erfassten Perrons in Oberwinterthur ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:7efd75d5",
           "type": "cloze",
           "prompt": "An Gleis 3 in Oberwinterthur sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:56e6adf5",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 2 in Oberwinterthur erfasst? (Mehrfachauswahl)",
           "options": [
@@ -288,6 +297,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:489b7f7b",
           "type": "cloze",
           "prompt": "In Oberwinterthur sind ___ Perronsegmente erfasst.",
           "options": [
@@ -302,6 +312,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5ed3ab56",
           "type": "true_false",
           "prompt": "Bei keinem der 16 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -315,7 +326,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Oberwinterthur – Schwalmenacker (Spw): Im Personenverkehr verkehren dort 333 Züge pro Tag, das sind 121'719 im Jahr. Auf dem Abschnitt Oberwinterthur Ost – Oberwinterthur sind es 225 und auf dem Abschnitt Winterthur Wallrüti – Oberwinterthur sind es 127 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 29 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Oberwinterthur – Schwalmenacker (Spw)",
@@ -334,6 +345,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:a0dc63ae",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Oberwinterthur – Schwalmenacker (Spw)?",
           "options": [
@@ -348,6 +360,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -400,6 +413,7 @@
       ],
       "questions": [
         {
+          "id": "linien:2b65d830",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 842 ist Oberwinterthur eingetragen?",
           "min": 24,
@@ -412,6 +426,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -464,6 +479,7 @@
       ],
       "questions": [
         {
+          "id": "services:0c0b71dd",
           "type": "true_false",
           "prompt": "Oberwinterthur steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -472,6 +488,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:8df37c69",
           "type": "cloze",
           "prompt": "In Oberwinterthur sind ___ Billettentwerter erfasst.",
           "options": [
@@ -513,6 +530,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -527,6 +545,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -541,6 +560,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

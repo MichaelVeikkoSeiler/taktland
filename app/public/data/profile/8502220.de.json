@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:4bc6b9a5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Urdorf ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:29b716ec",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Urdorf ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:e2878869",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Urdorf?",
           "min": 360,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:7aaa9dd5",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Urdorf?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f55a64aa",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Urdorf?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:45e96f7c",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Urdorf sind niveaufrei erreichbar.",
           "correct": true,
@@ -223,6 +230,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:e6854631",
           "type": "cloze",
           "prompt": "An Gleis 1 in Urdorf sind ___ Sektoren erfasst.",
           "options": [
@@ -237,6 +245,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:e11c4ff6",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Urdorf kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -273,6 +282,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:4233c36d",
           "type": "cloze",
           "prompt": "In Urdorf sind ___ Perronsegmente erfasst.",
           "options": [
@@ -287,6 +297,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
           "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -300,7 +311,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Urdorf – Urdorf Weihermatt 146 Züge pro Tag, das sind 53'186 im Jahr. Auf dem Abschnitt Zürich Altstetten Farbhof – Urdorf sind es ebenfalls 146 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Urdorf – Urdorf Weihermatt",
@@ -319,6 +330,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:d07148e7",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Urdorf – Urdorf Weihermatt?",
           "options": [
@@ -333,6 +345,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:4d3301a5",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Urdorf – Urdorf Weihermatt?",
           "min": 43500,
@@ -367,6 +380,7 @@
       ],
       "questions": [
         {
+          "id": "linien:ac5597bb",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 711 ist Urdorf eingetragen?",
           "min": 7.0,
@@ -407,6 +421,7 @@
       ],
       "questions": [
         {
+          "id": "services:52e222da",
           "type": "true_false",
           "prompt": "Urdorf steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -415,6 +430,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:fb12ec72",
           "type": "cloze",
           "prompt": "In Urdorf sind ___ Billettentwerter erfasst.",
           "options": [
@@ -456,6 +472,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -470,6 +487,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -484,6 +502,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

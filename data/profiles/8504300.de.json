@@ -4,17 +4,16 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,132 +27,244 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Biel/Bienne liegt im Kanton Bern, auf 437 Metern über Meer. An einem Werktag steigen hier 53'200 Personen ein und aus, an einem freien Tag 37'700. Die Anlage gehört der SBB, Züge fahren von BLS und SBB. Als Bahnhofbenutzer, also einschliesslich Personen ohne Zugfahrt, sind 68'000 pro Tag erfasst.",
+      "body": "An einem Werktag steigen in Biel/Bienne 53'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 48'400, an einem freien Tag 37'700. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS und SBB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne ASM.»",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 53200,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 48400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 37700,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
         },
         {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 68000,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
-        },
-        {
-          "label": "Höhe über Meer",
-          "value": 437,
-          "unit": "m",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.hoehe_m_ue_m"
+          "label": "Abgrenzung der Zahl",
+          "value": "Ohne ASM.",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.bemerkung"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:aadfbd62",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Biel/Bienne ein und aus?",
           "options": [
-            "18'400",
             "53'200",
-            "96'000",
-            "184'000"
+            "64'000",
+            "74'000",
+            "90'000"
           ],
-          "correct": 1,
-          "explanation": "53'200 Personen pro Werktag, Stand 2025.",
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 53'200 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Es sind mehr Bahnhofbenutzer erfasst als Ein- und Aussteigende.",
-          "correct": true,
-          "explanation": "68'000 Bahnhofbenutzer gegenüber 53'200 Ein- und Aussteigenden. Die beiden Zahlen kommen aus zwei verschiedenen Erhebungen und zählen nicht dasselbe.",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag",
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 46000,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 50800,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 53700,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 46'000 (2022), 50'800 (2023), 53'700 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "type": "single_choice",
-          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "id": "steckbrief:40bee121",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Biel/Bienne ___ Personen ein und aus.",
           "options": [
-            "2018",
-            "2022",
-            "2023",
-            "2025"
+            "37'700",
+            "45'000",
+            "64'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 37'700 Personen, an einem Werktag 53'200. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "id": "steckbrief:cf077aee",
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Biel/Bienne umfasst auch ASM.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne ASM.». Wofür ASM steht, führt sie nicht aus.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Biel/Bienne liegt auf 437.08 Metern über Meer in der Gemeinde Biel/Bienne, Bezirk Biel/Bienne, Kanton Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BI.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 437.08,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "BI",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:48d23dff",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Biel/Bienne?",
+          "min": 350,
+          "max": 640,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 437.08,
+          "explanation": "Der Bahnhof liegt auf 437.08 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:22748c6b",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Biel/Bienne lautet ___.",
+          "options": [
+            "BGG",
+            "BI",
+            "BIM"
           ],
           "correct": 1,
-          "explanation": "2022, mit 46'000 Personen pro Werktag.",
-          "factRef": "steckbrief.verlauf[1].jahr",
           "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist BI als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
-      "title": "Der Tag am Bahnhof",
-      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 10.2 Prozent des Tagesaufkommens. Um 2 Uhr nachts sind es 0.0 Prozent. Über die Woche ist der Freitag mit 16.4 Prozent der stärkste Tag, der Sonntag mit 10.5 Prozent der schwächste.",
+      "title": "Tagesrhythmus",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Biel/Bienne in der Stunde ab 17 Uhr: 10.2 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Freitag, 16.4 Prozent, der kleinste auf den Sonntag, 10.5 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 10.2,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Stärkster Wochentag",
+          "label": "Wochentag mit dem grössten Anteil",
           "value": "Freitag",
-          "unit": null,
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.4,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 10.5,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:59dfd0da",
           "type": "single_choice",
-          "prompt": "In welcher Stunde ist in Biel/Bienne der grösste Anteil der Bahnhofbenutzer unterwegs?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Biel/Bienne die meisten Bahnhofbenutzer?",
           "options": [
-            "7 Uhr",
-            "12 Uhr",
-            "17 Uhr",
-            "21 Uhr"
+            "ab 7 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
           ],
           "correct": 2,
-          "explanation": "Um 17 Uhr, mit 10.2 Prozent des Tagesaufkommens.",
-          "factRef": "tagesrhythmus.spitzenstunde",
           "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 10.2, ab 16 Uhr 8.9, ab 7 Uhr 7.5, ab 18 Uhr 7.3 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
           "difficulty": 1
         },
         {
+          "id": "tagesrhythmus:0a7652cf",
+          "type": "slider",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Biel/Bienne auf die Stunde ab 17 Uhr?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 10.2,
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 10.2 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        },
+        {
+          "id": "tagesrhythmus:dfb77689",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag ist der schwächste?",
+          "prompt": "Auf welchen Wochentag entfällt in Biel/Bienne der grösste Anteil der Bahnhofbenutzer?",
           "options": [
-            "Montag",
-            "Freitag",
-            "Samstag",
-            "Sonntag"
+            "Dienstag",
+            "Mittwoch",
+            "Donnerstag",
+            "Freitag"
           ],
           "correct": 3,
-          "explanation": "Der Sonntag mit 10.5 Prozent, gegenüber 16.4 Prozent am Freitag.",
-          "factRef": "tagesrhythmus.wochentage[6].tag",
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Freitag 16.4, Donnerstag 15.3, Dienstag 14.9, Mittwoch 14.8 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[4].tag",
           "difficulty": 2
         }
       ]
@@ -161,40 +272,38 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 5 Perrons liegen Daten vor. Das längste misst 407 Meter, das kürzeste 264 Meter. Bei 5 von 5 erfassten Perrons ist der Zugang niveaufrei.",
+      "body": "Zu 5 Perrons in Biel/Bienne liegen offene Daten vor. Am längsten sind Perron 4/5 mit 407 Metern, Perron 2/3 mit 379 Metern, Perron 6/7 mit 299 Metern und Perron 1 mit 297 Metern. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 5,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Längstes Perron",
+          "label": "Längstes erfasstes Perron",
           "value": 407,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 5,
-          "unit": null,
-          "source": "perron",
-          "factRef": "perrons.niveaufrei_erreichbar"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
               "label": "Perron 4/5",
               "value": 407,
               "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 2/3",
+              "value": 379,
+              "factRef": "perrons.items[1].laenge_m"
             },
             {
               "label": "Perron 6/7",
@@ -207,193 +316,207 @@
               "factRef": "perrons.items[4].laenge_m"
             }
           ],
-          "correct": null,
-          "explanation": "Perron 4/5 ist mit 407 Metern das längste, Perron 9/10 mit 264 Metern das kürzeste der erfassten.",
           "factRef": "perrons.items",
+          "explanation": "Perron 4/5 misst 407 Meter, Perron 2/3 misst 379 Meter, Perron 6/7 misst 299 Meter, Perron 9/10 misst 264 Meter. Perrons mit fast gleicher Länge bleiben weg.",
           "difficulty": 2
+        },
+        {
+          "id": "perrons:dfb8a2c6",
+          "type": "true_false",
+          "prompt": "Alle 5 erfassten Perrons in Biel/Bienne sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 5 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 9 Gleisen vor: 1 bis 7 sowie 9 und 10. Die längste Perronkante hat Gleis 5 mit 355 Metern, die kürzeste Gleis 1 mit 235 Metern. An den erfassten Gleisen reichen die Sektoren von A bis D.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "title": "Gleise",
+      "body": "Zu 9 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 5, 6, 7, 9 und 10. Erfasst sind Perronhöhen von 35 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 9,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste Perronkante, Gleis 5",
-          "value": 355,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[4].perronkante_m"
-        },
-        {
-          "label": "Letzter Sektor an Gleis 2",
-          "value": "D",
-          "unit": null,
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
           "source": "sektortafel",
-          "factRef": "gleise.items[1].sektoren[3]"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "true_false",
-          "prompt": "Zu einem Gleis mit der Nummer 8 liegen in den offenen Daten keine Angaben vor.",
-          "correct": true,
-          "explanation": "Erfasst sind die Gleise 1 bis 7 sowie 9 und 10.",
-          "factRef": "gleise.nummern",
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 5",
+              "value": 355,
+              "factRef": "gleise.items[4].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 337,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 10",
+              "value": 266,
+              "factRef": "gleise.items[8].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 235,
+              "factRef": "gleise.items[0].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 5 misst 355 Meter, Gleis 3 misst 337 Meter, Gleis 10 misst 266 Meter, Gleis 1 misst 235 Meter. Gleise mit fast gleicher Kante bleiben weg.",
           "difficulty": 3
         },
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "5",
-          "explanation": "Gleis 5 mit 355 Metern.",
-          "factRef": "gleise.items[4].nr",
-          "difficulty": 2
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 2?",
+          "id": "gleise:75433b5f",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Biel/Bienne sind ___ Sektoren erfasst.",
           "options": [
-            "B",
-            "D",
-            "G",
-            "K"
+            "2",
+            "3",
+            "4"
           ],
-          "correct": 1,
-          "explanation": "Von A bis D, also 4 Sektoren.",
-          "factRef": "gleise.items[1].sektoren[3]",
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "20 Perronabschnitte sind erfasst, 17 davon auf 55 Zentimetern und 3 auf 35 Zentimetern. An 8 der 9 erfassten Gleise gibt es einen Abschnitt auf 55 Zentimetern. Die Ausnahme ist Gleis 1, wo die Kante auf 35 Zentimetern liegt. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe.",
+      "title": "Hindernisfreiheit",
+      "body": "Für Biel/Bienne sind 20 Perronsegmente erfasst: 17 mit 55 Zentimetern, 3 mit 35 Zentimetern. An 8 der 9 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Perronabschnitte",
+          "label": "Erfasste Perronsegmente",
           "value": 20,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Abschnitte mit 55 cm",
-          "value": 17,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
-        },
-        {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 8,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
-          "label": "Perronhöhe an Gleis 1",
-          "value": 35,
-          "unit": "cm",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronhoehen_cm[0]"
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "An welchem Gleis liegt die Perronkante tiefer als an den übrigen?",
+          "id": "hindernisfreiheit:8fe69b28",
+          "type": "cloze",
+          "prompt": "In Biel/Bienne sind ___ Perronsegmente erfasst.",
           "options": [
-            "Gleis 1",
-            "Gleis 5",
-            "Gleis 7",
-            "Gleis 10"
+            "20",
+            "24",
+            "28"
           ],
           "correct": 0,
-          "explanation": "An Gleis 1 liegt die Kante auf 35 Zentimetern, an den anderen erfassten Gleisen auf 55.",
-          "factRef": "gleise.items[0].nr",
           "optionen_aus_fakten": true,
-          "difficulty": 3
+          "explanation": "Die BehiG-Erhebung führt 20 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronabschnitte sind insgesamt erfasst?",
-          "options": [
-            "9",
-            "14",
-            "20",
-            "31"
-          ],
-          "correct": 2,
-          "explanation": "20 Abschnitte, Stand 2023.",
-          "factRef": "hindernisfreiheit.segmente",
-          "optionen_aus_fakten": true,
+          "id": "hindernisfreiheit:e3f8b352",
+          "type": "true_false",
+          "prompt": "Bei keinem der 20 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 20 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf den Strecken",
-      "body": "Am stärksten befahren ist der Abschnitt Richtung Biel Mett: 83'685 Personenzüge pro Jahr, rund 229 pro Tag in beiden Richtungen zusammen. Richtung Madretsch sind es 162 pro Tag, von Tüscherz her 140. Dazu kommen 67 Güterzüge pro Tag von Tüscherz her.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Biel/Bienne – Biel Mett: Im Personenverkehr verkehren dort 229 Züge pro Tag, das sind 83'685 im Jahr. Auf dem Abschnitt Biel/Bienne – Madretsch sind es 162 und auf dem Abschnitt Tüscherz – Biel/Bienne sind es 140 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 67 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag Richtung Biel Mett",
+          "label": "Züge pro Tag, Personenverkehr Biel/Bienne – Biel Mett",
           "value": 229,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Personenzüge pro Tag Richtung Madretsch",
-          "value": 162,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Biel/Bienne – Biel Mett",
+          "value": 83685,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
-        },
-        {
-          "label": "Güterzüge pro Tag von Tüscherz her",
-          "value": 67,
-          "unit": "Züge",
-          "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[4].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:1f77fddb",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Biel/Bienne?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Biel/Bienne – Biel Mett?",
           "options": [
-            "82",
-            "140",
             "229",
-            "480"
+            "270",
+            "320",
+            "390"
           ],
-          "correct": 2,
-          "explanation": "Rund 229 pro Tag Richtung Biel Mett, beide Richtungen zusammen.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 229 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zugzahlen sagen, wie viele Züge in Biel/Bienne halten.",
-          "correct": false,
-          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt. Ob ein Zug hält oder durchfährt, steht nicht in diesen Daten.",
-          "factRef": "zuege.hinweis",
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Biel/Bienne – Biel Mett, Personenverkehr",
+              "value": 83685,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Biel/Bienne – Madretsch, Personenverkehr",
+              "value": 59088,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Tüscherz – Biel/Bienne, Personenverkehr",
+              "value": 50988,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Mahlenwald – Biel/Bienne, Personenverkehr",
+              "value": 29800,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Biel/Bienne – Biel Mett (Personenverkehr) 83'685, Biel/Bienne – Madretsch (Personenverkehr) 59'088, Tüscherz – Biel/Bienne (Personenverkehr) 50'988, Mahlenwald – Biel/Bienne (Personenverkehr) 29'800 Züge im Jahr.",
           "difficulty": 3
         }
       ]
@@ -401,88 +524,107 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "In diesen Daten laufen in Biel/Bienne 2 Linien zusammen: die Linie 410 von Olten über Solothurn und die Linie 210 von Daillens.",
+      "body": "Für Biel/Bienne sind 2 Linien erfasst: die Linie 410 Olten - Solothurn - Biel/Bienne und die Linie 210 Daillens - Biel/Bienne.",
       "facts": [
         {
-          "label": "Linien am Bahnhof",
+          "label": "Erfasste Linien",
           "value": 2,
-          "unit": null,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie von Olten her",
-          "value": 410,
-          "unit": null,
+          "label": "Kilometrierung auf der Linie 210",
+          "value": 104.5,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].nummer"
+          "factRef": "linien.items[1].km_am_bahnhof"
         }
       ],
       "questions": [
         {
+          "id": "linien:6e1281b5",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 210 ist Biel/Bienne eingetragen?",
+          "min": 85,
+          "max": 152,
+          "step": 1,
+          "unit": "km",
+          "correct": 104.5,
+          "explanation": "Die Kilometrierung von Biel/Bienne auf der Linie 210 beträgt 104.5. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[1].km_am_bahnhof",
+          "difficulty": 3
+        },
+        {
+          "id": "linien:f57243ca",
           "type": "match",
-          "prompt": "Welche Liniennummer gehört zu welcher Strecke?",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
             {
-              "links": "Olten - Solothurn - Biel/Bienne",
-              "rechts": "410",
-              "factRef": "linien.items[0].nummer"
+              "links": "Linie 410",
+              "rechts": "Olten - Solothurn - Biel/Bienne",
+              "factRef": "linien.items[0].name"
             },
             {
-              "links": "Daillens - Biel/Bienne",
-              "rechts": "210",
-              "factRef": "linien.items[1].nummer"
+              "links": "Linie 210",
+              "rechts": "Daillens - Biel/Bienne",
+              "factRef": "linien.items[1].name"
             }
           ],
-          "correct": null,
-          "explanation": "Zwei Linien sind für Biel/Bienne erfasst.",
           "factRef": "linien.items",
+          "explanation": "Die Linie 410 heisst Olten - Solothurn - Biel/Bienne, die Linie 210 heisst Daillens - Biel/Bienne.",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 7 Billettautomaten, 15 Billettentwerter und 4 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "title": "Services",
+      "body": "Biel/Bienne steht in der Liste der WLAN-Standorte. Erfasst sind 7 Billettautomaten vom Typ ePOS, 15 Billettentwerter und 4 Wartehallen.",
       "facts": [
         {
-          "label": "Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 7,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 15,
-          "unit": null,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen",
-          "value": 4,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "In Biel/Bienne sind ___ Billettautomaten erfasst.",
-          "options": [
-            "2",
-            "7",
-            "15",
-            "24"
-          ],
-          "correct": 1,
-          "explanation": "7 Automaten, dazu 15 Billettentwerter.",
-          "factRef": "services.billettautomaten_erfasst",
-          "optionen_aus_fakten": true,
+          "id": "services:2774302a",
+          "type": "true_false",
+          "prompt": "Biel/Bienne steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
+          "factRef": "services.wlan_erfasst",
           "difficulty": 1
+        },
+        {
+          "id": "services:5b16d1f8",
+          "type": "cloze",
+          "prompt": "In Biel/Bienne sind ___ Billettentwerter erfasst.",
+          "options": [
+            "15",
+            "33",
+            "60"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 15 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -518,38 +660,41 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "27",
-            "32",
             "38",
-            "46"
+            "46",
+            "53",
+            "65"
           ],
-          "correct": 2,
+          "correct": 0,
           "explanation": "Erfasst sind 38 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "2",
-            "3",
             "4",
-            "6"
+            "5",
+            "6",
+            "24"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "Erfasst sind 6 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1,
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 23,
+          "min": 68,
           "max": 205,
           "step": 1,
           "unit": "Schliessfächer",
@@ -559,8 +704,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -585,7 +731,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4/5 hat mit 2'707 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 1'619 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 4/5 hat mit 2'707 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 1'619 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -593,22 +739,22 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Biel/Bienne ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "body": "Für Biel/Bienne ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Plan als A4",
+          "label": "Plan als A4-Blatt",
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-biel-bienne-a4.pdf",
-          "unit": null,
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:f4cf1db6",
           "type": "true_false",
-          "prompt": "Für Biel/Bienne gibt es einen veröffentlichten Bahnhofplan.",
+          "prompt": "Für Biel/Bienne ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
@@ -635,152 +781,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        35
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 235,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 335,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 337,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "4",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 348,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "5",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 355,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "6",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 263,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "7",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 264,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "9",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 264,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "10",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 266,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
     }
   ]
 }

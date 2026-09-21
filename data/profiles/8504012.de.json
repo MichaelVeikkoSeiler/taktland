@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f484daf9",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Puidoux ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:7a313511",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Puidoux ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:123491ce",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Puidoux?",
           "min": 500,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:ffb83482",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Puidoux lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:e32d8af0",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Puidoux?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -209,6 +216,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:e2d0dc69",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Puidoux sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -249,6 +258,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:23a144ce",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Puidoux erfasst? (Mehrfachauswahl)",
           "options": [
@@ -295,6 +305,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:f7856443",
           "type": "cloze",
           "prompt": "In Puidoux sind ___ Perronsegmente erfasst.",
           "options": [
@@ -309,6 +320,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:8fc3c778",
           "type": "true_false",
           "prompt": "Bei keinem der 13 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -322,7 +334,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Puidoux – Moreillon: Im Personenverkehr verkehren dort 255 Züge pro Tag, das sind 93'214 im Jahr. Auf dem Abschnitt Grandvaux – Puidoux sind es 216 und auf dem Abschnitt Puidoux – Le Verney (embr) sind es 39 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 10 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Puidoux – Moreillon",
@@ -341,6 +353,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:905d3bdf",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Puidoux – Moreillon?",
           "options": [
@@ -355,6 +368,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -407,6 +421,7 @@
       ],
       "questions": [
         {
+          "id": "linien:39ce7c09",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Puidoux eingetragen?",
           "min": 9.5,
@@ -419,6 +434,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -466,6 +482,7 @@
       ],
       "questions": [
         {
+          "id": "services:245450c4",
           "type": "true_false",
           "prompt": "Puidoux steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -474,6 +491,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:935c8054",
           "type": "single_choice",
           "prompt": "Wie viele Billettentwerter sind in Puidoux erfasst?",
           "options": [
@@ -515,6 +533,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -529,6 +548,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [

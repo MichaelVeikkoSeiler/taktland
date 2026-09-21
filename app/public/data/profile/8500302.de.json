@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:ae054441",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Möhlin ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:f574f7f6",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Möhlin ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:236be7e8",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Möhlin?",
           "min": 250,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:051c6e45",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Möhlin lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:fc6a68d5",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Möhlin?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -205,6 +212,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:865dd216",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Möhlin sind niveaufrei erreichbar.",
           "correct": true,
@@ -235,6 +243,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:e0e11624",
           "type": "cloze",
           "prompt": "An Gleis 2 in Möhlin sind ___ Sektoren erfasst.",
           "options": [
@@ -249,6 +258,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a4dff54c",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Möhlin erfasst? (Mehrfachauswahl)",
           "options": [
@@ -295,6 +305,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:3bb33d48",
           "type": "cloze",
           "prompt": "In Möhlin sind ___ Perronsegmente erfasst.",
           "options": [
@@ -309,6 +320,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f641b667",
           "type": "true_false",
           "prompt": "Bei keinem der 9 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -322,7 +334,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Rheinfelden – Möhlin 170 Züge pro Tag, das sind 62'213 im Jahr. Auf dem Abschnitt Möhlin – Dossenboden (Spw) sind es ebenfalls 170 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 115 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rheinfelden – Möhlin",
@@ -341,6 +353,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:36416a8b",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rheinfelden – Möhlin?",
           "options": [
@@ -355,6 +368,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:05ea3432",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Rheinfelden – Möhlin?",
           "min": 51000,
@@ -389,6 +403,7 @@
       ],
       "questions": [
         {
+          "id": "linien:a4b0d853",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 700 ist Möhlin eingetragen?",
           "min": 55,
@@ -429,6 +444,7 @@
       ],
       "questions": [
         {
+          "id": "services:cd22cf8f",
           "type": "true_false",
           "prompt": "Möhlin steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -437,6 +453,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:d79c2ca5",
           "type": "cloze",
           "prompt": "In Möhlin sind ___ Billettentwerter erfasst.",
           "options": [
@@ -478,6 +495,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -492,6 +510,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -507,6 +526,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

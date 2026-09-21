@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:12c34047",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Erlenbach ZH ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:4a1a0679",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Erlenbach ZH ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:b7eb158b",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Erlenbach ZH?",
           "min": 340,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:5ae2a9de",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Erlenbach ZH lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:e16165dd",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Erlenbach ZH?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:494f9b30",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Erlenbach ZH ist niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:2db47f9b",
           "type": "cloze",
           "prompt": "An Gleis 2 in Erlenbach ZH sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:d292d528",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Erlenbach ZH erfasst? (Mehrfachauswahl)",
           "options": [
@@ -276,6 +285,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:9083170c",
           "type": "cloze",
           "prompt": "In Erlenbach ZH sind ___ Perronsegmente erfasst.",
           "options": [
@@ -290,6 +300,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5f9b5852",
           "type": "true_false",
           "prompt": "Bei keinem der 19 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -303,7 +314,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Küsnacht ZH – Erlenbach ZH 233 Züge pro Tag, das sind 85'157 im Jahr. Auf dem Abschnitt Erlenbach ZH – Winkel am Zürichsee sind es ebenfalls 233 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Küsnacht ZH – Erlenbach ZH",
@@ -322,6 +333,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:d4921de5",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Küsnacht ZH – Erlenbach ZH?",
           "options": [
@@ -336,6 +348,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:c16d4d42",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Küsnacht ZH – Erlenbach ZH?",
           "min": 69500,
@@ -370,6 +383,7 @@
       ],
       "questions": [
         {
+          "id": "linien:f6793011",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Erlenbach ZH eingetragen?",
           "min": 11.0,
@@ -410,6 +424,7 @@
       ],
       "questions": [
         {
+          "id": "services:d37a8b9d",
           "type": "true_false",
           "prompt": "Erlenbach ZH steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -418,6 +433,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:792a4517",
           "type": "cloze",
           "prompt": "In Erlenbach ZH sind ___ Billettentwerter erfasst.",
           "options": [
@@ -436,7 +452,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Erlenbach ZH 7 Sitzbänke sowie 6 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Erlenbach ZH 7 Sitzbänke sowie 6 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -459,6 +475,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -473,6 +490,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

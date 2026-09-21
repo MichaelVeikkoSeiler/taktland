@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:b3aa8f22",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Moutier ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ed57f139",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Moutier ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:2066f613",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Moutier?",
           "min": 430,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e655b457",
           "type": "single_choice",
           "prompt": "In welchem Kanton liegt der Bahnhof Moutier?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:02fa59bc",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Moutier?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -212,6 +219,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:b51961f2",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Moutier sind niveaufrei erreichbar.",
           "correct": true,
@@ -242,6 +250,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:56cdaa77",
           "type": "cloze",
           "prompt": "An Gleis 2 in Moutier sind ___ Sektoren erfasst.",
           "options": [
@@ -256,6 +265,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:9c230f33",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Moutier kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -292,6 +302,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:0a5dcac3",
           "type": "cloze",
           "prompt": "In Moutier sind ___ Perronsegmente erfasst.",
           "options": [
@@ -306,6 +317,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:8fc3c778",
           "type": "true_false",
           "prompt": "Bei keinem der 13 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -319,7 +331,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Tunnelblock (Grenchenberg) – Moutier: Im Personenverkehr verkehren dort 75 Züge pro Tag, das sind 27'499 im Jahr. Auf dem Abschnitt Moutier – Choindez sind es 74 und auf dem Abschnitt Court – Moutier sind es 41 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 2 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Tunnelblock (Grenchenberg) – Moutier",
@@ -338,6 +350,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:53abff6c",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Tunnelblock (Grenchenberg) – Moutier?",
           "options": [
@@ -352,6 +365,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -404,6 +418,7 @@
       ],
       "questions": [
         {
+          "id": "linien:6523c3bc",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 226 ist Moutier eingetragen?",
           "min": 60,
@@ -416,6 +431,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -468,6 +484,7 @@
       ],
       "questions": [
         {
+          "id": "services:8237caf0",
           "type": "true_false",
           "prompt": "Moutier steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -476,6 +493,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:f48cd907",
           "type": "cloze",
           "prompt": "In Moutier sind ___ Billettentwerter erfasst.",
           "options": [
@@ -523,6 +541,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -537,6 +556,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -552,6 +572,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -564,6 +585,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

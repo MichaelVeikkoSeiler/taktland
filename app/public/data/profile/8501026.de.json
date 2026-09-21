@@ -4,44 +4,47 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
+    "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
     "perronoberflache",
-    "wifistation, billetautomat, billetentwerter, haltestelle-wartehallen",
+    "sektortafel",
+    "wifistation",
     "zugzahlen"
   ],
   "chapters": [
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Genève-Aéroport ist ein Bahnhof im Kanton Genf, betrieben von der SBB. An einem Werktag 2025 steigen hier 15'500 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 16'000. An einem freien Tag liegt der Wert mit 17'100 sogar höher.",
+      "body": "An einem Werktag steigen in Genève-Aéroport 15'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 16'000, an einem freien Tag 17'100. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 15500,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Tagesmittel über das ganze Jahr",
+          "label": "Ein- und Aussteigende im Tagesmittel",
           "value": 16000,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
-          "label": "Verkehr an einem freien Tag",
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 17100,
           "unit": "Personen",
           "source": "passagierfrequenz",
@@ -50,28 +53,22 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:bd1135a1",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag 2025 in Genève-Aéroport ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Genève-Aéroport ein und aus?",
           "options": [
-            "8'000",
-            "11'500",
             "15'500",
-            "20'000"
+            "19'000",
+            "22'000",
+            "26'000"
           ],
-          "correct": 2,
-          "explanation": "An einem Werktag 2025 steigen 15'500 Personen ein und aus.",
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 15'500 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Der Wert an einem freien Tag (dnwv) liegt 2025 höher als der Werktagswert (dwv).",
-          "correct": true,
-          "explanation": "An einem freien Tag liegt der Wert bei 17'100, an einem Werktag bei 15'500 Personen.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 2
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +91,20 @@
           ],
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 11'900 (2022), 14'600 (2023), 16'300 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:56e5caba",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Genève-Aéroport ___ Personen ein und aus.",
+          "options": [
+            "17'100",
+            "21'000",
+            "24'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 17'100 Personen, an einem Werktag 15'500. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
       ]
@@ -101,7 +112,7 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Der Bahnhof liegt auf 411 Metern über Meer in der Gemeinde Le Grand-Saconnex im Kanton Genf. Betreiberin ist die SBB.",
+      "body": "Genève-Aéroport liegt auf 411 Metern über Meer in der Gemeinde Le Grand-Saconnex. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet GEAP.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -111,89 +122,128 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
+          "label": "Offizielle Abkürzung",
+          "value": "GEAP",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
           "label": "Gemeinde",
           "value": "Le Grand-Saconnex",
-          "unit": "",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Auf welcher Höhe über Meer liegt Genève-Aéroport?",
-          "options": [
-            "380 m",
-            "411 m",
-            "450 m",
-            "500 m"
-          ],
-          "correct": 1,
+          "id": "stammdaten:189e77e6",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Genève-Aéroport?",
+          "min": 330,
+          "max": 600,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 411,
           "explanation": "Der Bahnhof liegt auf 411 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
+          "id": "stammdaten:f936599a",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Genève-Aéroport?",
           "options": [
             "Genève",
-            "Vernier",
+            "Le Grand-Saconnex",
             "Meyrin",
-            "Le Grand-Saconnex"
+            "Vernier"
           ],
-          "correct": 3,
-          "explanation": "Der Bahnhof liegt in der Gemeinde Le Grand-Saconnex.",
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Le Grand-Saconnex eingetragen.",
           "factRef": "stammdaten.gemeinde",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
       "title": "Tagesrhythmus",
-      "body": "Die Bahnhofbenutzung 2025 erreicht ihren höchsten Anteil um 12 Uhr mit 7.9 Prozent des Tagesverkehrs. Über die Wochentage betrachtet ist der Sonntag mit 16.1 Prozent der stärkste Tag.",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Genève-Aéroport in der Stunde ab 12 Uhr: 7.9 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Sonntag, 16.1 Prozent, der kleinste auf Dienstag und Mittwoch, je 12.8 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 12,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Stärkster Wochentag",
-          "value": "Sonntag",
-          "unit": "",
+          "label": "Anteil dieser Stunde am Tag",
+          "value": 7.9,
+          "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Wochentag mit dem grössten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.1,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
         }
       ],
       "questions": [
         {
-          "type": "slider",
-          "prompt": "Zu welcher Stunde liegt 2025 der höchste Anteil der Bahnhofbenutzung?",
-          "min": 0,
-          "max": 23,
-          "step": 1,
-          "unit": "Uhr",
-          "correct": 12,
-          "explanation": "Die Spitzenstunde liegt bei 12 Uhr mit 7.9 Prozent des Tagesverkehrs.",
+          "id": "tagesrhythmus:3f287b5a",
+          "type": "single_choice",
+          "prompt": "In welcher Stunde zählt die Erhebung in Genève-Aéroport die meisten Bahnhofbenutzer?",
+          "options": [
+            "ab 11 Uhr",
+            "ab 12 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 12 Uhr 7.9, ab 17 Uhr 7.1, ab 18 Uhr 6.9, ab 11 Uhr 6.6 Prozent.",
           "factRef": "tagesrhythmus.spitzenstunde",
           "difficulty": 1
         },
         {
+          "id": "tagesrhythmus:6215f729",
+          "type": "slider",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Genève-Aéroport auf die Stunde ab 12 Uhr?",
+          "min": 0,
+          "max": 20,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 7.9,
+          "explanation": "In der Stunde ab 12 Uhr zählt die Erhebung 7.9 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        },
+        {
+          "id": "tagesrhythmus:24f11e36",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag zeigt 2025 den höchsten Anteil an der Bahnhofbenutzung?",
+          "prompt": "Auf welchen Wochentag entfällt in Genève-Aéroport der grösste Anteil der Bahnhofbenutzer?",
           "options": [
             "Montag",
-            "Freitag",
+            "Donnerstag",
             "Samstag",
             "Sonntag"
           ],
           "correct": 3,
-          "explanation": "Der Sonntag hat mit 16.1 Prozent den höchsten Anteil.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Sonntag 16.1, Montag 14.6, Donnerstag 14.1, Samstag 13.9 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[6].tag",
           "difficulty": 2
         }
       ]
@@ -201,47 +251,25 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 6 Perrons liegen offene Daten vor. Das längste misst 1031 Meter, das kürzeste 175 Meter. Von den erfassten Perrons sind 5 niveaufrei erreichbar.",
+      "body": "Zu 6 Perrons in Genève-Aéroport liegen offene Daten vor. Am längsten sind Perron 11 mit 1031 Metern, Perron 14 mit 900 Metern, Perron 12 mit 543 Metern und Perron 1/2 mit 481 Metern. 5 sind als niveaufrei vermerkt, 1 ausdrücklich als nicht niveaufrei.",
       "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 6,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
         {
           "label": "Längstes erfasstes Perron",
           "value": 1031,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 175,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Genève-Aéroport?",
-          "options": [
-            "543 m",
-            "900 m",
-            "1031 m",
-            "1200 m"
-          ],
-          "correct": 2,
-          "explanation": "Das längste erfasste Perron (Nr. 11) misst 1031 Meter.",
-          "factRef": "perrons.laengste_m",
-          "difficulty": 1
-        },
-        {
-          "type": "true_false",
-          "prompt": "Alle 6 erfassten Perrons sind niveaufrei erreichbar.",
-          "correct": false,
-          "explanation": "Von 6 erfassten Perrons sind 5 niveaufrei erreichbar, eines nicht.",
-          "factRef": "perrons.niveaufrei_erreichbar",
-          "difficulty": 2
-        },
-        {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -270,15 +298,65 @@
               "label": "Perron 3/4",
               "value": 432,
               "factRef": "perrons.items[4].laenge_m"
-            },
-            {
-              "label": "Perron 13",
-              "value": 175,
-              "factRef": "perrons.items[5].laenge_m"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Nach Länge geordnet folgen die Perrons 11 (1031 m), 14 (900 m), 12 (543 m), 1/2 (481 m), 3/4 (432 m) und 13 (175 m).",
+          "explanation": "Perron 11 misst 1031 Meter, Perron 14 misst 900 Meter, Perron 12 misst 543 Meter, Perron 1/2 misst 481 Meter, Perron 3/4 misst 432 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "perrons:fe038705",
+          "type": "true_false",
+          "prompt": "Zu allen 6 erfassten Perrons in Genève-Aéroport ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Für 5 der 6 erfassten Perrons ist ein niveaufreier Zugang vermerkt. 1 ist ausdrücklich als nicht niveaufrei erfasst.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 4 Gleisen liegen offene Daten vor: 1, 2, 3 und 4. An allen 4 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 4,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 8,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:3e48f107",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Genève-Aéroport sind ___ Sektoren erfasst.",
+          "options": [
+            "8",
+            "24",
+            "32"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D, E, F, G und H, also 8 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:0cf691d7",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Genève-Aéroport kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 4 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
@@ -286,174 +364,191 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Aus der BehiG-Erhebung sind 8 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. Für keines der Segmente ist ein Hilfstritt erfasst.",
+      "body": "Für Genève-Aéroport sind 8 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 4 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
           "value": 8,
-          "unit": "Segmente",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit erfasstem Hilfstritt",
-          "value": 0,
-          "unit": "Segmente",
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 4,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind gemäss BehiG-Erhebung erfasst?",
+          "id": "hindernisfreiheit:1604856e",
+          "type": "cloze",
+          "prompt": "In Genève-Aéroport sind ___ Perronsegmente erfasst.",
           "options": [
-            "4",
-            "6",
             "8",
-            "10"
+            "24",
+            "32"
           ],
-          "correct": 2,
-          "explanation": "Es sind 8 Perronsegmente erfasst.",
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 8 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
-          "prompt": "Für die erfassten Segmente ist ein Hilfstritt erfasst.",
-          "correct": false,
-          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 8 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt zwischen Genève-Aéroport und Châtelaine (bif) verkehren 2025 rund 184 Züge pro Tag in beiden Richtungen zusammen, was 67'066 Zügen im Jahr entspricht.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Genève-Aéroport – Châtelaine (bif) 184 Züge pro Tag, das sind 67'066 im Jahr. Güterverkehr ist auf diesem Abschnitt keiner erfasst.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Genève-Aéroport – Châtelaine (bif)",
+          "label": "Züge pro Tag, Personenverkehr Genève-Aéroport – Châtelaine (bif)",
           "value": 184,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Genève-Aéroport – Châtelaine (bif)",
+          "label": "Züge pro Jahr, Personenverkehr Genève-Aéroport – Châtelaine (bif)",
           "value": 67066,
-          "unit": "Züge",
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:4fffcd7f",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren 2025 pro Tag auf dem Abschnitt Genève-Aéroport – Châtelaine (bif)?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Genève-Aéroport – Châtelaine (bif)?",
           "options": [
-            "74",
-            "100",
-            "130",
-            "184"
+            "160",
+            "184",
+            "220",
+            "260"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt verkehren rund 184 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 184 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "Auf dem Abschnitt Genève-Aéroport – Châtelaine (bif) verkehren 2025 pro Jahr rund ___ Züge.",
-          "options": [
-            "45'000",
-            "55'000",
-            "67'066",
-            "80'000"
-          ],
-          "correct": 2,
-          "explanation": "Auf diesem Abschnitt verkehren 2025 rund 67'066 Züge im Jahr.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
-          "difficulty": 2
+          "id": "zuege:a570b507",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Genève-Aéroport – Châtelaine (bif)?",
+          "min": 54500,
+          "max": 97500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 67066,
+          "explanation": "Die Erhebung zählt 67'066 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Erfasst ist eine Linie: die Linie 150 zwischen Lausanne und Genève-Aéroport.",
+      "body": "Für Genève-Aéroport ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 66.17882 eingetragen.",
       "facts": [
         {
-          "label": "Liniennummer",
-          "value": 150,
-          "unit": "",
+          "label": "Erfasste Linien",
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].nummer"
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 150",
+          "value": 66.17882,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Liniennummer bedient gemäss offenen Daten Genève-Aéroport?",
-          "options": [
-            "150",
-            "160",
-            "170",
-            "180"
-          ],
-          "correct": 0,
-          "explanation": "Erfasst ist die Linie 150, Lausanne - Genève-Aéroport.",
-          "factRef": "linien.items[0].nummer",
-          "difficulty": 1,
-          "optionen_aus_fakten": false
+          "id": "linien:5dee430e",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Genève-Aéroport eingetragen?",
+          "min": 54,
+          "max": 96,
+          "step": 1,
+          "unit": "km",
+          "correct": 66.17882,
+          "explanation": "Die Kilometrierung von Genève-Aéroport auf der Linie 150 beträgt 66.17882. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 7 Billettautomaten und 6 Billettentwerter. Wartehallen sind für diesen Bahnhof keine erfasst.",
+      "body": "Genève-Aéroport steht in der Liste der WLAN-Standorte. Erfasst sind 7 Billettautomaten vom Typ ePOS und 6 Billettentwerter. Wartehallen sind keine verzeichnet.",
       "facts": [
         {
-          "label": "Erfasste Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 7,
-          "unit": "Stück",
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Erfasste Wartehallen",
-          "value": 0,
-          "unit": "Stück",
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
+          "label": "Billettentwerter erfasst",
+          "value": 6,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind für Genève-Aéroport erfasst?",
-          "options": [
-            "3",
-            "5",
-            "7",
-            "9"
-          ],
-          "correct": 2,
-          "explanation": "Erfasst sind 7 Billettautomaten.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "id": "services:d5435d60",
+          "type": "true_false",
+          "prompt": "Genève-Aéroport steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Für Genève-Aéroport ist eine Wartehalle erfasst.",
-          "correct": false,
-          "explanation": "Es sind 0 Wartehallen erfasst; das bedeutet nicht zwingend, dass keine vorhanden ist.",
-          "factRef": "services.wartehallen_erfasst",
-          "difficulty": 1
+          "id": "services:296cb894",
+          "type": "cloze",
+          "prompt": "In Genève-Aéroport sind ___ Billettentwerter erfasst.",
+          "options": [
+            "5",
+            "6",
+            "24"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -483,6 +578,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -497,21 +593,23 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "2",
-            "3",
             "4",
-            "6"
+            "5",
+            "6",
+            "24"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "Erfasst sind 6 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1,
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -527,8 +625,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -553,7 +652,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1/2 hat mit 5'104 Quadratmetern die grösste erfasste Fläche, Perron 12 mit 856 die kleinste der gezeigten.",
+          "explanation": "Perron 1/2 hat mit 5'104 Quadratmetern die grösste erfasste Belagsfläche, Perron 12 mit 856 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -561,29 +660,23 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Genève-Aéroport liegen Bahnhofplan-Daten vor. Eigentümerin der Anlage ist gemäss diesen Daten die SBB.",
+      "body": "Für Genève-Aéroport ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Eigentümerin der Anlage",
-          "value": "SBB",
-          "unit": "",
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-geneve-aeroport-a4.pdf",
           "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
+          "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wem gehört die Anlage Genève-Aéroport gemäss den Bahnhofplan-Daten?",
-          "options": [
-            "SBB",
-            "BLS",
-            "Kanton Genf",
-            "Flughafen Genf"
-          ],
-          "correct": 0,
-          "explanation": "Als Eigentümerin ist die SBB erfasst.",
-          "factRef": "bahnhofplan.eigentuemer",
+          "id": "bahnhofplan:5a16188b",
+          "type": "true_false",
+          "prompt": "Für Genève-Aéroport ist ein Bahnhofplan als PDF veröffentlicht.",
+          "correct": true,
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
       ]

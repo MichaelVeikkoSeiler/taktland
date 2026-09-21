@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:1ce051dd",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Richterswil ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:6bfbc8c9",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Richterswil ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:b972ddb9",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Richterswil?",
           "min": 330,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:5559526a",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Richterswil?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:bc83cce2",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Richterswil?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -212,6 +219,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:708ec0f8",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Richterswil sind niveaufrei erreichbar.",
           "correct": true,
@@ -242,6 +250,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:68e4a35d",
           "type": "cloze",
           "prompt": "An Gleis 1 in Richterswil sind ___ Sektoren erfasst.",
           "options": [
@@ -284,6 +293,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:e8fa0a33",
           "type": "cloze",
           "prompt": "In Richterswil sind ___ Perronsegmente erfasst.",
           "options": [
@@ -298,6 +308,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:e26e8213",
           "type": "true_false",
           "prompt": "Bei keinem der 3 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -311,7 +322,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Wädenswil – Richterswil 291 Züge pro Tag, das sind 106'141 im Jahr. Auf dem Abschnitt Richterswil – Hafen Bäch (Spw) sind es ebenfalls 291 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 24 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Wädenswil – Richterswil",
@@ -330,6 +341,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:3caafa09",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Wädenswil – Richterswil?",
           "options": [
@@ -344,6 +356,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:81d1c3b4",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Wädenswil – Richterswil?",
           "min": 87000,
@@ -378,6 +391,7 @@
       ],
       "questions": [
         {
+          "id": "linien:5937b55d",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 720 ist Richterswil eingetragen?",
           "min": 22,
@@ -418,6 +432,7 @@
       ],
       "questions": [
         {
+          "id": "services:f842ea36",
           "type": "true_false",
           "prompt": "Richterswil steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -426,6 +441,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:a4d99115",
           "type": "cloze",
           "prompt": "In Richterswil sind ___ Billettentwerter erfasst.",
           "options": [
@@ -467,6 +483,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -481,6 +498,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -495,6 +513,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

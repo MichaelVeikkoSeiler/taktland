@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:1af13180",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Stein am Rhein ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:c01a5914",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Stein am Rhein ___ Personen ein und aus.",
           "options": [
@@ -124,16 +127,11 @@
           "value": "STR",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
-        },
-        {
-          "label": "Bezirk",
-          "value": "Stein",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:a5f23cdb",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Stein am Rhein?",
           "min": 330,
@@ -146,18 +144,18 @@
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Stein am Rhein?",
+          "id": "stammdaten:005b43e2",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Stein am Rhein lautet ___.",
           "options": [
-            "Oberklettgau",
-            "Reiat",
-            "Schaffhausen",
-            "Stein"
+            "EW",
+            "EZ",
+            "STR"
           ],
-          "correct": 3,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Stein eingetragen.",
-          "factRef": "stammdaten.bezirk",
+          "explanation": "In den Stammdaten ist STR als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
@@ -183,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:4fb20df1",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Stein am Rhein?",
           "options": [
@@ -197,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -216,6 +216,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:81a764c0",
           "type": "true_false",
           "prompt": "Zu beiden erfassten Perrons in Stein am Rhein ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -240,6 +241,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:fa176b0e",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 2 in Stein am Rhein erfasst? (Mehrfachauswahl)",
           "options": [
@@ -286,6 +288,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7facac8d",
           "type": "cloze",
           "prompt": "In Stein am Rhein sind ___ Perronsegmente erfasst.",
           "options": [
@@ -300,6 +303,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -313,7 +317,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Etzwilen – Stein am Rhein: Im Personenverkehr verkehren dort 154 Züge pro Tag, das sind 56'386 im Jahr. Auf dem Abschnitt Stein am Rhein – Eschenz sind es 78 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 26 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Etzwilen – Stein am Rhein",
@@ -332,6 +336,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:4bc9fddf",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Etzwilen – Stein am Rhein?",
           "options": [
@@ -346,6 +351,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:18c8f83b",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Etzwilen – Stein am Rhein?",
           "min": 46000,
@@ -380,6 +386,7 @@
       ],
       "questions": [
         {
+          "id": "linien:e246b254",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 822 ist Stein am Rhein eingetragen?",
           "min": 28,
@@ -420,6 +427,7 @@
       ],
       "questions": [
         {
+          "id": "services:b8668a60",
           "type": "true_false",
           "prompt": "Stein am Rhein steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -428,6 +436,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:e3232cd7",
           "type": "cloze",
           "prompt": "In Stein am Rhein sind ___ Billettentwerter erfasst.",
           "options": [
@@ -475,6 +484,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -489,6 +499,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -504,6 +515,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,

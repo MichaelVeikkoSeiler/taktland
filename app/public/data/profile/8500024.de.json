@@ -48,6 +48,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:9bebad34",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Lausen ein und aus?",
           "options": [
@@ -62,6 +63,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -87,6 +89,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:fde0c715",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Lausen ___ Personen ein und aus.",
           "options": [
@@ -122,6 +125,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:b1bf99ed",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Lausen?",
           "min": 280,
@@ -134,6 +138,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:3b5ace28",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Lausen lautet ___.",
           "options": [
@@ -170,6 +175,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:4f928693",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Lausen?",
           "options": [
@@ -184,6 +190,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -203,6 +210,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:244dd185",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Lausen sind niveaufrei erreichbar.",
           "correct": true,
@@ -227,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:1b65c531",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Lausen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -263,6 +272,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:92547d96",
           "type": "cloze",
           "prompt": "In Lausen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -277,6 +287,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -290,7 +301,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Lausen – Liestal Süd (Spw) 320 Züge pro Tag, das sind 116'912 im Jahr. Auf dem Abschnitt Lausen – Itingen sind es ebenfalls 320 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 62 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Lausen – Liestal Süd (Spw)",
@@ -309,6 +320,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:3f3a265e",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Lausen – Liestal Süd (Spw)?",
           "options": [
@@ -323,6 +335,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:19b21dbf",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Lausen – Liestal Süd (Spw)?",
           "min": 95500,
@@ -357,6 +370,7 @@
       ],
       "questions": [
         {
+          "id": "linien:5397791a",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 500 ist Lausen eingetragen?",
           "min": 13.5,
@@ -397,6 +411,7 @@
       ],
       "questions": [
         {
+          "id": "services:f37cb54a",
           "type": "true_false",
           "prompt": "Lausen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -405,6 +420,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c8f2f4fd",
           "type": "cloze",
           "prompt": "In Lausen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -440,6 +456,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -454,6 +471,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:7530ea18",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Hinwil ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:9a48c702",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Hinwil ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:14ec4fdf",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Hinwil?",
           "min": 460,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:0c6ecef1",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Hinwil lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:98631b76",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Hinwil?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:8ba23ef1",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Hinwil ist niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:66900f8f",
           "type": "cloze",
           "prompt": "An Gleis 2 in Hinwil sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:5f6dba5f",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Hinwil kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -266,6 +275,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:185d4c9d",
           "type": "cloze",
           "prompt": "In Hinwil sind ___ Perronsegmente erfasst.",
           "options": [
@@ -280,6 +290,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:cb4cc65b",
           "type": "true_false",
           "prompt": "Bei keinem der 10 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -293,7 +304,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Wetzikon ZH – Hinwil 83 Züge pro Tag, das sind 30'173 im Jahr. Im Güterverkehr zählt die Erhebung bis zu 5 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Wetzikon ZH – Hinwil",
@@ -312,6 +323,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:4a546497",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Wetzikon ZH – Hinwil?",
           "options": [
@@ -326,6 +338,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:15ca2e0f",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Wetzikon ZH – Hinwil?",
           "min": 24500,
@@ -360,6 +373,7 @@
       ],
       "questions": [
         {
+          "id": "linien:075188f8",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 753 ist Hinwil eingetragen?",
           "min": 18,
@@ -372,6 +386,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -419,6 +434,7 @@
       ],
       "questions": [
         {
+          "id": "services:6aee3997",
           "type": "true_false",
           "prompt": "Hinwil steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -427,6 +443,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:2ad766a3",
           "type": "cloze",
           "prompt": "In Hinwil sind ___ Billettentwerter erfasst.",
           "options": [
@@ -445,7 +462,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Hinwil 12 Sitzbänke sowie 5 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Hinwil 12 Sitzbänke sowie 5 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -468,6 +485,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -482,6 +500,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -496,6 +515,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

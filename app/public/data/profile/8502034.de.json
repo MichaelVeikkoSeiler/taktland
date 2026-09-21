@@ -47,6 +47,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:5c7e85b4",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Beinwil am See ein und aus?",
           "options": [
@@ -61,6 +62,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -96,6 +98,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e5cb0592",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Beinwil am See ___ Personen ein und aus.",
           "options": [
@@ -137,6 +140,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:291537ef",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Beinwil am See?",
           "min": 420,
@@ -149,6 +153,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:95e2f6ce",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Beinwil am See?",
           "options": [
@@ -186,6 +191,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:a6e117df",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Beinwil am See?",
           "options": [
@@ -200,6 +206,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:6af5e415",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Beinwil am See ist niveaufrei erreichbar.",
           "correct": false,
@@ -224,6 +231,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:0412ec55",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Beinwil am See kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -254,6 +262,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:f6f1aff5",
           "type": "cloze",
           "prompt": "In Beinwil am See sind ___ Perronsegmente erfasst.",
           "options": [
@@ -268,6 +277,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f366795b",
           "type": "true_false",
           "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -281,7 +291,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Birrwil – Beinwil am See: Im Personenverkehr verkehren dort 73 Züge pro Tag, das sind 26'546 im Jahr. Auf dem Abschnitt Beinwil am See – Mosen sind es 69 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Birrwil – Beinwil am See",
@@ -300,6 +310,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:8049f26c",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Birrwil – Beinwil am See?",
           "options": [
@@ -314,6 +325,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:77c66e0e",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Birrwil – Beinwil am See?",
           "min": 21500,
@@ -348,6 +360,7 @@
       ],
       "questions": [
         {
+          "id": "linien:379e4ef1",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 651 ist Beinwil am See eingetragen?",
           "min": 22,
@@ -388,6 +401,7 @@
       ],
       "questions": [
         {
+          "id": "services:be89b480",
           "type": "true_false",
           "prompt": "Beinwil am See steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -396,6 +410,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:7976649e",
           "type": "single_choice",
           "prompt": "Wie viele Billettentwerter sind in Beinwil am See erfasst?",
           "options": [
@@ -425,6 +440,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [

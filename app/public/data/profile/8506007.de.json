@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:99a0a1ac",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Turbenthal ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:2102148b",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Turbenthal ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:df2888e2",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Turbenthal?",
           "min": 450,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:2d826d91",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Turbenthal lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:ec8cfde9",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Turbenthal?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:7ad9652c",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Turbenthal ist niveaufrei erreichbar.",
           "correct": true,
@@ -209,6 +216,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:078eb708",
           "type": "true_false",
           "prompt": "Zum erfassten Gleis in Turbenthal sind Sektortafeln verzeichnet.",
           "correct": false,
@@ -245,6 +253,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:62a7ecc4",
           "type": "cloze",
           "prompt": "In Turbenthal sind ___ Perronsegmente erfasst.",
           "options": [
@@ -259,6 +268,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:333e7d65",
           "type": "true_false",
           "prompt": "Bei keinem der 2 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -272,7 +282,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Turbenthal – Wila 101 Züge pro Tag, das sind 36'879 im Jahr. Auf dem Abschnitt Rämismühle-Zell – Turbenthal sind es ebenfalls 101 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 7 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Turbenthal – Wila",
@@ -291,6 +301,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:1bc16e21",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Turbenthal – Wila?",
           "options": [
@@ -305,6 +316,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:0ed45a7c",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Turbenthal – Wila?",
           "min": 30000,
@@ -339,6 +351,7 @@
       ],
       "questions": [
         {
+          "id": "linien:38819c74",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 754 ist Turbenthal eingetragen?",
           "min": 13.0,
@@ -379,6 +392,7 @@
       ],
       "questions": [
         {
+          "id": "services:421a1ce1",
           "type": "true_false",
           "prompt": "Turbenthal steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -387,6 +401,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:86fe5213",
           "type": "cloze",
           "prompt": "In Turbenthal sind ___ Billettentwerter erfasst.",
           "options": [
@@ -405,7 +420,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Turbenthal 7 Sitzbänke sowie 5 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Turbenthal 7 Sitzbänke sowie 5 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -428,6 +443,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -442,6 +458,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -456,6 +473,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

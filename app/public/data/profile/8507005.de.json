@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:2aa263f8",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Rubigen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:5101de74",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Rubigen ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:1d1fc471",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Rubigen?",
           "min": 450,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:906089fb",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Rubigen lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f4995442",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Rubigen?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:4cfe1ff3",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Rubigen sind niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:ac355dd8",
           "type": "cloze",
           "prompt": "An Gleis 1 in Rubigen sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:4b9615b3",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Rubigen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -266,6 +275,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:889e9f71",
           "type": "cloze",
           "prompt": "In Rubigen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -280,6 +290,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -293,7 +304,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Rubigen – Münsingen 220 Züge pro Tag, das sind 80'360 im Jahr. Auf dem Abschnitt Gümligen Süd (Abzw) – Rubigen sind es ebenfalls 220 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 47 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rubigen – Münsingen",
@@ -312,6 +323,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:6cb82836",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rubigen – Münsingen?",
           "options": [
@@ -326,6 +338,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:3c0ecf8b",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Rubigen – Münsingen?",
           "min": 65500,
@@ -360,6 +373,7 @@
       ],
       "questions": [
         {
+          "id": "linien:72490f96",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 290 ist Rubigen eingetragen?",
           "min": 97,
@@ -400,6 +414,7 @@
       ],
       "questions": [
         {
+          "id": "services:c7c9b0db",
           "type": "true_false",
           "prompt": "Rubigen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -408,6 +423,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:ecc85503",
           "type": "cloze",
           "prompt": "In Rubigen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -449,6 +465,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -463,6 +480,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -478,6 +496,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

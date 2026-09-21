@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:3cced5a6",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Hochdorf ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:835ced20",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Hochdorf ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:810c5856",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Hochdorf?",
           "min": 390,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e02d0b75",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Hochdorf lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:94bbfde2",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Hochdorf?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:66add648",
           "type": "true_false",
           "prompt": "Zu beiden erfassten Perrons in Hochdorf ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -214,6 +221,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:42f70547",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Hochdorf kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -250,6 +258,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:72587897",
           "type": "cloze",
           "prompt": "In Hochdorf sind ___ Perronsegmente erfasst.",
           "options": [
@@ -264,6 +273,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -277,7 +287,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Hochdorf – Hochdorf Schönau: Im Personenverkehr verkehren dort 78 Züge pro Tag, das sind 28'613 im Jahr. Auf dem Abschnitt Baldegg Kloster – Hochdorf sind es 69 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Hochdorf – Hochdorf Schönau",
@@ -296,6 +306,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:9ba2a935",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Hochdorf – Hochdorf Schönau?",
           "options": [
@@ -310,6 +321,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:ad3b65c0",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Hochdorf – Hochdorf Schönau?",
           "min": 23000,
@@ -344,6 +356,7 @@
       ],
       "questions": [
         {
+          "id": "linien:5db62856",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 651 ist Hochdorf eingetragen?",
           "min": 11.0,
@@ -384,6 +397,7 @@
       ],
       "questions": [
         {
+          "id": "services:0794c499",
           "type": "true_false",
           "prompt": "Hochdorf steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -392,6 +406,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:663f8e94",
           "type": "cloze",
           "prompt": "In Hochdorf sind ___ Billettentwerter erfasst.",
           "options": [
@@ -433,6 +448,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -447,6 +463,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [

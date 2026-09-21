@@ -4,14 +4,12 @@
   "tier": "M",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
-    "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -25,39 +23,48 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Renens VD liegt im Kanton Waadt, die Anlage gehört der SBB. An einem Werktag steigen hier 51'800 Personen ein und aus, im Tagesmittel über das ganze Jahr 47'400 und an einem freien Tag 37'800. 2018 waren es 22'500 pro Werktag.",
+      "body": "An einem Werktag steigen in Renens VD 51'800 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 47'400, an einem freien Tag 37'800. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag (dwv)",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 51800,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Durchschnittlicher täglicher Verkehr (dtv)",
+          "label": "Ein- und Aussteigende im Tagesmittel",
           "value": 47400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 37800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:4e773ca4",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag 2025 in Renens VD ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Renens VD ein und aus?",
           "options": [
-            "20'000",
-            "35'000",
-            "51'800",
-            "70'000"
+            "28'000",
+            "36'000",
+            "44'000",
+            "51'800"
           ],
-          "correct": 2,
-          "explanation": "51'800 Personen pro Werktag, Stand 2025.",
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 51'800 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -85,6 +92,20 @@
           ],
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 23'200 (2022), 26'700 (2023), 29'800 (2024), 51'800 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:89239601",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Renens VD ___ Personen ein und aus.",
+          "options": [
+            "26'000",
+            "32'000",
+            "37'800"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 37'800 Personen, an einem Werktag 51'800. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
       ]
@@ -92,89 +113,113 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Renens VD gehört zum Bezirk Ouest lausannois im Kanton Vaud. Die offizielle Bezeichnung lautet Renens VD, Betreiberin ist die SBB.",
+      "body": "Renens VD liegt auf 415.887 Metern über Meer in der Gemeinde Renens (VD), Bezirk Ouest lausannois. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet REN.",
       "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 415.887,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "REN",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
         {
           "label": "Bezirk",
           "value": "Ouest lausannois",
-          "unit": null,
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:bcdfeacd",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Renens VD?",
+          "min": 340,
+          "max": 610,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 415.887,
+          "explanation": "Der Bahnhof liegt auf 415.887 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:0ccbf5ab",
           "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt Renens VD?",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Renens VD?",
           "options": [
-            "Ouest lausannois",
             "Lausanne",
             "Morges",
-            "Nyon"
+            "Nyon",
+            "Ouest lausannois"
           ],
-          "correct": 0,
-          "explanation": "Renens VD liegt im Bezirk Ouest lausannois.",
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Bezirk ist Ouest lausannois eingetragen.",
           "factRef": "stammdaten.bezirk",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 5 Perrons in Renens VD liegen offene Daten vor. Das längste erfasste Perron misst 420 Meter, das kürzeste 252 Meter. Zu Perron 41/42 ist keine Länge erfasst. 4 der erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 5 Perrons in Renens VD liegen offene Daten vor. Perron 4/5 misst 420 Meter, Perron 2/3 misst 420 Meter, Perron 1 misst 326 Meter, Perron 7 misst 252 Meter. Zu Perron 41/42 ist keine Länge erfasst. 4 sind als niveaufrei vermerkt, zu 1 fehlt die Angabe zum Zugang.",
       "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 5,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
         {
           "label": "Längstes erfasstes Perron",
           "value": 420,
-          "unit": "Meter",
+          "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 4,
-          "unit": "Perrons",
-          "source": "perron",
-          "factRef": "perrons.niveaufrei_erreichbar"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Das längste erfasste Perron misst ___ Meter.",
-          "options": [
-            "170",
-            "230",
-            "420"
-          ],
-          "correct": 2,
-          "explanation": "Die Perrons 4/5 und 2/3 sind mit 420 Metern die längsten erfassten Perrons.",
-          "factRef": "perrons.laengste_m",
-          "difficulty": 1
-        },
-        {
-          "type": "match",
-          "prompt": "Welche Länge gehört zu welchem Perron?",
-          "pairs": [
+          "id": "perrons:b8692c98",
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
             {
-              "links": "Perron 1",
-              "rechts": "326 m",
+              "label": "Perron 4/5",
+              "value": 420,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 326,
               "factRef": "perrons.items[2].laenge_m"
             },
             {
-              "links": "Perron 7",
-              "rechts": "252 m",
+              "label": "Perron 7",
+              "value": 252,
               "factRef": "perrons.items[3].laenge_m"
-            },
-            {
-              "links": "Perron 4/5",
-              "rechts": "420 m",
-              "factRef": "perrons.items[0].laenge_m"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1 misst 326 Meter, Perron 7 misst 252 Meter und Perron 4/5 misst 420 Meter.",
+          "explanation": "Perron 4/5 misst 420 Meter, Perron 1 misst 326 Meter, Perron 7 misst 252 Meter. Perrons mit fast gleicher Länge bleiben weg.",
+          "difficulty": 2
+        },
+        {
+          "id": "perrons:04b3a385",
+          "type": "true_false",
+          "prompt": "Zu allen 5 erfassten Perrons in Renens VD ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Für 4 der 5 erfassten Perrons ist ein niveaufreier Zugang vermerkt. Zu 1 fehlt die Angabe.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 2
         }
       ]
@@ -182,216 +227,235 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 6 Gleisen in Renens VD liegen offene Daten vor. Als Perronhöhe ist 55 cm erfasst.",
+      "body": "Zu 6 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 5 und 7. Zu den Gleisen 1, 2, 3, 4 und 5 ist eine Perronhöhe von 55 Zentimetern vermerkt, zu Gleis 7 keine.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
           "value": 6,
-          "unit": "Gleise",
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Erfasste Perronhöhe",
-          "value": 55,
-          "unit": "cm",
+          "label": "Sektoren an Gleis 1",
+          "value": 6,
           "source": "sektortafel",
-          "factRef": "gleise.perronhoehen_cm[0]"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Zu wie vielen Gleisen liegen in Renens VD offene Daten vor?",
+          "id": "gleise:3f2150b1",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Renens VD sind ___ Sektoren erfasst.",
           "options": [
             "6",
             "8",
-            "10",
-            "13"
+            "10"
           ],
           "correct": 0,
-          "explanation": "Zu 6 Gleisen liegen offene Daten vor.",
-          "factRef": "gleise.anzahl_mit_daten",
-          "difficulty": 1
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Welche Perronhöhe ist bei den erfassten Gleisen dokumentiert?",
-          "options": [
-            "35 cm",
-            "38 cm",
-            "55 cm",
-            "76 cm"
-          ],
-          "correct": 2,
-          "explanation": "Die erfasste Perronhöhe beträgt 55 cm.",
-          "factRef": "gleise.perronhoehen_cm[0]",
-          "difficulty": 1
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D, E und F, also 6 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Von 5 erfassten Perrons in Renens VD sind 4 als niveaufrei erreichbar vermerkt, zum fünften fehlt die Angabe zum Zugang. Von den 17 erfassten Perronsegmenten ist keines mit Hilfstritt ausgestattet.",
+      "body": "Für Renens VD sind 17 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An 5 der 6 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Perronsegmente insgesamt erfasst",
+          "label": "Erfasste Perronsegmente",
           "value": 17,
-          "unit": "Segmente",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit Hilfstritt erfasst",
-          "value": 0,
-          "unit": "Segmente",
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 5,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         }
       ],
       "questions": [
         {
-          "type": "true_false",
-          "prompt": "Zu allen 5 erfassten Perrons in Renens VD ist ein niveaufreier Zugang vermerkt.",
-          "correct": false,
-          "explanation": "Für 4 der 5 erfassten Perrons ist ein niveaufreier Zugang vermerkt, zum fünften steht in den Daten nichts.",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei",
-          "difficulty": 2
+          "id": "hindernisfreiheit:0f3e5418",
+          "type": "cloze",
+          "prompt": "In Renens VD sind ___ Perronsegmente erfasst.",
+          "options": [
+            "12",
+            "17",
+            "20"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 17 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele der erfassten Perronsegmente in Renens VD verfügen über einen Hilfstritt?",
-          "options": [
-            "0",
-            "5",
-            "10",
-            "17"
-          ],
-          "correct": 0,
-          "explanation": "Es ist kein Segment mit Hilfstritt erfasst.",
+          "id": "hindernisfreiheit:e0718f45",
+          "type": "true_false",
+          "prompt": "Bei keinem der 17 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 17 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt zwischen Renens VD Est (bif) und Renens VD verkehren im Personenverkehr rund 561 Züge pro Tag. Auf dem Abschnitt zwischen Renens VD und Renens VD Ouest (bif) sind im Güterverkehr rund 49 Züge pro Tag erfasst.",
+      "body": "Am stärksten befahren ist der Abschnitt Renens VD Est (bif) – Renens VD: Im Personenverkehr verkehren dort 561 Züge pro Tag, das sind 204'892 im Jahr. Auf dem Abschnitt Renens VD – Renens VD Ouest (bif) sind es 557 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 49 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr, Renens VD Est (bif)–Renens VD",
+          "label": "Züge pro Tag, Personenverkehr Renens VD Est (bif) – Renens VD",
           "value": 561,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Renens VD Est (bif) – Renens VD",
+          "value": 204892,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:33075390",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren pro Tag im Personenverkehr auf dem Abschnitt zwischen Renens VD Est (bif) und Renens VD?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Renens VD Est (bif) – Renens VD?",
           "options": [
-            "220",
-            "310",
-            "390",
-            "561"
+            "480",
+            "561",
+            "670",
+            "790"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt sind 561 Züge pro Tag im Personenverkehr erfasst, Stand 2025.",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 561 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "Auf dem Abschnitt zwischen Renens VD und Renens VD Ouest (bif) verkehren im Güterverkehr rund ___ Züge pro Tag.",
-          "options": [
-            "20",
-            "27",
-            "49"
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Renens VD Est (bif) – Renens VD, Personenverkehr",
+              "value": 204892,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Renens VD – Renens VD Ouest (bif), Güterverkehr",
+              "value": 18015,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Renens VD Est (bif) – Renens VD, Güterverkehr",
+              "value": 14182,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
           ],
-          "correct": 2,
-          "explanation": "Auf diesem Abschnitt sind im Güterverkehr rund 49 Züge pro Tag erfasst.",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
-          "difficulty": 2
+          "factRef": "zuege.abschnitte",
+          "explanation": "Renens VD Est (bif) – Renens VD (Personenverkehr) 204'892, Renens VD – Renens VD Ouest (bif) (Güterverkehr) 18'015, Renens VD Est (bif) – Renens VD (Güterverkehr) 14'182 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Renens VD ist eine Linie erfasst: die Linie 150 von Lausanne nach Genève-Aéroport.",
+      "body": "Für Renens VD ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 4.51005 eingetragen.",
       "facts": [
         {
-          "label": "Erfasste Linie",
-          "value": "150",
-          "unit": null,
+          "label": "Erfasste Linien",
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].nummer"
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 150",
+          "value": 4.51005,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Liniennummer ist für Renens VD erfasst?",
-          "options": [
-            "150",
-            "160",
-            "170",
-            "180"
-          ],
-          "correct": 0,
-          "explanation": "Erfasst ist die Linie 150, Lausanne–Genève-Aéroport.",
-          "factRef": "linien.items[0].nummer",
-          "difficulty": 1
+          "id": "linien:b0b5b67c",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Renens VD eingetragen?",
+          "min": 3.5,
+          "max": 7.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 4.51005,
+          "explanation": "Die Kilometrierung von Renens VD auf der Linie 150 beträgt 4.51005. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "In Renens VD sind 5 Billettautomaten und 14 Billettentwerter erfasst, dazu 2 Wartehallen. Für Renens VD ist kein WLAN in den offenen Daten erfasst.",
+      "body": "Erfasst sind 5 Billettautomaten vom Typ ePOS, 14 Billettentwerter und 2 Wartehallen. Renens VD steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
         {
           "label": "Billettautomaten erfasst",
           "value": 5,
-          "unit": "Automaten",
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
           "label": "Billettentwerter erfasst",
           "value": 14,
-          "unit": "Entwerter",
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind für Renens VD erfasst?",
-          "options": [
-            "5",
-            "8",
-            "11",
-            "15"
-          ],
-          "correct": 0,
-          "explanation": "Erfasst sind 5 Billettautomaten des Typs ePOS.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "id": "services:5789c811",
+          "type": "true_false",
+          "prompt": "Renens VD steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "Für Renens VD ist WLAN in den offenen Daten erfasst.",
-          "correct": false,
-          "explanation": "Renens VD steht nicht in der Liste der WLAN-Standorte.",
-          "factRef": "services.wlan_erfasst",
-          "difficulty": 1
+          "id": "services:b0fb6a43",
+          "type": "cloze",
+          "prompt": "In Renens VD sind ___ Billettentwerter erfasst.",
+          "options": [
+            "14",
+            "20",
+            "24"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 14 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -421,20 +485,22 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "8",
-            "10",
             "13",
-            "15"
+            "15",
+            "18",
+            "21"
           ],
-          "correct": 3,
+          "correct": 1,
           "explanation": "Erfasst sind 15 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -449,6 +515,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -464,8 +531,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -490,7 +558,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4/5 hat mit 3'501 Quadratmetern die grösste erfasste Fläche, Perron 41/42 mit 231 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 4/5 hat mit 3'501 Quadratmetern die grösste erfasste Belagsfläche, Perron 41/42 mit 231 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]

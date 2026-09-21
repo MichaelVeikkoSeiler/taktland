@@ -4,17 +4,16 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,117 +27,229 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Baden liegt im Kanton Aargau, auf 385 Metern über Meer. An einem Werktag steigen hier 38'500 Personen ein und aus, an einem freien Tag 23'900. Als Bahnhofbenutzer sind 57'300 pro Tag erfasst.",
+      "body": "An einem Werktag steigen in Baden 38'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 34'000, an einem freien Tag 23'900. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 38500,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 34000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 23900,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 57300,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
-        },
-        {
-          "label": "Höhe über Meer",
-          "value": 385,
-          "unit": "m",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.hoehe_m_ue_m"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:61351041",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Baden ein und aus?",
           "options": [
-            "14'000",
-            "38'500",
-            "84'000",
-            "160'000"
+            "21'000",
+            "27'000",
+            "33'000",
+            "38'500"
           ],
-          "correct": 1,
-          "explanation": "38'500 Personen pro Werktag, Stand 2025.",
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 38'500 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Es sind mehr Bahnhofbenutzer erfasst als Ein- und Aussteigende.",
-          "correct": true,
-          "explanation": "57'300 gegenüber 38'500. Die beiden Zahlen kommen aus zwei verschiedenen Erhebungen.",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag",
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 30100,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 35700,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 38500,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 30'100 (2022), 35'700 (2023), 38'500 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
+        },
+        {
+          "id": "steckbrief:1457466f",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Baden ___ Personen ein und aus.",
+          "options": [
+            "17'000",
+            "20'000",
+            "23'900"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 23'900 Personen, an einem Werktag 38'500. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Baden liegt auf 385.1 Metern über Meer in der Gemeinde Baden, Bezirk Baden, Kanton Aargau. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BD.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 385.1,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "BD",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:3d888126",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Baden?",
+          "min": 310,
+          "max": 560,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 385.1,
+          "explanation": "Der Bahnhof liegt auf 385.1 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:a100bf2e",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Baden lautet ___.",
+          "options": [
+            "BD",
+            "NHOF",
+            "WE"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist BD als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
-      "title": "Der Tag am Bahnhof",
-      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 10.8 Prozent des Tagesaufkommens. Über die Woche ist der Freitag mit 15.8 Prozent der stärkste Tag, der Sonntag mit 9.7 Prozent der schwächste.",
+      "title": "Tagesrhythmus",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Baden in der Stunde ab 17 Uhr: 10.8 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Freitag, 15.8 Prozent, der kleinste auf den Sonntag, 9.7 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 10.8,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Stärkster Wochentag",
+          "label": "Wochentag mit dem grössten Anteil",
           "value": "Freitag",
-          "unit": null,
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 15.8,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 9.7,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:40d8eceb",
           "type": "single_choice",
-          "prompt": "In welcher Stunde ist in Baden der grösste Anteil der Bahnhofbenutzer unterwegs?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Baden die meisten Bahnhofbenutzer?",
           "options": [
-            "7 Uhr",
-            "12 Uhr",
-            "17 Uhr",
-            "20 Uhr"
+            "ab 12 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
           ],
           "correct": 2,
-          "explanation": "Um 17 Uhr, mit 10.8 Prozent des Tagesaufkommens.",
-          "factRef": "tagesrhythmus.spitzenstunde",
           "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 10.8, ab 16 Uhr 9.1, ab 12 Uhr 8.3, ab 18 Uhr 8.0 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
           "difficulty": 1
         },
         {
+          "id": "tagesrhythmus:0c76bb08",
+          "type": "slider",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Baden auf die Stunde ab 17 Uhr?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 10.8,
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 10.8 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        },
+        {
+          "id": "tagesrhythmus:edf2c0a4",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag ist in Baden der schwächste?",
+          "prompt": "Auf welchen Wochentag entfällt in Baden der grösste Anteil der Bahnhofbenutzer?",
           "options": [
             "Montag",
             "Freitag",
             "Samstag",
             "Sonntag"
           ],
-          "correct": 3,
-          "explanation": "Der Sonntag mit 9.7 Prozent, gegenüber 15.8 Prozent am Freitag.",
-          "factRef": "tagesrhythmus.wochentage[6].tag",
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Freitag 15.8, Montag 14.5, Samstag 14.2, Sonntag 9.7 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[4].tag",
           "difficulty": 2
         }
       ]
@@ -146,246 +257,374 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 4 Perrons liegen Daten vor. Das längste misst 371 Meter. Eines ist als Dienstperron von 80 Metern erfasst und nicht für Reisende bestimmt. Von 4 Perrons sind 3 niveaufrei erreichbar.",
+      "body": "Zu 4 Perrons in Baden liegen offene Daten vor. Perron 2/3 misst 371 Meter, Perron 1 misst 306 Meter, Perron 4/5 misst 228 Meter, Perron 11 misst 80 Meter. 3 sind als niveaufrei vermerkt, 1 ausdrücklich als nicht niveaufrei.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 4,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Längstes Perron",
+          "label": "Längstes erfasstes Perron",
           "value": 371,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes Perron",
-          "value": 80,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 3,
-          "unit": null,
-          "source": "perron",
-          "factRef": "perrons.niveaufrei_erreichbar"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie lang ist das kürzeste erfasste Perron in Baden?",
-          "options": [
-            "80 m",
-            "150 m",
-            "228 m",
-            "306 m"
+          "id": "perrons:b8692c98",
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 2/3",
+              "value": 371,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 1",
+              "value": 306,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 4/5",
+              "value": 228,
+              "factRef": "perrons.items[2].laenge_m"
+            },
+            {
+              "label": "Perron 11",
+              "value": 80,
+              "factRef": "perrons.items[3].laenge_m"
+            }
           ],
-          "correct": 0,
-          "explanation": "80 Meter. Es ist als Dienstperron erfasst.",
-          "factRef": "perrons.kuerzeste_m",
-          "optionen_aus_fakten": true,
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 misst 371 Meter, Perron 1 misst 306 Meter, Perron 4/5 misst 228 Meter, Perron 11 misst 80 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "1926.41 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "612.1 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 4/5",
+              "rechts": "1042.96 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 hat 1926.41 Quadratmeter, Perron 1 hat 612.1 Quadratmeter, Perron 4/5 hat 1042.96 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:bacd43bf",
+          "type": "true_false",
+          "prompt": "Zu allen 4 erfassten Perrons in Baden ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Für 3 der 4 erfassten Perrons ist ein niveaufreier Zugang vermerkt. 1 ist ausdrücklich als nicht niveaufrei erfasst.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 5 Gleisen vor, den Nummern 1 bis 5. Die längste Perronkante hat Gleis 2 mit 365 Metern. An den erfassten Gleisen reichen die Sektoren von A bis D.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "title": "Gleise",
+      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 3, 4 und 5. Erfasst sind Perronhöhen von 20, 35 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 5,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste Perronkante, Gleis 2",
-          "value": 365,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
-        },
-        {
-          "label": "Letzter Sektor an Gleis 2",
-          "value": "D",
-          "unit": null,
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
           "source": "sektortafel",
-          "factRef": "gleise.items[1].sektoren[3]"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "2",
-          "explanation": "Gleis 2 mit 365 Metern, knapp vor Gleis 3 mit 363 Metern.",
-          "factRef": "gleise.items[1].nr",
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 2",
+              "value": 365,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 240,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 228,
+              "factRef": "gleise.items[3].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 2 misst 365 Meter, Gleis 1 misst 240 Meter, Gleis 4 misst 228 Meter. Gleise mit fast gleicher Kante bleiben weg.",
           "difficulty": 3
         },
         {
+          "id": "gleise:a044f5a1",
           "type": "cloze",
-          "prompt": "In Baden liegen Daten zu ___ Gleisen vor.",
+          "prompt": "An Gleis 1 in Baden sind ___ Sektoren erfasst.",
           "options": [
+            "2",
             "3",
-            "5",
-            "8",
-            "12"
+            "4"
           ],
-          "correct": 1,
-          "explanation": "5 Gleise, die Nummern 1 bis 5.",
-          "factRef": "gleise.anzahl_mit_daten",
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "difficulty": 1
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:d27be733",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Baden erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": [
+            0,
+            2,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 1 sind 20, 35 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "21 Perronabschnitte sind erfasst, 17 davon auf 55 Zentimetern. An 5 von 5 Gleisen gibt es einen Abschnitt auf 55 Zentimetern. Von 4 erfassten Perrons sind 3 als niveaufrei erreichbar vermerkt, das vierte ausdrücklich als nicht niveaufrei. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "title": "Hindernisfreiheit",
+      "body": "Für Baden sind 21 Perronsegmente erfasst: 17 mit 55 Zentimetern, 2 mit 20 Zentimetern, 2 mit 35 Zentimetern. An allen 5 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Abschnitte",
+          "label": "Erfasste Perronsegmente",
           "value": 21,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Abschnitte mit 55 cm",
-          "value": 17,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
-        },
-        {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 5,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronabschnitte sind in Baden erfasst?",
+          "id": "hindernisfreiheit:e3f7c4c8",
+          "type": "cloze",
+          "prompt": "In Baden sind ___ Perronsegmente erfasst.",
           "options": [
-            "9",
-            "17",
             "21",
-            "34"
+            "25",
+            "29"
           ],
-          "correct": 2,
-          "explanation": "21 Abschnitte, davon 17 auf 55 Zentimetern.",
-          "factRef": "hindernisfreiheit.segmente",
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "difficulty": 2
+          "explanation": "Die BehiG-Erhebung führt 21 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:c76ce7a0",
           "type": "true_false",
-          "prompt": "Jedes erfasste Perron in Baden ist ohne Gleisquerung erreichbar.",
-          "correct": false,
-          "explanation": "Von 4 erfassten Perrons sind 3 niveaufrei erreichbar.",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei",
-          "difficulty": 3
+          "prompt": "Bei keinem der 21 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 21 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf den Strecken",
-      "body": "Von Turgi her verkehren 134'126 Personenzüge pro Jahr, rund 367 pro Tag in beiden Richtungen zusammen. Richtung Wettingen sind es 321 pro Tag. Dazu kommen 56 Güterzüge pro Tag Richtung Wettingen.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Turgi – Baden: Im Personenverkehr verkehren dort 367 Züge pro Tag, das sind 134'126 im Jahr. Auf dem Abschnitt Baden – Wettingen sind es 321 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 56 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, Abschnitt Turgi",
+          "label": "Züge pro Tag, Personenverkehr Turgi – Baden",
           "value": 367,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Güterzüge pro Tag Richtung Wettingen",
-          "value": 56,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Turgi – Baden",
+          "value": 134126,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:51019f92",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Baden?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Turgi – Baden?",
           "options": [
-            "120",
-            "321",
             "367",
-            "740"
+            "440",
+            "510",
+            "620"
           ],
-          "correct": 2,
-          "explanation": "Rund 367 pro Tag von Turgi her, beide Richtungen zusammen.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 367 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zugzahlen sagen, wie viele Züge in Baden halten.",
-          "correct": false,
-          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
-          "factRef": "zuege.hinweis",
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Turgi – Baden, Personenverkehr",
+              "value": 134126,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Baden – Wettingen, Personenverkehr",
+              "value": 117110,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Baden – Wettingen, Güterverkehr",
+              "value": 20451,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Turgi – Baden (Personenverkehr) 134'126, Baden – Wettingen (Personenverkehr) 117'110, Baden – Wettingen (Güterverkehr) 20'451 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Baden ist 1 Linie erfasst: die Linie 710 Zurich HB - Brugg AG. Der Bahnhof ist darauf bei Kilometer 22.52873 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 710",
+          "value": 22.52873,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:3050f25f",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 710 ist Baden eingetragen?",
+          "min": 18,
+          "max": 33,
+          "step": 1,
+          "unit": "km",
+          "correct": 22.52873,
+          "explanation": "Die Kilometrierung von Baden auf der Linie 710 beträgt 22.52873. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 5 Billettautomaten, 9 Billettentwerter und 2 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "title": "Services",
+      "body": "Baden steht in der Liste der WLAN-Standorte. Erfasst sind 5 Billettautomaten (Typen Autelca und ePOS), 9 Billettentwerter und 2 Wartehallen.",
       "facts": [
         {
-          "label": "Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 5,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 9,
-          "unit": null,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "WLAN erfasst",
-          "value": true,
-          "unit": null,
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:784e6e62",
           "type": "true_false",
           "prompt": "Baden steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Ja, der Bahnhof ist als WLAN-Standort erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
+        },
+        {
+          "id": "services:e2a9a921",
+          "type": "cloze",
+          "prompt": "In Baden sind ___ Billettentwerter erfasst.",
+          "options": [
+            "9",
+            "27",
+            "36"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 9 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -421,6 +660,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -435,24 +675,26 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "2",
-            "3",
             "4",
-            "6"
+            "5",
+            "6",
+            "24"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "Erfasst sind 6 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1,
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 9,
+          "min": 26,
           "max": 79,
           "step": 1,
           "unit": "Schliessfächer",
@@ -462,8 +704,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -488,7 +731,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'525 Quadratmetern die grösste erfasste Fläche, Perron 11 mit 202 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 2'525 Quadratmetern die grösste erfasste Belagsfläche, Perron 11 mit 202 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -496,22 +739,22 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Baden ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "body": "Für Baden ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Plan als A4",
+          "label": "Plan als A4-Blatt",
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-baden-a4.pdf",
-          "unit": null,
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:b32aba1d",
           "type": "true_false",
-          "prompt": "Für Baden gibt es einen veröffentlichten Bahnhofplan.",
+          "prompt": "Für Baden ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
@@ -533,90 +776,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        20,
-        35,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 240,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 365,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 363,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "4",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 228,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "5",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 228,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
     }
   ]
 }

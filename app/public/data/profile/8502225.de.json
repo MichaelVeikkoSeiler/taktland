@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:c01ec0dc",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Mettmenstetten ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:3d2ca21d",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Mettmenstetten ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:7e04786f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Mettmenstetten?",
           "min": 370,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:9968ec99",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Mettmenstetten lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:56e0fe99",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Mettmenstetten?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:801978d5",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Mettmenstetten sind niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:60a9aab5",
           "type": "cloze",
           "prompt": "An Gleis 1 in Mettmenstetten sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:08777283",
           "type": "true_false",
           "prompt": "Zum erfassten Gleis in Mettmenstetten ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -260,6 +269,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:86f9ee71",
           "type": "true_false",
           "prompt": "Für Mettmenstetten sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -273,7 +283,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Mettmenstetten – Knonau 81 Züge pro Tag, das sind 29'460 im Jahr. Auf dem Abschnitt Affoltern am Albis – Mettmenstetten sind es ebenfalls 81 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 84 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Mettmenstetten – Knonau",
@@ -292,6 +302,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:4dc4f318",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Mettmenstetten – Knonau?",
           "options": [
@@ -306,6 +317,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:b4789f51",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Mettmenstetten – Knonau?",
           "min": 24000,
@@ -340,6 +352,7 @@
       ],
       "questions": [
         {
+          "id": "linien:466abb08",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 711 ist Mettmenstetten eingetragen?",
           "min": 23,
@@ -380,6 +393,7 @@
       ],
       "questions": [
         {
+          "id": "services:e8e8c868",
           "type": "true_false",
           "prompt": "Mettmenstetten steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -388,6 +402,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:678001f8",
           "type": "cloze",
           "prompt": "In Mettmenstetten sind ___ Billettentwerter erfasst.",
           "options": [
@@ -429,6 +444,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -443,6 +459,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

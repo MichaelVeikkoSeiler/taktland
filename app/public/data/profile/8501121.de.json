@@ -48,6 +48,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:e4df9a6d",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Pully ein und aus?",
           "options": [
@@ -62,6 +63,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -92,6 +94,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:a3263a55",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Pully ___ Personen ein und aus.",
           "options": [
@@ -127,6 +130,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:42f78a4c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Pully?",
           "min": 340,
@@ -139,6 +143,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:9a478a95",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Pully lautet ___.",
           "options": [
@@ -175,6 +180,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:7d9836f0",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Pully?",
           "options": [
@@ -189,6 +195,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -208,6 +215,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:48041eed",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Pully sind niveaufrei erreichbar.",
           "correct": true,
@@ -238,6 +246,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:19c154d5",
           "type": "true_false",
           "prompt": "Für Pully sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -251,7 +260,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Taillepied (diag) – Pully 304 Züge pro Tag, das sind 110'928 im Jahr. Auf dem Abschnitt Lausanne – Pully sind es ebenfalls 304 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 26 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Taillepied (diag) – Pully",
@@ -270,6 +279,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:2308f45f",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Taillepied (diag) – Pully?",
           "options": [
@@ -284,6 +294,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:b1515bff",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Taillepied (diag) – Pully?",
           "min": 90500,
@@ -318,6 +329,7 @@
       ],
       "questions": [
         {
+          "id": "linien:f8b1f4c0",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Pully eingetragen?",
           "min": 2.0,
@@ -358,6 +370,7 @@
       ],
       "questions": [
         {
+          "id": "services:344a5700",
           "type": "true_false",
           "prompt": "Pully steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -366,6 +379,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:5cd4b753",
           "type": "cloze",
           "prompt": "In Pully sind ___ Billettentwerter erfasst.",
           "options": [
@@ -407,6 +421,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -421,6 +436,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

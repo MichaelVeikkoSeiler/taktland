@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:b7109c52",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Neuhausen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:585a1d2f",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Neuhausen ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:ce90f473",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Neuhausen?",
           "min": 320,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:29913845",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Neuhausen?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:90f8dee6",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Neuhausen?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:d891e8e5",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Neuhausen ist niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:7e6e9de6",
           "type": "cloze",
           "prompt": "An Gleis 2 in Neuhausen sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:eb752596",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Neuhausen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -278,6 +287,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:b0015364",
           "type": "cloze",
           "prompt": "In Neuhausen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -292,6 +302,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f641b667",
           "type": "true_false",
           "prompt": "Bei keinem der 9 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -305,7 +316,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Schaffhausen Süd – Neuhausen: Im Personenverkehr verkehren dort 263 Züge pro Tag, das sind 96'008 im Jahr. Auf dem Abschnitt Neuhausen Rheinfall – Neuhausen sind es 151 und auf dem Abschnitt Neuhausen – Schloss Laufen am Rheinfall sind es 112 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 11 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Schaffhausen Süd – Neuhausen",
@@ -324,6 +335,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:d4872afa",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Schaffhausen Süd – Neuhausen?",
           "options": [
@@ -338,6 +350,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -390,6 +403,7 @@
       ],
       "questions": [
         {
+          "id": "linien:05027fab",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 762 ist Neuhausen eingetragen?",
           "min": 44,
@@ -402,6 +416,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -449,6 +464,7 @@
       ],
       "questions": [
         {
+          "id": "services:cc91db8e",
           "type": "true_false",
           "prompt": "Neuhausen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -457,6 +473,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:53ae3853",
           "type": "cloze",
           "prompt": "In Neuhausen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -475,7 +492,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Neuhausen 6 Sitzbänke sowie 6 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Neuhausen 6 Sitzbänke sowie 6 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -498,6 +515,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -512,6 +530,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -526,6 +545,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

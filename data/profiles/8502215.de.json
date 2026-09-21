@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:543ef53c",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Muri AG ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:caef7e34",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Muri AG ___ Personen ein und aus.",
           "options": [
@@ -99,6 +101,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:db03cce4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Muri AG?",
           "min": 370,
@@ -111,6 +114,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:a60f5f3f",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Muri AG lautet ___.",
           "options": [
@@ -147,6 +151,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:9684410f",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Muri AG?",
           "options": [
@@ -161,6 +166,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:7a1806ac",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Muri AG sind niveaufrei erreichbar.",
           "correct": true,
@@ -191,6 +197,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:900204e7",
           "type": "cloze",
           "prompt": "An Gleis 3 in Muri AG sind ___ Sektoren erfasst.",
           "options": [
@@ -205,6 +212,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:fa4f9d28",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Muri AG kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -241,6 +249,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7d26b270",
           "type": "cloze",
           "prompt": "In Muri AG sind ___ Perronsegmente erfasst.",
           "options": [
@@ -255,6 +264,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
           "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -268,7 +278,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Boswil-Bünzen – Muri AG: Im Personenverkehr verkehren dort 137 Züge pro Tag, das sind 50'131 im Jahr. Auf dem Abschnitt Muri AG – Benzenschwil sind es 84 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 98 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Boswil-Bünzen – Muri AG",
@@ -287,6 +297,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:bc2b9f41",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Boswil-Bünzen – Muri AG?",
           "options": [
@@ -301,6 +312,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -348,6 +360,7 @@
       ],
       "questions": [
         {
+          "id": "linien:a3beaa4c",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 653 ist Muri AG eingetragen?",
           "min": 66,
@@ -388,6 +401,7 @@
       ],
       "questions": [
         {
+          "id": "services:4f6a0525",
           "type": "true_false",
           "prompt": "Muri AG steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -396,6 +410,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:ff9c593e",
           "type": "cloze",
           "prompt": "In Muri AG sind ___ Billettentwerter erfasst.",
           "options": [
@@ -437,6 +452,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -451,6 +467,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

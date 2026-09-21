@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:28817505",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Stein-Säckingen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ae30e348",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Stein-Säckingen ___ Personen ein und aus.",
           "options": [
@@ -122,14 +125,15 @@
           "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Gemeinde",
-          "value": "Stein (AG)",
+          "label": "Bezirk",
+          "value": "Rheinfelden",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:758e26e3",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Stein-Säckingen?",
           "min": 250,
@@ -142,18 +146,19 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:c9c5ec99",
           "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt der Bahnhof Stein-Säckingen?",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Stein-Säckingen?",
           "options": [
-            "Eiken",
-            "Münchwilen (AG)",
-            "Sisseln",
-            "Stein (AG)"
+            "Aarau",
+            "Brugg",
+            "Laufenburg",
+            "Rheinfelden"
           ],
           "correct": 3,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Stein (AG) eingetragen.",
-          "factRef": "stammdaten.gemeinde",
+          "explanation": "Als Bezirk ist Rheinfelden eingetragen.",
+          "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
       ]
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:df44a52c",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Stein-Säckingen?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:f2c6bfad",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Stein-Säckingen sind niveaufrei erreichbar.",
           "correct": true,
@@ -223,6 +230,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:95fc896e",
           "type": "cloze",
           "prompt": "An Gleis 2 in Stein-Säckingen sind ___ Sektoren erfasst.",
           "options": [
@@ -237,6 +245,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:e7f80fa6",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 3 in Stein-Säckingen erfasst? (Mehrfachauswahl)",
           "options": [
@@ -283,6 +292,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:a49ba05e",
           "type": "cloze",
           "prompt": "In Stein-Säckingen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -302,7 +312,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Mumpf – Stein-Säckingen: Im Personenverkehr verkehren dort 170 Züge pro Tag, das sind 62'047 im Jahr. Auf dem Abschnitt Stein-Säckingen – Eiken sind es 127 und auf dem Abschnitt Stein-Säckingen – Sisseln sind es 39 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 110 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Mumpf – Stein-Säckingen",
@@ -321,6 +331,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:6c7f77b7",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Mumpf – Stein-Säckingen?",
           "options": [
@@ -335,6 +346,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -387,6 +399,7 @@
       ],
       "questions": [
         {
+          "id": "linien:7353743b",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 700 ist Stein-Säckingen eingetragen?",
           "min": 48,
@@ -427,6 +440,7 @@
       ],
       "questions": [
         {
+          "id": "services:ad48b26d",
           "type": "true_false",
           "prompt": "Stein-Säckingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -435,6 +449,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:63836e32",
           "type": "cloze",
           "prompt": "In Stein-Säckingen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -476,6 +491,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -490,6 +506,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -505,6 +522,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

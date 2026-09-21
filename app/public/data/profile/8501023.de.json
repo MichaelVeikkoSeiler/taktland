@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:183128ce",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Coppet ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:02ea575d",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Coppet ___ Personen ein und aus.",
           "options": [
@@ -98,6 +100,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:c7b9e5ae",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Coppet?",
           "min": 320,
@@ -110,6 +113,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:5cb67a2c",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Coppet lautet ___.",
           "options": [
@@ -146,6 +150,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f54aec8a",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Coppet?",
           "options": [
@@ -160,6 +165,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -179,6 +185,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:acbdae51",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Coppet sind niveaufrei erreichbar.",
           "correct": true,
@@ -203,6 +210,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:da6706c6",
           "type": "true_false",
           "prompt": "An Gleis 1 in Coppet sind Perronhöhen von 20, 25, 35 und 55 Zentimetern erfasst.",
           "correct": true,
@@ -239,6 +247,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:2f1411b7",
           "type": "cloze",
           "prompt": "In Coppet sind ___ Perronsegmente erfasst.",
           "options": [
@@ -253,6 +262,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
           "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -266,25 +276,26 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Tannay – Coppet: Im Personenverkehr verkehren dort 413 Züge pro Tag, das sind 150'628 im Jahr. Auf dem Abschnitt Coppet – Founex sind es 250 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Tannay – Coppet",
           "value": 413,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Tannay – Coppet",
           "value": 150628,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:8a31559a",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Tannay – Coppet?",
           "options": [
@@ -295,19 +306,33 @@
           ],
           "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 413 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Tannay – Coppet?",
-          "min": 123500,
-          "max": 218500,
-          "step": 500,
-          "unit": "Züge/Jahr",
-          "correct": 150628,
-          "explanation": "Die Erhebung zählt 150'628 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Tannay – Coppet, Personenverkehr",
+              "value": 150628,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Coppet – Founex, Personenverkehr",
+              "value": 91192,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Coppet – Founex, Güterverkehr",
+              "value": 10781,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Tannay – Coppet (Personenverkehr) 150'628, Coppet – Founex (Personenverkehr) 91'192, Coppet – Founex (Güterverkehr) 10'781 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -333,6 +358,7 @@
       ],
       "questions": [
         {
+          "id": "linien:86527b83",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Coppet eingetragen?",
           "min": 38,
@@ -373,6 +399,7 @@
       ],
       "questions": [
         {
+          "id": "services:d8dec9b5",
           "type": "true_false",
           "prompt": "Coppet steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -381,6 +408,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:bef3a8c7",
           "type": "cloze",
           "prompt": "In Coppet sind ___ Billettentwerter erfasst.",
           "options": [
@@ -416,6 +444,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -430,6 +459,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

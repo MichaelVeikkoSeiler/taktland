@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f72c46fd",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in La Plaine ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -98,6 +100,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:671b8833",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in La Plaine ___ Personen ein und aus.",
           "options": [
@@ -139,6 +142,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:40ac3ac4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof La Plaine?",
           "min": 290,
@@ -151,6 +155,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:60a4c774",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof La Plaine?",
           "options": [
@@ -188,6 +193,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:bd107bbe",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in La Plaine?",
           "options": [
@@ -202,6 +208,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:b5fcf77c",
           "type": "true_false",
           "prompt": "Das erfasste Perron in La Plaine ist niveaufrei erreichbar.",
           "correct": true,
@@ -232,6 +239,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:4c247e03",
           "type": "cloze",
           "prompt": "An Gleis 1 in La Plaine sind ___ Sektoren erfasst.",
           "options": [
@@ -268,6 +276,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:dfe3e534",
           "type": "cloze",
           "prompt": "In La Plaine sind ___ Perronsegmente erfasst.",
           "options": [
@@ -282,6 +291,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:333e7d65",
           "type": "true_false",
           "prompt": "Bei keinem der 2 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -295,7 +305,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt La Plaine – Russin: Im Personenverkehr verkehren dort 144 Züge pro Tag, das sind 52'476 im Jahr. Auf dem Abschnitt La Plaine – La Plaine-Frontière sind es 58 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr La Plaine – Russin",
@@ -314,6 +324,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:96e3cfcd",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt La Plaine – Russin?",
           "options": [
@@ -328,6 +339,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -375,6 +387,7 @@
       ],
       "questions": [
         {
+          "id": "linien:5fc780d3",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 151 ist La Plaine eingetragen?",
           "min": 61,
@@ -415,6 +428,7 @@
       ],
       "questions": [
         {
+          "id": "services:5863c30b",
           "type": "true_false",
           "prompt": "La Plaine steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -423,6 +437,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:a3bc0bda",
           "type": "cloze",
           "prompt": "In La Plaine sind ___ Billettentwerter erfasst.",
           "options": [
@@ -441,7 +456,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für La Plaine 6 Sitzbänke sowie 1 Infopunkt erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für La Plaine 6 Sitzbänke sowie 1 Infopunkt erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -464,6 +479,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -478,6 +494,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -493,6 +510,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

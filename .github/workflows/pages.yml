@@ -39,6 +39,11 @@ jobs:
           python3 -m pip install --quiet pytest
           python3 -m pytest -q generator/tests belegt/tests
 
+      # Jedes Profil muss genau das sein, was bauen.py aus Fakten und Bauplan
+      # macht. Wer ein Profil von Hand ändert, fällt hier auf.
+      - name: Profile entsprechen dem Bauplan
+        run: python3 generator/bauen.py --alle --pruefen
+
       - name: Profile gegen die Fakten prüfen
         run: python3 generator/validate.py --alle
 

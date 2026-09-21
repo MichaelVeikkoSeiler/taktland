@@ -28,6 +28,8 @@ export interface MatchPaar {
 }
 
 export interface Frage {
+  /** feste Kennung, unter der die App die Antwort speichert */
+  id: string
   type: Fragetyp
   prompt: string
   options?: string[]

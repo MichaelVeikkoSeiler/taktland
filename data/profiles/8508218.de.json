@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:68b5e74d",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Malters ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:8673ed8a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Malters ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:31342f75",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Malters?",
           "min": 400,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:4efb549c",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Malters?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:9659c141",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Malters?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:3931ffd5",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Malters ist niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:83a217ae",
           "type": "cloze",
           "prompt": "An Gleis 2 in Malters sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:385b0a10",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Malters kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -278,6 +287,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:908155d7",
           "type": "cloze",
           "prompt": "In Malters sind ___ Perronsegmente erfasst.",
           "options": [
@@ -292,6 +302,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -305,7 +316,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Malters – Luzern Littau: Im Personenverkehr verkehren dort 86 Züge pro Tag, das sind 31'545 im Jahr. Auf dem Abschnitt Schachen LU – Malters sind es 85 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Malters – Luzern Littau",
@@ -324,6 +335,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:c9197849",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Malters – Luzern Littau?",
           "options": [
@@ -338,6 +350,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:b31facdd",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Malters – Luzern Littau?",
           "min": 25500,
@@ -372,6 +385,7 @@
       ],
       "questions": [
         {
+          "id": "linien:40c44e3e",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 460 ist Malters eingetragen?",
           "min": 68,
@@ -412,6 +426,7 @@
       ],
       "questions": [
         {
+          "id": "services:1405a8ef",
           "type": "true_false",
           "prompt": "Malters steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -420,6 +435,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:828d1806",
           "type": "cloze",
           "prompt": "In Malters sind ___ Billettentwerter erfasst.",
           "options": [
@@ -438,7 +454,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Malters 7 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Malters 7 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -461,6 +477,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -475,6 +492,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -489,6 +507,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

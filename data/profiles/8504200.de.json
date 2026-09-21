@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -12,7 +12,6 @@
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -26,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Yverdon-les-Bains liegt im Kanton Vaud. Infrastrukturbetreiberin und Bahnunternehmen sind gemäss den Fakten die SBB. An einem Werktag steigen 21'900 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 19'300, an einem freien Tag 13'500. Die Angaben gelten ohne TRAVYS.",
+      "body": "An einem Werktag steigen in Yverdon-les-Bains 21'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 19'300, an einem freien Tag 13'500. Infrastruktur und Züge sind der SBB zugeordnet. Die Quelle vermerkt zu diesen Zahlen: «Ohne TRAVYS.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -50,37 +49,30 @@
           "factRef": "steckbrief.dnwv"
         },
         {
-          "label": "Infrastrukturbetreiberin",
-          "value": "SBB",
-          "unit": "",
+          "label": "Abgrenzung der Zahl",
+          "value": "Ohne TRAVYS.",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
+          "factRef": "steckbrief.bemerkung"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:337fe684",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Yverdon-les-Bains ein und aus?",
           "options": [
-            "8'800",
             "12'000",
             "15'000",
+            "19'000",
             "21'900"
           ],
           "correct": 3,
-          "explanation": "An einem Werktag sind es 21'900 Personen, Stand 2025.",
+          "explanation": "An einem Werktag sind es 21'900 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Der Wert an einem freien Tag (dnwv) beträgt 13'500 Personen.",
-          "correct": true,
-          "explanation": "An einem freien Tag sind es 13'500 Personen, Stand 2025.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 1
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -102,26 +94,38 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 19'800 (2018), 20'900 (2023), 22'300 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
+          "explanation": "Die erfassten Werte, aufsteigend: 19'800 (2018), 20'900 (2023), 22'300 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
         },
         {
-          "type": "slider",
-          "prompt": "Wie hoch war der Werktagsverkehr im Jahr 2024?",
-          "min": 15000,
-          "max": 25000,
-          "step": 100,
-          "unit": "Personen",
-          "correct": 22300,
-          "explanation": "2024 waren es 22'300 Personen an einem Werktag.",
-          "factRef": "steckbrief.verlauf[3].dwv",
+          "id": "steckbrief:4299cfc0",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Yverdon-les-Bains ___ Personen ein und aus.",
+          "options": [
+            "13'500",
+            "16'000",
+            "19'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 13'500 Personen, an einem Werktag 21'900. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
           "difficulty": 2
+        },
+        {
+          "id": "steckbrief:300a7b78",
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Yverdon-les-Bains umfasst auch TRAVYS.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne TRAVYS.». Wofür TRAVYS steht, führt sie nicht aus.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Der Bahnhof liegt auf 434.37 Metern über Meer, in der Gemeinde Yverdon-les-Bains, im Bezirk Jura-Nord vaudois. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "body": "Yverdon-les-Bains liegt auf 434.37 Metern über Meer in der Gemeinde Yverdon-les-Bains, Bezirk Jura-Nord vaudois. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet YV.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -131,59 +135,58 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Bezirk",
-          "value": "Jura-Nord vaudois",
-          "unit": "",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
-        },
-        {
-          "label": "Abkürzung",
+          "label": "Offizielle Abkürzung",
           "value": "YV",
-          "unit": "",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Jura-Nord vaudois",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt Yverdon-les-Bains?",
-          "options": [
-            "Jura-Nord vaudois",
-            "Gros-de-Vaud",
-            "Lausanne",
-            "Broye-Vully"
-          ],
-          "correct": 0,
-          "explanation": "Der Bahnhof liegt im Bezirk Jura-Nord vaudois.",
-          "factRef": "stammdaten.bezirk",
-          "difficulty": 1
+          "id": "stammdaten:bae50692",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Yverdon-les-Bains?",
+          "min": 350,
+          "max": 630,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 434.37,
+          "explanation": "Der Bahnhof liegt auf 434.37 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
         },
         {
-          "type": "cloze",
-          "prompt": "Der Bahnhof liegt auf ___ Metern über Meer.",
+          "id": "stammdaten:65fd3069",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Yverdon-les-Bains?",
           "options": [
-            "394.37",
-            "434.37",
-            "474.37"
+            "Broye-Vully",
+            "Gros-de-Vaud",
+            "Jura-Nord vaudois",
+            "Lausanne"
           ],
-          "correct": 1,
-          "explanation": "Die Höhe beträgt 434.37 m über Meer.",
-          "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Bezirk ist Jura-Nord vaudois eingetragen.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons liegen offene Daten vor, alle sind niveaufrei erreichbar. Das längste erfasste Perron misst 427 Meter, das kürzeste 97 Meter.",
+      "body": "Zu 3 Perrons in Yverdon-les-Bains liegen offene Daten vor. Perron 2/3 misst 427 Meter, Perron 1 misst 403 Meter, Perron 5 misst 97 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
           "value": 3,
-          "unit": "",
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
@@ -193,58 +196,61 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 97,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Yverdon-les-Bains?",
-          "options": [
-            "97 m",
-            "272 m",
-            "403 m",
-            "427 m"
-          ],
-          "correct": 3,
-          "explanation": "Das längste erfasste Perron (2/3) misst 427 m.",
-          "factRef": "perrons.laengste_m",
-          "difficulty": 1
-        },
-        {
-          "type": "match",
-          "prompt": "Ordne den Perrontyp der Perronnummer zu.",
-          "pairs": [
+          "id": "perrons:b8692c98",
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
             {
-              "links": "Perron 2/3",
-              "rechts": "Mittelperron",
-              "factRef": "perrons.items[0].typ"
+              "label": "Perron 2/3",
+              "value": 427,
+              "factRef": "perrons.items[0].laenge_m"
             },
             {
-              "links": "Perron 1",
-              "rechts": "Hausperron",
-              "factRef": "perrons.items[1].typ"
+              "label": "Perron 1",
+              "value": 403,
+              "factRef": "perrons.items[1].laenge_m"
             },
             {
-              "links": "Perron 5",
-              "rechts": "Zwischenperron",
-              "factRef": "perrons.items[2].typ"
+              "label": "Perron 5",
+              "value": 97,
+              "factRef": "perrons.items[2].laenge_m"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/3 ist ein Mittelperron, Perron 1 ein Hausperron und Perron 5 ein Zwischenperron."
+          "explanation": "Perron 2/3 misst 427 Meter, Perron 1 misst 403 Meter, Perron 5 misst 97 Meter.",
+          "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "2824.01 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "1734.06 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 hat 2824.01 Quadratmeter, Perron 1 hat 1734.06 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:6c0b0691",
           "type": "true_false",
-          "prompt": "Alle drei erfassten Perrons sind niveaufrei erreichbar.",
+          "prompt": "Alle 3 erfassten Perrons in Yverdon-les-Bains sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Die Fakten weisen 3 von 3 erfassten Perrons als niveaufrei erreichbar aus.",
+          "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
@@ -253,34 +259,44 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisnummern liegen offene Daten vor. Die erfassten Perronkanten sind unterschiedlich lang, und es kommen verschiedene Perronhöhen vor.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 20, 30 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Perronkante Gleis 1",
-          "value": 272,
-          "unit": "m",
+          "label": "Gleise mit offenen Daten",
+          "value": 3,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronkante_m"
+          "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Perronkante Gleis 2",
-          "value": 346,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
-        },
-        {
-          "label": "Perronkante Gleis 3",
+          "label": "Längste erfasste Perronkante",
           "value": 381,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
+          "id": "gleise:605f8f9a",
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "3",
+          "factRef": "gleise.items[2].nr",
+          "explanation": "Gleis 3 hat mit 381 Metern die längste erfasste Perronkante, die nächste misst 346 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
-          "prompt": "Ordne die Gleise nach Länge der Perronkante, längste zuerst.",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -300,289 +316,272 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Gleis 3 hat mit 381 m die längste erfasste Perronkante, vor Gleis 2 mit 346 m und Gleis 1 mit 272 m."
+          "explanation": "Gleis 3 misst 381 Meter, Gleis 2 misst 346 Meter, Gleis 1 misst 272 Meter.",
+          "difficulty": 3
         },
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste Perronkante?",
-          "schema": "gleise",
-          "correct": "3",
-          "factRef": "gleise.items[2].nr",
-          "explanation": "Gleis 3 hat mit 381 m die längste erfasste Perronkante."
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Welchen Perrontyp hat Gleis 2 laut den erfassten Daten?",
+          "id": "gleise:c733befd",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Yverdon-les-Bains sind ___ Sektoren erfasst.",
           "options": [
-            "Hausperron",
-            "Mittelperron",
-            "Zwischenperron",
-            "Seitenperron"
+            "3",
+            "4",
+            "7"
           ],
           "correct": 1,
-          "explanation": "Gleis 2 ist als Mittelperron erfasst.",
-          "factRef": "gleise.items[1].perrontyp",
-          "difficulty": 1
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:012e7fe5",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Yverdon-les-Bains erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "30 cm",
+            "55 cm"
+          ],
+          "correct": [
+            0,
+            2,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 1 sind 20, 30 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Von 18 erfassten Perronsegmenten haben 13 eine Perronhöhe von 55 cm, 3 eine Höhe von 20 cm und 2 eine Höhe von 30 cm. Für alle 3 Gleise mit Daten ist eine Sicherheitslinie erfasst.",
+      "body": "Für Yverdon-les-Bains sind 18 Perronsegmente erfasst: 13 mit 55 Zentimetern, 3 mit 20 Zentimetern, 2 mit 30 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
           "value": 18,
-          "unit": "",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit 55 cm Perronhöhe",
-          "value": 13,
-          "unit": "",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
-        },
-        {
-          "label": "Gleise mit 55 cm Perronhöhe",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 3,
-          "unit": "",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "slider",
-          "prompt": "Wie viele Perronsegmente sind in Yverdon-les-Bains insgesamt erfasst?",
-          "min": 0,
-          "max": 30,
-          "step": 1,
-          "unit": "Segmente",
-          "correct": 18,
-          "explanation": "Es sind 18 Perronsegmente erfasst.",
-          "factRef": "hindernisfreiheit.segmente",
-          "difficulty": 2
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele der erfassten Perronsegmente haben eine Perronhöhe von 55 cm?",
+          "id": "hindernisfreiheit:d006f134",
+          "type": "cloze",
+          "prompt": "In Yverdon-les-Bains sind ___ Perronsegmente erfasst.",
           "options": [
-            "7",
-            "11",
-            "13",
+            "10",
+            "18",
             "22"
           ],
-          "correct": 2,
-          "explanation": "13 von 18 erfassten Segmenten haben eine Perronhöhe von 55 cm.",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
-          "difficulty": 2
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 18 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:014a6dee",
           "type": "true_false",
-          "prompt": "Für die erfassten Perrons ist eine visuell-taktile Sicherheitslinie erfasst.",
+          "prompt": "Bei keinem der 18 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Der Wert für Sicherheitslinie ist mit 'Ja' erfasst.",
-          "factRef": "hindernisfreiheit.sicherheitslinie",
-          "difficulty": 1
+          "explanation": "Die Erhebung weist bei 0 der 18 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt Yverdon-les-Bains–Grandson verkehren im Personenverkehr rund 209 Züge pro Tag, beide Richtungen zusammen. Das ergibt 76'244 Züge pro Jahr auf diesem Abschnitt.",
+      "body": "Am stärksten befahren ist der Abschnitt Yverdon-les-Bains – Grandson: Im Personenverkehr verkehren dort 209 Züge pro Tag, das sind 76'244 im Jahr. Auf dem Abschnitt Ependes VD – Yverdon-les-Bains sind es 168 und auf dem Abschnitt Yverdon-les-Bains – Yverdon-Champ Pittet sind es 77 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 64 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag auf Yverdon-les-Bains–Grandson",
+          "label": "Züge pro Tag, Personenverkehr Yverdon-les-Bains – Grandson",
           "value": 209,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr auf Yverdon-les-Bains–Grandson",
+          "label": "Züge pro Jahr, Personenverkehr Yverdon-les-Bains – Grandson",
           "value": 76244,
-          "unit": "Züge",
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:30326e41",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren pro Tag im Personenverkehr auf dem Abschnitt Yverdon-les-Bains–Grandson (beide Richtungen)?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Yverdon-les-Bains – Grandson?",
           "options": [
-            "84",
-            "110",
             "150",
-            "209"
+            "180",
+            "209",
+            "250"
           ],
-          "correct": 3,
-          "explanation": "Auf dem Abschnitt Yverdon-les-Bains–Grandson verkehren rund 209 Züge pro Tag im Personenverkehr, Stand 2025.",
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 209 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
-          "prompt": "Ordne die Streckenabschnitte nach Zügen pro Tag, meiste zuerst.",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Yverdon-les-Bains–Grandson (Personenverkehr)",
-              "value": 209,
-              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+              "label": "Yverdon-les-Bains – Grandson, Personenverkehr",
+              "value": 76244,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Ependes VD–Yverdon-les-Bains (Personenverkehr)",
-              "value": 168,
-              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+              "label": "Ependes VD – Yverdon-les-Bains, Personenverkehr",
+              "value": 61244,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
-              "label": "Yverdon-les-Bains–Yverdon-Champ Pittet (Personenverkehr)",
-              "value": 77,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+              "label": "Yverdon-les-Bains – Yverdon-Champ Pittet, Personenverkehr",
+              "value": 28066,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
             },
             {
-              "label": "Ependes VD–Yverdon-les-Bains (Güterverkehr)",
-              "value": 64,
-              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+              "label": "Ependes VD – Yverdon-les-Bains, Güterverkehr",
+              "value": 23500,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Der Abschnitt Yverdon-les-Bains–Grandson hat mit 209 Zügen pro Tag im Personenverkehr die meisten Fahrten, gefolgt von Ependes VD–Yverdon-les-Bains mit 168, Yverdon-les-Bains–Yverdon-Champ Pittet mit 77 und Ependes VD–Yverdon-les-Bains im Güterverkehr mit 64."
-        },
-        {
-          "type": "true_false",
-          "prompt": "Auf dem Abschnitt Yverdon-les-Bains–Yverdon-Champ Pittet verkehren im Güterverkehr täglich rund 8 Züge.",
-          "correct": true,
-          "explanation": "Auf diesem Abschnitt sind es 8 Züge pro Tag im Güterverkehr, Stand 2025.",
-          "factRef": "zuege.abschnitte[5].zuege_pro_tag",
-          "difficulty": 2
+          "explanation": "Yverdon-les-Bains – Grandson (Personenverkehr) 76'244, Ependes VD – Yverdon-les-Bains (Personenverkehr) 61'244, Yverdon-les-Bains – Yverdon-Champ Pittet (Personenverkehr) 28'066, Ependes VD – Yverdon-les-Bains (Güterverkehr) 23'500 Züge im Jahr.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Zu 2 Linien liegen offene Daten vor: die Linie 212 Yverdon–Ste-Croix und die Linie 210 Daillens–Biel/Bienne.",
+      "body": "Für Yverdon-les-Bains sind 2 Linien erfasst: die Linie 212 Yverdon - Ste-Croix und die Linie 210 Daillens - Biel/Bienne.",
       "facts": [
         {
-          "label": "Linie 212",
-          "value": "Yverdon - Ste-Croix",
-          "unit": "",
+          "label": "Erfasste Linien",
+          "value": 2,
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].name"
+          "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie 210",
-          "value": "Daillens - Biel/Bienne",
-          "unit": "",
+          "label": "Kilometrierung auf der Linie 210",
+          "value": 39.1341,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[1].name"
+          "factRef": "linien.items[1].km_am_bahnhof"
         }
       ],
       "questions": [
         {
+          "id": "linien:49a84069",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 210 ist Yverdon-les-Bains eingetragen?",
+          "min": 32,
+          "max": 57,
+          "step": 1,
+          "unit": "km",
+          "correct": 39.1341,
+          "explanation": "Die Kilometrierung von Yverdon-les-Bains auf der Linie 210 beträgt 39.1341. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[1].km_am_bahnhof",
+          "difficulty": 3
+        },
+        {
+          "id": "linien:f57243ca",
           "type": "match",
-          "prompt": "Ordne die Liniennummer dem Namen zu.",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
             {
-              "links": "212",
+              "links": "Linie 212",
               "rechts": "Yverdon - Ste-Croix",
               "factRef": "linien.items[0].name"
             },
             {
-              "links": "210",
+              "links": "Linie 210",
               "rechts": "Daillens - Biel/Bienne",
               "factRef": "linien.items[1].name"
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Linie 212 heisst Yverdon - Ste-Croix, Linie 210 heisst Daillens - Biel/Bienne."
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Zu wie vielen Linien liegen für Yverdon-les-Bains offene Daten vor?",
-          "options": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "correct": 1,
-          "explanation": "Es liegen Daten zu 2 Linien vor.",
-          "factRef": "linien.anzahl",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "explanation": "Die Linie 212 heisst Yverdon - Ste-Croix, die Linie 210 heisst Daillens - Biel/Bienne.",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Yverdon-les-Bains ist als WLAN-Standort erfasst. Erfasst sind 3 Billettautomaten des Typs ePOS, 9 Billettentwerter und 1 Wartehalle.",
+      "body": "Yverdon-les-Bains steht in der Liste der WLAN-Standorte. Erfasst sind 3 Billettautomaten vom Typ ePOS, 9 Billettentwerter und 1 Wartehalle.",
       "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
         {
           "label": "Billettautomaten erfasst",
           "value": 3,
-          "unit": "",
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
           "label": "Billettentwerter erfasst",
           "value": 9,
-          "unit": "",
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen erfasst",
-          "value": 1,
-          "unit": "",
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind in Yverdon-les-Bains erfasst?",
-          "options": [
-            "1",
-            "2",
-            "3",
-            "5"
-          ],
-          "correct": 2,
-          "explanation": "Es sind 3 Billettautomaten des Typs ePOS erfasst.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
+          "id": "services:374bfcbb",
           "type": "true_false",
           "prompt": "Yverdon-les-Bains steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Der Bahnhof ist als WLAN-Standort erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
+          "id": "services:939a3fc8",
           "type": "cloze",
-          "prompt": "Erfasst sind ___ Billettentwerter.",
+          "prompt": "In Yverdon-les-Bains sind ___ Billettentwerter erfasst.",
           "options": [
             "9",
             "11",
             "27"
           ],
           "correct": 0,
-          "explanation": "Es sind 9 Billettentwerter erfasst.",
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 9 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
@@ -618,6 +617,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -632,23 +632,25 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "10",
             "15",
             "21",
-            "26"
+            "26",
+            "33"
           ],
-          "correct": 1,
+          "correct": 0,
           "explanation": "Erfasst sind 15 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 7,
+          "min": 22,
           "max": 65,
           "step": 1,
           "unit": "Schliessfächer",
@@ -658,6 +660,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -673,8 +676,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -694,7 +698,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 3'505 Quadratmetern die grösste erfasste Fläche, Perron 5 mit 215 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 3'505 Quadratmetern die grösste erfasste Belagsfläche, Perron 5 mit 215 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -702,29 +706,23 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Yverdon-les-Bains sind Bahnhofpläne als PDF-Dokumente veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "body": "Für Yverdon-les-Bains ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Eigentümerin",
-          "value": "SBB",
-          "unit": "",
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-yverdon-les-bains-a4.pdf",
           "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
+          "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wer ist gemäss den Fakten Eigentümerin der Bahnhofanlage Yverdon-les-Bains?",
-          "options": [
-            "SBB",
-            "TRAVYS",
-            "Kanton Vaud",
-            "Gemeinde Yverdon-les-Bains"
-          ],
-          "correct": 0,
-          "explanation": "Als Eigentümerin ist die SBB erfasst.",
-          "factRef": "bahnhofplan.eigentuemer",
+          "id": "bahnhofplan:6b050370",
+          "type": "true_false",
+          "prompt": "Für Yverdon-les-Bains ist ein Bahnhofplan als PDF veröffentlicht.",
+          "correct": true,
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
       ]

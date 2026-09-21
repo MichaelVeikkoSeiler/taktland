@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:87108e91",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Steinmaur ein und aus?",
           "options": [
@@ -63,6 +64,33 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 1300,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 1500,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 1600,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 1'300 (2022), 1'500 (2024), 1'600 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:a6d5a3f8",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Steinmaur ___ Personen ein und aus.",
           "options": [
@@ -98,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:6263219b",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Steinmaur?",
           "min": 360,
@@ -110,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:611cbc60",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Steinmaur lautet ___.",
           "options": [
@@ -146,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:1bae6091",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Steinmaur?",
           "options": [
@@ -160,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:54af9f84",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Steinmaur ist niveaufrei erreichbar.",
           "correct": true,
@@ -190,6 +222,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:ceed1682",
           "type": "cloze",
           "prompt": "An Gleis 1 in Steinmaur sind ___ Sektoren erfasst.",
           "options": [
@@ -202,6 +235,15 @@
           "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
           "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
+        },
+        {
+          "id": "gleise:5cf6f004",
+          "type": "true_false",
+          "prompt": "Zum erfassten Gleis in Steinmaur ist eine Perronhöhe vermerkt.",
+          "correct": false,
+          "explanation": "Zum erfassten Gleis ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
@@ -226,6 +268,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:261722ee",
           "type": "true_false",
           "prompt": "Für Steinmaur sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -239,7 +282,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Steinmaur – Dielsdorf 79 Züge pro Tag, das sind 28'962 im Jahr. Auf dem Abschnitt Schöfflisdorf-Oberweningen – Steinmaur sind es ebenfalls 79 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Steinmaur – Dielsdorf",
@@ -258,6 +301,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:b77fc568",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Steinmaur – Dielsdorf?",
           "options": [
@@ -294,6 +338,7 @@
       ],
       "questions": [
         {
+          "id": "linien:8a1737bb",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 761 ist Steinmaur eingetragen?",
           "min": 15.0,
@@ -334,6 +379,7 @@
       ],
       "questions": [
         {
+          "id": "services:e0e3db8e",
           "type": "true_false",
           "prompt": "Steinmaur steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -342,6 +388,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c3c81866",
           "type": "cloze",
           "prompt": "In Steinmaur sind ___ Billettentwerter erfasst.",
           "options": [
@@ -377,6 +424,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -391,6 +439,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

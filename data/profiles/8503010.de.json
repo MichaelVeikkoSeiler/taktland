@@ -4,21 +4,22 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
     "perronoberflache",
+    "sektortafel",
     "wifistation",
     "zugzahlen"
   ],
@@ -26,7 +27,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Zürich Enge liegt im Kanton Zürich und wird von der SBB betrieben und befahren. An einem Werktag steigen hier 18'900 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 15'300. An einem freien Tag sind es 7'500 Personen.",
+      "body": "An einem Werktag steigen in Zürich Enge 18'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 15'300, an einem freien Tag 7'500. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -48,48 +49,62 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Infrastrukturbetreiberin",
-          "value": "SBB",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:7875874c",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Enge ein und aus?",
           "options": [
-            "7'600",
-            "10'000",
             "13'000",
-            "18'900"
+            "16'000",
+            "18'900",
+            "26'000"
           ],
-          "correct": 3,
-          "explanation": "An einem Werktag sind es 18'900 Personen, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 18'900 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "An einem freien Tag steigen in Zürich Enge 7'500 Personen ein und aus.",
-          "correct": true,
-          "explanation": "Der Wert für einen freien Tag beträgt 7'500 Personen, Stand 2025.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 1
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 14600,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 17500,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 18900,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 14'600 (2022), 17'500 (2023), 18'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
         },
         {
+          "id": "steckbrief:b1eba355",
           "type": "cloze",
-          "prompt": "Im Tagesmittel über das ganze Jahr steigen in Zürich Enge ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Zürich Enge ___ Personen ein und aus.",
           "options": [
-            "6'100",
-            "8'400",
-            "15'300"
+            "5'200",
+            "6'400",
+            "7'500"
           ],
           "correct": 2,
-          "explanation": "Der Wert im Tagesmittel beträgt 15'300 Personen, Stand 2025.",
-          "factRef": "steckbrief.dtv",
+          "explanation": "An einem freien Tag sind es 7'500 Personen, an einem Werktag 18'900. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
       ]
@@ -97,7 +112,7 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Zürich Enge liegt auf 409 Metern über Meer und wird von der Schweizerischen Bundesbahnen SBB betrieben.",
+      "body": "Zürich Enge liegt auf 409 Metern über Meer in der Gemeinde Zürich, Bezirk Zürich, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet ZEN.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -107,102 +122,134 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Betreiber",
-          "value": "Schweizerische Bundesbahnen SBB",
+          "label": "Offizielle Abkürzung",
+          "value": "ZEN",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.betreiber"
+          "factRef": "stammdaten.abkuerzung"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Auf welcher Höhe über Meer liegt Zürich Enge?",
-          "options": [
-            "330 m",
-            "409 m",
-            "512 m",
-            "601 m"
-          ],
-          "correct": 1,
-          "explanation": "Zürich Enge liegt auf 409 Metern über Meer.",
+          "id": "stammdaten:d593e7e4",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zürich Enge?",
+          "min": 330,
+          "max": 600,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 409,
+          "explanation": "Der Bahnhof liegt auf 409 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "Zürich Enge wird von der Schweizerischen Bundesbahnen SBB betrieben.",
-          "correct": true,
-          "explanation": "Als Betreiber ist die Schweizerische Bundesbahnen SBB erfasst.",
-          "factRef": "stammdaten.betreiber",
-          "difficulty": 1
+          "id": "stammdaten:b13a9084",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Zürich Enge lautet ___.",
+          "options": [
+            "ZEN",
+            "ZSTH",
+            "ZWIE"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist ZEN als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
       "title": "Tagesrhythmus",
-      "body": "Die stärkste Stunde im Tagesverlauf ist die Stunde 17 mit einem Anteil von 10.5 Prozent des Tagesverkehrs. Der stärkste Wochentag ist der Donnerstag mit einem Anteil von 17.3 Prozent der Woche.",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Zürich Enge in der Stunde ab 17 Uhr: 10.5 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Donnerstag, 17.3 Prozent, der kleinste auf den Sonntag, 8.0 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 10.5,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Stärkster Wochentag",
+          "label": "Wochentag mit dem grössten Anteil",
           "value": "Donnerstag",
-          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 17.3,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 8.0,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:f54abdfd",
           "type": "single_choice",
-          "prompt": "Um welche Stunde ist der Anteil am Tagesverkehr in Zürich Enge am höchsten?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Zürich Enge die meisten Bahnhofbenutzer?",
           "options": [
-            "8 Uhr",
-            "12 Uhr",
-            "17 Uhr",
-            "20 Uhr"
+            "ab 7 Uhr",
+            "ab 8 Uhr",
+            "ab 12 Uhr",
+            "ab 17 Uhr"
           ],
-          "correct": 2,
-          "explanation": "Die Stunde 17 hat mit 10.5 Prozent den höchsten Anteil, Stand 2025.",
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 10.5, ab 12 Uhr 9.4, ab 8 Uhr 9.3, ab 7 Uhr 8.4 Prozent.",
           "factRef": "tagesrhythmus.spitzenstunde",
           "difficulty": 1
         },
         {
+          "id": "tagesrhythmus:e919bc94",
           "type": "slider",
-          "prompt": "Wie viel Prozent des Tagesverkehrs entfallen auf die Spitzenstunde?",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Zürich Enge auf die Stunde ab 17 Uhr?",
           "min": 0,
-          "max": 20,
-          "step": 0.5,
+          "max": 25,
+          "step": 0.1,
           "unit": "%",
           "correct": 10.5,
-          "explanation": "Die Spitzenstunde erreicht einen Anteil von 10.5 Prozent, Stand 2025.",
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 10.5 Prozent der Bahnhofbenutzer des ganzen Tages.",
           "factRef": "tagesrhythmus.spitzenanteil",
-          "difficulty": 2
+          "difficulty": 3
         },
         {
+          "id": "tagesrhythmus:e79fa5a2",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag hat in Zürich Enge den höchsten Anteil am Wochenverkehr?",
+          "prompt": "Auf welchen Wochentag entfällt in Zürich Enge der grösste Anteil der Bahnhofbenutzer?",
           "options": [
             "Montag",
             "Mittwoch",
             "Donnerstag",
-            "Samstag"
+            "Freitag"
           ],
           "correct": 2,
-          "explanation": "Der Donnerstag hat mit 17.3 Prozent den höchsten Anteil, Stand 2025.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Donnerstag 17.3, Mittwoch 16.4, Montag 16.0, Freitag 15.5 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[3].tag",
           "difficulty": 2
         }
       ]
@@ -210,7 +257,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons in Zürich Enge liegen offene Daten vor. Das längste erfasste Perron misst 315 Meter, das kürzeste 62 Meter.",
+      "body": "Zu 3 Perrons in Zürich Enge liegen offene Daten vor. Perron 2 misst 315 Meter, Perron 1 misst 291 Meter, Perron 2.2 misst 62 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -224,72 +271,144 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 62,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Zürich Enge?",
-          "options": [
-            "62 m",
-            "244 m",
-            "291 m",
-            "315 m"
-          ],
-          "correct": 3,
-          "explanation": "Das längste erfasste Perron misst 315 Meter.",
-          "factRef": "perrons.laengste_m",
-          "difficulty": 1
-        },
-        {
-          "type": "cloze",
-          "prompt": "Das kürzeste erfasste Perron in Zürich Enge misst ___ Meter.",
-          "options": [
-            "25",
-            "34",
-            "62"
-          ],
-          "correct": 2,
-          "explanation": "Das kürzeste erfasste Perron misst 62 Meter.",
-          "factRef": "perrons.kuerzeste_m",
-          "difficulty": 1
-        },
-        {
-          "type": "match",
-          "prompt": "Welche Länge gehört zu welchem Perron?",
-          "pairs": [
+          "id": "perrons:b8692c98",
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
             {
-              "links": "Perron 2",
-              "rechts": "315 m",
+              "label": "Perron 2",
+              "value": 315,
               "factRef": "perrons.items[0].laenge_m"
             },
             {
-              "links": "Perron 1",
-              "rechts": "291 m",
+              "label": "Perron 1",
+              "value": 291,
               "factRef": "perrons.items[1].laenge_m"
             },
             {
-              "links": "Perron 2.2",
-              "rechts": "62 m",
+              "label": "Perron 2.2",
+              "value": 62,
               "factRef": "perrons.items[2].laenge_m"
             }
           ],
-          "explanation": "Perron 2 misst 315 Meter, Perron 1 misst 291 Meter und Perron 2.2 misst 62 Meter.",
-          "factRef": "perrons.items"
+          "factRef": "perrons.items",
+          "explanation": "Perron 2 misst 315 Meter, Perron 1 misst 291 Meter, Perron 2.2 misst 62 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2",
+              "rechts": "2458.26 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "2107 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2 hat 2458.26 Quadratmeter, Perron 1 hat 2107 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:122d247f",
+          "type": "true_false",
+          "prompt": "Alle 3 erfassten Perrons in Zürich Enge sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. Erfasst sind Perronhöhen von 20, 35 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante",
+          "value": 307,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 6,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:61ecaaf5",
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "2",
+          "factRef": "gleise.items[1].nr",
+          "explanation": "Gleis 2 hat mit 307 Metern die längste erfasste Perronkante, die nächste misst 291 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:ab75f527",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Zürich Enge sind ___ Sektoren erfasst.",
+          "options": [
+            "5",
+            "6",
+            "24"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D, E und F, also 6 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:4c005574",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Zürich Enge erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": [
+            0,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 1 sind 20 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Zürich Enge sind 11 Perronsegmente erfasst, verteilt auf verschiedene Perronhöhen. Eine Sicherheitslinie ist erfasst.",
+      "body": "Für Zürich Enge sind 11 Perronsegmente erfasst: 9 mit 55 Zentimetern, 1 mit 20 Zentimetern, 1 mit 35 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
@@ -298,13 +417,7 @@
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
-        },
-        {
-          "label": "Gleise mit 55 cm Perronhöhe",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
@@ -318,58 +431,46 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind für Zürich Enge erfasst?",
+          "id": "hindernisfreiheit:0b4462bd",
+          "type": "cloze",
+          "prompt": "In Zürich Enge sind ___ Perronsegmente erfasst.",
           "options": [
-            "2",
-            "6",
             "11",
-            "20"
+            "24",
+            "44"
           ],
-          "correct": 2,
-          "explanation": "Es sind 11 Perronsegmente erfasst, Datenstand 2023.",
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 11 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
-          "type": "true_false",
-          "prompt": "Für Zürich Enge ist eine Sicherheitslinie erfasst.",
-          "correct": true,
-          "explanation": "Der Wert der Sicherheitslinie ist erfasst als «Ja».",
-          "factRef": "hindernisfreiheit.sicherheitslinie",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "In Zürich Enge sind ___ Gleise mit einer Perronhöhe von 55 cm erfasst.",
-          "options": [
-            "0",
-            "2",
-            "5"
-          ],
-          "correct": 1,
-          "explanation": "Es sind 2 Gleise mit 55 cm Perronhöhe erfasst.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
-          "difficulty": 2,
-          "optionen_aus_fakten": true
+          "id": "hindernisfreiheit:f366795b",
+          "type": "true_false",
+          "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 11 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt Zürich Wiedikon–Zürich Enge verkehren im Personenverkehr rund 244 Züge pro Tag, das sind 89'079 Züge pro Jahr in beiden Richtungen zusammen.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Zürich Wiedikon – Zürich Enge 244 Züge pro Tag, das sind 89'079 im Jahr. Auf dem Abschnitt Zürich Enge – Zürich Wollishofen sind es ebenfalls 244 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 2 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Abschnitt Wiedikon–Enge",
+          "label": "Züge pro Tag, Personenverkehr Zürich Wiedikon – Zürich Enge",
           "value": 244,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Abschnitt Wiedikon–Enge",
+          "label": "Züge pro Jahr, Personenverkehr Zürich Wiedikon – Zürich Enge",
           "value": 89079,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
@@ -378,54 +479,48 @@
       ],
       "questions": [
         {
+          "id": "zuege:6b3b7be6",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren pro Tag im Personenverkehr auf dem Abschnitt Zürich Wiedikon–Zürich Enge?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zürich Wiedikon – Zürich Enge?",
           "options": [
-            "98",
-            "130",
-            "170",
-            "244"
+            "244",
+            "290",
+            "340",
+            "410"
           ],
-          "correct": 3,
-          "explanation": "Auf dem Abschnitt Zürich Wiedikon–Zürich Enge verkehren rund 244 Züge pro Tag, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 244 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Auf dem Abschnitt Zürich Enge–Zürich Wollishofen verkehren im Güterverkehr rund 2 Züge pro Tag.",
-          "correct": true,
-          "explanation": "Für diesen Abschnitt sind im Güterverkehr 2 Züge pro Tag erfasst, Stand 2025.",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
-          "difficulty": 2
-        },
-        {
+          "id": "zuege:e29fbc11",
           "type": "slider",
-          "prompt": "Wie viele Züge pro Jahr verkehren im Personenverkehr auf dem Abschnitt Zürich Wiedikon–Zürich Enge?",
-          "min": 50000,
-          "max": 100000,
-          "step": 1000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Zürich Wiedikon – Zürich Enge?",
+          "min": 73000,
+          "max": 129500,
+          "step": 500,
           "unit": "Züge/Jahr",
           "correct": 89079,
-          "explanation": "Auf dem Abschnitt verkehren 89'079 Züge pro Jahr, Stand 2025.",
+          "explanation": "Die Erhebung zählt 89'079 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
-          "difficulty": 2
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "In Zürich Enge liegt ein Betriebspunkt der Linie 720 (ZH Langstrasse–Thalwil–Ziegelbrücke) bei Kilometer 3.93155.",
+      "body": "Für Zürich Enge ist 1 Linie erfasst: die Linie 720 ZH Langstrasse - Thalwil - Ziegelbrucke. Der Bahnhof ist darauf bei Kilometer 3.93155 eingetragen.",
       "facts": [
         {
-          "label": "Liniennummer",
-          "value": 720,
+          "label": "Erfasste Linien",
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].nummer"
+          "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometer der Linie 720",
+          "label": "Kilometrierung auf der Linie 720",
           "value": 3.93155,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
@@ -434,41 +529,29 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Liniennummer führt durch Zürich Enge?",
-          "options": [
-            "290",
-            "400",
-            "500",
-            "720"
-          ],
-          "correct": 3,
-          "explanation": "Es handelt sich um die Linie 720 (ZH Langstrasse–Thalwil–Ziegelbrücke).",
-          "factRef": "linien.items[0].nummer",
-          "difficulty": 1
-        },
-        {
+          "id": "linien:d19b6b26",
           "type": "slider",
-          "prompt": "Bei welchem Kilometer der Linie 720 liegt der Betriebspunkt Zürich Enge?",
-          "min": 0,
-          "max": 10,
-          "step": 0.01,
+          "prompt": "Bei welchem Streckenkilometer der Linie 720 ist Zürich Enge eingetragen?",
+          "min": 3.0,
+          "max": 6.0,
+          "step": 0.1,
           "unit": "km",
           "correct": 3.93155,
-          "explanation": "Der Betriebspunkt liegt bei Kilometer 3.93155.",
+          "explanation": "Die Kilometrierung von Zürich Enge auf der Linie 720 beträgt 3.93155. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
-          "difficulty": 2
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Für Zürich Enge ist WLAN erfasst. Erfasst sind 1 Billettautomat und 6 Billettentwerter. Wartehallen sind keine verzeichnet.",
+      "body": "Zürich Enge steht in der Liste der WLAN-Standorte. Erfasst sind 1 Billettautomat vom Typ ePOS und 6 Billettentwerter. Wartehallen sind keine verzeichnet.",
       "facts": [
         {
           "label": "WLAN erfasst",
           "value": true,
+          "unit": "",
           "source": "wifistation",
           "factRef": "services.wlan_erfasst"
         },
@@ -487,42 +570,28 @@
       ],
       "questions": [
         {
+          "id": "services:1a7d56a1",
           "type": "true_false",
-          "prompt": "Für Zürich Enge ist WLAN erfasst.",
+          "prompt": "Zürich Enge steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Der Bahnhof steht in der Liste der WLAN-Standorte.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind für Zürich Enge erfasst?",
+          "id": "services:bc36ee81",
+          "type": "cloze",
+          "prompt": "In Zürich Enge sind ___ Billettentwerter erfasst.",
           "options": [
-            "0",
-            "1",
-            "3",
-            "6"
+            "5",
+            "6",
+            "24"
           ],
           "correct": 1,
-          "explanation": "Erfasst ist 1 Billettautomat vom Typ ePOS.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettentwerter sind für Zürich Enge erfasst?",
-          "options": [
-            "1",
-            "2",
-            "6",
-            "9"
-          ],
-          "correct": 2,
-          "explanation": "Es sind 6 Billettentwerter erfasst.",
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 2
         }
       ]
     },
@@ -558,6 +627,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -572,24 +642,26 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "4",
-            "5",
+            "8",
             "9",
-            "27"
+            "27",
+            "36"
           ],
-          "correct": 2,
+          "correct": 1,
           "explanation": "Erfasst sind 9 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1,
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 7,
+          "min": 20,
           "max": 59,
           "step": 1,
           "unit": "Schliessfächer",
@@ -599,6 +671,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -618,22 +691,23 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Zürich Enge ist ein Bahnhofplan veröffentlicht. Eigentümerin der Anlage ist die SBB.",
+      "body": "Für Zürich Enge ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Eigentümerin",
-          "value": "SBB",
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-zuerich-enge-a4.pdf",
           "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
+          "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:69f2dafa",
           "type": "true_false",
-          "prompt": "Die SBB ist als Eigentümerin des Bahnhofplans für Zürich Enge erfasst.",
+          "prompt": "Für Zürich Enge ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Als Eigentümerin ist die SBB erfasst.",
-          "factRef": "bahnhofplan.eigentuemer",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
       ]
@@ -659,6 +733,46 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        20,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 291,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "sektoren_anzahl": 6
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 307,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "sektoren_anzahl": 6
     }
   ]
 }

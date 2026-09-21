@@ -4,17 +4,16 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,122 +27,229 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Neuchâtel liegt im gleichnamigen Kanton, auf 479 Metern über Meer. An einem Werktag steigen hier 32'600 Personen ein und aus, an einem freien Tag 22'000. Erfasst sind vier Bahnunternehmen: BLS, SBB, TPF und transN.",
+      "body": "An einem Werktag steigen in Neuchâtel 32'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 29'300, an einem freien Tag 22'000. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS, SBB, TPF und transN erfasst.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 32600,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 29300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 22000,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnunternehmen",
-          "value": "BLS, SBB, TPF, transN",
-          "unit": null,
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.evu"
-        },
-        {
-          "label": "Höhe über Meer",
-          "value": 479,
-          "unit": "m",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.hoehe_m_ue_m"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:d3ebe061",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Neuchâtel ein und aus?",
           "options": [
-            "11'400",
+            "23'000",
+            "28'000",
             "32'600",
-            "58'000",
-            "121'000"
+            "39'000"
           ],
-          "correct": 1,
-          "explanation": "32'600 Personen pro Werktag, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 32'600 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "In Neuchâtel sind Züge von vier verschiedenen Bahnunternehmen erfasst.",
-          "correct": true,
-          "explanation": "Erfasst sind BLS, SBB, TPF und transN.",
-          "factRef": "steckbrief.evu",
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 26900,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 28800,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 32700,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 26'900 (2022), 28'800 (2018), 32'700 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:c5a938d9",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Neuchâtel ___ Personen ein und aus.",
+          "options": [
+            "19'000",
+            "22'000",
+            "26'000"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 22'000 Personen, an einem Werktag 32'600. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Neuchâtel liegt auf 479.22 Metern über Meer in der Gemeinde Neuchâtel. Als Kanton ist in den Stammdaten Neuchâtel eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet NE.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 479.22,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "NE",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:36c796fb",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Neuchâtel?",
+          "min": 390,
+          "max": 700,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 479.22,
+          "explanation": "Der Bahnhof liegt auf 479.22 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "2024 wurden mehr Ein- und Aussteigende gezählt als 2025.",
-          "correct": true,
-          "explanation": "2024 waren es 32'700, 2025 sind es 32'600.",
-          "factRef": "steckbrief.verlauf[3].dwv",
-          "difficulty": 3
+          "id": "stammdaten:05930909",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Neuchâtel lautet ___.",
+          "options": [
+            "DEU",
+            "NE",
+            "NESE"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist NE als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
-      "title": "Der Tag am Bahnhof",
-      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 10.5 Prozent des Tagesaufkommens. Um 2 Uhr nachts sind es 0.0 Prozent. Über die Woche ist der Freitag mit 16.1 Prozent der stärkste Tag, der Sonntag mit 10.7 Prozent der schwächste.",
+      "title": "Tagesrhythmus",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Neuchâtel in der Stunde ab 17 Uhr: 10.5 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Freitag, 16.1 Prozent, der kleinste auf den Sonntag, 10.7 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 10.5,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 27900,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
+          "label": "Wochentag mit dem grössten Anteil",
+          "value": "Freitag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.1,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 10.7,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:f604b0e5",
+          "type": "single_choice",
+          "prompt": "In welcher Stunde zählt die Erhebung in Neuchâtel die meisten Bahnhofbenutzer?",
+          "options": [
+            "ab 7 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 10.5, ab 7 Uhr 9.5, ab 16 Uhr 8.6, ab 18 Uhr 8.1 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
+        },
+        {
+          "id": "tagesrhythmus:ae80001a",
           "type": "slider",
-          "prompt": "Welcher Anteil des Tagesaufkommens fällt auf die stärkste Stunde?",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Neuchâtel auf die Stunde ab 17 Uhr?",
           "min": 0,
           "max": 25,
           "step": 0.1,
           "unit": "%",
           "correct": 10.5,
-          "explanation": "10.5 Prozent, in der Stunde ab 17 Uhr.",
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 10.5 Prozent der Bahnhofbenutzer des ganzen Tages.",
           "factRef": "tagesrhythmus.spitzenanteil",
           "difficulty": 3
         },
         {
+          "id": "tagesrhythmus:24b45996",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag ist in Neuchâtel der stärkste?",
+          "prompt": "Auf welchen Wochentag entfällt in Neuchâtel der grösste Anteil der Bahnhofbenutzer?",
           "options": [
             "Montag",
-            "Donnerstag",
             "Freitag",
-            "Samstag"
+            "Samstag",
+            "Sonntag"
           ],
-          "correct": 2,
-          "explanation": "Der Freitag mit 16.1 Prozent der Wochenbesuche.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Freitag 16.1, Montag 14.7, Samstag 11.6, Sonntag 10.7 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[4].tag",
           "difficulty": 2
         }
       ]
@@ -151,34 +257,27 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 4 Perrons liegen Daten vor. Das längste misst 419 Meter, das kürzeste 187 Meter. Bei 4 von 4 erfassten Perrons ist der Zugang niveaufrei.",
+      "body": "Zu 4 Perrons in Neuchâtel liegen offene Daten vor. Perron 2/3 misst 419 Meter, Perron 4/5 misst 402 Meter, Perron 1 misst 218 Meter, Perron 6/7 misst 187 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 4,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Längstes Perron",
+          "label": "Längstes erfasstes Perron",
           "value": 419,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes Perron",
-          "value": 187,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -197,238 +296,319 @@
               "factRef": "perrons.items[3].laenge_m"
             }
           ],
-          "correct": null,
-          "explanation": "Perron 2/3 ist mit 419 Metern das längste, Perron 6/7 mit 187 Metern das kürzeste der erfassten.",
           "factRef": "perrons.items",
+          "explanation": "Perron 2/3 misst 419 Meter, Perron 1 misst 218 Meter, Perron 6/7 misst 187 Meter. Perrons mit fast gleicher Länge bleiben weg.",
           "difficulty": 2
+        },
+        {
+          "id": "perrons:d1003d05",
+          "type": "true_false",
+          "prompt": "Alle 4 erfassten Perrons in Neuchâtel sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 4 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 7 Gleisen vor, den Nummern 1 bis 7. Die längsten Perronkanten haben die Gleise 2 und 3 mit je 303 Metern. An den Gleisen 2 bis 5 reichen die Sektoren von A bis G, an den Gleisen 6 und 7 nur von A bis C.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "title": "Gleise",
+      "body": "Zu 7 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 5, 6 und 7. An allen 7 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 7,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Perronkante an Gleis 2",
-          "value": 303,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
-        },
-        {
-          "label": "Letzter Sektor an Gleis 2",
-          "value": "G",
-          "unit": null,
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
           "source": "sektortafel",
-          "factRef": "gleise.items[1].sektoren[6]"
-        },
-        {
-          "label": "Letzter Sektor an Gleis 6",
-          "value": "C",
-          "unit": null,
-          "source": "sektortafel",
-          "factRef": "gleise.items[5].sektoren[2]"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 2?",
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 2",
+              "value": 303,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 218,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 7",
+              "value": 188,
+              "factRef": "gleise.items[6].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 2 misst 303 Meter, Gleis 1 misst 218 Meter, Gleis 7 misst 188 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:940a584a",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Neuchâtel sind ___ Sektoren erfasst.",
           "options": [
-            "C",
-            "E",
-            "G",
-            "K"
+            "2",
+            "3",
+            "4"
           ],
           "correct": 2,
-          "explanation": "Von A bis G. An den Gleisen 6 und 7 reichen sie nur bis C.",
-          "factRef": "gleise.items[1].sektoren[6]",
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         },
         {
-          "type": "hotspot",
-          "prompt": "An welchem Gleis ist die Perronkante am kürzesten?",
-          "schema": "gleise",
-          "correct": "6",
-          "explanation": "Gleis 6 mit 187 Metern.",
-          "factRef": "gleise.items[5].nr",
+          "id": "gleise:0cb50f63",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Neuchâtel kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 7 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "27 Perronabschnitte sind erfasst, durchgehend auf 55 Zentimetern. An 7 von 7 erfassten Gleisen ist damit die Referenzhöhe für den stufenfreien Einstieg erreicht. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe.",
+      "title": "Hindernisfreiheit",
+      "body": "Für Neuchâtel sind 27 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 7 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Perronabschnitte",
+          "label": "Erfasste Perronsegmente",
           "value": 27,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 7,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
-          "label": "Abschnitte mit Hilfstritt",
-          "value": 0,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:2f1fbc25",
+          "type": "cloze",
+          "prompt": "In Neuchâtel sind ___ Perronsegmente erfasst.",
+          "options": [
+            "27",
+            "32",
+            "38"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 27 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:362dffa5",
           "type": "true_false",
-          "prompt": "An jedem erfassten Gleis in Neuchâtel liegt die Perronkante auf 55 Zentimetern.",
+          "prompt": "Bei keinem der 27 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "7 von 7 erfassten Gleisen haben einen Abschnitt auf 55 Zentimetern.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "explanation": "Die Erhebung weist bei 0 der 27 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf den Strecken",
-      "body": "Am stärksten befahren ist der Abschnitt von Neuchâtel-Vauseyon her: 117'781 Personenzüge pro Jahr, rund 323 pro Tag in beiden Richtungen zusammen. Richtung Neuchâtel Est sind es 286 pro Tag. Dazu kommen 57 Güterzüge pro Tag von Vauseyon her.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Neuchâtel-Vauseyon (bif) – Neuchâtel: Im Personenverkehr verkehren dort 323 Züge pro Tag, das sind 117'781 im Jahr. Auf dem Abschnitt Neuchâtel – Neuchâtel Est (bif) sind es 286 und auf dem Abschnitt Neuchâtel – Neuchâtel Cargo sind es 6 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 57 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, Abschnitt Vauseyon",
+          "label": "Züge pro Tag, Personenverkehr Neuchâtel-Vauseyon (bif) – Neuchâtel",
           "value": 323,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Personenzüge pro Tag Richtung Neuchâtel Est",
-          "value": 286,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Neuchâtel-Vauseyon (bif) – Neuchâtel",
+          "value": 117781,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
-        },
-        {
-          "label": "Güterzüge pro Tag, Abschnitt Vauseyon",
-          "value": 57,
-          "unit": "Züge",
-          "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:84c31b69",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Neuchâtel?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Neuchâtel-Vauseyon (bif) – Neuchâtel?",
           "options": [
-            "94",
-            "180",
+            "270",
             "323",
-            "610"
+            "390",
+            "450"
           ],
-          "correct": 2,
-          "explanation": "Rund 323 pro Tag von Neuchâtel-Vauseyon her, beide Richtungen zusammen.",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 323 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Auf dem stärksten Abschnitt bei Neuchâtel fahren auch Güterzüge.",
-          "correct": true,
-          "explanation": "57 Güterzüge pro Tag, zusätzlich zu den 323 Personenzügen.",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
-          "difficulty": 2
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Neuchâtel-Vauseyon (bif) – Neuchâtel, Personenverkehr",
+              "value": 117781,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Neuchâtel – Neuchâtel Est (bif), Personenverkehr",
+              "value": 104398,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Neuchâtel-Vauseyon (bif) – Neuchâtel, Güterverkehr",
+              "value": 20791,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Neuchâtel – Neuchâtel Cargo, Personenverkehr",
+              "value": 2189,
+              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Neuchâtel-Vauseyon (bif) – Neuchâtel (Personenverkehr) 117'781, Neuchâtel – Neuchâtel Est (bif) (Personenverkehr) 104'398, Neuchâtel-Vauseyon (bif) – Neuchâtel (Güterverkehr) 20'791, Neuchâtel – Neuchâtel Cargo (Personenverkehr) 2'189 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "In diesen Daten laufen in Neuchâtel 2 Linien zusammen: die Linie 210 von Daillens nach Biel/Bienne und die Linie 215 Richtung Neuchâtel Est.",
+      "body": "Für Neuchâtel sind 2 Linien erfasst: die Linie 210 Daillens - Biel/Bienne und die Linie 215 Neuchatel - Neuchatel Est.",
       "facts": [
         {
-          "label": "Linien am Bahnhof",
+          "label": "Erfasste Linien",
           "value": 2,
-          "unit": null,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie von Daillens her",
-          "value": 210,
-          "unit": null,
+          "label": "Kilometrierung auf der Linie 210",
+          "value": 75.29488,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].nummer"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Linie führt von Daillens über Neuchâtel nach Biel/Bienne?",
-          "options": [
-            "Linie 210",
-            "Linie 215",
-            "Linie 410"
+          "id": "linien:0c7a2d02",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 210 ist Neuchâtel eingetragen?",
+          "min": 61,
+          "max": 110,
+          "step": 1,
+          "unit": "km",
+          "correct": 75.29488,
+          "explanation": "Die Kilometrierung von Neuchâtel auf der Linie 210 beträgt 75.29488. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        },
+        {
+          "id": "linien:f57243ca",
+          "type": "match",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
+          "pairs": [
+            {
+              "links": "Linie 210",
+              "rechts": "Daillens - Biel/Bienne",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "Linie 215",
+              "rechts": "Neuchatel - Neuchatel Est",
+              "factRef": "linien.items[1].name"
+            }
           ],
-          "correct": 0,
-          "explanation": "Die Linie 210, in der Quelle als «Daillens - Biel/Bienne» geführt.",
-          "factRef": "linien.items[0].nummer",
-          "optionen_aus_fakten": true,
+          "factRef": "linien.items",
+          "explanation": "Die Linie 210 heisst Daillens - Biel/Bienne, die Linie 215 heisst Neuchatel - Neuchatel Est.",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 4 Billettautomaten, 7 Billettentwerter und 2 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "title": "Services",
+      "body": "Neuchâtel steht in der Liste der WLAN-Standorte. Erfasst sind 4 Billettautomaten (Typen BATS und ePOS), 7 Billettentwerter und 2 Wartehallen.",
       "facts": [
         {
-          "label": "Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 4,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 7,
-          "unit": null,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "WLAN erfasst",
-          "value": true,
-          "unit": null,
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:a270f713",
           "type": "true_false",
           "prompt": "Neuchâtel steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Ja, der Bahnhof ist als WLAN-Standort erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
+        },
+        {
+          "id": "services:6071e65b",
+          "type": "cloze",
+          "prompt": "In Neuchâtel sind ___ Billettentwerter erfasst.",
+          "options": [
+            "6",
+            "7",
+            "28"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 7 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -464,6 +644,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -478,24 +659,25 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "5",
             "13",
             "29",
-            "39"
+            "39",
+            "52"
           ],
-          "correct": 1,
+          "correct": 0,
           "explanation": "Erfasst sind 13 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 14,
+          "min": 42,
           "max": 126,
           "step": 1,
           "unit": "Schliessfächer",
@@ -505,6 +687,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -520,8 +703,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -546,7 +730,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4/5 hat mit 2'473 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 1'005 die kleinste der gezeigten.",
+          "explanation": "Perron 4/5 hat mit 2'473 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 1'005 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -554,22 +738,22 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Neuchâtel ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "body": "Für Neuchâtel ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Plan als A4",
+          "label": "Plan als A4-Blatt",
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-neuchatel-a4.pdf",
-          "unit": null,
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:3a5149f6",
           "type": "true_false",
-          "prompt": "Für Neuchâtel gibt es einen veröffentlichten Bahnhofplan.",
+          "prompt": "Für Neuchâtel ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
@@ -591,130 +775,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 218,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 303,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G"
-      ],
-      "sektoren_anzahl": 7
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 303,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G"
-      ],
-      "sektoren_anzahl": 7
-    },
-    {
-      "nr": "4",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 302,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G"
-      ],
-      "sektoren_anzahl": 7
-    },
-    {
-      "nr": "5",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 302,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G"
-      ],
-      "sektoren_anzahl": 7
-    },
-    {
-      "nr": "6",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 187,
-      "sektoren": [
-        "A",
-        "B",
-        "C"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "7",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 188,
-      "sektoren": [
-        "A",
-        "B",
-        "C"
-      ],
-      "sektoren_anzahl": 3
     }
   ]
 }

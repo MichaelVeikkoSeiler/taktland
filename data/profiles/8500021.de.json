@@ -11,13 +11,11 @@
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
     "perronoberflache",
-    "sektortafel",
     "wifistation",
     "zugzahlen"
   ],
@@ -25,7 +23,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Pratteln 10'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 8'700, an einem freien Tag 5'200. Infrastruktur und Züge sind der SBB zugeordnet. Der höchste erfasste Werktagswert liegt mit 10'500 im Jahr 2024.",
+      "body": "An einem Werktag steigen in Pratteln 10'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 8'700, an einem freien Tag 5'200. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -51,20 +49,22 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:69445c88",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Pratteln ein und aus?",
           "options": [
-            "6'100",
             "7'100",
             "10'200",
+            "12'000",
             "14'000"
           ],
-          "correct": 2,
+          "correct": 1,
           "explanation": "An einem Werktag sind es 10'200 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +88,20 @@
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 9'000 (2022), 9'900 (2023), 10'500 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
+        },
+        {
+          "id": "steckbrief:e358df60",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Pratteln ___ Personen ein und aus.",
+          "options": [
+            "3'600",
+            "4'400",
+            "5'200"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 5'200 Personen, an einem Werktag 10'200. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         }
       ]
     },
@@ -104,20 +118,34 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Bezirk",
-          "value": "Liestal",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
-        },
-        {
           "label": "Offizielle Abkürzung",
           "value": "PR",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Liestal",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:a1ed84c1",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Pratteln?",
+          "min": 230,
+          "max": 420,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 289.6,
+          "explanation": "Der Bahnhof liegt auf 289.6 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:4f992855",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Pratteln?",
           "options": [
@@ -128,20 +156,8 @@
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Pratteln liegt im Bezirk Liestal, Kanton Basel-Landschaft.",
+          "explanation": "Als Bezirk ist Liestal eingetragen.",
           "factRef": "stammdaten.bezirk",
-          "difficulty": 2
-        },
-        {
-          "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Pratteln?",
-          "min": 250,
-          "max": 410,
-          "step": 1,
-          "unit": "m ü. M.",
-          "correct": 289.6,
-          "explanation": "Der Bahnhof liegt auf 289.6 Metern über Meer.",
-          "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         }
       ]
@@ -149,7 +165,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons in Pratteln liegen offene Daten vor, alle 3 sind niveaufrei erreichbar. Perron 2/4 ist mit 324 Metern das längste, Perron 5/7 misst 252 Meter und Perron 1 misst 228 Meter.",
+      "body": "Zu 3 Perrons in Pratteln liegen offene Daten vor. Perron 2/4 misst 324 Meter, Perron 5/7 misst 252 Meter, Perron 1 misst 228 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -163,17 +179,11 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 228,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -195,10 +205,11 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/4 misst 324 Meter, Perron 5/7 misst 252 und Perron 1 misst 228 Meter.",
+          "explanation": "Perron 2/4 misst 324 Meter, Perron 5/7 misst 252 Meter, Perron 1 misst 228 Meter.",
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -219,12 +230,13 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/4 hat 1147.02 Quadratmeter, Perron 5/7 hat 893.22 und Perron 1 hat 620.23.",
+          "explanation": "Perron 2/4 hat 1147.02 Quadratmeter, Perron 5/7 hat 893.22 Quadratmeter, Perron 1 hat 620.23 Quadratmeter.",
           "difficulty": 3
         },
         {
+          "id": "perrons:23b19736",
           "type": "true_false",
-          "prompt": "Zu allen 3 erfassten Perrons in Pratteln ist ein niveaufreier Zugang vermerkt.",
+          "prompt": "Alle 3 erfassten Perrons in Pratteln sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -235,7 +247,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 4, 5 und 7. An allen 5 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Die Perronkanten messen zwischen 229 und 238 Metern. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 4, 5 und 7. An allen 5 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -243,31 +255,16 @@
           "value": 5,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
-        },
-        {
-          "label": "Längste erfasste Perronkante",
-          "value": 238,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
         }
       ],
       "questions": [
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "2",
-          "factRef": "gleise.items[1].nr",
-          "explanation": "Gleis 2 hat mit 238 Metern die längste erfasste Perronkante. Die Gleise 4, 5 und 7 messen je 236 Meter, Gleis 1 misst 229.",
-          "difficulty": 3
-        },
-        {
+          "id": "gleise:f4b0b8a2",
           "type": "true_false",
-          "prompt": "Zu den erfassten Gleisen in Pratteln sind Sektortafeln verzeichnet.",
-          "correct": false,
-          "explanation": "Zu keinem der 5 erfassten Gleise ist eine Sektortafel in den Daten. Ob vor Ort Sektoren angeschrieben sind, sagen die offenen Daten nicht.",
-          "factRef": "gleise.items[0].sektoren_anzahl",
+          "prompt": "An den erfassten Gleisen in Pratteln kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 5 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
@@ -275,7 +272,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Pratteln sind 10 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 5 erfassten Gleisen liegt diese Höhe vor. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Pratteln sind 10 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 5 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -299,10 +296,11 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:f0431295",
           "type": "cloze",
           "prompt": "In Pratteln sind ___ Perronsegmente erfasst.",
           "options": [
-            "7",
+            "8",
             "10",
             "14"
           ],
@@ -313,6 +311,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:cb4cc65b",
           "type": "true_false",
           "prompt": "Bei keinem der 10 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -325,68 +324,69 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Von der Pratteln Überwerfung her verkehren im Personenverkehr 292 Züge pro Tag, das sind 106'642 im Jahr. Auf demselben Abschnitt kommen 185 Güterzüge pro Tag dazu. Richtung Pratteln Salina Raurica sind es 173 Züge im Personenverkehr und 118 im Güterverkehr.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Am stärksten befahren ist der Abschnitt Pratteln Ueberwerfung – Pratteln: Im Personenverkehr verkehren dort 292 Züge pro Tag, das sind 106'642 im Jahr. Auf dem Abschnitt Pratteln – Pratteln Salina Raurica sind es 173 und auf dem Abschnitt Pratteln – Frenkendorf-Füllinsdorf sind es 118 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 185 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr von der Überwerfung",
+          "label": "Züge pro Tag, Personenverkehr Pratteln Ueberwerfung – Pratteln",
           "value": 292,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Güterzüge pro Tag, gleicher Abschnitt",
-          "value": 185,
-          "unit": "Züge/Tag",
+          "label": "Züge pro Jahr, Personenverkehr Pratteln Ueberwerfung – Pratteln",
+          "value": 106642,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:f62df3f4",
           "type": "single_choice",
-          "prompt": "Wie viele Güterzüge pro Tag verkehren auf dem Abschnitt von der Pratteln Überwerfung her?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Pratteln Ueberwerfung – Pratteln?",
           "options": [
-            "67",
-            "118",
-            "185",
-            "292"
+            "200",
+            "250",
+            "292",
+            "350"
           ],
           "correct": 2,
-          "optionen_aus_fakten": true,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 185 Güterzüge pro Tag. Im Personenverkehr sind es 292.",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag",
-          "difficulty": 2
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 292 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Von der Überwerfung, Personenverkehr",
+              "label": "Pratteln Ueberwerfung – Pratteln, Personenverkehr",
               "value": 106642,
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Von der Überwerfung, Güterverkehr",
+              "label": "Pratteln Ueberwerfung – Pratteln, Güterverkehr",
               "value": 67531,
               "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
-              "label": "Richtung Salina Raurica, Personenverkehr",
+              "label": "Pratteln – Pratteln Salina Raurica, Personenverkehr",
               "value": 63061,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
             },
             {
-              "label": "Richtung Frenkendorf-Füllinsdorf, Personenverkehr",
-              "value": 43003,
-              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
+              "label": "Pratteln – Pratteln Salina Raurica, Güterverkehr",
+              "value": 43006,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr von der Überwerfung sind es 106'642 Züge im Jahr, im Güterverkehr 67'531. Richtung Salina Raurica fahren 63'061 Personenzüge, Richtung Frenkendorf-Füllinsdorf 43'003.",
+          "explanation": "Pratteln Ueberwerfung – Pratteln (Personenverkehr) 106'642, Pratteln Ueberwerfung – Pratteln (Güterverkehr) 67'531, Pratteln – Pratteln Salina Raurica (Personenverkehr) 63'061, Pratteln – Pratteln Salina Raurica (Güterverkehr) 43'006 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -394,7 +394,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Pratteln ist 1 Linie erfasst: die Linie 500 Basel SBB–Olten–Luzern. Der Bahnhof ist darauf bei Kilometer 8.33813 eingetragen.",
+      "body": "Für Pratteln ist 1 Linie erfasst: die Linie 500 Basel SBB - Olten - Luzern. Der Bahnhof ist darauf bei Kilometer 8.33813 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -412,15 +412,15 @@
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Auf der Linie 500 steht Pratteln bei Kilometer ___.",
-          "options": [
-            "8.33813",
-            "28.33813",
-            "48.33813"
-          ],
-          "correct": 0,
-          "explanation": "Die Kilometrierung von Pratteln auf der Linie 500 beträgt 8.33813. Der Wert zählt ab Basel SBB.",
+          "id": "linien:606d641a",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 500 ist Pratteln eingetragen?",
+          "min": 6.5,
+          "max": 12.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 8.33813,
+          "explanation": "Die Kilometrierung von Pratteln auf der Linie 500 beträgt 8.33813. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -432,6 +432,13 @@
       "body": "Erfasst sind 2 Billettautomaten vom Typ ePOS, 6 Billettentwerter und 3 Wartehallen. Pratteln steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
           "label": "Billettautomaten erfasst",
           "value": 2,
           "source": "billetautomat",
@@ -442,17 +449,11 @@
           "value": 6,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "WLAN erfasst",
-          "value": false,
-          "unit": "",
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:207e3730",
           "type": "true_false",
           "prompt": "Pratteln steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -461,17 +462,18 @@
           "difficulty": 2
         },
         {
+          "id": "services:4af9d903",
           "type": "cloze",
-          "prompt": "In Pratteln sind ___ Wartehallen erfasst.",
+          "prompt": "In Pratteln sind ___ Billettentwerter erfasst.",
           "options": [
-            "1",
-            "3",
-            "6"
+            "6",
+            "8",
+            "13"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 3 Wartehallen. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort steht.",
-          "factRef": "services.wartehallen_erfasst",
+          "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
       ]
@@ -508,6 +510,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -522,6 +525,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -536,6 +540,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -548,8 +553,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -569,7 +575,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/4 hat mit 1'858 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 881 die kleinste der gezeigten.",
+          "explanation": "Perron 2/4 hat mit 1'858 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 881 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -615,63 +621,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 229,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 238,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "4",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 236,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "5",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 236,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "7",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 236,
-      "sektoren": [],
-      "sektoren_anzahl": 0
     }
   ]
 }

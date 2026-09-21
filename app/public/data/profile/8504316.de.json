@@ -54,6 +54,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:34abc699",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Le Locle ein und aus?",
           "options": [
@@ -68,6 +69,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:7d4928ab",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Le Locle ___ Personen ein und aus.",
           "options": [
@@ -106,6 +109,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:a1f11ea7",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Le Locle umfasst auch transN.",
           "correct": false,
@@ -136,6 +140,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:a833d7d0",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Le Locle?",
           "min": 770,
@@ -148,6 +153,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:edfe69ce",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Le Locle lautet ___.",
           "options": [
@@ -184,6 +190,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -209,6 +216,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -228,6 +236,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:849d6ba3",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Le Locle sind niveaufrei erreichbar.",
           "correct": true,
@@ -259,6 +268,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:bce0052e",
           "type": "cloze",
           "prompt": "In Le Locle sind ___ Perronsegmente erfasst.",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5eee92da",
           "type": "true_false",
           "prompt": "Bei keinem der 5 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -317,7 +329,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Le Locle – Le Crêt-du-Locle: Im Personenverkehr verkehren dort 91 Züge pro Tag, das sind 33'053 im Jahr. Auf dem Abschnitt Le Locle-Col-des-Roches – Le Locle sind es 12 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Le Locle – Le Crêt-du-Locle",
@@ -336,6 +348,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:2902c644",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Le Locle – Le Crêt-du-Locle?",
           "options": [
@@ -350,6 +363,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -397,6 +411,7 @@
       ],
       "questions": [
         {
+          "id": "linien:116a7d84",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 224 ist Le Locle eingetragen?",
           "min": 30,
@@ -409,6 +424,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -456,6 +472,7 @@
       ],
       "questions": [
         {
+          "id": "services:3a1d871f",
           "type": "true_false",
           "prompt": "Le Locle steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -464,6 +481,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:6ac3225d",
           "type": "cloze",
           "prompt": "In Le Locle sind ___ Billettentwerter erfasst.",
           "options": [
@@ -505,6 +523,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -519,6 +538,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -533,6 +553,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -548,8 +569,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -569,7 +591,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2 hat mit 1'107 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 0 die kleinste der gezeigten.",
+          "explanation": "Perron 2 hat mit 1'107 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 0 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

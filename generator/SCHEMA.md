@@ -523,6 +523,34 @@ gibt es für sie nicht. `build_facts.py` führt das jetzt als Lücke
 «Stammdaten». Beide sind vorerst zurückgestellt (`ZURUECKGESTELLT` in
 `offen.py`).
 
+**Keine geschenkten Fragen.** «In welchem Bezirk liegt Meilen?» mit der Antwort
+Meilen prüft nichts. Steckt die Antwort im Namen des Bahnhofs, muss auch eine
+falsche Antwort aus dem Namen stammen (Wildegg: Gemeinde Möriken-Wildegg,
+daneben «Wildegg»), sonst meldet der Validator die Frage.
+
+**Keine Null als Satzgegenstand.** «0 sind als niveaufrei vermerkt, 2
+ausdrücklich als nicht niveaufrei» (Rorschach Hafen) heisst jetzt «Beide
+erfassten Perrons sind ausdrücklich als nicht niveaufrei vermerkt».
+
+**Nettofläche und Belagsfläche sind zwei Grössen.** Die Nettofläche stammt aus
+`perron`, die Belagsfläche aus `perronoberflache`. Basel SBB, Perron 5/6: 4'033
+und 5'597 Quadratmeter. Die Sortierfrage im Kapitel Ausstattung sagt darum
+«Belagsfläche».
+
+**Keine Mengen in Worten, auch nicht allgemein.** «Pläne gibt es nur für einen
+kleinen Teil der Bahnhöfe» stand in jeder Bahnhofplan-Frage. Die Zahl nennt die
+Lücke bei Bahnhöfen ohne Plan, gezählt von der Pipeline.
+
+**Tagesrhythmus aus dem Baukasten.** Die alten Profile fragten «Welcher
+Wochentag ist der stärkste?» bei Freitag 15.4 gegen Donnerstag 15.2 Prozent.
+Der Baustein fragt nur gegen klar kleinere Werte und nennt Gleichstand als
+«je 12.8 Prozent», nie als Einzelsieger.
+
+**Feste Kennungen für Fragen.** Jede Frage trägt `id`, gebildet aus Kapitel,
+Art, factRef und Wortlaut. Die App speichert Antworten darunter. Vorher galt
+die Stelle («steckbrief:0»), und fiel eine Frage weg, hing die alte Antwort an
+der nächsten.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:

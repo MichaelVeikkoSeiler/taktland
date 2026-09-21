@@ -72,6 +72,14 @@ NUR_ERFASST = (r"(Hilfstritt|Billettautomat\w*|Billettentwerter\w*|Wartehalle\w*
 MINDESTABSTAND = 0.05
 
 
+def geschenkt(antwort, name):
+    """Steckt die Antwort im Namen des Bahnhofs? «In welchem Bezirk liegt
+    Meilen?» mit der Antwort Meilen prüft nichts."""
+    teile = [t for t in re.split(r"[ \-/]", name) if len(t) >= 4]
+    a = str(antwort).lower()
+    return str(antwort).split(" (")[0] in name or any(t.lower() in a for t in teile)
+
+
 def zu_nah(a, b, anteil=MINDESTABSTAND):
     """Zwei Werte, die man beim Lernen nicht auseinanderhalten kann."""
     return a == b or abs(a - b) < anteil * max(abs(a), abs(b))
@@ -98,7 +106,7 @@ MEHRZAHL_NACH_LUECKE = (r"___ (Sektoren|Perrons|Gleise[n]?|Züge[n]?|Personen|Li
 
 #: Sätze, die für mehrere geschrieben sind und bei genau einem nicht passen
 #: (Pont-Céard: ein Gleis, ein Perron, ein Entwerter)
-EINZAHL = r"\b1 (Segmenten|Gleisen|Abschnitten|Zügen|Wartehallen|Billettautomaten)\b|\b[Dd]en 1 \w+|\b[Ee]rfasst sind 1 [\wäöüÄÖÜ-]+\.|\bsind 1 [\wäöüÄÖÜ-]+ (erfasst|verzeichnet|vermerkt)\b"
+EINZAHL = r"\b1 (Segmenten|Gleisen|Abschnitten|Zügen|Wartehallen|Billettautomaten|Perrons)\b|\b[Dd]en 1 \w+|\b[Ee]rfasst sind 1 [\wäöüÄÖÜ-]+\.|\bsind 1 [\wäöüÄÖÜ-]+ (erfasst|verzeichnet|vermerkt)\b"
 
 LEERFORMELN = [
     r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",
@@ -372,6 +380,13 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             b.fehlt("Profil/luecken", "Lücken weichen im Wortlaut oder in der Reihenfolge "
                                       "von den Fakten ab. Neu bauen")
 
+    # Feste Kennungen: die App speichert Antworten darunter
+    ids = [q.get("id") for k in profil.get("chapters", []) for q in k.get("questions", [])]
+    if not all(ids):
+        b.fehlt("Profil", "Frage ohne Kennung 'id'. Mit bauen.py bauen")
+    elif len(set(ids)) != len(ids):
+        b.fehlt("Profil", "Zwei Fragen mit derselben Kennung")
+
     verfuegbar = set(fakten.get("verfuegbare_kapitel", []))
     kapitel_raus, fragen_gesamt = [], 0
 
@@ -395,6 +410,11 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             for muster, warum in FALSCHDEUTUNG:
                 if m := re.search(muster, text, re.I):
                     b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: {warum}")
+            # «0 sind als niveaufrei vermerkt» (Rorschach Hafen): eine Null als
+            # Satzgegenstand liest sich wie ein Fehler
+            if m := re.search(r"(?:^|[.;:!?] )0 (?:sind|ist)\b", text):
+                b.fehlt(f"{wo}/{feld}", f"«{m.group(0).strip()}»: sag, was erfasst ist, "
+                                        "nicht wie viele nicht")
             if m := re.search(EINZAHL, text):
                 b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: bei genau einem passt die Mehrzahl nicht")
             # Namen aus den Daten enden manchmal mit einem Abkürzungspunkt
@@ -463,6 +483,22 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                 b.fehlt(f"{wo}", f"«{m.group(0)}»: pro Tag zählt die Erhebung auf "
                                  f"{gleich[0]['von']} – {gleich[0]['bis']} gleich viele Züge "
                                  f"({st['zuege_pro_tag']}). Nenne die Werte, ohne einen Abschnitt vorzuziehen")
+
+        if kid == "stammdaten":
+            # Keine geschenkten Fragen: Steckt die Antwort im Namen, muss auch
+            # eine falsche Antwort aus dem Namen stammen (Wildegg: Gemeinde
+            # Möriken-Wildegg, daneben «Wildegg»). Sonst prüft die Frage nichts.
+            for i, q in enumerate(kap.get("questions", [])):
+                ref = q.get("factRef", "")
+                opts, c = q.get("options"), q.get("correct")
+                if ref.split(".")[-1] not in ("gemeinde", "bezirk", "kanton") or not opts \
+                        or not isinstance(c, int):
+                    continue
+                name = profil.get("name", "")
+                if geschenkt(opts[c], name) and not any(
+                        geschenkt(o, name) for j, o in enumerate(opts) if j != c):
+                    b.fehlt(f"{wo}/questions[{i}]", f"«{opts[c]}» steckt im Namen {name}. "
+                                                     "Die Frage verrät ihre Antwort")
 
         if kid == "services" and (sv := fakten.get("services")):
             # Eine 0 heisst «nicht erfasst». Der Text muss das sagen, nicht schweigen

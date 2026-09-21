@@ -11,7 +11,6 @@
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -25,7 +24,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Aigle 12'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 11'500, an einem freien Tag 9'400. Infrastruktur und Züge sind der SBB zugeordnet. Zwischen 2018 und 2025 stieg der Werktagsverkehr von 7'700 auf 12'500.",
+      "body": "An einem Werktag steigen in Aigle 12'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 11'500, an einem freien Tag 9'400. Infrastruktur und Züge sind der SBB zugeordnet. Die Quelle vermerkt zu diesen Zahlen: «Ohne TPC.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -57,20 +56,22 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:d76d9f33",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Aigle ein und aus?",
           "options": [
-            "5'000",
-            "6'900",
             "8'800",
-            "12'500"
+            "11'000",
+            "12'500",
+            "15'000"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "An einem Werktag sind es 12'500 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -101,8 +102,23 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:a7714213",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Aigle ___ Personen ein und aus.",
+          "options": [
+            "6'600",
+            "8'000",
+            "9'400"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 9'400 Personen, an einem Werktag 12'500. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "id": "steckbrief:10c8a68a",
           "type": "true_false",
-          "prompt": "Die Zahl der Ein- und Aussteigenden in Aigle umfasst auch die TPC.",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Aigle umfasst auch TPC.",
           "correct": false,
           "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne TPC.». Wofür TPC steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
@@ -113,7 +129,7 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Aigle liegt auf 403.908 Metern über Meer in der Gemeinde Aigle, Bezirk Aigle. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "body": "Aigle liegt auf 403.908 Metern über Meer in der Gemeinde Aigle, Bezirk Aigle. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet AIG.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -121,12 +137,6 @@
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
-        },
-        {
-          "label": "Kanton laut Stammdaten",
-          "value": "Vaud",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.kanton"
         },
         {
           "label": "Offizielle Abkürzung",
@@ -137,10 +147,11 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:7f3a7630",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Aigle?",
-          "min": 350,
-          "max": 540,
+          "min": 330,
+          "max": 590,
           "step": 1,
           "unit": "m ü. M.",
           "correct": 403.908,
@@ -149,6 +160,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e49d25f1",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Aigle lautet ___.",
           "options": [
@@ -167,7 +179,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 5 Perrons in Aigle liegen offene Daten vor. Zu 2 davon sind Länge und Zugang erfasst: Perron 2/3 mit 400 Metern und Perron 1/11 mit 375 Metern, beide niveaufrei erreichbar. Zu den Perrons 16, 12/13 und 14/15 stehen weder Länge noch Zugang in den Daten.",
+      "body": "Zu 5 Perrons in Aigle liegen offene Daten vor. Perron 2/3 misst 400 Meter, Perron 1/11 misst 375 Meter. Zu den Perrons 16, 12/13 und 14/15 ist keine Länge erfasst. 2 sind als niveaufrei vermerkt, zu 3 fehlt die Angabe zum Zugang.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -181,71 +193,39 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 2,
-          "source": "perron",
-          "factRef": "perrons.niveaufrei_erreichbar"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Das längste erfasste Perron in Aigle misst ___ Meter.",
+          "id": "perrons:c15c5752",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Aigle?",
           "options": [
-            "250",
-            "310",
-            "400"
+            "400 m",
+            "480 m",
+            "560 m",
+            "680 m"
           ],
-          "correct": 2,
-          "explanation": "Perron 2/3 ist mit 400 Metern das längste Perron, zu dem eine Länge vorliegt. Perron 1/11 misst 375 Meter.",
+          "correct": 0,
+          "explanation": "Das längste erfasste Perron misst 400 Meter.",
           "factRef": "perrons.laengste_m",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
+          "id": "perrons:74d947e7",
           "type": "true_false",
           "prompt": "Zu allen 5 erfassten Perrons in Aigle ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
-          "explanation": "Nur für 2 der 5 erfassten Perrons ist ein niveaufreier Zugang vermerkt. Zu den drei anderen steht in den Daten nichts - das heisst nicht, dass sie nicht niveaufrei erreichbar sind.",
+          "explanation": "Für 2 der 5 erfassten Perrons ist ein niveaufreier Zugang vermerkt. Zu 3 fehlt die Angabe.",
           "factRef": "perrons.niveaufrei_erreichbar",
-          "difficulty": 3
-        },
-        {
-          "type": "match",
-          "prompt": "Welcher Perrontyp gehört zu welchem Perron?",
-          "pairs": [
-            {
-              "links": "Perron 2/3",
-              "rechts": "Mittelperron",
-              "factRef": "perrons.items[0].typ"
-            },
-            {
-              "links": "Perron 1/11",
-              "rechts": "Hausperron",
-              "factRef": "perrons.items[1].typ"
-            },
-            {
-              "links": "Perron 16",
-              "rechts": "Aussenperron",
-              "factRef": "perrons.items[2].typ"
-            },
-            {
-              "links": "Perron 12/13",
-              "rechts": "Zwischenperron",
-              "factRef": "perrons.items[3].typ"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 2/3 ist ein Mittelperron, Perron 1/11 ein Hausperron, Perron 16 ein Aussenperron und Perron 12/13 ein Zwischenperron.",
-          "difficulty": 3
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Gleis 1 hat eine Perronkante von 375 Metern und 4 Sektoren, die Gleise 2 und 3 messen je 325 Meter und tragen je 3 Sektoren. An Gleis 1 ist eine Perronhöhe von 55 Zentimetern erfasst, an den Gleisen 2 und 3 je 35 und 55 Zentimeter.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 35 und 55 Zentimetern.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -255,7 +235,7 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Perronkante Gleis 1",
+          "label": "Längste erfasste Perronkante",
           "value": 375,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
@@ -270,52 +250,55 @@
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
           "correct": "1",
           "factRef": "gleise.items[0].nr",
-          "explanation": "Gleis 1 hat mit 375 Metern die längste erfasste Perronkante, die Gleise 2 und 3 messen je 325 Meter.",
+          "explanation": "Gleis 1 hat mit 375 Metern die längste erfasste Perronkante, die nächste misst 325 Meter.",
           "difficulty": 2
         },
         {
+          "id": "gleise:d7b976bb",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Aigle sind ___ Sektoren erfasst.",
+          "options": [
+            "4",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:b3bda4a3",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 2 in Aigle erfasst? (Mehrfachauswahl)",
           "options": [
-            "20 cm",
+            "30 cm",
             "35 cm",
-            "55 cm",
-            "76 cm"
+            "42 cm",
+            "55 cm"
           ],
           "correct": [
             1,
-            2
+            3
           ],
           "optionen_aus_fakten": true,
-          "explanation": "An Gleis 2 sind 35 und 55 Zentimeter verzeichnet, an Gleis 1 nur 55 Zentimeter.",
+          "explanation": "An Gleis 2 sind 35 und 55 Zentimeter verzeichnet.",
           "factRef": "gleise.items[1].perronhoehen_cm",
           "difficulty": 3
-        },
-        {
-          "type": "cloze",
-          "prompt": "An Gleis 1 sind ___ Sektoren erfasst.",
-          "options": [
-            "3",
-            "4",
-            "6"
-          ],
-          "correct": 1,
-          "optionen_aus_fakten": true,
-          "explanation": "Gleis 1 trägt die Sektoren A bis D, also 4 Stück. Die Gleise 2 und 3 haben je 3.",
-          "factRef": "gleise.items[0].sektoren_anzahl",
-          "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Aigle sind 10 Perronsegmente erfasst: 6 mit einer Perronhöhe von 55 Zentimetern und 4 mit 35 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Aigle sind 10 Perronsegmente erfasst: 6 mit 55 Zentimetern, 4 mit 35 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -331,12 +314,6 @@
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
-          "label": "Perrons ohne Angabe zum Zugang",
-          "value": 3,
-          "source": "perron",
-          "factRef": "hindernisfreiheit.perrons_ohne_zugangsangabe"
-        },
-        {
           "label": "Sicherheitslinie",
           "value": "Ja",
           "source": "haltestelle-visuell-taktile-sicherheitslinie",
@@ -345,35 +322,22 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind in Aigle erfasst?",
+          "id": "hindernisfreiheit:b031b500",
+          "type": "cloze",
+          "prompt": "In Aigle sind ___ Perronsegmente erfasst.",
           "options": [
-            "4",
-            "6",
+            "8",
             "10",
             "14"
           ],
-          "correct": 2,
+          "correct": 1,
           "optionen_aus_fakten": true,
           "explanation": "Die BehiG-Erhebung führt 10 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "Zu ___ der 5 erfassten Perrons fehlt in den Daten die Angabe zum Zugang.",
-          "options": [
-            "2",
-            "3",
-            "4"
-          ],
-          "correct": 1,
-          "optionen_aus_fakten": true,
-          "explanation": "Zu 3 der 5 erfassten Perrons steht keine Angabe zum Zugang in den Daten. Daraus folgt nicht, dass sie schlecht erreichbar wären - es ist schlicht nichts vermerkt.",
-          "factRef": "hindernisfreiheit.perrons_ohne_zugangsangabe",
-          "difficulty": 3
-        },
-        {
+          "id": "hindernisfreiheit:cb4cc65b",
           "type": "true_false",
           "prompt": "Bei keinem der 10 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -386,45 +350,59 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt zwischen Aigle und St-Triphon: Im Personenverkehr verkehren dort 228 Züge pro Tag, das sind 83'092 im Jahr. Von Roche VD her sind es 226 Züge pro Tag. Im Güterverkehr kommen auf beiden Abschnitten je 26 Züge pro Tag dazu.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Am stärksten befahren ist der Abschnitt Aigle – St-Triphon: Im Personenverkehr verkehren dort 228 Züge pro Tag, das sind 83'092 im Jahr. Auf dem Abschnitt Roche VD – Aigle sind es 226 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 26 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Aigle–St-Triphon",
+          "label": "Züge pro Tag, Personenverkehr Aigle – St-Triphon",
           "value": 228,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Aigle–St-Triphon",
+          "label": "Züge pro Jahr, Personenverkehr Aigle – St-Triphon",
           "value": 83092,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:02e12d9d",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Aigle–St-Triphon?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Aigle – St-Triphon?",
           "options": [
-            "91",
-            "130",
-            "170",
-            "228"
+            "190",
+            "228",
+            "270",
+            "320"
           ],
-          "correct": 3,
+          "correct": 1,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 228 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
+        },
+        {
+          "id": "zuege:e3c97c26",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Aigle – St-Triphon?",
+          "min": 68000,
+          "max": 120500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 83092,
+          "explanation": "Die Erhebung zählt 83'092 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Aigle sind 3 Linien erfasst: die Linie 100 Lausanne–Simplon Tunnel I–Iselle, die Linie 125 Aigle–Aigle-Dépôt und die Linie 123 Aigle–Le Sépey. Auf der Linie 100 ist der Bahnhof bei Kilometer 39.31241 eingetragen.",
+      "body": "Für Aigle sind 3 Linien erfasst: die Linie 100 Lausanne - Simplon Tunnel I - Iselle, die Linie 125 Aigle - Aigle-Depot und die Linie 123 Aigle - Le Sepey.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -442,6 +420,20 @@
       ],
       "questions": [
         {
+          "id": "linien:467707db",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Aigle eingetragen?",
+          "min": 32,
+          "max": 58,
+          "step": 1,
+          "unit": "km",
+          "correct": 39.31241,
+          "explanation": "Die Kilometrierung von Aigle auf der Linie 100 beträgt 39.31241. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        },
+        {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -462,20 +454,8 @@
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Die Linie 100 führt von Lausanne durch den Simplon nach Iselle, die Linie 125 zum Depot und die Linie 123 nach Le Sépey.",
+          "explanation": "Die Linie 100 heisst Lausanne - Simplon Tunnel I - Iselle, die Linie 125 heisst Aigle - Aigle-Depot, die Linie 123 heisst Aigle - Le Sepey.",
           "difficulty": 2
-        },
-        {
-          "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Aigle eingetragen?",
-          "min": 20,
-          "max": 110,
-          "step": 1,
-          "unit": "km",
-          "correct": 39.31241,
-          "explanation": "Die Kilometrierung von Aigle auf der Linie 100 beträgt 39.31241. Der Wert zählt ab Lausanne und nennt den Standort des Bahnhofs auf der Linie.",
-          "factRef": "linien.items[0].km_am_bahnhof",
-          "difficulty": 3
         }
       ]
     },
@@ -506,6 +486,7 @@
       ],
       "questions": [
         {
+          "id": "services:964e9d4d",
           "type": "true_false",
           "prompt": "Aigle steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -514,14 +495,15 @@
           "difficulty": 1
         },
         {
+          "id": "services:89787866",
           "type": "cloze",
           "prompt": "In Aigle sind ___ Billettentwerter erfasst.",
           "options": [
-            "4",
             "5",
+            "7",
             "8"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
           "explanation": "Erfasst sind 5 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
@@ -561,20 +543,22 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "7",
-            "9",
             "11",
-            "13"
+            "13",
+            "18",
+            "22"
           ],
-          "correct": 3,
+          "correct": 1,
           "explanation": "Erfasst sind 13 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -589,6 +573,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -601,6 +586,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

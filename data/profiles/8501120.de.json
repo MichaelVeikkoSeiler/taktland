@@ -4,17 +4,16 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,157 +27,257 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Lausanne liegt im Kanton Waadt, auf 447 Metern über Meer. An einem Werktag steigen hier 107'700 Personen ein und aus, an einem freien Tag 75'000. Als Bahnhofbenutzer sind 134'400 pro Tag erfasst. 2024 waren es 112'600 pro Werktag.",
+      "body": "An einem Werktag steigen in Lausanne 107'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 97'500, an einem freien Tag 75'000. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 107700,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 97500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 75000,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 134400,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
-        },
-        {
-          "label": "Wert 2024",
-          "value": 112600,
-          "unit": "Personen",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[3].dwv"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:cfe14a3f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Lausanne ein und aus?",
           "options": [
-            "38'000",
             "107'700",
-            "240'000",
-            "450'000"
+            "130'000",
+            "150'000",
+            "180'000"
           ],
-          "correct": 1,
-          "explanation": "107'700 Personen pro Werktag, Stand 2025.",
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 107'700 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "2024 wurden mehr Ein- und Aussteigende gezählt als 2025.",
-          "correct": true,
-          "explanation": "2024 waren es 112'600, 2025 sind es 107'700.",
-          "factRef": "steckbrief.verlauf[3].dwv",
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 93700,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 105900,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 112600,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 93'700 (2022), 105'900 (2023), 112'600 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:372031f5",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Lausanne ___ Personen ein und aus.",
+          "options": [
+            "52'000",
+            "64'000",
+            "75'000"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 75'000 Personen, an einem Werktag 107'700. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Lausanne liegt auf 447.09 Metern über Meer in der Gemeinde Lausanne, Bezirk Lausanne. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LS.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 447.09,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "LS",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:449651c5",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Lausanne?",
+          "min": 360,
+          "max": 650,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 447.09,
+          "explanation": "Der Bahnhof liegt auf 447.09 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "Es sind mehr Bahnhofbenutzer erfasst als Ein- und Aussteigende.",
-          "correct": true,
-          "explanation": "134'400 gegenüber 107'700. Die beiden Zahlen kommen aus zwei verschiedenen Erhebungen.",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag",
-          "difficulty": 3
+          "id": "stammdaten:c27eda28",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Lausanne lautet ___.",
+          "options": [
+            "LS",
+            "PRMA",
+            "PUN"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist LS als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
-      "title": "Der Tag am Bahnhof",
-      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 10.5 Prozent des Tagesaufkommens. Über die Woche ist der Donnerstag mit 16.3 Prozent der stärkste Tag, der Sonntag mit 9.9 Prozent der schwächste.",
+      "title": "Tagesrhythmus",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Lausanne in der Stunde ab 17 Uhr: 10.5 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Donnerstag, 16.3 Prozent, der kleinste auf den Sonntag, 9.9 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 10.5,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Stärkster Wochentag",
+          "label": "Wochentag mit dem grössten Anteil",
           "value": "Donnerstag",
-          "unit": null,
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.3,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 9.9,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:7e53ea22",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag ist in Lausanne der stärkste?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Lausanne die meisten Bahnhofbenutzer?",
           "options": [
-            "Dienstag",
-            "Donnerstag",
-            "Samstag",
-            "Sonntag"
+            "ab 7 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
           ],
-          "correct": 1,
-          "explanation": "Der Donnerstag mit 16.3 Prozent.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
-          "difficulty": 2
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 10.5, ab 16 Uhr 8.8, ab 7 Uhr 8.6, ab 18 Uhr 8.5 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
         },
         {
+          "id": "tagesrhythmus:366f5c31",
           "type": "slider",
-          "prompt": "Welcher Anteil des Tagesaufkommens fällt auf die stärkste Stunde?",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Lausanne auf die Stunde ab 17 Uhr?",
           "min": 0,
           "max": 25,
           "step": 0.1,
           "unit": "%",
           "correct": 10.5,
-          "explanation": "10.5 Prozent, in der Stunde ab 17 Uhr.",
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 10.5 Prozent der Bahnhofbenutzer des ganzen Tages.",
           "factRef": "tagesrhythmus.spitzenanteil",
           "difficulty": 3
+        },
+        {
+          "id": "tagesrhythmus:082b6016",
+          "type": "single_choice",
+          "prompt": "Auf welchen Wochentag entfällt in Lausanne der grösste Anteil der Bahnhofbenutzer?",
+          "options": [
+            "Montag",
+            "Mittwoch",
+            "Donnerstag",
+            "Samstag"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Donnerstag 16.3, Mittwoch 15.1, Montag 14.4, Samstag 12.6 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[3].tag",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 5 Perrons liegen Daten vor. Das längste misst 525 Meter, das kürzeste 198 Meter. Bei 5 von 5 ist der Zugang niveaufrei.",
+      "body": "Zu 5 Perrons in Lausanne liegen offene Daten vor. Am längsten sind Perron 1 mit 525 Metern, Perron 5/6 mit 409 Metern, Perron 3/4 mit 397 Metern und Perron 7/8 mit 391 Metern. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 5,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Längstes Perron",
+          "label": "Längstes erfasstes Perron",
           "value": 525,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes Perron",
-          "value": 198,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -187,9 +286,9 @@
               "factRef": "perrons.items[0].laenge_m"
             },
             {
-              "label": "Perron 3/4",
-              "value": 397,
-              "factRef": "perrons.items[2].laenge_m"
+              "label": "Perron 5/6",
+              "value": 409,
+              "factRef": "perrons.items[1].laenge_m"
             },
             {
               "label": "Perron 9",
@@ -197,192 +296,249 @@
               "factRef": "perrons.items[4].laenge_m"
             }
           ],
-          "correct": null,
-          "explanation": "Perron 1 ist mit 525 Metern das längste der erfassten.",
           "factRef": "perrons.items",
+          "explanation": "Perron 1 misst 525 Meter, Perron 5/6 misst 409 Meter, Perron 9 misst 198 Meter. Perrons mit fast gleicher Länge bleiben weg.",
           "difficulty": 2
+        },
+        {
+          "id": "perrons:04d7054f",
+          "type": "true_false",
+          "prompt": "Alle 5 erfassten Perrons in Lausanne sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 5 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 9 Gleisen vor: 1 bis 8 sowie ein Eintrag mit der Nummer 70. Die längste erfasste Perronkante hat Gleis 1 mit 258 Metern. An den Gleisen 5 bis 7 reichen die Sektoren bis H.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "title": "Gleise",
+      "body": "Zu 9 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 5, 6, 7, 8 und 70. Erfasst sind Perronhöhen von 35, 42 und 55 Zentimetern. Zu Gleis 2 sind keine Sektortafeln erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 9,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste Perronkante, Gleis 1",
+          "label": "Längste erfasste Perronkante",
           "value": 258,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.items[0].perronkante_m"
         },
         {
-          "label": "Letzter Sektor an Gleis 5",
-          "value": "H",
-          "unit": null,
+          "label": "Sektoren an Gleis 1",
+          "value": 7,
           "source": "sektortafel",
-          "factRef": "gleise.items[4].sektoren[7]"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 5?",
-          "options": [
-            "D",
-            "F",
-            "H",
-            "K"
-          ],
-          "correct": 2,
-          "explanation": "Von A bis H, also 8 Sektoren.",
-          "factRef": "gleise.items[4].sektoren[7]",
-          "difficulty": 2
-        },
-        {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
           "correct": "1",
-          "explanation": "Gleis 1 mit 258 Metern.",
           "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 1 hat mit 258 Metern die längste erfasste Perronkante, die nächste misst 166 Meter.",
           "difficulty": 2
         },
         {
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 1",
+              "value": 258,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 2",
+              "value": 166,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 70",
+              "value": 152,
+              "factRef": "gleise.items[8].perronkante_m"
+            },
+            {
+              "label": "Gleis 5",
+              "value": 93,
+              "factRef": "gleise.items[4].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 75,
+              "factRef": "gleise.items[2].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 1 misst 258 Meter, Gleis 2 misst 166 Meter, Gleis 70 misst 152 Meter, Gleis 5 misst 93 Meter, Gleis 3 misst 75 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:d259bc3b",
           "type": "cloze",
-          "prompt": "In Lausanne liegen Daten zu ___ Gleisen vor.",
+          "prompt": "An Gleis 1 in Lausanne sind ___ Sektoren erfasst.",
           "options": [
-            "5",
-            "9",
-            "12",
-            "18"
+            "6",
+            "7",
+            "28"
           ],
           "correct": 1,
-          "explanation": "9 Gleise, darunter einer mit der Nummer 70.",
-          "factRef": "gleise.anzahl_mit_daten",
           "optionen_aus_fakten": true,
-          "difficulty": 1
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D, E, F und G, also 7 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:39d354f0",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Lausanne erfasst? (Mehrfachauswahl)",
+          "options": [
+            "30 cm",
+            "35 cm",
+            "42 cm",
+            "55 cm"
+          ],
+          "correct": [
+            1,
+            2,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 1 sind 35, 42 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "Für Lausanne sind 347 Perronabschnitte erfasst. 326 davon liegen auf 35 Zentimetern, 17 auf 55 und 4 auf 42. Von 9 erfassten Gleisen haben 3 einen Abschnitt auf 55 Zentimetern. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "title": "Hindernisfreiheit",
+      "body": "Für Lausanne sind 347 Perronsegmente erfasst: 326 mit 35 Zentimetern, 17 mit 55 Zentimetern, 4 mit 42 Zentimetern. An 3 der 9 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Abschnitte",
+          "label": "Erfasste Perronsegmente",
           "value": 347,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Abschnitte mit 35 cm",
-          "value": 326,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.35"
-        },
-        {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 3,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Perronhöhe kommt bei den erfassten Abschnitten am häufigsten vor?",
+          "id": "hindernisfreiheit:4936cbff",
+          "type": "cloze",
+          "prompt": "In Lausanne sind ___ Perronsegmente erfasst.",
           "options": [
-            "35 cm",
-            "42 cm",
-            "55 cm"
+            "347",
+            "420",
+            "490"
           ],
           "correct": 0,
-          "explanation": "35 Zentimeter, bei 326 der 347 erfassten Abschnitte.",
-          "factRef": "gleise.perronhoehen_cm[0]",
           "optionen_aus_fakten": true,
-          "difficulty": 2
+          "explanation": "Die BehiG-Erhebung führt 347 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele der 9 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
-          "options": [
-            "3",
-            "5",
-            "7",
-            "9"
-          ],
-          "correct": 0,
-          "explanation": "3 von 9 Gleisen.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
-          "optionen_aus_fakten": true,
+          "id": "hindernisfreiheit:d0fc5470",
+          "type": "true_false",
+          "prompt": "Bei keinem der 347 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 347 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf den Strecken",
-      "body": "Am stärksten befahren ist der Abschnitt von Lausanne her: 205'203 Personenzüge pro Jahr, rund 562 pro Tag in beiden Richtungen zusammen. Richtung Pully sind es 304 pro Tag, Richtung Pully-Nord 216. Dazu kommen 35 Güterzüge pro Tag.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Lausanne (bif) – Lausanne: Im Personenverkehr verkehren dort 562 Züge pro Tag, das sind 205'203 im Jahr. Auf dem Abschnitt Lausanne – Pully sind es 304 und auf dem Abschnitt Lausanne – Pully-Nord sind es 216 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 35 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, stärkster Abschnitt",
+          "label": "Züge pro Tag, Personenverkehr Lausanne (bif) – Lausanne",
           "value": 562,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Personenzüge pro Tag Richtung Pully",
-          "value": 304,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Lausanne (bif) – Lausanne",
+          "value": 205203,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
-        },
-        {
-          "label": "Güterzüge pro Tag",
-          "value": 35,
-          "unit": "Züge",
-          "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:6e8dc151",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Lausanne?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Lausanne (bif) – Lausanne?",
           "options": [
-            "216",
-            "304",
+            "390",
+            "480",
             "562",
-            "1'100"
+            "670"
           ],
           "correct": 2,
-          "explanation": "Rund 562 pro Tag, beide Richtungen zusammen.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 562 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zugzahlen sagen, wie viele Züge in Lausanne halten.",
-          "correct": false,
-          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
-          "factRef": "zuege.hinweis",
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Lausanne (bif) – Lausanne, Personenverkehr",
+              "value": 205203,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Lausanne – Pully, Personenverkehr",
+              "value": 110927,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Lausanne – Pully-Nord, Personenverkehr",
+              "value": 78741,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Lausanne (bif) – Lausanne, Güterverkehr",
+              "value": 12712,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Lausanne (bif) – Lausanne (Personenverkehr) 205'203, Lausanne – Pully (Personenverkehr) 110'927, Lausanne – Pully-Nord (Personenverkehr) 78'741, Lausanne (bif) – Lausanne (Güterverkehr) 12'712 Züge im Jahr.",
           "difficulty": 3
         }
       ]
@@ -390,88 +546,87 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "In diesen Daten sind für Lausanne 2 Linien erfasst: die Linie 100 Richtung Simplon-Tunnel und die Linie 150 nach Genève-Aéroport.",
+      "body": "Für Lausanne sind 2 Linien erfasst: die Linie 100 Lausanne - Simplon Tunnel I - Iselle und die Linie 150 Lausanne - Geneve-Aeroport.",
       "facts": [
         {
-          "label": "Linien am Bahnhof",
+          "label": "Erfasste Linien",
           "value": 2,
-          "unit": null,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
-        },
-        {
-          "label": "Linie nach Genève-Aéroport",
-          "value": 150,
-          "unit": null,
-          "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[1].nummer"
         }
       ],
       "questions": [
         {
+          "id": "linien:f57243ca",
           "type": "match",
-          "prompt": "Welche Liniennummer gehört zu welcher Strecke?",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
             {
-              "links": "Lausanne - Simplon Tunnel I",
-              "rechts": "100",
-              "factRef": "linien.items[0].nummer"
+              "links": "Linie 100",
+              "rechts": "Lausanne - Simplon Tunnel I - Iselle",
+              "factRef": "linien.items[0].name"
             },
             {
-              "links": "Lausanne - Geneve-Aeroport",
-              "rechts": "150",
-              "factRef": "linien.items[1].nummer"
+              "links": "Linie 150",
+              "rechts": "Lausanne - Geneve-Aeroport",
+              "factRef": "linien.items[1].name"
             }
           ],
-          "correct": null,
-          "explanation": "Die Schreibweise der Streckennamen stammt unverändert aus der Quelle.",
           "factRef": "linien.items",
+          "explanation": "Die Linie 100 heisst Lausanne - Simplon Tunnel I - Iselle, die Linie 150 heisst Lausanne - Geneve-Aeroport.",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 15 Billettautomaten, 18 Billettentwerter und 6 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "title": "Services",
+      "body": "Lausanne steht in der Liste der WLAN-Standorte. Erfasst sind 15 Billettautomaten vom Typ ePOS, 18 Billettentwerter und 6 Wartehallen.",
       "facts": [
         {
-          "label": "Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 15,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 18,
-          "unit": null,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen",
-          "value": 6,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "In Lausanne sind ___ Billettautomaten erfasst.",
-          "options": [
-            "6",
-            "15",
-            "23",
-            "34"
-          ],
-          "correct": 1,
-          "explanation": "15 Automaten, dazu 18 Billettentwerter.",
-          "factRef": "services.billettautomaten_erfasst",
-          "optionen_aus_fakten": true,
+          "id": "services:01bb7e87",
+          "type": "true_false",
+          "prompt": "Lausanne steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
+          "factRef": "services.wlan_erfasst",
           "difficulty": 1
+        },
+        {
+          "id": "services:c2f7a57a",
+          "type": "cloze",
+          "prompt": "In Lausanne sind ___ Billettentwerter erfasst.",
+          "options": [
+            "18",
+            "25",
+            "31"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 18 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -507,6 +662,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -521,6 +677,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -535,9 +692,10 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 27,
+          "min": 81,
           "max": 243,
           "step": 1,
           "unit": "Schliessfächer",
@@ -547,6 +705,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -562,8 +721,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -588,7 +748,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1 hat mit 3'105 Quadratmetern die grösste erfasste Fläche, Perron 9 mit 991 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 1 hat mit 3'105 Quadratmetern die grösste erfasste Belagsfläche, Perron 9 mit 991 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -596,22 +756,22 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Lausanne ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "body": "Für Lausanne ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Plan als A4",
+          "label": "Plan als A4-Blatt",
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-lausanne-a4.pdf",
-          "unit": null,
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:4dd7d76f",
           "type": "true_false",
-          "prompt": "Für Lausanne gibt es einen veröffentlichten Bahnhofplan.",
+          "prompt": "Für Lausanne ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

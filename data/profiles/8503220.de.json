@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:8734d73c",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Lachen SZ ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:2b6a1a42",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Lachen SZ ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:54ec736f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Lachen SZ?",
           "min": 340,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:c25ddec6",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Lachen SZ?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:996f94b2",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Lachen SZ?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:49bb6f7f",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Lachen SZ ist niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:70bdb212",
           "type": "cloze",
           "prompt": "An Gleis 2 in Lachen SZ sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:dc4dc105",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Lachen SZ kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -278,6 +287,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:91cd1e6b",
           "type": "cloze",
           "prompt": "In Lachen SZ sind ___ Perronsegmente erfasst.",
           "options": [
@@ -292,6 +302,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f641b667",
           "type": "true_false",
           "prompt": "Bei keinem der 9 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -305,7 +316,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Lachen SZ – Siebnen-Wangen: Im Personenverkehr verkehren dort 232 Züge pro Tag, das sind 84'623 im Jahr. Auf dem Abschnitt Altendorf – Lachen SZ sind es 222 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 20 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Lachen SZ – Siebnen-Wangen",
@@ -324,6 +335,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:13e49649",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Lachen SZ – Siebnen-Wangen?",
           "options": [
@@ -338,6 +350,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:49197625",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Lachen SZ – Siebnen-Wangen?",
           "min": 69000,
@@ -372,6 +385,7 @@
       ],
       "questions": [
         {
+          "id": "linien:8928c825",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 720 ist Lachen SZ eingetragen?",
           "min": 32,
@@ -412,6 +426,7 @@
       ],
       "questions": [
         {
+          "id": "services:dc9333e4",
           "type": "true_false",
           "prompt": "Lachen SZ steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -420,6 +435,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:5edb558b",
           "type": "cloze",
           "prompt": "In Lachen SZ sind ___ Billettentwerter erfasst.",
           "options": [
@@ -438,7 +454,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Lachen SZ 11 Sitzbänke sowie 2 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Lachen SZ 11 Sitzbänke sowie 2 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -461,6 +477,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -475,6 +492,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -489,6 +507,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

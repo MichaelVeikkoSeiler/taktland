@@ -25,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Rorschach 7'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 7'200, an einem freien Tag 6'800. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB, SOB und Thurbo erfasst.",
+      "body": "An einem Werktag steigen in Rorschach 7'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 7'200, an einem freien Tag 6'800. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB, SOB und Thurbo erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne AB.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -57,6 +57,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:09f47ea3",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Rorschach ein und aus?",
           "options": [
@@ -71,6 +72,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -106,6 +108,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:8ee5537a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Rorschach ___ Personen ein und aus.",
           "options": [
@@ -119,6 +122,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:84d02497",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Rorschach umfasst auch AB.",
           "correct": false,
@@ -149,6 +153,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:e3e08e34",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Rorschach?",
           "min": 320,
@@ -161,6 +166,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:221556bc",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Rorschach lautet ___.",
           "options": [
@@ -197,6 +203,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -222,6 +229,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -246,6 +254,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:4553e67a",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Rorschach sind niveaufrei erreichbar.",
           "correct": true,
@@ -276,6 +285,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -301,6 +311,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:b4a46e11",
           "type": "cloze",
           "prompt": "An Gleis 2 in Rorschach sind ___ Sektoren erfasst.",
           "options": [
@@ -315,6 +326,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:0fae1ac5",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Rorschach erfasst? (Mehrfachauswahl)",
           "options": [
@@ -362,6 +374,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:424642e0",
           "type": "cloze",
           "prompt": "In Rorschach sind ___ Perronsegmente erfasst.",
           "options": [
@@ -376,6 +389,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:2bc22178",
           "type": "true_false",
           "prompt": "Bei keinem der 23 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -389,25 +403,26 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Rorschach Stadt – Rorschach: Im Personenverkehr verkehren dort 231 Züge pro Tag, das sind 84'240 im Jahr. Auf dem Abschnitt Rorschach GB – Rorschach sind es 212 und auf dem Abschnitt Rorschach Hafen – Rorschach sind es 82 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 12 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rorschach Stadt – Rorschach",
           "value": 231,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Rorschach Stadt – Rorschach",
           "value": 84240,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:a2f0e7e9",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rorschach Stadt – Rorschach?",
           "options": [
@@ -418,10 +433,11 @@
           ],
           "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 231 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -474,6 +490,7 @@
       ],
       "questions": [
         {
+          "id": "linien:91ac9fef",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 825 ist Rorschach eingetragen?",
           "min": 79,
@@ -486,6 +503,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -533,6 +551,7 @@
       ],
       "questions": [
         {
+          "id": "services:25c7e6fc",
           "type": "true_false",
           "prompt": "Rorschach steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -541,6 +560,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c0c5186b",
           "type": "cloze",
           "prompt": "In Rorschach sind ___ Billettentwerter erfasst.",
           "options": [
@@ -588,6 +608,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -602,6 +623,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -616,6 +638,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -628,8 +651,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -649,7 +673,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4/5 hat mit 2'756 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 925 die kleinste der gezeigten.",
+          "explanation": "Perron 4/5 hat mit 2'756 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 925 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -668,10 +692,11 @@
       ],
       "questions": [
         {
+          "id": "bahnhofplan:b86d9287",
           "type": "true_false",
           "prompt": "Für Rorschach ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

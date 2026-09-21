@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:c3ec034c",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Wichtrach ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:3b6930a1",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Wichtrach ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:093df241",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Wichtrach?",
           "min": 430,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:f630c49c",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Wichtrach lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:946ef091",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Wichtrach?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -204,6 +211,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:666c10dd",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Wichtrach sind niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +236,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:245711d4",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Wichtrach kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -264,6 +273,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:71be9ff4",
           "type": "cloze",
           "prompt": "In Wichtrach sind ___ Perronsegmente erfasst.",
           "options": [
@@ -278,6 +288,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -291,7 +302,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Wichtrach – Kiesen 216 Züge pro Tag, das sind 78'704 im Jahr. Auf dem Abschnitt Münsingen – Wichtrach sind es ebenfalls 216 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 47 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Wichtrach – Kiesen",
@@ -310,6 +321,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:fdfb158f",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Wichtrach – Kiesen?",
           "options": [
@@ -324,6 +336,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:1eb7bc00",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Wichtrach – Kiesen?",
           "min": 64500,
@@ -358,6 +371,7 @@
       ],
       "questions": [
         {
+          "id": "linien:488b4212",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 290 ist Wichtrach eingetragen?",
           "min": 103,
@@ -398,6 +412,7 @@
       ],
       "questions": [
         {
+          "id": "services:64372379",
           "type": "true_false",
           "prompt": "Wichtrach steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -406,6 +421,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:a1ef86e3",
           "type": "cloze",
           "prompt": "In Wichtrach sind ___ Billettentwerter erfasst.",
           "options": [
@@ -441,6 +457,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -455,6 +472,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

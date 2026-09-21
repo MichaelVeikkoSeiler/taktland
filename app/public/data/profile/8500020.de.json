@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:800f0b5b",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Muttenz ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:4b09cc5a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Muttenz ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:19086979",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Muttenz?",
           "min": 230,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:94e0d548",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Muttenz?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:d261cf7a",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Muttenz?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -222,6 +229,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:fdcd0d16",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Muttenz sind niveaufrei erreichbar.",
           "correct": true,
@@ -252,6 +260,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:7cf7dbea",
           "type": "cloze",
           "prompt": "An Gleis 1 in Muttenz sind ___ Sektoren erfasst.",
           "options": [
@@ -266,6 +275,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:d4037503",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Muttenz kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -302,6 +312,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:969b3260",
           "type": "cloze",
           "prompt": "In Muttenz sind ___ Perronsegmente erfasst.",
           "options": [
@@ -316,6 +327,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -329,7 +341,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Muttenz – Muttenz Ost (Abzw): Im Personenverkehr verkehren dort 489 Züge pro Tag, das sind 178'430 im Jahr. Auf dem Abschnitt Muttenz – Basel St. Jakob Nord (Spw) sind es 445 und auf dem Abschnitt Basel SBB RB Gr A – Muttenz sind es 25 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 6 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Muttenz – Muttenz Ost (Abzw)",
@@ -348,6 +360,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:95a14666",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Muttenz – Muttenz Ost (Abzw)?",
           "options": [
@@ -362,6 +375,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -414,6 +428,7 @@
       ],
       "questions": [
         {
+          "id": "linien:4f38def5",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 500 ist Muttenz eingetragen?",
           "min": 3.5,
@@ -426,6 +441,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -473,6 +489,7 @@
       ],
       "questions": [
         {
+          "id": "services:eeb98b1f",
           "type": "true_false",
           "prompt": "Muttenz steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -481,6 +498,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:28e25937",
           "type": "cloze",
           "prompt": "In Muttenz sind ___ Billettentwerter erfasst.",
           "options": [
@@ -522,6 +540,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -536,6 +555,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -551,8 +571,9 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -572,7 +593,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4 hat mit 1'926 Quadratmetern die grösste erfasste Fläche, Perron 2/3 mit 1'116 die kleinste der gezeigten.",
+          "explanation": "Perron 4 hat mit 1'926 Quadratmetern die grösste erfasste Belagsfläche, Perron 2/3 mit 1'116 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

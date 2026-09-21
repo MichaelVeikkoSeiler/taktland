@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:8ceeb25f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Wollishofen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:d82554e8",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Zürich Wollishofen ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:3db4b89f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zürich Wollishofen?",
           "min": 330,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:699859e7",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Zürich Wollishofen lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:e305fced",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Zürich Wollishofen?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:878b1384",
           "type": "true_false",
           "prompt": "Zu allen 3 erfassten Perrons in Zürich Wollishofen ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -221,6 +228,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:84c07edf",
           "type": "cloze",
           "prompt": "An Gleis 3 in Zürich Wollishofen sind ___ Sektoren erfasst.",
           "options": [
@@ -235,6 +243,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:af4a2bda",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Zürich Wollishofen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -271,6 +280,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:13b07ffd",
           "type": "cloze",
           "prompt": "In Zürich Wollishofen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -285,6 +295,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -298,7 +309,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Zürich Enge – Zürich Wollishofen: Im Personenverkehr verkehren dort 244 Züge pro Tag, das sind 89'073 im Jahr. Auf dem Abschnitt Zürich Wollishofen – Kilchberg ZH sind es 233 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 2 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Zürich Enge – Zürich Wollishofen",
@@ -317,6 +328,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:dcc80556",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zürich Enge – Zürich Wollishofen?",
           "options": [
@@ -331,6 +343,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:44d8ed0f",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Zürich Enge – Zürich Wollishofen?",
           "min": 73000,
@@ -365,6 +378,7 @@
       ],
       "questions": [
         {
+          "id": "linien:e834e136",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 720 ist Zürich Wollishofen eingetragen?",
           "min": 4.5,
@@ -405,6 +419,7 @@
       ],
       "questions": [
         {
+          "id": "services:c8addc5e",
           "type": "true_false",
           "prompt": "Zürich Wollishofen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -413,6 +428,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:9834f0f4",
           "type": "cloze",
           "prompt": "In Zürich Wollishofen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -454,6 +470,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -468,6 +485,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

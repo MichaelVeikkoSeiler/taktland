@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:aaa7dead",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Frick ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:029c0c0a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Frick ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:cf77f3ea",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Frick?",
           "min": 290,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:ca6189c4",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Frick?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f0759572",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Frick?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -212,6 +219,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:ec07040f",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Frick sind niveaufrei erreichbar.",
           "correct": true,
@@ -242,6 +250,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:8f454c12",
           "type": "cloze",
           "prompt": "An Gleis 1 in Frick sind ___ Sektoren erfasst.",
           "options": [
@@ -256,6 +265,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:689c18de",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Frick kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -292,6 +302,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:bd65d622",
           "type": "cloze",
           "prompt": "In Frick sind ___ Perronsegmente erfasst.",
           "options": [
@@ -306,6 +317,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:cb4cc65b",
           "type": "true_false",
           "prompt": "Bei keinem der 10 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -319,7 +331,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Niederfeld (Spw) – Frick: Im Personenverkehr verkehren dort 127 Züge pro Tag, das sind 46'291 im Jahr. Auf dem Abschnitt Frick Süd (Spw) – Frick sind es 85 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 100 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Niederfeld (Spw) – Frick",
@@ -338,6 +350,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:84361469",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Niederfeld (Spw) – Frick?",
           "options": [
@@ -352,6 +365,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -399,6 +413,7 @@
       ],
       "questions": [
         {
+          "id": "linien:bb12a693",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 700 ist Frick eingetragen?",
           "min": 42,
@@ -439,6 +454,7 @@
       ],
       "questions": [
         {
+          "id": "services:b211f64b",
           "type": "true_false",
           "prompt": "Frick steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -447,6 +463,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:304d19be",
           "type": "cloze",
           "prompt": "In Frick sind ___ Billettentwerter erfasst.",
           "options": [
@@ -488,6 +505,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -502,6 +520,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -517,6 +536,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

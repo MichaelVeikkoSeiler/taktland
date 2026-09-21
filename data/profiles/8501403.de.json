@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:0ac9a49a",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in St-Maurice ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:0a00648b",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in St-Maurice ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:8202562c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof St-Maurice?",
           "min": 340,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:3b222218",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs St-Maurice lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -202,6 +208,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -226,6 +233,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:a1c25e9c",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in St-Maurice sind niveaufrei erreichbar.",
           "correct": true,
@@ -256,6 +264,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -281,6 +290,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:2458407c",
           "type": "cloze",
           "prompt": "An Gleis 1 in St-Maurice sind ___ Sektoren erfasst.",
           "options": [
@@ -295,6 +305,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:24191ca9",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in St-Maurice kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -331,6 +342,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:ea5117fd",
           "type": "cloze",
           "prompt": "In St-Maurice sind ___ Perronsegmente erfasst.",
           "options": [
@@ -345,6 +357,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5ed3ab56",
           "type": "true_false",
           "prompt": "Bei keinem der 16 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -358,7 +371,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Les Paluds – St-Maurice: Im Personenverkehr verkehren dort 251 Züge pro Tag, das sind 91'515 im Jahr. Auf dem Abschnitt St-Maurice – St-Maurice sud sind es 183 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 29 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Les Paluds – St-Maurice",
@@ -377,6 +390,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:495f1b42",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Les Paluds – St-Maurice?",
           "options": [
@@ -391,6 +405,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -443,6 +458,7 @@
       ],
       "questions": [
         {
+          "id": "linien:83cf9b08",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 100 ist St-Maurice eingetragen?",
           "min": 42,
@@ -483,6 +499,7 @@
       ],
       "questions": [
         {
+          "id": "services:77e3b47e",
           "type": "true_false",
           "prompt": "St-Maurice steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -491,6 +508,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:18ddb838",
           "type": "cloze",
           "prompt": "In St-Maurice sind ___ Billettentwerter erfasst.",
           "options": [
@@ -532,6 +550,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -546,6 +565,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -560,6 +580,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -575,8 +596,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -596,7 +618,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 3'716 Quadratmetern die grösste erfasste Fläche, Perron 4/6 mit 894 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 3'716 Quadratmetern die grösste erfasste Belagsfläche, Perron 4/6 mit 894 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

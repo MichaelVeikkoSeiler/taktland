@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:4b32037b",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Monthey ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:d6963355",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Monthey ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:de354e41",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Monthey?",
           "min": 330,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e64c8f7b",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Monthey lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:8b652d12",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Monthey?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:771fea53",
           "type": "true_false",
           "prompt": "Zu beiden erfassten Perrons in Monthey ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -253,6 +261,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:0a3672fd",
           "type": "cloze",
           "prompt": "In Monthey sind ___ Perronsegmente erfasst.",
           "options": [
@@ -267,6 +276,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:154c629d",
           "type": "true_false",
           "prompt": "Bei keinem der 242 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -280,7 +290,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Monthey Industrie – Monthey: Im Personenverkehr verkehren dort 72 Züge pro Tag, das sind 26'100 im Jahr. Auf dem Abschnitt Monthey Giovanola (embr) – Monthey sind es 37 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 8 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Monthey Industrie – Monthey",
@@ -299,6 +309,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:379f0f0c",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Monthey Industrie – Monthey?",
           "options": [
@@ -313,6 +324,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -365,6 +377,7 @@
       ],
       "questions": [
         {
+          "id": "linien:201373aa",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 131 ist Monthey eingetragen?",
           "min": 4.5,
@@ -405,6 +418,7 @@
       ],
       "questions": [
         {
+          "id": "services:ea98d78c",
           "type": "true_false",
           "prompt": "Monthey steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -413,6 +427,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:f2fa2235",
           "type": "single_choice",
           "prompt": "Wie viele Billettentwerter sind in Monthey erfasst?",
           "options": [
@@ -454,6 +469,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -468,6 +484,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -482,6 +499,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

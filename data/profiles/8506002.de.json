@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f654c103",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Winterthur Seen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:7dce8564",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Winterthur Seen ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:12afb94d",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Winterthur Seen?",
           "min": 380,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:5b0f4c7d",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Winterthur Seen lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:cb567143",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Winterthur Seen?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -205,6 +212,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:172b55cd",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Winterthur Seen sind niveaufrei erreichbar.",
           "correct": true,
@@ -242,6 +250,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -251,6 +260,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:ff9b0b48",
           "type": "cloze",
           "prompt": "An Gleis 1 in Winterthur Seen sind ___ Sektoren erfasst.",
           "options": [
@@ -265,6 +275,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:4337f8a8",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Winterthur Seen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -301,6 +312,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7d64c622",
           "type": "cloze",
           "prompt": "In Winterthur Seen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -315,6 +327,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -328,7 +341,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Winterthur Seen – Sennhof-Kyburg: Im Personenverkehr verkehren dort 133 Züge pro Tag, das sind 48'383 im Jahr. Auf dem Abschnitt Winterthur Grüze – Winterthur Seen sind es 127 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 7 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Winterthur Seen – Sennhof-Kyburg",
@@ -347,6 +360,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:10181d93",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Winterthur Seen – Sennhof-Kyburg?",
           "options": [
@@ -361,6 +375,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:6d56c2a5",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Winterthur Seen – Sennhof-Kyburg?",
           "min": 39500,
@@ -395,6 +410,7 @@
       ],
       "questions": [
         {
+          "id": "linien:6e793d29",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 754 ist Winterthur Seen eingetragen?",
           "min": 3.5,
@@ -435,6 +451,7 @@
       ],
       "questions": [
         {
+          "id": "services:6cbc0d41",
           "type": "true_false",
           "prompt": "Winterthur Seen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -443,6 +460,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:6f666b2c",
           "type": "cloze",
           "prompt": "In Winterthur Seen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -484,6 +502,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -498,6 +517,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

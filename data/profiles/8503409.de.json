@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:fdbd6b25",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Bad Zurzach ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:1480bdd4",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Bad Zurzach ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:b9ed711f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bad Zurzach?",
           "min": 270,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:607f68ce",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Bad Zurzach?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:4c8c7776",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Bad Zurzach?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:d12d50fc",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Bad Zurzach sind niveaufrei erreichbar.",
           "correct": true,
@@ -223,6 +230,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:34e90731",
           "type": "cloze",
           "prompt": "An Gleis 1 in Bad Zurzach sind ___ Sektoren erfasst.",
           "options": [
@@ -237,6 +245,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:0f2bcaa0",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Bad Zurzach kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -273,6 +282,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:d336e10d",
           "type": "cloze",
           "prompt": "In Bad Zurzach sind ___ Perronsegmente erfasst.",
           "options": [
@@ -287,6 +297,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -300,7 +311,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Rietheim – Bad Zurzach: Im Personenverkehr verkehren dort 79 Züge pro Tag, das sind 29'011 im Jahr. Auf dem Abschnitt Bad Zurzach – Rekingen AG sind es 37 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 6 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rietheim – Bad Zurzach",
@@ -319,6 +330,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:770f9e8b",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rietheim – Bad Zurzach?",
           "options": [
@@ -333,6 +345,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -380,6 +393,7 @@
       ],
       "questions": [
         {
+          "id": "linien:dfd417d1",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 701 ist Bad Zurzach eingetragen?",
           "min": 33,
@@ -420,6 +434,7 @@
       ],
       "questions": [
         {
+          "id": "services:6b9788b2",
           "type": "true_false",
           "prompt": "Bad Zurzach steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -428,6 +443,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:6203f5f7",
           "type": "cloze",
           "prompt": "In Bad Zurzach sind ___ Billettentwerter erfasst.",
           "options": [
@@ -475,6 +491,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -489,6 +506,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -504,6 +522,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 5,
@@ -516,6 +535,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

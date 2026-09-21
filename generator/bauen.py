@@ -25,6 +25,7 @@ entschieden ist, und nur das:
 Ein Bahnhof mit Profil steht im Bauplan, auch wenn nichts zu entscheiden war
 ({}). Der Bauplan ist damit auch die Liste dessen, was gebaut wird.
 """
+import hashlib
 import json
 import sys
 from datetime import date
@@ -66,9 +67,27 @@ def bauen(uic, eintrag=None):
     # zeigte die App bei 49 Bahnhöfen «Zu diesem Bahnhof liegt kein Schema vor».
     if any(q["type"] == "hotspot" for k in d["chapters"] for q in k["questions"]):
         d["gleise"] = f["gleise"]["items"]
+    kennungen(d)
     # Quellen erst am Schluss: auch das Kapitel Ausstattung hat eine
     d["sources"] = sorted({x["source"] for k in d["chapters"] for x in k.get("facts", [])})
     return {k: d[k] for k in FELDER if k in d}
+
+
+def kennungen(d):
+    """Jede Frage bekommt eine feste Kennung aus Kapitel, Art, factRef und
+    Wortlaut. Die App merkte sich Antworten nach der Stelle («steckbrief:0»);
+    fiel eine Frage weg, hing die alte Antwort an der nächsten. Ändert sich
+    eine Frage, ändert sich ihre Kennung, und die alte Antwort gilt nicht mehr."""
+    for k in d["chapters"]:
+        vergeben = set()
+        for j, q in enumerate(k["questions"]):
+            q.pop("id", None)
+            roh = json.dumps([q["type"], q.get("factRef"), q.get("prompt")], ensure_ascii=False)
+            kennung = f"{k['id']}:{hashlib.sha1(roh.encode()).hexdigest()[:8]}"
+            while kennung in vergeben:          # gleiche Frage zweimal im Kapitel
+                kennung += "+"
+            vergeben.add(kennung)
+            k["questions"][j] = {"id": kennung, **q}
 
 
 def ohne_datum(d):

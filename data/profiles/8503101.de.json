@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:b470db5e",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Küsnacht ZH ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:33333754",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Küsnacht ZH ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:65b2fc2f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Küsnacht ZH?",
           "min": 340,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:25f8a38b",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Küsnacht ZH lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:ad8e57b6",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Küsnacht ZH?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:28af8c0a",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Küsnacht ZH ist niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:af107277",
           "type": "cloze",
           "prompt": "An Gleis 3 in Küsnacht ZH sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a3d95075",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 3 in Küsnacht ZH erfasst? (Mehrfachauswahl)",
           "options": [
@@ -276,6 +285,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:cb68f2d2",
           "type": "cloze",
           "prompt": "In Küsnacht ZH sind ___ Perronsegmente erfasst.",
           "options": [
@@ -290,6 +300,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1282a462",
           "type": "true_false",
           "prompt": "Bei keinem der 15 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -303,7 +314,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Küsnacht Goldbach – Küsnacht ZH: Im Personenverkehr verkehren dort 238 Züge pro Tag, das sind 86'863 im Jahr. Auf dem Abschnitt Küsnacht ZH – Erlenbach ZH sind es 233 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Küsnacht Goldbach – Küsnacht ZH",
@@ -322,6 +333,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:c4b5747b",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Küsnacht Goldbach – Küsnacht ZH?",
           "options": [
@@ -336,6 +348,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:e6875dbe",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Küsnacht Goldbach – Küsnacht ZH?",
           "min": 71000,
@@ -370,6 +383,7 @@
       ],
       "questions": [
         {
+          "id": "linien:fdd1dfc4",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Küsnacht ZH eingetragen?",
           "min": 9.5,
@@ -410,6 +424,7 @@
       ],
       "questions": [
         {
+          "id": "services:42381d1a",
           "type": "true_false",
           "prompt": "Küsnacht ZH steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -418,6 +433,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:092e78e3",
           "type": "cloze",
           "prompt": "In Küsnacht ZH sind ___ Billettentwerter erfasst.",
           "options": [
@@ -436,7 +452,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Küsnacht ZH 9 Sitzbänke sowie 4 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Küsnacht ZH 9 Sitzbänke sowie 4 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -459,6 +475,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -473,6 +490,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -487,6 +505,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

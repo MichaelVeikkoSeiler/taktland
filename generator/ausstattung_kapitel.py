@@ -57,14 +57,15 @@ def body_text(name, a):
     if pb:
         arten = pb["belagsarten"]
         n = pb["anzahl_perrons_mit_daten"]
+        # Sissach: «Zu 1 Perrons liegt der Belag vor, erfasst ist überall: …»
+        zu = "Zu 1 Perron" if n == 1 else f"Zu {n} Perrons"
         if len(arten) == 1:
             # Nominativ, weil sich die Belagsnamen nicht zuverlaessig beugen
             # lassen: «aus Bituminöses Mischgut» war falsch.
-            saetze.append(f"Zu {n} Perrons liegt der Belag vor, erfasst ist "
-                          f"überall: {arten[0]}.")
+            saetze.append(f"{zu} liegt der Belag vor: {arten[0]}." if n == 1 else
+                          f"{zu} liegt der Belag vor, erfasst ist überall: {arten[0]}.")
         else:
-            saetze.append(f"Zu {n} Perrons liegt der Belag vor, erfasst sind "
-                          f"{aufzaehlen(arten)}.")
+            saetze.append(f"{zu} liegt der Belag vor, erfasst sind {aufzaehlen(arten)}.")
     saetze.append("Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt "
                   "in den Daten und nicht zwingend vor Ort.")
     return " ".join(saetze)
@@ -171,14 +172,14 @@ def frage_flaeche(a):
     gross, klein = items[0], items[-1]
     return {
         "type": "sort",
-        "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+        "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
         "richtung": "absteigend",
         "items": items,
         "factRef": "ausstattung.perronbelag.items",
         "explanation": (f"{gross['label']} hat mit {ch(gross['value'])} Quadratmetern "
-                        f"die grösste erfasste Fläche, {klein['label']} mit "
+                        f"die grösste erfasste Belagsfläche, {klein['label']} mit "
                         f"{ch(klein['value'])} die kleinste der gezeigten."
-                        + (" Perrons mit fast gleicher Fläche bleiben weg."
+                        + (" Perrons mit fast gleicher Belagsfläche bleiben weg."
                            if len(klar) < len(pb["items"]) else "")),
         "difficulty": 2,
     }

@@ -41,3 +41,20 @@ def test_ohne_geraetedaten_keine_erfundene_null():
     k = services(fakten(8507083))
     assert "Billettentwerter sind keine verzeichnet" not in k["body"]
     assert "Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor." in k["body"]
+
+
+def test_tagesrhythmus_fragt_nicht_gegen_knappe_werte():
+    # Basel SBB: Freitag 15.4, Donnerstag 15.2 Prozent - der Donnerstag darf
+    # nicht zur Auswahl stehen
+    from baukasten import tagesrhythmus
+    k = tagesrhythmus(fakten(8500010))
+    tag = next(q for q in k["questions"] if "Wochentag" in q["prompt"])
+    assert "Donnerstag" not in tag["options"]
+    assert tag["options"][tag["correct"]] == "Freitag"
+
+
+def test_tagesrhythmus_gleichstand_ist_kein_einzelsieger():
+    # Genève-Aéroport: Dienstag und Mittwoch je 12.8 Prozent
+    from baukasten import tagesrhythmus
+    k = tagesrhythmus(fakten(8501026))
+    assert "der kleinste auf Dienstag und Mittwoch, je 12.8 Prozent" in k["body"]

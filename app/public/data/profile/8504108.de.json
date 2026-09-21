@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:70159451",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Bern Europaplatz ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:4549a2af",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Bern Europaplatz ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:9fb504c2",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bern Europaplatz?",
           "min": 450,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:abadcb97",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Bern Europaplatz lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:5c366006",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Bern Europaplatz?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -209,6 +216,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:317ad419",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Bern Europaplatz sind niveaufrei erreichbar.",
           "correct": true,
@@ -239,6 +247,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:6a1048db",
           "type": "true_false",
           "prompt": "Für Bern Europaplatz sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -252,7 +261,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Bern Europaplatz – Bern Steigerhubel (Abzw) 226 Züge pro Tag, das sind 82'586 im Jahr. Auf dem Abschnitt Bern Bümpliz Süd – Bern Europaplatz sind es ebenfalls 226 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 10 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Bern Europaplatz – Bern Steigerhubel (Abzw)",
@@ -271,6 +280,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:1e646da8",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bern Europaplatz – Bern Steigerhubel (Abzw)?",
           "options": [
@@ -285,6 +295,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:c98e1696",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Bern Europaplatz – Bern Steigerhubel (Abzw)?",
           "min": 67500,
@@ -319,6 +330,7 @@
       ],
       "questions": [
         {
+          "id": "linien:63be6f3f",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Bern Europaplatz eingetragen?",
           "min": 77,
@@ -331,6 +343,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -378,6 +391,7 @@
       ],
       "questions": [
         {
+          "id": "services:a2d193c9",
           "type": "true_false",
           "prompt": "Bern Europaplatz steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -386,6 +400,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:f83be4fa",
           "type": "cloze",
           "prompt": "In Bern Europaplatz sind ___ Billettentwerter erfasst.",
           "options": [
@@ -421,6 +436,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -435,6 +451,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -465,10 +482,11 @@
       ],
       "questions": [
         {
+          "id": "bahnhofplan:51e122c8",
           "type": "true_false",
           "prompt": "Für Bern Europaplatz ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

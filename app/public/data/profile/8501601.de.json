@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:2cd7db84",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Leuk ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:ca33fd22",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Leuk ___ Personen ein und aus.",
           "options": [
@@ -99,6 +101,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:e289a626",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Leuk?",
           "min": 510,
@@ -111,6 +114,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:68c9c182",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Leuk lautet ___.",
           "options": [
@@ -147,6 +151,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:d76a623b",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Leuk?",
           "options": [
@@ -161,6 +166,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -180,6 +186,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:f88f9b53",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Leuk sind niveaufrei erreichbar.",
           "correct": true,
@@ -210,6 +217,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:59ffb72a",
           "type": "cloze",
           "prompt": "An Gleis 1 in Leuk sind ___ Sektoren erfasst.",
           "options": [
@@ -224,6 +232,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:fd423676",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Leuk erfasst? (Mehrfachauswahl)",
           "options": [
@@ -270,6 +279,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:e3c9c43d",
           "type": "cloze",
           "prompt": "In Leuk sind ___ Perronsegmente erfasst.",
           "options": [
@@ -284,6 +294,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
           "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -297,7 +308,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Salgesch – Leuk: Im Personenverkehr verkehren dort 151 Züge pro Tag, das sind 54'968 im Jahr. Auf dem Abschnitt Leuk – Turtmann sind es 150 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 9 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Salgesch – Leuk",
@@ -316,6 +327,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:23d6b658",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Salgesch – Leuk?",
           "options": [
@@ -330,6 +342,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:9e9e9c27",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Salgesch – Leuk?",
           "min": 45000,
@@ -364,6 +377,7 @@
       ],
       "questions": [
         {
+          "id": "linien:988bd760",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Leuk eingetragen?",
           "min": 96,
@@ -404,6 +418,7 @@
       ],
       "questions": [
         {
+          "id": "services:52926b5d",
           "type": "true_false",
           "prompt": "Leuk steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -412,6 +427,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:571b94ab",
           "type": "cloze",
           "prompt": "In Leuk sind ___ Billettentwerter erfasst.",
           "options": [
@@ -447,6 +463,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -461,6 +478,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -11,7 +11,6 @@
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -25,7 +24,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Sursee 15'100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 13'400, an einem freien Tag 9'700. Die Infrastruktur gehört der SBB, Züge fahren hier von SBB und SOB. Zwischen 2018 und 2025 stieg der Werktagsverkehr von 13'900 auf 15'100, mit einem Tiefpunkt von 12'700 im Jahr 2022.",
+      "body": "An einem Werktag steigen in Sursee 15'100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 13'400, an einem freien Tag 9'700. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -47,22 +46,17 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnunternehmen",
-          "value": "SBB, SOB",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.evu"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:3987654e",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Sursee ein und aus?",
           "options": [
-            "6'000",
             "8'300",
             "11'000",
+            "13'000",
             "15'100"
           ],
           "correct": 3,
@@ -71,26 +65,7 @@
           "difficulty": 1
         },
         {
-          "type": "slider",
-          "prompt": "Wie viele Personen steigen im Tagesmittel über das ganze Jahr in Sursee ein und aus?",
-          "min": 7000,
-          "max": 22000,
-          "step": 100,
-          "unit": "Personen",
-          "correct": 13400,
-          "explanation": "Das Tagesmittel liegt bei 13'400 Personen. Es zählt Werktage und freie Tage zusammen.",
-          "factRef": "steckbrief.dtv",
-          "difficulty": 2
-        },
-        {
-          "type": "true_false",
-          "prompt": "In Sursee verkehren laut den Frequenzdaten Züge von SBB und SOB.",
-          "correct": true,
-          "explanation": "Als Bahnunternehmen sind SBB und SOB erfasst, als Infrastrukturbetreiberin die SBB.",
-          "factRef": "steckbrief.evu",
-          "difficulty": 2
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -114,13 +89,27 @@
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 12'700 (2022), 14'400 (2023), 15'200 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
+        },
+        {
+          "id": "steckbrief:122a9f6a",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Sursee ___ Personen ein und aus.",
+          "options": [
+            "9'700",
+            "12'000",
+            "14'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 9'700 Personen, an einem Werktag 15'100. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Sursee liegt auf 504 Metern über Meer in der Gemeinde Sursee, Bezirk Sursee, Kanton Luzern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "body": "Sursee liegt auf 504 Metern über Meer in der Gemeinde Sursee, Bezirk Sursee, Kanton Luzern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet SS.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -130,53 +119,47 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Bezirk",
-          "value": "Sursee",
+          "label": "Offizielle Abkürzung",
+          "value": "SS",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
-        },
-        {
-          "label": "Kanton",
-          "value": "Luzern",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.kanton"
+          "factRef": "stammdaten.abkuerzung"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
+          "id": "stammdaten:6f9b5a07",
+          "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Sursee?",
-          "options": [
-            "280 m",
-            "350 m",
-            "504 m",
-            "660 m"
-          ],
-          "correct": 2,
+          "min": 410,
+          "max": 740,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 504,
           "explanation": "Der Bahnhof liegt auf 504 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
+          "id": "stammdaten:977e8c64",
           "type": "cloze",
-          "prompt": "Der Bahnhof Sursee liegt im Kanton ___.",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Sursee lautet ___.",
           "options": [
-            "Aargau",
-            "Luzern",
-            "Solothurn"
+            "OBK",
+            "SS",
+            "STER"
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Sursee liegt im Kanton Luzern, in der Gemeinde Sursee.",
-          "factRef": "stammdaten.kanton",
-          "difficulty": 1
+          "explanation": "In den Stammdaten ist SS als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Sursee liegen offene Daten vor, beide sind niveaufrei erreichbar. Perron 2/3 ist ein Mittelperron und misst 320 Meter, Perron 1 ist ein Hausperron und misst 310 Meter.",
+      "body": "Zu 2 Perrons in Sursee liegen offene Daten vor. Perron 2/3 misst 320 Meter, Perron 1 misst 310 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -190,62 +173,59 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 310,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Das längste erfasste Perron in Sursee misst ___ Meter.",
+          "id": "perrons:63a13ed1",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Sursee?",
           "options": [
-            "180",
-            "220",
-            "320"
+            "270 m",
+            "320 m",
+            "380 m",
+            "450 m"
           ],
-          "correct": 2,
-          "explanation": "Perron 2/3 ist mit 320 Metern das längste erfasste Perron, Perron 1 misst 310 Meter.",
+          "correct": 1,
+          "explanation": "Das längste erfasste Perron misst 320 Meter.",
           "factRef": "perrons.laengste_m",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "1133.2 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "1001.95 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 hat 1133.2 Quadratmeter, Perron 1 hat 1001.95 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:b15a7d32",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Sursee sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
-        },
-        {
-          "type": "match",
-          "prompt": "Welcher Perrontyp gehört zu welchem Perron?",
-          "pairs": [
-            {
-              "links": "Perron 2/3",
-              "rechts": "Mittelperron",
-              "factRef": "perrons.items[0].typ"
-            },
-            {
-              "links": "Perron 1",
-              "rechts": "Hausperron",
-              "factRef": "perrons.items[1].typ"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 2/3 ist als Mittelperron erfasst, Perron 1 als Hausperron.",
-          "difficulty": 2
         }
       ]
     },
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Die erfassten Perronkanten messen 308 bis 320 Meter. Alle 3 erfassten Gleise tragen je 3 Sektoren. Bei keinem ist ein Hilfstritt verzeichnet.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 20, 25, 35 und 55 Zentimetern.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -255,32 +235,32 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Perronkante Gleis 1",
-          "value": 308,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronkante_m"
-        },
-        {
-          "label": "Sektoren an Gleis 2",
+          "label": "Sektoren an Gleis 1",
           "value": 3,
           "source": "sektortafel",
-          "factRef": "gleise.items[1].sektoren_anzahl"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die kürzeste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "1",
-          "factRef": "gleise.items[0].nr",
-          "explanation": "Gleis 1 hat mit 308 Metern die kürzeste erfasste Perronkante, die Gleise 2 und 3 messen je 320 Meter.",
+          "id": "gleise:df907358",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Sursee sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "5",
+            "9"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren B, C und D, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         },
         {
+          "id": "gleise:a4952fef",
           "type": "multiple_choice",
-          "prompt": "Welche Perronhöhen sind für Gleis 2 in Sursee erfasst? (Mehrfachauswahl)",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Sursee erfasst? (Mehrfachauswahl)",
           "options": [
             "20 cm",
             "25 cm",
@@ -288,21 +268,12 @@
             "55 cm"
           ],
           "correct": [
-            0,
-            2,
+            1,
             3
           ],
           "optionen_aus_fakten": true,
-          "explanation": "Für Gleis 2 sind 20, 35 und 55 Zentimeter erfasst. Die 25 Zentimeter kommen nur an Gleis 1 vor.",
-          "factRef": "gleise.items[1].perronhoehen_cm",
-          "difficulty": 3
-        },
-        {
-          "type": "true_false",
-          "prompt": "An Gleis 3 in Sursee ist nur eine einzige Perronhöhe erfasst.",
-          "correct": true,
-          "explanation": "Für Gleis 3 sind ausschliesslich 55 Zentimeter verzeichnet, während an den Gleisen 1 und 2 je drei Höhen vorkommen.",
-          "factRef": "gleise.items[2].perronhoehen_cm",
+          "explanation": "An Gleis 1 sind 25 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
           "difficulty": 3
         }
       ]
@@ -310,7 +281,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Sursee sind 20 Perronsegmente erfasst. 12 davon haben eine Perronhöhe von 55 Zentimetern, 4 von 25, je 2 von 20 und 35 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Sursee sind 20 Perronsegmente erfasst: 12 mit 55 Zentimetern, 4 mit 25 Zentimetern, 2 mit 20 Zentimetern, 2 mit 35 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -320,10 +291,10 @@
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 3,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
           "label": "Sicherheitslinie",
@@ -334,107 +305,97 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind in Sursee erfasst?",
+          "id": "hindernisfreiheit:0e6d8719",
+          "type": "cloze",
+          "prompt": "In Sursee sind ___ Perronsegmente erfasst.",
           "options": [
             "8",
             "17",
-            "20",
-            "24"
+            "20"
           ],
           "correct": 2,
+          "optionen_aus_fakten": true,
           "explanation": "Die BehiG-Erhebung führt 20 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "Von den 20 erfassten Segmenten weisen ___ eine Perronhöhe von 55 Zentimetern auf.",
-          "options": [
-            "4",
-            "8",
-            "12"
-          ],
-          "correct": 2,
-          "optionen_aus_fakten": true,
-          "explanation": "12 der 20 Segmente sind mit 55 Zentimetern erfasst, das ist die häufigste Höhe in Sursee.",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
-          "difficulty": 2
-        },
-        {
+          "id": "hindernisfreiheit:e3f8b352",
           "type": "true_false",
-          "prompt": "Für Sursee ist eine visuell-taktile Sicherheitslinie erfasst.",
+          "prompt": "Bei keinem der 20 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung verzeichnet eine Sicherheitslinie für diesen Bahnhof.",
-          "factRef": "hindernisfreiheit.sicherheitslinie",
-          "difficulty": 1
+          "explanation": "Die Erhebung weist bei 0 der 20 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt zwischen Sursee und Sursee Süd: Im Personenverkehr verkehren dort 236 Züge pro Tag, das sind 86'244 im Jahr. Richtung St. Erhard-Knutwil sind es 198 Züge pro Tag. Im Güterverkehr kommen auf denselben Abschnitten 14 und 19 Züge dazu.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Am stärksten befahren ist der Abschnitt Sursee – Sursee Süd (Spw): Im Personenverkehr verkehren dort 236 Züge pro Tag, das sind 86'244 im Jahr. Auf dem Abschnitt St. Erhard-Knutwil – Sursee sind es 198 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 19 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Sursee–Sursee Süd",
+          "label": "Züge pro Tag, Personenverkehr Sursee – Sursee Süd (Spw)",
           "value": 236,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Sursee–Sursee Süd",
+          "label": "Züge pro Jahr, Personenverkehr Sursee – Sursee Süd (Spw)",
           "value": 86244,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:2284b2ea",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Sursee–Sursee Süd?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Sursee – Sursee Süd (Spw)?",
           "options": [
-            "94",
-            "130",
-            "170",
-            "236"
+            "200",
+            "236",
+            "280",
+            "330"
           ],
-          "correct": 3,
+          "correct": 1,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 236 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Tag, meiste zuerst.",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Sursee – Sursee Süd, Personenverkehr",
-              "value": 236,
-              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+              "label": "Sursee – Sursee Süd (Spw), Personenverkehr",
+              "value": 86244,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
               "label": "St. Erhard-Knutwil – Sursee, Personenverkehr",
-              "value": 198,
-              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+              "value": 72134,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
               "label": "St. Erhard-Knutwil – Sursee, Güterverkehr",
-              "value": 19,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+              "value": 7074,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
             },
             {
-              "label": "Sursee – Sursee Süd, Güterverkehr",
-              "value": 14,
-              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+              "label": "Sursee – Sursee Süd (Spw), Güterverkehr",
+              "value": 5237,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr führt Sursee–Sursee Süd mit 236 Zügen pro Tag vor St. Erhard-Knutwil–Sursee mit 198. Im Güterverkehr sind es 19 beziehungsweise 14.",
+          "explanation": "Sursee – Sursee Süd (Spw) (Personenverkehr) 86'244, St. Erhard-Knutwil – Sursee (Personenverkehr) 72'134, St. Erhard-Knutwil – Sursee (Güterverkehr) 7'074, Sursee – Sursee Süd (Spw) (Güterverkehr) 5'237 Züge im Jahr.",
           "difficulty": 3
         }
       ]
@@ -442,7 +403,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Sursee ist 1 Linie erfasst: die Linie 500 Basel SBB–Olten–Luzern. Sursee ist darauf bei Kilometer 69.0362 eingetragen.",
+      "body": "Für Sursee ist 1 Linie erfasst: die Linie 500 Basel SBB - Olten - Luzern. Der Bahnhof ist darauf bei Kilometer 69.0362 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -451,7 +412,7 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung von Sursee auf der Linie 500",
+          "label": "Kilometrierung auf der Linie 500",
           "value": 69.0362,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
@@ -460,29 +421,15 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Linie ist für Sursee erfasst?",
-          "options": [
-            "Basel SBB - Olten - Luzern",
-            "Luzern - Zug - Zürich",
-            "Olten - Solothurn - Biel/Bienne",
-            "Zofingen - Sursee - Emmen"
-          ],
-          "correct": 0,
-          "optionen_aus_fakten": true,
-          "explanation": "Erfasst ist die Linie 500, Basel SBB - Olten - Luzern.",
-          "factRef": "linien.items[0].name",
-          "difficulty": 1
-        },
-        {
+          "id": "linien:0a9a9334",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 500 ist Sursee eingetragen?",
-          "min": 40,
-          "max": 130,
+          "min": 56,
+          "max": 101,
           "step": 1,
           "unit": "km",
           "correct": 69.0362,
-          "explanation": "Die Kilometrierung von Sursee auf der Linie 500 beträgt 69.0362. Der Wert nennt den Standort des Bahnhofs, gezählt ab dem Anfang der Linie.",
+          "explanation": "Die Kilometrierung von Sursee auf der Linie 500 beträgt 69.0362. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -515,6 +462,7 @@
       ],
       "questions": [
         {
+          "id": "services:e6e78836",
           "type": "true_false",
           "prompt": "Sursee steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -523,6 +471,7 @@
           "difficulty": 1
         },
         {
+          "id": "services:53421fa7",
           "type": "cloze",
           "prompt": "In Sursee sind ___ Billettentwerter erfasst.",
           "options": [
@@ -532,7 +481,7 @@
           ],
           "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 7 Billettentwerter. Eine Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 7 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -570,6 +519,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -584,10 +534,11 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "1",
+            "2",
             "3",
             "5",
             "9"
@@ -599,6 +550,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -611,6 +563,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -658,56 +611,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        25,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Aussenperron",
-      "perronkante_m": 308,
-      "sektoren": [
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        20,
-        35,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Aussenperron",
-      "perronkante_m": 320,
-      "sektoren": [
-        "A",
-        "B",
-        "C"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 320,
-      "sektoren": [
-        "A",
-        "B",
-        "C"
-      ],
-      "sektoren_anzahl": 3
     }
   ]
 }

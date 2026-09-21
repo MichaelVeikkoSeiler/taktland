@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:3ad9513b",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Schwyz ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:018bc0b2",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Schwyz ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:a2b911d7",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Schwyz?",
           "min": 370,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:54626e72",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Schwyz lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:7627cffd",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Schwyz?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -210,6 +217,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:6088bbd0",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Schwyz sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:5cba2cb5",
           "type": "cloze",
           "prompt": "An Gleis 2 in Schwyz sind ___ Sektoren erfasst.",
           "options": [
@@ -254,6 +263,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:5d3ffc6e",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Schwyz kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:97410abc",
           "type": "cloze",
           "prompt": "In Schwyz sind ___ Perronsegmente erfasst.",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -317,7 +329,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Steinen – Schwyz: Im Personenverkehr verkehren dort 191 Züge pro Tag, das sind 69'575 im Jahr. Auf dem Abschnitt Schwyz – Brunnen sind es 190 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 101 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Steinen – Schwyz",
@@ -336,6 +348,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:c2b56d4b",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Steinen – Schwyz?",
           "options": [
@@ -350,6 +363,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:521f7666",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Steinen – Schwyz?",
           "min": 57000,
@@ -384,6 +398,7 @@
       ],
       "questions": [
         {
+          "id": "linien:2fe369a1",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 600 ist Schwyz eingetragen?",
           "min": 13.5,
@@ -424,6 +439,7 @@
       ],
       "questions": [
         {
+          "id": "services:fa08ff96",
           "type": "true_false",
           "prompt": "Schwyz steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -432,6 +448,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:f82250b0",
           "type": "cloze",
           "prompt": "In Schwyz sind ___ Billettentwerter erfasst.",
           "options": [
@@ -479,6 +496,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -493,6 +511,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -508,6 +527,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -520,6 +540,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

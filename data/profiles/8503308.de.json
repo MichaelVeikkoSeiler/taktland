@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:afe3ea76",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Kloten ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:94b6e950",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Kloten ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:a68bfdc5",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Kloten?",
           "min": 360,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:3e7a1981",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Kloten lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:afdf3103",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Kloten?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:d17e177d",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Kloten ist niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:52a2b4d6",
           "type": "cloze",
           "prompt": "An Gleis 3 in Kloten sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:1cd39736",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Kloten kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -266,6 +275,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7637ea3c",
           "type": "cloze",
           "prompt": "In Kloten sind ___ Perronsegmente erfasst.",
           "options": [
@@ -280,6 +290,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -293,7 +304,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Kloten Balsberg – Kloten: Im Personenverkehr verkehren dort 84 Züge pro Tag, das sind 30'537 im Jahr. Auf dem Abschnitt Kloten – Dorfnest (Abzw) sind es 83 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 35 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Kloten Balsberg – Kloten",
@@ -312,6 +323,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:a70fad55",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Kloten Balsberg – Kloten?",
           "options": [
@@ -326,6 +338,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:8b9fc0ab",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Kloten Balsberg – Kloten?",
           "min": 25000,
@@ -360,6 +373,7 @@
       ],
       "questions": [
         {
+          "id": "linien:d994def0",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 757 ist Kloten eingetragen?",
           "min": 9.0,
@@ -372,6 +386,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -419,6 +434,7 @@
       ],
       "questions": [
         {
+          "id": "services:5b6d42a5",
           "type": "true_false",
           "prompt": "Kloten steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -427,6 +443,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:3121ce21",
           "type": "cloze",
           "prompt": "In Kloten sind ___ Billettentwerter erfasst.",
           "options": [
@@ -445,7 +462,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Kloten 11 Sitzbänke sowie 4 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Kloten 11 Sitzbänke sowie 4 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -468,6 +485,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -482,6 +500,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -496,6 +515,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

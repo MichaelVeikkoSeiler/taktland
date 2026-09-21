@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:3f299a8f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Altdorf UR ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -99,6 +101,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:eb03515a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Altdorf UR ___ Personen ein und aus.",
           "options": [
@@ -134,6 +137,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:d941cae4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Altdorf UR?",
           "min": 360,
@@ -146,6 +150,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:4cedcf9a",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Altdorf UR lautet ___.",
           "options": [
@@ -182,6 +187,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:3c036808",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Altdorf UR?",
           "options": [
@@ -196,6 +202,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -215,6 +222,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:e4355e2c",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Altdorf UR sind niveaufrei erreichbar.",
           "correct": true,
@@ -245,6 +253,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:faeb55cd",
           "type": "cloze",
           "prompt": "An Gleis 1 in Altdorf UR sind ___ Sektoren erfasst.",
           "options": [
@@ -287,6 +296,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:2ecc592e",
           "type": "cloze",
           "prompt": "In Altdorf UR sind ___ Perronsegmente erfasst.",
           "options": [
@@ -301,6 +311,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5eee92da",
           "type": "true_false",
           "prompt": "Bei keinem der 5 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -314,7 +325,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Flüelen – Altdorf UR: Im Personenverkehr verkehren dort 144 Züge pro Tag, das sind 52'397 im Jahr. Auf dem Abschnitt Altdorf UR – Rynächt Nord sind es 143 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 100 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Flüelen – Altdorf UR",
@@ -333,6 +344,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:05b27d18",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Flüelen – Altdorf UR?",
           "options": [
@@ -347,6 +359,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -394,6 +407,7 @@
       ],
       "questions": [
         {
+          "id": "linien:58cd25ac",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 600 ist Altdorf UR eingetragen?",
           "min": 28,
@@ -434,6 +448,7 @@
       ],
       "questions": [
         {
+          "id": "services:c3f10cac",
           "type": "true_false",
           "prompt": "Altdorf UR steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -442,6 +457,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:b4e9345e",
           "type": "cloze",
           "prompt": "In Altdorf UR sind ___ Billettentwerter erfasst.",
           "options": [
@@ -483,6 +499,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -498,6 +515,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -513,6 +531,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

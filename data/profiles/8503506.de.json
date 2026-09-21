@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:63eab498",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Killwangen-Spreitenbach ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ae157bf7",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Killwangen-Spreitenbach ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:801b21ba",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Killwangen-Spreitenbach?",
           "min": 320,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:4a13e363",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Killwangen-Spreitenbach?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -209,6 +215,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:82c4afc3",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Killwangen-Spreitenbach sind niveaufrei erreichbar.",
           "correct": true,
@@ -239,6 +246,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:c3df6e1f",
           "type": "cloze",
           "prompt": "An Gleis 3 in Killwangen-Spreitenbach sind ___ Sektoren erfasst.",
           "options": [
@@ -253,6 +261,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:abb05182",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Killwangen-Spreitenbach kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -289,6 +298,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:bff05e13",
           "type": "cloze",
           "prompt": "In Killwangen-Spreitenbach sind ___ Perronsegmente erfasst.",
           "options": [
@@ -303,6 +313,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:014a6dee",
           "type": "true_false",
           "prompt": "Bei keinem der 18 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -316,7 +327,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Killwangen-Spreitenbach – Silberen (Abzw): Im Personenverkehr verkehren dort 624 Züge pro Tag, das sind 227'883 im Jahr. Auf dem Abschnitt Langacher (Spw) – Killwangen-Spreitenbach sind es 415 und auf dem Abschnitt Killwangen-Spreitenbach – Killwangen Lehnenviadukt sind es 210 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 114 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Killwangen-Spreitenbach – Silberen (Abzw)",
@@ -335,6 +346,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:4440d346",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Killwangen-Spreitenbach – Silberen (Abzw)?",
           "options": [
@@ -349,6 +361,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -401,6 +414,7 @@
       ],
       "questions": [
         {
+          "id": "linien:a7bc7682",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 710 ist Killwangen-Spreitenbach eingetragen?",
           "min": 13.0,
@@ -413,6 +427,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -460,6 +475,7 @@
       ],
       "questions": [
         {
+          "id": "services:40b97391",
           "type": "true_false",
           "prompt": "Killwangen-Spreitenbach steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -468,6 +484,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:649b6cfb",
           "type": "cloze",
           "prompt": "In Killwangen-Spreitenbach sind ___ Billettentwerter erfasst.",
           "options": [
@@ -509,6 +526,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -523,6 +541,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -538,8 +557,9 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -559,7 +579,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 5/6 hat mit 2'620 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 320 die kleinste der gezeigten.",
+          "explanation": "Perron 5/6 hat mit 2'620 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 320 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

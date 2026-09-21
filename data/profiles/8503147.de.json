@@ -4,14 +4,13 @@
   "tier": "M",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -25,7 +24,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Stettbach liegt im Kanton Zürich und wird von der SBB als Infrastrukturbetreiberin und als Bahnunternehmen betrieben. An einem Werktag steigen hier 28'900 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 25'200 und an einem freien Tag 16'900. Der Werktagsverkehr ist von 25'800 im Jahr 2018 auf 28'900 im Jahr 2025 gestiegen.",
+      "body": "An einem Werktag steigen in Stettbach 28'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 25'200, an einem freien Tag 16'900. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -35,51 +34,38 @@
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Tagesmittel über das ganze Jahr",
+          "label": "Ein- und Aussteigende im Tagesmittel",
           "value": 25200,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
-          "label": "An einem freien Tag",
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 16900,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Werktagsverkehr 2018",
-          "value": 25800,
-          "unit": "Personen",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[0].dwv"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:61d4f942",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Stettbach ein und aus?",
           "options": [
-            "12'000",
-            "16'000",
             "20'000",
-            "28'900"
+            "25'000",
+            "28'900",
+            "35'000"
           ],
-          "correct": 3,
-          "explanation": "An einem Werktag sind es 28'900 Personen, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 28'900 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "An einem freien Tag steigen in Stettbach 16'900 Personen ein und aus.",
-          "correct": true,
-          "explanation": "Der Wert für einen freien Tag (dnwv) beträgt 16'900 Personen, Stand 2025.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 1
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -102,6 +88,20 @@
           ],
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 23'100 (2022), 26'700 (2023), 28'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:00e1dfcd",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Stettbach ___ Personen ein und aus.",
+          "options": [
+            "14'000",
+            "16'900",
+            "20'000"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 16'900 Personen, an einem Werktag 28'900. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
       ]
@@ -109,7 +109,7 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Stettbach liegt auf 431,5 Metern über Meer in der Gemeinde Zürich. Betrieben wird die Haltestelle von den Schweizerischen Bundesbahnen SBB.",
+      "body": "Stettbach liegt auf 431.5 Metern über Meer in der Gemeinde Zürich, Bezirk Zürich, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet STET.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -119,98 +119,92 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Gemeinde",
-          "value": "Zürich",
-          "unit": null,
+          "label": "Offizielle Abkürzung",
+          "value": "STET",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
+          "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Betreiber",
-          "value": "Schweizerische Bundesbahnen SBB",
-          "unit": null,
+          "label": "Gemeinde",
+          "value": "Zürich",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.betreiber"
+          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Stettbach liegt auf ___ Metern über Meer.",
-          "options": [
-            "398.2",
-            "431.5",
-            "462.0"
-          ],
-          "correct": 1,
-          "explanation": "Die erfasste Höhe beträgt 431,5 Meter über Meer.",
+          "id": "stammdaten:920877c7",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Stettbach?",
+          "min": 350,
+          "max": 630,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 431.5,
+          "explanation": "Der Bahnhof liegt auf 431.5 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
+          "id": "stammdaten:b71a56cb",
           "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt Stettbach?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Stettbach?",
           "options": [
             "Dübendorf",
+            "Uster",
             "Wallisellen",
-            "Zürich",
-            "Uster"
+            "Zürich"
           ],
-          "correct": 2,
-          "explanation": "Als Gemeinde ist Zürich erfasst.",
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Zürich eingetragen.",
           "factRef": "stammdaten.gemeinde",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu einem Perron liegen offene Daten vor. Es handelt sich um ein Mittelperron mit einer Länge von 323 Metern, das niveaufrei erreichbar ist.",
+      "body": "Zu 1 Perron in Stettbach liegen offene Daten vor. Perron 1/2 ist ein Mittelperron von 323 Metern. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
           "value": 1,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Länge des längsten erfassten Perrons",
+          "label": "Längstes erfasstes Perron",
           "value": 323,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 1,
-          "unit": null,
-          "source": "perron",
-          "factRef": "perrons.niveaufrei_erreichbar"
         }
       ],
       "questions": [
         {
+          "id": "perrons:8a0364ec",
           "type": "single_choice",
-          "prompt": "Wie lang ist das in den offenen Daten erfasste Perron in Stettbach?",
+          "prompt": "Wie lang ist das erfasste Perron in Stettbach?",
           "options": [
-            "215 m",
-            "270 m",
             "323 m",
-            "410 m"
+            "390 m",
+            "450 m",
+            "550 m"
           ],
-          "correct": 2,
-          "explanation": "Das erfasste Mittelperron misst 323 Meter.",
+          "correct": 0,
+          "explanation": "Das erfasste Perron misst 323 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
+          "id": "perrons:830e4737",
           "type": "true_false",
-          "prompt": "Zu Stettbach liegt Perrondaten für ein Perron vor.",
+          "prompt": "Das erfasste Perron in Stettbach ist niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Es liegt Daten für 1 Perron vor.",
-          "factRef": "perrons.anzahl_mit_daten",
+          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
       ]
@@ -218,212 +212,215 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu zwei Gleisen liegen offene Daten vor: Gleis 1 und Gleis 2, jeweils mit den Sektoren A bis E.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. Perronhöhen sind zu diesen Gleisen nicht vermerkt.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
           "value": 2,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 5,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
+          "id": "gleise:9f115000",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Stettbach sind ___ Sektoren erfasst.",
+          "options": [
+            "4",
+            "5",
+            "6"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D und E, also 5 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:9ad3a704",
           "type": "true_false",
-          "prompt": "Zu zwei Gleisen liegen in Stettbach offene Daten vor.",
-          "correct": true,
-          "explanation": "Erfasst sind Daten zu 2 Gleisen (Gleis 1 und Gleis 2).",
-          "factRef": "gleise.anzahl_mit_daten",
-          "difficulty": 1
+          "prompt": "Zu den erfassten Gleisen in Stettbach ist eine Perronhöhe vermerkt.",
+          "correct": false,
+          "explanation": "Zu keinem der erfassten Gleise ist eine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Von einem erfassten Perron ist eines niveaufrei erreichbar, und es ist eine visuell-taktile Sicherheitslinie vorhanden. Zu keinem der beiden Gleise mit Daten ist überhaupt eine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Stettbach keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Niveaufrei erreichbare Perrons",
           "value": 1,
-          "unit": null,
           "source": "perron",
           "factRef": "hindernisfreiheit.perrons_niveaufrei"
         },
         {
-          "label": "Sicherheitslinie vorhanden",
+          "label": "Sicherheitslinie",
           "value": "Ja",
-          "unit": null,
           "source": "haltestelle-visuell-taktile-sicherheitslinie",
           "factRef": "hindernisfreiheit.sicherheitslinie"
-        },
-        {
-          "label": "Gleise mit 55 cm Perronhöhe",
-          "value": 0,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Bei wie vielen der zwei erfassten Gleise in Stettbach ist eine Perronhöhe von 55 cm erfasst?",
-          "options": [
-            "0",
-            "1",
-            "2",
-            "3"
-          ],
-          "correct": 0,
-          "explanation": "Bei keinem der 2 erfassten Gleise ist eine Perronhöhe von 55 cm eingetragen.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
-          "difficulty": 2,
-          "optionen_aus_fakten": true
-        },
-        {
+          "id": "hindernisfreiheit:39bb5726",
           "type": "true_false",
-          "prompt": "Für Stettbach ist eine visuell-taktile Sicherheitslinie erfasst.",
-          "correct": true,
-          "explanation": "Als Sicherheitslinie ist «Ja» eingetragen.",
-          "factRef": "hindernisfreiheit.sicherheitslinie",
-          "difficulty": 1
+          "prompt": "Für Stettbach sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "correct": false,
+          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
+          "factRef": "hindernisfreiheit.perrons_mit_daten",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt zwischen Zürich Hottingen (Spw) und Stettbach verkehren im Personenverkehr rund 472 Züge pro Tag, beide Richtungen zusammen.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Zürich Hottingen (Spw) – Stettbach 472 Züge pro Tag, das sind 172'289 im Jahr. Auf dem Abschnitt Stettbach – Neugut (Abzw) sind es ebenfalls 472 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 9 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag auf dem stärksten Abschnitt",
+          "label": "Züge pro Tag, Personenverkehr Zürich Hottingen (Spw) – Stettbach",
           "value": 472,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Zürich Hottingen (Spw) – Stettbach",
+          "value": 172289,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:78eccaaa",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren pro Tag auf dem Abschnitt zwischen Zürich Hottingen (Spw) und Stettbach im Personenverkehr, beide Richtungen zusammen?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zürich Hottingen (Spw) – Stettbach?",
           "options": [
-            "190",
-            "260",
-            "330",
-            "472"
+            "400",
+            "472",
+            "570",
+            "660"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt sind es rund 472 Züge pro Tag, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
-          "difficulty": 2
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 472 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:9f13fa91",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Zürich Hottingen (Spw) – Stettbach?",
+          "min": 141000,
+          "max": 250000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 172289,
+          "explanation": "Die Erhebung zählt 172'289 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Zu Stettbach ist eine Linie mit offenen Daten erfasst: die S-Bahn-Linie 745 von Zürich Langstrasse nach Dietlikon Süd.",
+      "body": "Für Stettbach ist 1 Linie erfasst: die Linie 745 ZH Langstrasse - Dietlikon Sud (S-Bahn). Der Bahnhof ist darauf bei Kilometer 106.9411 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
           "value": 1,
-          "unit": null,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Liniennummer",
-          "value": 745,
-          "unit": null,
+          "label": "Kilometrierung auf der Linie 745",
+          "value": 106.9411,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].nummer"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Liniennummer ist für Stettbach erfasst?",
-          "options": [
-            "704",
-            "719",
-            "745",
-            "760"
-          ],
-          "correct": 2,
-          "explanation": "Erfasst ist die Linie 745 (ZH Langstrasse – Dietlikon Süd).",
-          "factRef": "linien.items[0].nummer",
-          "difficulty": 1
+          "id": "linien:3437d75b",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 745 ist Stettbach eingetragen?",
+          "min": 87,
+          "max": 156,
+          "step": 1,
+          "unit": "km",
+          "correct": 106.9411,
+          "explanation": "Die Kilometrierung von Stettbach auf der Linie 745 beträgt 106.9411. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "In Stettbach ist WLAN erfasst. Ausserdem sind 2 Billettautomaten, 3 Billettentwerter und 2 Wartehallen erfasst.",
+      "body": "Stettbach steht in der Liste der WLAN-Standorte. Erfasst sind 2 Billettautomaten vom Typ ePOS, 3 Billettentwerter und 2 Wartehallen.",
       "facts": [
         {
           "label": "WLAN erfasst",
           "value": true,
-          "unit": null,
+          "unit": "",
           "source": "wifistation",
           "factRef": "services.wlan_erfasst"
         },
         {
-          "label": "Billettautomaten",
+          "label": "Billettautomaten erfasst",
           "value": 2,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 3,
-          "unit": null,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen",
-          "value": 2,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:4e312f61",
           "type": "true_false",
-          "prompt": "Für Stettbach ist WLAN erfasst.",
+          "prompt": "Stettbach steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "WLAN ist als erfasst eingetragen (wlan_erfasst = true).",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
-          "type": "match",
-          "prompt": "Ordne den Service der erfassten Anzahl zu.",
-          "pairs": [
-            {
-              "links": "Billettautomaten",
-              "rechts": "2 Billettautomaten",
-              "factRef": "services.billettautomaten_erfasst"
-            },
-            {
-              "links": "Billettentwerter",
-              "rechts": "3 Billettentwerter",
-              "factRef": "services.billettentwerter_erfasst"
-            },
-            {
-              "links": "Wartehallen",
-              "rechts": "2 Wartehallen",
-              "factRef": "services.wartehallen_erfasst"
-            }
+          "id": "services:0db47e0d",
+          "type": "cloze",
+          "prompt": "In Stettbach sind ___ Billettentwerter erfasst.",
+          "options": [
+            "2",
+            "3",
+            "4"
           ],
-          "factRef": "services",
-          "explanation": "Erfasst sind 2 Billettautomaten, 3 Billettentwerter und 2 Wartehallen.",
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
       ]
@@ -431,7 +428,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Stettbach 12 Sitzbänke sowie 7 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Stettbach 12 Sitzbänke sowie 7 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -454,20 +451,22 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "8",
             "10",
             "12",
-            "14"
+            "14",
+            "17"
           ],
-          "correct": 2,
+          "correct": 1,
           "explanation": "Erfasst sind 12 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

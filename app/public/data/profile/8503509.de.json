@@ -4,15 +4,13 @@
   "tier": "M",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "abfahrtsplakate0",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -26,10 +24,10 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Schlieren rund 15'200 Personen ein und aus. Das Jahresmittel, das Werktage und freie Tage zusammenzählt, liegt bei 12'800. An einem freien Tag sind es 7'700. Zwischen 2018 und 2025 stieg der Werktagsverkehr von 14'100 auf 15'200 Personen, mit einem Zwischenhoch von 15'800 im Jahr 2024.",
+      "body": "An einem Werktag steigen in Schlieren 15'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 12'800, an einem freien Tag 7'700. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 15200,
           "unit": "Personen",
           "source": "passagierfrequenz",
@@ -52,175 +50,117 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:a935d535",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag 2025 in Schlieren ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Schlieren ein und aus?",
           "options": [
-            "6'100",
             "8'400",
             "11'000",
+            "13'000",
             "15'200"
           ],
           "correct": 3,
-          "explanation": "An einem Werktag waren es 2025 rund 15'200 Personen.",
+          "explanation": "An einem Werktag sind es 15'200 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Im Tagesmittel über das ganze Jahr 2025 steigen in Schlieren 12'800 Personen ein und aus.",
-          "correct": true,
-          "explanation": "Der Wert für das Tagesmittel 2025 beträgt 12'800 Personen.",
-          "factRef": "steckbrief.dtv",
-          "difficulty": 1
-        },
-        {
-          "type": "slider",
-          "prompt": "Wie viele Personen steigen an einem freien Tag 2025 in Schlieren ein und aus?",
-          "min": 0,
-          "max": 20000,
-          "step": 100,
-          "unit": "Personen",
-          "correct": 7700,
-          "explanation": "An einem freien Tag sind es 2025 rund 7'700 Personen.",
+          "id": "steckbrief:7d95daa0",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Schlieren ___ Personen ein und aus.",
+          "options": [
+            "6'500",
+            "7'700",
+            "9'200"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 7'700 Personen, an einem Werktag 15'200. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
-        },
-        {
-          "type": "match",
-          "prompt": "Ordne die Jahre dem jeweiligen Werktagsverkehr zu.",
-          "pairs": [
-            {
-              "links": "2018",
-              "rechts": "14'100 Personen",
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "links": "2022",
-              "rechts": "14'300 Personen",
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "links": "2024",
-              "rechts": "15'800 Personen",
-              "factRef": "steckbrief.verlauf[3].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "2018 lag der Werktagsverkehr bei 14'100, 2022 bei 14'300 und 2024 bei 15'800 Personen."
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Der Bahnhof Schlieren liegt auf 392.6 Meter über Meer in der Gemeinde Schlieren, Bezirk Dietikon, Kanton Zürich. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "body": "Schlieren liegt auf 392.6 Metern über Meer in der Gemeinde Schlieren, Bezirk Dietikon, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet SCHL.",
       "facts": [
         {
           "label": "Höhe über Meer",
           "value": 392.6,
-          "unit": "m ü. M.",
+          "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
+          "label": "Offizielle Abkürzung",
+          "value": "SCHL",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
           "label": "Bezirk",
           "value": "Dietikon",
-          "unit": null,
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
+          "id": "stammdaten:1804210b",
+          "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Schlieren?",
-          "options": [
-            "252.0 m",
-            "392.6 m",
-            "440.1 m",
-            "512.9 m"
-          ],
-          "correct": 1,
-          "explanation": "Der Bahnhof liegt auf 392.6 Meter über Meer.",
+          "min": 320,
+          "max": 570,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 392.6,
+          "explanation": "Der Bahnhof liegt auf 392.6 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "Schlieren liegt im Kanton Zürich.",
-          "correct": true,
-          "explanation": "Der Kanton ist gemäss Stammdaten Zürich.",
-          "factRef": "stammdaten.kanton",
-          "difficulty": 1
-        },
-        {
-          "type": "cloze",
-          "prompt": "Der Bahnhof Schlieren liegt im Bezirk ___.",
+          "id": "stammdaten:f80366fd",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Schlieren?",
           "options": [
+            "Affoltern",
+            "Dielsdorf",
             "Dietikon",
-            "Uster",
-            "Bülach"
+            "Zürich"
           ],
-          "correct": 0,
-          "explanation": "Gemäss Stammdaten liegt Schlieren im Bezirk Dietikon.",
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Bezirk ist Dietikon eingetragen.",
           "factRef": "stammdaten.bezirk",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu drei Perrons in Schlieren liegen offene Daten vor. Das längste misst 392 Meter, das kürzeste 252 Meter. Alle drei erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 3 Perrons in Schlieren liegen offene Daten vor. Perron 5/6 misst 392 Meter, Perron 3/4 misst 351 Meter, Perron 1 misst 252 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
           "value": 3,
-          "unit": "Perrons",
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
           "value": 392,
-          "unit": "Meter",
+          "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 252,
-          "unit": "Meter",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Schlieren?",
-          "options": [
-            "252 Meter",
-            "351 Meter",
-            "392 Meter",
-            "410 Meter"
-          ],
-          "correct": 2,
-          "explanation": "Das längste erfasste Perron misst 392 Meter.",
-          "factRef": "perrons.laengste_m",
-          "difficulty": 1
-        },
-        {
-          "type": "true_false",
-          "prompt": "Alle drei erfassten Perrons in Schlieren sind niveaufrei erreichbar.",
-          "correct": true,
-          "explanation": "Zu 3 von 3 erfassten Perrons ist ein niveaufreier Zugang erfasst.",
-          "factRef": "perrons.niveaufrei_erreichbar",
-          "difficulty": 1
-        },
-        {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne die erfassten Perrons nach Länge, längstes zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -240,105 +180,194 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Die Perrons messen 392, 351 und 252 Meter, absteigend sortiert."
+          "explanation": "Perron 5/6 misst 392 Meter, Perron 3/4 misst 351 Meter, Perron 1 misst 252 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 5/6",
+              "rechts": "1748.48 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 3/4",
+              "rechts": "1550.67 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "582.91 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 5/6 hat 1748.48 Quadratmeter, Perron 3/4 hat 1550.67 Quadratmeter, Perron 1 hat 582.91 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:7b973265",
+          "type": "true_false",
+          "prompt": "Alle 3 erfassten Perrons in Schlieren sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 3, 4, 5 und 6. Erfasst sind Perronhöhen von 25 und 55 Zentimetern. Zu den Gleisen 5 und 6 sind keine Sektortafeln erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 5,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Sektoren an Gleis 3",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[1].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 5",
+              "value": 393,
+              "factRef": "gleise.items[3].perronkante_m"
+            },
+            {
+              "label": "Gleis 3",
+              "value": 352,
+              "factRef": "gleise.items[1].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 253,
+              "factRef": "gleise.items[0].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 5 misst 393 Meter, Gleis 3 misst 352 Meter, Gleis 1 misst 253 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:95256fbe",
+          "type": "cloze",
+          "prompt": "An Gleis 3 in Schlieren sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "9",
+            "12"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 3 trägt die Sektoren A, B und C, also 3 Stück.",
+          "factRef": "gleise.items[1].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:2b678948",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 3 in Schlieren erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "30 cm",
+            "55 cm"
+          ],
+          "correct": [
+            1,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 3 sind 25 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[1].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Zu den drei erfassten Perrons in Schlieren liegen insgesamt 14 Perronsegmente aus der BehiG-Erhebung vor, davon 10 mit einer Perronhöhe von 25 cm und 4 mit 55 cm. Für keines der Segmente ist ein Hilfstritt erfasst. Bei 2 der 5 erfassten Gleise liegt eine Perronhöhe von 55 cm vor.",
+      "body": "Für Schlieren sind 14 Perronsegmente erfasst: 10 mit 25 Zentimetern, 4 mit 55 Zentimetern. An 2 der 5 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
           "value": 14,
-          "unit": "Segmente",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "unit": "Segmente",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
-        },
-        {
-          "label": "Gleise mit 55 cm Perronhöhe",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 2,
-          "unit": "Gleise",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind für Schlieren in der BehiG-Erhebung erfasst?",
+          "id": "hindernisfreiheit:879a6bd4",
+          "type": "cloze",
+          "prompt": "In Schlieren sind ___ Perronsegmente erfasst.",
           "options": [
-            "12",
             "14",
             "17",
             "20"
           ],
-          "correct": 1,
-          "explanation": "Es sind 14 Perronsegmente erfasst.",
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 14 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:627960b7",
           "type": "true_false",
-          "prompt": "Für Segmente in Schlieren ist ein Hilfstritt erfasst.",
-          "correct": false,
-          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
+          "prompt": "Bei keinem der 14 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 14 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 1
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Bei wie vielen der erfassten Gleise liegt eine Perronhöhe von 55 cm vor?",
-          "options": [
-            "1",
-            "2",
-            "3",
-            "4"
-          ],
-          "correct": 1,
-          "explanation": "Bei 2 der 5 erfassten Gleise liegt eine Perronhöhe von 55 cm vor.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
-          "difficulty": 2,
-          "optionen_aus_fakten": true
-        },
-        {
-          "type": "cloze",
-          "prompt": "Von den 3 erfassten Perrons in Schlieren sind ___ niveaufrei erreichbar.",
-          "options": [
-            "3",
-            "7",
-            "9"
-          ],
-          "correct": 0,
-          "explanation": "Alle 3 erfassten Perrons sind niveaufrei erreichbar.",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt Schlieren–Einfang (Abzw) der Strecke Killwangen–Zürich Altstetten verkehren 2025 im Personenverkehr rund 665 Züge pro Tag in beide Richtungen zusammen, das sind 242'606 Züge pro Jahr. Im Güterverkehr sind es auf demselben Abschnitt rund 99 Züge pro Tag.",
+      "body": "Am stärksten befahren ist der Abschnitt Schlieren – Einfang (Abzw): Im Personenverkehr verkehren dort 665 Züge pro Tag, das sind 242'606 im Jahr. Auf dem Abschnitt Glanzenberg – Schlieren sind es 662 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 99 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Schlieren–Einfang (Abzw)",
+          "label": "Züge pro Tag, Personenverkehr Schlieren – Einfang (Abzw)",
           "value": 665,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Schlieren–Einfang (Abzw)",
+          "label": "Züge pro Jahr, Personenverkehr Schlieren – Einfang (Abzw)",
           "value": 242606,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
@@ -347,81 +376,67 @@
       ],
       "questions": [
         {
+          "id": "zuege:d9dd8999",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren 2025 pro Tag im Personenverkehr auf dem Abschnitt Schlieren–Einfang (Abzw), beide Richtungen zusammen?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Schlieren – Einfang (Abzw)?",
           "options": [
-            "270",
-            "370",
-            "470",
-            "665"
+            "665",
+            "800",
+            "930",
+            "1'100"
           ],
-          "correct": 3,
-          "explanation": "Auf dem Abschnitt Schlieren–Einfang (Abzw) sind es 665 Personenzüge pro Tag, Stand 2025.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 665 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Auf dem Abschnitt Schlieren–Einfang (Abzw) verkehren im Güterverkehr rund 99 Züge pro Tag.",
-          "correct": true,
-          "explanation": "Im Güterverkehr sind auf diesem Abschnitt 99 Züge pro Tag erfasst.",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag",
-          "difficulty": 2
-        },
-        {
-          "type": "cloze",
-          "prompt": "Auf dem Abschnitt Schlieren–Einfang (Abzw) verkehren 2025 im Personenverkehr ___ Züge pro Jahr.",
-          "options": [
-            "97'000",
-            "130'000",
-            "242'606"
-          ],
-          "correct": 2,
-          "explanation": "Der Wert für den Personenverkehr auf diesem Abschnitt beträgt 2025 242'606 Züge pro Jahr.",
+          "id": "zuege:b15e1166",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Schlieren – Einfang (Abzw)?",
+          "min": 198500,
+          "max": 352000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 242606,
+          "explanation": "Die Erhebung zählt 242'606 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
-          "difficulty": 2
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Schlieren ist eine Linie erfasst: die Linie 710 Zurich HB–Brugg AG, mit einem Streckenpunkt bei Kilometer 7.50708.",
+      "body": "Für Schlieren ist 1 Linie erfasst: die Linie 710 Zurich HB - Brugg AG. Der Bahnhof ist darauf bei Kilometer 7.50708 eingetragen.",
       "facts": [
         {
-          "label": "Erfasste Linie",
-          "value": "Zurich HB - Brugg AG",
-          "unit": null,
+          "label": "Erfasste Linien",
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].name"
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 710",
+          "value": 7.50708,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Linie ist für den Bahnhof Schlieren erfasst?",
-          "options": [
-            "Zurich HB - Brugg AG",
-            "Zürich HB - Winterthur",
-            "Killwangen - Baden",
-            "Bern - Olten"
-          ],
-          "correct": 0,
-          "explanation": "Erfasst ist die Linie 710 Zurich HB - Brugg AG.",
-          "factRef": "linien.items[0].name",
-          "difficulty": 1
-        },
-        {
+          "id": "linien:fa4cb031",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer liegt der Betriebspunkt der Linie 710 in Schlieren?",
-          "min": 0,
-          "max": 20,
+          "prompt": "Bei welchem Streckenkilometer der Linie 710 ist Schlieren eingetragen?",
+          "min": 6.0,
+          "max": 11.0,
           "step": 0.1,
           "unit": "km",
           "correct": 7.50708,
-          "explanation": "Der Betriebspunkt liegt bei Kilometer 7.50708.",
+          "explanation": "Die Kilometrierung von Schlieren auf der Linie 710 beträgt 7.50708. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
-          "difficulty": 2
+          "difficulty": 3
         }
       ]
     },
@@ -431,65 +446,49 @@
       "body": "Schlieren steht in der Liste der WLAN-Standorte. Erfasst sind 2 Billettautomaten vom Typ ePOS, 3 Billettentwerter und 1 Wartehalle.",
       "facts": [
         {
-          "label": "Erfasste Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 2,
-          "unit": "Automaten",
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Erfasste Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 3,
-          "unit": "Entwerter",
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Erfasste Wartehallen",
-          "value": 1,
-          "unit": "Wartehallen",
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:1789e035",
           "type": "true_false",
           "prompt": "Schlieren steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Schlieren ist als WLAN-Standort erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind für Schlieren erfasst?",
+          "id": "services:51600eef",
+          "type": "cloze",
+          "prompt": "In Schlieren sind ___ Billettentwerter erfasst.",
           "options": [
-            "0",
-            "1",
-            "2",
-            "4"
-          ],
-          "correct": 2,
-          "explanation": "Es sind 2 Billettautomaten vom Typ ePOS erfasst.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettentwerter sind für Schlieren erfasst?",
-          "options": [
-            "2",
             "3",
             "9",
             "12"
           ],
-          "correct": 1,
-          "explanation": "Erfasst sind 3 Billettentwerter.",
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 2
         }
       ]
     },
@@ -525,21 +524,22 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "3",
             "8",
             "18",
-            "24"
+            "24",
+            "32"
           ],
-          "correct": 1,
+          "correct": 0,
           "explanation": "Erfasst sind 8 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -554,9 +554,10 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 2,
+          "min": 7,
           "max": 20,
           "step": 1,
           "unit": "Schliessfächer",
@@ -566,8 +567,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -587,7 +589,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 5/6 hat mit 2'705 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 810 die kleinste der gezeigten.",
+          "explanation": "Perron 5/6 hat mit 2'705 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 810 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

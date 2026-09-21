@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:9b37ee7d",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Tiefenbrunnen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:f3889ba3",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Zürich Tiefenbrunnen ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:b02c62b4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zürich Tiefenbrunnen?",
           "min": 330,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:dd117e37",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Zürich Tiefenbrunnen lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:a60815fd",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Zürich Tiefenbrunnen?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -210,6 +217,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:eb10ec5e",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Zürich Tiefenbrunnen sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:17b7c494",
           "type": "cloze",
           "prompt": "An Gleis 1 in Zürich Tiefenbrunnen sind ___ Sektoren erfasst.",
           "options": [
@@ -254,6 +263,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:d1436004",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Zürich Tiefenbrunnen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:8e109e89",
           "type": "cloze",
           "prompt": "In Zürich Tiefenbrunnen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -317,7 +329,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Zürich Stadelhofen – Zürich Tiefenbrunnen: Im Personenverkehr verkehren dort 241 Züge pro Tag, das sind 87'897 im Jahr. Auf dem Abschnitt Zürich Tiefenbrunnen – Zollikon sind es 238 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Zürich Stadelhofen – Zürich Tiefenbrunnen",
@@ -336,6 +348,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:bc134b10",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zürich Stadelhofen – Zürich Tiefenbrunnen?",
           "options": [
@@ -350,6 +363,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -397,6 +411,7 @@
       ],
       "questions": [
         {
+          "id": "linien:0e2a7d43",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Zürich Tiefenbrunnen eingetragen?",
           "min": 6.5,
@@ -437,6 +452,7 @@
       ],
       "questions": [
         {
+          "id": "services:ec8d5997",
           "type": "true_false",
           "prompt": "Zürich Tiefenbrunnen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -445,6 +461,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:a44280af",
           "type": "cloze",
           "prompt": "In Zürich Tiefenbrunnen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -486,6 +503,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -500,6 +518,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -514,6 +533,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

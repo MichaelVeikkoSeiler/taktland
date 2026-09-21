@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:496c40ee",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Chavornay ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:b708a56a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Chavornay ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:dd22b157",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Chavornay?",
           "min": 360,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:51a24aa1",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Chavornay?",
           "options": [
@@ -178,6 +183,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -203,6 +209,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -222,6 +229,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:bb89c911",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Chavornay sind niveaufrei erreichbar.",
           "correct": true,
@@ -252,6 +260,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d471595b",
           "type": "cloze",
           "prompt": "An Gleis 2 in Chavornay sind ___ Sektoren erfasst.",
           "options": [
@@ -266,6 +275,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:66cc85d3",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Chavornay erfasst? (Mehrfachauswahl)",
           "options": [
@@ -307,6 +317,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:36b5c9af",
           "type": "cloze",
           "prompt": "In Chavornay sind ___ Perronsegmente erfasst.",
           "options": [
@@ -321,6 +332,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:014a6dee",
           "type": "true_false",
           "prompt": "Bei keinem der 18 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -334,7 +346,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Bavois – Chavornay: Im Personenverkehr verkehren dort 170 Züge pro Tag, das sind 61'918 im Jahr. Auf dem Abschnitt Chavornay – Essert-Pittet sind es 168 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 67 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Bavois – Chavornay",
@@ -353,6 +365,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:689b8c99",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bavois – Chavornay?",
           "options": [
@@ -367,6 +380,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:4f6f50ba",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Bavois – Chavornay?",
           "min": 50500,
@@ -401,6 +415,7 @@
       ],
       "questions": [
         {
+          "id": "linien:d00cefe8",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 210 ist Chavornay eingetragen?",
           "min": 22,
@@ -413,6 +428,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -460,6 +476,7 @@
       ],
       "questions": [
         {
+          "id": "services:2668c7b6",
           "type": "true_false",
           "prompt": "Chavornay steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -468,6 +485,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:4d0ba66f",
           "type": "cloze",
           "prompt": "In Chavornay sind ___ Billettentwerter erfasst.",
           "options": [
@@ -503,6 +521,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -518,6 +537,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -533,8 +553,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -554,7 +575,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 1'529 Quadratmetern die grösste erfasste Fläche, Perron 5 mit 93 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 1'529 Quadratmetern die grösste erfasste Belagsfläche, Perron 5 mit 93 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

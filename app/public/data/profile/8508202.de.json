@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:ff6c9ee8",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Konolfingen ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:a3d7b917",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Konolfingen ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:dd6347db",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Konolfingen?",
           "min": 540,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:b40c6aca",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Konolfingen?",
           "options": [
@@ -178,6 +183,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:53d067b7",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Konolfingen?",
           "options": [
@@ -192,6 +198,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:682b23d8",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Konolfingen sind niveaufrei erreichbar.",
           "correct": true,
@@ -222,6 +229,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -247,6 +255,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:ac9f5655",
           "type": "cloze",
           "prompt": "An Gleis 2 in Konolfingen sind ___ Sektoren erfasst.",
           "options": [
@@ -261,6 +270,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:b36c9398",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Konolfingen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -291,6 +301,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:438647d3",
           "type": "cloze",
           "prompt": "In Konolfingen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -305,6 +316,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
           "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -318,25 +330,26 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Konolfingen – Zäziwil 113 Züge pro Tag, das sind 41'342 im Jahr. Auf dem Abschnitt Tägertschi – Konolfingen sind es ebenfalls 113 und auf dem Abschnitt Konolfingen – Stalden i.E. sind es 102 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 135 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Konolfingen – Zäziwil",
           "value": 113,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Konolfingen – Zäziwil",
           "value": 41342,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:07a96ad6",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Konolfingen – Zäziwil?",
           "options": [
@@ -347,10 +360,11 @@
           ],
           "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 113 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -403,6 +417,7 @@
       ],
       "questions": [
         {
+          "id": "linien:6cec475f",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 460 ist Konolfingen eingetragen?",
           "min": 16,
@@ -415,6 +430,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -438,7 +454,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 2 Billettautomaten der Typen BATS und ePOS, 5 Billettentwerter und 2 Wartehallen. Konolfingen steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 2 Billettautomaten (Typen BATS und ePOS), 5 Billettentwerter und 2 Wartehallen. Konolfingen steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -462,6 +478,7 @@
       ],
       "questions": [
         {
+          "id": "services:22f7831f",
           "type": "true_false",
           "prompt": "Konolfingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -470,6 +487,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:07263a55",
           "type": "cloze",
           "prompt": "In Konolfingen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -511,6 +529,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -525,6 +544,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -540,6 +560,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -555,8 +576,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -576,7 +598,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 3/4 hat mit 1'407 Quadratmetern die grösste erfasste Fläche, Perron 5/6 mit 846 die kleinste der gezeigten.",
+          "explanation": "Perron 3/4 hat mit 1'407 Quadratmetern die grösste erfasste Belagsfläche, Perron 5/6 mit 846 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

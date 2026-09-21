@@ -4,17 +4,16 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,90 +27,179 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Winterthur liegt im Kanton Zürich, auf 439 Metern über Meer. An einem Werktag steigen hier 116'400 Personen ein und aus, an einem freien Tag 75'800. Als Bahnhofbenutzer sind 119'200 pro Tag erfasst. Züge fahren von SBB und Thurbo.",
+      "body": "An einem Werktag steigen in Winterthur 116'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 103'800, an einem freien Tag 75'800. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 116400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 103800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 75800,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 119200,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
-        },
-        {
-          "label": "Höhe über Meer",
-          "value": 439,
-          "unit": "m",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.hoehe_m_ue_m"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:ef2f26cb",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Winterthur ein und aus?",
           "options": [
-            "42'000",
             "116'400",
-            "260'000",
-            "510'000"
+            "140'000",
+            "160'000",
+            "200'000"
           ],
-          "correct": 1,
-          "explanation": "116'400 Personen pro Werktag, Stand 2025.",
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 116'400 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 93700,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 109300,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 116400,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 93'700 (2022), 109'300 (2018), 116'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:cd2e2733",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Winterthur ___ Personen ein und aus.",
           "options": [
-            "2018",
-            "2022",
-            "2023",
-            "2025"
+            "64'000",
+            "75'800",
+            "91'000"
           ],
           "correct": 1,
-          "explanation": "2022, mit 93'700 Personen pro Werktag.",
-          "factRef": "steckbrief.verlauf[1].jahr",
+          "explanation": "An einem freien Tag sind es 75'800 Personen, an einem Werktag 116'400. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Winterthur liegt auf 438.9 Metern über Meer in der Gemeinde Winterthur, Bezirk Winterthur, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet W.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 438.9,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "W",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:e97418ec",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Winterthur?",
+          "min": 350,
+          "max": 640,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 438.9,
+          "explanation": "Der Bahnhof liegt auf 438.9 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:8424371f",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Winterthur lautet ___.",
+          "options": [
+            "W",
+            "WGR",
+            "WTOE"
+          ],
+          "correct": 0,
           "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist W als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
-      "title": "Der Tag am Bahnhof",
-      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 11.3 Prozent des Tagesaufkommens. Über die Woche ist der Donnerstag mit 16.4 Prozent der stärkste Tag, der Sonntag mit 8.6 Prozent der schwächste.",
+      "title": "Tagesrhythmus",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Winterthur in der Stunde ab 17 Uhr: 11.3 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Donnerstag, 16.4 Prozent, der kleinste auf den Sonntag, 8.6 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 11.3,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Anteil am Sonntag",
+          "label": "Wochentag mit dem grössten Anteil",
+          "value": "Donnerstag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.4,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Sonntag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[6].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
           "value": 8.6,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
@@ -120,64 +208,76 @@
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:e0cedd54",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag ist in Winterthur der stärkste?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Winterthur die meisten Bahnhofbenutzer?",
           "options": [
-            "Dienstag",
-            "Donnerstag",
-            "Freitag",
-            "Samstag"
+            "ab 7 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
           ],
-          "correct": 1,
-          "explanation": "Der Donnerstag mit 16.4 Prozent.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
-          "difficulty": 2
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 11.3, ab 16 Uhr 9.2, ab 7 Uhr 9.0, ab 18 Uhr 8.0 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
         },
         {
+          "id": "tagesrhythmus:5dc96513",
           "type": "slider",
-          "prompt": "Welcher Anteil der Wochenbesuche fällt auf den Sonntag?",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Winterthur auf die Stunde ab 17 Uhr?",
           "min": 0,
           "max": 25,
           "step": 0.1,
           "unit": "%",
-          "correct": 8.6,
-          "explanation": "8.6 Prozent, gegenüber 16.4 Prozent am Donnerstag.",
-          "factRef": "tagesrhythmus.wochentage[6].prozent",
+          "correct": 11.3,
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 11.3 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
           "difficulty": 3
+        },
+        {
+          "id": "tagesrhythmus:c0bb5505",
+          "type": "single_choice",
+          "prompt": "Auf welchen Wochentag entfällt in Winterthur der grösste Anteil der Bahnhofbenutzer?",
+          "options": [
+            "Montag",
+            "Donnerstag",
+            "Samstag",
+            "Sonntag"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Donnerstag 16.4, Montag 14.5, Samstag 12.8, Sonntag 8.6 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[3].tag",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 5 Perrons liegen Daten vor. Das längste misst 424 Meter, das kürzeste 176 Meter. Bei 5 von 5 ist der Zugang niveaufrei.",
+      "body": "Zu 5 Perrons in Winterthur liegen offene Daten vor. Am längsten sind Perron 2/3 mit 424 Metern, Perron 4/5 mit 419 Metern, Perron 6/7 mit 414 Metern und Perron 8/9 mit 340 Metern. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 5,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Längstes Perron",
+          "label": "Längstes erfasstes Perron",
           "value": 424,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes Perron",
-          "value": 176,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -196,225 +296,321 @@
               "factRef": "perrons.items[4].laenge_m"
             }
           ],
-          "correct": null,
-          "explanation": "Perron 2/3 ist mit 424 Metern das längste, Perron 1 mit 176 Metern das kürzeste.",
           "factRef": "perrons.items",
+          "explanation": "Perron 2/3 misst 424 Meter, Perron 8/9 misst 340 Meter, Perron 1 misst 176 Meter. Perrons mit fast gleicher Länge bleiben weg.",
           "difficulty": 2
+        },
+        {
+          "id": "perrons:6512e64c",
+          "type": "true_false",
+          "prompt": "Alle 5 erfassten Perrons in Winterthur sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 5 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 9 Gleisen vor, den Nummern 1 bis 9. Die Sektoren sind unterschiedlich beschriftet: an den Gleisen 1 und 2 mit F, G, H und J, an den übrigen ab A. Die längste erfasste Perronkante hat Gleis 8 mit 264 Metern.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "title": "Gleise",
+      "body": "Zu 9 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 5, 6, 7, 8 und 9. An allen 9 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 9,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Erster Sektor an Gleis 1",
-          "value": "F",
-          "unit": null,
-          "source": "sektortafel",
-          "factRef": "gleise.items[0].sektoren[0]"
-        },
-        {
-          "label": "Letzter Sektor an Gleis 1",
-          "value": "J",
-          "unit": null,
-          "source": "sektortafel",
-          "factRef": "gleise.items[0].sektoren[3]"
-        },
-        {
-          "label": "Perronkante an Gleis 8",
+          "label": "Längste erfasste Perronkante",
           "value": 264,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.items[7].perronkante_m"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Mit welchem Buchstaben beginnen die Sektoren an Gleis 1?",
-          "options": [
-            "A",
-            "C",
-            "F",
-            "H"
-          ],
-          "correct": 2,
-          "explanation": "Mit F. An den Gleisen 1 und 2 sind die Sektoren F, G, H und J erfasst.",
-          "factRef": "gleise.items[0].sektoren[0]",
-          "optionen_aus_fakten": true,
-          "difficulty": 3
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Welcher ist der letzte erfasste Sektor an Gleis 1?",
-          "options": [
-            "G",
-            "H",
-            "I",
-            "J"
-          ],
-          "correct": 3,
-          "explanation": "J. Ein Sektor I ist an diesem Gleis nicht erfasst.",
-          "factRef": "gleise.items[0].sektoren[3]",
-          "difficulty": 3
-        },
-        {
+          "id": "gleise:49c074d4",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
           "correct": "8",
-          "explanation": "Gleis 8 mit 264 Metern.",
           "factRef": "gleise.items[7].nr",
+          "explanation": "Gleis 8 hat mit 264 Metern die längste erfasste Perronkante, die nächste misst 130 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 8",
+              "value": 264,
+              "factRef": "gleise.items[7].perronkante_m"
+            },
+            {
+              "label": "Gleis 9",
+              "value": 130,
+              "factRef": "gleise.items[8].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 110,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 7",
+              "value": 78,
+              "factRef": "gleise.items[6].perronkante_m"
+            },
+            {
+              "label": "Gleis 5",
+              "value": 64,
+              "factRef": "gleise.items[4].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 8 misst 264 Meter, Gleis 9 misst 130 Meter, Gleis 1 misst 110 Meter, Gleis 7 misst 78 Meter, Gleis 5 misst 64 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:646d3849",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Winterthur sind ___ Sektoren erfasst.",
+          "options": [
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren F, G, H und J, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:092b0058",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Winterthur kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 9 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "Die 19 erfassten Perronabschnitte liegen auf 55 Zentimetern, und 9 von 9 Gleisen haben einen solchen Abschnitt. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "title": "Hindernisfreiheit",
+      "body": "Für Winterthur sind 19 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 9 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Abschnitte",
+          "label": "Erfasste Perronsegmente",
           "value": 19,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 9,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:366af15f",
+          "type": "cloze",
+          "prompt": "In Winterthur sind ___ Perronsegmente erfasst.",
+          "options": [
+            "19",
+            "27",
+            "32"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 19 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:5f9b5852",
           "type": "true_false",
-          "prompt": "In Winterthur liegt die Perronkante an jedem erfassten Gleis auf 55 Zentimetern.",
+          "prompt": "Bei keinem der 19 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "9 von 9 erfassten Gleisen haben einen Abschnitt auf 55 Zentimetern.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "explanation": "Die Erhebung weist bei 0 der 19 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf den Strecken",
-      "body": "Von Winterthur West her verkehren 247'593 Personenzüge pro Jahr, rund 678 pro Tag in beiden Richtungen zusammen. Richtung Schwalmenacker sind es 676 pro Tag, von Lantig her 110. Dazu kommen 51 Güterzüge pro Tag Richtung Schwalmenacker.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Winterthur West (Abzw) – Winterthur: Im Personenverkehr verkehren dort 678 Züge pro Tag, das sind 247'593 im Jahr. Auf dem Abschnitt Winterthur – Schwalmenacker (Spw) sind es 676 und auf dem Abschnitt Lantig (B) – Winterthur sind es 110 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 51 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, Abschnitt Winterthur West",
+          "label": "Züge pro Tag, Personenverkehr Winterthur West (Abzw) – Winterthur",
           "value": 678,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Personenzüge pro Tag von Lantig her",
-          "value": 110,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Winterthur West (Abzw) – Winterthur",
+          "value": 247593,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
-        },
-        {
-          "label": "Güterzüge pro Tag Richtung Schwalmenacker",
-          "value": 51,
-          "unit": "Züge",
-          "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[3].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:6d7fe178",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem stärksten Abschnitt bei Winterthur?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Winterthur West (Abzw) – Winterthur?",
           "options": [
-            "220",
-            "410",
             "678",
-            "1'320"
+            "810",
+            "950",
+            "1'200"
           ],
-          "correct": 2,
-          "explanation": "Rund 678 pro Tag von Winterthur West her, beide Richtungen zusammen.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 678 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zugzahlen sagen, wie viele Züge in Winterthur halten.",
-          "correct": false,
-          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
-          "factRef": "zuege.hinweis",
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Winterthur West (Abzw) – Winterthur, Personenverkehr",
+              "value": 247593,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Lantig (B) – Winterthur, Personenverkehr",
+              "value": 40212,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Winterthur – Schwalmenacker (Spw), Güterverkehr",
+              "value": 18596,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Winterthur West (Abzw) – Winterthur (Personenverkehr) 247'593, Lantig (B) – Winterthur (Personenverkehr) 40'212, Winterthur – Schwalmenacker (Spw) (Güterverkehr) 18'596 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Winterthur ist 1 Linie erfasst: die Linie 751 ZH Langstr. - Wallisellen - Winterthur. Der Bahnhof ist darauf bei Kilometer 26.14175 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 751",
+          "value": 26.14175,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:71b45cb2",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 751 ist Winterthur eingetragen?",
+          "min": 21,
+          "max": 38,
+          "step": 1,
+          "unit": "km",
+          "correct": 26.14175,
+          "explanation": "Die Kilometrierung von Winterthur auf der Linie 751 beträgt 26.14175. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 9 Billettautomaten, 26 Billettentwerter und 1 Wartehalle. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "title": "Services",
+      "body": "Winterthur steht in der Liste der WLAN-Standorte. Erfasst sind 9 Billettautomaten (Typen S-POS und ePOS), 26 Billettentwerter und 1 Wartehalle.",
       "facts": [
         {
-          "label": "Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 9,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 26,
-          "unit": null,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "WLAN erfasst",
-          "value": true,
-          "unit": null,
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "In Winterthur sind ___ Billettautomaten erfasst.",
-          "options": [
-            "4",
-            "9",
-            "18",
-            "26"
-          ],
-          "correct": 1,
-          "explanation": "9 Automaten, dazu 26 Billettentwerter.",
-          "factRef": "services.billettautomaten_erfasst",
-          "optionen_aus_fakten": true,
-          "difficulty": 1
-        },
-        {
+          "id": "services:bf9d3ccb",
           "type": "true_false",
           "prompt": "Winterthur steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Ja, der Bahnhof ist als WLAN-Standort erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
+        },
+        {
+          "id": "services:593f0ef0",
+          "type": "cloze",
+          "prompt": "In Winterthur sind ___ Billettentwerter erfasst.",
+          "options": [
+            "26",
+            "31",
+            "36"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 26 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -450,6 +646,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -464,24 +661,25 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "6",
             "15",
             "33",
-            "45"
+            "45",
+            "60"
           ],
-          "correct": 1,
+          "correct": 0,
           "explanation": "Erfasst sind 15 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 24,
+          "min": 72,
           "max": 216,
           "step": 1,
           "unit": "Schliessfächer",
@@ -491,6 +689,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -506,8 +705,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -532,7 +732,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4/5 hat mit 3'281 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 538 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 4/5 hat mit 3'281 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 538 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -540,22 +740,22 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Winterthur ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "body": "Für Winterthur ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Plan als A4",
+          "label": "Plan als A4-Blatt",
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-winterthur-a4.pdf",
-          "unit": null,
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:e193a505",
           "type": "true_false",
-          "prompt": "Für Winterthur gibt es einen veröffentlichten Bahnhofplan.",
+          "prompt": "Für Winterthur ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:3eec5864",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Küssnacht am Rigi ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:fb5041a7",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Küssnacht am Rigi ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:7d3945ad",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Küssnacht am Rigi?",
           "min": 370,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:15498b5a",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Küssnacht am Rigi lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:737b6051",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Küssnacht am Rigi?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:95e43160",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Küssnacht am Rigi ist niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:cd76807c",
           "type": "cloze",
           "prompt": "An Gleis 1 in Küssnacht am Rigi sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:2447d6ac",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Küssnacht am Rigi erfasst? (Mehrfachauswahl)",
           "options": [
@@ -276,6 +285,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:3962c38d",
           "type": "cloze",
           "prompt": "In Küssnacht am Rigi sind ___ Perronsegmente erfasst.",
           "options": [
@@ -290,6 +300,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -303,7 +314,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Merlischachen – Küssnacht am Rigi: Im Personenverkehr verkehren dort 83 Züge pro Tag, das sind 30'392 im Jahr. Auf dem Abschnitt Küssnacht am Rigi – Immensee sind es 79 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 102 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Merlischachen – Küssnacht am Rigi",
@@ -322,6 +333,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:7983cd87",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Merlischachen – Küssnacht am Rigi?",
           "options": [
@@ -336,6 +348,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:66d7bf2f",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Merlischachen – Küssnacht am Rigi?",
           "min": 24500,
@@ -370,6 +383,7 @@
       ],
       "questions": [
         {
+          "id": "linien:89884c2f",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 570 ist Küssnacht am Rigi eingetragen?",
           "min": 13.0,
@@ -410,6 +424,7 @@
       ],
       "questions": [
         {
+          "id": "services:5776efd3",
           "type": "true_false",
           "prompt": "Küssnacht am Rigi steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -418,6 +433,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:7b191671",
           "type": "cloze",
           "prompt": "In Küssnacht am Rigi sind ___ Billettentwerter erfasst.",
           "options": [
@@ -436,7 +452,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Küssnacht am Rigi 8 Sitzbänke sowie 7 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Küssnacht am Rigi 8 Sitzbänke sowie 7 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -459,6 +475,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -473,6 +490,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -487,6 +505,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -56,6 +56,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:b371f0a1",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in St. Margrethen SG ein und aus?",
           "options": [
@@ -70,6 +71,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -100,6 +102,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:4936b2f0",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in St. Margrethen SG ___ Personen ein und aus.",
           "options": [
@@ -113,6 +116,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:fdf05e4c",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in St. Margrethen SG erfasst den Verkehr ins und aus dem Ausland vollständig.",
           "correct": false,
@@ -143,6 +147,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:38792c4a",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof St. Margrethen SG?",
           "min": 320,
@@ -155,6 +160,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:f6d7da66",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs St. Margrethen SG lautet ___.",
           "options": [
@@ -191,6 +197,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:34039c1c",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in St. Margrethen SG?",
           "options": [
@@ -205,6 +212,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -224,6 +232,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:466f47ef",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in St. Margrethen SG sind niveaufrei erreichbar.",
           "correct": true,
@@ -254,6 +263,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:c2a13a73",
           "type": "cloze",
           "prompt": "An Gleis 1 in St. Margrethen SG sind ___ Sektoren erfasst.",
           "options": [
@@ -268,6 +278,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:30dc9ea1",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in St. Margrethen SG kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -304,6 +315,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:8ce26c88",
           "type": "cloze",
           "prompt": "In St. Margrethen SG sind ___ Perronsegmente erfasst.",
           "options": [
@@ -318,6 +330,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:cb4cc65b",
           "type": "true_false",
           "prompt": "Bei keinem der 10 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -331,7 +344,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Rheineck – St. Margrethen SG: Im Personenverkehr verkehren dort 212 Züge pro Tag, das sind 77'450 im Jahr. Auf dem Abschnitt St. Margrethen SG – Au SG sind es 153 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 13 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rheineck – St. Margrethen SG",
@@ -350,6 +363,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:6b6a2ed9",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rheineck – St. Margrethen SG?",
           "options": [
@@ -364,6 +378,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -416,6 +431,7 @@
       ],
       "questions": [
         {
+          "id": "linien:9c07108f",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 880 ist St. Margrethen SG eingetragen?",
           "min": 44,
@@ -456,6 +472,7 @@
       ],
       "questions": [
         {
+          "id": "services:7e46c0e1",
           "type": "true_false",
           "prompt": "St. Margrethen SG steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -464,6 +481,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:ceafad99",
           "type": "cloze",
           "prompt": "In St. Margrethen SG sind ___ Billettentwerter erfasst.",
           "options": [
@@ -511,6 +529,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -525,6 +544,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -540,6 +560,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 11,

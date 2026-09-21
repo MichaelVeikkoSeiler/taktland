@@ -38,8 +38,11 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
   }
 
   const fragenGesamt = profil.chapters.reduce((n, k) => n + k.questions.length, 0)
-  const beantwortet = Object.keys(antworten).length
-  const richtig = Object.values(antworten).filter((a) => a.richtig).length
+  // nur Antworten auf Fragen, die es im Profil noch gibt
+  const ids = new Set(profil.chapters.flatMap((k) => k.questions.map((q) => q.id)))
+  const aktuelle = Object.entries(antworten).filter(([id]) => ids.has(id))
+  const beantwortet = aktuelle.length
+  const richtig = aktuelle.filter(([, a]) => a.richtig).length
 
   function merken(frageId: string, war: boolean) {
     antwortSpeichern(uic, frageId, war)
@@ -110,8 +113,8 @@ function KapitelBlock({ kapitel, antworten, merken, gleise }: {
         </aside>
       )}
 
-      {kapitel.questions.map((f, i) => {
-        const id = `${kapitel.id}:${i}`
+      {kapitel.questions.map((f) => {
+        const id = f.id
         return (
           <Frage
             key={id}

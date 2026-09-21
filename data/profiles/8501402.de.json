@@ -55,6 +55,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:0401209f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Bex ein und aus?",
           "options": [
@@ -69,6 +70,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -99,6 +101,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:537e2c86",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Bex ___ Personen ein und aus.",
           "options": [
@@ -112,6 +115,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:659ebd3e",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Bex umfasst auch TPC.",
           "correct": false,
@@ -142,6 +146,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:5173e01d",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bex?",
           "min": 330,
@@ -154,6 +159,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:6123a1a8",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Bex lautet ___.",
           "options": [
@@ -190,6 +196,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:341f2f27",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Bex?",
           "options": [
@@ -204,6 +211,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:e3e3f15d",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Bex sind niveaufrei erreichbar.",
           "correct": true,
@@ -234,6 +242,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:4ae52280",
           "type": "cloze",
           "prompt": "An Gleis 1 in Bex sind ___ Sektoren erfasst.",
           "options": [
@@ -248,6 +257,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:98026fa6",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Bex kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -278,6 +288,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:38901b8c",
           "type": "cloze",
           "prompt": "In Bex sind ___ Perronsegmente erfasst.",
           "options": [
@@ -292,6 +303,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f641b667",
           "type": "true_false",
           "prompt": "Bei keinem der 9 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -305,7 +317,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt St-Triphon – Bex: Im Personenverkehr verkehren dort 228 Züge pro Tag, das sind 83'305 im Jahr. Auf dem Abschnitt Bex – Les Paluds sind es 179 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 18 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr St-Triphon – Bex",
@@ -324,6 +336,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:3b685e33",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt St-Triphon – Bex?",
           "options": [
@@ -338,6 +351,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -390,6 +404,7 @@
       ],
       "questions": [
         {
+          "id": "linien:f144cadb",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Bex eingetragen?",
           "min": 38,
@@ -402,6 +417,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -449,6 +465,7 @@
       ],
       "questions": [
         {
+          "id": "services:98e8d4ef",
           "type": "true_false",
           "prompt": "Bex steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -457,6 +474,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:6582bbc9",
           "type": "cloze",
           "prompt": "In Bex sind ___ Billettentwerter erfasst.",
           "options": [
@@ -498,6 +516,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -513,6 +532,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -528,6 +548,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

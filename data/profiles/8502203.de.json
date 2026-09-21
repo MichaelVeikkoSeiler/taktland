@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:ef234cb8",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Cham ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:d47562ad",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Cham ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:fef302df",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Cham?",
           "min": 340,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:bdb21c2a",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Cham lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:a527cb9f",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Cham?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -204,6 +211,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:f316adb9",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Cham sind niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +236,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:12910d00",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Cham erfasst? (Mehrfachauswahl)",
           "options": [
@@ -274,6 +283,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:d4f41968",
           "type": "cloze",
           "prompt": "In Cham sind ___ Perronsegmente erfasst.",
           "options": [
@@ -293,7 +303,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Cham – Cham Alpenblick 216 Züge pro Tag, das sind 78'727 im Jahr. Auf dem Abschnitt Hünenberg Zythus – Cham sind es ebenfalls 216 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Cham – Cham Alpenblick",
@@ -312,6 +322,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:73e5f670",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Cham – Cham Alpenblick?",
           "options": [
@@ -326,6 +337,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:46c1ce3f",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Cham – Cham Alpenblick?",
           "min": 64500,
@@ -360,6 +372,7 @@
       ],
       "questions": [
         {
+          "id": "linien:20c7aacd",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 9660 ist Cham eingetragen?",
           "min": 35,
@@ -372,6 +385,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -419,6 +433,7 @@
       ],
       "questions": [
         {
+          "id": "services:45f3ca29",
           "type": "true_false",
           "prompt": "Cham steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -427,6 +442,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:0a119075",
           "type": "cloze",
           "prompt": "In Cham sind ___ Billettentwerter erfasst.",
           "options": [
@@ -468,6 +484,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -482,6 +499,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -496,6 +514,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

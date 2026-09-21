@@ -48,6 +48,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:e20d12f3",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Baar Lindenpark ein und aus?",
           "options": [
@@ -62,6 +63,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -92,6 +94,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ded97db6",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Baar Lindenpark ___ Personen ein und aus.",
           "options": [
@@ -127,6 +130,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:54b647b6",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Baar Lindenpark?",
           "min": 350,
@@ -139,6 +143,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:0c43a452",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Baar Lindenpark lautet ___.",
           "options": [
@@ -175,6 +180,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:a5ef19ca",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Baar Lindenpark?",
           "options": [
@@ -189,6 +195,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -208,6 +215,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:3d5a1d82",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Baar Lindenpark sind niveaufrei erreichbar.",
           "correct": true,
@@ -238,6 +246,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:9c18c2bf",
           "type": "true_false",
           "prompt": "Für Baar Lindenpark sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -251,7 +260,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Baar Lindenpark – Zug: Im Personenverkehr verkehren dort 409 Züge pro Tag, das sind 149'387 im Jahr. Auf dem Abschnitt Baar Neufeld – Baar Lindenpark sind es 348 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Baar Lindenpark – Zug",
@@ -270,6 +279,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:29a58ee4",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Baar Lindenpark – Zug?",
           "options": [
@@ -284,6 +294,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -331,6 +342,7 @@
       ],
       "questions": [
         {
+          "id": "linien:eb7b3863",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 660 ist Baar Lindenpark eingetragen?",
           "min": 23,
@@ -343,6 +355,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -390,6 +403,7 @@
       ],
       "questions": [
         {
+          "id": "services:d79e28a3",
           "type": "true_false",
           "prompt": "Baar Lindenpark steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -398,6 +412,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c411466e",
           "type": "cloze",
           "prompt": "In Baar Lindenpark sind ___ Billettentwerter erfasst.",
           "options": [
@@ -439,6 +454,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -453,6 +469,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

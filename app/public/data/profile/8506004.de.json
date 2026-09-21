@@ -48,6 +48,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:e83910de",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Kollbrunn ein und aus?",
           "options": [
@@ -62,6 +63,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -92,6 +94,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ee8a95bb",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Kollbrunn ___ Personen ein und aus.",
           "options": [
@@ -133,6 +136,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:2a5b6530",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Kollbrunn?",
           "min": 400,
@@ -145,6 +149,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:95a8b527",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Kollbrunn?",
           "options": [
@@ -182,6 +187,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:13b2da27",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Kollbrunn?",
           "options": [
@@ -196,6 +202,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:fc0fd268",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Kollbrunn ist niveaufrei erreichbar.",
           "correct": true,
@@ -226,6 +233,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:525c25f7",
           "type": "true_false",
           "prompt": "Für Kollbrunn sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -239,7 +247,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Kollbrunn – Rikon 101 Züge pro Tag, das sind 36'885 im Jahr. Auf dem Abschnitt Sennhof-Kyburg – Kollbrunn sind es ebenfalls 101 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 7 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Kollbrunn – Rikon",
@@ -258,6 +266,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:8ce7efae",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Kollbrunn – Rikon?",
           "options": [
@@ -272,6 +281,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:66aa1d92",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Kollbrunn – Rikon?",
           "min": 30000,
@@ -306,6 +316,7 @@
       ],
       "questions": [
         {
+          "id": "linien:a6b9d216",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 754 ist Kollbrunn eingetragen?",
           "min": 7.0,
@@ -346,6 +357,7 @@
       ],
       "questions": [
         {
+          "id": "services:984d03bc",
           "type": "true_false",
           "prompt": "Kollbrunn steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -354,6 +366,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:18b05bff",
           "type": "cloze",
           "prompt": "In Kollbrunn sind ___ Billettentwerter erfasst.",
           "options": [
@@ -372,7 +385,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Kollbrunn 5 Sitzbänke sowie 11 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Kollbrunn 5 Sitzbänke sowie 11 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -395,6 +408,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -409,6 +423,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -423,6 +438,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

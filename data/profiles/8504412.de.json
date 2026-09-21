@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:67ca3aea",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Schüpfen ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:033e048c",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Schüpfen ___ Personen ein und aus.",
           "options": [
@@ -104,6 +106,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:738bceb4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Schüpfen?",
           "min": 420,
@@ -116,6 +119,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:752873eb",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Schüpfen?",
           "options": [
@@ -153,6 +157,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:117adccb",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Schüpfen?",
           "options": [
@@ -167,6 +172,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -186,6 +192,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:b756c4cf",
           "type": "true_false",
           "prompt": "Zu beiden erfassten Perrons in Schüpfen ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -217,6 +224,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -226,6 +234,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a24edcf3",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Schüpfen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -262,6 +271,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:b4b49d28",
           "type": "cloze",
           "prompt": "In Schüpfen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -276,6 +286,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -289,7 +300,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Suberg-Grossaffoltern – Schüpfen 162 Züge pro Tag, das sind 58'975 im Jahr. Auf dem Abschnitt Schüpfen – Münchenbuchsee sind es ebenfalls 162 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 13 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Suberg-Grossaffoltern – Schüpfen",
@@ -308,6 +319,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:a04eba0c",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Suberg-Grossaffoltern – Schüpfen?",
           "options": [
@@ -322,6 +334,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:92d7a18d",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Suberg-Grossaffoltern – Schüpfen?",
           "min": 48000,
@@ -356,6 +369,7 @@
       ],
       "questions": [
         {
+          "id": "linien:145a09a5",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 260 ist Schüpfen eingetragen?",
           "min": 12.5,
@@ -396,6 +410,7 @@
       ],
       "questions": [
         {
+          "id": "services:d751bf24",
           "type": "true_false",
           "prompt": "Schüpfen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -404,6 +419,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:ea627f6d",
           "type": "cloze",
           "prompt": "In Schüpfen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -439,6 +455,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -453,6 +470,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:416bca65",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Sonceboz-Sombeval ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:8615c5bb",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Sonceboz-Sombeval ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:cea0515a",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Sonceboz-Sombeval?",
           "min": 530,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:653ec5dd",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Sonceboz-Sombeval?",
           "options": [
@@ -178,6 +183,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:87d2b40a",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Sonceboz-Sombeval?",
           "options": [
@@ -192,6 +198,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -211,6 +218,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:d49deaa8",
           "type": "true_false",
           "prompt": "Zu beiden erfassten Perrons in Sonceboz-Sombeval ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -241,6 +249,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:ff481520",
           "type": "cloze",
           "prompt": "An Gleis 1 in Sonceboz-Sombeval sind ___ Sektoren erfasst.",
           "options": [
@@ -255,6 +264,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a8f7536b",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Sonceboz-Sombeval kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -285,6 +295,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:fe234d6e",
           "type": "cloze",
           "prompt": "In Sonceboz-Sombeval sind ___ Perronsegmente erfasst.",
           "options": [
@@ -299,6 +310,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f366795b",
           "type": "true_false",
           "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -312,7 +324,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Sonceboz-Sombeval – La Heutte: Im Personenverkehr verkehren dort 82 Züge pro Tag, das sind 29'812 im Jahr. Auf dem Abschnitt Corgémont – Sonceboz-Sombeval sind es 70 und auf dem Abschnitt Sonceboz-Sombeval – Tavannes sind es 55 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Sonceboz-Sombeval – La Heutte",
@@ -331,6 +343,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:a7efecbe",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Sonceboz-Sombeval – La Heutte?",
           "options": [
@@ -345,6 +358,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -397,6 +411,7 @@
       ],
       "questions": [
         {
+          "id": "linien:8d905a00",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 225 ist Sonceboz-Sombeval eingetragen?",
           "min": 39,
@@ -437,6 +452,7 @@
       ],
       "questions": [
         {
+          "id": "services:2f22a74b",
           "type": "true_false",
           "prompt": "Sonceboz-Sombeval steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -445,6 +461,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:78a4f53d",
           "type": "cloze",
           "prompt": "In Sonceboz-Sombeval sind ___ Billettentwerter erfasst.",
           "options": [
@@ -480,6 +497,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -494,6 +512,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

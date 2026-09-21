@@ -48,6 +48,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:340874ea",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Thörishaus Dorf ein und aus?",
           "options": [
@@ -62,6 +63,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -87,6 +89,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:c56d5443",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Thörishaus Dorf ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:1d96dbe4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Thörishaus Dorf?",
           "min": 470,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e4658600",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Thörishaus Dorf?",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:ad81ae96",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Thörishaus Dorf?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:5aa58572",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Thörishaus Dorf sind niveaufrei erreichbar.",
           "correct": true,
@@ -221,6 +228,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:007789c4",
           "type": "true_false",
           "prompt": "Für Thörishaus Dorf sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -234,7 +242,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Flamatt – Thörishaus Dorf 222 Züge pro Tag, das sind 80'983 im Jahr. Auf dem Abschnitt Thörishaus Dorf – Thörishaus Station sind es ebenfalls 222 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 8 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Flamatt – Thörishaus Dorf",
@@ -253,6 +261,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:ee8e5376",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Flamatt – Thörishaus Dorf?",
           "options": [
@@ -267,6 +276,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:5a9dadd9",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Flamatt – Thörishaus Dorf?",
           "min": 66000,
@@ -301,6 +311,7 @@
       ],
       "questions": [
         {
+          "id": "linien:6faf5bfe",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Thörishaus Dorf eingetragen?",
           "min": 71,
@@ -341,6 +352,7 @@
       ],
       "questions": [
         {
+          "id": "services:1f4ad2d0",
           "type": "true_false",
           "prompt": "Thörishaus Dorf steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -349,6 +361,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:60188a1a",
           "type": "cloze",
           "prompt": "In Thörishaus Dorf sind ___ Billettentwerter erfasst.",
           "options": [
@@ -384,6 +397,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -399,6 +413,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:ec382cb6",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Affoltern ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:aa7e914b",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Zürich Affoltern ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:f2e4d42f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zürich Affoltern?",
           "min": 370,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:86ae3635",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Zürich Affoltern lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f21b625a",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Zürich Affoltern?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:33aaf49a",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Zürich Affoltern sind niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:a0a6aa5a",
           "type": "cloze",
           "prompt": "An Gleis 1 in Zürich Affoltern sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:deedb17d",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Zürich Affoltern ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -260,6 +269,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7358a7b9",
           "type": "true_false",
           "prompt": "Für Zürich Affoltern sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -273,7 +283,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Regensdorf-Watt – Zürich Affoltern 95 Züge pro Tag, das sind 34'528 im Jahr. Auf dem Abschnitt Zürich Affoltern – Zürich Seebach sind es ebenfalls 95 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 32 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Regensdorf-Watt – Zürich Affoltern",
@@ -292,6 +302,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:9a8ec287",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Regensdorf-Watt – Zürich Affoltern?",
           "options": [
@@ -306,6 +317,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:cdd48f77",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Regensdorf-Watt – Zürich Affoltern?",
           "min": 28000,
@@ -340,6 +352,7 @@
       ],
       "questions": [
         {
+          "id": "linien:63e5b0af",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 703 ist Zürich Affoltern eingetragen?",
           "min": 21,
@@ -380,6 +393,7 @@
       ],
       "questions": [
         {
+          "id": "services:a3d399c3",
           "type": "true_false",
           "prompt": "Zürich Affoltern steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -388,6 +402,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:42edb90e",
           "type": "cloze",
           "prompt": "In Zürich Affoltern sind ___ Billettentwerter erfasst.",
           "options": [
@@ -423,6 +438,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -437,6 +453,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -51,6 +51,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:1b82bd97",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Glattbrugg ein und aus?",
           "options": [
@@ -65,6 +66,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -95,6 +97,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:a3113174",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Glattbrugg ___ Personen ein und aus.",
           "options": [
@@ -136,6 +139,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:672a01a9",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Glattbrugg?",
           "min": 350,
@@ -148,6 +152,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:dd84c8e4",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Glattbrugg?",
           "options": [
@@ -185,6 +190,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f0fcc17a",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Glattbrugg?",
           "options": [
@@ -199,6 +205,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:1329308a",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Glattbrugg ist niveaufrei erreichbar.",
           "correct": true,
@@ -229,6 +236,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:1be6f08c",
           "type": "cloze",
           "prompt": "An Gleis 2 in Glattbrugg sind ___ Sektoren erfasst.",
           "options": [
@@ -243,6 +251,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:4edbe328",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 2 in Glattbrugg erfasst? (Mehrfachauswahl)",
           "options": [
@@ -289,6 +298,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:fa58f46d",
           "type": "cloze",
           "prompt": "In Glattbrugg sind ___ Perronsegmente erfasst.",
           "options": [
@@ -303,6 +313,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1282a462",
           "type": "true_false",
           "prompt": "Bei keinem der 15 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -316,25 +327,26 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Tankanlage Rümlang – Glattbrugg: Im Personenverkehr verkehren dort 234 Züge pro Tag, das sind 85'251 im Jahr. Auf dem Abschnitt Glattbrugg – Zürich Oerlikon Nord (Abzw) sind es 233 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 37 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Tankanlage Rümlang – Glattbrugg",
           "value": 234,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Tankanlage Rümlang – Glattbrugg",
           "value": 85251,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:8d0fac74",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Tankanlage Rümlang – Glattbrugg?",
           "options": [
@@ -345,10 +357,11 @@
           ],
           "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 234 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -367,10 +380,15 @@
               "label": "Glattbrugg – Opfikon Süd, Güterverkehr",
               "value": 6993,
               "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            },
+            {
+              "label": "Glattbrugg – Zürich Oerlikon Nord (Abzw), Güterverkehr",
+              "value": 5692,
+              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Richtig ist diese Reihenfolge: Tankanlage Rümlang – Glattbrugg im Personenverkehr mit 85'251, Tankanlage Rümlang – Glattbrugg im Güterverkehr mit 13'347 und Glattbrugg – Opfikon Süd im Güterverkehr mit 6'993 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Tankanlage Rümlang – Glattbrugg (Personenverkehr) 85'251, Tankanlage Rümlang – Glattbrugg (Güterverkehr) 13'347, Glattbrugg – Opfikon Süd (Güterverkehr) 6'993, Glattbrugg – Zürich Oerlikon Nord (Abzw) (Güterverkehr) 5'692 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -396,6 +414,7 @@
       ],
       "questions": [
         {
+          "id": "linien:5bf20e1d",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 760 ist Glattbrugg eingetragen?",
           "min": 5.5,
@@ -436,6 +455,7 @@
       ],
       "questions": [
         {
+          "id": "services:b4469ff4",
           "type": "true_false",
           "prompt": "Glattbrugg steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -444,6 +464,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:0bbc5a33",
           "type": "cloze",
           "prompt": "In Glattbrugg sind ___ Billettentwerter erfasst.",
           "options": [
@@ -462,7 +483,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Glattbrugg 10 Sitzbänke sowie 25 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Glattbrugg 10 Sitzbänke sowie 25 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -485,6 +506,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -499,6 +521,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -513,6 +536,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -543,10 +567,11 @@
       ],
       "questions": [
         {
+          "id": "bahnhofplan:02f3c6f6",
           "type": "true_false",
           "prompt": "Für Glattbrugg ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

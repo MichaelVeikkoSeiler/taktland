@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:5f7f4514",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zimeysa ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:56b44e82",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Zimeysa ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:67c96b59",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zimeysa?",
           "min": 350,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:80f2c25c",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Zimeysa?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:265f5046",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Zimeysa?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:752559c0",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Zimeysa sind niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:aee9404c",
           "type": "cloze",
           "prompt": "An Gleis 1 in Zimeysa sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:3e5e74b2",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Zimeysa ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -272,6 +281,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:8fc88f98",
           "type": "true_false",
           "prompt": "Für Zimeysa sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -285,7 +295,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Satigny – Zimeysa 145 Züge pro Tag, das sind 52'998 im Jahr. Auf dem Abschnitt Zimeysa – Meyrin sind es ebenfalls 145 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Satigny – Zimeysa",
@@ -304,6 +314,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:658c1646",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Satigny – Zimeysa?",
           "options": [
@@ -318,6 +329,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:5548a489",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Satigny – Zimeysa?",
           "min": 43000,
@@ -352,6 +364,7 @@
       ],
       "questions": [
         {
+          "id": "linien:31452148",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 151 ist Zimeysa eingetragen?",
           "min": 54,
@@ -392,6 +405,7 @@
       ],
       "questions": [
         {
+          "id": "services:20096adb",
           "type": "true_false",
           "prompt": "Zimeysa steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -400,6 +414,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:882ecbbc",
           "type": "cloze",
           "prompt": "In Zimeysa sind ___ Billettentwerter erfasst.",
           "options": [
@@ -435,6 +450,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -449,6 +465,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

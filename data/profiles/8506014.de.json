@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:218e6654",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Elgg ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:c053df92",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Elgg ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:b154a58c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Elgg?",
           "min": 410,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:c174df02",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Elgg?",
           "options": [
@@ -178,6 +183,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:965b01bd",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Elgg?",
           "options": [
@@ -192,6 +198,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:d50f7ac5",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Elgg sind niveaufrei erreichbar.",
           "correct": true,
@@ -222,6 +229,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:eff12589",
           "type": "cloze",
           "prompt": "An Gleis 2 in Elgg sind ___ Sektoren erfasst.",
           "options": [
@@ -258,6 +266,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:6a980972",
           "type": "cloze",
           "prompt": "In Elgg sind ___ Perronsegmente erfasst.",
           "options": [
@@ -277,7 +286,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Schneit – Elgg 216 Züge pro Tag, das sind 78'948 im Jahr. Auf dem Abschnitt Elgg – Aadorf sind es ebenfalls 216 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 20 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Schneit – Elgg",
@@ -296,6 +305,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:e557f810",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Schneit – Elgg?",
           "options": [
@@ -310,6 +320,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:13499707",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Schneit – Elgg?",
           "min": 64500,
@@ -344,6 +355,7 @@
       ],
       "questions": [
         {
+          "id": "linien:93af9cf9",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 850 ist Elgg eingetragen?",
           "min": 103,
@@ -384,6 +396,7 @@
       ],
       "questions": [
         {
+          "id": "services:a0d3fafe",
           "type": "true_false",
           "prompt": "Elgg steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -392,6 +405,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:a0be86ff",
           "type": "cloze",
           "prompt": "In Elgg sind ___ Billettentwerter erfasst.",
           "options": [
@@ -433,6 +447,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -448,6 +463,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -463,6 +479,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

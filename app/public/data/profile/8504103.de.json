@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:a04634eb",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Flamatt ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -99,6 +101,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:5bd78522",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Flamatt ___ Personen ein und aus.",
           "options": [
@@ -140,6 +143,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:45e4c823",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Flamatt?",
           "min": 450,
@@ -152,6 +156,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:1476bdaa",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Flamatt?",
           "options": [
@@ -189,6 +194,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:05fe4cf5",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Flamatt?",
           "options": [
@@ -203,6 +209,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:3432e3ea",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Flamatt sind niveaufrei erreichbar.",
           "correct": true,
@@ -233,6 +240,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:2377f705",
           "type": "cloze",
           "prompt": "An Gleis 1 in Flamatt sind ___ Sektoren erfasst.",
           "options": [
@@ -247,6 +255,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:e0cb4910",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Flamatt kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -283,6 +292,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:5731a4e9",
           "type": "cloze",
           "prompt": "In Flamatt sind ___ Perronsegmente erfasst.",
           "options": [
@@ -297,6 +307,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1282a462",
           "type": "true_false",
           "prompt": "Bei keinem der 15 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -310,7 +321,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Flamatt – Thörishaus Dorf: Im Personenverkehr verkehren dort 222 Züge pro Tag, das sind 80'983 im Jahr. Auf dem Abschnitt Wünnewil – Flamatt sind es 159 und auf dem Abschnitt Flamatt – Flamatt Dorf sind es 63 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 8 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Flamatt – Thörishaus Dorf",
@@ -329,6 +340,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:ee8e5376",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Flamatt – Thörishaus Dorf?",
           "options": [
@@ -343,6 +355,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -395,6 +408,7 @@
       ],
       "questions": [
         {
+          "id": "linien:a19a81b2",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Flamatt eingetragen?",
           "min": 68,
@@ -407,6 +421,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -454,6 +469,7 @@
       ],
       "questions": [
         {
+          "id": "services:f15a432f",
           "type": "true_false",
           "prompt": "Flamatt steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -462,6 +478,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:7dc79ab0",
           "type": "cloze",
           "prompt": "In Flamatt sind ___ Billettentwerter erfasst.",
           "options": [
@@ -503,6 +520,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -517,6 +535,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -532,6 +551,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

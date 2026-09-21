@@ -4,16 +4,13 @@
   "tier": "M",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
-    "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
-    "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -27,312 +24,443 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Zürich Flughafen liegt in der Gemeinde Kloten, auf 413 Metern über Meer. An einem Werktag steigen hier 55'500 Personen ein und aus, an einem freien Tag 48'300. 2022 waren es 35'500 pro Werktag. Züge fahren von SBB und Thurbo.",
+      "body": "An einem Werktag steigen in Zürich Flughafen 55'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 53'300, an einem freien Tag 48'300. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 55500,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 53300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 48300,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:87efbd10",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Flughafen ein und aus?",
+          "options": [
+            "55'500",
+            "67'000",
+            "78'000",
+            "94'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 55'500 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
         },
         {
-          "label": "Wert 2022",
-          "value": 35500,
-          "unit": "Personen",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[1].dwv"
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 35500,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 52500,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 55500,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 35'500 (2022), 52'500 (2018), 55'500 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:e83f7782",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Zürich Flughafen ___ Personen ein und aus.",
+          "options": [
+            "34'000",
+            "41'000",
+            "48'300"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 48'300 Personen, an einem Werktag 55'500. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Zürich Flughafen liegt auf 413 Metern über Meer in der Gemeinde Kloten, Bezirk Bülach, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet ZFH.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 413,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "ZFH",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
         },
         {
           "label": "Gemeinde",
           "value": "Kloten",
-          "unit": null,
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Flughafen ein und aus?",
-          "options": [
-            "19'000",
-            "55'500",
-            "120'000",
-            "240'000"
-          ],
-          "correct": 1,
-          "explanation": "55'500 Personen pro Werktag, Stand 2025.",
-          "factRef": "steckbrief.dwv",
-          "difficulty": 1
-        },
-        {
-          "type": "true_false",
-          "prompt": "An freien Tagen ist die Zahl der Reisenden fast so hoch wie an Werktagen.",
-          "correct": true,
-          "explanation": "48'300 an freien Tagen gegenüber 55'500 an Werktagen.",
-          "factRef": "steckbrief.dnwv",
+          "id": "stammdaten:8aa9dc9b",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zürich Flughafen?",
+          "min": 330,
+          "max": 600,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 413,
+          "explanation": "Der Bahnhof liegt auf 413 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
+          "id": "stammdaten:4707a8e5",
           "type": "single_choice",
-          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Zürich Flughafen?",
           "options": [
-            "2018",
-            "2022",
-            "2023",
-            "2025"
-          ],
-          "correct": 1,
-          "explanation": "2022, mit 35'500 Personen pro Werktag.",
-          "factRef": "steckbrief.verlauf[1].jahr",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
-        },
-        {
-          "type": "cloze",
-          "prompt": "Der Bahnhof liegt in der Gemeinde ___.",
-          "options": [
-            "Bülach",
             "Kloten",
             "Opfikon",
+            "Rümlang",
             "Zürich"
           ],
-          "correct": 1,
-          "explanation": "Kloten. Der Bahnhofsname nennt die Gemeinde nicht.",
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Kloten eingetragen.",
           "factRef": "stammdaten.gemeinde",
-          "difficulty": 3
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Erfasst sind 2 Perrons: eines von 492 Metern, eines von 474 Metern. Bei 2 von 2 ist der Zugang niveaufrei.",
+      "body": "Zu 2 Perrons in Zürich Flughafen liegen offene Daten vor. Perron 1/2 misst 492 Meter, Perron 3/4 misst 474 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 2,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Längstes Perron",
+          "label": "Längstes erfasstes Perron",
           "value": 492,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes Perron",
-          "value": 474,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:6ddc715a",
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Zürich Flughafen?",
           "options": [
-            "318 m",
-            "474 m",
-            "492 m",
-            "610 m"
+            "270 m",
+            "340 m",
+            "420 m",
+            "492 m"
           ],
-          "correct": 2,
-          "explanation": "492 Meter, das Perron an den Gleisen 1 und 2.",
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 492 Meter.",
           "factRef": "perrons.laengste_m",
-          "optionen_aus_fakten": true,
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:d4e7e0bf",
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Zürich Flughafen sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 4 Gleisen vor, den Nummern 1 bis 4. Die Perronkanten messen zwischen 459 und 479 Metern. An den erfassten Gleisen reichen die Sektoren von A bis D.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "title": "Gleise",
+      "body": "Zu 4 Gleisen liegen offene Daten vor: 1, 2, 3 und 4. An allen 4 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 4,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste Perronkante, Gleis 1",
-          "value": 479,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronkante_m"
-        },
-        {
-          "label": "Kürzeste Perronkante, Gleis 4",
-          "value": 459,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[3].perronkante_m"
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "1",
-          "explanation": "Gleis 1 mit 479 Metern. Die vier Gleise unterscheiden sich nur um wenige Meter.",
-          "factRef": "gleise.items[0].nr",
-          "difficulty": 3
+          "id": "gleise:af84717a",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Zürich Flughafen sind ___ Sektoren erfasst.",
+          "options": [
+            "4",
+            "5",
+            "6"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:73ec81cf",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Zürich Flughafen kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 4 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "Die 10 erfassten Perronabschnitte liegen auf 55 Zentimetern, und 4 von 4 Gleisen haben einen solchen Abschnitt. Bei 2 von 2 Perrons ist der Zugang niveaufrei. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Ein Hilfstritt gleicht den Unterschied aus.",
+      "title": "Hindernisfreiheit",
+      "body": "Für Zürich Flughafen sind 10 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 4 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Abschnitte",
+          "label": "Erfasste Perronsegmente",
           "value": 10,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 4,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:4fe4cd34",
+          "type": "cloze",
+          "prompt": "In Zürich Flughafen sind ___ Perronsegmente erfasst.",
+          "options": [
+            "10",
+            "12",
+            "14"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 10 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:cb4cc65b",
           "type": "true_false",
-          "prompt": "An jedem erfassten Gleis liegt die Perronkante auf 55 Zentimetern.",
+          "prompt": "Bei keinem der 10 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "4 von 4 erfassten Gleisen haben einen solchen Abschnitt.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
+          "explanation": "Die Erhebung weist bei 0 der 10 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf den Strecken",
-      "body": "Von Opfikon her verkehren 158'660 Personenzüge pro Jahr, rund 435 pro Tag in beiden Richtungen zusammen. Richtung Dorfnest sind es 297 pro Tag. Güterzüge sind selten: 4 pro Tag.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Opfikon – Zürich Flughafen: Im Personenverkehr verkehren dort 435 Züge pro Tag, das sind 158'660 im Jahr. Auf dem Abschnitt Zürich Flughafen – Dorfnest (Abzw) sind es 297 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 4 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, Abschnitt Opfikon",
+          "label": "Züge pro Tag, Personenverkehr Opfikon – Zürich Flughafen",
           "value": 435,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Personenzüge pro Tag Richtung Dorfnest",
-          "value": 297,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Opfikon – Zürich Flughafen",
+          "value": 158660,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
-        },
-        {
-          "label": "Güterzüge pro Tag",
-          "value": 4,
-          "unit": "Züge",
-          "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:c3cc5a3f",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt von Opfikon her?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Opfikon – Zürich Flughafen?",
           "options": [
-            "148",
-            "297",
-            "435",
-            "880"
+            "240",
+            "300",
+            "370",
+            "435"
           ],
-          "correct": 2,
-          "explanation": "Rund 435 pro Tag, beide Richtungen zusammen.",
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 435 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zugzahlen sagen, wie viele Züge hier halten.",
-          "correct": false,
-          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
-          "factRef": "zuege.hinweis",
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Opfikon – Zürich Flughafen, Personenverkehr",
+              "value": 158660,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Zürich Flughafen – Dorfnest (Abzw), Personenverkehr",
+              "value": 108407,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Zürich Flughafen – Dorfnest (Abzw), Güterverkehr",
+              "value": 1540,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Opfikon – Zürich Flughafen, Güterverkehr",
+              "value": 1198,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Opfikon – Zürich Flughafen (Personenverkehr) 158'660, Zürich Flughafen – Dorfnest (Abzw) (Personenverkehr) 108'407, Zürich Flughafen – Dorfnest (Abzw) (Güterverkehr) 1'540, Opfikon – Zürich Flughafen (Güterverkehr) 1'198 Züge im Jahr.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Zürich Flughafen ist 1 Linie erfasst: die Linie 750 ZH Oerlikon Nord - Dorfnest. Der Bahnhof ist darauf bei Kilometer 9.60138 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 750",
+          "value": 9.60138,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:daf24432",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 750 ist Zürich Flughafen eingetragen?",
+          "min": 7.5,
+          "max": 14.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 9.60138,
+          "explanation": "Die Kilometrierung von Zürich Flughafen auf der Linie 750 beträgt 9.60138. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 15 Billettautomaten und 16 Billettentwerter. Eine Wartehalle ist nicht erfasst, und dieser Bahnhof steht nicht in der Liste der WLAN-Standorte.",
+      "title": "Services",
+      "body": "Erfasst sind 15 Billettautomaten vom Typ ePOS und 16 Billettentwerter. Wartehallen sind keine verzeichnet. Zürich Flughafen steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
-          "label": "Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 15,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 16,
-          "unit": null,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "WLAN erfasst",
-          "value": false,
-          "unit": null,
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:c7b89795",
           "type": "true_false",
           "prompt": "Zürich Flughafen steht in der Liste der WLAN-Standorte.",
           "correct": false,
-          "explanation": "Der Bahnhof ist dort nicht aufgeführt. Die Liste umfasst nur einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
+          "id": "services:f20bdcb6",
           "type": "cloze",
-          "prompt": "In Zürich Flughafen sind ___ Billettautomaten erfasst.",
+          "prompt": "In Zürich Flughafen sind ___ Billettentwerter erfasst.",
           "options": [
-            "5",
-            "10",
-            "15",
-            "22"
+            "14",
+            "16",
+            "19"
           ],
-          "correct": 2,
-          "explanation": "15 Automaten, dazu 16 Billettentwerter.",
-          "factRef": "services.billettautomaten_erfasst",
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "difficulty": 1
+          "explanation": "Erfasst sind 16 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -362,23 +490,25 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "7",
-            "13",
             "18",
-            "22"
+            "22",
+            "25",
+            "31"
           ],
-          "correct": 2,
+          "correct": 0,
           "explanation": "Erfasst sind 18 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 20,
+          "min": 59,
           "max": 176,
           "step": 1,
           "unit": "Schliessfächer",
@@ -388,6 +518,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -445,72 +576,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 479,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 473,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 466,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "4",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 459,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
     }
   ]
 }

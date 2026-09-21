@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:39431d3b",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Giubiasco ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:657af5f6",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Giubiasco ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:2d4f39ac",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Giubiasco?",
           "min": 180,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:6efa2794",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Giubiasco?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:a5a32e8d",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Giubiasco?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -222,6 +229,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:2c8e3ff7",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Giubiasco sind niveaufrei erreichbar.",
           "correct": true,
@@ -252,6 +260,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -277,6 +286,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:41b4d19d",
           "type": "cloze",
           "prompt": "An Gleis 2 in Giubiasco sind ___ Sektoren erfasst.",
           "options": [
@@ -319,6 +329,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:763e15c6",
           "type": "cloze",
           "prompt": "In Giubiasco sind ___ Perronsegmente erfasst.",
           "options": [
@@ -333,6 +344,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f366795b",
           "type": "true_false",
           "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -346,7 +358,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Giubiasco – Giubiasco Nord: Im Personenverkehr verkehren dort 284 Züge pro Tag, das sind 103'787 im Jahr. Auf dem Abschnitt Giubiasco – Giubiasco Ovest sind es 264 und auf dem Abschnitt Giubiasco Est (c bin) – Giubiasco sind es 87 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 105 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Giubiasco – Giubiasco Nord",
@@ -365,6 +377,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:288d23e6",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Giubiasco – Giubiasco Nord?",
           "options": [
@@ -379,6 +392,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -431,6 +445,7 @@
       ],
       "questions": [
         {
+          "id": "linien:9ed39929",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 600 ist Giubiasco eingetragen?",
           "min": 126,
@@ -471,6 +486,7 @@
       ],
       "questions": [
         {
+          "id": "services:1a18c4e7",
           "type": "true_false",
           "prompt": "Giubiasco steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -479,6 +495,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:78282fcf",
           "type": "cloze",
           "prompt": "In Giubiasco sind ___ Billettentwerter erfasst.",
           "options": [
@@ -520,6 +537,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -534,6 +552,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -549,6 +568,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -564,8 +584,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -585,7 +606,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'089 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 985 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 2'089 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 985 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

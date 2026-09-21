@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:4d353fab",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Buchs-Dällikon ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:350f5c8d",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Buchs-Dällikon ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:84efd5b8",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Buchs-Dällikon?",
           "min": 340,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:275460b2",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Buchs-Dällikon?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:bf94ab15",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Buchs-Dällikon?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:19a2c1b9",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Buchs-Dällikon ist niveaufrei erreichbar.",
           "correct": true,
@@ -223,6 +230,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:a1e44ddd",
           "type": "cloze",
           "prompt": "An Gleis 1 in Buchs-Dällikon sind ___ Sektoren erfasst.",
           "options": [
@@ -265,6 +273,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:cf98d23b",
           "type": "cloze",
           "prompt": "In Buchs-Dällikon sind ___ Perronsegmente erfasst.",
           "options": [
@@ -279,6 +288,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:333e7d65",
           "type": "true_false",
           "prompt": "Bei keinem der 2 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -292,7 +302,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Buchs-Dällikon – Regensdorf-Watt 81 Züge pro Tag, das sind 29'658 im Jahr. Auf dem Abschnitt Buchs-Dällikon Industrie – Buchs-Dällikon sind es ebenfalls 81 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 32 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Buchs-Dällikon – Regensdorf-Watt",
@@ -311,6 +321,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:b5d5b560",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Buchs-Dällikon – Regensdorf-Watt?",
           "options": [
@@ -325,6 +336,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:6b33bbf3",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Buchs-Dällikon – Regensdorf-Watt?",
           "min": 24000,
@@ -359,6 +371,7 @@
       ],
       "questions": [
         {
+          "id": "linien:ce38b34c",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 703 ist Buchs-Dällikon eingetragen?",
           "min": 26,
@@ -399,6 +412,7 @@
       ],
       "questions": [
         {
+          "id": "services:9e7db70f",
           "type": "true_false",
           "prompt": "Buchs-Dällikon steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -407,6 +421,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:14776813",
           "type": "cloze",
           "prompt": "In Buchs-Dällikon sind ___ Billettentwerter erfasst.",
           "options": [
@@ -425,7 +440,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Buchs-Dällikon 4 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Buchs-Dällikon 4 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -448,6 +463,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -462,6 +478,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -476,6 +493,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

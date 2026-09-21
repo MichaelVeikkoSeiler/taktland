@@ -48,6 +48,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:eb7f2f1d",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Buchrain ein und aus?",
           "options": [
@@ -62,6 +63,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -92,6 +94,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e02c25b2",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Buchrain ___ Personen ein und aus.",
           "options": [
@@ -133,6 +136,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:aa8cb233",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Buchrain?",
           "min": 340,
@@ -145,6 +149,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:b51044f7",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Buchrain?",
           "options": [
@@ -182,6 +187,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:5d7d2cd1",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Buchrain?",
           "options": [
@@ -196,6 +202,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:61037762",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Buchrain sind niveaufrei erreichbar.",
           "correct": true,
@@ -226,6 +233,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:e41f2b98",
           "type": "true_false",
           "prompt": "Für Buchrain sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -239,7 +247,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Ebikon – Buchrain 199 Züge pro Tag, das sind 72'585 im Jahr. Auf dem Abschnitt Buchrain – Root D4 sind es ebenfalls 199 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 8 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Ebikon – Buchrain",
@@ -258,6 +266,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:41352600",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Ebikon – Buchrain?",
           "options": [
@@ -272,6 +281,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:3c679bdf",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Ebikon – Buchrain?",
           "min": 59500,
@@ -306,6 +316,7 @@
       ],
       "questions": [
         {
+          "id": "linien:8ef510e0",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 660 ist Buchrain eingetragen?",
           "min": 46,
@@ -346,6 +357,7 @@
       ],
       "questions": [
         {
+          "id": "services:58e06ada",
           "type": "true_false",
           "prompt": "Buchrain steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -354,6 +366,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:55d5ef42",
           "type": "cloze",
           "prompt": "In Buchrain sind ___ Billettentwerter erfasst.",
           "options": [
@@ -395,6 +408,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -409,6 +423,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -424,6 +439,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

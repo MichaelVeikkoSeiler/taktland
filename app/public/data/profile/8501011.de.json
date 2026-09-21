@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:47c4609a",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Les Tuileries ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:431cce31",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Les Tuileries ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:75a35d4d",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Les Tuileries?",
           "min": 310,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:53866d08",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Les Tuileries?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:ddb37c65",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Les Tuileries?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:04fd8c01",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Les Tuileries ist niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:ae4ee670",
           "type": "cloze",
           "prompt": "An Gleis 1 in Les Tuileries sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a44bd15c",
           "type": "true_false",
           "prompt": "Zum erfassten Gleis in Les Tuileries ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -272,6 +281,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:6c2b6c6d",
           "type": "true_false",
           "prompt": "Für Les Tuileries sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -285,7 +295,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Les Tuileries – Genthod-Bellevue 413 Züge pro Tag, das sind 150'883 im Jahr. Auf dem Abschnitt Vengeron (diag) – Les Tuileries sind es ebenfalls 413 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Les Tuileries – Genthod-Bellevue",
@@ -304,6 +314,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:d01e05f9",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
           "options": [
@@ -318,6 +329,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:b7e8be68",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
           "min": 123500,
@@ -352,6 +364,7 @@
       ],
       "questions": [
         {
+          "id": "linien:fa322166",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Les Tuileries eingetragen?",
           "min": 45,
@@ -392,6 +405,7 @@
       ],
       "questions": [
         {
+          "id": "services:ec97c7ff",
           "type": "true_false",
           "prompt": "Les Tuileries steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -400,6 +414,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:64a5adb5",
           "type": "cloze",
           "prompt": "In Les Tuileries sind ___ Billettentwerter erfasst.",
           "options": [
@@ -418,7 +433,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Les Tuileries 1 Sitzbank erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Les Tuileries 1 Sitzbank erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -435,6 +450,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -450,6 +466,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

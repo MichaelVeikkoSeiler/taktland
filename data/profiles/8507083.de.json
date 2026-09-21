@@ -4,11 +4,10 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "haltestelle-haltekante",
-    "haltestelle-wartehallen",
     "passagierfrequenz",
     "wifistation",
     "zugzahlen"
@@ -17,239 +16,295 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Köniz liegt in der Gemeinde Köniz im Kanton Bern, auf 572 Metern über Meer. An einem Werktag steigen hier 1900 Personen ein und aus, an einem freien Tag 990. Die Anlage gehört der BLS, nicht der SBB.",
+      "body": "An einem Werktag steigen in Köniz 1'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 1'600, an einem freien Tag 990. Infrastruktur und Züge sind der BLS zugeordnet.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 1900,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 1600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 990,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:4522d65a",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Köniz ein und aus?",
+          "options": [
+            "760",
+            "1'000",
+            "1'300",
+            "1'900"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 1'900 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 1600,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 1800,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 1900,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 2000,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 1'600 (2022), 1'800 (2024), 1'900 (2025), 2'000 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:f36d7f20",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Köniz ___ Personen ein und aus.",
+          "options": [
+            "690",
+            "840",
+            "990"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 990 Personen, an einem Werktag 1'900. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Köniz liegt auf 571.786 Metern über Meer in der Gemeinde Köniz, Bezirk Bern-Mittelland, Kanton Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet KOE.",
+      "facts": [
+        {
           "label": "Höhe über Meer",
-          "value": 572,
+          "value": 571.786,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Infrastrukturbetreiberin",
-          "value": "BLS",
-          "unit": null,
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
+          "label": "Offizielle Abkürzung",
+          "value": "KOE",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Bern-Mittelland",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Köniz ein und aus?",
-          "options": [
-            "760",
-            "1900",
-            "4300",
-            "9500"
-          ],
-          "correct": 1,
-          "explanation": "1900 Personen pro Werktag, Stand 2025.",
-          "factRef": "steckbrief.dwv",
-          "difficulty": 1
-        },
-        {
-          "type": "true_false",
-          "prompt": "Die Anlage in Köniz gehört der SBB.",
-          "correct": false,
-          "explanation": "Infrastrukturbetreiberin ist die BLS. Taktland führt den Bahnhof trotzdem, weil die offenen Daten ihn abdecken.",
-          "factRef": "steckbrief.isb",
+          "id": "stammdaten:e56e6cae",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Köniz?",
+          "min": 460,
+          "max": 830,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 571.786,
+          "explanation": "Der Bahnhof liegt auf 571.786 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e6c36625",
           "type": "single_choice",
-          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am höchsten?",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Köniz?",
           "options": [
-            "2018",
-            "2022",
-            "2023",
-            "2025"
+            "Bern-Mittelland",
+            "Emmental",
+            "Seeland",
+            "Thun"
           ],
           "correct": 0,
-          "explanation": "2018, mit 2000 Personen pro Werktag. 2022 waren es 1600.",
-          "factRef": "steckbrief.verlauf[0].jahr",
           "optionen_aus_fakten": true,
-          "difficulty": 3
+          "explanation": "Als Bezirk ist Bern-Mittelland eingetragen.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Offene Daten liegen zu den Gleisen 1 und 2 vor. Gleis 1 liegt an einem Hausperron, Gleis 2 an einem Aussenperron. Die Perronkanten messen 110 und 112 Meter.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. An beiden erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Gleise mit Daten",
+          "label": "Gleise mit offenen Daten",
           "value": 2,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
-        },
-        {
-          "label": "Perronkante an Gleis 1",
-          "value": 110,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronkante_m"
-        },
-        {
-          "label": "Perrontyp an Gleis 1",
-          "value": "Hausperron",
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perrontyp"
         }
       ],
       "questions": [
         {
+          "id": "gleise:1ef78deb",
           "type": "true_false",
-          "prompt": "Gleis 1 und Gleis 2 liegen am selben Perron.",
-          "correct": false,
-          "explanation": "Gleis 1 liegt an einem Hausperron, Gleis 2 an einem Aussenperron.",
-          "factRef": "gleise.items[0].perrontyp",
-          "difficulty": 2
-        },
-        {
-          "type": "slider",
-          "prompt": "Wie lang ist die Perronkante an Gleis 1 in Metern?",
-          "min": 50,
-          "max": 300,
-          "step": 10,
-          "unit": "m",
-          "correct": 110,
-          "explanation": "110 Meter, die kürzeste erfasste Perronkante hier.",
-          "factRef": "gleise.items[0].perronkante_m",
+          "prompt": "An den erfassten Gleisen in Köniz kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "Die erfassten Perronkanten sind 55 Zentimeter hoch, an 2 von 2 Gleisen. Erfasst sind 7 Abschnitte, keiner davon braucht einen Hilfstritt.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, braucht es eine Rampe oder einen Hilfstritt. Die visuell-taktile Sicherheitslinie führt sehbehinderte Reisende entlang der Kante.",
+      "title": "Hindernisfreiheit",
+      "body": "Für Köniz sind 7 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Perronhöhe",
-          "value": 55,
-          "unit": "cm",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.perronhoehen_cm[0]"
-        },
-        {
-          "label": "Gleise mit 55 cm",
-          "value": 2,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm"
-        },
-        {
-          "label": "Erfasste Abschnitte",
+          "label": "Erfasste Perronsegmente",
           "value": 7,
-          "unit": null,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie hoch sind die erfassten Perronkanten in Köniz?",
+          "id": "hindernisfreiheit:386a9e67",
+          "type": "cloze",
+          "prompt": "In Köniz sind ___ Perronsegmente erfasst.",
           "options": [
-            "20 cm",
-            "35 cm",
-            "55 cm",
-            "76 cm"
+            "5",
+            "6",
+            "7"
           ],
           "correct": 2,
-          "explanation": "55 Zentimeter, an beiden erfassten Gleisen.",
-          "factRef": "gleise.perronhoehen_cm[0]",
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 7 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:ed8d87c8",
+          "type": "true_false",
+          "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 7 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf der Strecke",
-      "body": "Auf dem Abschnitt von Liebefeld her verkehren 26'928 Personenzüge pro Jahr, rund 74 pro Tag in beiden Richtungen zusammen. Richtung Moos sind es 26'878 im Jahr. Gezählt werden Fahrten auf dem Streckenabschnitt, nicht Halte am Bahnhof.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Liebefeld – Köniz 74 Züge pro Tag, das sind 26'928 im Jahr. Auf dem Abschnitt Köniz – Moos sind es ebenfalls 74 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 40 Züge im Jahr auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, Abschnitt Liebefeld",
+          "label": "Züge pro Tag, Personenverkehr Liebefeld – Köniz",
           "value": 74,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Personenzüge pro Jahr, Abschnitt Liebefeld",
+          "label": "Züge pro Jahr, Personenverkehr Liebefeld – Köniz",
           "value": 26928,
-          "unit": "Züge",
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:08eed004",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem Abschnitt von Liebefeld her?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Liebefeld – Köniz?",
           "options": [
-            "18",
             "74",
-            "210",
-            "640"
+            "89",
+            "100",
+            "130"
           ],
-          "correct": 1,
-          "explanation": "Rund 74 pro Tag, beide Richtungen zusammen.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 74 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:7201837b",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Liebefeld – Köniz?",
+          "min": 22000,
+          "max": 39500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 26928,
+          "explanation": "Die Erhebung zählt 26'928 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Köniz steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor.",
+      "title": "Services",
+      "body": "Wartehallen sind keine verzeichnet. Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor. Köniz steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
           "value": false,
-          "unit": null,
+          "unit": "",
           "source": "wifistation",
           "factRef": "services.wlan_erfasst"
-        },
-        {
-          "label": "Wartehallen erfasst",
-          "value": 0,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:6606ea28",
           "type": "true_false",
-          "prompt": "Dass kein Billettautomat aufgeführt ist, heisst, dass es vor Ort keinen gibt.",
+          "prompt": "Köniz steht in der Liste der WLAN-Standorte.",
           "correct": false,
-          "explanation": "Die Angaben fehlen für diesen Bahnhof ganz. Was nicht erfasst ist, kann trotzdem vorhanden sein.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
-          "difficulty": 3
+          "difficulty": 2
         }
       ]
     }

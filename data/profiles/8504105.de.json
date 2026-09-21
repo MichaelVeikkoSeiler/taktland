@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:c246edd5",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Niederwangen ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:fe166ae2",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Niederwangen ___ Personen ein und aus.",
           "options": [
@@ -104,6 +106,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:a065b375",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Niederwangen?",
           "min": 460,
@@ -116,6 +119,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:3324c916",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Niederwangen?",
           "options": [
@@ -153,6 +157,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:426ba6c8",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Niederwangen?",
           "options": [
@@ -167,6 +172,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -186,6 +192,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:c2eea502",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Niederwangen sind niveaufrei erreichbar.",
           "correct": true,
@@ -210,6 +217,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:16f17290",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Niederwangen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -246,6 +254,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:4f8e4b07",
           "type": "cloze",
           "prompt": "In Niederwangen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -260,6 +269,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -273,7 +283,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Bern Bümpliz Süd Abstellanlage – Niederwangen 220 Züge pro Tag, das sind 80'204 im Jahr. Auf dem Abschnitt Oberwangen – Niederwangen sind es ebenfalls 220 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 10 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Bern Bümpliz Süd Abstellanlage – Niederwangen",
@@ -292,6 +302,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:838880b6",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bern Bümpliz Süd Abstellanlage – Niederwangen?",
           "options": [
@@ -306,6 +317,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:5c7420f7",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Bern Bümpliz Süd Abstellanlage – Niederwangen?",
           "min": 65500,
@@ -340,6 +352,7 @@
       ],
       "questions": [
         {
+          "id": "linien:1e93bf78",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 250 ist Niederwangen eingetragen?",
           "min": 74,
@@ -380,6 +393,7 @@
       ],
       "questions": [
         {
+          "id": "services:8110e903",
           "type": "true_false",
           "prompt": "Niederwangen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -388,6 +402,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:edb4eb6a",
           "type": "cloze",
           "prompt": "In Niederwangen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -429,6 +444,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -444,6 +460,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -459,6 +476,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

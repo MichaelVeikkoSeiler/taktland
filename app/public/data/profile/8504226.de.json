@@ -48,6 +48,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:50db0569",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in La Neuveville ein und aus?",
           "options": [
@@ -62,6 +63,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -87,6 +89,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ae296afa",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in La Neuveville ___ Personen ein und aus.",
           "options": [
@@ -122,6 +125,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:51ecdad3",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof La Neuveville?",
           "min": 350,
@@ -134,6 +138,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:9df2fef3",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs La Neuveville lautet ___.",
           "options": [
@@ -170,6 +175,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:524e0920",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in La Neuveville?",
           "options": [
@@ -184,6 +190,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -203,6 +210,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:41aebc8d",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in La Neuveville sind niveaufrei erreichbar.",
           "correct": true,
@@ -233,6 +241,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:597f03a2",
           "type": "true_false",
           "prompt": "Für La Neuveville sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -246,7 +255,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Poudeille – La Neuveville 139 Züge pro Tag, das sind 50'902 im Jahr. Auf dem Abschnitt Le Landeron – La Neuveville sind es ebenfalls 139 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 67 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Poudeille – La Neuveville",
@@ -265,6 +274,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:abd832ee",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Poudeille – La Neuveville?",
           "options": [
@@ -279,6 +289,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:679e0c32",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Poudeille – La Neuveville?",
           "min": 41500,
@@ -313,6 +324,7 @@
       ],
       "questions": [
         {
+          "id": "linien:ed7d319c",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 210 ist La Neuveville eingetragen?",
           "min": 73,
@@ -325,6 +337,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -372,6 +385,7 @@
       ],
       "questions": [
         {
+          "id": "services:c8535843",
           "type": "true_false",
           "prompt": "La Neuveville steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -380,6 +394,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:6eefa55d",
           "type": "cloze",
           "prompt": "In La Neuveville sind ___ Billettentwerter erfasst.",
           "options": [
@@ -421,6 +436,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -436,6 +452,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -450,6 +467,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

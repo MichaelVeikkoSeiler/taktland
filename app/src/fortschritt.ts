@@ -1,6 +1,13 @@
 /** Fortschritt liegt nur auf dem Gerät. Kein Login, kein Server, kein Tracking. */
 
-const SCHLUESSEL = 'taktland.fortschritt.v1'
+// v2: Antworten unter der festen Kennung der Frage. v1 speicherte nach der
+// Stelle («steckbrief:0») und wird beim ersten Laden verworfen.
+const SCHLUESSEL = 'taktland.fortschritt.v2'
+try {
+  localStorage.removeItem('taktland.fortschritt.v1')
+} catch {
+  // gesperrter Speicher: nichts zu verwerfen
+}
 const DUELL_SCHLUESSEL = 'taktland.duell.v1'
 
 export interface Antwort {

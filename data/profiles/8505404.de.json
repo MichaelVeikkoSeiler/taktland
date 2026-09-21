@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:07157e7d",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Cadenazzo ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:f711a043",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Cadenazzo ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:21a6d49f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Cadenazzo?",
           "min": 170,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:8b3e561f",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Cadenazzo lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:6970348d",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Cadenazzo?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -210,6 +217,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:99c70934",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Cadenazzo sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:df4df256",
           "type": "cloze",
           "prompt": "An Gleis 1 in Cadenazzo sind ___ Sektoren erfasst.",
           "options": [
@@ -254,6 +263,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:2d318c78",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Cadenazzo kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:3eb3cf95",
           "type": "cloze",
           "prompt": "In Cadenazzo sind ___ Perronsegmente erfasst.",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:014a6dee",
           "type": "true_false",
           "prompt": "Bei keinem der 18 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -317,7 +329,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Cadenazzo – Cadenazzo Ovest (bif): Im Personenverkehr verkehren dort 204 Züge pro Tag, das sind 74'389 im Jahr. Auf dem Abschnitt S. Antonino – Cadenazzo sind es 199 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 45 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Cadenazzo – Cadenazzo Ovest (bif)",
@@ -336,6 +348,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:0b75d8d1",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Cadenazzo – Cadenazzo Ovest (bif)?",
           "options": [
@@ -350,6 +363,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -397,6 +411,7 @@
       ],
       "questions": [
         {
+          "id": "linien:3e22baf7",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 630 ist Cadenazzo eingetragen?",
           "min": 130,
@@ -437,6 +452,7 @@
       ],
       "questions": [
         {
+          "id": "services:83b390e8",
           "type": "true_false",
           "prompt": "Cadenazzo steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -445,6 +461,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c6bfd64c",
           "type": "cloze",
           "prompt": "In Cadenazzo sind ___ Billettentwerter erfasst.",
           "options": [
@@ -486,6 +503,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -500,6 +518,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -515,6 +534,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

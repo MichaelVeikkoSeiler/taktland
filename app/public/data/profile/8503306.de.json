@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:44d4ad18",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Dietlikon ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:c0943de8",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Dietlikon ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:57f3d198",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Dietlikon?",
           "min": 360,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:116d8cba",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Dietlikon?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:1ecd33e2",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Dietlikon?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -212,6 +219,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:c43be2b0",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Dietlikon sind niveaufrei erreichbar.",
           "correct": true,
@@ -234,28 +242,30 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Sektoren an Gleis 1",
-          "value": 1,
+          "label": "Sektoren an Gleis 2",
+          "value": 3,
           "source": "sektortafel",
-          "factRef": "gleise.items[0].sektoren_anzahl"
+          "factRef": "gleise.items[1].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Sektoren sind an Gleis 1 in Dietlikon erfasst?",
+          "id": "gleise:a0c4d887",
+          "type": "cloze",
+          "prompt": "An Gleis 2 in Dietlikon sind ___ Sektoren erfasst.",
           "options": [
-            "1",
-            "2",
-            "4"
+            "3",
+            "4",
+            "5"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 1 trägt nur den Sektor B.",
-          "factRef": "gleise.items[0].sektoren_anzahl",
+          "explanation": "Gleis 2 trägt die Sektoren A, B und C, also 3 Stück.",
+          "factRef": "gleise.items[1].sektoren_anzahl",
           "difficulty": 2
         },
         {
+          "id": "gleise:e6fbf4a7",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Dietlikon kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -292,6 +302,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7fe4cf08",
           "type": "cloze",
           "prompt": "In Dietlikon sind ___ Perronsegmente erfasst.",
           "options": [
@@ -306,6 +317,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -319,25 +331,26 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Dietlikon – Hürlistein West: Im Personenverkehr verkehren dort 378 Züge pro Tag, das sind 138'024 im Jahr. Auf dem Abschnitt Neugut (Abzw) – Dietlikon sind es 239 und auf dem Abschnitt Wallisellen – Dietlikon sind es 140 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 6 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Dietlikon – Hürlistein West",
           "value": 378,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Dietlikon – Hürlistein West",
           "value": 138024,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:173e2472",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Dietlikon – Hürlistein West?",
           "options": [
@@ -348,10 +361,11 @@
           ],
           "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 378 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -378,7 +392,7 @@
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Dietlikon – Hürlistein West (Personenverkehr) 138'024, Neugut (Abzw) – Dietlikon (Personenverkehr) 87'188, Wallisellen – Dietlikon (Personenverkehr) 50'926, Dietlikon – Hürlistein West (Güterverkehr) 2'306 Züge im Jahr.",
+          "explanation": "Dietlikon – Hürlistein West (Personenverkehr) 138'024, Neugut (Abzw) – Dietlikon (Personenverkehr) 87'188, Wallisellen – Dietlikon (Personenverkehr) 50'926, Dietlikon – Hürlistein West (Güterverkehr) 2'306 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -404,11 +418,12 @@
       ],
       "questions": [
         {
+          "id": "linien:9d3fa817",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 751 ist Dietlikon eingetragen?",
-          "min": 9,
-          "max": 17,
-          "step": 1,
+          "min": 9.0,
+          "max": 16.5,
+          "step": 0.1,
           "unit": "km",
           "correct": 11.04929,
           "explanation": "Die Kilometrierung von Dietlikon auf der Linie 751 beträgt 11.04929. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
@@ -444,6 +459,7 @@
       ],
       "questions": [
         {
+          "id": "services:0cf63a35",
           "type": "true_false",
           "prompt": "Dietlikon steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -452,6 +468,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c8f5511d",
           "type": "cloze",
           "prompt": "In Dietlikon sind ___ Billettentwerter erfasst.",
           "options": [
@@ -493,6 +510,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -507,6 +525,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -521,6 +540,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -12,7 +12,6 @@
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -26,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Locarno 11'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'800, an einem freien Tag 9'300. Die Infrastruktur gehört der SBB, Züge fahren hier von SBB und SOB. Die erfasste Reihe steigt deutlich: von 6'600 im Jahr 2018 auf 11'500 im Jahr 2025.",
+      "body": "An einem Werktag steigen in Locarno 11'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'800, an einem freien Tag 9'300. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne FART.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -58,12 +57,13 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:bdeca509",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Locarno ein und aus?",
           "options": [
-            "4'600",
             "6'300",
-            "8'100",
+            "8'000",
+            "9'800",
             "11'500"
           ],
           "correct": 3,
@@ -72,14 +72,7 @@
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "In Locarno liegt der Wert für einen freien Tag nahe beim Werktagswert.",
-          "correct": true,
-          "explanation": "An einem Werktag sind es 11'500 Personen, an einem freien Tag 9'300. Der Abstand ist damit kleiner als an vielen anderen erfassten Bahnhöfen.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 2
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -110,8 +103,23 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e754f74b",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Locarno ___ Personen ein und aus.",
+          "options": [
+            "6'500",
+            "7'900",
+            "9'300"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 9'300 Personen, an einem Werktag 11'500. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "id": "steckbrief:a295542c",
           "type": "true_false",
-          "prompt": "Die Zahl der Ein- und Aussteigenden in Locarno umfasst auch die FART.",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Locarno umfasst auch FART.",
           "correct": false,
           "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne FART.». Wofür FART steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
@@ -122,7 +130,7 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Der Bahnhof Locarno liegt auf 205 Metern über Meer. Die politische Gemeinde ist Muralto, der Bezirk Locarno. Als Kanton ist in den Stammdaten Ticino eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "body": "Locarno liegt auf 205 Metern über Meer in der Gemeinde Muralto, Bezirk Locarno. Als Kanton ist in den Stammdaten Ticino eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LO.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -132,22 +140,36 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
+          "label": "Offizielle Abkürzung",
+          "value": "LO",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
           "label": "Gemeinde",
           "value": "Muralto",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.gemeinde"
-        },
-        {
-          "label": "Bezirk",
-          "value": "Locarno",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:2b8bab57",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Locarno?",
+          "min": 160,
+          "max": 300,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 205,
+          "explanation": "Der Bahnhof liegt auf 205 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:4ab6a887",
           "type": "single_choice",
-          "prompt": "In welcher politischen Gemeinde liegt der Bahnhof Locarno?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Locarno?",
           "options": [
             "Ascona",
             "Locarno",
@@ -156,20 +178,8 @@
           ],
           "correct": 3,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Muralto eingetragen, der Bezirk heisst Locarno.",
+          "explanation": "Als Gemeinde ist Muralto eingetragen.",
           "factRef": "stammdaten.gemeinde",
-          "difficulty": 3
-        },
-        {
-          "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Locarno?",
-          "min": 180,
-          "max": 320,
-          "step": 1,
-          "unit": "m ü. M.",
-          "correct": 205,
-          "explanation": "Der Bahnhof liegt auf 205 Metern über Meer.",
-          "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         }
       ]
@@ -177,7 +187,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Locarno liegen offene Daten vor, beide sind niveaufrei erreichbar. Perron 1 ist ein Hausperron und misst 329 Meter, Perron 2/3 ist ein Mittelperron und misst 239 Meter.",
+      "body": "Zu 2 Perrons in Locarno liegen offene Daten vor. Perron 1 misst 329 Meter, Perron 2/3 misst 239 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -191,30 +201,26 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 239,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Das längste erfasste Perron in Locarno misst ___ Meter.",
+          "id": "perrons:eab9db93",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Locarno?",
           "options": [
-            "190",
-            "260",
-            "329"
+            "329 m",
+            "390 m",
+            "460 m",
+            "560 m"
           ],
-          "correct": 2,
-          "explanation": "Perron 1 ist mit 329 Metern das längste erfasste Perron, Perron 2/3 misst 239 Meter.",
+          "correct": 0,
+          "explanation": "Das längste erfasste Perron misst 329 Meter.",
           "factRef": "perrons.laengste_m",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -230,10 +236,11 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1 hat 1384 Quadratmeter, Perron 2/3 hat 1129.78.",
-          "difficulty": 2
+          "explanation": "Perron 1 hat 1384 Quadratmeter, Perron 2/3 hat 1129.78 Quadratmeter.",
+          "difficulty": 3
         },
         {
+          "id": "perrons:8e116dc0",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Locarno sind niveaufrei erreichbar.",
           "correct": true,
@@ -246,7 +253,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Gleis 1 trägt 4 Sektoren, die Gleise 2 und 3 je 3. Die erfassten Perronkanten messen 151, 198 und 173 Meter.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -271,15 +278,17 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
           "correct": "2",
           "factRef": "gleise.items[1].nr",
-          "explanation": "Gleis 2 hat mit 198 Metern die längste erfasste Perronkante, vor Gleis 3 mit 173 und Gleis 1 mit 151 Metern.",
+          "explanation": "Gleis 2 hat mit 198 Metern die längste erfasste Perronkante, die nächste misst 173 Meter.",
           "difficulty": 2
         },
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -301,21 +310,31 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Gleis 2 misst 198 Meter, Gleis 3 misst 173 und Gleis 1 misst 151 Meter. Das Hausperron an Gleis 1 hat also die kürzeste erfasste Kante.",
-          "difficulty": 2
+          "explanation": "Gleis 2 misst 198 Meter, Gleis 3 misst 173 Meter, Gleis 1 misst 151 Meter.",
+          "difficulty": 3
         },
         {
+          "id": "gleise:63221ba5",
           "type": "cloze",
           "prompt": "An Gleis 1 in Locarno sind ___ Sektoren erfasst.",
           "options": [
-            "2",
             "4",
-            "6"
+            "5",
+            "12"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 1 trägt die Sektoren A bis D, also 4 Stück. Die Gleise 2 und 3 haben je 3.",
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
           "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:04be04b6",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Locarno kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
       ]
@@ -323,7 +342,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Locarno sind 6 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt diese Höhe vor. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Locarno sind 6 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -347,75 +366,79 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:deb39ac3",
           "type": "cloze",
           "prompt": "In Locarno sind ___ Perronsegmente erfasst.",
           "options": [
-            "4",
             "6",
-            "9"
+            "8",
+            "10"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
           "explanation": "Die BehiG-Erhebung führt 6 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
-          "prompt": "Für Locarno ist eine visuell-taktile Sicherheitslinie erfasst.",
+          "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung verzeichnet eine Sicherheitslinie für diesen Bahnhof.",
-          "factRef": "hindernisfreiheit.sicherheitslinie",
-          "difficulty": 1
+          "explanation": "Die Erhebung weist bei 0 der 6 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Für Locarno ist ein einziger Streckenabschnitt erfasst: von Minusio her verkehren im Personenverkehr 184 Züge pro Tag, das sind 67'097 im Jahr. Güterverkehr ist auf diesem Abschnitt keiner erfasst.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Minusio – Locarno 184 Züge pro Tag, das sind 67'097 im Jahr. Güterverkehr ist auf diesem Abschnitt keiner erfasst.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Minusio–Locarno",
+          "label": "Züge pro Tag, Personenverkehr Minusio – Locarno",
           "value": 184,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Minusio–Locarno",
+          "label": "Züge pro Jahr, Personenverkehr Minusio – Locarno",
           "value": 67097,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:4bc52ac3",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Minusio–Locarno?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Minusio – Locarno?",
           "options": [
-            "74",
-            "100",
             "130",
-            "184"
+            "160",
+            "184",
+            "220"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 184 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:00ee4850",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Minusio–Locarno?",
-          "min": 40000,
-          "max": 120000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Minusio – Locarno?",
+          "min": 55000,
+          "max": 97500,
           "step": 500,
           "unit": "Züge/Jahr",
           "correct": 67097,
           "explanation": "Die Erhebung zählt 67'097 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -423,7 +446,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Locarno ist 1 Linie erfasst: die Linie 630 Giubiasco–Locarno. Der Bahnhof ist darauf bei Kilometer 171.94048 eingetragen.",
+      "body": "Für Locarno ist 1 Linie erfasst: die Linie 630 Giubiasco - Locarno. Der Bahnhof ist darauf bei Kilometer 171.94048 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -441,25 +464,11 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Liniennummer ist für Locarno erfasst?",
-          "options": [
-            "420",
-            "600",
-            "630",
-            "820"
-          ],
-          "correct": 2,
-          "optionen_aus_fakten": true,
-          "explanation": "Erfasst ist die Linie 630, Giubiasco - Locarno.",
-          "factRef": "linien.items[0].nummer",
-          "difficulty": 1
-        },
-        {
+          "id": "linien:269251f0",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 630 ist Locarno eingetragen?",
-          "min": 130,
-          "max": 230,
+          "min": 140,
+          "max": 250,
           "step": 1,
           "unit": "km",
           "correct": 171.94048,
@@ -496,6 +505,7 @@
       ],
       "questions": [
         {
+          "id": "services:79fadf19",
           "type": "true_false",
           "prompt": "Locarno steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -504,12 +514,13 @@
           "difficulty": 1
         },
         {
+          "id": "services:7778156a",
           "type": "cloze",
           "prompt": "In Locarno sind ___ Billettentwerter erfasst.",
           "options": [
             "5",
             "7",
-            "10"
+            "8"
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
@@ -551,20 +562,22 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "8",
-            "11",
-            "14",
-            "20"
+            "20",
+            "24",
+            "28",
+            "34"
           ],
-          "correct": 3,
+          "correct": 0,
           "explanation": "Erfasst sind 20 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -579,6 +592,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 81,
@@ -602,20 +616,15 @@
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-locarno-a4.pdf",
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
-        },
-        {
-          "label": "Eigentümerin der Pläne",
-          "value": "SBB",
-          "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:2a0286ff",
           "type": "true_false",
           "prompt": "Für Locarno ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }

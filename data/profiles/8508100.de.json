@@ -11,7 +11,6 @@
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -25,7 +24,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Langenthal 12'000 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'500, an einem freien Tag 7'300. Die Infrastruktur gehört der SBB, Züge fahren hier von BLS, SBB und SOB. Der höchste erfasste Werktagswert stammt mit 13'500 aus dem Jahr 2018.",
+      "body": "An einem Werktag steigen in Langenthal 12'000 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'500, an einem freien Tag 7'300. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS, SBB und SOB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne asm.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -57,12 +56,13 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:35091321",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Langenthal ein und aus?",
           "options": [
-            "4'800",
             "6'600",
             "8'400",
+            "10'000",
             "12'000"
           ],
           "correct": 3,
@@ -71,14 +71,7 @@
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Der höchste erfasste Werktagswert in Langenthal fällt auf das Jahr 2025.",
-          "correct": false,
-          "explanation": "Der höchste erfasste Wert liegt mit 13'500 im Jahr 2018. Für 2025 sind 12'000 erfasst.",
-          "factRef": "steckbrief.verlauf[0].dwv",
-          "difficulty": 3
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -104,8 +97,23 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:b9dd0bb7",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Langenthal ___ Personen ein und aus.",
+          "options": [
+            "6'200",
+            "7'300",
+            "8'800"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 7'300 Personen, an einem Werktag 12'000. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "id": "steckbrief:e70ecca8",
           "type": "true_false",
-          "prompt": "Die Zahl der Ein- und Aussteigenden in Langenthal umfasst auch die asm.",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Langenthal umfasst auch asm.",
           "correct": false,
           "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne asm.». Wofür asm steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
@@ -126,24 +134,25 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Bezirk",
-          "value": "Oberaargau",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
-        },
-        {
           "label": "Offizielle Abkürzung",
           "value": "LTH",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Oberaargau",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:851a161c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Langenthal?",
-          "min": 420,
-          "max": 600,
+          "min": 380,
+          "max": 690,
           "step": 1,
           "unit": "m ü. M.",
           "correct": 472,
@@ -152,6 +161,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:80882dcd",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Langenthal?",
           "options": [
@@ -162,7 +172,7 @@
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Langenthal liegt im Bezirk Oberaargau, Kanton Bern.",
+          "explanation": "Als Bezirk ist Oberaargau eingetragen.",
           "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
@@ -171,7 +181,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons in Langenthal liegen offene Daten vor, alle 3 sind niveaufrei erreichbar. Perron 2/3 ist mit 326 Metern das längste, Perron 1 misst 248 Meter und Perron 14 misst 155 Meter.",
+      "body": "Zu 3 Perrons in Langenthal liegen offene Daten vor. Perron 2/3 misst 326 Meter, Perron 1 misst 248 Meter, Perron 14 misst 155 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -185,17 +195,11 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 155,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -217,10 +221,11 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/3 misst 326 Meter, Perron 1 misst 248 und Perron 14 misst 155 Meter.",
+          "explanation": "Perron 2/3 misst 326 Meter, Perron 1 misst 248 Meter, Perron 14 misst 155 Meter.",
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -241,12 +246,13 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/3 hat 2288.08 Quadratmeter, Perron 1 hat 1100.88 und Perron 14 hat 468.65.",
+          "explanation": "Perron 2/3 hat 2288.08 Quadratmeter, Perron 1 hat 1100.88 Quadratmeter, Perron 14 hat 468.65 Quadratmeter.",
           "difficulty": 3
         },
         {
+          "id": "perrons:e2e91c29",
           "type": "true_false",
-          "prompt": "Zu allen 3 erfassten Perrons in Langenthal ist ein niveaufreier Zugang vermerkt.",
+          "prompt": "Alle 3 erfassten Perrons in Langenthal sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -257,7 +263,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 7 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 12, 13 und 14. Die längsten erfassten Perronkanten haben die Gleise 2 und 3 mit 403 und 402 Metern, die kürzeste hat Gleis 13 mit 90 Metern. Sektortafeln sind nur an den Gleisen 2 und 3 erfasst, dort je 6.",
+      "body": "Zu 7 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 12, 13 und 14. Erfasst sind Perronhöhen von 30 und 55 Zentimetern. Zu den Gleisen 1, 4, 12, 13 und 14 sind keine Sektortafeln erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -265,13 +271,6 @@
           "value": 7,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
-        },
-        {
-          "label": "Längste erfasste Perronkante",
-          "value": 403,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[1].perronkante_m"
         },
         {
           "label": "Sektoren an Gleis 2",
@@ -282,15 +281,7 @@
       ],
       "questions": [
         {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "2",
-          "factRef": "gleise.items[1].nr",
-          "explanation": "Gleis 2 hat mit 403 Metern die längste erfasste Perronkante, knapp vor Gleis 3 mit 402 Metern.",
-          "difficulty": 2
-        },
-        {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -311,30 +302,51 @@
               "factRef": "gleise.items[0].perronkante_m"
             },
             {
-              "label": "Gleis 13",
-              "value": 90,
-              "factRef": "gleise.items[5].perronkante_m"
+              "label": "Gleis 12",
+              "value": 127,
+              "factRef": "gleise.items[4].perronkante_m"
+            },
+            {
+              "label": "Gleis 14",
+              "value": 108,
+              "factRef": "gleise.items[6].perronkante_m"
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Richtig ist diese Reihenfolge: Gleis 2 mit 403, Gleis 4 mit 188, Gleis 1 mit 151 und Gleis 13 mit 90 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Gleis 2 misst 403 Meter, Gleis 4 misst 188 Meter, Gleis 1 misst 151 Meter, Gleis 12 misst 127 Meter, Gleis 14 misst 108 Meter. Gleise mit fast gleicher Kante bleiben weg.",
           "difficulty": 3
         },
         {
+          "id": "gleise:df6f1054",
+          "type": "cloze",
+          "prompt": "An Gleis 2 in Langenthal sind ___ Sektoren erfasst.",
+          "options": [
+            "6",
+            "8",
+            "10"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 2 trägt die Sektoren A, B, C, D, E und F, also 6 Stück.",
+          "factRef": "gleise.items[1].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:36adf951",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 3 in Langenthal erfasst? (Mehrfachauswahl)",
           "options": [
-            "20 cm",
+            "25 cm",
             "30 cm",
-            "55 cm",
-            "76 cm"
+            "35 cm",
+            "55 cm"
           ],
           "correct": [
             1,
-            2
+            3
           ],
           "optionen_aus_fakten": true,
-          "explanation": "An Gleis 3 sind 30 und 55 Zentimeter verzeichnet. An Gleis 2 steht nur die 30, an Gleis 1 nur die 55.",
+          "explanation": "An Gleis 3 sind 30 und 55 Zentimeter verzeichnet.",
           "factRef": "gleise.items[2].perronhoehen_cm",
           "difficulty": 3
         }
@@ -343,7 +355,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Langenthal sind 26 Perronsegmente erfasst: 14 mit einer Perronhöhe von 55 Zentimetern und 12 mit 30 Zentimetern. An 5 der 7 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Langenthal sind 26 Perronsegmente erfasst: 14 mit 55 Zentimetern, 12 mit 30 Zentimetern. An 5 der 7 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -357,45 +369,26 @@
           "value": 5,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
-        },
-        {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind in Langenthal erfasst?",
+          "id": "hindernisfreiheit:fc650ece",
+          "type": "cloze",
+          "prompt": "In Langenthal sind ___ Perronsegmente erfasst.",
           "options": [
-            "10",
-            "16",
-            "21",
+            "18",
+            "22",
             "26"
           ],
-          "correct": 3,
+          "correct": 2,
           "optionen_aus_fakten": true,
           "explanation": "Die BehiG-Erhebung führt 26 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "An ___ der 7 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern.",
-          "options": [
-            "3",
-            "5",
-            "7"
-          ],
-          "correct": 1,
-          "optionen_aus_fakten": true,
-          "explanation": "An 5 der 7 erfassten Gleise ist ein Abschnitt mit 55 Zentimetern verzeichnet. An den Gleisen 2 und 14 stehen nur 30 Zentimeter.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
-          "difficulty": 3
-        },
-        {
+          "id": "hindernisfreiheit:c646bf8f",
           "type": "true_false",
           "prompt": "Bei keinem der 26 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -408,40 +401,42 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt zwischen Langenthal und Roggwil-Wynau: Im Personenverkehr verkehren dort 158 Züge pro Tag, das sind 57'548 im Jahr. Von Langenthal GB her sind es 91 Züge pro Tag, Richtung Langenthal Süd 64. Der Güterverkehr fällt hier ins Gewicht: 42 Züge pro Tag nach Roggwil-Wynau.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Am stärksten befahren ist der Abschnitt Langenthal – Roggwil-Wynau: Im Personenverkehr verkehren dort 158 Züge pro Tag, das sind 57'548 im Jahr. Auf dem Abschnitt Langenthal GB – Langenthal sind es 91 und auf dem Abschnitt Langenthal – Langenthal Süd sind es 64 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 42 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Langenthal–Roggwil-Wynau",
+          "label": "Züge pro Tag, Personenverkehr Langenthal – Roggwil-Wynau",
           "value": 158,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Langenthal–Roggwil-Wynau",
+          "label": "Züge pro Jahr, Personenverkehr Langenthal – Roggwil-Wynau",
           "value": 57548,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:6b3d99aa",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Langenthal–Roggwil-Wynau?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Langenthal – Roggwil-Wynau?",
           "options": [
-            "63",
-            "88",
-            "110",
-            "158"
+            "158",
+            "190",
+            "220",
+            "270"
           ],
-          "correct": 3,
+          "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 158 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -468,7 +463,7 @@
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr sind es 57'548, 33'340 und 23'488 Züge im Jahr. Der Güterverkehr nach Roggwil-Wynau kommt auf 15'454.",
+          "explanation": "Langenthal – Roggwil-Wynau (Personenverkehr) 57'548, Langenthal GB – Langenthal (Personenverkehr) 33'340, Langenthal – Langenthal Süd (Personenverkehr) 23'488, Langenthal – Roggwil-Wynau (Güterverkehr) 15'454 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -476,7 +471,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Langenthal sind 3 Linien erfasst: die Linie 450 Olten Süd–Bern, die Linie 413 Langenthal–Niederbipp und die Linie 441 Langenthal–Huttwil. Auf der Linie 450 ist der Bahnhof bei Kilometer 59.19606 eingetragen.",
+      "body": "Für Langenthal sind 3 Linien erfasst: die Linie 450 Olten Sud - Bern, die Linie 413 Langenthal - Niederbipp und die Linie 441 Langenthal - Huttwil.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -494,6 +489,20 @@
       ],
       "questions": [
         {
+          "id": "linien:e8e9963a",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 450 ist Langenthal eingetragen?",
+          "min": 48,
+          "max": 86,
+          "step": 1,
+          "unit": "km",
+          "correct": 59.19606,
+          "explanation": "Die Kilometrierung von Langenthal auf der Linie 450 beträgt 59.19606. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        },
+        {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -514,20 +523,8 @@
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Die Linie 450 führt von Olten Süd nach Bern, die Linie 413 nach Niederbipp und die Linie 441 nach Huttwil.",
+          "explanation": "Die Linie 450 heisst Olten Sud - Bern, die Linie 413 heisst Langenthal - Niederbipp, die Linie 441 heisst Langenthal - Huttwil.",
           "difficulty": 2
-        },
-        {
-          "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 450 ist Langenthal eingetragen?",
-          "min": 35,
-          "max": 125,
-          "step": 1,
-          "unit": "km",
-          "correct": 59.19606,
-          "explanation": "Die Kilometrierung von Langenthal auf der Linie 450 beträgt 59.19606. Der Wert zählt ab Olten Süd.",
-          "factRef": "linien.items[0].km_am_bahnhof",
-          "difficulty": 3
         }
       ]
     },
@@ -558,6 +555,7 @@
       ],
       "questions": [
         {
+          "id": "services:aaf3bbc3",
           "type": "true_false",
           "prompt": "Langenthal steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -566,12 +564,13 @@
           "difficulty": 1
         },
         {
+          "id": "services:3c352d81",
           "type": "cloze",
           "prompt": "In Langenthal sind ___ Billettentwerter erfasst.",
           "options": [
-            "7",
+            "8",
             "9",
-            "12"
+            "11"
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
@@ -613,6 +612,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -627,6 +627,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -641,6 +642,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 10,
@@ -653,6 +655,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -668,8 +671,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -689,7 +693,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'685 Quadratmetern die grösste erfasste Fläche, Perron 14 mit 550 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 2'685 Quadratmetern die grösste erfasste Belagsfläche, Perron 14 mit 550 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]
@@ -704,20 +708,15 @@
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-langenthal-a4.pdf",
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
-        },
-        {
-          "label": "Eigentümerin der Pläne",
-          "value": "SBB",
-          "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:7cddf3b8",
           "type": "true_false",
           "prompt": "Für Langenthal ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
@@ -759,101 +758,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "1",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 151,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        30
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 403,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F"
-      ],
-      "sektoren_anzahl": 6
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [
-        30,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Aussenperron",
-      "perronkante_m": 402,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F"
-      ],
-      "sektoren_anzahl": 6
-    },
-    {
-      "nr": "4",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Aussenperron",
-      "perronkante_m": 188,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "12",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 127,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "13",
-      "perronhoehen_cm": [
-        30,
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Hausperron",
-      "perronkante_m": 90,
-      "sektoren": [],
-      "sektoren_anzahl": 0
-    },
-    {
-      "nr": "14",
-      "perronhoehen_cm": [
-        30
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Aussenperron",
-      "perronkante_m": 108,
-      "sektoren": [],
-      "sektoren_anzahl": 0
     }
   ]
 }

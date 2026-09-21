@@ -4,17 +4,16 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "anzahl-sbb-bahnhofbenutzer",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-wartehallen",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,187 +27,262 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Luzern liegt auf 436 Metern über Meer. An einem Werktag steigen hier 114'900 Personen ein und aus, an einem freien Tag 95'400. Als Bahnhofbenutzer sind 155'400 pro Tag erfasst. Züge fahren von BLS, SBB, SOB und Zentralbahn.",
+      "body": "An einem Werktag steigen in Luzern 114'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 108'800, an einem freien Tag 95'400. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS, SBB, SOB und Zentralbahn erfasst.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 114900,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Ein- und Aussteigende an freien Tagen",
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 108800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 95400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnhofbenutzer pro Tag",
-          "value": 155400,
-          "unit": "Personen",
-          "source": "anzahl-sbb-bahnhofbenutzer",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag"
-        },
-        {
-          "label": "Bahnunternehmen",
-          "value": "BLS, SBB, SOB, Zentralbahn",
-          "unit": null,
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.evu"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:ccac8859",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Luzern ein und aus?",
           "options": [
-            "41'000",
+            "80'000",
+            "98'000",
             "114'900",
-            "260'000",
-            "480'000"
+            "140'000"
           ],
-          "correct": 1,
-          "explanation": "114'900 Personen pro Werktag, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 114'900 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "In Luzern sind Züge von vier Bahnunternehmen erfasst.",
-          "correct": true,
-          "explanation": "Erfasst sind BLS, SBB, SOB und Zentralbahn.",
-          "factRef": "steckbrief.evu",
-          "difficulty": 2
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 88100,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 97900,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 104400,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 114900,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 88'100 (2022), 97'900 (2018), 104'400 (2023), 114'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
         },
         {
-          "type": "single_choice",
-          "prompt": "In welchem erfassten Jahr war die Zahl der Ein- und Aussteigenden am tiefsten?",
+          "id": "steckbrief:cd023ac0",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Luzern ___ Personen ein und aus.",
           "options": [
-            "2018",
-            "2022",
-            "2023",
-            "2025"
+            "81'000",
+            "95'400",
+            "110'000"
           ],
           "correct": 1,
-          "explanation": "2022, mit 88'100 Personen pro Werktag.",
-          "factRef": "steckbrief.verlauf[1].jahr",
-          "optionen_aus_fakten": true,
+          "explanation": "An einem freien Tag sind es 95'400 Personen, an einem Werktag 114'900. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Luzern liegt auf 436 Metern über Meer in der Gemeinde Luzern, Bezirk Luzern-Stadt, Kanton Luzern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LZ.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 436,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "LZ",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:f32563b1",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Luzern?",
+          "min": 350,
+          "max": 640,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 436,
+          "explanation": "Der Bahnhof liegt auf 436 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "Es sind mehr Bahnhofbenutzer erfasst als Ein- und Aussteigende.",
-          "correct": true,
-          "explanation": "155'400 gegenüber 114'900. Die beiden Zahlen kommen aus zwei verschiedenen Erhebungen.",
-          "factRef": "bahnhofbenutzer.anzahl_pro_tag",
-          "difficulty": 3
+          "id": "stammdaten:152594a2",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Luzern lautet ___.",
+          "options": [
+            "EBR",
+            "LZ",
+            "LZVH"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist LZ als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
-      "title": "Der Tag am Bahnhof",
-      "body": "Die stärkste Stunde beginnt um 17 Uhr mit 9.8 Prozent des Tagesaufkommens. Über die Woche ist der Samstag mit 16.2 Prozent der stärkste Tag, der Sonntag mit 13.2 Prozent der schwächste.",
+      "title": "Tagesrhythmus",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Luzern in der Stunde ab 17 Uhr: 9.8 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Samstag, 16.2 Prozent, der kleinste auf den Montag, 13.1 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 17,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Stärkster Wochentag",
+          "label": "Anteil dieser Stunde am Tag",
+          "value": 9.8,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "factRef": "tagesrhythmus.spitzenanteil"
+        },
+        {
+          "label": "Wochentag mit dem grössten Anteil",
           "value": "Samstag",
-          "unit": null,
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
         },
         {
-          "label": "Anteil am Samstag",
+          "label": "Anteil dieses Wochentags",
           "value": 16.2,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
+        },
+        {
+          "label": "Wochentag mit dem kleinsten Anteil",
+          "value": "Montag",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[0].tag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 13.1,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.wochentage[0].prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:35d1d277",
           "type": "single_choice",
-          "prompt": "Welcher Wochentag ist in Luzern der stärkste?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Luzern die meisten Bahnhofbenutzer?",
           "options": [
-            "Montag",
+            "ab 12 Uhr",
+            "ab 16 Uhr",
+            "ab 17 Uhr",
+            "ab 18 Uhr"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 17 Uhr 9.8, ab 16 Uhr 8.9, ab 18 Uhr 7.5, ab 12 Uhr 7.2 Prozent.",
+          "factRef": "tagesrhythmus.spitzenstunde",
+          "difficulty": 1
+        },
+        {
+          "id": "tagesrhythmus:e1a5fc78",
+          "type": "slider",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Luzern auf die Stunde ab 17 Uhr?",
+          "min": 0,
+          "max": 20,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 9.8,
+          "explanation": "In der Stunde ab 17 Uhr zählt die Erhebung 9.8 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
+        },
+        {
+          "id": "tagesrhythmus:5a22a5f7",
+          "type": "single_choice",
+          "prompt": "Auf welchen Wochentag entfällt in Luzern der grösste Anteil der Bahnhofbenutzer?",
+          "options": [
+            "Dienstag",
+            "Mittwoch",
             "Donnerstag",
-            "Freitag",
             "Samstag"
           ],
           "correct": 3,
-          "explanation": "Der Samstag mit 16.2 Prozent der Wochenbesuche.",
-          "factRef": "tagesrhythmus.staerkster_wochentag",
-          "difficulty": 3
-        },
-        {
-          "type": "slider",
-          "prompt": "Welcher Anteil der Wochenbesuche fällt auf den Samstag?",
-          "min": 0,
-          "max": 25,
-          "step": 0.1,
-          "unit": "%",
-          "correct": 16.2,
-          "explanation": "16.2 Prozent, gegenüber 13.2 Prozent am Sonntag.",
-          "factRef": "tagesrhythmus.staerkster_wochentag_prozent",
-          "difficulty": 3
-        },
-        {
-          "type": "single_choice",
-          "prompt": "In welcher Stunde ist in Luzern der grösste Anteil der Bahnhofbenutzer unterwegs?",
-          "options": [
-            "8 Uhr",
-            "12 Uhr",
-            "17 Uhr",
-            "20 Uhr"
-          ],
-          "correct": 2,
-          "explanation": "Um 17 Uhr, mit 9.8 Prozent des Tagesaufkommens.",
-          "factRef": "tagesrhythmus.spitzenstunde",
           "optionen_aus_fakten": true,
-          "difficulty": 1
+          "explanation": "Anteil an der Woche: Samstag 16.2, Donnerstag 14.3, Mittwoch 13.9, Dienstag 13.8 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[5].tag",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 15 Perrons liegen Daten vor. Das längste misst 452 Meter, das kürzeste 28 Meter. Bei 15 von 15 ist der Zugang niveaufrei.",
+      "body": "Zu 15 Perrons in Luzern liegen offene Daten vor. Am längsten sind Perron 2/3 mit 452 Metern, Perron 6/7 mit 415 Metern, Perron 4/5 mit 395 Metern und Perron 8/9 mit 352 Metern. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 15,
-          "unit": null,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
-          "label": "Längstes Perron",
+          "label": "Längstes erfasstes Perron",
           "value": 452,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes Perron",
-          "value": 28,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -217,296 +291,302 @@
               "factRef": "perrons.items[0].laenge_m"
             },
             {
+              "label": "Perron 6/7",
+              "value": 415,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
               "label": "Perron 8/9",
               "value": 352,
               "factRef": "perrons.items[3].laenge_m"
             },
             {
-              "label": "Perron 14/15",
-              "value": 267,
-              "factRef": "perrons.items[6].laenge_m"
+              "label": "Perron 10/11",
+              "value": 316,
+              "factRef": "perrons.items[4].laenge_m"
+            },
+            {
+              "label": "Perron 12/13",
+              "value": 274,
+              "factRef": "perrons.items[5].laenge_m"
             }
           ],
-          "correct": null,
-          "explanation": "Perron 2/3 ist mit 452 Metern das längste der erfassten.",
           "factRef": "perrons.items",
+          "explanation": "Perron 2/3 misst 452 Meter, Perron 6/7 misst 415 Meter, Perron 8/9 misst 352 Meter, Perron 10/11 misst 316 Meter, Perron 12/13 misst 274 Meter. Perrons mit fast gleicher Länge bleiben weg.",
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie lang ist das kürzeste erfasste Perron in Luzern?",
-          "options": [
-            "28 m",
-            "120 m",
-            "200 m",
-            "267 m"
-          ],
-          "correct": 0,
-          "explanation": "28 Meter. Zum Vergleich: das längste misst 452 Meter.",
-          "factRef": "perrons.kuerzeste_m",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
-        },
-        {
+          "id": "perrons:ddd1b7e9",
           "type": "true_false",
-          "prompt": "Die erfassten Perrons in Luzern sind alle etwa gleich lang.",
-          "correct": false,
-          "explanation": "Das längste misst 452 Meter, das kürzeste 28 Meter.",
-          "factRef": "perrons.kuerzeste_m",
-          "difficulty": 2
-        }
-      ]
-    },
-    {
-      "id": "gleise",
-      "title": "Gleise und Sektoren",
-      "body": "Offene Daten liegen zu 14 Gleisen vor, den Nummern 2 bis 15. Die längste erfasste Perronkante hat Gleis 7 mit 416 Metern, die kürzeste Gleis 14 mit 23 Metern. An den Gleisen 4 bis 7 reichen die Sektoren von A bis E.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen hält. Sie sind mit Buchstaben ab A beschriftet.",
-      "facts": [
-        {
-          "label": "Gleise mit Daten",
-          "value": 14,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.anzahl_mit_daten"
-        },
-        {
-          "label": "Längste Perronkante, Gleis 7",
-          "value": 416,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[5].perronkante_m"
-        },
-        {
-          "label": "Kürzeste Perronkante, Gleis 14",
-          "value": 23,
-          "unit": "m",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[12].perronkante_m"
-        },
-        {
-          "label": "Letzter Sektor an Gleis 4",
-          "value": "E",
-          "unit": null,
-          "source": "sektortafel",
-          "factRef": "gleise.items[2].sektoren[4]"
-        }
-      ],
-      "questions": [
-        {
-          "type": "hotspot",
-          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
-          "schema": "gleise",
-          "correct": "7",
-          "explanation": "Gleis 7 mit 416 Metern, knapp vor Gleis 6 mit 415 Metern.",
-          "factRef": "gleise.items[5].nr",
-          "difficulty": 3
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Bis zu welchem Buchstaben reichen die Sektoren an Gleis 4?",
-          "options": [
-            "C",
-            "D",
-            "E",
-            "H"
-          ],
-          "correct": 2,
-          "explanation": "Von A bis E, also 3 Sektoren.",
-          "factRef": "gleise.items[2].sektoren[4]",
-          "difficulty": 2
-        },
-        {
-          "type": "true_false",
-          "prompt": "Zu einem Gleis mit der Nummer 1 liegen in diesen Daten keine Angaben vor.",
+          "prompt": "Alle 15 erfassten Perrons in Luzern sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Erfasst sind die Gleise 2 bis 15.",
-          "factRef": "gleise.nummern",
-          "difficulty": 3
-        },
-        {
-          "type": "cloze",
-          "prompt": "In Luzern liegen Daten zu ___ Gleisen vor.",
-          "options": [
-            "8",
-            "11",
-            "14",
-            "20"
-          ],
-          "correct": 2,
-          "explanation": "14 Gleise, die Nummern 2 bis 15.",
-          "factRef": "gleise.anzahl_mit_daten",
-          "optionen_aus_fakten": true,
+          "explanation": "Für alle 15 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
       ]
     },
     {
-      "id": "hindernisfreiheit",
-      "title": "Hindernisfreies Reisen",
-      "body": "34 Perronabschnitte sind erfasst: 27 auf 55 Zentimetern und 7 auf 35. Von 14 erfassten Gleisen haben 9 einen Abschnitt auf 55 Zentimetern. Bei 15 von 15 Perrons ist der Zugang niveaufrei. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht.",
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 14 Gleisen liegen offene Daten vor: 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 und 15. Erfasst sind Perronhöhen von 35 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Erfasste Abschnitte",
-          "value": 34,
-          "unit": null,
+          "label": "Gleise mit offenen Daten",
+          "value": 14,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente"
+          "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Gleise mit einem 55-cm-Abschnitt",
-          "value": 9,
-          "unit": null,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 15,
-          "unit": null,
-          "source": "perron",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+          "label": "Sektoren an Gleis 2",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele der 14 erfassten Gleise haben einen Abschnitt auf 55 Zentimetern?",
-          "options": [
-            "5",
-            "9",
-            "12",
-            "14"
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 7",
+              "value": 416,
+              "factRef": "gleise.items[5].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 395,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 9",
+              "value": 353,
+              "factRef": "gleise.items[7].perronkante_m"
+            },
+            {
+              "label": "Gleis 11",
+              "value": 317,
+              "factRef": "gleise.items[9].perronkante_m"
+            },
+            {
+              "label": "Gleis 13",
+              "value": 255,
+              "factRef": "gleise.items[11].perronkante_m"
+            }
           ],
-          "correct": 1,
-          "explanation": "9 von 14 Gleisen. An den übrigen liegt die Kante tiefer oder die Angabe fehlt.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "factRef": "gleise.items",
+          "explanation": "Gleis 7 misst 416 Meter, Gleis 4 misst 395 Meter, Gleis 9 misst 353 Meter, Gleis 11 misst 317 Meter, Gleis 13 misst 255 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
         },
         {
-          "type": "true_false",
-          "prompt": "Jedes erfasste Perron in Luzern ist ohne Gleisquerung erreichbar.",
-          "correct": true,
-          "explanation": "Bei 15 von 15 erfassten Perrons ist der Zugang niveaufrei.",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei",
-          "difficulty": 2
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronabschnitte sind in Luzern erfasst?",
+          "id": "gleise:6b0c72f3",
+          "type": "cloze",
+          "prompt": "An Gleis 2 in Luzern sind ___ Sektoren erfasst.",
           "options": [
-            "14",
-            "27",
-            "34",
-            "52"
+            "1",
+            "2",
+            "3"
           ],
           "correct": 2,
-          "explanation": "34 Abschnitte, davon 27 auf 55 Zentimetern.",
-          "factRef": "hindernisfreiheit.segmente",
           "optionen_aus_fakten": true,
+          "explanation": "Gleis 2 trägt die Sektoren C, D und E, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Luzern sind 34 Perronsegmente erfasst: 27 mit 55 Zentimetern, 7 mit 35 Zentimetern. An 9 der 14 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 34,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 9,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:84947a07",
+          "type": "cloze",
+          "prompt": "In Luzern sind ___ Perronsegmente erfasst.",
+          "options": [
+            "34",
+            "48",
+            "58"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 34 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:fc4b2225",
+          "type": "true_false",
+          "prompt": "Bei keinem der 34 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 34 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
-      "title": "Züge auf der Strecke",
-      "body": "Auf dem Abschnitt von der Luzerner Einfahrt her verkehren 244'737 Personenzüge pro Jahr, rund 671 pro Tag in beiden Richtungen zusammen. Dazu kommen 15 Güterzüge pro Tag.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Luzern Einfahrt (Abzw) – Luzern 671 Züge pro Tag, das sind 244'737 im Jahr. Im Güterverkehr zählt die Erhebung bis zu 15 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag",
+          "label": "Züge pro Tag, Personenverkehr Luzern Einfahrt (Abzw) – Luzern",
           "value": 671,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Güterzüge pro Tag",
-          "value": 15,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Luzern Einfahrt (Abzw) – Luzern",
+          "value": 244737,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:a423129e",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren täglich auf dem erfassten Abschnitt bei Luzern?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Luzern Einfahrt (Abzw) – Luzern?",
           "options": [
-            "210",
-            "450",
+            "570",
             "671",
-            "1'340"
+            "810",
+            "940"
           ],
-          "correct": 2,
-          "explanation": "Rund 671 pro Tag, beide Richtungen zusammen.",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 671 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zugzahlen sagen, wie viele Züge in Luzern halten.",
-          "correct": false,
-          "explanation": "Sie zählen Fahrten auf einem Streckenabschnitt.",
-          "factRef": "zuege.hinweis",
+          "id": "zuege:37dadd8b",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Luzern Einfahrt (Abzw) – Luzern?",
+          "min": 200500,
+          "max": 355000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 244737,
+          "explanation": "Die Erhebung zählt 244'737 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Luzern ist 1 Linie erfasst: die Linie 500 Basel SBB - Olten - Luzern. Der Bahnhof ist darauf bei Kilometer 95.09297 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 500",
+          "value": 95.09297,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:3bd38421",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 500 ist Luzern eingetragen?",
+          "min": 77,
+          "max": 138,
+          "step": 1,
+          "unit": "km",
+          "correct": 95.09297,
+          "explanation": "Die Kilometrierung von Luzern auf der Linie 500 beträgt 95.09297. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
-      "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 13 Billettautomaten, 23 Billettentwerter und 5 Wartehallen. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "title": "Services",
+      "body": "Luzern steht in der Liste der WLAN-Standorte. Erfasst sind 13 Billettautomaten vom Typ ePOS, 23 Billettentwerter und 5 Wartehallen.",
       "facts": [
         {
-          "label": "Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 13,
-          "unit": null,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 23,
-          "unit": null,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen",
-          "value": 5,
-          "unit": null,
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "In Luzern sind ___ Billettautomaten erfasst.",
-          "options": [
-            "5",
-            "13",
-            "23",
-            "31"
-          ],
-          "correct": 1,
-          "explanation": "13 Automaten, dazu 23 Billettentwerter.",
-          "factRef": "services.billettautomaten_erfasst",
-          "optionen_aus_fakten": true,
-          "difficulty": 1
-        },
-        {
+          "id": "services:aa33f85e",
           "type": "true_false",
           "prompt": "Luzern steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Ja, der Bahnhof ist als WLAN-Standort erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
+        },
+        {
+          "id": "services:45566fd0",
+          "type": "cloze",
+          "prompt": "In Luzern sind ___ Billettentwerter erfasst.",
+          "options": [
+            "23",
+            "32",
+            "39"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 23 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -542,37 +622,40 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "24",
-            "33",
             "42",
-            "60"
+            "51",
+            "60",
+            "84"
           ],
-          "correct": 3,
+          "correct": 2,
           "explanation": "Erfasst sind 60 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "29",
             "41",
             "49",
-            "70"
+            "70",
+            "90"
           ],
-          "correct": 1,
+          "correct": 0,
           "explanation": "Erfasst sind 41 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 58,
+          "min": 173,
           "max": 518,
           "step": 1,
           "unit": "Schliessfächer",
@@ -582,8 +665,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -608,7 +692,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 3'660 Quadratmetern die grösste erfasste Fläche, Perron 14/15 mit 2'277 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 2/3 hat mit 3'660 Quadratmetern die grösste erfasste Belagsfläche, Perron 14/15 mit 2'277 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -616,22 +700,22 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Luzern ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat.",
+      "body": "Für Luzern ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Dazu gibt es einen eigenen Shopping-Plan.",
       "facts": [
         {
-          "label": "Plan als A4",
+          "label": "Plan als A4-Blatt",
           "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-luzern-a4.pdf",
-          "unit": null,
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:61e6ba0d",
           "type": "true_false",
-          "prompt": "Für Luzern gibt es einen veröffentlichten Bahnhofplan.",
+          "prompt": "Für Luzern ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Ja, als A4-Blatt und als Plakat.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
           "difficulty": 1
         }
@@ -653,232 +737,6 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
-    }
-  ],
-  "gleise": [
-    {
-      "nr": "2",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 303,
-      "sektoren": [
-        "C",
-        "D",
-        "E"
-      ],
-      "sektoren_anzahl": 3
-    },
-    {
-      "nr": "3",
-      "perronhoehen_cm": [],
-      "hilfstritt": false,
-      "perrontyp": null,
-      "perronkante_m": null,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E"
-      ],
-      "sektoren_anzahl": 5
-    },
-    {
-      "nr": "4",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 395,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E"
-      ],
-      "sektoren_anzahl": 5
-    },
-    {
-      "nr": "5",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 395,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E"
-      ],
-      "sektoren_anzahl": 5
-    },
-    {
-      "nr": "6",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 415,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E"
-      ],
-      "sektoren_anzahl": 5
-    },
-    {
-      "nr": "7",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 416,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E"
-      ],
-      "sektoren_anzahl": 5
-    },
-    {
-      "nr": "8",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 352,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "9",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 353,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "10",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 316,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "11",
-      "perronhoehen_cm": [
-        55
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 317,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "12",
-      "perronhoehen_cm": [
-        35
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 254,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "13",
-      "perronhoehen_cm": [
-        35
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 255,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "14",
-      "perronhoehen_cm": [
-        35
-      ],
-      "hilfstritt": false,
-      "perrontyp": "Mittelperron",
-      "perronkante_m": 23,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
-    },
-    {
-      "nr": "15",
-      "perronhoehen_cm": [],
-      "hilfstritt": false,
-      "perrontyp": null,
-      "perronkante_m": null,
-      "sektoren": [
-        "A",
-        "B",
-        "C",
-        "D"
-      ],
-      "sektoren_anzahl": 4
     }
   ]
 }

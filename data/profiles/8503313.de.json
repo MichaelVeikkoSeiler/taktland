@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:0f56dfba",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Niederglatt ZH ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:353f2b58",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Niederglatt ZH ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:2d8cadd7",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Niederglatt ZH?",
           "min": 340,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:ddafea54",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Niederglatt ZH lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:66c63c2a",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Niederglatt ZH?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:e6fc0f26",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Niederglatt ZH ist niveaufrei erreichbar.",
           "correct": true,
@@ -215,6 +222,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:1ba37706",
           "type": "cloze",
           "prompt": "An Gleis 5 in Niederglatt ZH sind ___ Sektoren erfasst.",
           "options": [
@@ -229,6 +237,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:558ad549",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Niederglatt ZH kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -259,6 +268,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:c19ab19d",
           "type": "cloze",
           "prompt": "In Niederglatt ZH sind ___ Perronsegmente erfasst.",
           "options": [
@@ -273,6 +283,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -286,7 +297,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Niederglatt ZH – Oberglatt ZH 158 Züge pro Tag, das sind 57'493 im Jahr. Auf dem Abschnitt Bülach – Niederglatt ZH sind es ebenfalls 158 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 33 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Niederglatt ZH – Oberglatt ZH",
@@ -305,6 +316,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:aed3747a",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Niederglatt ZH – Oberglatt ZH?",
           "options": [
@@ -319,6 +331,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -366,6 +379,7 @@
       ],
       "questions": [
         {
+          "id": "linien:e5d6ccbf",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 768 ist Niederglatt ZH eingetragen?",
           "min": 17,
@@ -378,6 +392,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -425,6 +440,7 @@
       ],
       "questions": [
         {
+          "id": "services:e3315674",
           "type": "true_false",
           "prompt": "Niederglatt ZH steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -433,6 +449,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:27d464eb",
           "type": "cloze",
           "prompt": "In Niederglatt ZH sind ___ Billettentwerter erfasst.",
           "options": [
@@ -451,7 +468,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Niederglatt ZH 6 Sitzbänke sowie 19 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Niederglatt ZH 6 Sitzbänke sowie 19 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -474,6 +491,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -488,6 +506,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -502,6 +521,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

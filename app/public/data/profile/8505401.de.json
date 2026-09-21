@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f3d3a27c",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Tenero ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:13b4fa63",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Tenero ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:75a4fbbe",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Tenero?",
           "min": 160,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:8c91fe12",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Tenero?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:bf4a46c7",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Tenero?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -217,6 +224,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:418f41c2",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Tenero sind niveaufrei erreichbar.",
           "correct": true,
@@ -247,6 +255,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:5079d8ce",
           "type": "cloze",
           "prompt": "An Gleis 1 in Tenero sind ___ Sektoren erfasst.",
           "options": [
@@ -261,6 +270,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:5a3af06f",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Tenero kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -297,6 +307,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:9202d2f9",
           "type": "cloze",
           "prompt": "In Tenero sind ___ Perronsegmente erfasst.",
           "options": [
@@ -311,6 +322,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5eee92da",
           "type": "true_false",
           "prompt": "Bei keinem der 5 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -324,7 +336,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Gordola – Tenero 184 Züge pro Tag, das sind 67'302 im Jahr. Auf dem Abschnitt Tenero – Minusio sind es ebenfalls 184 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Gordola – Tenero",
@@ -343,6 +355,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:0bbb5961",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Gordola – Tenero?",
           "options": [
@@ -357,6 +370,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:9309371e",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Gordola – Tenero?",
           "min": 55000,
@@ -391,6 +405,7 @@
       ],
       "questions": [
         {
+          "id": "linien:9b397fdc",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 630 ist Tenero eingetragen?",
           "min": 137,
@@ -431,6 +446,7 @@
       ],
       "questions": [
         {
+          "id": "services:7ebc418e",
           "type": "true_false",
           "prompt": "Tenero steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -439,6 +455,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:e4a896ed",
           "type": "cloze",
           "prompt": "In Tenero sind ___ Billettentwerter erfasst.",
           "options": [
@@ -474,6 +491,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -488,6 +506,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

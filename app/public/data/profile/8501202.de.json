@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:805c73ae",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Burier ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:72e966d0",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Burier ___ Personen ein und aus.",
           "options": [
@@ -134,6 +137,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:e1c9e8f6",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Burier?",
           "min": 320,
@@ -146,6 +150,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:444672b4",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Burier?",
           "options": [
@@ -183,6 +188,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:37531081",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Burier?",
           "options": [
@@ -197,6 +203,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -216,6 +223,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:4dd67512",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Burier sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:e470c92f",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 2 in Burier erfasst? (Mehrfachauswahl)",
           "options": [
@@ -286,6 +295,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7457db9a",
           "type": "cloze",
           "prompt": "In Burier sind ___ Perronsegmente erfasst.",
           "options": [
@@ -300,6 +310,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -313,7 +324,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt La Tour-de-Peilz – Burier 231 Züge pro Tag, das sind 84'487 im Jahr. Auf dem Abschnitt Tunnel des Crêtes (diag) – Burier sind es ebenfalls 231 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 26 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr La Tour-de-Peilz – Burier",
@@ -332,6 +343,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:b51db6e5",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt La Tour-de-Peilz – Burier?",
           "options": [
@@ -346,6 +358,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:75591eaa",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt La Tour-de-Peilz – Burier?",
           "min": 69000,
@@ -380,6 +393,7 @@
       ],
       "questions": [
         {
+          "id": "linien:3714be00",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Burier eingetragen?",
           "min": 17,
@@ -420,6 +434,7 @@
       ],
       "questions": [
         {
+          "id": "services:9e5d44ed",
           "type": "true_false",
           "prompt": "Burier steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -428,6 +443,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c696f356",
           "type": "cloze",
           "prompt": "In Burier sind ___ Billettentwerter erfasst.",
           "options": [
@@ -463,6 +479,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -477,6 +494,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:db99a465",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Nebikon ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:56186e01",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Nebikon ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:eba1d3ae",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Nebikon?",
           "min": 390,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:9b1cd752",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Nebikon lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:23739c59",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Nebikon?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -210,6 +217,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:38b719d8",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Nebikon sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:1e898d4a",
           "type": "cloze",
           "prompt": "An Gleis 2 in Nebikon sind ___ Sektoren erfasst.",
           "options": [
@@ -254,6 +263,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:144879cd",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Nebikon kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:3435c19c",
           "type": "cloze",
           "prompt": "In Nebikon sind ___ Perronsegmente erfasst.",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -317,7 +329,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Nebikon Nord (Abzw) – Nebikon 198 Züge pro Tag, das sind 72'190 im Jahr. Auf dem Abschnitt Nebikon – Wauwil sind es ebenfalls 198 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 22 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Nebikon Nord (Abzw) – Nebikon",
@@ -336,6 +348,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:32dc2769",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Nebikon Nord (Abzw) – Nebikon?",
           "options": [
@@ -350,6 +363,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -397,6 +411,7 @@
       ],
       "questions": [
         {
+          "id": "linien:7371f9e9",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 500 ist Nebikon eingetragen?",
           "min": 48,
@@ -437,6 +452,7 @@
       ],
       "questions": [
         {
+          "id": "services:2e19d8c0",
           "type": "true_false",
           "prompt": "Nebikon steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -445,6 +461,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:0c5f55dd",
           "type": "cloze",
           "prompt": "In Nebikon sind ___ Billettentwerter erfasst.",
           "options": [
@@ -486,6 +503,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -500,6 +518,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -514,6 +533,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

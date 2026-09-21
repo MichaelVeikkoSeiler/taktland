@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:b1c1f161",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Glarus ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:637b0de5",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Glarus ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:5e9e4ec4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Glarus?",
           "min": 380,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:d4d32c91",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Glarus lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:336dccbf",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Glarus?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -204,6 +211,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:5b136553",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Glarus sind niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +236,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:62baaaf3",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Glarus kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -264,6 +273,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:8e85f643",
           "type": "cloze",
           "prompt": "In Glarus sind ___ Perronsegmente erfasst.",
           "options": [
@@ -278,6 +288,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f641b667",
           "type": "true_false",
           "prompt": "Bei keinem der 9 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -291,7 +302,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Glarus – Ennenda: Im Personenverkehr verkehren dort 75 Züge pro Tag, das sind 27'486 im Jahr. Auf dem Abschnitt Netstal – Glarus sind es 74 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 35 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Glarus – Ennenda",
@@ -310,6 +321,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:907c8bfb",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Glarus – Ennenda?",
           "options": [
@@ -324,6 +336,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:e5cb2ba6",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Glarus – Ennenda?",
           "min": 22500,
@@ -358,6 +371,7 @@
       ],
       "questions": [
         {
+          "id": "linien:61685e13",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 736 ist Glarus eingetragen?",
           "min": 56,
@@ -398,6 +412,7 @@
       ],
       "questions": [
         {
+          "id": "services:09bbf0eb",
           "type": "true_false",
           "prompt": "Glarus steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -406,6 +421,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:80b49518",
           "type": "cloze",
           "prompt": "In Glarus sind ___ Billettentwerter erfasst.",
           "options": [
@@ -453,6 +469,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -467,6 +484,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -481,6 +499,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 18,
@@ -493,6 +512,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -11,7 +11,6 @@
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -25,7 +24,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Lyss 11'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'000, an einem freien Tag 6'300. Die Infrastruktur gehört der SBB, als Bahnunternehmen ist die BLS erfasst. Der höchste erfasste Werktagswert liegt mit 13'000 im Jahr 2018.",
+      "body": "An einem Werktag steigen in Lyss 11'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'000, an einem freien Tag 6'300. Die Infrastruktur gehört der SBB, als Bahnunternehmen ist BLS erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -47,38 +46,26 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Bahnunternehmen",
-          "value": "BLS",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.evu"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:17739216",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Lyss ein und aus?",
           "options": [
-            "4'700",
-            "6'400",
-            "8'200",
-            "11'700"
+            "9'900",
+            "11'700",
+            "14'000",
+            "16'000"
           ],
-          "correct": 3,
+          "correct": 1,
           "explanation": "An einem Werktag sind es 11'700 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Als Bahnunternehmen ist für Lyss allein die BLS erfasst.",
-          "correct": true,
-          "explanation": "In den Frequenzdaten steht als Bahnunternehmen die BLS, als Infrastrukturbetreiberin die SBB. Das sind zwei verschiedene Rollen.",
-          "factRef": "steckbrief.evu",
-          "difficulty": 2
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,9 +76,9 @@
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2024",
+              "label": "2025",
               "value": 11700,
-              "factRef": "steckbrief.verlauf[3].dwv"
+              "factRef": "steckbrief.verlauf[4].dwv"
             },
             {
               "label": "2018",
@@ -100,8 +87,22 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 10'600 (2022), 11'700 (2024), 13'000 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 10'600 (2022), 11'700 (2025), 13'000 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
+        },
+        {
+          "id": "steckbrief:fac07a1e",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Lyss ___ Personen ein und aus.",
+          "options": [
+            "6'300",
+            "7'600",
+            "8'800"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 6'300 Personen, an einem Werktag 11'700. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         }
       ]
     },
@@ -118,24 +119,25 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Bezirk",
-          "value": "Seeland",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
-        },
-        {
           "label": "Offizielle Abkürzung",
           "value": "LY",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Seeland",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:3df399d7",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Lyss?",
-          "min": 400,
-          "max": 570,
+          "min": 360,
+          "max": 650,
           "step": 1,
           "unit": "m ü. M.",
           "correct": 444.481,
@@ -144,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e2054e3f",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Lyss?",
           "options": [
@@ -154,7 +157,7 @@
           ],
           "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Lyss liegt im Bezirk Seeland, Kanton Bern.",
+          "explanation": "Als Bezirk ist Seeland eingetragen.",
           "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
@@ -163,7 +166,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons in Lyss liegen offene Daten vor, alle 3 sind niveaufrei erreichbar. Perron 1 ist ein Hausperron und misst 362 Meter, Perron 2/3 misst 263 Meter und Perron 4/5 misst 164 Meter.",
+      "body": "Zu 3 Perrons in Lyss liegen offene Daten vor. Perron 1 misst 362 Meter, Perron 2/3 misst 263 Meter, Perron 4/5 misst 164 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -177,17 +180,11 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 164,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -209,36 +206,13 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1 misst 362 Meter, Perron 2/3 misst 263 und Perron 4/5 misst 164 Meter.",
+          "explanation": "Perron 1 misst 362 Meter, Perron 2/3 misst 263 Meter, Perron 4/5 misst 164 Meter.",
           "difficulty": 2
         },
         {
-          "type": "match",
-          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
-          "pairs": [
-            {
-              "links": "Perron 1",
-              "rechts": "886.76 m²",
-              "factRef": "perrons.items[0].flaeche_netto_m2"
-            },
-            {
-              "links": "Perron 2/3",
-              "rechts": "838.5 m²",
-              "factRef": "perrons.items[1].flaeche_netto_m2"
-            },
-            {
-              "links": "Perron 4/5",
-              "rechts": "708.61 m²",
-              "factRef": "perrons.items[2].flaeche_netto_m2"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 1 hat 886.76 Quadratmeter, Perron 2/3 hat 838.5 und Perron 4/5 hat 708.61.",
-          "difficulty": 3
-        },
-        {
+          "id": "perrons:472b9f80",
           "type": "true_false",
-          "prompt": "Zu allen 3 erfassten Perrons in Lyss ist ein niveaufreier Zugang vermerkt.",
+          "prompt": "Alle 3 erfassten Perrons in Lyss sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -249,7 +223,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 5 Gleisen liegen offene Daten vor: 1 bis 5. Gleis 1 hat mit 361 Metern die längste erfasste Perronkante und 5 Sektoren. Die Zahl der Sektoren nimmt ab: Gleis 2 hat 5, Gleis 3 hat 4, Gleis 4 hat 3 und Gleis 5 hat 2. An Gleis 5 sind es die Sektoren B und C, nicht A und B.",
+      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 3, 4 und 5. Erfasst sind Perronhöhen von 20 und 55 Zentimetern.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -266,68 +240,81 @@
           "factRef": "gleise.items[0].perronkante_m"
         },
         {
-          "label": "Sektoren an Gleis 5",
-          "value": 2,
+          "label": "Sektoren an Gleis 1",
+          "value": 5,
           "source": "sektortafel",
-          "factRef": "gleise.items[4].sektoren_anzahl"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
           "correct": "1",
           "factRef": "gleise.items[0].nr",
-          "explanation": "Gleis 1 hat mit 361 Metern die längste erfasste Perronkante, deutlich vor Gleis 3 mit 240 Metern.",
+          "explanation": "Gleis 1 hat mit 361 Metern die längste erfasste Perronkante, die nächste misst 240 Meter.",
           "difficulty": 2
         },
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
-          "prompt": "Ordne die Gleise nach der Zahl der erfassten Sektoren, meiste zuerst.",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
               "label": "Gleis 1",
-              "value": 5,
-              "factRef": "gleise.items[0].sektoren_anzahl"
+              "value": 361,
+              "factRef": "gleise.items[0].perronkante_m"
             },
             {
               "label": "Gleis 3",
-              "value": 4,
-              "factRef": "gleise.items[2].sektoren_anzahl"
-            },
-            {
-              "label": "Gleis 4",
-              "value": 3,
-              "factRef": "gleise.items[3].sektoren_anzahl"
+              "value": 240,
+              "factRef": "gleise.items[2].perronkante_m"
             },
             {
               "label": "Gleis 5",
-              "value": 2,
-              "factRef": "gleise.items[4].sektoren_anzahl"
+              "value": 168,
+              "factRef": "gleise.items[4].perronkante_m"
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Gleis 1 hat 5 Sektoren, Gleis 3 hat 4, Gleis 4 hat 3 und Gleis 5 hat 2. Gleis 2 hat ebenfalls 5 und bleibt hier weg.",
+          "explanation": "Gleis 1 misst 361 Meter, Gleis 3 misst 240 Meter, Gleis 5 misst 168 Meter. Gleise mit fast gleicher Kante bleiben weg.",
           "difficulty": 3
         },
         {
+          "id": "gleise:c84e2891",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Lyss sind ___ Sektoren erfasst.",
+          "options": [
+            "5",
+            "7",
+            "8"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D und E, also 5 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:b0963ea3",
           "type": "multiple_choice",
-          "prompt": "Welche Perronhöhen sind für Gleis 3 in Lyss erfasst? (Mehrfachauswahl)",
+          "prompt": "Welche Perronhöhen sind für Gleis 2 in Lyss erfasst? (Mehrfachauswahl)",
           "options": [
             "20 cm",
-            "35 cm",
-            "55 cm",
-            "76 cm"
+            "25 cm",
+            "30 cm",
+            "55 cm"
           ],
           "correct": [
             0,
-            2
+            3
           ],
           "optionen_aus_fakten": true,
-          "explanation": "An Gleis 3 sind 20 und 55 Zentimeter verzeichnet, wie auch an Gleis 2. An den Gleisen 1, 4 und 5 steht nur die 55.",
-          "factRef": "gleise.items[2].perronhoehen_cm",
+          "explanation": "An Gleis 2 sind 20 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[1].perronhoehen_cm",
           "difficulty": 3
         }
       ]
@@ -335,7 +322,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Lyss sind 12 Perronsegmente erfasst: 10 mit einer Perronhöhe von 55 Zentimetern und 2 mit 20 Zentimetern. An allen 5 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Lyss sind 12 Perronsegmente erfasst: 10 mit 55 Zentimetern, 2 mit 20 Zentimetern. An allen 5 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -359,20 +346,22 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:2ab65866",
           "type": "cloze",
-          "prompt": "Von den 12 erfassten Segmenten weisen ___ eine Perronhöhe von 55 Zentimetern auf.",
+          "prompt": "In Lyss sind ___ Perronsegmente erfasst.",
           "options": [
-            "2",
-            "7",
-            "10"
+            "8",
+            "12",
+            "14"
           ],
-          "correct": 2,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "10 der 12 Segmente sind mit 55 Zentimetern erfasst, die übrigen 2 mit 20 Zentimetern.",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
-          "difficulty": 2
+          "explanation": "Die BehiG-Erhebung führt 12 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
           "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -385,70 +374,77 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt von Busswil BE her: Im Personenverkehr verkehren dort 208 Züge pro Tag, das sind 75'794 im Jahr. Richtung Suberg-Grossaffoltern sind es 162 Züge pro Tag, von Lyss Grien her 40.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Am stärksten befahren ist der Abschnitt Busswil BE – Lyss: Im Personenverkehr verkehren dort 208 Züge pro Tag, das sind 75'794 im Jahr. Auf dem Abschnitt Lyss – Suberg-Grossaffoltern sind es 162 und auf dem Abschnitt Lyss Grien – Lyss sind es 40 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 18 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Busswil BE–Lyss",
+          "label": "Züge pro Tag, Personenverkehr Busswil BE – Lyss",
           "value": 208,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Busswil BE–Lyss",
+          "label": "Züge pro Jahr, Personenverkehr Busswil BE – Lyss",
           "value": 75794,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:ba06e925",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Busswil BE–Lyss?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Busswil BE – Lyss?",
           "options": [
-            "83",
-            "120",
-            "150",
-            "208"
+            "208",
+            "250",
+            "290",
+            "350"
           ],
-          "correct": 3,
+          "correct": 0,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 208 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
-          "prompt": "Ordne die Abschnitte im Personenverkehr nach Zügen pro Tag, meiste zuerst.",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Busswil BE – Lyss",
-              "value": 208,
-              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+              "label": "Busswil BE – Lyss, Personenverkehr",
+              "value": 75794,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Lyss – Suberg-Grossaffoltern",
-              "value": 162,
-              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+              "label": "Lyss – Suberg-Grossaffoltern, Personenverkehr",
+              "value": 58990,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
-              "label": "Lyss Grien – Lyss",
-              "value": 40,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+              "label": "Lyss Grien – Lyss, Personenverkehr",
+              "value": 14439,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Busswil BE – Lyss, Güterverkehr",
+              "value": 6669,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Von Busswil BE her sind es 208 Züge pro Tag, Richtung Suberg-Grossaffoltern 162 und von Lyss Grien her 40.",
-          "difficulty": 2
+          "explanation": "Busswil BE – Lyss (Personenverkehr) 75'794, Lyss – Suberg-Grossaffoltern (Personenverkehr) 58'990, Lyss Grien – Lyss (Personenverkehr) 14'439, Busswil BE – Lyss (Güterverkehr) 6'669 Züge im Jahr.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Lyss ist 1 Linie erfasst: die Linie 260 Zollikofen Nord–Biel/Bienne Aebistrasse. Der Bahnhof ist darauf bei Kilometer 23.3666 eingetragen.",
+      "body": "Für Lyss ist 1 Linie erfasst: die Linie 260 Zollikofen Nord - Biel/Bienne Aebistr. Der Bahnhof ist darauf bei Kilometer 23.3666 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -466,25 +462,11 @@
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Liniennummer ist für Lyss erfasst?",
-          "options": [
-            "140",
-            "260",
-            "410",
-            "520"
-          ],
-          "correct": 1,
-          "optionen_aus_fakten": true,
-          "explanation": "Erfasst ist die Linie 260, Zollikofen Nord - Biel/Bienne Aebistrasse.",
-          "factRef": "linien.items[0].nummer",
-          "difficulty": 1
-        },
-        {
+          "id": "linien:e66b691e",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 260 ist Lyss eingetragen?",
-          "min": 10,
-          "max": 90,
+          "min": 19,
+          "max": 34,
           "step": 1,
           "unit": "km",
           "correct": 23.3666,
@@ -521,6 +503,7 @@
       ],
       "questions": [
         {
+          "id": "services:53fa53af",
           "type": "true_false",
           "prompt": "Lyss steht in der Liste der WLAN-Standorte.",
           "correct": true,
@@ -529,14 +512,15 @@
           "difficulty": 1
         },
         {
+          "id": "services:82df8712",
           "type": "cloze",
           "prompt": "In Lyss sind ___ Billettentwerter erfasst.",
           "options": [
-            "4",
             "6",
-            "9"
+            "7",
+            "8"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
           "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
@@ -576,20 +560,22 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "14",
-            "22",
             "26",
-            "31"
+            "31",
+            "36",
+            "44"
           ],
-          "correct": 2,
+          "correct": 0,
           "explanation": "Erfasst sind 26 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -604,6 +590,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 11,
@@ -616,6 +603,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -631,8 +619,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -652,7 +641,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 1'267 Quadratmetern die grösste erfasste Fläche, Perron 4/5 mit 887 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 1'267 Quadratmetern die grösste erfasste Belagsfläche, Perron 4/5 mit 887 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

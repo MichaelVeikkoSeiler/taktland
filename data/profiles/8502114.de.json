@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:173e867a",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Rupperswil ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -98,6 +100,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:99a5bb87",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Rupperswil ___ Personen ein und aus.",
           "options": [
@@ -133,6 +136,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:60fb6ef1",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Rupperswil?",
           "min": 300,
@@ -145,6 +149,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:0b5272b9",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Rupperswil lautet ___.",
           "options": [
@@ -181,6 +186,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:92fbd300",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Rupperswil?",
           "options": [
@@ -195,6 +201,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -214,6 +221,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:2bafd487",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Rupperswil sind niveaufrei erreichbar.",
           "correct": true,
@@ -251,6 +259,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -260,6 +269,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:207746f1",
           "type": "cloze",
           "prompt": "An Gleis 1 in Rupperswil sind ___ Sektoren erfasst.",
           "options": [
@@ -274,6 +284,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:978b3668",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Rupperswil erfasst? (Mehrfachauswahl)",
           "options": [
@@ -314,6 +325,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:ae0fee62",
           "type": "cloze",
           "prompt": "In Rupperswil sind ___ Perronsegmente erfasst.",
           "options": [
@@ -333,7 +345,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Rohr (Spw) – Rupperswil: Im Personenverkehr verkehren dort 635 Züge pro Tag, das sind 231'724 im Jahr. Auf dem Abschnitt Rupperswil – Lenzburg sind es 475 und auf dem Abschnitt Rupperswil Ost – Rupperswil sind es 160 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 121 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rohr (Spw) – Rupperswil",
@@ -352,6 +364,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:fb8ca8c5",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rohr (Spw) – Rupperswil?",
           "options": [
@@ -366,6 +379,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -418,6 +432,7 @@
       ],
       "questions": [
         {
+          "id": "linien:dad3ff4f",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 640 ist Rupperswil eingetragen?",
           "min": 35,
@@ -430,6 +445,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -482,6 +498,7 @@
       ],
       "questions": [
         {
+          "id": "services:165d45db",
           "type": "true_false",
           "prompt": "Rupperswil steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -490,6 +507,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:15e7a5dd",
           "type": "cloze",
           "prompt": "In Rupperswil sind ___ Billettentwerter erfasst.",
           "options": [
@@ -531,6 +549,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -545,6 +564,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -560,6 +580,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

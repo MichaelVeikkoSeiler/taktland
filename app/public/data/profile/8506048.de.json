@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:20a0b924",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Marthalen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:4de232b6",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Marthalen ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:a171b707",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Marthalen?",
           "min": 330,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:155e351b",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Marthalen?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:c769d18d",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Marthalen?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:637c7c66",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Marthalen sind niveaufrei erreichbar.",
           "correct": true,
@@ -223,6 +230,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:45931a77",
           "type": "cloze",
           "prompt": "An Gleis 1 in Marthalen sind ___ Sektoren erfasst.",
           "options": [
@@ -237,6 +245,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:aae2e5c4",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Marthalen ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -267,6 +276,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:3d9ec380",
           "type": "true_false",
           "prompt": "Für Marthalen sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -280,7 +290,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Marthalen Nord – Marthalen: Im Personenverkehr verkehren dort 111 Züge pro Tag, das sind 40'673 im Jahr. Auf dem Abschnitt Marthalen – Meder (Verzw) sind es 110 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 42 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Marthalen Nord – Marthalen",
@@ -299,6 +309,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:053728ed",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Marthalen Nord – Marthalen?",
           "options": [
@@ -313,6 +324,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:a582a481",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Marthalen Nord – Marthalen?",
           "min": 33000,
@@ -347,6 +359,7 @@
       ],
       "questions": [
         {
+          "id": "linien:ce6daaad",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 762 ist Marthalen eingetragen?",
           "min": 37,
@@ -387,6 +400,7 @@
       ],
       "questions": [
         {
+          "id": "services:c774cf8a",
           "type": "true_false",
           "prompt": "Marthalen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -395,6 +409,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:d5f28974",
           "type": "cloze",
           "prompt": "In Marthalen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -436,6 +451,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -450,6 +466,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -464,6 +481,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

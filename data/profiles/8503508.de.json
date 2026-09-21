@@ -4,14 +4,13 @@
   "tier": "M",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -25,7 +24,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Dietikon 24'300 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 21'200. Infrastrukturbetreiberin ist die SBB, Züge fahren hier von SBB und SOB.",
+      "body": "An einem Werktag steigen in Dietikon 24'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 21'200, an einem freien Tag 14'400. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne AVA.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -42,53 +41,64 @@
           "factRef": "steckbrief.dtv"
         },
         {
-          "label": "Infrastrukturbetreiberin",
-          "value": "SBB",
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 14400,
+          "unit": "Personen",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Abgrenzung der Zahl",
+          "value": "Ohne AVA.",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.bemerkung"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:0f955134",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Dietikon ein und aus?",
           "options": [
-            "12'400",
-            "18'900",
+            "17'000",
+            "21'000",
             "24'300",
-            "31'700"
+            "29'000"
           ],
           "correct": 2,
-          "explanation": "An einem Werktag sind es 24'300 Personen, Stand 2025.",
+          "explanation": "An einem Werktag sind es 24'300 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Infrastruktur in Dietikon wird von der SBB betrieben.",
-          "correct": true,
-          "explanation": "Als Infrastrukturbetreiberin ist die SBB erfasst.",
-          "factRef": "steckbrief.isb",
-          "difficulty": 1
+          "id": "steckbrief:d5493787",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Dietikon ___ Personen ein und aus.",
+          "options": [
+            "14'400",
+            "17'000",
+            "20'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 14'400 Personen, an einem Werktag 24'300. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         },
         {
-          "type": "slider",
-          "prompt": "Wie viele Personen stiegen 2018 an einem Werktag in Dietikon ein und aus?",
-          "min": 15000,
-          "max": 30000,
-          "step": 100,
-          "unit": "Personen",
-          "correct": 23700,
-          "explanation": "2018 waren es 23'700 Personen an einem Werktag.",
-          "factRef": "steckbrief.verlauf[0].dwv",
-          "difficulty": 2
+          "id": "steckbrief:05401d4c",
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Dietikon umfasst auch AVA.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne AVA.». Wofür AVA steht, führt sie nicht aus.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Dietikon liegt auf 388,3 Metern über Meer und wird von den Schweizerischen Bundesbahnen SBB betrieben.",
+      "body": "Dietikon liegt auf 388.3 Metern über Meer in der Gemeinde Dietikon, Bezirk Dietikon, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet DT.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -98,38 +108,51 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Betreiber",
-          "value": "Schweizerische Bundesbahnen SBB",
+          "label": "Offizielle Abkürzung",
+          "value": "DT",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.betreiber"
+          "factRef": "stammdaten.abkuerzung"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
+          "id": "stammdaten:050886a9",
+          "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Dietikon?",
-          "options": [
-            "312,5 m",
-            "388,3 m",
-            "421,7 m",
-            "455,0 m"
-          ],
-          "correct": 1,
-          "explanation": "Der Bahnhof liegt auf 388,3 Metern über Meer.",
+          "min": 310,
+          "max": 570,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 388.3,
+          "explanation": "Der Bahnhof liegt auf 388.3 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:6811fb87",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Dietikon lautet ___.",
+          "options": [
+            "DT",
+            "GLZB",
+            "URD"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist DT als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons liegen offene Daten vor. Das längste misst 407 Meter, das kürzeste 330 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 3 Perrons in Dietikon liegen offene Daten vor. Perron 5/6 misst 407 Meter, Perron 3/4 misst 401 Meter, Perron 1 misst 330 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
           "value": 3,
-          "unit": "Perrons",
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
@@ -139,27 +162,31 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 330,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Das längste erfasste Perron in Dietikon misst ___ Meter.",
+          "id": "perrons:272f9acc",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Dietikon?",
           "options": [
-            "160",
-            "220",
-            "407"
+            "350 m",
+            "407 m",
+            "490 m",
+            "570 m"
           ],
-          "correct": 2,
-          "explanation": "Das Perron 5/6 misst 407 Meter, das längste erfasste Perron.",
+          "correct": 1,
+          "explanation": "Das längste erfasste Perron misst 407 Meter.",
           "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:6c84525a",
+          "type": "true_false",
+          "prompt": "Alle 3 erfassten Perrons in Dietikon sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
       ]
@@ -167,113 +194,107 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 6 Gleisen liegen offene Daten vor. Erfasst sind die Perronhöhen 30 und 55 Zentimeter.",
+      "body": "Zu 6 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 5 und 6. Erfasst sind Perronhöhen von 30 und 55 Zentimetern. Zu Gleis 2 sind keine Sektortafeln erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
           "value": 6,
-          "unit": "Gleise",
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Kleinste erfasste Perronhöhe",
-          "value": 30,
-          "unit": "cm",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.perronhoehen_cm[0]"
-        },
-        {
-          "label": "Grösste erfasste Perronhöhe",
-          "value": 55,
-          "unit": "cm",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.perronhoehen_cm[1]"
+          "label": "Sektoren an Gleis 1",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "match",
-          "prompt": "Welche Perronkantenlänge gehört zu welchem Gleis?",
-          "pairs": [
-            {
-              "links": "Gleis 1",
-              "rechts": "330 m",
-              "factRef": "gleise.items[0].perronkante_m"
-            },
-            {
-              "links": "Gleis 4",
-              "rechts": "315 m",
-              "factRef": "gleise.items[3].perronkante_m"
-            }
+          "id": "gleise:2dd21586",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Dietikon sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "7",
+            "9"
           ],
-          "factRef": "gleise.items",
-          "explanation": "Gleis 1 hat eine Perronkante von 330 Metern, Gleis 4 von 315 Metern."
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren B, F und G, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "Welche ist die grösste erfasste Perronhöhe in Dietikon?",
+          "id": "gleise:13d06697",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 5 in Dietikon erfasst? (Mehrfachauswahl)",
           "options": [
+            "25 cm",
             "30 cm",
-            "40 cm",
-            "55 cm",
-            "76 cm"
+            "35 cm",
+            "55 cm"
           ],
-          "correct": 2,
-          "explanation": "Die grösste erfasste Perronhöhe beträgt 55 Zentimeter.",
-          "factRef": "gleise.perronhoehen_cm[1]",
-          "difficulty": 1
+          "correct": [
+            1,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 5 sind 30 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[4].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "3 der erfassten Perrons sind niveaufrei erreichbar. Insgesamt sind 24 Perronsegmente erfasst, davon 22 mit einer Höhe von 55 Zentimetern.",
+      "body": "Für Dietikon sind 24 Perronsegmente erfasst: 22 mit 55 Zentimetern, 2 mit 30 Zentimetern. An allen 6 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 3,
-          "unit": "Perrons",
-          "source": "perron",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei"
-        },
         {
           "label": "Erfasste Perronsegmente",
           "value": 24,
-          "unit": "Segmente",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "unit": "Segmente",
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 6,
           "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "true_false",
-          "prompt": "Es ist mindestens ein Perronsegment mit Hilfstritt erfasst.",
-          "correct": false,
-          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "id": "hindernisfreiheit:9f38dbb4",
+          "type": "cloze",
+          "prompt": "In Dietikon sind ___ Perronsegmente erfasst.",
+          "options": [
+            "7",
+            "17",
+            "24"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 24 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente mit einer Höhe von 55 cm sind in Dietikon erfasst?",
-          "options": [
-            "9",
-            "12",
-            "15",
-            "22"
-          ],
-          "correct": 3,
-          "explanation": "Von 24 erfassten Segmenten haben 22 eine Höhe von 55 cm.",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
+          "id": "hindernisfreiheit:8a8c6933",
+          "type": "true_false",
+          "prompt": "Bei keinem der 24 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 24 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
       ]
@@ -281,111 +302,157 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt Dietikon-Glanzenberg verkehren im Personenverkehr an einem Tag rund 662 Züge, beide Richtungen zusammen.",
+      "body": "Am stärksten befahren ist der Abschnitt Dietikon – Glanzenberg: Im Personenverkehr verkehren dort 662 Züge pro Tag, das sind 241'493 im Jahr. Auf dem Abschnitt Silberen (Abzw) – Dietikon sind es 624 und auf dem Abschnitt RBL Kopf Zürich – Dietikon sind es 10 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 99 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag Dietikon-Glanzenberg (Personenverkehr)",
+          "label": "Züge pro Tag, Personenverkehr Dietikon – Glanzenberg",
           "value": 662,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Dietikon – Glanzenberg",
+          "value": 241493,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:0220f2ed",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr rund pro Tag auf dem Abschnitt Dietikon-Glanzenberg?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Dietikon – Glanzenberg?",
           "options": [
-            "260",
-            "360",
-            "460",
-            "662"
+            "560",
+            "662",
+            "790",
+            "930"
           ],
-          "correct": 3,
-          "explanation": "Auf dem Abschnitt Dietikon-Glanzenberg verkehren im Personenverkehr rund 662 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 662 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
-          "difficulty": 2
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Dietikon – Glanzenberg, Personenverkehr",
+              "value": 241493,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Silberen (Abzw) – Dietikon, Personenverkehr",
+              "value": 227643,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Dietikon – Glanzenberg, Güterverkehr",
+              "value": 35993,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "RBL Kopf Zürich – Dietikon, Güterverkehr",
+              "value": 28917,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Dietikon – Glanzenberg (Personenverkehr) 241'493, Silberen (Abzw) – Dietikon (Personenverkehr) 227'643, Dietikon – Glanzenberg (Güterverkehr) 35'993, RBL Kopf Zürich – Dietikon (Güterverkehr) 28'917 Züge im Jahr.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "In Dietikon liegt eine Linie mit offenen Daten vor: die Linie 710 mit dem Streckenverlauf Zurich HB - Brugg AG.",
+      "body": "Für Dietikon ist 1 Linie erfasst: die Linie 710 Zurich HB - Brugg AG. Der Bahnhof ist darauf bei Kilometer 11.06546 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
           "value": 1,
-          "unit": "Linien",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie 710",
-          "value": "Zurich HB - Brugg AG",
+          "label": "Kilometrierung auf der Linie 710",
+          "value": 11.06546,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].name"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welcher Streckenverlauf ist für die Linie 710 in Dietikon erfasst?",
-          "options": [
-            "Zurich HB - Brugg AG",
-            "Zurich HB - Baden",
-            "Basel - Zurich HB",
-            "Zurich HB - Winterthur"
-          ],
-          "correct": 0,
-          "explanation": "Erfasst ist die Linie 710 mit dem Streckenverlauf Zurich HB - Brugg AG.",
-          "factRef": "linien.items[0].name",
-          "difficulty": 1
+          "id": "linien:53ff59c8",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 710 ist Dietikon eingetragen?",
+          "min": 9.0,
+          "max": 16.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 11.06546,
+          "explanation": "Die Kilometrierung von Dietikon auf der Linie 710 beträgt 11.06546. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "In Dietikon sind 4 Billettautomaten und 2 Wartehallen erfasst. WLAN ist als Standort erfasst.",
+      "body": "Dietikon steht in der Liste der WLAN-Standorte. Erfasst sind 4 Billettautomaten vom Typ ePOS, 6 Billettentwerter und 2 Wartehallen.",
       "facts": [
         {
-          "label": "Erfasste Billettautomaten",
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
           "value": 4,
-          "unit": "Automaten",
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Erfasste Wartehallen",
-          "value": 2,
-          "unit": "Wartehallen",
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
+          "label": "Billettentwerter erfasst",
+          "value": 6,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:2bd093e9",
           "type": "true_false",
           "prompt": "Dietikon steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Der Bahnhof ist als WLAN-Standort erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind für Dietikon erfasst?",
+          "id": "services:fe4149ec",
+          "type": "cloze",
+          "prompt": "In Dietikon sind ___ Billettentwerter erfasst.",
           "options": [
-            "4",
+            "6",
             "7",
-            "9",
-            "12"
+            "18"
           ],
           "correct": 0,
-          "explanation": "Erfasst sind 4 Billettautomaten des Typs ePOS.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -421,6 +488,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -435,6 +503,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -449,9 +518,10 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 4,
+          "min": 12,
           "max": 36,
           "step": 1,
           "unit": "Schliessfächer",
@@ -461,8 +531,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -482,7 +553,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 3/4 hat mit 2'659 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 1'244 die kleinste der gezeigten.",
+          "explanation": "Perron 3/4 hat mit 2'659 Quadratmetern die grösste erfasste Belagsfläche, Perron 1 mit 1'244 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

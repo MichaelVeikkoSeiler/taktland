@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:c3124422",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Amriswil ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:9768fb3a",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Amriswil ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:c485d078",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Amriswil?",
           "min": 350,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:be790afa",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Amriswil?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:3bcf1e7f",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Amriswil?",
           "options": [
@@ -193,6 +199,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -212,6 +219,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:621aa8e9",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Amriswil sind niveaufrei erreichbar.",
           "correct": true,
@@ -242,6 +250,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:63f4dc1f",
           "type": "cloze",
           "prompt": "An Gleis 1 in Amriswil sind ___ Sektoren erfasst.",
           "options": [
@@ -256,6 +265,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:5c9a4306",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Amriswil ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -286,6 +296,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:4e3ba4ac",
           "type": "true_false",
           "prompt": "Für Amriswil sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -299,7 +310,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Oberaach – Amriswil 150 Züge pro Tag, das sind 54'670 im Jahr. Auf dem Abschnitt Amriswil – Romanshorn West (Abzw) sind es ebenfalls 150 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 12 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Oberaach – Amriswil",
@@ -318,6 +329,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:65a36e53",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Oberaach – Amriswil?",
           "options": [
@@ -332,6 +344,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:f8a5273a",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Oberaach – Amriswil?",
           "min": 44500,
@@ -366,6 +379,7 @@
       ],
       "questions": [
         {
+          "id": "linien:c982871f",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 840 ist Amriswil eingetragen?",
           "min": 61,
@@ -406,6 +420,7 @@
       ],
       "questions": [
         {
+          "id": "services:ca824a28",
           "type": "true_false",
           "prompt": "Amriswil steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -414,6 +429,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:2b23d639",
           "type": "cloze",
           "prompt": "In Amriswil sind ___ Billettentwerter erfasst.",
           "options": [
@@ -461,6 +477,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -475,6 +492,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -490,6 +508,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 7,
@@ -502,6 +521,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

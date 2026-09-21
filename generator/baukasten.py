@@ -29,12 +29,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generator"))
 from distraktoren import vorschlaege  # noqa: E402
-from taktland import hoechstens_fragen, klar_getrennt  # noqa: E402
+from taktland import hoechstens_fragen, klar_getrennt, zu_nah  # noqa: E402
 
 SEKTOR = ("Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten "
           "können, wo ihr Wagen zu stehen kommt.")
-ZUG = ("Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, "
-       "der durchfährt, zählt gleich wie einer, der hält.")
+# ohne das Wort «Zug» für sich allein: Beim Bahnhof Zug hielt der Validator
+# es für den Bahnhofsnamen in einer Erläuterung
+ZUG = ("Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. "
+       "Durchfahrende Züge zählen gleich wie haltende.")
 H55 = "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge."
 
 
@@ -181,7 +183,9 @@ def steckbrief(f, extra_body="", extra_fragen=()):
             fr.append(tf(f"Die Zahl der Ein- und Aussteigenden in {name} erfasst den Verkehr "
                          "ins und aus dem Ausland vollständig.", False,
                          f"Die Quelle vermerkt: «{ausland}»", "steckbrief.bemerkung", diff=3))
-        m = re.fullmatch(r"Ohne ([^.]+)\.", s["bemerkung"].strip())
+        # nur einfache Namen: Aus «Ohne FLP; RhB: Bus.» (Lugano) wurde sonst
+        # «umfasst auch FLP; RhB: Bus» und «Wofür FLP; RhB: Bus steht»
+        m = re.fullmatch(r"Ohne ([\w\s,-]+)\.", s["bemerkung"].strip())
         if m:
             wer = m.group(1)
             fr.append(tf(f"Die Zahl der Ein- und Aussteigenden in {name} umfasst auch {wer}.",
@@ -248,6 +252,107 @@ def stammdaten(f, frage="abkuerzung", distraktoren=()):
             "facts": facts, "questions": fr}
 
 
+TAG = ("Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. "
+       "Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf "
+       "die Wochentage verteilt.")
+
+
+def tagesrhythmus(f):
+    """Stunden und Wochentage. Die alten Profile fragten «Welcher Wochentag ist
+    der stärkste?» auch bei Freitag 15.4 gegen Donnerstag 15.2 Prozent (Basel
+    SBB). Gefragt wird darum nur gegen klar kleinere Werte, und Gleichstand
+    heisst nie «am meisten»."""
+    t = f["tagesrhythmus"]; name = f["name"]
+    st = t.get("stunden") or []
+    wt = t.get("wochentage") or []
+    QS, QW = "anzahl-sbb-bahnhofbenutzer-tagesverlauf", "anzahl-sbb-bahnhofbenutzer-wochentag"
+    satz, facts, fr = [], [], []
+    if st:
+        top = max(x["prozent"] for x in st)
+        spitze = [x for x in st if x["prozent"] == top]
+        ab = aufzaehlung([str(x["stunde"]) for x in spitze])
+        satz.append(f"Die meisten Bahnhofbenutzer zählt die Erhebung in {name} in der Stunde "
+                    f"ab {ab} Uhr: {top} Prozent des ganzen Tages." if len(spitze) == 1 else
+                    f"Die meisten Bahnhofbenutzer zählt die Erhebung in {name} in den Stunden "
+                    f"ab {ab} Uhr, je {top} Prozent des ganzen Tages.")
+        facts += [{"label": "Stunde mit dem grössten Anteil", "value": t["spitzenstunde"],
+                   "unit": "Uhr", "source": QS, "factRef": "tagesrhythmus.spitzenstunde"},
+                  {"label": "Anteil dieser Stunde am Tag", "value": t["spitzenanteil"],
+                   "unit": "%", "source": QS, "factRef": "tagesrhythmus.spitzenanteil"}]
+        andere = sorted([x for x in st if not zu_nah(x["prozent"], top)],
+                        key=lambda x: -x["prozent"])[:3]
+        if len(spitze) == 1 and len(andere) == 3:
+            opts = sorted([spitze[0], *andere], key=lambda x: x["stunde"])
+            fr.append({"type": "single_choice",
+                       "prompt": f"In welcher Stunde zählt die Erhebung in {name} die meisten "
+                                 "Bahnhofbenutzer?",
+                       "options": [f"ab {x['stunde']} Uhr" for x in opts],
+                       "correct": opts.index(spitze[0]), "optionen_aus_fakten": True,
+                       "explanation": "Anteil am ganzen Tag: " + ", ".join(
+                           f"ab {x['stunde']} Uhr {x['prozent']}" for x in [spitze[0], *andere])
+                           + " Prozent.",
+                       "factRef": "tagesrhythmus.spitzenstunde", "difficulty": 1})
+        # eigene Spanne: Bei «10.0» rechnete schieber() in ganzen Schritten, und
+        # der Regler zählte mehr als ein Viertel seiner Spanne als richtig
+        fr.append({"type": "slider",
+                   "prompt": f"Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in {name} "
+                             f"auf die Stunde ab {t['spitzenstunde']} Uhr?",
+                   "min": 0, "max": int(max(20, -(-top * 2 // 5) * 5)), "step": 0.1, "unit": "%",
+                   "correct": top,
+                   "explanation": f"In der Stunde ab {t['spitzenstunde']} Uhr zählt die Erhebung "
+                                  f"{top} Prozent der Bahnhofbenutzer des ganzen Tages.",
+                   "factRef": "tagesrhythmus.spitzenanteil", "difficulty": 3})
+    else:
+        satz.append(f"Wie sich die Besuche über die Stunden des Tages verteilen, ist für {name} "
+                    "nicht erfasst.")
+    if wt:
+        hoch = max(x["prozent"] for x in wt); tief = min(x["prozent"] for x in wt)
+        oben = [x for x in wt if x["prozent"] == hoch]
+        unten = [x for x in wt if x["prozent"] == tief]
+        def auf(tage, wert):
+            if len(tage) == 1:
+                return f"auf den {tage[0]['tag']}, {wert} Prozent"
+            return f"auf {aufzaehlung([x['tag'] for x in tage])}, je {wert} Prozent"
+        satz.append(f"Über die Woche entfällt der grösste Anteil {auf(oben, hoch)}, "
+                    f"der kleinste {auf(unten, tief)}.")
+        if len(oben) == 1:
+            facts += [{"label": "Wochentag mit dem grössten Anteil", "value": t["staerkster_wochentag"],
+                       "source": QW, "factRef": "tagesrhythmus.staerkster_wochentag"},
+                      {"label": "Anteil dieses Wochentags", "value": t["staerkster_wochentag_prozent"],
+                       "unit": "%", "source": QW, "factRef": "tagesrhythmus.staerkster_wochentag_prozent"}]
+        if len(unten) == 1:
+            i = wt.index(unten[0])
+            facts += [{"label": "Wochentag mit dem kleinsten Anteil", "value": unten[0]["tag"],
+                       "source": QW, "factRef": f"tagesrhythmus.wochentage[{i}].tag"},
+                      {"label": "Anteil dieses Wochentags", "value": tief, "unit": "%",
+                       "source": QW, "factRef": f"tagesrhythmus.wochentage[{i}].prozent"}]
+
+        def tagfrage(ziel, wort, absteigend):
+            reihe = sorted(wt, key=lambda x: -x["prozent"] if absteigend else x["prozent"])
+            andere = [x for x in reihe if not zu_nah(x["prozent"], ziel["prozent"])][:3]
+            if len(andere) < 3:
+                return None
+            opts = sorted([ziel, *andere], key=wt.index)
+            return {"type": "single_choice",
+                    "prompt": f"Auf welchen Wochentag entfällt in {name} der {wort} Anteil "
+                              "der Bahnhofbenutzer?",
+                    "options": [x["tag"] for x in opts], "correct": opts.index(ziel),
+                    "optionen_aus_fakten": True,
+                    "explanation": "Anteil an der Woche: " + ", ".join(
+                        f"{x['tag']} {x['prozent']}" for x in [ziel, *andere]) + " Prozent.",
+                    "factRef": f"tagesrhythmus.wochentage[{wt.index(ziel)}].tag", "difficulty": 2}
+        q = tagfrage(oben[0], "grösste", True) if len(oben) == 1 else None
+        if q is None and len(unten) == 1:
+            q = tagfrage(unten[0], "kleinste", False)
+        if q:
+            fr.append(q)
+    else:
+        satz.append(f"Wie sich die Besuche über die Wochentage verteilen, ist für {name} "
+                    "nicht erfasst.")
+    return {"id": "tagesrhythmus", "title": "Tagesrhythmus", "body": " ".join(satz),
+            "erlaeuterung": TAG, "facts": facts, "questions": fr}
+
+
 def perrons(f):
     pr = f["perrons"]; name = f["name"]; uic = f["uic"]
     items = pr["items"]; n = pr["anzahl_mit_daten"]
@@ -265,9 +370,17 @@ def perrons(f):
         it = items[0]
         satz.append(f"Perron {it['nr']} ist ein {it['typ']} von {it['laenge_m']} Metern.")
     else:
-        beschr = ", ".join(f"Perron {it['nr']} misst {it['laenge_m']} Meter"
-                           for _, it in sorted(mit_laenge, key=lambda t: -t[1]["laenge_m"])[:4])
-        satz.append(beschr[0].upper() + beschr[1:] + ".")
+        reihe = [it for _, it in sorted(mit_laenge, key=lambda t: -t[1]["laenge_m"])]
+        if len(reihe) <= 4:
+            beschr = ", ".join(f"Perron {it['nr']} misst {it['laenge_m']} Meter" for it in reihe)
+            satz.append(beschr[0].upper() + beschr[1:] + ".")
+        else:
+            # Basel SBB: «Zu 14 Perrons … Perron 30/31 misst 572 Meter, …» nannte
+            # vier und las sich wie alle. Gleich lange an der Grenze bleiben dabei.
+            grenze = reihe[3]["laenge_m"]
+            lang = [it for it in reihe if it["laenge_m"] >= grenze]
+            satz.append("Am längsten sind " + aufzaehlung(
+                [f"Perron {it['nr']} mit {it['laenge_m']} Metern" for it in lang]) + ".")
         # Ein Perron ohne Länge wird genannt, nicht übergangen (Zwingen)
         ohne_l = [str(it["nr"]) for it in items if not it.get("laenge_m")]
         if ohne_l:
@@ -282,12 +395,20 @@ def perrons(f):
         # ein einziges Perron (Beinwil am See): kein «0 sind …, 1 …»
         satz.append("Es ist ausdrücklich als nicht niveaufrei vermerkt." if nein
                     else "Zum Zugang fehlt die Angabe.")
+    elif nein == n:
+        # Rorschach Hafen: «0 sind als niveaufrei vermerkt, 2 ausdrücklich …»
+        satz.append(("Beide erfassten Perrons sind" if n == 2 else f"Alle {n} erfassten Perrons sind")
+                    + " ausdrücklich als nicht niveaufrei vermerkt.")
     else:
-        t = f"{ja} {'ist' if ja == 1 else 'sind'} als niveaufrei vermerkt"
+        teile = []
+        if ja:
+            teile.append(f"{ja} {'ist' if ja == 1 else 'sind'} als niveaufrei vermerkt")
         if nein:
-            t += f", {nein} ausdrücklich als nicht niveaufrei"
+            teile.append(f"{nein} ausdrücklich als nicht niveaufrei" if teile else
+                         f"{nein} {'ist' if nein == 1 else 'sind'} ausdrücklich als nicht niveaufrei vermerkt")
         if ohne:
-            t += f", zu {ohne} fehlt die Angabe zum Zugang"
+            teile.append(f"zu {ohne} fehlt die Angabe zum Zugang")
+        t = ", ".join(teile)
         satz.append(t[0].upper() + t[1:] + ".")
     facts = [{"label": "Perrons mit offenen Daten", "value": n, "source": "perron",
               "factRef": "perrons.anzahl_mit_daten"},
@@ -743,15 +864,19 @@ def services(f):
 def bahnhofplan(f):
     bp = f["bahnhofplan"]; name = f["name"]
     if bp.get("a4_pdf"):
-        body = (f"Für {name} ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als "
-                "Plakat. Eigentümerin der Pläne ist die SBB."
+        body = (f"Für {name} ist ein Bahnhofplan veröffentlicht, als A4-Blatt"
+                + (" und als Plakat." if bp.get("plakat_pdf") else ".")
+                + " Eigentümerin der Pläne ist die SBB."
                 + (" Ein eigener Shopping-Plan liegt nicht vor." if not bp.get("shopping_pdf") else
                    " Dazu gibt es einen eigenen Shopping-Plan."))
         facts = [{"label": "Plan als A4-Blatt", "value": bp["a4_pdf"],
                   "source": "haltestelle-karte-trafimage", "factRef": "bahnhofplan.a4_pdf"}]
+        # «Pläne gibt es nur für einen kleinen Teil der Bahnhöfe» war eine
+        # Menge in Worten (Regel 8). Die Zahl steht bei Bahnhöfen ohne Plan
+        # als Lücke, gezählt von der Pipeline.
         fr = [tf(f"Für {name} ist ein Bahnhofplan als PDF veröffentlicht.", True,
-                 "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es "
-                 "nur für einen kleinen Teil der Bahnhöfe.", "bahnhofplan.a4_pdf", diff=1)]
+                 "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat." if bp.get("plakat_pdf")
+                 else "Er liegt als A4-Blatt vor.", "bahnhofplan.a4_pdf", diff=1)]
     else:
         body = (f"{name} ist in der Planübersicht aufgeführt, als Eigentümerin ist die SBB "
                 "vermerkt. Ein PDF des Plans ist in den offenen Daten aber nicht hinterlegt.")
@@ -763,7 +888,8 @@ def bahnhofplan(f):
     return {"id": "bahnhofplan", "title": "Bahnhofplan", "body": body, "facts": facts, "questions": fr}
 
 
-BAUER = {"steckbrief": steckbrief, "stammdaten": stammdaten, "perrons": perrons,
+BAUER = {"steckbrief": steckbrief, "stammdaten": stammdaten, "tagesrhythmus": tagesrhythmus,
+         "perrons": perrons,
          "gleise": gleise, "hindernisfreiheit": hindernisfreiheit, "zuege": zuege,
          "linien": linien, "services": services, "bahnhofplan": bahnhofplan}
 
@@ -809,7 +935,7 @@ def profil(uic, **pro_kapitel):
     f = fakten(uic)
     kap = []
     for kid in f["verfuegbare_kapitel"]:
-        if kid in ("ausstattung", "tagesrhythmus"):
+        if kid == "ausstattung":  # kommt in bauen.py dazu
             continue
         if kid in pro_kapitel and pro_kapitel[kid] is None:
             continue

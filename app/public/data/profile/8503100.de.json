@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:528ed60f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zollikon ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:490ee210",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Zollikon ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:18d2956c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zollikon?",
           "min": 340,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:b7445c00",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Zollikon lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:49962f37",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Zollikon?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:112d0852",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Zollikon ist niveaufrei erreichbar.",
           "correct": true,
@@ -221,6 +228,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:f66594bb",
           "type": "cloze",
           "prompt": "An Gleis 2 in Zollikon sind ___ Sektoren erfasst.",
           "options": [
@@ -235,6 +243,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:3f7d4f78",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Zollikon kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -271,6 +280,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:7f34c46d",
           "type": "cloze",
           "prompt": "In Zollikon sind ___ Perronsegmente erfasst.",
           "options": [
@@ -285,6 +295,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -298,7 +309,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Zürich Tiefenbrunnen – Zollikon 238 Züge pro Tag, das sind 86'866 im Jahr. Auf dem Abschnitt Zollikon – Küsnacht Goldbach sind es ebenfalls 238 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Zürich Tiefenbrunnen – Zollikon",
@@ -317,6 +328,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:f736bd48",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zürich Tiefenbrunnen – Zollikon?",
           "options": [
@@ -331,6 +343,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:262e0382",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Zürich Tiefenbrunnen – Zollikon?",
           "min": 71000,
@@ -365,6 +378,7 @@
       ],
       "questions": [
         {
+          "id": "linien:93b5266c",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Zollikon eingetragen?",
           "min": 7.5,
@@ -405,6 +419,7 @@
       ],
       "questions": [
         {
+          "id": "services:94e8e258",
           "type": "true_false",
           "prompt": "Zollikon steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -413,6 +428,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c5e77c9e",
           "type": "cloze",
           "prompt": "In Zollikon sind ___ Billettentwerter erfasst.",
           "options": [
@@ -431,7 +447,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Zollikon 6 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Zollikon 6 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -454,6 +470,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -468,6 +485,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -482,6 +500,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

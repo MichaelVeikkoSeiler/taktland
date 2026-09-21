@@ -50,7 +50,8 @@ wenn eine Aussage allgemein bekannt oder offensichtlich richtig ist.
    weder beim Sortieren noch beim Zuordnen oder beim Hotspot. Ein Schieberegler
    darf höchstens ein Viertel seiner Spanne als richtig werten. Gleichstand ist
    kein Vorsprung: Bei gleich vielen Zügen pro Tag ist kein Abschnitt «am
-   stärksten befahren».
+   stärksten befahren». Genauso wenig darf eine Frage ihre Antwort verraten:
+   «In welchem Bezirk liegt Meilen?» mit der Antwort Meilen prüft nichts.
 
 ### Wie es geprüft wird
 

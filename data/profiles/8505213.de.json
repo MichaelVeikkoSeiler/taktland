@@ -4,83 +4,71 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "anzahl-sbb-bahnhofbenutzer-wochentag",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
+    "haltestelle-karte-trafimage",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
     "perronoberflache",
-    "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "sektortafel",
+    "wifistation",
     "zugzahlen"
   ],
   "chapters": [
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "Bellinzona liegt im Kanton Tessin und wird von der SBB als Infrastrukturbetreiberin geführt. Zug halten SBB und SOB. An einem Werktag steigen hier 21'900 Personen ein und aus, im Tagesmittel über das ganze Jahr sind es 20'700, an einem freien Tag 17'900.",
+      "body": "An einem Werktag steigen in Bellinzona 21'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 20'700, an einem freien Tag 17'900. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
       "facts": [
         {
-          "label": "Ein- und Aussteigende pro Werktag",
+          "label": "Ein- und Aussteigende an einem Werktag",
           "value": 21900,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
-          "label": "Tagesmittel über das Jahr",
+          "label": "Ein- und Aussteigende im Tagesmittel",
           "value": 20700,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
-          "label": "Verkehr an einem freien Tag",
+          "label": "Ein- und Aussteigende an einem freien Tag",
           "value": 17900,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Infrastrukturbetreiberin",
-          "value": "SBB",
-          "unit": "",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:16709b9b",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen in Bellinzona an einem Werktag ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Bellinzona ein und aus?",
           "options": [
-            "8'800",
-            "12'000",
-            "15'000",
-            "21'900"
+            "21'900",
+            "26'000",
+            "31'000",
+            "37'000"
           ],
-          "correct": 3,
-          "explanation": "An einem Werktag sind es 21'900 Personen, Stand 2025.",
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 21'900 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Das Tagesmittel über das ganze Jahr liegt in Bellinzona höher als der Werktagsverkehr.",
-          "correct": false,
-          "explanation": "Das Tagesmittel beträgt 20'700, der Werktagsverkehr 21'900 Personen, Stand 2025.",
-          "factRef": "steckbrief.dtv",
-          "difficulty": 2
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -107,29 +95,29 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "optionen_aus_fakten": true,
-          "explanation": "Die erfassten Werte, aufsteigend: 16'900 (2018), 19'200 (2022), 20'300 (2023), 21'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
+          "explanation": "Die erfassten Werte, aufsteigend: 16'900 (2018), 19'200 (2022), 20'300 (2023), 21'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
         },
         {
-          "type": "single_choice",
-          "prompt": "Welche Bahnunternehmen sind laut den Fakten in Bellinzona als EVU erfasst?",
+          "id": "steckbrief:40bd03f1",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Bellinzona ___ Personen ein und aus.",
           "options": [
-            "SBB, SOB",
-            "SBB, BLS",
-            "SOB, RhB",
-            "SBB allein"
+            "17'900",
+            "21'000",
+            "25'000"
           ],
           "correct": 0,
-          "explanation": "Als EVU sind SBB und SOB erfasst.",
-          "factRef": "steckbrief.evu",
-          "difficulty": 1
+          "explanation": "An einem freien Tag sind es 17'900 Personen, an einem Werktag 21'900. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Bellinzona liegt auf 241 Metern über Meer, in der Gemeinde Bellinzona im Bezirk Bellinzona. Betreiberin ist die Schweizerische Bundesbahnen SBB.",
+      "body": "Bellinzona liegt auf 241 Metern über Meer in der Gemeinde Bellinzona, Bezirk Bellinzona. Als Kanton ist in den Stammdaten Ticino eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BEL.",
       "facts": [
         {
           "label": "Höhe über Meer",
@@ -139,120 +127,121 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Bezirk",
-          "value": "Bellinzona",
-          "unit": "",
+          "label": "Offizielle Abkürzung",
+          "value": "BEL",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
-        },
-        {
-          "label": "Betreiberin",
-          "value": "Schweizerische Bundesbahnen SBB",
-          "unit": "",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.betreiber"
+          "factRef": "stammdaten.abkuerzung"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:18483f25",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt Bellinzona (in Metern)?",
-          "min": 100,
-          "max": 400,
-          "step": 10,
-          "unit": "m",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bellinzona?",
+          "min": 190,
+          "max": 350,
+          "step": 1,
+          "unit": "m ü. M.",
           "correct": 241,
-          "explanation": "Bellinzona liegt auf 241 m über Meer.",
+          "explanation": "Der Bahnhof liegt auf 241 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt Bellinzona laut Stammdaten?",
+          "id": "stammdaten:2f19fb78",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Bellinzona lautet ___.",
           "options": [
-            "Bellinzona",
-            "Locarno",
-            "Lugano",
-            "Mendrisio"
+            "BEL",
+            "CAST",
+            "GIU"
           ],
           "correct": 0,
-          "explanation": "Der Bezirk ist Bellinzona.",
-          "factRef": "stammdaten.bezirk",
-          "difficulty": 1
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist BEL als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "tagesrhythmus",
       "title": "Tagesrhythmus",
-      "body": "Der Tagesverlauf 2025 zeigt die stärkste Nutzung um 16 Uhr mit 10.9 Prozent des Tagesaufkommens. Unter der Woche ist der Freitag mit 16.2 Prozent der stärkste Wochentag.",
+      "body": "Die meisten Bahnhofbenutzer zählt die Erhebung in Bellinzona in der Stunde ab 16 Uhr: 10.9 Prozent des ganzen Tages. Über die Woche entfällt der grösste Anteil auf den Freitag, 16.2 Prozent, der kleinste auf Samstag und Sonntag, je 12.3 Prozent.",
+      "erlaeuterung": "Bahnhofbenutzer sind alle Personen im Bahnhof, auch solche ohne Zugfahrt. Die Anteile zeigen, wie sich ihre Zahl auf die Stunden eines Tages und auf die Wochentage verteilt.",
       "facts": [
         {
-          "label": "Spitzenstunde",
+          "label": "Stunde mit dem grössten Anteil",
           "value": 16,
           "unit": "Uhr",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenstunde"
         },
         {
-          "label": "Anteil in der Spitzenstunde",
+          "label": "Anteil dieser Stunde am Tag",
           "value": 10.9,
           "unit": "%",
           "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
           "factRef": "tagesrhythmus.spitzenanteil"
         },
         {
-          "label": "Stärkster Wochentag",
+          "label": "Wochentag mit dem grössten Anteil",
           "value": "Freitag",
-          "unit": "",
-          "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
           "factRef": "tagesrhythmus.staerkster_wochentag"
+        },
+        {
+          "label": "Anteil dieses Wochentags",
+          "value": 16.2,
+          "unit": "%",
+          "source": "anzahl-sbb-bahnhofbenutzer-wochentag",
+          "factRef": "tagesrhythmus.staerkster_wochentag_prozent"
         }
       ],
       "questions": [
         {
+          "id": "tagesrhythmus:5d99d9d9",
           "type": "single_choice",
-          "prompt": "Zu welcher Stunde ist der Anteil am Tagesverkehr in Bellinzona am höchsten?",
+          "prompt": "In welcher Stunde zählt die Erhebung in Bellinzona die meisten Bahnhofbenutzer?",
           "options": [
-            "7 Uhr",
-            "12 Uhr",
-            "16 Uhr",
-            "20 Uhr"
+            "ab 7 Uhr",
+            "ab 15 Uhr",
+            "ab 16 Uhr",
+            "ab 18 Uhr"
           ],
           "correct": 2,
-          "explanation": "Um 16 Uhr liegt der Anteil bei 10.9 Prozent, dem höchsten Wert des Tages.",
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil am ganzen Tag: ab 16 Uhr 10.9, ab 7 Uhr 10.2, ab 15 Uhr 7.3, ab 18 Uhr 6.7 Prozent.",
           "factRef": "tagesrhythmus.spitzenstunde",
           "difficulty": 1
         },
         {
-          "type": "match",
-          "prompt": "Ordne den Wochentagen ihren Anteil am Wochenverkehr zu.",
-          "pairs": [
-            {
-              "links": "Freitag",
-              "rechts": "16.2 %",
-              "factRef": "tagesrhythmus.wochentage[4].prozent"
-            },
-            {
-              "links": "Samstag",
-              "rechts": "12.3 %",
-              "factRef": "tagesrhythmus.wochentage[5].prozent"
-            },
-            {
-              "links": "Montag",
-              "rechts": "14.4 %",
-              "factRef": "tagesrhythmus.wochentage[0].prozent"
-            }
-          ],
-          "factRef": "tagesrhythmus.wochentage",
-          "explanation": "Freitag hat 16.2 Prozent, Samstag 12.3 Prozent und Montag 14.4 Prozent Anteil am Wochenverkehr."
+          "id": "tagesrhythmus:c0b61950",
+          "type": "slider",
+          "prompt": "Welcher Anteil der Bahnhofbenutzer eines Tages entfällt in Bellinzona auf die Stunde ab 16 Uhr?",
+          "min": 0,
+          "max": 25,
+          "step": 0.1,
+          "unit": "%",
+          "correct": 10.9,
+          "explanation": "In der Stunde ab 16 Uhr zählt die Erhebung 10.9 Prozent der Bahnhofbenutzer des ganzen Tages.",
+          "factRef": "tagesrhythmus.spitzenanteil",
+          "difficulty": 3
         },
         {
-          "type": "true_false",
-          "prompt": "Der Sonntag ist in Bellinzona der Wochentag mit dem geringsten Anteil am Wochenverkehr.",
-          "correct": false,
-          "explanation": "Sonntag und Samstag haben beide 12.3 Prozent, keiner der beiden ist alleiniger tiefster Wert.",
-          "factRef": "tagesrhythmus.wochentage[6].prozent",
+          "id": "tagesrhythmus:0f853524",
+          "type": "single_choice",
+          "prompt": "Auf welchen Wochentag entfällt in Bellinzona der grösste Anteil der Bahnhofbenutzer?",
+          "options": [
+            "Dienstag",
+            "Mittwoch",
+            "Donnerstag",
+            "Freitag"
+          ],
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Anteil an der Woche: Freitag 16.2, Dienstag 15.0, Donnerstag 15.0, Mittwoch 14.7 Prozent.",
+          "factRef": "tagesrhythmus.wochentage[4].tag",
           "difficulty": 2
         }
       ]
@@ -260,12 +249,11 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu drei Perrons liegen offene Daten vor. Das längste misst 551 Meter, das kürzeste 273 Meter. Alle drei erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 3 Perrons in Bellinzona liegen offene Daten vor. Perron 2/3 misst 551 Meter, Perron 1 misst 478 Meter, Perron 4/6 misst 273 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 3,
-          "unit": "",
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
@@ -275,32 +263,13 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 273,
-          "unit": "m",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Das längste erfasste Perron in Bellinzona misst ___ Meter.",
-          "options": [
-            "300",
-            "390",
-            "551"
-          ],
-          "correct": 2,
-          "explanation": "Perron 2/3 misst 551 Meter.",
-          "factRef": "perrons.laengste_m",
-          "difficulty": 1
-        },
-        {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne die erfassten Perrons nach Länge, längstes zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -320,256 +289,308 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/3 misst 551 Meter, Perron 1 misst 478 Meter und Perron 4/6 misst 273 Meter."
+          "explanation": "Perron 2/3 misst 551 Meter, Perron 1 misst 478 Meter, Perron 4/6 misst 273 Meter.",
+          "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "Welcher Perrontyp ist Perron 1 in Bellinzona?",
-          "options": [
-            "Hausperron",
-            "Mittelperron",
-            "Seitenperron",
-            "Inselperron"
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "3129.57 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "3511.67 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 4/6",
+              "rechts": "1073.99 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
+            }
           ],
-          "correct": 0,
-          "explanation": "Perron 1 ist als Hausperron erfasst.",
-          "factRef": "perrons.items[1].typ",
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 hat 3129.57 Quadratmeter, Perron 1 hat 3511.67 Quadratmeter, Perron 4/6 hat 1073.99 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:34a843b0",
+          "type": "true_false",
+          "prompt": "Alle 3 erfassten Perrons in Bellinzona sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 5 Gleisen liegen offene Daten vor: 1, 2, 3, 4 und 6. Erfasst sind Perronhöhen von 35 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 5,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 6,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gleis 3",
+              "value": 301,
+              "factRef": "gleise.items[2].perronkante_m"
+            },
+            {
+              "label": "Gleis 4",
+              "value": 220,
+              "factRef": "gleise.items[3].perronkante_m"
+            },
+            {
+              "label": "Gleis 1",
+              "value": 195,
+              "factRef": "gleise.items[0].perronkante_m"
+            },
+            {
+              "label": "Gleis 6",
+              "value": 176,
+              "factRef": "gleise.items[4].perronkante_m"
+            }
+          ],
+          "factRef": "gleise.items",
+          "explanation": "Gleis 3 misst 301 Meter, Gleis 4 misst 220 Meter, Gleis 1 misst 195 Meter, Gleis 6 misst 176 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:780c7686",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Bellinzona sind ___ Sektoren erfasst.",
+          "options": [
+            "5",
+            "6",
+            "24"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren B, C, D, E, F und G, also 6 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:4d42195d",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 4 in Bellinzona erfasst? (Mehrfachauswahl)",
+          "options": [
+            "30 cm",
+            "35 cm",
+            "42 cm",
+            "55 cm"
+          ],
+          "correct": [
+            1,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 4 sind 35 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[3].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Bellinzona sind 14 Perronsegmente erfasst, davon 12 mit einer Perronhöhe von 55 cm und 2 mit 35 cm. Für kein Segment ist ein Hilfstritt erfasst. Eine Sicherheitslinie ist vorhanden.",
+      "body": "Für Bellinzona sind 14 Perronsegmente erfasst: 12 mit 55 Zentimetern, 2 mit 35 Zentimetern. An allen 5 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Segmente",
+          "label": "Erfasste Perronsegmente",
           "value": 14,
-          "unit": "",
-          "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+          "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "unit": "",
-          "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 5,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
           "label": "Sicherheitslinie",
           "value": "Ja",
-          "unit": "",
           "source": "haltestelle-visuell-taktile-sicherheitslinie",
           "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente mit einer Höhe von 55 cm sind in Bellinzona erfasst?",
+          "id": "hindernisfreiheit:df68200c",
+          "type": "cloze",
+          "prompt": "In Bellinzona sind ___ Perronsegmente erfasst.",
           "options": [
-            "2",
-            "5",
-            "12",
-            "14"
+            "14",
+            "24",
+            "31"
           ],
-          "correct": 2,
-          "explanation": "12 der 14 erfassten Segmente haben eine Perronhöhe von 55 cm.",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
-          "type": "true_false",
-          "prompt": "Für Bellinzona ist mindestens ein Segment mit Hilfstritt erfasst.",
-          "correct": false,
-          "explanation": "Es sind 0 Segmente mit Hilfstritt erfasst.",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 14 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele der erfassten Perrons in Bellinzona sind niveaufrei erreichbar?",
-          "options": [
-            "0",
-            "1",
-            "2",
-            "3"
-          ],
-          "correct": 3,
-          "explanation": "Alle 3 erfassten Perrons sind niveaufrei erreichbar.",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "id": "hindernisfreiheit:627960b7",
+          "type": "true_false",
+          "prompt": "Bei keinem der 14 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 14 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt zwischen Bellinzona und Bellinzona Sud verkehren im Personenverkehr rund 284 Züge pro Tag, beide Richtungen zusammen, bei 103'786 Zügen pro Jahr. Auf demselben Abschnitt sind im Güterverkehr 38'490 Züge pro Jahr erfasst, das entspricht rund 105 pro Tag.",
+      "body": "Am stärksten befahren ist der Abschnitt Bellinzona – Bellinzona Sud: Im Personenverkehr verkehren dort 284 Züge pro Tag, das sind 103'786 im Jahr. Auf dem Abschnitt Bellinzona – Bellinzona S. Paolo sind es 275 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 105 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Personenzüge pro Tag, Bellinzona–Bellinzona Sud",
+          "label": "Züge pro Tag, Personenverkehr Bellinzona – Bellinzona Sud",
           "value": 284,
-          "unit": "Züge",
+          "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Güterzüge pro Jahr, Bellinzona–Bellinzona Sud",
-          "value": 38490,
-          "unit": "Züge",
+          "label": "Züge pro Jahr, Personenverkehr Bellinzona – Bellinzona Sud",
+          "value": 103786,
+          "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:11cac43b",
           "type": "single_choice",
-          "prompt": "Wie viele Personenzüge verkehren rund pro Tag auf dem Abschnitt Bellinzona–Bellinzona Sud, beide Richtungen zusammen?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bellinzona – Bellinzona Sud?",
           "options": [
-            "110",
-            "160",
-            "200",
-            "284"
+            "284",
+            "340",
+            "400",
+            "480"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt sind es 2025 rund 284 Personenzüge pro Tag.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 284 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Auf dem Abschnitt Bellinzona–Bellinzona Sud verkehren mehr Güterzüge als Personenzüge pro Jahr.",
-          "correct": false,
-          "explanation": "Im Personenverkehr sind es 103'786 Züge pro Jahr, im Güterverkehr 38'490.",
-          "factRef": "zuege.abschnitte[2].zuege_pro_jahr",
-          "difficulty": 2
-        },
-        {
-          "type": "match",
-          "prompt": "Ordne den Streckenabschnitten die Zugzahl pro Jahr im Personenverkehr zu.",
-          "pairs": [
-            {
-              "links": "Bellinzona–Bellinzona Sud",
-              "rechts": "103'786",
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "links": "Bellinzona–Bellinzona S. Paolo",
-              "rechts": "100'211",
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Auf dem Abschnitt Bellinzona–Bellinzona Sud sind 103'786 Personenzüge pro Jahr erfasst, auf dem Abschnitt Bellinzona–Bellinzona S. Paolo 100'211."
+          "id": "zuege:05d7d486",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Bellinzona – Bellinzona Sud?",
+          "min": 85000,
+          "max": 150500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 103786,
+          "explanation": "Die Erhebung zählt 103'786 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Bellinzona ist eine Linie erfasst: Linie 600, Immensee–Bellinzona–Chiasso. Bellinzona ist darauf bei Kilometer 150.89101 eingetragen.",
+      "body": "Für Bellinzona ist 1 Linie erfasst: die Linie 600 Immensee - Bellinzona - Chiasso. Der Bahnhof ist darauf bei Kilometer 150.89101 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
           "value": 1,
-          "unit": "",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie 600",
-          "value": "Immensee - Bellinzona - Chiasso",
-          "unit": "",
+          "label": "Kilometrierung auf der Linie 600",
+          "value": 150.89101,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].name"
+          "factRef": "linien.items[0].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Welche Linie ist für Bellinzona erfasst?",
-          "options": [
-            "Immensee - Bellinzona - Chiasso",
-            "Zürich - Bellinzona - Lugano",
-            "Bellinzona - Locarno",
-            "Basel - Bellinzona"
-          ],
-          "correct": 0,
-          "explanation": "Erfasst ist Linie 600, Immensee - Bellinzona - Chiasso.",
-          "factRef": "linien.items[0].name",
-          "difficulty": 1
-        },
-        {
+          "id": "linien:6d9d0698",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 600 ist Bellinzona eingetragen?",
-          "min": 50,
-          "max": 250,
-          "step": 5,
+          "min": 123,
+          "max": 219,
+          "step": 1,
           "unit": "km",
           "correct": 150.89101,
-          "explanation": "Bellinzona steht auf der Linie 600 bei Kilometer 150.89101. Der Wert zählt ab Immensee.",
+          "explanation": "Die Kilometrierung von Bellinzona auf der Linie 600 beträgt 150.89101. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
-          "difficulty": 2
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "In Bellinzona sind 5 Billettautomaten und 11 Billettentwerter erfasst, dazu eine Wartehalle. WLAN ist als Standort erfasst.",
+      "body": "Bellinzona steht in der Liste der WLAN-Standorte. Erfasst sind 5 Billettautomaten (Typen S-POS und ePOS), 11 Billettentwerter und 1 Wartehalle.",
       "facts": [
         {
-          "label": "Erfasste Billettautomaten",
-          "value": 5,
+          "label": "WLAN erfasst",
+          "value": true,
           "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 5,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
-          "label": "Erfasste Billettentwerter",
+          "label": "Billettentwerter erfasst",
           "value": 11,
-          "unit": "",
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Erfasste Wartehallen",
-          "value": 1,
-          "unit": "",
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind in Bellinzona erfasst?",
-          "options": [
-            "1",
-            "3",
-            "5",
-            "11"
-          ],
-          "correct": 2,
-          "explanation": "Erfasst sind 5 Billettautomaten.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
+          "id": "services:682959f3",
           "type": "true_false",
           "prompt": "Bellinzona steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "WLAN ist für Bellinzona erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
+          "id": "services:96eddb15",
           "type": "cloze",
           "prompt": "In Bellinzona sind ___ Billettentwerter erfasst.",
           "options": [
@@ -578,9 +599,10 @@
             "33"
           ],
           "correct": 0,
-          "explanation": "Es sind 11 Billettentwerter erfasst.",
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 11 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
@@ -616,6 +638,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -630,6 +653,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -644,9 +668,10 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 14,
+          "min": 43,
           "max": 130,
           "step": 1,
           "unit": "Schliessfächer",
@@ -656,6 +681,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -671,8 +697,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -692,8 +719,32 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1 hat mit 4'516 Quadratmetern die grösste erfasste Fläche, Perron 4/6 mit 1'364 die kleinste der gezeigten.",
+          "explanation": "Perron 1 hat mit 4'516 Quadratmetern die grösste erfasste Belagsfläche, Perron 4/6 mit 1'364 die kleinste der gezeigten.",
           "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für Bellinzona ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
+      "facts": [
+        {
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-bellinzona-a4.pdf",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhofplan:6ba7e95b",
+          "type": "true_false",
+          "prompt": "Für Bellinzona ist ein Bahnhofplan als PDF veröffentlicht.",
+          "correct": true,
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
         }
       ]
     }

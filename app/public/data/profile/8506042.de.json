@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:19fb7003",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Pfungen ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:06780b4d",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Pfungen ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:736696f4",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Pfungen?",
           "min": 330,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:3a1ba3a5",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Pfungen lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:a98ead40",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Pfungen?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:909e085c",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Pfungen sind niveaufrei erreichbar.",
           "correct": true,
@@ -220,6 +227,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:5a5eb883",
           "type": "cloze",
           "prompt": "An Gleis 1 in Pfungen sind ___ Sektoren erfasst.",
           "options": [
@@ -234,6 +242,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:134e3b4f",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Pfungen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -264,6 +273,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:74186abf",
           "type": "cloze",
           "prompt": "In Pfungen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -278,6 +288,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -291,7 +302,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Pfungen – Winterthur Wülflingen: Im Personenverkehr verkehren dort 81 Züge pro Tag, das sind 29'434 im Jahr. Auf dem Abschnitt Embrach-Rorbas – Pfungen sind es 80 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 5 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Pfungen – Winterthur Wülflingen",
@@ -310,6 +321,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:47e1229a",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Pfungen – Winterthur Wülflingen?",
           "options": [
@@ -324,6 +336,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:50be410a",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Pfungen – Winterthur Wülflingen?",
           "min": 24000,
@@ -358,6 +371,7 @@
       ],
       "questions": [
         {
+          "id": "linien:7a0ff37c",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 769 ist Pfungen eingetragen?",
           "min": 6.0,
@@ -398,6 +412,7 @@
       ],
       "questions": [
         {
+          "id": "services:d5645e03",
           "type": "true_false",
           "prompt": "Pfungen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -406,6 +421,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:8cc5db26",
           "type": "cloze",
           "prompt": "In Pfungen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -447,6 +463,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -462,6 +479,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -476,6 +494,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

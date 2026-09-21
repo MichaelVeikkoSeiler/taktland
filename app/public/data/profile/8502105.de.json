@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:bea80c1e",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Othmarsingen ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:25322848",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Othmarsingen ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:acbfafc0",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Othmarsingen?",
           "min": 340,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:e31cc826",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Othmarsingen lautet ___.",
           "options": [
@@ -177,6 +182,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:61f422e3",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Othmarsingen?",
           "options": [
@@ -191,6 +197,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -210,6 +217,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:c8da28e5",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Othmarsingen sind niveaufrei erreichbar.",
           "correct": true,
@@ -240,6 +248,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:784ca91a",
           "type": "cloze",
           "prompt": "An Gleis 2 in Othmarsingen sind ___ Sektoren erfasst.",
           "options": [
@@ -254,6 +263,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:d2e203c8",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Othmarsingen kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -290,6 +300,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:11870b40",
           "type": "cloze",
           "prompt": "In Othmarsingen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -304,6 +315,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -317,7 +329,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Gexi – Othmarsingen: Im Personenverkehr verkehren dort 438 Züge pro Tag, das sind 159'784 im Jahr. Auf dem Abschnitt Othmarsingen – Mägenwil sind es 410 und auf dem Abschnitt Brunegg – Othmarsingen sind es 79 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 106 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Gexi – Othmarsingen",
@@ -336,6 +348,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:294b677c",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Gexi – Othmarsingen?",
           "options": [
@@ -350,6 +363,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -402,6 +416,7 @@
       ],
       "questions": [
         {
+          "id": "linien:f46ec659",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 650 ist Othmarsingen eingetragen?",
           "min": 22,
@@ -414,6 +429,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -461,6 +477,7 @@
       ],
       "questions": [
         {
+          "id": "services:c18d47bc",
           "type": "true_false",
           "prompt": "Othmarsingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -469,6 +486,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:74a19246",
           "type": "cloze",
           "prompt": "In Othmarsingen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -510,6 +528,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -524,6 +543,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -539,6 +559,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

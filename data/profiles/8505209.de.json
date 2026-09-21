@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:e8bb43b2",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Biasca ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:99eb20f3",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Biasca ___ Personen ein und aus.",
           "options": [
@@ -130,6 +133,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:c9df6d50",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Biasca?",
           "min": 240,
@@ -142,6 +146,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:1f455bcc",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Biasca?",
           "options": [
@@ -179,6 +184,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -204,6 +210,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -223,6 +230,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:fa247652",
           "type": "true_false",
           "prompt": "Zu allen 3 erfassten Perrons in Biasca ist ein niveaufreier Zugang vermerkt.",
           "correct": false,
@@ -253,6 +261,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:603f7f68",
           "type": "cloze",
           "prompt": "An Gleis 2 in Biasca sind ___ Sektoren erfasst.",
           "options": [
@@ -295,6 +304,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:5e07aa20",
           "type": "cloze",
           "prompt": "In Biasca sind ___ Perronsegmente erfasst.",
           "options": [
@@ -309,6 +319,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
           "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -322,7 +333,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Biasca – Giustizia (dira): Im Personenverkehr verkehren dort 124 Züge pro Tag, das sind 45'221 im Jahr. Auf dem Abschnitt Biasca – Pollegio Nord (dira) sind es 42 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 22 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Biasca – Giustizia (dira)",
@@ -341,6 +352,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:b41157de",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Biasca – Giustizia (dira)?",
           "options": [
@@ -355,6 +367,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -402,6 +415,7 @@
       ],
       "questions": [
         {
+          "id": "linien:ec9b05a4",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 600 ist Biasca eingetragen?",
           "min": 108,
@@ -442,6 +456,7 @@
       ],
       "questions": [
         {
+          "id": "services:d1fec426",
           "type": "true_false",
           "prompt": "Biasca steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -450,6 +465,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:4c944fa4",
           "type": "cloze",
           "prompt": "In Biasca sind ___ Billettentwerter erfasst.",
           "options": [
@@ -491,6 +507,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -505,6 +522,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -519,8 +537,9 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -540,7 +559,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'392 Quadratmetern die grösste erfasste Fläche, Perron 4 mit 380 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 2'392 Quadratmetern die grösste erfasste Belagsfläche, Perron 4 mit 380 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

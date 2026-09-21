@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:f8cdc515",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Aadorf ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:b478646d",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Aadorf ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:ba54a4c9",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Aadorf?",
           "min": 430,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:aac85c8e",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Aadorf?",
           "options": [
@@ -178,6 +183,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f2129fad",
           "type": "single_choice",
           "prompt": "Wie lang ist das erfasste Perron in Aadorf?",
           "options": [
@@ -192,6 +198,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:818d4eb4",
           "type": "true_false",
           "prompt": "Das erfasste Perron in Aadorf ist niveaufrei erreichbar.",
           "correct": true,
@@ -222,6 +229,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:7998d3d4",
           "type": "cloze",
           "prompt": "An Gleis 1 in Aadorf sind ___ Sektoren erfasst.",
           "options": [
@@ -236,6 +244,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:0ebf81f4",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Aadorf kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -266,6 +275,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:70384dd6",
           "type": "cloze",
           "prompt": "In Aadorf sind ___ Perronsegmente erfasst.",
           "options": [
@@ -280,6 +290,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -293,7 +304,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Elgg – Aadorf 216 Züge pro Tag, das sind 78'945 im Jahr. Auf dem Abschnitt Aadorf – Guntershausen sind es ebenfalls 216 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 20 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Elgg – Aadorf",
@@ -312,6 +323,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:a7f788a3",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Elgg – Aadorf?",
           "options": [
@@ -326,6 +338,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:5dd18f36",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Elgg – Aadorf?",
           "min": 64500,
@@ -360,6 +373,7 @@
       ],
       "questions": [
         {
+          "id": "linien:6915483a",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 850 ist Aadorf eingetragen?",
           "min": 100,
@@ -400,6 +414,7 @@
       ],
       "questions": [
         {
+          "id": "services:dc6ee531",
           "type": "true_false",
           "prompt": "Aadorf steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -408,6 +423,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:203e3ff4",
           "type": "cloze",
           "prompt": "In Aadorf sind ___ Billettentwerter erfasst.",
           "options": [
@@ -426,7 +442,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Aadorf 1 Sitzbank sowie 1 Infopunkt erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Aadorf 1 Sitzbank sowie 1 Infopunkt erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -449,6 +465,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -464,6 +481,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -479,6 +497,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

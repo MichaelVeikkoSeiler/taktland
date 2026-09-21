@@ -54,6 +54,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:8a70227a",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Suhr ein und aus?",
           "options": [
@@ -68,6 +69,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:15fc0ad6",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Suhr ___ Personen ein und aus.",
           "options": [
@@ -106,6 +109,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:50f27c40",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Suhr umfasst auch AVA.",
           "correct": false,
@@ -136,6 +140,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:a3778cfb",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Suhr?",
           "min": 320,
@@ -148,6 +153,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:1bb59c93",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Suhr lautet ___.",
           "options": [
@@ -184,6 +190,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:29be9786",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Suhr?",
           "options": [
@@ -198,6 +205,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -217,6 +225,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:4a5c0877",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Suhr sind niveaufrei erreichbar.",
           "correct": true,
@@ -241,6 +250,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:2638b8c5",
           "type": "true_false",
           "prompt": "Zum erfassten Gleis in Suhr sind Sektortafeln verzeichnet.",
           "correct": false,
@@ -277,6 +287,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:2b4c27af",
           "type": "cloze",
           "prompt": "In Suhr sind ___ Perronsegmente erfasst.",
           "options": [
@@ -291,6 +302,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:5eee92da",
           "type": "true_false",
           "prompt": "Bei keinem der 5 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -304,7 +316,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Suhr – Suhr Migros: Im Personenverkehr verkehren dort 68 Züge pro Tag, das sind 24'890 im Jahr. Auf dem Abschnitt Oberentfelden – Suhr sind es 67 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 13 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Suhr – Suhr Migros",
@@ -323,6 +335,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:ecf72b02",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Suhr – Suhr Migros?",
           "options": [
@@ -337,6 +350,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -384,6 +398,7 @@
       ],
       "questions": [
         {
+          "id": "linien:9f7591ab",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 645 ist Suhr eingetragen?",
           "min": 55,
@@ -396,6 +411,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -443,6 +459,7 @@
       ],
       "questions": [
         {
+          "id": "services:835280aa",
           "type": "true_false",
           "prompt": "Suhr steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -451,6 +468,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:9016a94d",
           "type": "cloze",
           "prompt": "In Suhr sind ___ Billettentwerter erfasst.",
           "options": [
@@ -486,6 +504,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -500,6 +519,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [

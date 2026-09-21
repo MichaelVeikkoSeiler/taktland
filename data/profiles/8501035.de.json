@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:9080bf7f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Allaman ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:eb9137f4",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Allaman ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:f79e0b5a",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Allaman?",
           "min": 340,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:ea5b0384",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Allaman lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:f6acdcc2",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Allaman?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -209,6 +216,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:514d8b01",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Allaman sind niveaufrei erreichbar.",
           "correct": true,
@@ -233,6 +241,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:b996235d",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Allaman kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -269,6 +278,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:79413d7c",
           "type": "cloze",
           "prompt": "In Allaman sind ___ Perronsegmente erfasst.",
           "options": [
@@ -283,6 +293,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:8fc3c778",
           "type": "true_false",
           "prompt": "Bei keinem der 13 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -296,7 +307,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Allaman – Etoy: Im Personenverkehr verkehren dort 319 Züge pro Tag, das sind 116'503 im Jahr. Auf dem Abschnitt Perroy – Allaman sind es 246 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 34 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Allaman – Etoy",
@@ -315,6 +326,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:e2afc1cd",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Allaman – Etoy?",
           "options": [
@@ -329,6 +341,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -376,6 +389,7 @@
       ],
       "questions": [
         {
+          "id": "linien:ac7ab361",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Allaman eingetragen?",
           "min": 17,
@@ -416,6 +430,7 @@
       ],
       "questions": [
         {
+          "id": "services:f8330399",
           "type": "true_false",
           "prompt": "Allaman steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -424,6 +439,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:d5b66b07",
           "type": "cloze",
           "prompt": "In Allaman sind ___ Billettentwerter erfasst.",
           "options": [
@@ -465,6 +481,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -479,6 +496,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -494,6 +512,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

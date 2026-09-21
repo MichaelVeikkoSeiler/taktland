@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:698e5053",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Zürich Wipkingen ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:c90c7fe8",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Zürich Wipkingen ___ Personen ein und aus.",
           "options": [
@@ -123,6 +126,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:93430a8f",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Zürich Wipkingen?",
           "min": 340,
@@ -135,6 +139,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:0a1c4202",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Zürich Wipkingen lautet ___.",
           "options": [
@@ -171,6 +176,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:14bc037d",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Zürich Wipkingen?",
           "options": [
@@ -185,6 +191,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -204,6 +211,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:7c22879a",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Zürich Wipkingen sind niveaufrei erreichbar.",
           "correct": true,
@@ -234,6 +242,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:b2c8e550",
           "type": "cloze",
           "prompt": "An Gleis 1 in Zürich Wipkingen sind ___ Sektoren erfasst.",
           "options": [
@@ -248,6 +257,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:6dc245ed",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Zürich Wipkingen erfasst? (Mehrfachauswahl)",
           "options": [
@@ -288,6 +298,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:88f1915b",
           "type": "cloze",
           "prompt": "In Zürich Wipkingen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -307,7 +318,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Zürich Birchsteg (Abzw) – Zürich Wipkingen 230 Züge pro Tag, das sind 84'114 im Jahr. Auf dem Abschnitt Zürich Viadukt (Abzw) – Zürich Wipkingen sind es ebenfalls 230 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 16 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Zürich Birchsteg (Abzw) – Zürich Wipkingen",
@@ -326,6 +337,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:ca35ef5c",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Zürich Birchsteg (Abzw) – Zürich Wipkingen?",
           "options": [
@@ -340,6 +352,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:7f9b0d21",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Zürich Birchsteg (Abzw) – Zürich Wipkingen?",
           "min": 68500,
@@ -374,6 +387,7 @@
       ],
       "questions": [
         {
+          "id": "linien:0a3fac27",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 751 ist Zürich Wipkingen eingetragen?",
           "min": 1.5,
@@ -414,6 +428,7 @@
       ],
       "questions": [
         {
+          "id": "services:a7cab6d0",
           "type": "true_false",
           "prompt": "Zürich Wipkingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -422,6 +437,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:6ab1c07e",
           "type": "cloze",
           "prompt": "In Zürich Wipkingen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -463,6 +479,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -477,6 +494,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -491,6 +509,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

@@ -1,5 +1,13 @@
 {
- "8500010": {},
+ "8500010": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BSDH",
+    "BSSJ"
+   ]
+  }
+ },
  "8500020": {
   "stammdaten": {
    "frage": "bezirk",
@@ -18,9 +26,6 @@
     "Sissach",
     "Waldenburg"
    ]
-  },
-  "steckbrief": {
-   "extra_body": "Der höchste erfasste Werktagswert liegt mit 10'500 im Jahr 2024."
   }
  },
  "8500022": {
@@ -33,7 +38,15 @@
    ]
   }
  },
- "8500023": {},
+ "8500023": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "FRE",
+    "LSN"
+   ]
+  }
+ },
  "8500024": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -43,7 +56,15 @@
    ]
   }
  },
- "8500026": {},
+ "8500026": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "IT",
+    "DIE"
+   ]
+  }
+ },
  "8500027": {
   "stammdaten": {
    "frage": "bezirk",
@@ -129,7 +150,15 @@
    ]
   }
  },
- "8500131": {},
+ "8500131": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BX",
+    "GRA"
+   ]
+  }
+ },
  "8500136": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -158,7 +187,15 @@
    ]
   }
  },
- "8500207": {},
+ "8500207": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SW",
+    "SOAD"
+   ]
+  }
+ },
  "8500212": {
   "stammdaten": {
    "frage": "bezirk",
@@ -169,7 +206,15 @@
    ]
   }
  },
- "8500218": {},
+ "8500218": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OLH",
+    "TRI"
+   ]
+  }
+ },
  "8500300": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -207,14 +252,22 @@
    ]
   }
  },
- "8500309": {},
+ "8500309": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "TG",
+    "LUPF"
+   ]
+  }
+ },
  "8500320": {
   "stammdaten": {
-   "frage": "gemeinde",
+   "frage": "bezirk",
    "distraktoren": [
-    "Eiken",
-    "Münchwilen (AG)",
-    "Sisseln"
+    "Laufenburg",
+    "Aarau",
+    "Brugg"
    ]
   }
  },
@@ -257,7 +310,15 @@
    ]
   }
  },
- "8501008": {},
+ "8501008": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GESE",
+    "GEV"
+   ]
+  }
+ },
  "8501011": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -316,7 +377,15 @@
    ]
   }
  },
- "8501030": {},
+ "8501030": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GLA",
+    "COP"
+   ]
+  }
+ },
  "8501031": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -354,7 +423,15 @@
    ]
   }
  },
- "8501037": {},
+ "8501037": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "STJ",
+    "LON"
+   ]
+  }
+ },
  "8501042": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -403,7 +480,15 @@
    ]
   }
  },
- "8501120": {},
+ "8501120": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "PUN",
+    "PRMA"
+   ]
+  }
+ },
  "8501121": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -432,7 +517,16 @@
    ]
   }
  },
- "8501200": {},
+ "8501200": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
+   ]
+  }
+ },
  "8501201": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -518,7 +612,15 @@
    ]
   }
  },
- "8501500": {},
+ "8501500": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CHAR",
+    "VERN"
+   ]
+  }
+ },
  "8501502": {
   "stammdaten": {
    "frage": "bezirk",
@@ -529,7 +631,15 @@
    ]
   }
  },
- "8501506": {},
+ "8501506": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CHF",
+    "SL"
+   ]
+  }
+ },
  "8501509": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -548,8 +658,24 @@
    ]
   }
  },
- "8501605": {},
- "8501609": {},
+ "8501605": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RAR",
+    "BR"
+   ]
+  }
+ },
+ "8501609": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "VI",
+    "RAR"
+   ]
+  }
+ },
  "8502000": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -588,7 +714,15 @@
    ]
   }
  },
- "8502007": {},
+ "8502007": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "STER",
+    "OBK"
+   ]
+  }
+ },
  "8502009": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -665,7 +799,15 @@
    ]
   }
  },
- "8502113": {},
+ "8502113": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SUHR",
+    "OEF"
+   ]
+  }
+ },
  "8502114": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -685,7 +827,15 @@
    ]
   }
  },
- "8502119": {},
+ "8502119": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WI",
+    "HDK"
+   ]
+  }
+ },
  "8502200": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -705,7 +855,16 @@
    ]
   }
  },
- "8502202": {},
+ "8502202": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Oberrüti",
+    "Hünenberg",
+    "Root"
+   ]
+  }
+ },
  "8502203": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -715,8 +874,24 @@
    ]
   }
  },
- "8502204": {},
- "8502206": {},
+ "8502204": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZGSE",
+    "ZGPP"
+   ]
+  }
+ },
+ "8502206": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BAAN",
+    "BAAL"
+   ]
+  }
+ },
  "8502208": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -834,17 +1009,41 @@
  },
  "8502229": {
   "stammdaten": {
-   "frage": "gemeinde",
+   "frage": "bezirk",
    "distraktoren": [
-    "Birmensdorf (ZH)",
-    "Dietikon",
-    "Schlieren"
+    "Zürich",
+    "Affoltern",
+    "Dielsdorf"
    ]
   }
  },
- "8503000": {},
- "8503001": {},
- "8503003": {},
+ "8503000": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZSTH",
+    "ZWIE"
+   ]
+  }
+ },
+ "8503001": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZHDB",
+    "ZWIP"
+   ]
+  }
+ },
+ "8503003": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZEN",
+    "ZUE"
+   ]
+  }
+ },
  "8503004": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -854,7 +1053,15 @@
    ]
   }
  },
- "8503006": {},
+ "8503006": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZSEB",
+    "ZWIP"
+   ]
+  }
+ },
  "8503008": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -873,8 +1080,24 @@
    ]
   }
  },
- "8503010": {},
- "8503011": {},
+ "8503010": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZWIE",
+    "ZSTH"
+   ]
+  }
+ },
+ "8503011": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZEN",
+    "ZUE"
+   ]
+  }
+ },
  "8503015": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -884,8 +1107,25 @@
    ]
   }
  },
- "8503016": {},
- "8503020": {},
+ "8503016": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Opfikon",
+    "Rümlang",
+    "Zürich"
+   ]
+  }
+ },
+ "8503020": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZWIP",
+    "ZWIE"
+   ]
+  }
+ },
  "8503100": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -925,11 +1165,10 @@
  },
  "8503104": {
   "stammdaten": {
-   "frage": "bezirk",
+   "frage": "abkuerzung",
    "distraktoren": [
-    "Hinwil",
-    "Horgen",
-    "Uster"
+    "AU",
+    "HERL"
    ]
   }
  },
@@ -971,7 +1210,16 @@
    ]
   }
  },
- "8503110": {},
+ "8503110": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Toggenburg",
+    "Wil",
+    "Sarganserland"
+   ]
+  }
+ },
  "8503116": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1022,7 +1270,15 @@
    ]
   }
  },
- "8503125": {},
+ "8503125": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NAEN",
+    "AAT"
+   ]
+  }
+ },
  "8503126": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -1040,9 +1296,6 @@
     "SBZ",
     "SCHW"
    ]
-  },
-  "steckbrief": {
-   "extra_body": "Der Abstand zwischen Werktag und freiem Tag ist hier gross."
   }
  },
  "8503128": {
@@ -1109,7 +1362,16 @@
    ]
   }
  },
- "8503202": {},
+ "8503202": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Meilen",
+    "Zürich",
+    "Affoltern"
+   ]
+  }
+ },
  "8503203": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1148,7 +1410,16 @@
    ]
   }
  },
- "8503209": {},
+ "8503209": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Altendorf",
+    "Rapperswil-Jona",
+    "Hombrechtikon"
+   ]
+  }
+ },
  "8503220": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1247,7 +1518,16 @@
    ]
   }
  },
- "8503305": {},
+ "8503305": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bülach",
+    "Uster",
+    "Winterthur"
+   ]
+  }
+ },
  "8503306": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1351,8 +1631,25 @@
    ]
   }
  },
- "8503340": {},
- "8503400": {},
+ "8503340": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Zürich",
+    "Dielsdorf",
+    "Uster"
+   ]
+  }
+ },
+ "8503400": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GF",
+    "EMB"
+   ]
+  }
+ },
  "8503402": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1401,7 +1698,15 @@
    ]
   }
  },
- "8503424": {},
+ "8503424": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "FT",
+    "NH"
+   ]
+  }
+ },
  "8503501": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1431,7 +1736,15 @@
    ]
   }
  },
- "8503504": {},
+ "8503504": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WE",
+    "NHOF"
+   ]
+  }
+ },
  "8503505": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1451,8 +1764,25 @@
    ]
   }
  },
- "8503508": {},
- "8503509": {},
+ "8503508": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GLZB",
+    "URD"
+   ]
+  }
+ },
+ "8503509": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Zürich",
+    "Dielsdorf",
+    "Affoltern"
+   ]
+  }
+ },
  "8503512": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -1465,11 +1795,11 @@
  },
  "8503526": {
   "stammdaten": {
-   "frage": "gemeinde",
+   "frage": "bezirk",
    "distraktoren": [
-    "Buchs (ZH)",
-    "Dällikon",
-    "Otelfingen"
+    "Zürich",
+    "Dietikon",
+    "Bülach"
    ]
   }
  },
@@ -1521,7 +1851,16 @@
    ]
   }
  },
- "8504100": {},
+ "8504100": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sense",
+    "La Broye",
+    "See"
+   ]
+  }
+ },
  "8504101": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1636,7 +1975,15 @@
    ]
   }
  },
- "8504221": {},
+ "8504221": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NESE",
+    "DEU"
+   ]
+  }
+ },
  "8504226": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1646,7 +1993,15 @@
    ]
   }
  },
- "8504300": {},
+ "8504300": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BIM",
+    "BGG"
+   ]
+  }
+ },
  "8504304": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1657,7 +2012,16 @@
    ]
   }
  },
- "8504306": {},
+ "8504306": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504310": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1744,8 +2108,25 @@
    ]
   }
  },
- "8504484": {},
- "8505000": {},
+ "8504484": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura bernois",
+    "Biel/Bienne",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8505000": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LZVH",
+    "EBR"
+   ]
+  }
+ },
  "8505002": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1793,7 +2174,15 @@
    ]
   }
  },
- "8505119": {},
+ "8505119": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AI",
+    "ER"
+   ]
+  }
+ },
  "8505209": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1816,11 +2205,10 @@
  },
  "8505213": {
   "stammdaten": {
-   "frage": "bezirk",
+   "frage": "abkuerzung",
    "distraktoren": [
-    "Locarno",
-    "Lugano",
-    "Mendrisio"
+    "GIU",
+    "CAST"
    ]
   }
  },
@@ -1844,7 +2232,15 @@
    ]
   }
  },
- "8505300": {},
+ "8505300": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LGP",
+    "LAM"
+   ]
+  }
+ },
  "8505301": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1861,9 +2257,6 @@
     "MDR",
     "MS"
    ]
-  },
-  "steckbrief": {
-   "extra_body": "Der höchste erfasste Werktagswert liegt mit 12'400 im Jahr 2024."
   }
  },
  "8505307": {
@@ -1905,8 +2298,25 @@
    ]
   }
  },
- "8505407": {},
- "8506000": {},
+ "8505407": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Muralto",
+    "Minusio",
+    "Tenero-Contra"
+   ]
+  }
+ },
+ "8506000": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WTOE",
+    "WGR"
+   ]
+  }
+ },
  "8506001": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2099,15 +2509,22 @@
  },
  "8506139": {
   "stammdaten": {
-   "frage": "bezirk",
+   "frage": "abkuerzung",
    "distraktoren": [
-    "Oberklettgau",
-    "Reiat",
-    "Schaffhausen"
+    "EZ",
+    "EW"
    ]
   }
  },
- "8506206": {},
+ "8506206": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BRO",
+    "BROA"
+   ]
+  }
+ },
  "8506208": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2137,7 +2554,15 @@
    ]
   }
  },
- "8506302": {},
+ "8506302": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SGF",
+    "SGBR"
+   ]
+  }
+ },
  "8506303": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2156,8 +2581,24 @@
    ]
   }
  },
- "8506306": {},
- "8506308": {},
+ "8506306": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "RSST",
+    "RS"
+   ]
+  }
+ },
+ "8506308": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "STCH",
+    "ARBS"
+   ]
+  }
+ },
  "8506311": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2214,7 +2655,15 @@
    ]
   }
  },
- "8507000": {},
+ "8507000": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BNAS",
+    "BNWD"
+   ]
+  }
+ },
  "8507002": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2261,10 +2710,46 @@
    ]
   }
  },
- "8507083": {},
- "8508001": {},
- "8508005": {},
- "8508006": {},
+ "8507083": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Seeland",
+    "Emmental",
+    "Thun"
+   ]
+  }
+ },
+ "8508001": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Seeland",
+    "Biel/Bienne"
+   ]
+  }
+ },
+ "8508005": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Oberaargau",
+    "Seeland"
+   ]
+  }
+ },
+ "8508006": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Oberaargau",
+    "Bern-Mittelland",
+    "Seeland"
+   ]
+  }
+ },
  "8508008": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2312,7 +2797,15 @@
    ]
   }
  },
- "8508213": {},
+ "8508213": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HAS",
+    "SCHH"
+   ]
+  }
+ },
  "8508215": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2333,8 +2826,24 @@
    ]
   }
  },
- "8509000": {},
- "8509002": {},
+ "8509000": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LQ",
+    "MF"
+   ]
+  }
+ },
+ "8509002": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MF",
+    "BRAG"
+   ]
+  }
+ },
  "8509004": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2354,7 +2863,15 @@
    ]
   }
  },
- "8509411": {},
+ "8509411": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MELS",
+    "BRAG"
+   ]
+  }
+ },
  "8509414": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2383,8 +2900,12 @@
   }
  },
  "8516155": {
-  "steckbrief": {
-   "extra_body": "Die erfasste Reihe beginnt 2018 bei 1'600 und steigt seither stark."
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CABA",
+    "CHHO"
+   ]
   }
  },
  "8516161": {
@@ -2423,9 +2944,6 @@
     "GE",
     "GEX"
    ]
-  },
-  "steckbrief": {
-   "extra_body": "Die erfasste Reihe beginnt erst 2022 mit 7'700 und steigt seither."
   }
  },
  "8516274": {
@@ -2463,9 +2981,6 @@
     "LAB",
     "LBA"
    ]
-  },
-  "steckbrief": {
-   "extra_body": "Die erfasste Reihe beginnt 2022 bei 6'300 und steigt seither."
   }
  },
  "8518452": {

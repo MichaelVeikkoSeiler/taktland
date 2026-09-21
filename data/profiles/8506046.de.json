@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:20c7e0bf",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Henggart ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e8c34cc2",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Henggart ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:3c430589",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Henggart?",
           "min": 350,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:f7fdfdcb",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Henggart lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:2c50de37",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Henggart?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -209,6 +216,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:4bed1cd3",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Henggart sind niveaufrei erreichbar.",
           "correct": true,
@@ -233,6 +241,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:bf67dbde",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Henggart kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -269,6 +278,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:1ef9af17",
           "type": "cloze",
           "prompt": "In Henggart sind ___ Perronsegmente erfasst.",
           "options": [
@@ -283,6 +293,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -296,7 +307,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Henggart – Hettlingen: Im Personenverkehr verkehren dort 110 Züge pro Tag, das sind 40'212 im Jahr. Auf dem Abschnitt Andelfingen – Henggart sind es 109 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 46 Züge im Jahr auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Henggart – Hettlingen",
@@ -315,6 +326,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:16293154",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Henggart – Hettlingen?",
           "options": [
@@ -329,6 +341,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:ee259d57",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Henggart – Hettlingen?",
           "min": 32500,
@@ -363,6 +376,7 @@
       ],
       "questions": [
         {
+          "id": "linien:58399665",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 762 ist Henggart eingetragen?",
           "min": 28,
@@ -403,6 +417,7 @@
       ],
       "questions": [
         {
+          "id": "services:2c0f34dd",
           "type": "true_false",
           "prompt": "Henggart steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -411,6 +426,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:597bd6f4",
           "type": "cloze",
           "prompt": "In Henggart sind ___ Billettentwerter erfasst.",
           "options": [
@@ -452,6 +468,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -466,6 +483,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -480,6 +498,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

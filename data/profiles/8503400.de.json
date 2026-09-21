@@ -4,17 +4,14 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
-    "abfahrtsplakate0",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
     "haltestelle-karte-trafimage",
-    "haltestelle-uhr",
     "haltestelle-visuell-taktile-sicherheitslinie",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -28,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Bülach 2025 rund 18'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 15'600, an einem freien Tag 9'500. Infrastrukturbetreiberin ist die SBB, die Züge von SBB und Thurbo fahren hier.",
+      "body": "An einem Werktag steigen in Bülach 18'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 15'600, an einem freien Tag 9'500. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -50,39 +47,26 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Infrastrukturbetreiberin",
-          "value": "SBB",
-          "unit": "",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.isb"
         }
       ],
       "questions": [
         {
+          "id": "steckbrief:138ae47b",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag 2025 in Bülach ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Bülach ein und aus?",
           "options": [
-            "7'300",
-            "10'000",
-            "13'000",
-            "18'300"
+            "16'000",
+            "18'300",
+            "22'000",
+            "26'000"
           ],
-          "correct": 3,
-          "explanation": "An einem Werktag sind es 18'300 Personen, Stand 2025.",
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 18'300 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Im Tagesmittel über das ganze Jahr steigen in Bülach 15'600 Personen ein und aus.",
-          "correct": true,
-          "explanation": "Der Tagesmittelwert (dtv) beträgt 2025 15'600 Personen.",
-          "factRef": "steckbrief.dtv",
-          "difficulty": 1
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -104,207 +88,268 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 15'000 (2022), 16'300 (2018), 18'300 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
+          "explanation": "Die erfassten Werte, aufsteigend: 15'000 (2022), 16'300 (2018), 18'300 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:518acd36",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Bülach ___ Personen ein und aus.",
+          "options": [
+            "9'500",
+            "11'000",
+            "13'000"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 9'500 Personen, an einem Werktag 18'300. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Bülach liegt auf 427.5 Meter über Meer im Kanton Zürich. Betreiberin der Anlage ist die Schweizerische Bundesbahnen SBB.",
+      "body": "Bülach liegt auf 427.5 Metern über Meer in der Gemeinde Bülach, Bezirk Bülach, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BUE.",
       "facts": [
         {
           "label": "Höhe über Meer",
           "value": 427.5,
-          "unit": "m ü. M.",
+          "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Betreiberin",
-          "value": "Schweizerische Bundesbahnen SBB",
-          "unit": "",
+          "label": "Offizielle Abkürzung",
+          "value": "BUE",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.betreiber"
-        },
-        {
-          "label": "Kanton",
-          "value": "Zürich",
-          "unit": "",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.kanton"
+          "factRef": "stammdaten.abkuerzung"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:e1841da2",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt Bülach laut Fakten?",
-          "min": 400,
-          "max": 450,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bülach?",
+          "min": 350,
+          "max": 620,
           "step": 1,
           "unit": "m ü. M.",
           "correct": 427.5,
-          "explanation": "Die erfasste Höhe beträgt 427.5 Meter über Meer.",
+          "explanation": "Der Bahnhof liegt auf 427.5 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
-          "difficulty": 1
+          "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "Welche Betreiberin ist für Bülach erfasst?",
+          "id": "stammdaten:40f413e4",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Bülach lautet ___.",
           "options": [
-            "Schweizerische Bundesbahnen SBB",
-            "Thurbo AG",
-            "Kanton Zürich",
-            "BLS AG"
+            "BUE",
+            "EMB",
+            "GF"
           ],
           "correct": 0,
-          "explanation": "Als Betreiberin ist die Schweizerische Bundesbahnen SBB erfasst.",
-          "factRef": "stammdaten.betreiber",
-          "difficulty": 1
-        },
-        {
-          "type": "true_false",
-          "prompt": "Bülach liegt im Kanton Zürich.",
-          "correct": true,
-          "explanation": "Der Kanton ist als Zürich erfasst.",
-          "factRef": "stammdaten.kanton",
-          "difficulty": 1
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist BUE als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Für Bülach liegen Daten zu 4 Perrons vor. Das längste misst 430 Meter, das kürzeste 220 Meter. Alle 4 erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 4 Perrons in Bülach liegen offene Daten vor. Perron 3 misst 430 Meter, Perron 1/2 misst 409 Meter, Perron 4 misst 227 Meter, Perron 5/6 misst 220 Meter. Alle erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
-          "label": "Perrons mit Daten",
+          "label": "Perrons mit offenen Daten",
           "value": 4,
-          "unit": "",
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
           "value": 430,
-          "unit": "Meter",
+          "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Kürzestes erfasstes Perron",
-          "value": 220,
-          "unit": "Meter",
-          "source": "perron",
-          "factRef": "perrons.kuerzeste_m"
         }
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "Das längste erfasste Perron in Bülach misst ___ Meter.",
+          "id": "perrons:4c5128da",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Bülach?",
           "options": [
-            "170",
-            "240",
-            "430"
+            "240 m",
+            "300 m",
+            "370 m",
+            "430 m"
           ],
-          "correct": 2,
-          "explanation": "Perron 3 misst 430 Meter, das längste erfasste Perron.",
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 430 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "type": "match",
-          "prompt": "Welche Länge in Metern gehört zu welchem Perron?",
-          "pairs": [
+          "id": "perrons:ab081903",
+          "type": "true_false",
+          "prompt": "Alle 4 erfassten Perrons in Bülach sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für alle 4 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 6 Gleisen liegen offene Daten vor: 1, 2, 3, 4, 5 und 6. Erfasst sind Perronhöhen von 35, 42 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 6,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante",
+          "value": 346,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 4,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:61ecaaf5",
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "2",
+          "factRef": "gleise.items[1].nr",
+          "explanation": "Gleis 2 hat mit 346 Metern die längste erfasste Perronkante, die nächste misst 280 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:de6a2cdd",
+          "type": "sort",
+          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
+          "richtung": "absteigend",
+          "items": [
             {
-              "links": "Perron 3",
-              "rechts": "430",
-              "factRef": "perrons.items[0].laenge_m"
+              "label": "Gleis 2",
+              "value": 346,
+              "factRef": "gleise.items[1].perronkante_m"
             },
             {
-              "links": "Perron 1/2",
-              "rechts": "409",
-              "factRef": "perrons.items[1].laenge_m"
+              "label": "Gleis 1",
+              "value": 280,
+              "factRef": "gleise.items[0].perronkante_m"
             },
             {
-              "links": "Perron 4",
-              "rechts": "227",
-              "factRef": "perrons.items[2].laenge_m"
-            },
-            {
-              "links": "Perron 5/6",
-              "rechts": "220",
-              "factRef": "perrons.items[3].laenge_m"
+              "label": "Gleis 5",
+              "value": 224,
+              "factRef": "gleise.items[4].perronkante_m"
             }
           ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 3 misst 430 m, Perron 1/2 409 m, Perron 4 227 m und Perron 5/6 220 m."
+          "factRef": "gleise.items",
+          "explanation": "Gleis 2 misst 346 Meter, Gleis 1 misst 280 Meter, Gleis 5 misst 224 Meter. Gleise mit fast gleicher Kante bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "gleise:d52d7c12",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Bülach sind ___ Sektoren erfasst.",
+          "options": [
+            "4",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:d415abfc",
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Bülach erfasst? (Mehrfachauswahl)",
+          "options": [
+            "30 cm",
+            "35 cm",
+            "42 cm",
+            "55 cm"
+          ],
+          "correct": [
+            1,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 1 sind 35 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Zu Bülach sind 26 Perronsegmente erfasst. Für 0 Segmente ist ein Hilfstritt vermerkt. 6 Gleise weisen eine Perronhöhe von 55 Zentimetern auf.",
+      "body": "Für Bülach sind 26 Perronsegmente erfasst: 17 mit 55 Zentimetern, 8 mit 35 Zentimetern, 1 mit 42 Zentimetern. An allen 6 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
           "value": 26,
-          "unit": "",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
-          "label": "Segmente mit Hilfstritt",
-          "value": 0,
-          "unit": "",
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt"
-        },
-        {
-          "label": "Gleise mit 55 cm Perronhöhe",
+          "label": "Gleise mit Perronhöhe 55 cm",
           "value": 6,
-          "unit": "",
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Perronsegmente sind für Bülach erfasst?",
+          "id": "hindernisfreiheit:02fa65f7",
+          "type": "cloze",
+          "prompt": "In Bülach sind ___ Perronsegmente erfasst.",
           "options": [
-            "10",
-            "14",
-            "18",
-            "26"
+            "22",
+            "26",
+            "31"
           ],
-          "correct": 3,
-          "explanation": "Es sind 26 Perronsegmente erfasst.",
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 26 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:c646bf8f",
           "type": "true_false",
-          "prompt": "Für 0 Segmente ist in Bülach ein Hilfstritt erfasst.",
+          "prompt": "Bei keinem der 26 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Der Wert segmente_mit_hilfstritt beträgt 0.",
+          "explanation": "Die Erhebung weist bei 0 der 26 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 1
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele Segmente mit einer Perronhöhe von 55 cm sind erfasst?",
-          "options": [
-            "7",
-            "9",
-            "14",
-            "17"
-          ],
-          "correct": 3,
-          "explanation": "17 Segmente sind mit einer Perronhöhe von 55 cm erfasst.",
-          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55",
           "difficulty": 2
         }
       ]
@@ -312,17 +357,18 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Auf dem Abschnitt Glattfelden–Bülach verkehren 2025 im Personenverkehr rund 184 Züge pro Tag, beide Richtungen zusammen. Auf dem Abschnitt Bülach–Embrach-Rorbas sind es im Güterverkehr rund 5 Züge pro Tag.",
+      "body": "Am stärksten befahren ist der Abschnitt Glattfelden – Bülach: Im Personenverkehr verkehren dort 184 Züge pro Tag, das sind 67'234 im Jahr. Auf dem Abschnitt Bülach – Niederglatt ZH sind es 158 und auf dem Abschnitt Bülach – Embrach-Rorbas sind es 80 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 34 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Glattfelden–Bülach, Personenverkehr",
+          "label": "Züge pro Tag, Personenverkehr Glattfelden – Bülach",
           "value": 184,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Glattfelden–Bülach, Personenverkehr",
+          "label": "Züge pro Jahr, Personenverkehr Glattfelden – Bülach",
           "value": 67234,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
@@ -331,207 +377,162 @@
       ],
       "questions": [
         {
+          "id": "zuege:eff08aab",
           "type": "single_choice",
-          "prompt": "Wie viele Züge verkehren pro Tag auf dem Abschnitt Glattfelden–Bülach im Personenverkehr?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Glattfelden – Bülach?",
           "options": [
-            "74",
-            "100",
             "130",
-            "184"
+            "160",
+            "184",
+            "260"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt verkehren 2025 rund 184 Züge pro Tag im Personenverkehr.",
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 184 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
-          "prompt": "Ordne die Personenverkehrsabschnitte nach Zügen pro Tag, meiste zuerst.",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Glattfelden–Bülach",
-              "value": 184,
-              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+              "label": "Glattfelden – Bülach, Personenverkehr",
+              "value": 67234,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Bülach–Niederglatt ZH",
-              "value": 158,
-              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+              "label": "Bülach – Niederglatt ZH, Personenverkehr",
+              "value": 57488,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
-              "label": "Bülach–Embrach-Rorbas",
-              "value": 80,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+              "label": "Bülach – Embrach-Rorbas, Personenverkehr",
+              "value": 29199,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Glattfelden – Bülach, Güterverkehr",
+              "value": 12377,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr verkehren auf Glattfelden–Bülach 184, auf Bülach–Niederglatt ZH 158 und auf Bülach–Embrach-Rorbas 80 Züge pro Tag."
-        },
-        {
-          "type": "true_false",
-          "prompt": "Auf dem Abschnitt Bülach–Embrach-Rorbas verkehren im Güterverkehr täglich rund 5 Züge.",
-          "correct": true,
-          "explanation": "Der Abschnitt Bülach–Embrach-Rorbas weist im Güterverkehr 5 Züge pro Tag auf.",
-          "factRef": "zuege.abschnitte[5].zuege_pro_tag",
-          "difficulty": 2
+          "explanation": "Glattfelden – Bülach (Personenverkehr) 67'234, Bülach – Niederglatt ZH (Personenverkehr) 57'488, Bülach – Embrach-Rorbas (Personenverkehr) 29'199, Glattfelden – Bülach (Güterverkehr) 12'377 Züge im Jahr.",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Bülach sind 3 Linien mit Betriebspunkt erfasst: die Linien 770, 769 und 760.",
+      "body": "Für Bülach sind 3 Linien erfasst: die Linie 770 Bulach - Eglisau - Neuhausen, die Linie 769 Winterthur West - Bulach und die Linie 760 Zurich Hardbrucke  - Bulach.",
       "facts": [
         {
           "label": "Erfasste Linien",
           "value": 3,
-          "unit": "",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Linie 770",
-          "value": "Bulach - Eglisau - Neuhausen",
-          "unit": "",
+          "label": "Kilometrierung auf der Linie 760",
+          "value": 20.27248,
+          "unit": "km",
           "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[0].name"
-        },
-        {
-          "label": "Linie 769",
-          "value": "Winterthur West - Bulach",
-          "unit": "",
-          "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[1].name"
-        },
-        {
-          "label": "Linie 760",
-          "value": "Zurich Hardbrucke  - Bulach",
-          "unit": "",
-          "source": "linie-mit-betriebspunkten",
-          "factRef": "linien.items[2].name"
+          "factRef": "linien.items[2].km_am_bahnhof"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Linien mit Betriebspunkt Bülach sind erfasst?",
-          "options": [
-            "1",
-            "2",
-            "3",
-            "5"
-          ],
-          "correct": 2,
-          "explanation": "Es sind 3 Linien erfasst.",
-          "factRef": "linien.anzahl",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "id": "linien:f1750ece",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 760 ist Bülach eingetragen?",
+          "min": 16,
+          "max": 30,
+          "step": 1,
+          "unit": "km",
+          "correct": 20.27248,
+          "explanation": "Die Kilometrierung von Bülach auf der Linie 760 beträgt 20.27248. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[2].km_am_bahnhof",
+          "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
-          "prompt": "Welche Liniennummer gehört zu welcher Streckenbezeichnung?",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
             {
-              "links": "770",
+              "links": "Linie 770",
               "rechts": "Bulach - Eglisau - Neuhausen",
               "factRef": "linien.items[0].name"
             },
             {
-              "links": "769",
+              "links": "Linie 769",
               "rechts": "Winterthur West - Bulach",
               "factRef": "linien.items[1].name"
             },
             {
-              "links": "760",
+              "links": "Linie 760",
               "rechts": "Zurich Hardbrucke  - Bulach",
               "factRef": "linien.items[2].name"
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Linie 770 führt Bulach - Eglisau - Neuhausen, Linie 769 Winterthur West - Bulach und Linie 760 Zurich Hardbrucke - Bulach."
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Welche Liniennummer ist für die Strecke Zurich Hardbrucke - Bulach erfasst?",
-          "options": [
-            "770",
-            "769",
-            "760"
-          ],
-          "correct": 2,
-          "explanation": "Die Liniennummer 760 ist für die Strecke Zurich Hardbrucke - Bulach erfasst.",
-          "factRef": "linien.items[2].nummer",
-          "difficulty": 2,
-          "optionen_aus_fakten": true
+          "explanation": "Die Linie 770 heisst Bulach - Eglisau - Neuhausen, die Linie 769 heisst Winterthur West - Bulach, die Linie 760 heisst Zurich Hardbrucke  - Bulach.",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "In Bülach sind 3 Billettautomaten und 8 Billettentwerter erfasst. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "body": "Bülach steht in der Liste der WLAN-Standorte. Erfasst sind 3 Billettautomaten (Typen S-POS und ePOS), 8 Billettentwerter und 4 Wartehallen.",
       "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
         {
           "label": "Billettautomaten erfasst",
           "value": 3,
-          "unit": "",
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
           "label": "Billettentwerter erfasst",
           "value": 8,
-          "unit": "",
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "Wartehallen erfasst",
-          "value": 4,
-          "unit": "",
-          "source": "haltestelle-wartehallen",
-          "factRef": "services.wartehallen_erfasst"
         }
       ],
       "questions": [
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Billettautomaten sind in Bülach erfasst?",
-          "options": [
-            "1",
-            "2",
-            "3",
-            "5"
-          ],
-          "correct": 2,
-          "explanation": "Es sind 3 Billettautomaten erfasst.",
-          "factRef": "services.billettautomaten_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
+          "id": "services:9e3c8992",
           "type": "true_false",
           "prompt": "Bülach steht in der Liste der WLAN-Standorte.",
           "correct": true,
-          "explanation": "Der Wert wlan_erfasst ist für Bülach mit true erfasst.",
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Wartehallen sind in Bülach erfasst?",
+          "id": "services:8139dabb",
+          "type": "cloze",
+          "prompt": "In Bülach sind ___ Billettentwerter erfasst.",
           "options": [
-            "4",
             "7",
-            "9",
-            "12"
+            "8",
+            "10"
           ],
-          "correct": 0,
-          "explanation": "Es sind 4 Wartehallen erfasst.",
-          "factRef": "services.wartehallen_erfasst",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 8 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
         }
       ]
     },
@@ -567,6 +568,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -581,12 +583,13 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "13",
             "18",
             "22",
+            "27",
             "32"
           ],
           "correct": 3,
@@ -595,9 +598,10 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 2,
+          "min": 7,
           "max": 22,
           "step": 1,
           "unit": "Schliessfächer",
@@ -607,8 +611,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -628,7 +633,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1/2 hat mit 2'682 Quadratmetern die grösste erfasste Fläche, Perron 5/6 mit 1'359 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
+          "explanation": "Perron 1/2 hat mit 2'682 Quadratmetern die grösste erfasste Belagsfläche, Perron 5/6 mit 1'359 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -636,37 +641,23 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Bülach ist ein Bahnhofplan als A4-PDF veröffentlicht. Eigentümerin der Anlage ist gemäss diesen Daten die SBB.",
+      "body": "Für Bülach ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
-          "label": "Eigentümerin",
-          "value": "SBB",
-          "unit": "",
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-buelach-a4.pdf",
           "source": "haltestelle-karte-trafimage",
-          "factRef": "bahnhofplan.eigentuemer"
+          "factRef": "bahnhofplan.a4_pdf"
         }
       ],
       "questions": [
         {
+          "id": "bahnhofplan:a52fd78f",
           "type": "true_false",
-          "prompt": "Für Bülach ist ein A4-Bahnhofplan als PDF veröffentlicht.",
+          "prompt": "Für Bülach ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
-          "explanation": "Es liegt ein A4-PDF-Bahnhofplan vor.",
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat.",
           "factRef": "bahnhofplan.a4_pdf",
-          "difficulty": 1
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Wer ist laut Bahnhofplan-Daten Eigentümerin der Anlage in Bülach?",
-          "options": [
-            "SBB",
-            "Kanton Zürich",
-            "Gemeinde Bülach",
-            "Thurbo"
-          ],
-          "correct": 0,
-          "explanation": "Als Eigentümerin ist die SBB erfasst.",
-          "factRef": "bahnhofplan.eigentuemer",
           "difficulty": 1
         }
       ]
@@ -697,6 +688,102 @@
       "thema": "Fahrplan",
       "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
       "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 280,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "sektoren_anzahl": 4
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        35,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 346,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "sektoren_anzahl": 4
+    },
+    {
+      "nr": "3",
+      "perronhoehen_cm": [
+        35,
+        42,
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 269,
+      "sektoren": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "sektoren_anzahl": 4
+    },
+    {
+      "nr": "4",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 220,
+      "sektoren": [
+        "B",
+        "C"
+      ],
+      "sektoren_anzahl": 2
+    },
+    {
+      "nr": "5",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 224,
+      "sektoren": [
+        "B",
+        "C"
+      ],
+      "sektoren_anzahl": 2
+    },
+    {
+      "nr": "6",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Mittelperron",
+      "perronkante_m": 224,
+      "sektoren": [
+        "B",
+        "C"
+      ],
+      "sektoren_anzahl": 2
     }
   ]
 }

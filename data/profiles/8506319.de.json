@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:399dbc7a",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Altstätten SG ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:0cd7f81e",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Altstätten SG ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:d8b91dc8",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Altstätten SG?",
           "min": 350,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:d0f8fc23",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Altstätten SG?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:64b70cad",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Altstätten SG?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:37758236",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Altstätten SG sind niveaufrei erreichbar.",
           "correct": true,
@@ -228,6 +235,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:48308a27",
           "type": "cloze",
           "prompt": "An Gleis 1 in Altstätten SG sind ___ Sektoren erfasst.",
           "options": [
@@ -242,6 +250,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:43102579",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Altstätten SG kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -278,6 +287,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:3898b64b",
           "type": "cloze",
           "prompt": "In Altstätten SG sind ___ Perronsegmente erfasst.",
           "options": [
@@ -292,6 +302,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
           "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -305,7 +316,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Rebstein-Marbach – Altstätten SG: Im Personenverkehr verkehren dort 152 Züge pro Tag, das sind 55'529 im Jahr. Auf dem Abschnitt Altstätten SG – Oberriet SG Nord (Abzw) sind es 111 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 7 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Rebstein-Marbach – Altstätten SG",
@@ -324,6 +335,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:87d0ebff",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rebstein-Marbach – Altstätten SG?",
           "options": [
@@ -338,6 +350,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -385,6 +398,7 @@
       ],
       "questions": [
         {
+          "id": "linien:f954f803",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 880 ist Altstätten SG eingetragen?",
           "min": 33,
@@ -425,6 +439,7 @@
       ],
       "questions": [
         {
+          "id": "services:c48c343d",
           "type": "true_false",
           "prompt": "Altstätten SG steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -433,6 +448,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:efd53c7e",
           "type": "cloze",
           "prompt": "In Altstätten SG sind ___ Billettentwerter erfasst.",
           "options": [
@@ -468,6 +484,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -482,6 +499,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

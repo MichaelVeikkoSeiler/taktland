@@ -23,7 +23,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Wohlen AG 7'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 6'100, an einem freien Tag 3'700. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
+      "body": "An einem Werktag steigen in Wohlen AG 7'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 6'100, an einem freien Tag 3'700. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne AVA.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -55,6 +55,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:51a2f839",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Wohlen AG ein und aus?",
           "options": [
@@ -69,6 +70,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:b85c74a9",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Wohlen AG ___ Personen ein und aus.",
           "options": [
@@ -82,6 +84,7 @@
           "difficulty": 2
         },
         {
+          "id": "steckbrief:a9f35c95",
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Wohlen AG umfasst auch AVA.",
           "correct": false,
@@ -118,6 +121,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:d21a669c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Wohlen AG?",
           "min": 340,
@@ -130,6 +134,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:01635f46",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Wohlen AG?",
           "options": [
@@ -167,6 +172,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:b8692c98",
           "type": "sort",
           "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
@@ -192,6 +198,7 @@
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -211,6 +218,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:59d25366",
           "type": "true_false",
           "prompt": "Alle 3 erfassten Perrons in Wohlen AG sind niveaufrei erreichbar.",
           "correct": true,
@@ -241,6 +249,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:bdfa0e3d",
           "type": "cloze",
           "prompt": "An Gleis 2 in Wohlen AG sind ___ Sektoren erfasst.",
           "options": [
@@ -255,6 +264,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:2e63bddb",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Wohlen AG kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -285,6 +295,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:eaf21e03",
           "type": "cloze",
           "prompt": "In Wohlen AG sind ___ Perronsegmente erfasst.",
           "options": [
@@ -299,6 +310,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
           "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -312,25 +324,26 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Dottikon Umspannanlage – Wohlen AG: Im Personenverkehr verkehren dort 140 Züge pro Tag, das sind 51'027 im Jahr. Auf dem Abschnitt Wohlen AG – Waltenschwil sind es 137 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 108 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Dottikon Umspannanlage – Wohlen AG",
           "value": 140,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
           "label": "Züge pro Jahr, Personenverkehr Dottikon Umspannanlage – Wohlen AG",
           "value": 51027,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:00144146",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Dottikon Umspannanlage – Wohlen AG?",
           "options": [
@@ -341,10 +354,11 @@
           ],
           "correct": 2,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 140 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -392,6 +406,7 @@
       ],
       "questions": [
         {
+          "id": "linien:7c0eb46f",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 653 ist Wohlen AG eingetragen?",
           "min": 58,
@@ -432,6 +447,7 @@
       ],
       "questions": [
         {
+          "id": "services:a5ac1963",
           "type": "true_false",
           "prompt": "Wohlen AG steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -440,6 +456,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:938f86ce",
           "type": "cloze",
           "prompt": "In Wohlen AG sind ___ Billettentwerter erfasst.",
           "options": [
@@ -487,6 +504,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -501,6 +519,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -515,6 +534,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 5,
@@ -527,6 +547,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -542,8 +563,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -563,7 +585,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 1'406 Quadratmetern die grösste erfasste Fläche, Perron 6 mit 141 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 1'406 Quadratmetern die grösste erfasste Belagsfläche, Perron 6 mit 141 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:ad4c8e74",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Goldach ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:7ad68c28",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Goldach ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:990da81c",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Goldach?",
           "min": 360,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:2b9ad704",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Goldach lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:20ad2220",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Goldach?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:10231334",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Goldach sind niveaufrei erreichbar.",
           "correct": true,
@@ -216,6 +223,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:68071ef4",
           "type": "cloze",
           "prompt": "An Gleis 1 in Goldach sind ___ Sektoren erfasst.",
           "options": [
@@ -230,6 +238,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:1f0ca22a",
           "type": "true_false",
           "prompt": "An den erfassten Gleisen in Goldach kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
@@ -266,6 +275,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:e32f05bc",
           "type": "cloze",
           "prompt": "In Goldach sind ___ Perronsegmente erfasst.",
           "options": [
@@ -280,6 +290,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:f366795b",
           "type": "true_false",
           "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -293,7 +304,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Goldach – Rorschach Stadt: Im Personenverkehr verkehren dort 231 Züge pro Tag, das sind 84'238 im Jahr. Auf dem Abschnitt Horchental – Goldach sind es 230 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 7 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Goldach – Rorschach Stadt",
@@ -312,6 +323,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:6c40d157",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Goldach – Rorschach Stadt?",
           "options": [
@@ -326,6 +338,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:a296c694",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Goldach – Rorschach Stadt?",
           "min": 69000,
@@ -360,6 +373,7 @@
       ],
       "questions": [
         {
+          "id": "linien:02b8953e",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 880 ist Goldach eingetragen?",
           "min": 55,
@@ -400,6 +414,7 @@
       ],
       "questions": [
         {
+          "id": "services:7f262025",
           "type": "true_false",
           "prompt": "Goldach steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -408,6 +423,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:79ee4e2e",
           "type": "cloze",
           "prompt": "In Goldach sind ___ Billettentwerter erfasst.",
           "options": [
@@ -449,6 +465,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -464,6 +481,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -478,6 +496,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

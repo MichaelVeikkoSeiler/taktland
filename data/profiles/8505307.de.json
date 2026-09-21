@@ -10,7 +10,6 @@
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
-    "haltestelle-wartehallen",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -24,7 +23,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Chiasso 10'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 9'100, an einem freien Tag 6'700. Infrastruktur und Züge sind der SBB zugeordnet. Die Quelle vermerkt ausdrücklich, dass der Verkehr ins und aus dem Ausland nur zum Teil erfasst ist und Trenord fehlt.",
+      "body": "An einem Werktag steigen in Chiasso 10'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 9'100, an einem freien Tag 6'700. Infrastruktur und Züge sind der SBB zugeordnet. Die Quelle vermerkt zu diesen Zahlen: «Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst. Ohne Trenord.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -56,28 +55,22 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:0931a124",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Chiasso ein und aus?",
           "options": [
-            "5'600",
-            "7'100",
             "10'200",
-            "14'000"
+            "12'000",
+            "14'000",
+            "17'000"
           ],
-          "correct": 2,
-          "explanation": "An einem Werktag sind es 10'200 Ein- und Aussteigende, Stand 2025. Der Grenzverkehr ist darin nur zum Teil enthalten.",
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 10'200 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "Die Zahl der Ein- und Aussteigenden in Chiasso erfasst den Verkehr ins Ausland vollständig.",
-          "correct": false,
-          "explanation": "Die Quelle vermerkt, dass Einsteigende Richtung Ausland und Aussteigende aus dem Ausland nur zum Teil erfasst sind. Zudem fehlt Trenord.",
-          "factRef": "steckbrief.bemerkung",
-          "difficulty": 3
-        },
-        {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -106,6 +99,20 @@
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 6'300 (2018), 7'500 (2022), 9'600 (2023), 10'200 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
+        },
+        {
+          "id": "steckbrief:c2fff51f",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Chiasso ___ Personen ein und aus.",
+          "options": [
+            "6'700",
+            "8'000",
+            "9'400"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 6'700 Personen, an einem Werktag 10'200. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
         }
       ]
     },
@@ -122,24 +129,25 @@
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
-          "label": "Bezirk",
-          "value": "Mendrisio",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
-        },
-        {
           "label": "Offizielle Abkürzung",
           "value": "CHI",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Mendrisio",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
+          "id": "stammdaten:23c39a29",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Chiasso?",
-          "min": 200,
-          "max": 360,
+          "min": 190,
+          "max": 350,
           "step": 1,
           "unit": "m ü. M.",
           "correct": 237,
@@ -148,6 +156,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:b4b117bf",
           "type": "single_choice",
           "prompt": "In welchem Bezirk liegt der Bahnhof Chiasso?",
           "options": [
@@ -158,7 +167,7 @@
           ],
           "correct": 3,
           "optionen_aus_fakten": true,
-          "explanation": "Chiasso liegt im Bezirk Mendrisio.",
+          "explanation": "Als Bezirk ist Mendrisio eingetragen.",
           "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
@@ -167,7 +176,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 12 Perrons in Chiasso liegen offene Daten vor. Das längste ist das Hausperron 1/11 mit 800 Metern, gefolgt vom Mittelperron 4/5/6 mit 507 Metern. Die übrigen 10 sind Dienstperrons, das kürzeste misst 14 Meter. 4 der 12 Perrons sind als niveaufrei erreichbar vermerkt, 8 ausdrücklich als nicht niveaufrei.",
+      "body": "Zu 12 Perrons in Chiasso liegen offene Daten vor. Am längsten sind Perron 1/11 mit 800 Metern, Perron 4/5/6 mit 507 Metern, Perron 38 mit 426 Metern und Perron 37 mit 222 Metern. 4 sind als niveaufrei vermerkt, 8 ausdrücklich als nicht niveaufrei.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -181,36 +190,13 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
-        },
-        {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 4,
-          "source": "perron",
-          "factRef": "perrons.niveaufrei_erreichbar"
-        },
-        {
-          "label": "Ausdrücklich nicht niveaufrei",
-          "value": 8,
-          "source": "perron",
-          "factRef": "hindernisfreiheit.perrons_nicht_niveaufrei"
         }
       ],
       "questions": [
         {
-          "type": "slider",
-          "prompt": "Wie lang ist das längste erfasste Perron in Chiasso?",
-          "min": 350,
-          "max": 1200,
-          "step": 10,
-          "unit": "Meter",
-          "correct": 800,
-          "explanation": "Das Hausperron 1/11 ist mit 800 Metern das längste erfasste Perron in Chiasso.",
-          "factRef": "perrons.laengste_m",
-          "difficulty": 2
-        },
-        {
+          "id": "perrons:b8692c98",
           "type": "sort",
-          "prompt": "Ordne diese Perrons nach Länge, längstes zuerst.",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -232,48 +218,49 @@
               "label": "Perron 37",
               "value": 222,
               "factRef": "perrons.items[3].laenge_m"
+            },
+            {
+              "label": "Perron 24/25",
+              "value": 112,
+              "factRef": "perrons.items[6].laenge_m"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1/11 misst 800 Meter, Perron 4/5/6 misst 507, das Dienstperron 38 misst 426 und das Dienstperron 37 misst 222 Meter.",
-          "difficulty": 3
-        },
-        {
-          "type": "cloze",
-          "prompt": "Von den 12 erfassten Perrons sind ___ als niveaufrei erreichbar vermerkt.",
-          "options": [
-            "2",
-            "4",
-            "8"
-          ],
-          "correct": 1,
-          "optionen_aus_fakten": true,
-          "explanation": "4 Perrons sind als niveaufrei vermerkt, 8 ausdrücklich als nicht niveaufrei. Bei den nicht niveaufreien handelt es sich um Dienstperrons.",
-          "factRef": "perrons.niveaufrei_erreichbar",
+          "explanation": "Perron 1/11 misst 800 Meter, Perron 4/5/6 misst 507 Meter, Perron 38 misst 426 Meter, Perron 37 misst 222 Meter, Perron 24/25 misst 112 Meter. Perrons mit fast gleicher Länge bleiben weg.",
           "difficulty": 2
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
-          "prompt": "Welcher Perrontyp gehört zu welchem Perron?",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
             {
               "links": "Perron 1/11",
-              "rechts": "Hausperron",
-              "factRef": "perrons.items[0].typ"
+              "rechts": "3348.86 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
               "links": "Perron 4/5/6",
-              "rechts": "Mittelperron",
-              "factRef": "perrons.items[1].typ"
+              "rechts": "4293.85 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
             },
             {
-              "links": "Perron 38",
-              "rechts": "Dienstperron",
-              "factRef": "perrons.items[2].typ"
+              "links": "Perron 73/74",
+              "rechts": "312.49 m²",
+              "factRef": "perrons.items[4].flaeche_netto_m2"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1/11 ist ein Hausperron, Perron 4/5/6 ein Mittelperron und Perron 38 ein Dienstperron.",
+          "explanation": "Perron 1/11 hat 3348.86 Quadratmeter, Perron 4/5/6 hat 4293.85 Quadratmeter, Perron 73/74 hat 312.49 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:ccedf05f",
+          "type": "true_false",
+          "prompt": "Zu allen 12 erfassten Perrons in Chiasso ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Für 4 der 12 erfassten Perrons ist ein niveaufreier Zugang vermerkt. 8 sind ausdrücklich als nicht niveaufrei erfasst.",
+          "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 2
         }
       ]
@@ -281,7 +268,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 6 Gleisen liegen offene Daten vor: 1, 4, 5, 6, 11 und 38. Gleis 1 hat mit 565 Metern die längste erfasste Perronkante. Die Gleise 1 und 6 tragen je 8 Sektoren, Gleis 4 hat 6 Sektoren von C bis H. Zu Gleis 11 sind keine Sektortafeln erfasst, zu Gleis 38 weder Perronkante noch Perronhöhe.",
+      "body": "Zu 6 Gleisen liegen offene Daten vor: 1, 4, 5, 6, 11 und 38. Zu den Gleisen 1, 4, 5, 6 und 11 ist eine Perronhöhe von 55 Zentimetern vermerkt, zu Gleis 38 keine. Zu Gleis 11 sind keine Sektortafeln erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -306,15 +293,17 @@
       ],
       "questions": [
         {
+          "id": "gleise:d3eb63ed",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
           "correct": "1",
           "factRef": "gleise.items[0].nr",
-          "explanation": "Gleis 1 hat mit 565 Metern die längste erfasste Perronkante, vor Gleis 6 mit 489 Metern.",
+          "explanation": "Gleis 1 hat mit 565 Metern die längste erfasste Perronkante, die nächste misst 489 Meter.",
           "difficulty": 2
         },
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -341,29 +330,30 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Richtig ist diese Reihenfolge: Gleis 1 mit 565, Gleis 6 mit 489, Gleis 4 mit 287 und Gleis 5 mit 243 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Gleis 1 misst 565 Meter, Gleis 6 misst 489 Meter, Gleis 4 misst 287 Meter, Gleis 5 misst 243 Meter. Gleise mit fast gleicher Kante bleiben weg.",
           "difficulty": 3
         },
         {
+          "id": "gleise:6073739c",
           "type": "cloze",
-          "prompt": "An Gleis 4 sind ___ Sektoren erfasst, von C bis H.",
+          "prompt": "An Gleis 1 in Chiasso sind ___ Sektoren erfasst.",
           "options": [
-            "2",
-            "6",
-            "8"
+            "8",
+            "10",
+            "18"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 4 trägt die Sektoren C bis H, also 6 Stück. Die Sektoren A und B fehlen dort.",
-          "factRef": "gleise.items[1].sektoren_anzahl",
-          "difficulty": 3
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C, D, E, F, G und H, also 8 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Chiasso sind 12 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An 5 der 6 erfassten Gleise liegt diese Höhe vor. Bei keinem Segment ist ein Hilfstritt verzeichnet. Von den 12 erfassten Perrons sind 4 als niveaufrei vermerkt und 8 ausdrücklich als nicht niveaufrei. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Chiasso sind 12 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An 5 der 6 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -377,38 +367,26 @@
           "value": 5,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
-        },
-        {
-          "label": "Perrons ausdrücklich nicht niveaufrei",
-          "value": 8,
-          "source": "perron",
-          "factRef": "hindernisfreiheit.perrons_nicht_niveaufrei"
         }
       ],
       "questions": [
         {
-          "type": "true_false",
-          "prompt": "Zu 8 Perrons in Chiasso fehlt in den Daten die Angabe zum Zugang.",
-          "correct": false,
-          "explanation": "Zu diesen 8 Perrons ist ausdrücklich vermerkt, dass sie nicht niveaufrei erreichbar sind. Die Angabe fehlt also nicht, sie lautet «nein».",
-          "factRef": "hindernisfreiheit.perrons_nicht_niveaufrei",
-          "difficulty": 3
-        },
-        {
+          "id": "hindernisfreiheit:043680e5",
           "type": "cloze",
-          "prompt": "An ___ der 6 erfassten Gleise liegt eine Perronhöhe von 55 Zentimetern vor.",
+          "prompt": "In Chiasso sind ___ Perronsegmente erfasst.",
           "options": [
-            "3",
-            "5",
-            "6"
+            "10",
+            "12",
+            "17"
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "An 5 der 6 erfassten Gleise ist ein Abschnitt mit 55 Zentimetern verzeichnet. Zu Gleis 38 liegt keine Höhe vor.",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm",
-          "difficulty": 2
+          "explanation": "Die BehiG-Erhebung führt 12 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:d46a5e4f",
           "type": "true_false",
           "prompt": "Bei keinem der 12 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -421,59 +399,59 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Für Chiasso ist ein Streckenabschnitt erfasst: von Balerna her verkehren im Personenverkehr 221 Züge pro Tag, das sind 80'505 im Jahr. Dazu kommen 12 Güterzüge pro Tag.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Balerna – Chiasso 221 Züge pro Tag, das sind 80'505 im Jahr. Im Güterverkehr zählt die Erhebung bis zu 12 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Balerna–Chiasso",
+          "label": "Züge pro Tag, Personenverkehr Balerna – Chiasso",
           "value": 221,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Balerna–Chiasso",
+          "label": "Züge pro Jahr, Personenverkehr Balerna – Chiasso",
           "value": 80505,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
         }
       ],
       "questions": [
         {
+          "id": "zuege:132a7b48",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Balerna–Chiasso?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Balerna – Chiasso?",
           "options": [
-            "88",
             "150",
+            "190",
             "221",
-            "310"
+            "270"
           ],
           "correct": 2,
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 221 Züge pro Tag, beide Richtungen zusammen.",
-          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "Auf dem Abschnitt Balerna–Chiasso verkehren ___ Güterzüge pro Tag.",
-          "options": [
-            "6",
-            "12",
-            "26"
-          ],
-          "correct": 1,
-          "optionen_aus_fakten": true,
-          "explanation": "Die Erhebung zählt dort 12 Güterzüge pro Tag, im Personenverkehr 221.",
-          "factRef": "zuege.abschnitte[1].zuege_pro_tag",
-          "difficulty": 2
+          "id": "zuege:355791f0",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Balerna – Chiasso?",
+          "min": 66000,
+          "max": 117000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 80505,
+          "explanation": "Die Erhebung zählt 80'505 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Chiasso ist 1 Linie erfasst: die Linie 600 Immensee–Bellinzona–Chiasso. Der Bahnhof ist darauf bei Kilometer 206.16614 eingetragen.",
+      "body": "Für Chiasso ist 1 Linie erfasst: die Linie 600 Immensee - Bellinzona - Chiasso. Der Bahnhof ist darauf bei Kilometer 206.16614 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -491,14 +469,15 @@
       ],
       "questions": [
         {
+          "id": "linien:e8773e01",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 600 ist Chiasso eingetragen?",
-          "min": 150,
-          "max": 270,
+          "min": 160,
+          "max": 300,
           "step": 1,
           "unit": "km",
           "correct": 206.16614,
-          "explanation": "Die Kilometrierung von Chiasso auf der Linie 600 beträgt 206.16614. Der Wert zählt ab Immensee.",
+          "explanation": "Die Kilometrierung von Chiasso auf der Linie 600 beträgt 206.16614. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -507,8 +486,15 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 3 Billettautomaten der Typen S-POS und ePOS, 8 Billettentwerter und 1 Wartehalle. Chiasso steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 3 Billettautomaten (Typen S-POS und ePOS), 8 Billettentwerter und 1 Wartehalle. Chiasso steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
         {
           "label": "Billettautomaten erfasst",
           "value": 3,
@@ -520,17 +506,11 @@
           "value": 8,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
-        },
-        {
-          "label": "WLAN erfasst",
-          "value": false,
-          "unit": "",
-          "source": "wifistation",
-          "factRef": "services.wlan_erfasst"
         }
       ],
       "questions": [
         {
+          "id": "services:de7fccbc",
           "type": "true_false",
           "prompt": "Chiasso steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -539,14 +519,15 @@
           "difficulty": 2
         },
         {
+          "id": "services:17822c5b",
           "type": "cloze",
           "prompt": "In Chiasso sind ___ Billettentwerter erfasst.",
           "options": [
-            "5",
             "8",
-            "11"
+            "10",
+            "18"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
           "explanation": "Erfasst sind 8 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
@@ -586,6 +567,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -600,6 +582,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -614,6 +597,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:37a1ea6c",
           "type": "slider",
           "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
           "min": 16,
@@ -626,6 +610,7 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
@@ -641,8 +626,9 @@
           "difficulty": 2
         },
         {
+          "id": "ausstattung:6c3be6e5",
           "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "prompt": "Ordne die Perrons nach erfasster Belagsfläche, grösste zuerst.",
           "richtung": "absteigend",
           "items": [
             {
@@ -667,7 +653,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4/5/6 hat mit 4'842 Quadratmetern die grösste erfasste Fläche, Perron 71/72 mit 504 die kleinste der gezeigten.",
+          "explanation": "Perron 4/5/6 hat mit 4'842 Quadratmetern die grösste erfasste Belagsfläche, Perron 71/72 mit 504 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]

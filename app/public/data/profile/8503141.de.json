@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:df7d22c1",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Küsnacht Goldbach ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -93,6 +95,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:6e4ffa22",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Küsnacht Goldbach ___ Personen ein und aus.",
           "options": [
@@ -128,6 +131,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:9ee8d762",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Küsnacht Goldbach?",
           "min": 340,
@@ -140,6 +144,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:80298c34",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Küsnacht Goldbach lautet ___.",
           "options": [
@@ -176,6 +181,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:2f38d5bc",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Küsnacht Goldbach?",
           "options": [
@@ -190,6 +196,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:e3df6aaa",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Küsnacht Goldbach sind niveaufrei erreichbar.",
           "correct": true,
@@ -220,6 +227,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:dd6777c4",
           "type": "cloze",
           "prompt": "An Gleis 1 in Küsnacht Goldbach sind ___ Sektoren erfasst.",
           "options": [
@@ -234,6 +242,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a54097dc",
           "type": "true_false",
           "prompt": "Zu den erfassten Gleisen in Küsnacht Goldbach ist eine Perronhöhe vermerkt.",
           "correct": false,
@@ -264,6 +273,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:3100cb64",
           "type": "true_false",
           "prompt": "Für Küsnacht Goldbach sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
@@ -277,7 +287,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Küsnacht Goldbach – Küsnacht ZH 238 Züge pro Tag, das sind 86'863 im Jahr. Auf dem Abschnitt Zollikon – Küsnacht Goldbach sind es ebenfalls 238 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Küsnacht Goldbach – Küsnacht ZH",
@@ -296,6 +306,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:c4b5747b",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Küsnacht Goldbach – Küsnacht ZH?",
           "options": [
@@ -310,6 +321,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:e6875dbe",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Küsnacht Goldbach – Küsnacht ZH?",
           "min": 71000,
@@ -344,6 +356,7 @@
       ],
       "questions": [
         {
+          "id": "linien:65600a43",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Küsnacht Goldbach eingetragen?",
           "min": 8.5,
@@ -384,6 +397,7 @@
       ],
       "questions": [
         {
+          "id": "services:22fcef4a",
           "type": "true_false",
           "prompt": "Küsnacht Goldbach steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -392,6 +406,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:c95cc010",
           "type": "cloze",
           "prompt": "In Küsnacht Goldbach sind ___ Billettentwerter erfasst.",
           "options": [
@@ -421,6 +436,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

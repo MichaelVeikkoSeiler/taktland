@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:2b65008f",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Wildegg ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -94,6 +96,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:69012481",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Wildegg ___ Personen ein und aus.",
           "options": [
@@ -135,6 +138,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:f4668dda",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Wildegg?",
           "min": 290,
@@ -147,6 +151,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:f5216cb7",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Wildegg?",
           "options": [
@@ -184,6 +189,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:89abda28",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Wildegg?",
           "options": [
@@ -198,6 +204,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -217,6 +224,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:5ac2f4c4",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Wildegg sind niveaufrei erreichbar.",
           "correct": true,
@@ -254,6 +262,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:61ecaaf5",
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
@@ -263,6 +272,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:de6a2cdd",
           "type": "sort",
           "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
           "richtung": "absteigend",
@@ -288,6 +298,7 @@
           "difficulty": 3
         },
         {
+          "id": "gleise:bd9369dc",
           "type": "cloze",
           "prompt": "An Gleis 1 in Wildegg sind ___ Sektoren erfasst.",
           "options": [
@@ -330,6 +341,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:aaa78e2e",
           "type": "cloze",
           "prompt": "In Wildegg sind ___ Perronsegmente erfasst.",
           "options": [
@@ -349,7 +361,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Wildegg – Rupperswil Ost 160 Züge pro Tag, das sind 58'499 im Jahr. Auf dem Abschnitt Wildegg – Holderbank AG sind es ebenfalls 160 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 23 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Wildegg – Rupperswil Ost",
@@ -368,6 +380,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:ea38d2c8",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Wildegg – Rupperswil Ost?",
           "options": [
@@ -382,6 +395,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:bdaeae9a",
           "type": "slider",
           "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Wildegg – Rupperswil Ost?",
           "min": 47500,
@@ -416,6 +430,7 @@
       ],
       "questions": [
         {
+          "id": "linien:fd43dc83",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 640 ist Wildegg eingetragen?",
           "min": 33,
@@ -456,6 +471,7 @@
       ],
       "questions": [
         {
+          "id": "services:06738473",
           "type": "true_false",
           "prompt": "Wildegg steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -464,6 +480,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:7666c268",
           "type": "cloze",
           "prompt": "In Wildegg sind ___ Billettentwerter erfasst.",
           "options": [
@@ -505,6 +522,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -519,6 +537,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:a8529c11",
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
@@ -533,6 +552,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

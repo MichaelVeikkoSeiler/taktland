@@ -50,6 +50,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:acfe271a",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Langnau i.E. ein und aus?",
           "options": [
@@ -64,6 +65,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -89,6 +91,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:e304f3cd",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Langnau i.E. ___ Personen ein und aus.",
           "options": [
@@ -124,6 +127,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:2d778dc1",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Langnau i.E.?",
           "min": 550,
@@ -136,6 +140,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:f33d8145",
           "type": "cloze",
           "prompt": "Die offizielle Abkürzung des Bahnhofs Langnau i.E. lautet ___.",
           "options": [
@@ -172,6 +177,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:77dd18e6",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Langnau i.E.?",
           "options": [
@@ -186,6 +192,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -205,6 +212,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:4bdfaaff",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Langnau i.E. sind niveaufrei erreichbar.",
           "correct": true,
@@ -235,6 +243,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:22304d8a",
           "type": "cloze",
           "prompt": "An Gleis 1 in Langnau i.E. sind ___ Sektoren erfasst.",
           "options": [
@@ -249,6 +258,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:3b609533",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 1 in Langnau i.E. erfasst? (Mehrfachauswahl)",
           "options": [
@@ -295,6 +305,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:30d04fb8",
           "type": "cloze",
           "prompt": "In Langnau i.E. sind ___ Perronsegmente erfasst.",
           "options": [
@@ -309,6 +320,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:ed8d87c8",
           "type": "true_false",
           "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -322,7 +334,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Obermatt – Langnau i.E.: Im Personenverkehr verkehren dort 153 Züge pro Tag, das sind 55'786 im Jahr. Auf dem Abschnitt Langnau i.E. – Trubschachen sind es 50 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Obermatt – Langnau i.E.",
@@ -341,6 +353,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:437494c9",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Obermatt – Langnau i.E.?",
           "options": [
@@ -355,6 +368,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -407,6 +421,7 @@
       ],
       "questions": [
         {
+          "id": "linien:d9390ae5",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 460 ist Langnau i.E. eingetragen?",
           "min": 30,
@@ -447,6 +462,7 @@
       ],
       "questions": [
         {
+          "id": "services:00094205",
           "type": "true_false",
           "prompt": "Langnau i.E. steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -455,6 +471,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:cf7af22d",
           "type": "cloze",
           "prompt": "In Langnau i.E. sind ___ Billettentwerter erfasst.",
           "options": [
@@ -490,6 +507,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -504,6 +522,7 @@
           "difficulty": 1
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [

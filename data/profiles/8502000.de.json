@@ -49,6 +49,7 @@
       ],
       "questions": [
         {
+          "id": "steckbrief:a2ff4339",
           "type": "single_choice",
           "prompt": "Wie viele Personen steigen an einem Werktag in Aarburg-Oftringen ein und aus?",
           "options": [
@@ -63,6 +64,7 @@
           "difficulty": 1
         },
         {
+          "id": "steckbrief:0a41c000",
           "type": "sort",
           "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
@@ -88,6 +90,7 @@
           "difficulty": 3
         },
         {
+          "id": "steckbrief:ad1e0ed2",
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Aarburg-Oftringen ___ Personen ein und aus.",
           "options": [
@@ -129,6 +132,7 @@
       ],
       "questions": [
         {
+          "id": "stammdaten:aa607f34",
           "type": "slider",
           "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Aarburg-Oftringen?",
           "min": 330,
@@ -141,6 +145,7 @@
           "difficulty": 2
         },
         {
+          "id": "stammdaten:6d72237a",
           "type": "single_choice",
           "prompt": "In welcher Gemeinde liegt der Bahnhof Aarburg-Oftringen?",
           "options": [
@@ -178,6 +183,7 @@
       ],
       "questions": [
         {
+          "id": "perrons:ad77d721",
           "type": "single_choice",
           "prompt": "Wie lang ist das längste erfasste Perron in Aarburg-Oftringen?",
           "options": [
@@ -192,6 +198,7 @@
           "difficulty": 1
         },
         {
+          "id": "perrons:57221352",
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -211,6 +218,7 @@
           "difficulty": 3
         },
         {
+          "id": "perrons:54c6460f",
           "type": "true_false",
           "prompt": "Beide erfassten Perrons in Aarburg-Oftringen sind niveaufrei erreichbar.",
           "correct": true,
@@ -241,6 +249,7 @@
       ],
       "questions": [
         {
+          "id": "gleise:1e3d186e",
           "type": "cloze",
           "prompt": "An Gleis 1 in Aarburg-Oftringen sind ___ Sektoren erfasst.",
           "options": [
@@ -255,6 +264,7 @@
           "difficulty": 2
         },
         {
+          "id": "gleise:a54fc95d",
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für Gleis 3 in Aarburg-Oftringen erfasst? (Mehrfachauswahl)",
           "options": [
@@ -295,6 +305,7 @@
       ],
       "questions": [
         {
+          "id": "hindernisfreiheit:e75f46a5",
           "type": "cloze",
           "prompt": "In Aarburg-Oftringen sind ___ Perronsegmente erfasst.",
           "options": [
@@ -309,6 +320,7 @@
           "difficulty": 1
         },
         {
+          "id": "hindernisfreiheit:023c3ba0",
           "type": "true_false",
           "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
@@ -322,7 +334,7 @@
       "id": "zuege",
       "title": "Züge",
       "body": "Am stärksten befahren ist der Abschnitt Olten – Aarburg-Oftringen: Im Personenverkehr verkehren dort 287 Züge pro Tag, das sind 104'814 im Jahr. Auf dem Abschnitt Aarburg-Oftringen – Aarburg-Oftringen Süd (Abzw) sind es 204 und auf dem Abschnitt Aarburg-Oftringen West (Abzw) – Aarburg-Oftringen sind es 84 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 36 Züge pro Tag auf einem Abschnitt.",
-      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
           "label": "Züge pro Tag, Personenverkehr Olten – Aarburg-Oftringen",
@@ -341,6 +353,7 @@
       ],
       "questions": [
         {
+          "id": "zuege:080dc4cb",
           "type": "single_choice",
           "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Olten – Aarburg-Oftringen?",
           "options": [
@@ -355,6 +368,7 @@
           "difficulty": 1
         },
         {
+          "id": "zuege:d38de786",
           "type": "sort",
           "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
           "richtung": "absteigend",
@@ -407,6 +421,7 @@
       ],
       "questions": [
         {
+          "id": "linien:777f1b0d",
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 451 ist Aarburg-Oftringen eingetragen?",
           "min": 35,
@@ -419,6 +434,7 @@
           "difficulty": 3
         },
         {
+          "id": "linien:f57243ca",
           "type": "match",
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
@@ -466,6 +482,7 @@
       ],
       "questions": [
         {
+          "id": "services:f4f45033",
           "type": "true_false",
           "prompt": "Aarburg-Oftringen steht in der Liste der WLAN-Standorte.",
           "correct": false,
@@ -474,6 +491,7 @@
           "difficulty": 2
         },
         {
+          "id": "services:a757d47f",
           "type": "cloze",
           "prompt": "In Aarburg-Oftringen sind ___ Billettentwerter erfasst.",
           "options": [
@@ -515,6 +533,7 @@
       ],
       "questions": [
         {
+          "id": "ausstattung:e6085503",
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
@@ -530,6 +549,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
           "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
@@ -545,6 +565,7 @@
           "optionen_aus_fakten": true
         },
         {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
