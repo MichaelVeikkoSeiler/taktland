@@ -56,6 +56,16 @@
    ]
   }
  },
+ "8500025": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Arlesheim",
+    "Laufen"
+   ]
+  }
+ },
  "8500026": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -175,6 +185,16 @@
    "distraktoren": [
     "BDR",
     "BSD"
+   ]
+  }
+ },
+ "8500201": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Seeland",
+    "Jura bernois",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -340,6 +360,15 @@
    ]
   }
  },
+ "8501007": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "VM",
+    "GEAP"
+   ]
+  }
+ },
  "8501008": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -468,6 +497,16 @@
    "distraktoren": [
     "ET",
     "ETO"
+   ]
+  }
+ },
+ "8501103": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Gros-de-Vaud",
+    "Ouest lausannois"
    ]
   }
  },
@@ -661,6 +700,16 @@
    ]
   }
  },
+ "8501503": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Conthey",
+    "Sion",
+    "Saint-Maurice"
+   ]
+  }
+ },
  "8501506": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -676,6 +725,15 @@
    "distraktoren": [
     "SI",
     "SRE"
+   ]
+  }
+ },
+ "8501510": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ARD",
+    "SIO"
    ]
   }
  },
@@ -732,6 +790,16 @@
     "Entlebuch",
     "Hochdorf",
     "Sursee"
+   ]
+  }
+ },
+ "8502004": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sursee",
+    "Hochdorf",
+    "Entlebuch"
    ]
   }
  },
@@ -836,6 +904,16 @@
    "distraktoren": [
     "OT",
     "OTS"
+   ]
+  }
+ },
+ "8502111": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gösgen",
+    "Gäu",
+    "Wasseramt"
    ]
   }
  },
@@ -1122,6 +1200,15 @@
    ]
   }
  },
+ "8503007": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZOER",
+    "GLB"
+   ]
+  }
+ },
  "8503008": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1287,6 +1374,16 @@
     "Meilen",
     "Oberrieden",
     "Thalwil"
+   ]
+  }
+ },
+ "8503115": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Toggenburg",
+    "Sarganserland",
+    "Wil"
    ]
   }
  },
@@ -1750,6 +1847,16 @@
    ]
   }
  },
+ "8503401": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Eglisau",
+    "Hüntwangen",
+    "Glattfelden"
+   ]
+  }
+ },
  "8503402": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1880,6 +1987,16 @@
     "Zürich",
     "Dielsdorf",
     "Affoltern"
+   ]
+  }
+ },
+ "8503511": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Brugg",
+    "Lenzburg",
+    "Bremgarten"
    ]
   }
  },
@@ -2036,6 +2153,16 @@
    ]
   }
  },
+ "8504121": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura-Nord vaudois",
+    "Lavaux-Oron",
+    "Morges"
+   ]
+  }
+ },
  "8504128": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2065,6 +2192,16 @@
    ]
   }
  },
+ "8504194": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Seeland",
+    "Jura bernois",
+    "Biel/Bienne"
+   ]
+  }
+ },
  "8504200": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2072,6 +2209,16 @@
     "Gros-de-Vaud",
     "Lausanne",
     "Broye-Vully"
+   ]
+  }
+ },
+ "8504201": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Broye-Vully",
+    "Gros-de-Vaud"
    ]
   }
  },
@@ -2099,6 +2246,16 @@
    "distraktoren": [
     "LN",
     "LNV"
+   ]
+  }
+ },
+ "8504237": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "La Chaux-de-Fonds",
+    "Neuchâtel",
+    "Milvignes"
    ]
   }
  },
@@ -2417,6 +2574,16 @@
    ]
   }
  },
+ "8505412": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Gordola",
+    "Gambarogno",
+    "Tenero-Contra"
+   ]
+  }
+ },
  "8505415": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2651,6 +2818,16 @@
    "distraktoren": [
     "EZ",
     "EW"
+   ]
+  }
+ },
+ "8506203": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Wil",
+    "St. Gallen",
+    "See-Gaster"
    ]
   }
  },
@@ -3093,6 +3270,16 @@
    ]
   }
  },
+ "8515997": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Hochdorf",
+    "Luzern-Stadt",
+    "Sursee"
+   ]
+  }
+ },
  "8516155": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3109,6 +3296,15 @@
     "Ostermundigen",
     "Muri bei Bern",
     "Zollikofen"
+   ]
+  }
+ },
+ "8516218": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OWT",
+    "WGR"
    ]
   }
  },

@@ -1,6 +1,6 @@
 {
-  "uic": 8501011,
-  "name": "Les Tuileries",
+  "uic": 8501007,
+  "name": "Vernier",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -10,7 +10,6 @@
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
-    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
@@ -24,25 +23,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Les Tuileries 2'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 2'000, an einem freien Tag 1'100. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Vernier 1'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 1'200, an einem freien Tag 570. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 2400,
+          "value": 1400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 2000,
+          "value": 1200,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 1100,
+          "value": 570,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -50,17 +49,17 @@
       ],
       "questions": [
         {
-          "id": "steckbrief:47c4609a",
+          "id": "steckbrief:d98f8ef1",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Les Tuileries ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Vernier ein und aus?",
           "options": [
-            "720",
-            "960",
-            "2'400",
-            "2'900"
+            "420",
+            "560",
+            "1'400",
+            "1'700"
           ],
           "correct": 2,
-          "explanation": "An einem Werktag sind es 2'400 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 1'400 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -71,41 +70,41 @@
           "richtung": "aufsteigend",
           "items": [
             {
+              "label": "2024",
+              "value": 770,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
               "label": "2018",
-              "value": 640,
+              "value": 980,
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
               "label": "2022",
-              "value": 1300,
+              "value": 1100,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2024",
-              "value": 1700,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
-              "value": 2400,
+              "value": 1400,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 640 (2018), 1'300 (2022), 1'700 (2024), 2'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 770 (2024), 980 (2018), 1'100 (2022), 1'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:431cce31",
+          "id": "steckbrief:d454f629",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Les Tuileries ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Vernier ___ Personen ein und aus.",
           "options": [
-            "770",
-            "940",
-            "1'100"
+            "570",
+            "680",
+            "800"
           ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 1'100 Personen, an einem Werktag 2'400. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 570 Personen, an einem Werktag 1'400. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -114,56 +113,49 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Les Tuileries liegt auf 388.79 Metern über Meer in der Gemeinde Bellevue. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet TUI.",
+      "body": "Vernier liegt auf 428.44 Metern über Meer in der Gemeinde Vernier. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet COI.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 388.79,
+          "value": 428.44,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "TUI",
+          "value": "COI",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
-        },
-        {
-          "label": "Gemeinde",
-          "value": "Bellevue",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:75a35d4d",
+          "id": "stammdaten:923684ff",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Les Tuileries?",
-          "min": 310,
-          "max": 570,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Vernier?",
+          "min": 350,
+          "max": 630,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 388.79,
-          "explanation": "Der Bahnhof liegt auf 388.79 Metern über Meer.",
+          "correct": 428.44,
+          "explanation": "Der Bahnhof liegt auf 428.44 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:53866d08",
-          "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt der Bahnhof Les Tuileries?",
+          "id": "stammdaten:0c5517c9",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Vernier lautet ___.",
           "options": [
-            "Bellevue",
-            "Genthod",
-            "Pregny-Chambésy",
-            "Versoix"
+            "COI",
+            "GEAP",
+            "VM"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Bellevue eingetragen.",
-          "factRef": "stammdaten.gemeinde",
+          "explanation": "In den Stammdaten ist COI als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
@@ -171,17 +163,17 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Les Tuileries liegen offene Daten vor. Perron 1 ist ein Hausperron von 182 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Vernier liegen offene Daten vor. Perron 2 misst 160 Meter, Perron 1 misst 160 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
-          "value": 1,
+          "value": 2,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 182,
+          "value": 160,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -189,26 +181,26 @@
       ],
       "questions": [
         {
-          "id": "perrons:ddb37c65",
+          "id": "perrons:68c45d44",
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Les Tuileries?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Vernier?",
           "options": [
-            "182 m",
+            "160 m",
+            "190 m",
             "220 m",
-            "250 m",
-            "310 m"
+            "270 m"
           ],
           "correct": 0,
-          "explanation": "Das erfasste Perron misst 182 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "explanation": "Das längste erfasste Perron misst 160 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:04fd8c01",
+          "id": "perrons:4db883cc",
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Les Tuileries ist niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in Vernier sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
@@ -217,12 +209,12 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu Gleis 1 liegen offene Daten vor. Zu diesem Gleis ist keine Perronhöhe vermerkt.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. Perronhöhen sind zu diesen Gleisen nicht vermerkt.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
-          "value": 1,
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
@@ -235,9 +227,9 @@
       ],
       "questions": [
         {
-          "id": "gleise:ae4ee670",
+          "id": "gleise:05df6e1a",
           "type": "cloze",
-          "prompt": "An Gleis 1 in Les Tuileries sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 1 in Vernier sind ___ Sektoren erfasst.",
           "options": [
             "3",
             "4",
@@ -250,11 +242,11 @@
           "difficulty": 2
         },
         {
-          "id": "gleise:a44bd15c",
+          "id": "gleise:13acdd9e",
           "type": "true_false",
-          "prompt": "Zum erfassten Gleis in Les Tuileries ist eine Perronhöhe vermerkt.",
+          "prompt": "Zu den erfassten Gleisen in Vernier ist eine Perronhöhe vermerkt.",
           "correct": false,
-          "explanation": "Zum erfassten Gleis ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+          "explanation": "Zu keinem der erfassten Gleise ist eine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
           "factRef": "gleise.perronhoehen_cm",
           "difficulty": 3
         }
@@ -263,29 +255,23 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Perronsegmente zur Hindernisfreiheit sind für Les Tuileries keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Vernier keine erhoben. Von den 2 erfassten Perrons sind 2 als niveaufrei erreichbar vermerkt.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Niveaufrei erreichbare Perrons",
-          "value": 1,
+          "value": 2,
           "source": "perron",
           "factRef": "hindernisfreiheit.perrons_niveaufrei"
-        },
-        {
-          "label": "Sicherheitslinie",
-          "value": "Ja",
-          "source": "haltestelle-visuell-taktile-sicherheitslinie",
-          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:6c2b6c6d",
+          "id": "hindernisfreiheit:a8dfbaaf",
           "type": "true_false",
-          "prompt": "Für Les Tuileries sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "prompt": "Für Vernier sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
-          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
+          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zu den Perrons.",
           "factRef": "hindernisfreiheit.perrons_mit_daten",
           "difficulty": 3
         }
@@ -294,19 +280,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Les Tuileries – Genthod-Bellevue 413 Züge pro Tag, das sind 150'883 im Jahr. Auf dem Abschnitt Vengeron (diag) – Les Tuileries sind es ebenfalls 413 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Vernier-Meyrin Cargo – Vernier 157 Züge pro Tag, das sind 57'487 im Jahr. Auf dem Abschnitt Vernier – Châtelaine (bif) sind es ebenfalls 157 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 8 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Les Tuileries – Genthod-Bellevue",
-          "value": 413,
+          "label": "Züge pro Tag, Personenverkehr Vernier-Meyrin Cargo – Vernier",
+          "value": 157,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Les Tuileries – Genthod-Bellevue",
-          "value": 150883,
+          "label": "Züge pro Jahr, Personenverkehr Vernier-Meyrin Cargo – Vernier",
+          "value": 57487,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -314,30 +300,30 @@
       ],
       "questions": [
         {
-          "id": "zuege:d01e05f9",
+          "id": "zuege:4b99fcd9",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Vernier-Meyrin Cargo – Vernier?",
           "options": [
-            "413",
-            "500",
-            "580",
-            "700"
+            "130",
+            "157",
+            "190",
+            "220"
           ],
-          "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 413 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 157 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:b7e8be68",
+          "id": "zuege:f4ad39c6",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
-          "min": 123500,
-          "max": 219000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Vernier-Meyrin Cargo – Vernier?",
+          "min": 47000,
+          "max": 83500,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 150883,
-          "explanation": "Die Erhebung zählt 150'883 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 57487,
+          "explanation": "Die Erhebung zählt 57'487 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -346,7 +332,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Les Tuileries ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 55.78 eingetragen.",
+      "body": "Für Vernier ist 1 Linie erfasst: die Linie 151 Geneve St-Jean - La Plaine-Frontiere. Der Bahnhof ist darauf bei Kilometer 64.775 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -355,8 +341,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 150",
-          "value": 55.78,
+          "label": "Kilometrierung auf der Linie 151",
+          "value": 64.775,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -364,15 +350,15 @@
       ],
       "questions": [
         {
-          "id": "linien:fa322166",
+          "id": "linien:e382f5a1",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Les Tuileries eingetragen?",
-          "min": 45,
-          "max": 81,
+          "prompt": "Bei welchem Streckenkilometer der Linie 151 ist Vernier eingetragen?",
+          "min": 53,
+          "max": 94,
           "step": 1,
           "unit": "km",
-          "correct": 55.78,
-          "explanation": "Die Kilometrierung von Les Tuileries auf der Linie 150 beträgt 55.78. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 64.775,
+          "explanation": "Die Kilometrierung von Vernier auf der Linie 151 beträgt 64.775. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -381,7 +367,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 1 Wartehalle. Les Tuileries steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ BATS, 3 Billettentwerter und 2 Wartehallen. Vernier steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -398,33 +384,33 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 2,
+          "value": 3,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
         {
-          "id": "services:ec97c7ff",
+          "id": "services:f2fc3923",
           "type": "true_false",
-          "prompt": "Les Tuileries steht in der Liste der WLAN-Standorte.",
+          "prompt": "Vernier steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:64a5adb5",
+          "id": "services:cf1e2eca",
           "type": "cloze",
-          "prompt": "In Les Tuileries sind ___ Billettentwerter erfasst.",
+          "prompt": "In Vernier sind ___ Billettentwerter erfasst.",
           "options": [
-            "2",
+            "3",
             "4",
-            "6"
+            "5"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 2 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -433,7 +419,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten ist für Les Tuileries 1 Sitzbank erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten ist für Vernier 1 Sitzbank erfasst. Zu 2 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Kiessandbelag. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -443,7 +429,7 @@
         },
         {
           "label": "Perrons mit erfasstem Belag",
-          "value": 1,
+          "value": 2,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
         }
@@ -464,22 +450,6 @@
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1,
           "optionen_aus_fakten": true
-        },
-        {
-          "id": "ausstattung:f5b7373c",
-          "type": "single_choice",
-          "prompt": "Welcher Belag ist für das erfasste Perron verzeichnet?",
-          "options": [
-            "Beton-Belag",
-            "Bituminöses Mischgut",
-            "Gussasphalt",
-            "Verbundstein-Pflästerung"
-          ],
-          "correct": 1,
-          "explanation": "Für das Perron mit Daten ist Bituminöses Mischgut erfasst.",
-          "factRef": "ausstattung.perronbelag.belagsarten",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
         }
       ]
     }
@@ -502,7 +472,7 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 1 Gleise (1). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {

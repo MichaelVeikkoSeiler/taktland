@@ -1,6 +1,6 @@
 {
-  "uic": 8501011,
-  "name": "Les Tuileries",
+  "uic": 8503401,
+  "name": "Glattfelden",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -24,25 +24,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Les Tuileries 2'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 2'000, an einem freien Tag 1'100. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Glattfelden 1'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 1'200, an einem freien Tag 760. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 2400,
+          "value": 1400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 2000,
+          "value": 1200,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 1100,
+          "value": 760,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -50,17 +50,17 @@
       ],
       "questions": [
         {
-          "id": "steckbrief:47c4609a",
+          "id": "steckbrief:57fbaf07",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Les Tuileries ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Glattfelden ein und aus?",
           "options": [
-            "720",
-            "960",
-            "2'400",
-            "2'900"
+            "560",
+            "980",
+            "1'400",
+            "1'700"
           ],
           "correct": 2,
-          "explanation": "An einem Werktag sind es 2'400 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 1'400 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -71,41 +71,41 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2018",
-              "value": 640,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2022",
-              "value": 1300,
+              "value": 1100,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
+              "label": "2023",
+              "value": 1200,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
               "label": "2024",
-              "value": 1700,
+              "value": 1300,
               "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
               "label": "2025",
-              "value": 2400,
+              "value": 1400,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 640 (2018), 1'300 (2022), 1'700 (2024), 2'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 1'100 (2022), 1'200 (2023), 1'300 (2024), 1'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:431cce31",
+          "id": "steckbrief:6945b767",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Les Tuileries ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Glattfelden ___ Personen ein und aus.",
           "options": [
-            "770",
-            "940",
-            "1'100"
+            "760",
+            "910",
+            "1'700"
           ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 1'100 Personen, an einem Werktag 2'400. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 760 Personen, an einem Werktag 1'400. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -114,55 +114,55 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Les Tuileries liegt auf 388.79 Metern über Meer in der Gemeinde Bellevue. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet TUI.",
+      "body": "Glattfelden liegt auf 410 Metern über Meer in der Gemeinde Bülach, Bezirk Bülach, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet GF.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 388.79,
+          "value": 410,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "TUI",
+          "value": "GF",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
           "label": "Gemeinde",
-          "value": "Bellevue",
+          "value": "Bülach",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:75a35d4d",
+          "id": "stammdaten:df0f4ae7",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Les Tuileries?",
-          "min": 310,
-          "max": 570,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Glattfelden?",
+          "min": 330,
+          "max": 600,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 388.79,
-          "explanation": "Der Bahnhof liegt auf 388.79 Metern über Meer.",
+          "correct": 410,
+          "explanation": "Der Bahnhof liegt auf 410 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:53866d08",
+          "id": "stammdaten:297b29a3",
           "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt der Bahnhof Les Tuileries?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Glattfelden?",
           "options": [
-            "Bellevue",
-            "Genthod",
-            "Pregny-Chambésy",
-            "Versoix"
+            "Bülach",
+            "Eglisau",
+            "Glattfelden",
+            "Hüntwangen"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Bellevue eingetragen.",
+          "explanation": "Als Gemeinde ist Bülach eingetragen.",
           "factRef": "stammdaten.gemeinde",
           "difficulty": 2
         }
@@ -171,7 +171,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Les Tuileries liegen offene Daten vor. Perron 1 ist ein Hausperron von 182 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 1 Perron in Glattfelden liegen offene Daten vor. Perron 1/2 ist ein Mittelperron von 297 Metern. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -181,7 +181,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 182,
+          "value": 297,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -189,24 +189,24 @@
       ],
       "questions": [
         {
-          "id": "perrons:ddb37c65",
+          "id": "perrons:b0c2fb87",
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Les Tuileries?",
+          "prompt": "Wie lang ist das erfasste Perron in Glattfelden?",
           "options": [
-            "182 m",
-            "220 m",
+            "160 m",
+            "210 m",
             "250 m",
-            "310 m"
+            "297 m"
           ],
-          "correct": 0,
-          "explanation": "Das erfasste Perron misst 182 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "correct": 3,
+          "explanation": "Das erfasste Perron misst 297 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:04fd8c01",
+          "id": "perrons:f626c06c",
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Les Tuileries ist niveaufrei erreichbar.",
+          "prompt": "Das erfasste Perron in Glattfelden ist niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -217,12 +217,12 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu Gleis 1 liegen offene Daten vor. Zu diesem Gleis ist keine Perronhöhe vermerkt.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. Perronhöhen sind zu diesen Gleisen nicht vermerkt.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
-          "value": 1,
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
@@ -235,9 +235,9 @@
       ],
       "questions": [
         {
-          "id": "gleise:ae4ee670",
+          "id": "gleise:82ed4ee9",
           "type": "cloze",
-          "prompt": "An Gleis 1 in Les Tuileries sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 1 in Glattfelden sind ___ Sektoren erfasst.",
           "options": [
             "3",
             "4",
@@ -250,11 +250,11 @@
           "difficulty": 2
         },
         {
-          "id": "gleise:a44bd15c",
+          "id": "gleise:d1c2ca08",
           "type": "true_false",
-          "prompt": "Zum erfassten Gleis in Les Tuileries ist eine Perronhöhe vermerkt.",
+          "prompt": "Zu den erfassten Gleisen in Glattfelden ist eine Perronhöhe vermerkt.",
           "correct": false,
-          "explanation": "Zum erfassten Gleis ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+          "explanation": "Zu keinem der erfassten Gleise ist eine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
           "factRef": "gleise.perronhoehen_cm",
           "difficulty": 3
         }
@@ -263,7 +263,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Perronsegmente zur Hindernisfreiheit sind für Les Tuileries keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Glattfelden keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -281,9 +281,9 @@
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:6c2b6c6d",
+          "id": "hindernisfreiheit:6c202aa9",
           "type": "true_false",
-          "prompt": "Für Les Tuileries sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "prompt": "Für Glattfelden sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
           "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
           "factRef": "hindernisfreiheit.perrons_mit_daten",
@@ -294,19 +294,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Les Tuileries – Genthod-Bellevue 413 Züge pro Tag, das sind 150'883 im Jahr. Auf dem Abschnitt Vengeron (diag) – Les Tuileries sind es ebenfalls 413 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Eglisau – Glattfelden 184 Züge pro Tag, das sind 67'235 im Jahr. Auf dem Abschnitt Glattfelden – Bülach sind es ebenfalls 184 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 34 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Les Tuileries – Genthod-Bellevue",
-          "value": 413,
+          "label": "Züge pro Tag, Personenverkehr Eglisau – Glattfelden",
+          "value": 184,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Les Tuileries – Genthod-Bellevue",
-          "value": 150883,
+          "label": "Züge pro Jahr, Personenverkehr Eglisau – Glattfelden",
+          "value": 67235,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -314,30 +314,30 @@
       ],
       "questions": [
         {
-          "id": "zuege:d01e05f9",
+          "id": "zuege:e0e05bee",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Eglisau – Glattfelden?",
           "options": [
-            "413",
-            "500",
-            "580",
-            "700"
+            "184",
+            "220",
+            "260",
+            "310"
           ],
           "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 413 Züge pro Tag, beide Richtungen zusammen.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 184 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:b7e8be68",
+          "id": "zuege:95273f21",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
-          "min": 123500,
-          "max": 219000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Eglisau – Glattfelden?",
+          "min": 55000,
+          "max": 97500,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 150883,
-          "explanation": "Die Erhebung zählt 150'883 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 67235,
+          "explanation": "Die Erhebung zählt 67'235 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -346,7 +346,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Les Tuileries ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 55.78 eingetragen.",
+      "body": "Für Glattfelden ist 1 Linie erfasst: die Linie 770 Bulach - Eglisau - Neuhausen. Der Bahnhof ist darauf bei Kilometer 19.39512 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -355,8 +355,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 150",
-          "value": 55.78,
+          "label": "Kilometrierung auf der Linie 770",
+          "value": 19.39512,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -364,15 +364,15 @@
       ],
       "questions": [
         {
-          "id": "linien:fa322166",
+          "id": "linien:353ce37a",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Les Tuileries eingetragen?",
-          "min": 45,
-          "max": 81,
-          "step": 1,
+          "prompt": "Bei welchem Streckenkilometer der Linie 770 ist Glattfelden eingetragen?",
+          "min": 15.5,
+          "max": 28.5,
+          "step": 0.1,
           "unit": "km",
-          "correct": 55.78,
-          "explanation": "Die Kilometrierung von Les Tuileries auf der Linie 150 beträgt 55.78. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 19.39512,
+          "explanation": "Die Kilometrierung von Glattfelden auf der Linie 770 beträgt 19.39512. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -381,7 +381,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 1 Wartehalle. Les Tuileries steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 1 Wartehalle. Glattfelden steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -405,18 +405,18 @@
       ],
       "questions": [
         {
-          "id": "services:ec97c7ff",
+          "id": "services:5d96b42e",
           "type": "true_false",
-          "prompt": "Les Tuileries steht in der Liste der WLAN-Standorte.",
+          "prompt": "Glattfelden steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:64a5adb5",
+          "id": "services:0ebd8dbf",
           "type": "cloze",
-          "prompt": "In Les Tuileries sind ___ Billettentwerter erfasst.",
+          "prompt": "In Glattfelden sind ___ Billettentwerter erfasst.",
           "options": [
             "2",
             "4",
@@ -433,13 +433,19 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten ist für Les Tuileries 1 Sitzbank erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Glattfelden 1 Sitzbank sowie 2 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
           "value": 1,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 2,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
         },
         {
           "label": "Perrons mit erfasstem Belag",
@@ -464,6 +470,21 @@
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1,
           "optionen_aus_fakten": true
+        },
+        {
+          "id": "ausstattung:a8529c11",
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "2",
+            "4",
+            "6",
+            "8"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 2 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
         },
         {
           "id": "ausstattung:f5b7373c",
@@ -502,7 +523,7 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 1 Gleise (1). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {

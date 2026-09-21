@@ -106,7 +106,7 @@ MEHRZAHL_NACH_LUECKE = (r"___ (Sektoren|Perrons|Gleise[n]?|Züge[n]?|Personen|Li
 
 #: Sätze, die für mehrere geschrieben sind und bei genau einem nicht passen
 #: (Pont-Céard: ein Gleis, ein Perron, ein Entwerter)
-EINZAHL = r"\b1 (Segmenten|Gleisen|Abschnitten|Zügen|Wartehallen|Billettautomaten|Perrons)\b|\b[Dd]en 1 \w+|\b[Ee]rfasst sind 1 [\wäöüÄÖÜ-]+\.|\bsind 1 [\wäöüÄÖÜ-]+ (erfasst|verzeichnet|vermerkt)\b"
+EINZAHL = r"\bsind für [^.,\d]+ 1 [\wäöüÄÖÜ-]+ erfasst\.|\b1 (Segmenten|Gleisen|Abschnitten|Zügen|Wartehallen|Billettautomaten|Perrons)\b|\b[Dd]en 1 \w+|\b[Ee]rfasst sind 1 [\wäöüÄÖÜ-]+\.|\bsind 1 [\wäöüÄÖÜ-]+ (erfasst|verzeichnet|vermerkt)\b"
 
 LEERFORMELN = [
     r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",

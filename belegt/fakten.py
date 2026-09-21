@@ -99,6 +99,10 @@ class Faktenbasis:
     def _sammeln_texte(self, obj, raus):
         if isinstance(obj, str):
             raus.add(obj.strip())
+            # auch einzelne Wörter mit Buchstaben und Ziffern: «Root D4» steht
+            # als Name in den Fakten, im Text wird «D4» geprüft
+            raus.update(w for w in re.findall(r"[\w/.'’-]+", obj)
+                        if re.search(r"\d", w) and re.search(r"[^\W\d_]", w))
         elif isinstance(obj, dict):
             for k, v in obj.items():
                 raus.add(str(k))

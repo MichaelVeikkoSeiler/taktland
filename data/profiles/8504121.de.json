@@ -1,6 +1,6 @@
 {
-  "uic": 8501011,
-  "name": "Les Tuileries",
+  "uic": 8504121,
+  "name": "Lucens",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -24,25 +24,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Les Tuileries 2'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 2'000, an einem freien Tag 1'100. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Lucens 1'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 1'200, an einem freien Tag 740. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 2400,
+          "value": 1400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 2000,
+          "value": 1200,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 1100,
+          "value": 740,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -50,17 +50,17 @@
       ],
       "questions": [
         {
-          "id": "steckbrief:47c4609a",
+          "id": "steckbrief:cdf0bf80",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Les Tuileries ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Lucens ein und aus?",
           "options": [
-            "720",
-            "960",
-            "2'400",
-            "2'900"
+            "1'400",
+            "1'700",
+            "2'000",
+            "2'400"
           ],
-          "correct": 2,
-          "explanation": "An einem Werktag sind es 2'400 Ein- und Aussteigende, Stand 2025.",
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 1'400 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -72,40 +72,40 @@
           "items": [
             {
               "label": "2018",
-              "value": 640,
+              "value": 1100,
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
               "label": "2022",
-              "value": 1300,
+              "value": 1200,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2024",
-              "value": 1700,
-              "factRef": "steckbrief.verlauf[3].dwv"
+              "label": "2025",
+              "value": 1400,
+              "factRef": "steckbrief.verlauf[4].dwv"
             },
             {
-              "label": "2025",
-              "value": 2400,
-              "factRef": "steckbrief.verlauf[4].dwv"
+              "label": "2024",
+              "value": 1500,
+              "factRef": "steckbrief.verlauf[3].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 640 (2018), 1'300 (2022), 1'700 (2024), 2'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 1'100 (2018), 1'200 (2022), 1'400 (2025), 1'500 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:431cce31",
+          "id": "steckbrief:9edd5cc2",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Les Tuileries ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Lucens ___ Personen ein und aus.",
           "options": [
-            "770",
-            "940",
-            "1'100"
+            "740",
+            "890",
+            "1'000"
           ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 1'100 Personen, an einem Werktag 2'400. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 740 Personen, an einem Werktag 1'400. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -114,56 +114,56 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Les Tuileries liegt auf 388.79 Metern über Meer in der Gemeinde Bellevue. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet TUI.",
+      "body": "Lucens liegt auf 493.16 Metern über Meer in der Gemeinde Lucens, Bezirk Broye-Vully. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LUC.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 388.79,
+          "value": 493.16,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "TUI",
+          "value": "LUC",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Gemeinde",
-          "value": "Bellevue",
+          "label": "Bezirk",
+          "value": "Broye-Vully",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:75a35d4d",
+          "id": "stammdaten:f2d9099f",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Les Tuileries?",
-          "min": 310,
-          "max": 570,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Lucens?",
+          "min": 400,
+          "max": 720,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 388.79,
-          "explanation": "Der Bahnhof liegt auf 388.79 Metern über Meer.",
+          "correct": 493.16,
+          "explanation": "Der Bahnhof liegt auf 493.16 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:53866d08",
+          "id": "stammdaten:8e3862bb",
           "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt der Bahnhof Les Tuileries?",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Lucens?",
           "options": [
-            "Bellevue",
-            "Genthod",
-            "Pregny-Chambésy",
-            "Versoix"
+            "Broye-Vully",
+            "Jura-Nord vaudois",
+            "Lavaux-Oron",
+            "Morges"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Bellevue eingetragen.",
-          "factRef": "stammdaten.gemeinde",
+          "explanation": "Als Bezirk ist Broye-Vully eingetragen.",
+          "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
       ]
@@ -171,17 +171,17 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Les Tuileries liegen offene Daten vor. Perron 1 ist ein Hausperron von 182 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Lucens liegen offene Daten vor. Perron 1 misst 160 Meter, Perron 2 misst 160 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
-          "value": 1,
+          "value": 2,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 182,
+          "value": 160,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -189,26 +189,26 @@
       ],
       "questions": [
         {
-          "id": "perrons:ddb37c65",
+          "id": "perrons:ba6ffe4b",
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Les Tuileries?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Lucens?",
           "options": [
-            "182 m",
-            "220 m",
-            "250 m",
-            "310 m"
+            "140 m",
+            "160 m",
+            "190 m",
+            "220 m"
           ],
-          "correct": 0,
-          "explanation": "Das erfasste Perron misst 182 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "correct": 1,
+          "explanation": "Das längste erfasste Perron misst 160 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:04fd8c01",
+          "id": "perrons:4dc0f5da",
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Les Tuileries ist niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in Lucens sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
@@ -217,12 +217,12 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu Gleis 1 liegen offene Daten vor. Zu diesem Gleis ist keine Perronhöhe vermerkt.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. An beiden erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
-          "value": 1,
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
@@ -235,13 +235,13 @@
       ],
       "questions": [
         {
-          "id": "gleise:ae4ee670",
+          "id": "gleise:696fd102",
           "type": "cloze",
-          "prompt": "An Gleis 1 in Les Tuileries sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 1 in Lucens sind ___ Sektoren erfasst.",
           "options": [
             "3",
-            "4",
-            "5"
+            "5",
+            "7"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
@@ -250,27 +250,33 @@
           "difficulty": 2
         },
         {
-          "id": "gleise:a44bd15c",
+          "id": "gleise:5e948f97",
           "type": "true_false",
-          "prompt": "Zum erfassten Gleis in Les Tuileries ist eine Perronhöhe vermerkt.",
-          "correct": false,
-          "explanation": "Zum erfassten Gleis ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+          "prompt": "An den erfassten Gleisen in Lucens kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
           "factRef": "gleise.perronhoehen_cm",
-          "difficulty": 3
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Perronsegmente zur Hindernisfreiheit sind für Les Tuileries keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "body": "Für Lucens sind 4 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Niveaufrei erreichbare Perrons",
-          "value": 1,
-          "source": "perron",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+          "label": "Erfasste Perronsegmente",
+          "value": 4,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
         {
           "label": "Sicherheitslinie",
@@ -281,32 +287,47 @@
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:6c2b6c6d",
+          "id": "hindernisfreiheit:87cc3fb5",
+          "type": "cloze",
+          "prompt": "In Lucens sind ___ Perronsegmente erfasst.",
+          "options": [
+            "4",
+            "5",
+            "6"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 4 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:7df99317",
           "type": "true_false",
-          "prompt": "Für Les Tuileries sind Perronsegmente zur Hindernisfreiheit erhoben.",
-          "correct": false,
-          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
-          "factRef": "hindernisfreiheit.perrons_mit_daten",
-          "difficulty": 3
+          "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 4 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Les Tuileries – Genthod-Bellevue 413 Züge pro Tag, das sind 150'883 im Jahr. Auf dem Abschnitt Vengeron (diag) – Les Tuileries sind es ebenfalls 413 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Moudon – Lucens 50 Züge pro Tag, das sind 18'252 im Jahr. Auf dem Abschnitt Lucens – Henniez sind es ebenfalls 50 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 2 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Les Tuileries – Genthod-Bellevue",
-          "value": 413,
+          "label": "Züge pro Tag, Personenverkehr Moudon – Lucens",
+          "value": 50,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Les Tuileries – Genthod-Bellevue",
-          "value": 150883,
+          "label": "Züge pro Jahr, Personenverkehr Moudon – Lucens",
+          "value": 18252,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -314,30 +335,30 @@
       ],
       "questions": [
         {
-          "id": "zuege:d01e05f9",
+          "id": "zuege:dbf6f923",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Moudon – Lucens?",
           "options": [
-            "413",
-            "500",
-            "580",
-            "700"
+            "28",
+            "35",
+            "42",
+            "50"
           ],
-          "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 413 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 50 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:b7e8be68",
+          "id": "zuege:fb616aa8",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
-          "min": 123500,
-          "max": 219000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Moudon – Lucens?",
+          "min": 14500,
+          "max": 26500,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 150883,
-          "explanation": "Die Erhebung zählt 150'883 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 18252,
+          "explanation": "Die Erhebung zählt 18'252 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -346,7 +367,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Les Tuileries ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 55.78 eingetragen.",
+      "body": "Für Lucens ist 1 Linie erfasst: die Linie 251 Palezieux Est - Lyss Nord. Der Bahnhof ist darauf bei Kilometer 43.38158 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -355,8 +376,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 150",
-          "value": 55.78,
+          "label": "Kilometrierung auf der Linie 251",
+          "value": 43.38158,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -364,15 +385,15 @@
       ],
       "questions": [
         {
-          "id": "linien:fa322166",
+          "id": "linien:95cc6617",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Les Tuileries eingetragen?",
-          "min": 45,
-          "max": 81,
+          "prompt": "Bei welchem Streckenkilometer der Linie 251 ist Lucens eingetragen?",
+          "min": 35,
+          "max": 63,
           "step": 1,
           "unit": "km",
-          "correct": 55.78,
-          "explanation": "Die Kilometrierung von Les Tuileries auf der Linie 150 beträgt 55.78. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 43.38158,
+          "explanation": "Die Kilometrierung von Lucens auf der Linie 251 beträgt 43.38158. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -381,7 +402,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 1 Wartehalle. Les Tuileries steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 1 Wartehalle. Lucens steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -405,22 +426,22 @@
       ],
       "questions": [
         {
-          "id": "services:ec97c7ff",
+          "id": "services:5f2cbc8a",
           "type": "true_false",
-          "prompt": "Les Tuileries steht in der Liste der WLAN-Standorte.",
+          "prompt": "Lucens steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:64a5adb5",
+          "id": "services:a7da5189",
           "type": "cloze",
-          "prompt": "In Les Tuileries sind ___ Billettentwerter erfasst.",
+          "prompt": "In Lucens sind ___ Billettentwerter erfasst.",
           "options": [
             "2",
-            "4",
-            "6"
+            "6",
+            "8"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
@@ -433,17 +454,17 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten ist für Les Tuileries 1 Sitzbank erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Lucens 3 Sitzbänke erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 1,
+          "value": 3,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
         {
           "label": "Perrons mit erfasstem Belag",
-          "value": 1,
+          "value": 2,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
         }
@@ -454,21 +475,20 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "1",
-            "2",
             "3",
-            "4"
+            "5",
+            "7",
+            "9"
           ],
           "correct": 0,
-          "explanation": "Erfasst ist 1 Sitzbank. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "explanation": "Erfasst sind 3 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 1
         },
         {
-          "id": "ausstattung:f5b7373c",
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
-          "prompt": "Welcher Belag ist für das erfasste Perron verzeichnet?",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
             "Beton-Belag",
             "Bituminöses Mischgut",
@@ -476,7 +496,7 @@
             "Verbundstein-Pflästerung"
           ],
           "correct": 1,
-          "explanation": "Für das Perron mit Daten ist Bituminöses Mischgut erfasst.",
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
           "difficulty": 2
@@ -502,18 +522,18 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 1 Gleise (1). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
-      "quelle": "21197_behig-haltekantesegment"
-    },
-    {
-      "thema": "Perronhöhen",
-      "grund": "Zu den erfassten Gleisen ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
     },
     {
       "thema": "Fahrplan",

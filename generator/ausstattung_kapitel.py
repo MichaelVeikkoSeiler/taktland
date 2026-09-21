@@ -52,7 +52,10 @@ def body_text(name, a):
     teile = [f"{ch(a[feld])} {mehrz if a[feld] != 1 else einz}"
              for feld, einz, mehrz in BESTAENDE if feld in a]
     if teile:
-        saetze.append(f"In den offenen Daten sind für {name} {aufzaehlen(teile)} erfasst.")
+        # Vernier: «sind für Vernier 1 Sitzbank erfasst»
+        einzeln = len(teile) == 1 and teile[0].startswith("1 ")
+        saetze.append(f"In den offenen Daten {'ist' if einzeln else 'sind'} für {name} "
+                      f"{aufzaehlen(teile)} erfasst.")
     pb = a.get("perronbelag")
     if pb:
         arten = pb["belagsarten"]

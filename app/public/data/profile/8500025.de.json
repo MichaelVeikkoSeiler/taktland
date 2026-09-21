@@ -1,12 +1,11 @@
 {
-  "uic": 8501011,
-  "name": "Les Tuileries",
+  "uic": 8500025,
+  "name": "Itingen",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
   "generated": "2026-09-21",
   "sources": [
-    "21197_behig-haltekantesegment",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
@@ -16,7 +15,6 @@
     "passagierfrequenz",
     "perron",
     "perronoberflache",
-    "sektortafel",
     "wifistation",
     "zugzahlen"
   ],
@@ -24,25 +22,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Les Tuileries 2'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 2'000, an einem freien Tag 1'100. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Itingen 1'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 1'100, an einem freien Tag 620. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 2400,
+          "value": 1300,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 2000,
+          "value": 1100,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 1100,
+          "value": 620,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -50,17 +48,17 @@
       ],
       "questions": [
         {
-          "id": "steckbrief:47c4609a",
+          "id": "steckbrief:95b13e1d",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Les Tuileries ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Itingen ein und aus?",
           "options": [
-            "720",
-            "960",
-            "2'400",
-            "2'900"
+            "910",
+            "1'300",
+            "1'600",
+            "1'800"
           ],
-          "correct": 2,
-          "explanation": "An einem Werktag sind es 2'400 Ein- und Aussteigende, Stand 2025.",
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 1'300 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -71,41 +69,36 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2018",
-              "value": 640,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2022",
-              "value": 1300,
+              "value": 1200,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2024",
-              "value": 1700,
-              "factRef": "steckbrief.verlauf[3].dwv"
+              "label": "2025",
+              "value": 1300,
+              "factRef": "steckbrief.verlauf[4].dwv"
             },
             {
-              "label": "2025",
-              "value": 2400,
-              "factRef": "steckbrief.verlauf[4].dwv"
+              "label": "2024",
+              "value": 1400,
+              "factRef": "steckbrief.verlauf[3].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 640 (2018), 1'300 (2022), 1'700 (2024), 2'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 1'200 (2022), 1'300 (2025), 1'400 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:431cce31",
+          "id": "steckbrief:3b67c460",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Les Tuileries ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Itingen ___ Personen ein und aus.",
           "options": [
-            "770",
-            "940",
-            "1'100"
+            "430",
+            "530",
+            "620"
           ],
           "correct": 2,
-          "explanation": "An einem freien Tag sind es 1'100 Personen, an einem Werktag 2'400. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "explanation": "An einem freien Tag sind es 620 Personen, an einem Werktag 1'300. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -114,56 +107,56 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Les Tuileries liegt auf 388.79 Metern über Meer in der Gemeinde Bellevue. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet TUI.",
+      "body": "Itingen liegt auf 358.64 Metern über Meer in der Gemeinde Itingen, Bezirk Sissach, Kanton Basel-Landschaft. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet IT.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 388.79,
+          "value": 358.64,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "TUI",
+          "value": "IT",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Gemeinde",
-          "value": "Bellevue",
+          "label": "Bezirk",
+          "value": "Sissach",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:75a35d4d",
+          "id": "stammdaten:e3de2cfe",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Les Tuileries?",
-          "min": 310,
-          "max": 570,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Itingen?",
+          "min": 290,
+          "max": 530,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 388.79,
-          "explanation": "Der Bahnhof liegt auf 388.79 Metern über Meer.",
+          "correct": 358.64,
+          "explanation": "Der Bahnhof liegt auf 358.64 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:53866d08",
+          "id": "stammdaten:5085634e",
           "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt der Bahnhof Les Tuileries?",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Itingen?",
           "options": [
-            "Bellevue",
-            "Genthod",
-            "Pregny-Chambésy",
-            "Versoix"
+            "Arlesheim",
+            "Laufen",
+            "Liestal",
+            "Sissach"
           ],
-          "correct": 0,
+          "correct": 3,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Bellevue eingetragen.",
-          "factRef": "stammdaten.gemeinde",
+          "explanation": "Als Bezirk ist Sissach eingetragen.",
+          "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
       ]
@@ -171,17 +164,17 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Les Tuileries liegen offene Daten vor. Perron 1 ist ein Hausperron von 182 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Itingen liegen offene Daten vor. Perron 2 misst 221 Meter, Perron 1 misst 220 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
-          "value": 1,
+          "value": 2,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 182,
+          "value": 221,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -189,86 +182,60 @@
       ],
       "questions": [
         {
-          "id": "perrons:ddb37c65",
+          "id": "perrons:66680bb9",
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Les Tuileries?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Itingen?",
           "options": [
-            "182 m",
-            "220 m",
-            "250 m",
-            "310 m"
+            "120 m",
+            "150 m",
+            "190 m",
+            "221 m"
           ],
-          "correct": 0,
-          "explanation": "Das erfasste Perron misst 182 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 221 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:04fd8c01",
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2",
+              "rechts": "715.46 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "633.7 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2 hat 715.46 Quadratmeter, Perron 1 hat 633.7 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:a055339a",
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Les Tuileries ist niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in Itingen sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
       ]
     },
     {
-      "id": "gleise",
-      "title": "Gleise",
-      "body": "Zu Gleis 1 liegen offene Daten vor. Zu diesem Gleis ist keine Perronhöhe vermerkt.",
-      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
-      "facts": [
-        {
-          "label": "Gleise mit offenen Daten",
-          "value": 1,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.anzahl_mit_daten"
-        },
-        {
-          "label": "Sektoren an Gleis 1",
-          "value": 3,
-          "source": "sektortafel",
-          "factRef": "gleise.items[0].sektoren_anzahl"
-        }
-      ],
-      "questions": [
-        {
-          "id": "gleise:ae4ee670",
-          "type": "cloze",
-          "prompt": "An Gleis 1 in Les Tuileries sind ___ Sektoren erfasst.",
-          "options": [
-            "3",
-            "4",
-            "5"
-          ],
-          "correct": 0,
-          "optionen_aus_fakten": true,
-          "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
-          "factRef": "gleise.items[0].sektoren_anzahl",
-          "difficulty": 2
-        },
-        {
-          "id": "gleise:a44bd15c",
-          "type": "true_false",
-          "prompt": "Zum erfassten Gleis in Les Tuileries ist eine Perronhöhe vermerkt.",
-          "correct": false,
-          "explanation": "Zum erfassten Gleis ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
-          "factRef": "gleise.perronhoehen_cm",
-          "difficulty": 3
-        }
-      ]
-    },
-    {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Perronsegmente zur Hindernisfreiheit sind für Les Tuileries keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Itingen keine erhoben. Von den 2 erfassten Perrons sind 2 als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Niveaufrei erreichbare Perrons",
-          "value": 1,
+          "value": 2,
           "source": "perron",
           "factRef": "hindernisfreiheit.perrons_niveaufrei"
         },
@@ -281,11 +248,11 @@
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:6c2b6c6d",
+          "id": "hindernisfreiheit:fdec7d4f",
           "type": "true_false",
-          "prompt": "Für Les Tuileries sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "prompt": "Für Itingen sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
-          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
+          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zu den Perrons.",
           "factRef": "hindernisfreiheit.perrons_mit_daten",
           "difficulty": 3
         }
@@ -294,19 +261,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Les Tuileries – Genthod-Bellevue 413 Züge pro Tag, das sind 150'883 im Jahr. Auf dem Abschnitt Vengeron (diag) – Les Tuileries sind es ebenfalls 413 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Itingen – Sissach 320 Züge pro Tag, das sind 116'881 im Jahr. Auf dem Abschnitt Lausen – Itingen sind es ebenfalls 320 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 61 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Les Tuileries – Genthod-Bellevue",
-          "value": 413,
+          "label": "Züge pro Tag, Personenverkehr Itingen – Sissach",
+          "value": 320,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Les Tuileries – Genthod-Bellevue",
-          "value": 150883,
+          "label": "Züge pro Jahr, Personenverkehr Itingen – Sissach",
+          "value": 116881,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -314,30 +281,30 @@
       ],
       "questions": [
         {
-          "id": "zuege:d01e05f9",
+          "id": "zuege:bc26179d",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Itingen – Sissach?",
           "options": [
-            "413",
-            "500",
-            "580",
-            "700"
+            "270",
+            "320",
+            "380",
+            "450"
           ],
-          "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 413 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 320 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:b7e8be68",
+          "id": "zuege:a54ad280",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Les Tuileries – Genthod-Bellevue?",
-          "min": 123500,
-          "max": 219000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Itingen – Sissach?",
+          "min": 95500,
+          "max": 169500,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 150883,
-          "explanation": "Die Erhebung zählt 150'883 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 116881,
+          "explanation": "Die Erhebung zählt 116'881 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -346,7 +313,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Les Tuileries ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 55.78 eingetragen.",
+      "body": "Für Itingen ist 1 Linie erfasst: die Linie 500 Basel SBB - Olten - Luzern. Der Bahnhof ist darauf bei Kilometer 19.151 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -355,8 +322,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 150",
-          "value": 55.78,
+          "label": "Kilometrierung auf der Linie 500",
+          "value": 19.151,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -364,15 +331,15 @@
       ],
       "questions": [
         {
-          "id": "linien:fa322166",
+          "id": "linien:32625363",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Les Tuileries eingetragen?",
-          "min": 45,
-          "max": 81,
-          "step": 1,
+          "prompt": "Bei welchem Streckenkilometer der Linie 500 ist Itingen eingetragen?",
+          "min": 15.5,
+          "max": 28.0,
+          "step": 0.1,
           "unit": "km",
-          "correct": 55.78,
-          "explanation": "Die Kilometrierung von Les Tuileries auf der Linie 150 beträgt 55.78. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 19.151,
+          "explanation": "Die Kilometrierung von Itingen auf der Linie 500 beträgt 19.151. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -381,7 +348,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 1 Wartehalle. Les Tuileries steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 2 Wartehallen. Itingen steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -405,18 +372,18 @@
       ],
       "questions": [
         {
-          "id": "services:ec97c7ff",
+          "id": "services:36480fc3",
           "type": "true_false",
-          "prompt": "Les Tuileries steht in der Liste der WLAN-Standorte.",
+          "prompt": "Itingen steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:64a5adb5",
+          "id": "services:5d5fda8d",
           "type": "cloze",
-          "prompt": "In Les Tuileries sind ___ Billettentwerter erfasst.",
+          "prompt": "In Itingen sind ___ Billettentwerter erfasst.",
           "options": [
             "2",
             "4",
@@ -433,7 +400,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten ist für Les Tuileries 1 Sitzbank erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Itingen 1 Sitzbank sowie 3 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -442,8 +409,14 @@
           "factRef": "ausstattung.sitzbaenke"
         },
         {
+          "label": "Infopunkte erfasst",
+          "value": 3,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
           "label": "Perrons mit erfasstem Belag",
-          "value": 1,
+          "value": 2,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
         }
@@ -466,17 +439,32 @@
           "optionen_aus_fakten": true
         },
         {
-          "id": "ausstattung:f5b7373c",
+          "id": "ausstattung:a8529c11",
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "7"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "id": "ausstattung:92d1d5cd",
           "type": "single_choice",
-          "prompt": "Welcher Belag ist für das erfasste Perron verzeichnet?",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
             "Beton-Belag",
             "Bituminöses Mischgut",
             "Gussasphalt",
             "Verbundstein-Pflästerung"
           ],
-          "correct": 1,
-          "explanation": "Für das Perron mit Daten ist Bituminöses Mischgut erfasst.",
+          "correct": 3,
+          "explanation": "Für alle Perrons mit Daten ist Verbundstein-Pflästerung erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
           "difficulty": 2
@@ -501,13 +489,8 @@
       "quelle": "anzahl-sbb-bahnhofbenutzer"
     },
     {
-      "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 1 Gleise (1). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
-      "quelle": "21197_behig-haltekantesegment"
-    },
-    {
-      "thema": "Perronhöhen",
-      "grund": "Zu den erfassten Gleisen ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {

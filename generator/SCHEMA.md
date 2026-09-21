@@ -552,6 +552,14 @@ Art, factRef und Wortlaut. Die App speichert Antworten darunter. Vorher galt
 die Stelle («steckbrief:0»), und fiel eine Frage weg, hing die alte Antwort an
 der nächsten.
 
+**Ziffern in Namen sind keine Zahlen.** «Root D4» fiel mit 21 Fehlern durch,
+weil der Validator die 4 für einen unbelegten Wert hielt. Wörter aus Buchstaben
+und Ziffern, die in einem Namen der Fakten stehen, gelten jetzt als Bezeichnung.
+
+**Einzahl auch in der Ausstattung.** «In den offenen Daten sind für Vernier 1
+Sitzbank erfasst» heisst jetzt «ist». Bei «12 Sitzbänke sowie 1 Infopunkt»
+bleibt «sind» richtig, die Prüfregel unterscheidet das.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:

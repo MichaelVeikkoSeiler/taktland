@@ -22,3 +22,13 @@ def test_einzahl_muster_trifft_nur_die_falsche_form():
     assert not re.search(EINZAHL, "Erfasst ist 1 Infopunkt.")
     assert not re.search(EINZAHL, "Erfasst sind 1 Billettautomat, 3 Billettentwerter und 1 Wartehalle.")
     assert not re.search(EINZAHL, "Von den 12 erfassten Perrons sind 10 niveaufrei.")
+
+
+def test_einzahl_bei_einem_einzigen_bestand():
+    # Vernier: «sind für Vernier 1 Sitzbank erfasst»; «12 Sitzbänke sowie
+    # 1 Infopunkt» ist richtig und darf nicht anschlagen
+    import re
+    from taktland import EINZAHL
+    assert re.search(EINZAHL, "In den offenen Daten sind für Vernier 1 Sitzbank erfasst.")
+    assert not re.search(EINZAHL, "In den offenen Daten sind für Muttenz 12 Sitzbänke sowie 1 Infopunkt erfasst.")
+    assert not re.search(EINZAHL, "In den offenen Daten sind für Zwingen 1 Sitzbank sowie 1 Infopunkt erfasst.")

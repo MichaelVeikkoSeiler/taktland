@@ -58,3 +58,10 @@ def test_tagesrhythmus_gleichstand_ist_kein_einzelsieger():
     from baukasten import tagesrhythmus
     k = tagesrhythmus(fakten(8501026))
     assert "der kleinste auf Dienstag und Mittwoch, je 12.8 Prozent" in k["body"]
+
+
+def test_ziffer_im_namen_ist_keine_zahl():
+    # Root D4: die 4 steht im Namen, nicht als Wert in den Fakten
+    d = B.bauen("8515997")
+    b, _ = pruefe(d, fakten_laden(8515997))
+    assert not b.fehler
