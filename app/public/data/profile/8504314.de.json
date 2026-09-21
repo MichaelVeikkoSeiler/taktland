@@ -1,0 +1,749 @@
+{
+  "uic": 8504314,
+  "name": "La Chaux-de-Fonds",
+  "tier": "L",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "passagierfrequenz",
+    "haltestelle-haltekante",
+    "perron",
+    "21197_behig-haltekantesegment",
+    "sektortafel",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "zugzahlen",
+    "linie-mit-betriebspunkten",
+    "wifistation",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-wartehallen",
+    "haltestelle-karte-trafimage"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in La Chaux-de-Fonds 11'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 10'200, an einem freien Tag 6'300. Die Infrastruktur gehört der SBB, Züge fahren hier von BLS und SBB.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 11900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 10200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 6300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Abgrenzung der Zahl",
+          "value": "Ohne CJ und transN.",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.bemerkung"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in La Chaux-de-Fonds ein und aus?",
+          "options": [
+            "4'800",
+            "6'500",
+            "8'300",
+            "11'900"
+          ],
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 11'900 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 9800,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2022",
+              "value": 10100,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 11500,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 11900,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 12100,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Der tiefste erfasste Wert liegt 2018 bei 9'800, der höchste 2024 bei 12'100. Für 2025 sind 11'900 erfasst, also etwas weniger als im Vorjahr.",
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in La Chaux-de-Fonds umfasst auch CJ und transN.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt «Ohne CJ und transN.». Die Zahl deckt also nicht den gesamten Verkehr am Bahnhof ab.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "La Chaux-de-Fonds liegt auf 994.23 Metern über Meer in der Gemeinde La Chaux-de-Fonds, Kanton Neuchâtel. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 994.23,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Kanton",
+          "value": "Neuchâtel",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.kanton"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "CF",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof La Chaux-de-Fonds?",
+          "min": 900,
+          "max": 1120,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 994.23,
+          "explanation": "Der Bahnhof liegt auf 994.23 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs La Chaux-de-Fonds lautet ___.",
+          "options": [
+            "CDF",
+            "CF",
+            "LCF"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist CF als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 3 Perrons in La Chaux-de-Fonds liegen offene Daten vor, alle 3 sind niveaufrei erreichbar und alle 3 sind als Mittelperron erfasst. Perron 5/6 misst 279 Meter, Perron 3/4 misst 231 Meter und Perron 1/2 misst 141 Meter.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 3,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 279,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Kürzestes erfasstes Perron",
+          "value": 141,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.kuerzeste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 5/6",
+              "value": 279,
+              "factRef": "perrons.items[0].laenge_m"
+            },
+            {
+              "label": "Perron 3/4",
+              "value": 231,
+              "factRef": "perrons.items[1].laenge_m"
+            },
+            {
+              "label": "Perron 1/2",
+              "value": 141,
+              "factRef": "perrons.items[2].laenge_m"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 5/6 misst 279 Meter, Perron 3/4 misst 231 und Perron 1/2 misst 141 Meter.",
+          "difficulty": 2
+        },
+        {
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 5/6",
+              "rechts": "1054.08 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 3/4",
+              "rechts": "956.58 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1/2",
+              "rechts": "803.56 m²",
+              "factRef": "perrons.items[2].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 5/6 hat 1054.08 Quadratmeter, Perron 3/4 hat 956.58 und Perron 1/2 hat 803.56.",
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zu allen 3 erfassten Perrons in La Chaux-de-Fonds ist ein niveaufreier Zugang vermerkt.",
+          "correct": true,
+          "explanation": "Für alle 3 Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 6 Gleisen liegen offene Daten vor: 1 bis 6. Gleis 1 hat mit 230 Metern die längste erfasste Perronkante, die übrigen messen zwischen 143 und 151 Metern. Jedes der 6 erfassten Gleise trägt 3 Sektoren. Die Perronhöhen liegen bei 20, 25 und 55 Zentimetern.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 6,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante",
+          "value": 230,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Sektoren je Gleis",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "1",
+          "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 1 hat mit 230 Metern die längste erfasste Perronkante, deutlich vor Gleis 3 mit 151 Metern.",
+          "difficulty": 2
+        },
+        {
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 3 in La Chaux-de-Fonds erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": [
+            0,
+            1,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 3 sind 20, 25 und 55 Zentimeter verzeichnet. Es ist das einzige erfasste Gleis mit drei Höhen.",
+          "factRef": "gleise.items[2].perronhoehen_cm",
+          "difficulty": 3
+        },
+        {
+          "type": "cloze",
+          "prompt": "An jedem erfassten Gleis in La Chaux-de-Fonds sind ___ Sektoren verzeichnet.",
+          "options": [
+            "2",
+            "3",
+            "6"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Alle 6 erfassten Gleise tragen die Sektoren A, B und C, also je 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für La Chaux-de-Fonds sind 39 Perronsegmente erfasst: 25 mit einer Perronhöhe von 20 Zentimetern, 8 mit 55 und 6 mit 25 Zentimetern. An 5 der 6 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 39,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 5,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Perronsegmente sind in La Chaux-de-Fonds erfasst?",
+          "options": [
+            "16",
+            "24",
+            "31",
+            "39"
+          ],
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 39 Segmente, Stand 2023. Das sind mehr als an manchem grösseren Bahnhof, weil jede Höhe einzeln erfasst wird.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perronhöhen nach der Zahl der erfassten Segmente, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "20 cm",
+              "value": 25,
+              "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.20"
+            },
+            {
+              "label": "55 cm",
+              "value": 8,
+              "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.55"
+            },
+            {
+              "label": "25 cm",
+              "value": 6,
+              "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm.25"
+            }
+          ],
+          "factRef": "hindernisfreiheit.segmente_pro_perronhoehe_cm",
+          "explanation": "Auf 20 Zentimeter entfallen 25 Segmente, auf 55 Zentimeter 8 und auf 25 Zentimeter 6.",
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei keinem der 39 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 39 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt von La Chaux-de-Fonds Les Forges her: Im Personenverkehr verkehren dort 91 Züge pro Tag, das sind 33'053 im Jahr. Richtung Les Hauts-Geneveys sind es 76 Züge pro Tag, Richtung Renan BE 69.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Les Forges–La Chaux-de-Fonds",
+          "value": 91,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Les Forges–La Chaux-de-Fonds",
+          "value": 33053,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Les Forges–La Chaux-de-Fonds?",
+          "options": [
+            "36",
+            "50",
+            "64",
+            "91"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 91 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte im Personenverkehr nach Zügen pro Tag, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Les Forges – La Chaux-de-Fonds",
+              "value": 91,
+              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
+            },
+            {
+              "label": "La Chaux-de-Fonds – Les Hauts-Geneveys",
+              "value": 76,
+              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
+            },
+            {
+              "label": "La Chaux-de-Fonds – Renan BE",
+              "value": 69,
+              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Von Les Forges her sind es 91 Züge pro Tag, Richtung Les Hauts-Geneveys 76 und Richtung Renan BE 69.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für La Chaux-de-Fonds sind 3 Linien erfasst: die Linie 224 Chambrelien Nord–Le Locle (Frontière), die Linie 234 La Chaux-de-Fonds–Les Ponts-de-Martel und die Linie 235 Tavannes–Le Noirmont. Auf der Linie 224 ist der Bahnhof bei Kilometer 29.457 eingetragen, auf der Linie 235 bei Kilometer 44.033.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 3,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 224",
+          "value": 29.457,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "match",
+          "prompt": "Welche Kilometrierung gehört zu welcher Linie?",
+          "pairs": [
+            {
+              "links": "Linie 224",
+              "rechts": "29.457",
+              "factRef": "linien.items[0].km_am_bahnhof"
+            },
+            {
+              "links": "Linie 235",
+              "rechts": "44.033",
+              "factRef": "linien.items[2].km_am_bahnhof"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Auf der Linie 224 steht der Bahnhof bei Kilometer 29.457, auf der Linie 235 bei 44.033. Jeder Wert zählt ab dem Anfang der jeweiligen Linie.",
+          "difficulty": 3
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Linien sind für La Chaux-de-Fonds erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "5"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 3 Linien: 224, 234 und 235.",
+          "factRef": "linien.anzahl",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "La Chaux-de-Fonds steht in der Liste der WLAN-Standorte. Erfasst sind 3 Billettautomaten vom Typ ePOS, 6 Billettentwerter und 3 Wartehallen.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": true,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 3,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Wartehallen erfasst",
+          "value": 3,
+          "source": "haltestelle-wartehallen",
+          "factRef": "services.wartehallen_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "La Chaux-de-Fonds steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In La Chaux-de-Fonds sind ___ Billettentwerter erfasst.",
+          "options": [
+            "4",
+            "6",
+            "9"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für La Chaux-de-Fonds 10 Sitzbänke, 3 Infopunkte sowie 14 Schliessfächer erfasst. Zu 3 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 10,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 3,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Schliessfächer erfasst",
+          "value": 14,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 3,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "7",
+            "10",
+            "17",
+            "22"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 10 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "1",
+            "3",
+            "7",
+            "9"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 3 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 8,
+          "max": 25,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 14,
+          "explanation": "Erfasst sind 14 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Perron 5/6",
+              "value": 1850,
+              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
+            },
+            {
+              "label": "Perron 3/4",
+              "value": 1616,
+              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+            },
+            {
+              "label": "Perron 1/2",
+              "value": 1025,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+            }
+          ],
+          "factRef": "ausstattung.perronbelag.items",
+          "explanation": "Perron 5/6 hat mit 1'850 Quadratmetern die grösste erfasste Fläche, Perron 1/2 mit 1'025 die kleinste der gezeigten.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhofplan",
+      "title": "Bahnhofplan",
+      "body": "Für La Chaux-de-Fonds ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
+      "facts": [
+        {
+          "label": "Plan als A4-Blatt",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-la-chaux-de-fonds-a4.pdf",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.a4_pdf"
+        },
+        {
+          "label": "Eigentümerin der Pläne",
+          "value": "SBB",
+          "source": "haltestelle-karte-trafimage",
+          "factRef": "bahnhofplan.eigentuemer"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Für La Chaux-de-Fonds ist ein Bahnhofplan als PDF veröffentlicht.",
+          "correct": true,
+          "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
+          "factRef": "bahnhofplan.a4_pdf",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (1, 2, 3, 4, 5, 6). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne CJ und transN.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

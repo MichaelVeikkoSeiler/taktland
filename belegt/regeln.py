@@ -46,6 +46,10 @@ VERGLEICH = (
 #: Zeichen, aus denen eine Bezeichnung wie «1/11» oder «4/5» bestehen kann
 BEZEICHNUNG = re.compile(r"[\w/.'’-]+")
 
+#: Benennungen, in denen eine Ziffer Teil des Namens ist und nichts ueber den
+#: Gegenstand aussagt. «A4-Blatt» ist ein Papierformat, keine Zahl aus den Daten.
+NAMENSZIFFERN = re.compile(r"\bA[0-9]\b|\bDIN\s?A[0-9]\b|\bCOVID-19\b")
+
 
 def _teil_einer_bezeichnung(text, treffer, faktenbasis):
     """Steht die gefundene Zahl in einer Bezeichnung, die so in den Fakten steht?"""
@@ -102,6 +106,9 @@ class Regelwerk:
             # Zahlen, die Teil einer Bezeichnung aus den Fakten sind, zaehlen
             # als belegt: «Perron 1/11» ist eine Bezeichnung, keine Rechnung.
             if _teil_einer_bezeichnung(text, m, faktenbasis):
+                continue
+            if any(t.start() <= m.start() and t.end() >= m.end()
+                   for t in NAMENSZIFFERN.finditer(text)):
                 continue
             if roh.isdigit() and len(roh) >= self.tausender_ab_stellen:
                 lesbar = f"{int(roh):,}".replace(",", "'")
