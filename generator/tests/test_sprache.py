@@ -4,6 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import bauen as B  # noqa: E402
 from baukasten import aufzaehlung  # noqa: E402
 
 
@@ -32,3 +33,10 @@ def test_einzahl_bei_einem_einzigen_bestand():
     assert re.search(EINZAHL, "In den offenen Daten sind für Vernier 1 Sitzbank erfasst.")
     assert not re.search(EINZAHL, "In den offenen Daten sind für Muttenz 12 Sitzbänke sowie 1 Infopunkt erfasst.")
     assert not re.search(EINZAHL, "In den offenen Daten sind für Zwingen 1 Sitzbank sowie 1 Infopunkt erfasst.")
+
+
+def test_hilfskante_ist_weiblich():
+    # Egnach: «Perron 1 ist ein Hilfskante von 120 Metern»
+    d = B.bauen("8506309")
+    body = next(k for k in d["chapters"] if k["id"] == "perrons")["body"]
+    assert "ist eine Hilfskante von" in body

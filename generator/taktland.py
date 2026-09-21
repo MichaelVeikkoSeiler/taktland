@@ -516,6 +516,9 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                 b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: nach dem Doppelpunkt fehlt die Aufzählung")
             if m := re.search(EINZAHL, text):
                 b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: bei genau einem passt die Mehrzahl nicht")
+            # Perrontypen sind männlich, bis auf die Hilfskante (Egnach)
+            if m := re.search(r"\bein \w*kante\b", text):
+                b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: Kante ist weiblich, «eine»")
             # Namen aus den Daten enden manchmal mit einem Abkürzungspunkt
             if m := re.search(r"\S{0,20}[^.]\.\.(?!\.)", text):
                 b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: doppelter Punkt")

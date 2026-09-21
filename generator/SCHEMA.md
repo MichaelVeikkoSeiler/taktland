@@ -606,3 +606,9 @@ Segmente ohne Höhe, die der Text übergeht.
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:
 480'900. «Perron», nicht «Bahnsteig». «Billett», nicht «Fahrkarte». Sie-Form vermeiden,
 neutral formulieren.
+
+**Artikel nach dem Wort aus den Daten.** Die Perrontypen der Quelle sind
+männlich (Hausperron, Mittelperron), bis auf die Hilfskante. «Perron 1 ist
+ein Hilfskante» stand bei Egnach. Wo ein Wort aus den Daten in einen Satz
+mit Artikel kommt, richtet sich der Artikel nach dem Wort, nicht nach dem
+häufigsten Fall. Der Validator meldet «ein …kante».

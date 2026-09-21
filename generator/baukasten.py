@@ -368,7 +368,9 @@ def perrons(f):
     satz = [f"Zu {n} {'Perron' if n == 1 else 'Perrons'} in {name} liegen offene Daten vor."]
     if n == 1:
         it = items[0]
-        satz.append(f"Perron {it['nr']} ist ein {it['typ']} von {it['laenge_m']} Metern.")
+        # «Hilfskante» ist weiblich: «Perron 1 ist ein Hilfskante» (Egnach)
+        artikel = "eine" if it["typ"].endswith("kante") else "ein"
+        satz.append(f"Perron {it['nr']} ist {artikel} {it['typ']} von {it['laenge_m']} Metern.")
     else:
         reihe = [it for _, it in sorted(mit_laenge, key=lambda t: -t[1]["laenge_m"])]
         if len(reihe) <= 4:
