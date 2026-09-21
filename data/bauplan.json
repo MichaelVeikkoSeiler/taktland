@@ -85,6 +85,16 @@
    ]
   }
  },
+ "8500035": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Laufen",
+    "Arlesheim"
+   ]
+  }
+ },
  "8500100": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -152,6 +162,16 @@
   }
  },
  "8500115": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arlesheim",
+    "Liestal",
+    "Sissach"
+   ]
+  }
+ },
+ "8500116": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -1010,6 +1030,16 @@
    "distraktoren": [
     "SMA",
     "STM"
+   ]
+  }
+ },
+ "8501405": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Martigny",
+    "Monthey",
+    "Conthey"
    ]
   }
  },
@@ -2303,6 +2333,16 @@
    ]
   }
  },
+ "8503208": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Richterswil",
+    "Stäfa",
+    "Wädenswil"
+   ]
+  }
+ },
  "8503209": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -2310,6 +2350,16 @@
     "Altendorf",
     "Rapperswil-Jona",
     "Hombrechtikon"
+   ]
+  }
+ },
+ "8503210": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "March",
+    "Schwyz",
+    "Küssnacht (SZ)"
    ]
   }
  },
@@ -2657,6 +2707,16 @@
     "Bad Zurzach",
     "Döttingen",
     "Rekingen"
+   ]
+  }
+ },
+ "8503411": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Baden",
+    "Laufenburg",
+    "Brugg"
    ]
   }
  },
@@ -3068,6 +3128,16 @@
    ]
   }
  },
+ "8504125": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Avenches",
+    "Corcelles-près-Payerne",
+    "Grolley-Ponthaux"
+   ]
+  }
+ },
  "8504126": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3127,6 +3197,16 @@
    ]
   }
  },
+ "8504135": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura-Nord vaudois",
+    "Lavaux-Oron",
+    "Morges"
+   ]
+  }
+ },
  "8504138": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3144,6 +3224,16 @@
     "La Broye",
     "Sense",
     "See"
+   ]
+  }
+ },
+ "8504140": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Faoug",
+    "Kerzers",
+    "Müntschemier"
    ]
   }
  },
@@ -3217,12 +3307,31 @@
    ]
   }
  },
+ "8504208": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BOLE",
+    "CLB"
+   ]
+  }
+ },
  "8504215": {
   "stammdaten": {
    "frage": "abkuerzung",
    "distraktoren": [
     "NOI",
     "CDM"
+   ]
+  }
+ },
+ "8504219": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Neuchâtel",
+    "Boudry",
+    "Val-de-Ruz"
    ]
   }
  },
@@ -3281,6 +3390,16 @@
    ]
   }
  },
+ "8504227": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura bernois",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504228": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3288,6 +3407,16 @@
     "Jura bernois",
     "Seeland",
     "Bern-Mittelland"
+   ]
+  }
+ },
+ "8504231": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Milvignes",
+    "Val-de-Ruz",
+    "Boudry"
    ]
   }
  },
@@ -3351,6 +3480,16 @@
   }
  },
  "8504306": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8504307": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -3614,6 +3753,16 @@
    "distraktoren": [
     "AI",
     "ER"
+   ]
+  }
+ },
+ "8505201": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Riviera",
+    "Locarno",
+    "Bellinzona"
    ]
   }
  },
@@ -4037,6 +4186,26 @@
    ]
   }
  },
+ "8506023": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Winterthur",
+    "Bülach",
+    "Pfäffikon"
+   ]
+  }
+ },
+ "8506024": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Winterthur",
+    "Bülach",
+    "Pfäffikon"
+   ]
+  }
+ },
  "8506038": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -4160,6 +4329,16 @@
    ]
   }
  },
+ "8506103": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frauenfeld",
+    "Münchwilen",
+    "Kreuzlingen"
+   ]
+  }
+ },
  "8506105": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -4196,6 +4375,16 @@
     "Frauenfeld",
     "Kreuzlingen",
     "Weinfelden"
+   ]
+  }
+ },
+ "8506119": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bottighofen",
+    "Lengwil",
+    "Münsterlingen"
    ]
   }
  },
@@ -4695,6 +4884,16 @@
     "Aarau",
     "Lenzburg",
     "Kulm"
+   ]
+  }
+ },
+ "8508200": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Thun",
+    "Seeland"
    ]
   }
  },
