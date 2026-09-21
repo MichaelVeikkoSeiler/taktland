@@ -73,7 +73,12 @@ data/profiles/ lernbare Profile je Bahnhof und Sprache
 python pipeline/fetch.py                    # Datasets laden
 .venv/bin/python pipeline/build_facts.py --all   # Fakten für alle Bahnhöfe
 .venv/bin/python generator/validate.py --alle    # Profile prüfen
+python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne Profil
 ```
+
+Neue Profile entstehen in Schüben von acht mit `generator/baukasten.py`. Jedes
+wird mit `zeigen()` gelesen, bevor es gespeichert wird. Was dabei auffällt,
+wird zur Prüfregel oder zum Abschnitt in `generator/SCHEMA.md`.
 
 ## Gestaltung
 
