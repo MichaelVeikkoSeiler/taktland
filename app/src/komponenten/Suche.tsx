@@ -1,23 +1,35 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 
 const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
 }
 
-/** So viele Einträge zeigt die Liste auf einmal. Früher war hier Schluss,
- *  ohne Hinweis: Oben stand «145 Bahnhöfe», unten erschienen 60. */
-const SCHRITT = 60
+/** So viele Bahnhöfe stehen auf einer Seite. Vorher wuchs die Liste mit
+ *  «Weitere anzeigen» um je 60 Einträge, bis alle untereinander standen. */
+const PRO_SEITE = 20
+
+/** Was die Liste sich merkt, solange die App offen ist. Sie verschwindet,
+ *  wenn ein Bahnhof offen ist: Wer zurückkommt, landet auf derselben Seite. */
+export interface ListenStand {
+  begriff: string
+  nurMitProfil: boolean
+  seite: number
+}
 
 /** Umlaute und Akzente ignorieren, damit «Zurich» auch «Zürich» findet. */
 function vereinfachen(text: string) {
   return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 }
 
-export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: number) => void }) {
-  const [begriff, setBegriff] = useState('')
-  const [nurMitProfil, setNurMitProfil] = useState(true)
-  const [anzahl, setAnzahl] = useState(SCHRITT)
+export function Suche({ index, oeffnen, stand, aendern }: {
+  index: BahnhofIndex
+  oeffnen: (uic: number) => void
+  stand: ListenStand
+  aendern: (neu: ListenStand) => void
+}) {
+  const { begriff, nurMitProfil } = stand
+  const listeOben = useRef<HTMLDivElement>(null)
 
   const treffer = useMemo(() => {
     const b = vereinfachen(begriff.trim())
@@ -28,8 +40,32 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
                                        vereinfachen(e.kanton ?? '').includes(b))
     return liste
   }, [begriff, nurMitProfil, index.bahnhoefe])
-  const sichtbar = treffer.slice(0, anzahl)
-  const rest = treffer.length - sichtbar.length
+
+  const seiten = Math.max(1, Math.ceil(treffer.length / PRO_SEITE))
+  const seite = Math.min(stand.seite, seiten - 1)
+  const von = seite * PRO_SEITE
+  const sichtbar = treffer.slice(von, von + PRO_SEITE)
+
+  function blaettern(neu: number, nachOben = false) {
+    const ziel = Math.max(0, Math.min(seiten - 1, neu))
+    if (ziel === seite) return
+    aendern({ ...stand, seite: ziel })
+    if (nachOben) listeOben.current?.scrollIntoView({ block: 'start' })
+  }
+
+  // Pfeiltasten blättern, ausser beim Tippen im Suchfeld oder in der Seitenwahl
+  useEffect(() => {
+    function taste(e: KeyboardEvent) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return
+      if (e.target instanceof Element && e.target.closest('input, select, textarea')) return
+      if (e.key === 'ArrowLeft') blaettern(seite - 1)
+      if (e.key === 'ArrowRight') blaettern(seite + 1)
+    }
+    window.addEventListener('keydown', taste)
+    return () => window.removeEventListener('keydown', taste)
+  })
+
+  const leiste = { seite, seiten, von, bis: von + sichtbar.length, gesamt: treffer.length }
 
   return (
     <div className="px-4 pb-16">
@@ -38,7 +74,7 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
         <input
           type="search"
           value={begriff}
-          onChange={(e) => { setBegriff(e.target.value); setAnzahl(SCHRITT) }}
+          onChange={(e) => aendern({ ...stand, begriff: e.target.value, seite: 0 })}
           placeholder="Bahnhof suchen"
           autoComplete="off"
           className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg
@@ -51,7 +87,7 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
         <input
           type="checkbox"
           checked={nurMitProfil}
-          onChange={(e) => { setNurMitProfil(e.target.checked); setAnzahl(SCHRITT) }}
+          onChange={(e) => aendern({ ...stand, nurMitProfil: e.target.checked, seite: 0 })}
           className="size-4 accent-sbb-red"
         />
         Nur Bahnhöfe mit Lerninhalten
@@ -78,21 +114,16 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
         <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">→</span>
       </a>
 
+      <div ref={listeOben} className="scroll-mt-2">
+        <Blaettern {...leiste} blaettern={(n) => blaettern(n)} name="Seiten" />
+      </div>
+
       <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
         {sichtbar.map((e) => <Eintrag key={e.uic} e={e} oeffnen={oeffnen} />)}
       </ul>
 
-      {rest > 0 && (
-        <button
-          type="button"
-          onClick={() => setAnzahl((a) => a + SCHRITT)}
-          className="mt-4 w-full border border-sbb-cloud bg-white px-4 py-3 text-sbb-black
-                     transition hover:border-sbb-black dark:border-sbb-iron
-                     dark:bg-sbb-midnight dark:text-sbb-white dark:hover:border-sbb-white"
-        >
-          Weitere anzeigen ({sichtbar.length} von {treffer.length}, noch {rest})
-        </button>
-      )}
+      {/* unten zurück an den Anfang der Liste, sonst stünde man mitten in der neuen Seite */}
+      <Blaettern {...leiste} blaettern={(n) => blaettern(n, true)} name="Seiten, unten" />
 
       {treffer.length === 0 && (
         <p className="mt-8 text-center text-sbb-metal dark:text-sbb-storm">
@@ -101,6 +132,58 @@ export function Suche({ index, oeffnen }: { index: BahnhofIndex; oeffnen: (uic: 
         </p>
       )}
     </div>
+  )
+}
+
+/** Pfeile in beide Richtungen, dazwischen die Seitenwahl zum direkten Springen. */
+function Blaettern({ seite, seiten, von, bis, gesamt, blaettern, name }: {
+  seite: number
+  seiten: number
+  von: number
+  bis: number
+  gesamt: number
+  blaettern: (neu: number) => void
+  name: string
+}) {
+  if (seiten <= 1) return null
+  const pfeil = `flex w-14 shrink-0 items-center justify-center border border-sbb-cloud
+                 bg-white text-2xl text-sbb-black transition hover:border-sbb-black
+                 disabled:cursor-default disabled:opacity-30 disabled:hover:border-sbb-cloud
+                 dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white
+                 dark:hover:border-sbb-white dark:disabled:hover:border-sbb-iron`
+  return (
+    <nav aria-label={name} className="mt-4 flex min-h-14 items-stretch gap-2">
+      <button
+        type="button" className={pfeil} disabled={seite === 0}
+        onClick={() => blaettern(seite - 1)} aria-label="Vorherige Seite"
+      >
+        ←
+      </button>
+      <label className="flex min-w-0 flex-1 cursor-pointer flex-col items-center justify-center
+                        border border-sbb-cloud bg-white px-2 py-1 hover:border-sbb-black
+                        dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white">
+        <span className="sr-only">Seite wählen</span>
+        <select
+          value={seite}
+          onChange={(e) => blaettern(Number(e.target.value))}
+          className="cursor-pointer appearance-none bg-transparent text-center font-medium
+                     text-sbb-black dark:text-sbb-white"
+        >
+          {Array.from({ length: seiten }, (_, i) => (
+            <option key={i} value={i}>Seite {i + 1} von {seiten}</option>
+          ))}
+        </select>
+        <span className="text-xs text-sbb-metal dark:text-sbb-storm">
+          {von + 1}–{bis} von {gesamt}
+        </span>
+      </label>
+      <button
+        type="button" className={pfeil} disabled={seite === seiten - 1}
+        onClick={() => blaettern(seite + 1)} aria-label="Nächste Seite"
+      >
+        →
+      </button>
+    </nav>
   )
 }
 

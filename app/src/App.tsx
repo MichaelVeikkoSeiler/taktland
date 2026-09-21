@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { allesZuruecksetzen, bearbeiteBahnhoefe } from './fortschritt'
 import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
-import { Suche } from './komponenten/Suche'
+import { Suche, type ListenStand } from './komponenten/Suche'
 import { indexLaden } from './daten'
 import type { BahnhofIndex } from './typen'
 
@@ -21,6 +21,8 @@ export default function App() {
   const [fehler, setFehler] = useState<string | null>(null)
   const [uic, setUic] = useState<number | null>(uicAusAdresse())
   const [duell, setDuell] = useState(istDuell())
+  // bleibt stehen, während ein Bahnhof offen ist: zurück auf derselben Seite
+  const [liste, setListe] = useState<ListenStand>({ begriff: '', nurMitProfil: true, seite: 0 })
 
   useEffect(() => {
     indexLaden().then(setIndex).catch((e: Error) => setFehler(e.message))
@@ -54,7 +56,7 @@ export default function App() {
         {duell
           ? <Duell zurueck={zurueck} />
           : index && (uic === null
-            ? <Suche index={index} oeffnen={oeffnen} />
+            ? <Suche index={index} oeffnen={oeffnen} stand={liste} aendern={setListe} />
             : <Bahnhof uic={uic} zurueck={zurueck} />)}
 
         <footer className="mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
