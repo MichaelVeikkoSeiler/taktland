@@ -82,10 +82,15 @@ def schieber(prompt, wert, erkl, ref, einheit, step=1, diff=2):
     runde = 10 if w > 200 else 1
     if w > 5000:
         runde = 500
-    mn = int(unten // runde * runde)
-    mx = int(-(-oben // runde) * runde)
+    # Kleine Werte wie Kilometer 2.354: In Einerschritten zählte die App bei
+    # 1 bis 4 km die Hälfte aller Stellungen als richtig (Toleranz = Schritt).
+    if 0 < w < 20 and not w.is_integer():
+        runde, step = 0.5, 0.1
+    fest = (lambda x: round(x, 1)) if runde < 1 else int
+    mn = fest(unten // runde * runde)
+    mx = fest(-(-oben // runde) * runde)
     if not mn < w < mx:
-        mn, mx = int(w) - 5 * runde, int(w) + 9 * runde
+        mn, mx = fest(w - 5 * runde), fest(w + 9 * runde)
     return {"type": "slider", "prompt": prompt, "min": mn, "max": mx,
             "step": step if w < 5000 else 500, "unit": einheit, "correct": wert,
             "explanation": erkl, "factRef": ref, "difficulty": diff}
@@ -112,8 +117,10 @@ def steckbrief(f, extra_body="", extra_fragen=()):
     if evu == s.get("isb"):
         teile.append(f"Infrastruktur und Züge sind der {evu} zugeordnet.")
     elif evu:
+        namen = evu.split(", ")
+        liste = namen[0] if len(namen) == 1 else ", ".join(namen[:-1]) + " und " + namen[-1]
         teile.append(f"Die Infrastruktur gehört der {s['isb']}, als Bahnunternehmen "
-                     f"{'sind' if ',' in evu else 'ist'} {evu.replace(', ', ' und ')} erfasst.")
+                     f"{'sind' if len(namen) > 1 else 'ist'} {liste} erfasst.")
     if extra_body:
         teile.append(extra_body)
     facts = [
@@ -127,7 +134,9 @@ def steckbrief(f, extra_body="", extra_fragen=()):
              s["dwv"], f"An einem Werktag sind es {ch(s['dwv'])} Ein- und Aussteigende, "
              "Stand 2025.", "steckbrief.dwv")]
     # Verlauf: nur Jahre, deren Werte man auseinanderhalten kann
-    alle_v = [(i, x) for i, x in enumerate(s.get("verlauf") or []) if x.get("dwv")]
+    # neueste Jahre zuerst: bei gleichem Wert bleibt das neuere Jahr stehen
+    alle_v = sorted([(i, x) for i, x in enumerate(s.get("verlauf") or []) if x.get("dwv")],
+                    key=lambda t: -t[1]["jahr"])
     v = klar_getrennt(alle_v, wert=lambda t: t[1]["dwv"])
     doppelte = len(v) < len(alle_v)
     if len(v) >= 3:
@@ -311,10 +320,15 @@ def gleise(f):
     hoehen = gl["perronhoehen_cm"]
     if not hoehen:
         satz.append("Perronhöhen sind zu diesen Gleisen nicht vermerkt.")
-    elif all(it["perronhoehen_cm"] == [55] for it in items if it["perronhoehen_cm"]) \
-            and all(it["perronhoehen_cm"] for it in items):
+    elif len(hoehen) == 1 and all(it["perronhoehen_cm"] for it in items):
+        # eine einzige Höhe an allen Gleisen, nicht nur bei 55 cm (Münsingen: 30)
         satz.append(f"An {alle_n(n, 'Gleisen') if n > 1 else 'dem erfassten Gleis'} "
-                    "ist eine Perronhöhe von 55 Zentimetern verzeichnet.")
+                    f"ist eine Perronhöhe von {hoehen[0]} Zentimetern verzeichnet.")
+    elif len(hoehen) == 1:
+        mit_h = [it["nr"] for it in items if it["perronhoehen_cm"]]
+        liste = mit_h[0] if len(mit_h) == 1 else ", ".join(mit_h[:-1]) + " und " + mit_h[-1]
+        satz.append(f"Zu {'Gleis' if len(mit_h) == 1 else 'den Gleisen'} {liste} ist eine "
+                    f"Perronhöhe von {hoehen[0]} Zentimetern vermerkt, zu den übrigen keine.")
     else:
         satz.append("Erfasst sind Perronhöhen von "
                     + ", ".join(str(h) for h in hoehen[:-1]) + f" und {hoehen[-1]} Zentimetern."
@@ -394,10 +408,11 @@ def gleise(f):
                                       + (", ".join(str(h) for h in eigene[:-1]) + " und " + str(eigene[-1]))
                                       + " Zentimeter verzeichnet.",
                        "factRef": f"gleise.items[{i}].perronhoehen_cm", "difficulty": 3})
-    elif hoehen == [55] and n >= 2:
+    elif len(hoehen) == 1 and n >= 2 and all(it["perronhoehen_cm"] for it in items):
+        # «alle» nur, wenn wirklich jedes Gleis eine Höhe trägt
         fr.append(tf(f"An den erfassten Gleisen in {name} kommt nur eine einzige Perronhöhe vor.",
                      True, f"Für {'beide' if n == 2 else 'alle ' + str(n)} erfassten Gleise sind "
-                     "ausschliesslich 55 Zentimeter verzeichnet.", "gleise.perronhoehen_cm"))
+                     f"ausschliesslich {hoehen[0]} Zentimeter verzeichnet.", "gleise.perronhoehen_cm"))
     elif not hoehen:
         fr.append(tf(f"Zu den erfassten Gleisen in {name} ist eine Perronhöhe vermerkt.", False,
                      "Zu keinem der erfassten Gleise ist eine Perronhöhe vermerkt. Ob der "
@@ -432,9 +447,9 @@ def hindernisfreiheit(f):
     seg = hf.get("segmente")
     if seg:
         proh = hf["segmente_pro_perronhoehe_cm"]
-        if list(proh) == ["55"]:
+        if len(proh) == 1:
             satz.append(f"Für {name} sind {seg} Perronsegmente erfasst, alle mit einer "
-                        "Perronhöhe von 55 Zentimetern.")
+                        f"Perronhöhe von {next(iter(proh))} Zentimetern.")
         else:
             teile = sorted(proh.items(), key=lambda t: -t[1])
             satz.append(f"Für {name} sind {seg} Perronsegmente erfasst: "

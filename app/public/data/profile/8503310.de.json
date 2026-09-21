@@ -396,9 +396,9 @@
         {
           "type": "slider",
           "prompt": "Bei welchem Streckenkilometer der Linie 760 ist Glattbrugg eingetragen?",
-          "min": 5,
-          "max": 11,
-          "step": 1,
+          "min": 5.5,
+          "max": 11.0,
+          "step": 0.1,
           "unit": "km",
           "correct": 7.24569,
           "explanation": "Die Kilometrierung von Glattbrugg auf der Linie 760 beträgt 7.24569. Der Wert nennt den Standort des Bahnhofs auf der Linie.",

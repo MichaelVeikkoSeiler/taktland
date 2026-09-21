@@ -175,6 +175,14 @@ der Regler beim Öffnen schon fast richtig. Lege die Spanne unsymmetrisch an.
 
 Für «wie viele von N», wo die Antwort 0 oder N ist, nimm einen anderen Fragetyp.
 
+**Höchstens ein Viertel der Spanne darf als richtig zählen.** Wegen der
+Toleranz von einer Schrittweite zählten bei «Kilometer 2.354» auf einem
+Regler von 1 bis 4 in Einerschritten die Stellungen 2 und 3 als richtig, also
+die Hälfte. Der Validator rechnet die Toleranz wie die App und meldet einen
+Fehler, wenn mehr als 25 % der Spanne richtig wären. Für kleine Dezimalwerte
+nimmt der Baukasten Zehntelschritte. Kleine Zählwerte (3 Entwerter, 2 von 5
+Gleisen) werden besser als Auswahlfrage gestellt.
+
 ### cloze (Lückentext)
 
 `prompt` enthält `___` an der Stelle der Lücke. Sonst wie single_choice.
@@ -362,6 +370,12 @@ waren 140 Sortierfragen betroffen, 37 davon fielen ganz weg
 Zügen pro Tag. Auf B sind es 226.» Der Vorsprung steckt nur in der
 Jahreszahl, der Leser sieht einen Widerspruch. Bei Gleichstand pro Tag nennt
 der Text beide Werte («ebenfalls 226»), ohne einen Abschnitt vorzuziehen.
+
+**Sonderfälle nicht an einen Normwert binden.** Der Baukasten kannte «an
+allen Gleisen dieselbe Höhe» nur für 55 cm. Münsingen hat an allen drei
+Gleisen 30 cm und bekam einen Satz, der nicht sagte, wo. Eine Regel, die für
+den häufigsten Wert geschrieben ist, gilt meist auch für die anderen, und
+«alle» nur dann, wenn wirklich jedes Gleis eine Höhe trägt.
 
 **Eine Bemerkung wiedergeben, nicht auslegen.** Aus «Ohne AB.» folgt nicht,
 dass die Zahl «nicht den gesamten Verkehr am Bahnhof» abdeckt. Das ist ein

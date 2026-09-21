@@ -60,7 +60,8 @@ def betroffen(q):
 
 
 def verlauf_neu(q, fakten):
-    v = [(i, x) for i, x in enumerate(fakten["steckbrief"].get("verlauf") or []) if x.get("dwv")]
+    v = sorted([(i, x) for i, x in enumerate(fakten["steckbrief"].get("verlauf") or []) if x.get("dwv")],
+               key=lambda t: -t[1]["jahr"])  # bei gleichem Wert bleibt das neuere Jahr
     klar = klar_getrennt(v, wert=lambda t: t[1]["dwv"])
     if len(klar) < 3:
         return None

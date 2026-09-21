@@ -45,7 +45,8 @@ wenn eine Aussage allgemein bekannt oder offensichtlich richtig ist.
 
 9. **Keine Glücksfragen.** Was gefragt wird, muss man wissen können. Werte, die
    weniger als 5 % auseinanderliegen, werden nicht gegeneinander gefragt,
-   weder beim Sortieren noch beim Zuordnen oder beim Hotspot. Gleichstand ist
+   weder beim Sortieren noch beim Zuordnen oder beim Hotspot. Ein Schieberegler
+   darf höchstens ein Viertel seiner Spanne als richtig werten. Gleichstand ist
    kein Vorsprung: Bei gleich vielen Zügen pro Tag ist kein Abschnitt «am
    stärksten befahren».
 

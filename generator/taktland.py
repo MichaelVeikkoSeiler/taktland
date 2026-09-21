@@ -189,9 +189,12 @@ def _pruefe_frage(fr, i, kap_id, fb, fakten, b, raus):
             if not mn < c < mx:
                 b.fehlt(wo, f"die Antwort {c} liegt am Rand der Spanne {mn} bis {mx}. "
                             "Der Regler startet unten, damit wäre sie verschenkt")
-            elif mx - mn < 4 * max(fr.get("step") or 1, 1):
-                b.warnt(wo, f"die Spanne {mn} bis {mx} ist so eng, dass kaum zu "
-                            "raten bleibt")
+            # Toleranz wie in app/src/komponenten/Frage.tsx (Schieberegler):
+            # eine Schrittweite, mindestens 5 % der Spanne.
+            elif (anteil := 2 * max(fr.get("step") or 1, (mx - mn) * 0.05) / (mx - mn)) > 0.25:
+                b.fehlt(wo, f"{anteil:.0%} der Spanne {mn} bis {mx} zählen als richtig, "
+                            "weil die App eine Schrittweite Toleranz gibt. Das ist Raten: "
+                            "feinere Schritte, oder bei kleinen Zählwerten eine Auswahlfrage")
 
     elif typ == "hotspot":
         if not fr.get("schema"):

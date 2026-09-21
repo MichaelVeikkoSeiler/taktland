@@ -1,6 +1,6 @@
 {
-  "uic": 8503310,
-  "name": "Glattbrugg",
+  "uic": 8506131,
+  "name": "Kreuzlingen",
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
@@ -23,25 +23,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Glattbrugg 8'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 7'400, an einem freien Tag 4'500. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Kreuzlingen 8'100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 7'500, an einem freien Tag 6'100. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 8700,
+          "value": 8100,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 7400,
+          "value": 7500,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 4500,
+          "value": 6100,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -50,58 +50,28 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Glattbrugg ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Kreuzlingen ein und aus?",
           "options": [
-            "6'100",
-            "8'700",
-            "10'000",
-            "12'000"
+            "6'900",
+            "8'100",
+            "9'700",
+            "11'000"
           ],
           "correct": 1,
-          "explanation": "An einem Werktag sind es 8'700 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 8'100 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2022",
-              "value": 6300,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 7500,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 8100,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 8700,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 6'300 (2022), 7'500 (2023), 8'100 (2024), 8'700 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
-          "difficulty": 3
-        },
-        {
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Glattbrugg ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Kreuzlingen ___ Personen ein und aus.",
           "options": [
-            "3'200",
-            "3'800",
-            "4'500"
+            "6'100",
+            "7'300",
+            "8'500"
           ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 4'500 Personen, an einem Werktag 8'700. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 6'100 Personen, an einem Werktag 8'100. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -110,54 +80,47 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Glattbrugg liegt auf 431.4 Metern über Meer in der Gemeinde Opfikon, Bezirk Bülach, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet GLB.",
+      "body": "Kreuzlingen liegt auf 403.3 Metern über Meer in der Gemeinde Kreuzlingen, Bezirk Kreuzlingen, Kanton Thurgau. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet KR.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 431.4,
+          "value": 403.3,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "GLB",
+          "value": "KR",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
-        },
-        {
-          "label": "Gemeinde",
-          "value": "Opfikon",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Glattbrugg?",
-          "min": 350,
-          "max": 630,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Kreuzlingen?",
+          "min": 330,
+          "max": 590,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 431.4,
-          "explanation": "Der Bahnhof liegt auf 431.4 Metern über Meer.",
+          "correct": 403.3,
+          "explanation": "Der Bahnhof liegt auf 403.3 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt der Bahnhof Glattbrugg?",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Kreuzlingen lautet ___.",
           "options": [
-            "Bülach",
-            "Kloten",
-            "Opfikon",
-            "Wallisellen"
+            "KL",
+            "KR",
+            "KRL"
           ],
-          "correct": 2,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Opfikon eingetragen.",
-          "factRef": "stammdaten.gemeinde",
+          "explanation": "In den Stammdaten ist KR als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
@@ -165,17 +128,17 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Glattbrugg liegen offene Daten vor. Perron 2/3 ist ein Mittelperron von 328 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Kreuzlingen liegen offene Daten vor. Perron 2/3 misst 261 Meter, Perron 1 misst 261 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
-          "value": 1,
+          "value": 2,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 328,
+          "value": 261,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -184,23 +147,42 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Glattbrugg?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Kreuzlingen?",
           "options": [
-            "328 m",
-            "390 m",
-            "460 m",
-            "560 m"
+            "261 m",
+            "310 m",
+            "370 m",
+            "440 m"
           ],
           "correct": 0,
-          "explanation": "Das erfasste Perron misst 328 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "explanation": "Das längste erfasste Perron misst 261 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2/3",
+              "rechts": "1641.98 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "506.93 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2/3 hat 1641.98 Quadratmeter, Perron 1 hat 506.93 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Glattbrugg ist niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in Kreuzlingen sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
@@ -209,18 +191,18 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 2 Gleisen liegen offene Daten vor: 2 und 3. Erfasst sind Perronhöhen von 30 und 55 Zentimetern.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
-          "value": 2,
+          "value": 3,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Sektoren an Gleis 2",
-          "value": 3,
+          "label": "Sektoren an Gleis 1",
+          "value": 2,
           "source": "sektortafel",
           "factRef": "gleise.items[0].sektoren_anzahl"
         }
@@ -228,53 +210,43 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "An Gleis 2 in Glattbrugg sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 1 in Kreuzlingen sind ___ Sektoren erfasst.",
           "options": [
-            "3",
+            "2",
             "4",
-            "5"
+            "8"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 2 trägt die Sektoren A, B und C, also 3 Stück.",
+          "explanation": "Gleis 1 trägt die Sektoren A und B, also 2 Stück.",
           "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         },
         {
-          "type": "multiple_choice",
-          "prompt": "Welche Perronhöhen sind für Gleis 2 in Glattbrugg erfasst? (Mehrfachauswahl)",
-          "options": [
-            "25 cm",
-            "30 cm",
-            "35 cm",
-            "55 cm"
-          ],
-          "correct": [
-            1,
-            3
-          ],
-          "optionen_aus_fakten": true,
-          "explanation": "An Gleis 2 sind 30 und 55 Zentimeter verzeichnet.",
-          "factRef": "gleise.items[0].perronhoehen_cm",
-          "difficulty": 3
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Kreuzlingen kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Glattbrugg sind 15 Perronsegmente erfasst: 9 mit 30 Zentimetern, 6 mit 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Kreuzlingen sind 11 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 15,
+          "value": 11,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
           "label": "Gleise mit Perronhöhe 55 cm",
-          "value": 2,
+          "value": 3,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
@@ -288,23 +260,23 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "In Glattbrugg sind ___ Perronsegmente erfasst.",
+          "prompt": "In Kreuzlingen sind ___ Perronsegmente erfasst.",
           "options": [
-            "15",
-            "18",
-            "21"
+            "9",
+            "11",
+            "13"
           ],
-          "correct": 0,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 15 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 11 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
           "type": "true_false",
-          "prompt": "Bei keinem der 15 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 15 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 11 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -313,19 +285,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Tankanlage Rümlang – Glattbrugg: Im Personenverkehr verkehren dort 234 Züge pro Tag, das sind 85'251 im Jahr. Auf dem Abschnitt Glattbrugg – Zürich Oerlikon Nord (Abzw) sind es 233 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 37 Züge pro Tag auf einem Abschnitt.",
+      "body": "Am stärksten befahren ist der Abschnitt Tägermoos (Abzw) – Kreuzlingen: Im Personenverkehr verkehren dort 197 Züge pro Tag, das sind 71'735 im Jahr. Auf dem Abschnitt Konstanz Grenze (Abzw) – Kreuzlingen sind es 175 und auf dem Abschnitt Kreuzlingen – Kreuzlingen Hafen sind es 84 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Tankanlage Rümlang – Glattbrugg",
-          "value": 234,
+          "label": "Züge pro Tag, Personenverkehr Tägermoos (Abzw) – Kreuzlingen",
+          "value": 197,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Tankanlage Rümlang – Glattbrugg",
-          "value": 85251,
+          "label": "Züge pro Jahr, Personenverkehr Tägermoos (Abzw) – Kreuzlingen",
+          "value": 71735,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
@@ -334,15 +306,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Tankanlage Rümlang – Glattbrugg?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Tägermoos (Abzw) – Kreuzlingen?",
           "options": [
-            "234",
+            "197",
+            "240",
             "280",
-            "330",
-            "400"
+            "330"
           ],
           "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 234 Züge pro Tag, beide Richtungen zusammen.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 197 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
         },
@@ -352,23 +324,28 @@
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Tankanlage Rümlang – Glattbrugg, Personenverkehr",
-              "value": 85251,
+              "label": "Tägermoos (Abzw) – Kreuzlingen, Personenverkehr",
+              "value": 71735,
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Tankanlage Rümlang – Glattbrugg, Güterverkehr",
-              "value": 13347,
+              "label": "Konstanz Grenze (Abzw) – Kreuzlingen, Personenverkehr",
+              "value": 64008,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Kreuzlingen – Kreuzlingen Hafen, Personenverkehr",
+              "value": 30755,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
             },
             {
-              "label": "Glattbrugg – Opfikon Süd, Güterverkehr",
-              "value": 6993,
+              "label": "Kreuzlingen – Kreuzlingen Hafen, Güterverkehr",
+              "value": 246,
               "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Richtig ist diese Reihenfolge: Tankanlage Rümlang – Glattbrugg im Personenverkehr mit 85'251, Tankanlage Rümlang – Glattbrugg im Güterverkehr mit 13'347 und Glattbrugg – Opfikon Süd im Güterverkehr mit 6'993 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Tägermoos (Abzw) – Kreuzlingen (Personenverkehr) 71'735, Konstanz Grenze (Abzw) – Kreuzlingen (Personenverkehr) 64'008, Kreuzlingen – Kreuzlingen Hafen (Personenverkehr) 30'755, Kreuzlingen – Kreuzlingen Hafen (Güterverkehr) 246 Züge im Jahr.",
           "difficulty": 3
         }
       ]
@@ -376,17 +353,17 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Glattbrugg ist 1 Linie erfasst: die Linie 760 Zurich Hardbrucke  - Bulach. Der Bahnhof ist darauf bei Kilometer 7.24569 eingetragen.",
+      "body": "Für Kreuzlingen sind 2 Linien erfasst: die Linie 823 Kreuzlingen - Kreuzlingen Hafen und die Linie 822 Etzwilen - Konstanz.",
       "facts": [
         {
           "label": "Erfasste Linien",
-          "value": 1,
+          "value": 2,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 760",
-          "value": 7.24569,
+          "label": "Kilometrierung auf der Linie 823",
+          "value": 60.68801,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -395,26 +372,45 @@
       "questions": [
         {
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 760 ist Glattbrugg eingetragen?",
-          "min": 5.5,
-          "max": 11.0,
-          "step": 0.1,
+          "prompt": "Bei welchem Streckenkilometer der Linie 823 ist Kreuzlingen eingetragen?",
+          "min": 49,
+          "max": 88,
+          "step": 1,
           "unit": "km",
-          "correct": 7.24569,
-          "explanation": "Die Kilometrierung von Glattbrugg auf der Linie 760 beträgt 7.24569. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 60.68801,
+          "explanation": "Die Kilometrierung von Kreuzlingen auf der Linie 823 beträgt 60.68801. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
+          "pairs": [
+            {
+              "links": "Linie 823",
+              "rechts": "Kreuzlingen - Kreuzlingen Hafen",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "Linie 822",
+              "rechts": "Etzwilen - Konstanz",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Die Linie 823 heisst Kreuzlingen - Kreuzlingen Hafen, die Linie 822 heisst Etzwilen - Konstanz.",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ S-POS und 3 Billettentwerter. Wartehallen sind keine verzeichnet. Glattbrugg steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Kreuzlingen steht in der Liste der WLAN-Standorte. Erfasst sind 1 Billettautomat vom Typ ePOS, 6 Billettentwerter und 2 Wartehallen.",
       "facts": [
         {
           "label": "WLAN erfasst",
-          "value": false,
+          "value": true,
           "unit": "",
           "source": "wifistation",
           "factRef": "services.wlan_erfasst"
@@ -427,7 +423,7 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 3,
+          "value": 6,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
@@ -435,23 +431,23 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Glattbrugg steht in der Liste der WLAN-Standorte.",
-          "correct": false,
-          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "prompt": "Kreuzlingen steht in der Liste der WLAN-Standorte.",
+          "correct": true,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten aufgeführt.",
           "factRef": "services.wlan_erfasst",
-          "difficulty": 2
+          "difficulty": 1
         },
         {
           "type": "cloze",
-          "prompt": "In Glattbrugg sind ___ Billettentwerter erfasst.",
+          "prompt": "In Kreuzlingen sind ___ Billettentwerter erfasst.",
           "options": [
-            "3",
             "4",
-            "5"
+            "5",
+            "6"
           ],
-          "correct": 0,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 6 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -460,7 +456,7 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Glattbrugg 10 Sitzbänke sowie 25 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Kreuzlingen 10 Sitzbänke, 2 Infopunkte sowie 18 Schliessfächer erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
@@ -470,13 +466,19 @@
         },
         {
           "label": "Infopunkte erfasst",
-          "value": 25,
+          "value": 2,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.infopunkte"
         },
         {
+          "label": "Schliessfächer erfasst",
+          "value": 18,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.schliessfaecher"
+        },
+        {
           "label": "Perrons mit erfasstem Belag",
-          "value": 1,
+          "value": 2,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
         }
@@ -486,12 +488,12 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "4",
-            "7",
-            "8",
-            "10"
+            "10",
+            "12",
+            "14",
+            "17"
           ],
-          "correct": 3,
+          "correct": 0,
           "explanation": "Erfasst sind 10 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
@@ -500,15 +502,28 @@
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "21",
-            "25",
-            "35",
-            "42"
+            "1",
+            "2",
+            "4",
+            "8"
           ],
           "correct": 1,
-          "explanation": "Erfasst sind 25 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "explanation": "Erfasst sind 2 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
-          "difficulty": 1
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
+          "min": 11,
+          "max": 32,
+          "step": 1,
+          "unit": "Schliessfächer",
+          "correct": 18,
+          "explanation": "Erfasst sind 18 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.schliessfaecher",
+          "difficulty": 2
         },
         {
           "type": "single_choice",
@@ -519,8 +534,8 @@
             "Gussasphalt",
             "Verbundstein-Pflästerung"
           ],
-          "correct": 1,
-          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "correct": 3,
+          "explanation": "Für alle Perrons mit Daten ist Verbundstein-Pflästerung erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
           "difficulty": 2
@@ -530,11 +545,11 @@
     {
       "id": "bahnhofplan",
       "title": "Bahnhofplan",
-      "body": "Für Glattbrugg ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
+      "body": "Für Kreuzlingen ist ein Bahnhofplan veröffentlicht, als A4-Blatt und als Plakat. Eigentümerin der Pläne ist die SBB. Ein eigener Shopping-Plan liegt nicht vor.",
       "facts": [
         {
           "label": "Plan als A4-Blatt",
-          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-glattbrugg-opfikon-a4.pdf",
+          "value": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-kreuzlingen-konstanz-a4.pdf",
           "source": "haltestelle-karte-trafimage",
           "factRef": "bahnhofplan.a4_pdf"
         }
@@ -542,7 +557,7 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Für Glattbrugg ist ein Bahnhofplan als PDF veröffentlicht.",
+          "prompt": "Für Kreuzlingen ist ein Bahnhofplan als PDF veröffentlicht.",
           "correct": true,
           "explanation": "Es liegen zwei Fassungen vor, ein A4-Blatt und ein Plakat. Pläne gibt es nur für einen kleinen Teil der Bahnhöfe.",
           "factRef": "bahnhofplan.a4_pdf",
@@ -564,23 +579,13 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 2 Gleise (2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
-    },
-    {
-      "thema": "WLAN",
-      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
-      "quelle": "wifistation"
     },
     {
       "thema": "Stand der BehiG-Daten",
       "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
       "quelle": "21197_behig-haltekantesegment"
-    },
-    {
-      "thema": "Wartehallen",
-      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
-      "quelle": "haltestelle-wartehallen"
     },
     {
       "thema": "Fahrplan",
