@@ -1,0 +1,554 @@
+{
+  "uic": 8501035,
+  "name": "Allaman",
+  "tier": "M",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "21197_behig-haltekantesegment",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "linie-mit-betriebspunkten",
+    "passagierfrequenz",
+    "perron",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Allaman 5'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 4'900, an einem freien Tag 3'000. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 5700,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 4900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 3000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Allaman ein und aus?",
+          "options": [
+            "4'000",
+            "4'800",
+            "5'700",
+            "6'800"
+          ],
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 5'700 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 4100,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2022",
+              "value": 4700,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 5800,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 6200,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 4'100 (2018), 4'700 (2022), 5'800 (2023), 6'200 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Allaman ___ Personen ein und aus.",
+          "options": [
+            "3'000",
+            "3'600",
+            "4'200"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 3'000 Personen, an einem Werktag 5'700. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Allaman liegt auf 421.868 Metern über Meer in der Gemeinde Allaman, Bezirk Morges. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet ALL.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 421.868,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "ALL",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Allaman?",
+          "min": 340,
+          "max": 620,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 421.868,
+          "explanation": "Der Bahnhof liegt auf 421.868 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Allaman lautet ___.",
+          "options": [
+            "AL",
+            "ALL",
+            "ALM"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist ALL als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 2 Perrons in Allaman liegen offene Daten vor. Perron 1 misst 283 Meter, Perron 2/3 misst 282 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 283,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Allaman?",
+          "options": [
+            "283 m",
+            "340 m",
+            "400 m",
+            "480 m"
+          ],
+          "correct": 0,
+          "explanation": "Das längste erfasste Perron misst 283 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 1",
+              "rechts": "865.08 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 2/3",
+              "rechts": "1232.69 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 1 hat 865.08 Quadratmeter, Perron 2/3 hat 1232.69 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Allaman sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 3,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Allaman kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Allaman sind 13 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 13,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 3,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Allaman sind ___ Perronsegmente erfasst.",
+          "options": [
+            "11",
+            "13",
+            "16"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 13 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei keinem der 13 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 13 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Am stärksten befahren ist der Abschnitt Allaman – Etoy: Im Personenverkehr verkehren dort 319 Züge pro Tag, das sind 116'503 im Jahr. Auf dem Abschnitt Perroy – Allaman sind es 246 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 34 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Allaman – Etoy",
+          "value": 319,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Allaman – Etoy",
+          "value": 116503,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Allaman – Etoy?",
+          "options": [
+            "180",
+            "220",
+            "270",
+            "319"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 319 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Allaman – Etoy, Personenverkehr",
+              "value": 116503,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Perroy – Allaman, Personenverkehr",
+              "value": 89755,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Allaman – Etoy, Güterverkehr",
+              "value": 12426,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Allaman – Etoy (Personenverkehr) 116'503, Perroy – Allaman (Personenverkehr) 89'755, Allaman – Etoy (Güterverkehr) 12'426 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Allaman ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 21.48029 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 150",
+          "value": 21.48029,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Allaman eingetragen?",
+          "min": 17,
+          "max": 32,
+          "step": 1,
+          "unit": "km",
+          "correct": 21.48029,
+          "explanation": "Die Kilometrierung von Allaman auf der Linie 150 beträgt 21.48029. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 3 Billettentwerter und 2 Wartehallen. Allaman steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 3,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Allaman steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Allaman sind ___ Billettentwerter erfasst.",
+          "options": [
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Allaman 6 Sitzbänke sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 6,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 1,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 6 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 1 Infopunkt. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2, 3 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

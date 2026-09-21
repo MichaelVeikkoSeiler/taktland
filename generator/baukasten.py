@@ -336,9 +336,12 @@ def gleise(f):
                     f"ist eine Perronhöhe von {hoehen[0]} Zentimetern verzeichnet.")
     elif len(hoehen) == 1:
         mit_h = [it["nr"] for it in items if it["perronhoehen_cm"]]
-        liste = aufzaehlung(mit_h)
-        satz.append(f"Zu {'Gleis' if len(mit_h) == 1 else 'den Gleisen'} {liste} ist eine "
-                    f"Perronhöhe von {hoehen[0]} Zentimetern vermerkt, zu den übrigen keine.")
+        ohne_h = [it["nr"] for it in items if not it["perronhoehen_cm"]]
+        # die übrigen Gleise beim Namen nennen: «zu den übrigen» passte nicht,
+        # wenn nur eines übrig blieb (Richterswil)
+        satz.append(f"Zu {'Gleis' if len(mit_h) == 1 else 'den Gleisen'} {aufzaehlung(mit_h)} ist eine "
+                    f"Perronhöhe von {hoehen[0]} Zentimetern vermerkt, zu "
+                    f"{'Gleis' if len(ohne_h) == 1 else 'den Gleisen'} {aufzaehlung(ohne_h)} keine.")
     else:
         satz.append("Erfasst sind Perronhöhen von "
                     + ", ".join(str(h) for h in hoehen[:-1]) + f" und {hoehen[-1]} Zentimetern."
