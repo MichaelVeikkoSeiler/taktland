@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { HERAUSGEBER, KONTAKT } from '../kontakt'
 import type { BahnhofIndex } from '../typen'
 
 /**
@@ -205,7 +206,28 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
           </li>
           <li>
             Taktland ist ein Lernspiel und nicht für die Reiseplanung gedacht. Es ist ein
-            privates Lernprojekt und kein Angebot der SBB.
+            privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
+          </li>
+          <li>
+            Hinweise auf Fehler gern an{' '}
+            <Verweis href={`mailto:${KONTAKT}`}>{KONTAKT}</Verweis>.
+          </li>
+        </Punkte>
+      </Abschnitt>
+
+      <Abschnitt titel="Datenschutz">
+        <Punkte>
+          <li>
+            Taktland speichert nichts über dich auf einem Server. Es gibt kein Konto, keine
+            Werbung und keine Auswertung, wer die Seite nutzt.
+          </li>
+          <li>
+            Der Lernfortschritt bleibt im Browser dieses Geräts. Die App lädt keine Schriften
+            oder Programme von fremden Diensten.
+          </li>
+          <li>
+            Ausgeliefert wird die Seite von GitHub Pages. GitHub speichert dabei laut eigenen
+            Angaben die IP-Adressen der Besucher aus Sicherheitsgründen.
           </li>
         </Punkte>
       </Abschnitt>

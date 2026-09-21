@@ -7,6 +7,7 @@ import { Linie } from './komponenten/Linie'
 import { Linien } from './komponenten/Linien'
 import { Suche, type ListenStand } from './komponenten/Suche'
 import { indexLaden } from './daten'
+import { HERAUSGEBER, KONTAKT } from './kontakt'
 import type { BahnhofIndex } from './typen'
 import auftaktDunkel from './assets/auftakt-dunkel.webp'
 import auftaktHell from './assets/auftakt-hell.webp'
@@ -100,7 +101,14 @@ export default function App() {
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss.
-            Taktland ist ein privates Lernprojekt und kein Angebot der SBB.
+            Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
+          </p>
+          <p className="mt-1">
+            Hinweise und Fehler gern an{' '}
+            <a href={`mailto:${KONTAKT}`} className="underline underline-offset-2
+                                                  hover:text-sbb-black dark:hover:text-sbb-white">
+              {KONTAKT}
+            </a>
           </p>
           <p className="mt-2 font-medium text-sbb-black dark:text-sbb-white">
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
@@ -110,7 +118,7 @@ export default function App() {
           <p className="mt-2">
             <a href="#/anleitung" className="underline underline-offset-2 hover:text-sbb-black
                                              dark:hover:text-sbb-white">
-              Anleitung und Datenquellen
+              Anleitung, Datenquellen und Datenschutz
             </a>
           </p>
           <p className="mt-1">
