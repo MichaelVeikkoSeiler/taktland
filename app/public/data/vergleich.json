@@ -9267,5 +9267,2925 @@
     "perron": 120
    }
   }
- ]
+ ],
+ "tunnel_kategorien": [
+  {
+   "id": "tunnel_laenge",
+   "titel": "Länge",
+   "frage": "Welcher Tunnel ist länger?",
+   "frage_mehrere": "Welcher dieser Tunnel ist am längsten?",
+   "einheit": "Meter",
+   "art": "messwert",
+   "quelle": "tunnel",
+   "hinweis": "Verglichen wird die Länge, wie die Quelle sie angibt. Bei einigen Tunneln sagt eine Bemerkung, was sie umfasst.",
+   "min_abstand": 100,
+   "min_anteil": 0.2
+  },
+  {
+   "id": "tunnel_jahr",
+   "titel": "Erste Inbetriebnahme",
+   "frage": "Welcher Tunnel ging früher erstmals in Betrieb?",
+   "frage_mehrere": "Welcher dieser Tunnel ging am frühesten erstmals in Betrieb?",
+   "einheit": "",
+   "art": "messwert",
+   "quelle": "tunnel",
+   "richtung": "tiefster",
+   "format": "jahr",
+   "min_abstand": 10,
+   "min_anteil": 0.0
+  }
+ ],
+ "tunnel": [
+  {
+   "id": "100:0",
+   "name": "Tunnel de Paudex ( 026 )",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 72,
+    "tunnel_jahr": 1999
+   }
+  },
+  {
+   "id": "100:1",
+   "name": "Tunnel de Bertholod ( 027 )",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 141,
+    "tunnel_jahr": 2020
+   }
+  },
+  {
+   "id": "100:2",
+   "name": "Tunnel des Crêtes (025)",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 302,
+    "tunnel_jahr": 1880
+   }
+  },
+  {
+   "id": "100:3",
+   "name": "Tunnel de St-Maurice (003)",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 490,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "100:4",
+   "name": "Tunnel de Sierre (Gobet)",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 370,
+    "tunnel_jahr": 2015
+   }
+  },
+  {
+   "id": "100:5",
+   "name": "Tunnel de la Raspille (072)",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 80,
+    "tunnel_jahr": 2018
+   }
+  },
+  {
+   "id": "100:6",
+   "name": "Tunnel de Varen (102)",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2799,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "100:7",
+   "name": "Tunnel de Leuk (103)",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1376,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "100:8",
+   "name": "Simplontunnel",
+   "linie": 100,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 19820,
+    "tunnel_jahr": 1900
+   }
+  },
+  {
+   "id": "111:0",
+   "name": "Tunnel de Salanche (077)",
+   "linie": 111,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 20,
+    "tunnel_jahr": 1904
+   }
+  },
+  {
+   "id": "111:1",
+   "name": "Tunnel du Crêt (078)",
+   "linie": 111,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 118,
+    "tunnel_jahr": 1904
+   }
+  },
+  {
+   "id": "111:2",
+   "name": "Tunnel du Carroz (079)",
+   "linie": 111,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 83,
+    "tunnel_jahr": 1904
+   }
+  },
+  {
+   "id": "150:0",
+   "name": "Couverture St-Jean",
+   "linie": 150,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 821,
+    "tunnel_jahr": 1995
+   }
+  },
+  {
+   "id": "150:1",
+   "name": "Galerie ICC",
+   "linie": 150,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 327,
+    "tunnel_jahr": 1985
+   }
+  },
+  {
+   "id": "151:0",
+   "name": "Tunnel du Saut-de-Mouton (093)",
+   "linie": 151,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 425,
+    "tunnel_jahr": 1993
+   }
+  },
+  {
+   "id": "152:0",
+   "name": "Tunnel de St. Jean (087)",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 221,
+    "tunnel_jahr": 1941
+   }
+  },
+  {
+   "id": "152:1",
+   "name": "Tunnel Bois de la Bâtie (088)",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1078,
+    "tunnel_jahr": 1949
+   }
+  },
+  {
+   "id": "152:2",
+   "name": "Tunnel de Pinchat",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2026,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:3",
+   "name": "TC Voirie de Carouge",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 99,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:4",
+   "name": "TC Rive gauche",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 411,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:5",
+   "name": "Tunnel de Champel 1",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 494,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:6",
+   "name": "Halte Genève-Champel",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 222,
+    "tunnel_jahr": 2018
+   }
+  },
+  {
+   "id": "152:7",
+   "name": "Tunnel de Champel 2",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 928,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:8",
+   "name": "TC Théodore Weber",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 119,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:9",
+   "name": "Halte Genève-Eaux-Vives",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 657,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:10",
+   "name": "TC Franck Thomas Gradelle",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1460,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:11",
+   "name": "TC Gradelle - Seymaz",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 435,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:12",
+   "name": "TC Seymaz - Halte de CHEB",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 271,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:13",
+   "name": "Halte Chêne-Bourg",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 250,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "152:14",
+   "name": "TC du Foron",
+   "linie": 152,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1136,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "154:0",
+   "name": "Tunnel de Châtelaine (089)",
+   "linie": 154,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1090,
+    "tunnel_jahr": 1959
+   }
+  },
+  {
+   "id": "200:0",
+   "name": "Tunnel de la Sarraz (033)",
+   "linie": 200,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 148,
+    "tunnel_jahr": 1870
+   }
+  },
+  {
+   "id": "200:1",
+   "name": "Tunnel du Moulin Bornu (034)",
+   "linie": 200,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 72,
+    "tunnel_jahr": 1870
+   }
+  },
+  {
+   "id": "200:2",
+   "name": "Tunnel de Combes (035)",
+   "linie": 200,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 100,
+    "tunnel_jahr": 1870
+   }
+  },
+  {
+   "id": "200:3",
+   "name": "Tunnel de Nanchau (036)",
+   "linie": 200,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 132,
+    "tunnel_jahr": 1870
+   }
+  },
+  {
+   "id": "201:0",
+   "name": "Tunnel des Epoisats",
+   "linie": 201,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 431,
+    "tunnel_jahr": 1886
+   }
+  },
+  {
+   "id": "203:0",
+   "name": "Tunnel du Mont d'Or (083)",
+   "linie": 203,
+   "bemerkung": "4947m gehört Frankreich",
+   "werte": {
+    "tunnel_laenge": 5936,
+    "tunnel_jahr": 1915
+   }
+  },
+  {
+   "id": "210:0",
+   "name": "Tunnel du Mormont sud 1",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 303,
+    "tunnel_jahr": 1856
+   }
+  },
+  {
+   "id": "210:1",
+   "name": "Tunnel du Mormont sud 3",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 328,
+    "tunnel_jahr": 2010
+   }
+  },
+  {
+   "id": "210:2",
+   "name": "Tunnel du Mormont nord 4",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 188,
+    "tunnel_jahr": 2010
+   }
+  },
+  {
+   "id": "210:3",
+   "name": "Tunnel du Mormont nord 2",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 182,
+    "tunnel_jahr": 1856
+   }
+  },
+  {
+   "id": "210:4",
+   "name": "Tunnel de Concise",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 366,
+    "tunnel_jahr": 2000
+   }
+  },
+  {
+   "id": "210:5",
+   "name": "Tunnel de Fin de Lance (099)",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 287,
+    "tunnel_jahr": 2000
+   }
+  },
+  {
+   "id": "210:6",
+   "name": "Tunnel de la Raisse (098)",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1256,
+    "tunnel_jahr": 2000
+   }
+  },
+  {
+   "id": "210:7",
+   "name": "Tunnel St-Aubin-Sauges (097)",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2253,
+    "tunnel_jahr": 1999
+   }
+  },
+  {
+   "id": "210:8",
+   "name": "Tunnel de Vauseyon (005)",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 58,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "210:9",
+   "name": "Tunnel de St-Blaise (004)",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 155,
+    "tunnel_jahr": 1927
+   }
+  },
+  {
+   "id": "210:10",
+   "name": "Tunnel Vingelz (092)",
+   "linie": 210,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2432,
+    "tunnel_jahr": 1968
+   }
+  },
+  {
+   "id": "219:0",
+   "name": "Tunnel de la Loge (014)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 54,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:1",
+   "name": "Tunnel de Rochefort (015)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 72,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:2",
+   "name": "Tunnel de Champ Rouge (016)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 85,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:3",
+   "name": "Tunnel de la Verrière (017)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 156,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:4",
+   "name": "Tunnel du Bois-de-Ban (018)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 161,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:5",
+   "name": "Tunnel des Moyats (019)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 338,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:6",
+   "name": "Tunnel Places-Bourgeoises",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 70,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:7",
+   "name": "Tunnel de Brot (021)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 455,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:8",
+   "name": "Tunnel de Fleurier (022)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 546,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:9",
+   "name": "Tunnel de St-Sulpice (023)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 277,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "219:10",
+   "name": "Tunnel du Haut de la Tour (24)",
+   "linie": 219,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 334,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "220:0",
+   "name": "Donnerbühltunnel",
+   "linie": 220,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 400,
+    "tunnel_jahr": 1959
+   }
+  },
+  {
+   "id": "223:0",
+   "name": "Tunnel du Gibet(010)",
+   "linie": 223,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 678,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "223:1",
+   "name": "Tunnel de la Luche (008)",
+   "linie": 223,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 116,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "223:2",
+   "name": "Tunnel de la Sauge (009)",
+   "linie": 223,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 118,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "224:0",
+   "name": "Tunnel des Loges (013)",
+   "linie": 224,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 3260,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "224:1",
+   "name": "Tunnel du Mont Sagne(007)",
+   "linie": 224,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1880,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "224:2",
+   "name": "Tunnel de Combe (Convers, 006)",
+   "linie": 224,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 254,
+    "tunnel_jahr": 1858
+   }
+  },
+  {
+   "id": "224:3",
+   "name": "Tunnel du col des Roches (073)",
+   "linie": 224,
+   "bemerkung": "107m gehört Frankreich",
+   "werte": {
+    "tunnel_laenge": 433,
+    "tunnel_jahr": 1884
+   }
+  },
+  {
+   "id": "225:0",
+   "name": "Tunnel de Pasquart (038)",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 52,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "225:1",
+   "name": "Tunnel de Taubenloch 1 ( 039 )",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 239,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "225:2",
+   "name": "Tunnel de Taubenloch 2 ( 040 )",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 320,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "225:3",
+   "name": "Tunnel de Taubenloch 3 ( 041 )",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 220,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "225:4",
+   "name": "Tunnel de Taubenloch 4 ( 042 )",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 163,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "225:5",
+   "name": "Tunnel de Taubenloch 5 ( 043 )",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 164,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "225:6",
+   "name": "Tunnel de Tournedos (044)",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 104,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "225:7",
+   "name": "Tunnel des Crosettes (075)",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1618,
+    "tunnel_jahr": 1888
+   }
+  },
+  {
+   "id": "225:8",
+   "name": "Tunnel de Combe (Creux, 076)",
+   "linie": 225,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 230,
+    "tunnel_jahr": 1888
+   }
+  },
+  {
+   "id": "226:0",
+   "name": "Tunnel de Pierre-Pertuis (045)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1294,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "226:1",
+   "name": "Tunnel de Court 1 (066)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 12,
+    "tunnel_jahr": 1877
+   }
+  },
+  {
+   "id": "226:2",
+   "name": "Tunnel de Court 2 (067)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 184,
+    "tunnel_jahr": 1900
+   }
+  },
+  {
+   "id": "226:3",
+   "name": "Tunnel de la Verrerie (068)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 604,
+    "tunnel_jahr": 1877
+   }
+  },
+  {
+   "id": "226:4",
+   "name": "Tunnel de Moutier 1 (048)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 31,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:5",
+   "name": "Tunnel de Moutier 2 (049)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 14,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:6",
+   "name": "Tunnel de Moutier 3 (050)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 7,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:7",
+   "name": "Tunnel de Moutier 4 (051)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 8,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:8",
+   "name": "Tunnel de Moutier 5 (052)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 60,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:9",
+   "name": "Tunnel de Moutier 6 (053)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 23,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:10",
+   "name": "Tunnel de Moutier 7 (054)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 54,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:11",
+   "name": "Tunnel de Moutier 8 (055)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 19,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:12",
+   "name": "Tunnel de Moutier 9 (056)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 13,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:13",
+   "name": "Tunnel Verrerie de Roches",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 108,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:14",
+   "name": "Tunnel Verrerie de Moutier",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 32,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:15",
+   "name": "Tunnel de Choindez 1 (059)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 29,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "226:16",
+   "name": "Tunnel de Choindez 3 (086)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 254,
+    "tunnel_jahr": 1932
+   }
+  },
+  {
+   "id": "226:17",
+   "name": "Tunnel de Choindez 2 (060)",
+   "linie": 226,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 165,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "230:0",
+   "name": "Tunnel de Vorbourg (046)",
+   "linie": 230,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 37,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "230:1",
+   "name": "Liesbergtunnel",
+   "linie": 230,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 184,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "230:2",
+   "name": "Bärschwiltunnel",
+   "linie": 230,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 116,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "230:3",
+   "name": "Angensteintunnel",
+   "linie": 230,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 65,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "230:4",
+   "name": "Wolftunnel",
+   "linie": 230,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 212,
+    "tunnel_jahr": 1913
+   }
+  },
+  {
+   "id": "240:0",
+   "name": "Tunnel de Glovelier (063)",
+   "linie": 240,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2012,
+    "tunnel_jahr": 1877
+   }
+  },
+  {
+   "id": "240:1",
+   "name": "Tunnel de Montmelon (064)",
+   "linie": 240,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 223,
+    "tunnel_jahr": 1877
+   }
+  },
+  {
+   "id": "240:2",
+   "name": "Tunnel de Malvie ( 065 )",
+   "linie": 240,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 213,
+    "tunnel_jahr": 1877
+   }
+  },
+  {
+   "id": "240:3",
+   "name": "Tunnel du Château (061)",
+   "linie": 240,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 230,
+    "tunnel_jahr": 1877
+   }
+  },
+  {
+   "id": "240:4",
+   "name": "Tunnel de la Croix (062)",
+   "linie": 240,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2966,
+    "tunnel_jahr": 1877
+   }
+  },
+  {
+   "id": "240:5",
+   "name": "Tunnel de Courchavon (037)",
+   "linie": 240,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 194,
+    "tunnel_jahr": 1877
+   }
+  },
+  {
+   "id": "250:0",
+   "name": "Tunnel de Grandvaux (030)",
+   "linie": 250,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 392,
+    "tunnel_jahr": 1862
+   }
+  },
+  {
+   "id": "250:1",
+   "name": "Tunnel de la Cornallaz(031)",
+   "linie": 250,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 494,
+    "tunnel_jahr": 1862
+   }
+  },
+  {
+   "id": "250:2",
+   "name": "Tunnel de Vauderens (101)",
+   "linie": 250,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1980,
+    "tunnel_jahr": 2001
+   }
+  },
+  {
+   "id": "250:3",
+   "name": "Mühletaltunnel (012)",
+   "linie": 250,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 400,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "250:4",
+   "name": "Flamattertunnel (011)",
+   "linie": 250,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 189,
+    "tunnel_jahr": 1860
+   }
+  },
+  {
+   "id": "251:0",
+   "name": "Tunnel de Villangeaux (047)",
+   "linie": 251,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 424,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "400:0",
+   "name": "Grauholztunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 6286,
+    "tunnel_jahr": 1993
+   }
+  },
+  {
+   "id": "400:1",
+   "name": "Birchiwaldtunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 39,
+    "tunnel_jahr": 2003
+   }
+  },
+  {
+   "id": "400:2",
+   "name": "Rüdtligentunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 400,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "400:3",
+   "name": "Emmetunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1633,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "400:4",
+   "name": "Hersiwiltunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1000,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "400:5",
+   "name": "Oenzbergtunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 3155,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "400:6",
+   "name": "Gishübeltunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 845,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "400:7",
+   "name": "Thunstettentunnel I Nord NBS",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 889,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "400:8",
+   "name": "Langenthaltunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1105,
+    "tunnel_jahr": 2003
+   }
+  },
+  {
+   "id": "400:9",
+   "name": "Aegertentunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 632,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "400:10",
+   "name": "Murgenthaltunnel",
+   "linie": 400,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 4744,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "415:0",
+   "name": "Wolfachertunnel Nord",
+   "linie": 415,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 577,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "415:1",
+   "name": "Wolfachertunnel Süd",
+   "linie": 415,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 418,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "450:0",
+   "name": "Borntunnel",
+   "linie": 450,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 798,
+    "tunnel_jahr": 1981
+   }
+  },
+  {
+   "id": "450:1",
+   "name": "Thunstettentunnel II Süd STL",
+   "linie": 450,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 891,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "450:2",
+   "name": "Burgdorfertunnel",
+   "linie": 450,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 510,
+    "tunnel_jahr": 1857
+   }
+  },
+  {
+   "id": "450:3",
+   "name": "Wylerfeldtunnel",
+   "linie": 450,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 300,
+    "tunnel_jahr": 2022
+   }
+  },
+  {
+   "id": "460:0",
+   "name": "Wiggentunnel",
+   "linie": 460,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 40,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "460:1",
+   "name": "Wilzigentunnel",
+   "linie": 460,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 250,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "460:2",
+   "name": "Entlenstaldentunnel",
+   "linie": 460,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 58,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "460:3",
+   "name": "Oberer Schächlitunnel",
+   "linie": 460,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 45,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "460:4",
+   "name": "Unterer Schächlitunnel",
+   "linie": 460,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 95,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "460:5",
+   "name": "Wolhusentunnel",
+   "linie": 460,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 150,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "460:6",
+   "name": "Werthensteintunnel",
+   "linie": 460,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 30,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "460:7",
+   "name": "Zimmereggtunnel",
+   "linie": 460,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1134,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "500:0",
+   "name": "Hauenstein Basistunnel HBT",
+   "linie": 500,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 8135,
+    "tunnel_jahr": 1916
+   }
+  },
+  {
+   "id": "500:1",
+   "name": "Aarburgertunnel",
+   "linie": 500,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 87,
+    "tunnel_jahr": 1856
+   }
+  },
+  {
+   "id": "500:2",
+   "name": "Gütschtunnel Luzern",
+   "linie": 500,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 326,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "500:3",
+   "name": "Schönheimtunnel",
+   "linie": 500,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 199,
+    "tunnel_jahr": 1896
+   }
+  },
+  {
+   "id": "501:0",
+   "name": "Adlertunnel",
+   "linie": 501,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 5303,
+    "tunnel_jahr": 2000
+   }
+  },
+  {
+   "id": "503:0",
+   "name": "Bucktentunnel",
+   "linie": 503,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 263,
+    "tunnel_jahr": 1857
+   }
+  },
+  {
+   "id": "503:1",
+   "name": "Mühlefluhtunnel BL",
+   "linie": 503,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 60,
+    "tunnel_jahr": 1857
+   }
+  },
+  {
+   "id": "503:2",
+   "name": "Ob. Hauensteintunnel",
+   "linie": 503,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2495,
+    "tunnel_jahr": 1857
+   }
+  },
+  {
+   "id": "510:0",
+   "name": "Kannenfeldtunnel",
+   "linie": 510,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 800,
+    "tunnel_jahr": 1901
+   }
+  },
+  {
+   "id": "510:1",
+   "name": "Schützenmatttunnel",
+   "linie": 510,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 286,
+    "tunnel_jahr": 1901
+   }
+  },
+  {
+   "id": "540:0",
+   "name": "Tunnel Wöschnau",
+   "linie": 540,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 488,
+    "tunnel_jahr": 2019
+   }
+  },
+  {
+   "id": "570:0",
+   "name": "Luzerner Stadttunnel",
+   "linie": 570,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2092,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "570:1",
+   "name": "Schiltenneunetunnel",
+   "linie": 570,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 166,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "570:2",
+   "name": "Seeburgtunnel",
+   "linie": 570,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 113,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "570:3",
+   "name": "Lerchenbühltunnel",
+   "linie": 570,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 560,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "570:4",
+   "name": "Lettentunnel LU",
+   "linie": 570,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 37,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "570:5",
+   "name": "Schwarzenbachtunnel",
+   "linie": 570,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 124,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "580:0",
+   "name": "Galleria di base del Ceneri",
+   "linie": 580,
+   "bemerkung": "CBT Ovest, da länger als CBT Est (ohne Sarè, da Saré eine Abzweigung ist und den Tunnel nicht verlängert)",
+   "werte": {
+    "tunnel_laenge": 15196,
+    "tunnel_jahr": 2020
+   }
+  },
+  {
+   "id": "594:0",
+   "name": "Gotthard-Basistunnel",
+   "linie": 594,
+   "bemerkung": "Länge der Oströhre, da länger als Weströhre",
+   "werte": {
+    "tunnel_laenge": 57104,
+    "tunnel_jahr": 2016
+   }
+  },
+  {
+   "id": "595:0",
+   "name": "Galleria Svincolo A2 Biasca",
+   "linie": 595,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 260,
+    "tunnel_jahr": 2016
+   }
+  },
+  {
+   "id": "595:1",
+   "name": "Galleria artificiale Giustizia",
+   "linie": 595,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 106,
+    "tunnel_jahr": 2016
+   }
+  },
+  {
+   "id": "600:0",
+   "name": "Rindelfluhtunnel re. Berg G200",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 201,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:1",
+   "name": "Rindelfluhtunnel li. See G100",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 200,
+    "tunnel_jahr": 1904
+   }
+  },
+  {
+   "id": "600:2",
+   "name": "Hochfluhtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 584,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:3",
+   "name": "Franziskustunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 193,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:4",
+   "name": "Oelbergtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1987,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:5",
+   "name": "Stutzecktunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 988,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:6",
+   "name": "Tellsplattentunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 172,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:7",
+   "name": "Axenbergtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1128,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:8",
+   "name": "Sulzeggtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 128,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:9",
+   "name": "Neue Gruonbachgalerie re. G200",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 98,
+    "tunnel_jahr": 1943
+   }
+  },
+  {
+   "id": "600:10",
+   "name": "Windgällentunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 182,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:11",
+   "name": "Bristentunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 710,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:12",
+   "name": "Intschitunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 88,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:13",
+   "name": "Zgraggentaltunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 70,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:14",
+   "name": "Breitentunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 54,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:15",
+   "name": "Meitschlingertunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 87,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:16",
+   "name": "Märchlisbachgalerie Mitte",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 25,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:17",
+   "name": "Häggrigerbachgalerie",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 32,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:18",
+   "name": "Muhrentunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 53,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:19",
+   "name": "Pfaffensprungtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1475,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:20",
+   "name": "Mühletunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 88,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:21",
+   "name": "Kirchbergtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 304,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:22",
+   "name": "Wattingentunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1084,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:23",
+   "name": "Rorbachtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 230,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:24",
+   "name": "Untere Entschigtalgalerie",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 185,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:25",
+   "name": "Strahllochtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 39,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:26",
+   "name": "Leggisteintunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1092,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:27",
+   "name": "Maienkreuztunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 78,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:28",
+   "name": "Obere Entschigtalgalerie",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 103,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:29",
+   "name": "Naxbergtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1570,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:30",
+   "name": "Gotthardtunnel",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 15000,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:31",
+   "name": "Galleria Stalvedro",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 194,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:32",
+   "name": "Galleria Dazio",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 354,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:33",
+   "name": "Galleria Artoito",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 74,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:34",
+   "name": "Galleria Freggio",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1568,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:35",
+   "name": "Galleria Monte Piottino",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 147,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:36",
+   "name": "Galleria Pardorea",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 286,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:37",
+   "name": "Galleria Prato",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1567,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:38",
+   "name": "Galleria Boscerina",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 43,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:39",
+   "name": "Galleria Polmengo",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 304,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:40",
+   "name": "Galleria la Lume",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 466,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:41",
+   "name": "Galleria Pianotondo",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1509,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:42",
+   "name": "Galleria Tourniquet",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 72,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:43",
+   "name": "Galleria Travi",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1547,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:44",
+   "name": "Galleria Crocetto",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 275,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "600:45",
+   "name": "Galleria Giustizia",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 64,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "600:46",
+   "name": "Galleria Svitto",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 291,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "600:47",
+   "name": "Galleria Dragonato",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 33,
+    "tunnel_jahr": 2018
+   }
+  },
+  {
+   "id": "600:48",
+   "name": "Galleria Costa",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 68,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "600:49",
+   "name": "Galleria Precassino Gl. 200",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 402,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "600:50",
+   "name": "Galleria Meggiagra Gl. 200",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 102,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:51",
+   "name": "Galleria Monte Ceneri I sinistra",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1675,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:52",
+   "name": "Galleria Molincero",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 75,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:53",
+   "name": "Galleria Massagno I sinistra",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 924,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "600:54",
+   "name": "Galeria Paradiso",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 758,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "600:55",
+   "name": "Galleria San Martino",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 53,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "600:56",
+   "name": "Galleria Maroggia",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 570,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "600:57",
+   "name": "Galleria Coldrerio",
+   "linie": 600,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 92,
+    "tunnel_jahr": 1874
+   }
+  },
+  {
+   "id": "604:0",
+   "name": "Morschachtunnel",
+   "linie": 604,
+   "bemerkung": "Inkl: Morschachtunnel2 Gl.100 (DfA 604) und Morschachtunnel3 Gl.200 (DfA 604)",
+   "werte": {
+    "tunnel_laenge": 1371,
+    "tunnel_jahr": 1947
+   }
+  },
+  {
+   "id": "604:1",
+   "name": "Fronalptunnel",
+   "linie": 604,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2793,
+    "tunnel_jahr": 1946
+   }
+  },
+  {
+   "id": "605:0",
+   "name": "Stutzeck-Axenbergtunnel",
+   "linie": 605,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 3375,
+    "tunnel_jahr": 1941
+   }
+  },
+  {
+   "id": "605:1",
+   "name": "Alte Gruonbachgalerie li. G100",
+   "linie": 605,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 100,
+    "tunnel_jahr": 1882
+   }
+  },
+  {
+   "id": "606:0",
+   "name": "Galleria Precassino-Meggiagra",
+   "linie": 606,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 713,
+    "tunnel_jahr": 1934
+   }
+  },
+  {
+   "id": "607:0",
+   "name": "Galleria Monte Ceneri II destra",
+   "linie": 607,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1693,
+    "tunnel_jahr": 1941
+   }
+  },
+  {
+   "id": "608:0",
+   "name": "Galleria Massagno II destra",
+   "linie": 608,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 943,
+    "tunnel_jahr": 1933
+   }
+  },
+  {
+   "id": "630:0",
+   "name": "Galleria Roca Bella",
+   "linie": 630,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 754,
+    "tunnel_jahr": 1980
+   }
+  },
+  {
+   "id": "638:0",
+   "name": "Galleria Balerna",
+   "linie": 638,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 616,
+    "tunnel_jahr": 1964
+   }
+  },
+  {
+   "id": "649:0",
+   "name": "Aarauer Stadttunnel I Nord",
+   "linie": 649,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 578,
+    "tunnel_jahr": 1996
+   }
+  },
+  {
+   "id": "650:0",
+   "name": "Heitersbergtunnel",
+   "linie": 650,
+   "bemerkung": "Inkl: Heitersberg2 (DfA 698) und Heitersberg3 (DfA 650)",
+   "werte": {
+    "tunnel_laenge": 4930,
+    "tunnel_jahr": 1972
+   }
+  },
+  {
+   "id": "650:1",
+   "name": "Aarauer Stadttunnel II Süd",
+   "linie": 650,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 615,
+    "tunnel_jahr": 1993
+   }
+  },
+  {
+   "id": "650:2",
+   "name": "Tunnel Eppenberg",
+   "linie": 650,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 3113,
+    "tunnel_jahr": 2020
+   }
+  },
+  {
+   "id": "651:0",
+   "name": "Hüslentunnel",
+   "linie": 651,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 606,
+    "tunnel_jahr": 1998
+   }
+  },
+  {
+   "id": "660:0",
+   "name": "Zimmerbergtunnel",
+   "linie": 660,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1984,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "660:1",
+   "name": "Albistunnel",
+   "linie": 660,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 3360,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "660:2",
+   "name": "Friedentaltunnel",
+   "linie": 660,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 120,
+    "tunnel_jahr": 1864
+   }
+  },
+  {
+   "id": "665:0",
+   "name": "Zuger Stadttunnel",
+   "linie": 665,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 585,
+    "tunnel_jahr": 1896
+   }
+  },
+  {
+   "id": "665:1",
+   "name": "Lothenbachtunnel",
+   "linie": 665,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 36,
+    "tunnel_jahr": 1898
+   }
+  },
+  {
+   "id": "665:2",
+   "name": "Bühltunnel ZG",
+   "linie": 665,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 94,
+    "tunnel_jahr": 2021
+   }
+  },
+  {
+   "id": "665:3",
+   "name": "Rossplattentunnel",
+   "linie": 665,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 48,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "665:4",
+   "name": "St. Adriantunnel",
+   "linie": 665,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 65,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "665:5",
+   "name": "Rufibachtunnel",
+   "linie": 665,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 39,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "665:6",
+   "name": "Kalkofentunnel",
+   "linie": 665,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 69,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "665:7",
+   "name": "Mühlefluhtunnel SZ",
+   "linie": 665,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 191,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "700:0",
+   "name": "Villnacherntunnel",
+   "linie": 700,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 185,
+    "tunnel_jahr": 1875
+   }
+  },
+  {
+   "id": "700:1",
+   "name": "Doppelspurtunnel Bözberg",
+   "linie": 700,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2692,
+    "tunnel_jahr": 2020
+   }
+  },
+  {
+   "id": "702:0",
+   "name": "Koblenztunnel",
+   "linie": 702,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 181,
+    "tunnel_jahr": 1854
+   }
+  },
+  {
+   "id": "704:0",
+   "name": "Tägerhardtunnel",
+   "linie": 704,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 400,
+    "tunnel_jahr": 1981
+   }
+  },
+  {
+   "id": "710:0",
+   "name": "Kreuzlibergtunnel",
+   "linie": 710,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 905,
+    "tunnel_jahr": 1961
+   }
+  },
+  {
+   "id": "711:0",
+   "name": "Landikontunnel",
+   "linie": 711,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 484,
+    "tunnel_jahr": 1864
+   }
+  },
+  {
+   "id": "714:0",
+   "name": "Kohlendreiecktunnel",
+   "linie": 714,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 185,
+    "tunnel_jahr": 2004
+   }
+  },
+  {
+   "id": "714:1",
+   "name": "UQB-Altstettertunnel",
+   "linie": 714,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 291,
+    "tunnel_jahr": 2002
+   }
+  },
+  {
+   "id": "720:0",
+   "name": "Ulmbergtunnel",
+   "linie": 720,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 848,
+    "tunnel_jahr": 1927
+   }
+  },
+  {
+   "id": "720:1",
+   "name": "Engetunnel",
+   "linie": 720,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 903,
+    "tunnel_jahr": 1927
+   }
+  },
+  {
+   "id": "722:0",
+   "name": "Seebahntunnel",
+   "linie": 722,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 97,
+    "tunnel_jahr": 2001
+   }
+  },
+  {
+   "id": "722:1",
+   "name": "Zimmerberg Basistunnel",
+   "linie": 722,
+   "bemerkung": "Inkl: ZBT Einspur Berg (DfA 725) und ZBT Einspur See (DfA 723)",
+   "werte": {
+    "tunnel_laenge": 9421,
+    "tunnel_jahr": 2003
+   }
+  },
+  {
+   "id": "730:0",
+   "name": "Riesbachtunnel",
+   "linie": 730,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1355,
+    "tunnel_jahr": 1894
+   }
+  },
+  {
+   "id": "730:1",
+   "name": "Erlenbachtunnel",
+   "linie": 730,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 72,
+    "tunnel_jahr": 1894
+   }
+  },
+  {
+   "id": "730:2",
+   "name": "Hitzbergtunnel",
+   "linie": 730,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 71,
+    "tunnel_jahr": 1967
+   }
+  },
+  {
+   "id": "730:3",
+   "name": "Lattenbergtunnel",
+   "linie": 730,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 93,
+    "tunnel_jahr": 1894
+   }
+  },
+  {
+   "id": "736:0",
+   "name": "Erlenrunstunnel",
+   "linie": 736,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 45,
+    "tunnel_jahr": 1879
+   }
+  },
+  {
+   "id": "740:0",
+   "name": "Täusitunnel",
+   "linie": 740,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 157,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "740:1",
+   "name": "Aathaltunnel",
+   "linie": 740,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 303,
+    "tunnel_jahr": 1990
+   }
+  },
+  {
+   "id": "745:0",
+   "name": "Tunnel Bahnhof Museumstrasse",
+   "linie": 745,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 772,
+    "tunnel_jahr": 1990
+   }
+  },
+  {
+   "id": "745:1",
+   "name": "Hirschengrabentunnel",
+   "linie": 745,
+   "bemerkung": "Inkl: Tunnel Hischengraben Axe 161 und Tunnel Hischengraben Axe 261",
+   "werte": {
+    "tunnel_laenge": 1334,
+    "tunnel_jahr": 1894
+   }
+  },
+  {
+   "id": "745:2",
+   "name": "Zürichbergtunnel",
+   "linie": 745,
+   "bemerkung": "Inkl: Tunnel Zürichbergtunnel Axe 33 (DfA 745) und Tunnel Zürichbergtunnel Axe 42 (DfA 730)",
+   "werte": {
+    "tunnel_laenge": 5295,
+    "tunnel_jahr": 1990
+   }
+  },
+  {
+   "id": "745:3",
+   "name": "Föhrlibucktunnel",
+   "linie": 745,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 193,
+    "tunnel_jahr": 1990
+   }
+  },
+  {
+   "id": "748:0",
+   "name": "Tunnel Bahnhof Löwenstrasse",
+   "linie": 748,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 584,
+    "tunnel_jahr": 2012
+   }
+  },
+  {
+   "id": "748:1",
+   "name": "Zürich Weinbergtunnel",
+   "linie": 748,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 4977,
+    "tunnel_jahr": 2014
+   }
+  },
+  {
+   "id": "748:2",
+   "name": "Oerlikontunnel",
+   "linie": 748,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 124,
+    "tunnel_jahr": 2014
+   }
+  },
+  {
+   "id": "750:0",
+   "name": "Opfikontunnel II",
+   "linie": 750,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 302,
+    "tunnel_jahr": 1980
+   }
+  },
+  {
+   "id": "750:1",
+   "name": "Flughafentunnel",
+   "linie": 750,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1510,
+    "tunnel_jahr": 1980
+   }
+  },
+  {
+   "id": "750:2",
+   "name": "Hagenholztunnel",
+   "linie": 750,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 3241,
+    "tunnel_jahr": 1980
+   }
+  },
+  {
+   "id": "751:0",
+   "name": "Wipkingertunnel",
+   "linie": 751,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1222,
+    "tunnel_jahr": 1856
+   }
+  },
+  {
+   "id": "752:0",
+   "name": "Opfikontunnel I",
+   "linie": 752,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 263,
+    "tunnel_jahr": 1978
+   }
+  },
+  {
+   "id": "754:0",
+   "name": "Lipperschwenditunnel",
+   "linie": 754,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 54,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "754:1",
+   "name": "Jonaschluchttunnel",
+   "linie": 754,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 31,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "754:2",
+   "name": "Kühweidtunnel",
+   "linie": 754,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 132,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "754:3",
+   "name": "Platteneinschnitttunnel",
+   "linie": 754,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 15,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "760:0",
+   "name": "Käferbergtunnel",
+   "linie": 760,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 2118,
+    "tunnel_jahr": 1969
+   }
+  },
+  {
+   "id": "762:0",
+   "name": "Schloss Laufentunnel",
+   "linie": 762,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 66,
+    "tunnel_jahr": 1857
+   }
+  },
+  {
+   "id": "762:1",
+   "name": "Rötitunnel",
+   "linie": 762,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 153,
+    "tunnel_jahr": 1964
+   }
+  },
+  {
+   "id": "769:0",
+   "name": "Dettenbergtunnel",
+   "linie": 769,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1801,
+    "tunnel_jahr": 1876
+   }
+  },
+  {
+   "id": "770:0",
+   "name": "Fischerhölzlitunnel",
+   "linie": 770,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 112,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "770:1",
+   "name": "Neuhausertunnel",
+   "linie": 770,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 143,
+    "tunnel_jahr": 1897
+   }
+  },
+  {
+   "id": "820:0",
+   "name": "Emmersbergtunnel",
+   "linie": 820,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 760,
+    "tunnel_jahr": 1895
+   }
+  },
+  {
+   "id": "853:0",
+   "name": "Rickentunnel",
+   "linie": 853,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 8604,
+    "tunnel_jahr": 1910
+   }
+  },
+  {
+   "id": "880:0",
+   "name": "Rosenbergtunnel",
+   "linie": 880,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 1466,
+    "tunnel_jahr": 1912
+   }
+  },
+  {
+   "id": "890:0",
+   "name": "Bommersteintunnel",
+   "linie": 890,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 453,
+    "tunnel_jahr": 1941
+   }
+  },
+  {
+   "id": "890:1",
+   "name": "Bühltunnel SG",
+   "linie": 890,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 114,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "890:2",
+   "name": "Stutztunnel",
+   "linie": 890,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 133,
+    "tunnel_jahr": 1859
+   }
+  },
+  {
+   "id": "890:3",
+   "name": "Kerenzerbergtunnel",
+   "linie": 890,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 3955,
+    "tunnel_jahr": 1961
+   }
+  },
+  {
+   "id": "890:4",
+   "name": "Biberlikopftunnel",
+   "linie": 890,
+   "bemerkung": null,
+   "werte": {
+    "tunnel_laenge": 289,
+    "tunnel_jahr": 1966
+   }
+  }
+ ],
+ "tunnel_datenstand": "2026-09-21"
 }

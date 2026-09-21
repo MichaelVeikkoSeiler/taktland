@@ -160,6 +160,10 @@ export interface Kategorie {
   hinweis?: string
   min_abstand: number
   min_anteil: number
+  /** «tiefster»: vorn liegt der kleinere Wert, etwa das frühere Jahr */
+  richtung?: 'hoechster' | 'tiefster'
+  /** «jahr»: ohne Tausenderzeichen anzeigen (1882, nicht 1'882) */
+  format?: 'jahr'
 }
 
 export interface VergleichsBahnhof {
@@ -169,9 +173,21 @@ export interface VergleichsBahnhof {
   werte: Record<string, number>
 }
 
+export interface VergleichsTunnel {
+  /** «Linie:Stelle» in data/linien/{nr}.json */
+  id: string
+  name: string
+  linie: number
+  bemerkung?: string | null
+  werte: Record<string, number>
+}
+
 export interface Vergleichsdaten {
   datenstand: string
   hinweis: string
   kategorien: Kategorie[]
   bahnhoefe: VergleichsBahnhof[]
+  tunnel_kategorien?: Kategorie[]
+  tunnel?: VergleichsTunnel[]
+  tunnel_datenstand?: string | null
 }

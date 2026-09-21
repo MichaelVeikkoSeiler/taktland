@@ -23,6 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FACTS = ROOT / "data" / "facts"
+LINIEN = ROOT / "data" / "linien"
 ZIEL = ROOT / "data" / "vergleich.json"
 
 #: min_abstand und min_anteil halten unfaire Paare heraus. Zwei Bahnhoefe mit
@@ -98,6 +99,55 @@ KATEGORIEN = [
 ]
 
 
+#: Tunnel gegeneinander. Die Werte stammen aus data/linien/{nr}.json. Länge und
+#: Jahr sind für alle 289 Tunnel der Quelle erfasst.
+#: richtung «tiefster»: vorn liegt der kleinere Wert (das frühere Jahr).
+TUNNEL_KATEGORIEN = [
+    {
+        "id": "tunnel_laenge",
+        "pfad": ["laenge_m"],
+        "titel": "Länge",
+        "frage": "Welcher Tunnel ist länger?",
+        "frage_mehrere": "Welcher dieser Tunnel ist am längsten?",
+        "einheit": "Meter",
+        "art": "messwert",
+        "quelle": "tunnel",
+        "hinweis": "Verglichen wird die Länge, wie die Quelle sie angibt. Bei einigen "
+                   "Tunneln sagt eine Bemerkung, was sie umfasst.",
+        "min_abstand": 100,
+        "min_anteil": 0.2,
+    },
+    {
+        "id": "tunnel_jahr",
+        "pfad": ["inbetriebnahme_jahr"],
+        "titel": "Erste Inbetriebnahme",
+        "frage": "Welcher Tunnel ging früher erstmals in Betrieb?",
+        "frage_mehrere": "Welcher dieser Tunnel ging am frühesten erstmals in Betrieb?",
+        "einheit": "",
+        "art": "messwert",
+        "quelle": "tunnel",
+        "richtung": "tiefster",
+        "format": "jahr",
+        "min_abstand": 10,
+        "min_anteil": 0.0,
+    },
+]
+
+
+def tunnel_eintraege():
+    """Jeder Tunnel mit Linie, Stelle in der Faktendatei und Bemerkung."""
+    raus = []
+    for p in sorted(LINIEN.glob("*.json"), key=lambda x: int(x.stem)):
+        f = json.loads(p.read_text(encoding="utf-8"))
+        for i, t in enumerate((f.get("tunnel") or {}).get("items", [])):
+            werte = {k["id"]: t[k["pfad"][0]] for k in TUNNEL_KATEGORIEN
+                     if isinstance(t.get(k["pfad"][0]), (int, float))}
+            if werte:
+                raus.append({"id": f"{f['linie']}:{i}", "name": t["name"], "linie": f["linie"],
+                             "bemerkung": t.get("bemerkung"), "werte": werte})
+    return raus
+
+
 def holen(d, pfad):
     for teil in pfad:
         if not isinstance(d, dict):
@@ -130,6 +180,12 @@ def main():
                    "nichts geschrieben und nichts geschaetzt.",
         "kategorien": [{k: v for k, v in kat.items() if k != "pfad"} for kat in KATEGORIEN],
         "bahnhoefe": bahnhoefe,
+        "tunnel_kategorien": [{k: v for k, v in kat.items() if k != "pfad"}
+                              for kat in TUNNEL_KATEGORIEN],
+        "tunnel": tunnel_eintraege(),
+        # die Tunnel kommen aus einem eigenen Abruf, mit eigenem Stand
+        "tunnel_datenstand": max((json.loads(p.read_text(encoding="utf-8"))["datenstand"]
+                                  for p in LINIEN.glob("*.json")), default=None),
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, indent=1), encoding="utf-8")
     groesse = ZIEL.stat().st_size / 1024
@@ -138,6 +194,9 @@ def main():
     for kat in KATEGORIEN:
         n = sum(1 for b in bahnhoefe if kat["id"] in b["werte"])
         print(f"  {kat['id']:<8}{n:>4} Bahnhöfe  ({kat['art']})")
+    for kat in TUNNEL_KATEGORIEN:
+        n = sum(1 for t in raus["tunnel"] if kat["id"] in t["werte"])
+        print(f"  {kat['id']:<14}{n:>4} Tunnel  ({kat['art']})")
     return 0
 
 

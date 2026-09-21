@@ -19,9 +19,10 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "pipeline"))
 
-from build_vergleich import KATEGORIEN, holen  # noqa: E402
+from build_vergleich import KATEGORIEN, TUNNEL_KATEGORIEN, holen  # noqa: E402
 
 FACTS = ROOT / "data" / "facts"
+LINIEN = ROOT / "data" / "linien"
 DATEI = ROOT / "data" / "vergleich.json"
 
 #: Die zweite Meinung: Nur diese Felder duerfen als Messwert gelten, also als
@@ -35,6 +36,10 @@ MESSWERTE = {
     "steckbrief.dnwv",
     "stammdaten.hoehe_m_ue_m",                 # Lage, keine Erhebungsfrage
     "zuege.staerkster_abschnitt.zuege_pro_tag",  # Fahrplanzaehlung je Abschnitt
+    # Tunnel: Laenge und Jahr stehen fuer alle 289 Tunnel der Quelle, das
+    # Verzeichnis ist das Tunnelinventar der SBB, kein erfasster Bestand
+    "tunnel.laenge_m",
+    "tunnel.inbetriebnahme_jahr",
 }
 
 
@@ -44,9 +49,10 @@ def main():
         return 1
     v = json.loads(DATEI.read_text(encoding="utf-8"))
     pfade = {k["id"]: k["pfad"] for k in KATEGORIEN}
+    pfade.update({k["id"]: ["tunnel", *k["pfad"]] for k in TUNNEL_KATEGORIEN})
     fehler = []
 
-    for kat in v["kategorien"]:
+    for kat in v["kategorien"] + v.get("tunnel_kategorien", []):
         pfad = pfade[kat["id"]]
         if kat["art"] == "messwert" and ".".join(pfad) not in MESSWERTE:
             fehler.append(f"Kategorie «{kat['id']}»: {'.'.join(pfad)} gilt als "
@@ -80,7 +86,25 @@ def main():
                 fehler.append(f"{b['name']} ({b['uic']}), {kid}: "
                               f"{wert!r} statt {soll!r} aus den Fakten")
 
-    print(f"{len(v['bahnhoefe'])} Bahnhöfe, {geprueft} Werte geprüft")
+    # Tunnel: jeder Wert gegen die Faktendatei seiner Linie
+    for t in v.get("tunnel", []):
+        nr, i = t["id"].split(":")
+        p = LINIEN / f"{nr}.json"
+        if not p.exists():
+            fehler.append(f"Tunnel {t['name']}: keine Faktendatei für Linie {nr}")
+            continue
+        items = (json.loads(p.read_text(encoding="utf-8")).get("tunnel") or {}).get("items", [])
+        soll = items[int(i)] if int(i) < len(items) else {}
+        if soll.get("name") != t["name"] or soll.get("bemerkung") != t.get("bemerkung"):
+            fehler.append(f"Tunnel {t['id']}: Name oder Bemerkung weicht von der Linie {nr} ab")
+        for kid, wert in t["werte"].items():
+            geprueft += 1
+            if soll.get(pfade[kid][-1]) != wert:
+                fehler.append(f"Tunnel {t['name']}, {kid}: {wert!r} statt "
+                              f"{soll.get(pfade[kid][-1])!r} aus den Fakten")
+
+    print(f"{len(v['bahnhoefe'])} Bahnhöfe und {len(v.get('tunnel', []))} Tunnel, "
+          f"{geprueft} Werte geprüft")
     for f in fehler[:20]:
         print(f"    FEHLER   {f}")
     if fehler:

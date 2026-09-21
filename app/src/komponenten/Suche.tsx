@@ -126,7 +126,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
         <span className="min-w-0">
           <span className="block font-medium text-sbb-black dark:text-sbb-white">Duell</span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-            Zwei Bahnhöfe gegeneinander, über alle {index.bahnhoefe_gesamt}
+            Zwei Bahnhöfe oder zwei Tunnel gegeneinander
           </span>
         </span>
         <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">→</span>

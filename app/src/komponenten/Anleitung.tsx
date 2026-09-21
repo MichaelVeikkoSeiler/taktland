@@ -102,6 +102,11 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Gespielt wird über die ganze Schweiz oder innerhalb eines Kantons, sofern er genug
             Bahnhöfe für faire Paare hat.
           </li>
+          <li>
+            In der Auswahl «Tunnel» treten Tunnel gegeneinander an: Welcher ist länger,
+            welcher ging früher erstmals in Betrieb? Nach der Antwort steht, falls vorhanden,
+            die Bemerkung der Quelle, etwa was eine Länge umfasst.
+          </li>
         </Punkte>
       </Abschnitt>
 

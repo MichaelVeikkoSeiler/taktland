@@ -733,3 +733,13 @@ erfasst. Fehlt die Sicherungsart, sagt der Text wie oft («Bei 1 der erfassten
 Bahnübergänge ist keine Sicherungsart eingetragen»), und «bei jedem» steht nur, wenn
 keiner fehlt. Linie 650 hat alle sechs Sicherungsarten: Dann gibt es keine weitere
 falsche Antwort zu ergänzen (der Baukasten stürzte dabei ab).
+
+## Tunnel im Duell
+
+`pipeline/build_vergleich.py` nimmt die Tunnel aus `data/linien/{nr}.json` (alle 289),
+`generator/validate_vergleich.py` prüft jeden Wert, Namen und Bemerkung gegen diese
+Datei. Zwei Kategorien: Länge (vorn der grössere Wert) und Jahr der ersten
+Inbetriebnahme (`richtung: tiefster`, vorn das frühere Jahr; `format: jahr`, damit
+1882 nicht als 1'882 erscheint). Nach der Antwort steht die Bemerkung der Quelle im
+Wortlaut, weil sie sagt, was eine Länge umfasst («Länge der Oströhre», «4947m gehört
+Frankreich»). Das Tunnel-Duell zeigt den Datenstand der Tunnel, nicht den der Bahnhöfe.

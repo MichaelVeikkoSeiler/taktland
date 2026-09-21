@@ -3,7 +3,7 @@ import {
   auswahlLesen, auswahlMerken, duellstandLesen, duellstandMerken, type Duellstand,
 } from '../fortschritt'
 import { vergleichLaden } from '../daten'
-import type { Kategorie, Vergleichsdaten, VergleichsBahnhof } from '../typen'
+import type { Kategorie, Vergleichsdaten } from '../typen'
 import { kantonText } from '../kanton'
 
 /**
@@ -30,9 +30,23 @@ const KANTONSNAME: Record<string, string> = {
   TI: 'Tessin', UR: 'Uri', VD: 'Waadt', VS: 'Wallis', ZG: 'Zug', ZH: 'Zürich',
 }
 
+/** Was gegeneinander antritt: ein Bahnhof oder ein Tunnel */
+interface Gegenstand {
+  schluessel: string
+  name: string
+  /** unter dem Namen: der Kanton beim Bahnhof, die Linie beim Tunnel */
+  unterzeile: string | null
+  /** Bemerkung der Quelle, etwa was eine Tunnellänge umfasst */
+  bemerkung?: string | null
+  werte: Record<string, number>
+}
+
+/** Auswahl «alle Tunnel» im Feld oben, neben Schweiz und Kantonen */
+const TUNNEL = 'TUNNEL'
+
 interface Runde {
   kategorie: Kategorie
-  bahnhoefe: VergleichsBahnhof[]
+  eintraege: Gegenstand[]
   richtig: number
 }
 
@@ -40,7 +54,7 @@ function zufall<T>(liste: T[]): T {
   return liste[Math.floor(Math.random() * liste.length)]
 }
 
-function wertVon(b: VergleichsBahnhof, k: Kategorie) {
+function wertVon(b: Gegenstand, k: Kategorie) {
   return b.werte[k.id]
 }
 
@@ -61,7 +75,7 @@ function weitGenug(a: number, b: number, k: Kategorie) {
  * es gab kein Paar mehr, und das Spiel blieb beim Laden stehen. Wer eine
  * Serie von 8 schaffte, wurde also dafür bestraft.
  */
-function versuchen(feldAlle: VergleichsBahnhof[], kategorie: Kategorie,
+function versuchen(feldAlle: Gegenstand[], kategorie: Kategorie,
                    serie: number, engziehen: boolean): Runde | null {
   const feld = feldAlle.filter((b) => wertVon(b, kategorie) != null)
   if (feld.length < 8) return null
@@ -74,7 +88,7 @@ function versuchen(feldAlle: VergleichsBahnhof[], kategorie: Kategorie,
     const erster = zufall(feld)
     const a = wertVon(erster, kategorie)
     const passend = feld.filter((b) => {
-      if (b.uic === erster.uic) return false
+      if (b.schluessel === erster.schluessel) return false
       const v = wertVon(b, kategorie)
       if (!weitGenug(a, v, kategorie)) return false
       return Math.abs(a - v) <= Math.max(Math.abs(a), Math.abs(v)) * enge
@@ -95,8 +109,9 @@ function versuchen(feldAlle: VergleichsBahnhof[], kategorie: Kategorie,
 
     const gemischt = [...gewaehlt].sort(() => Math.random() - 0.5)
     const werte = gemischt.map((b) => wertVon(b, kategorie))
-    const hoechster = Math.max(...werte)
-    return { kategorie, bahnhoefe: gemischt, richtig: werte.indexOf(hoechster) }
+    // vorn liegt der höchste Wert, beim Jahr der ersten Inbetriebnahme der tiefste
+    const bester = kategorie.richtung === 'tiefster' ? Math.min(...werte) : Math.max(...werte)
+    return { kategorie, eintraege: gemischt, richtig: werte.indexOf(bester) }
   }
   return null
 }
@@ -105,9 +120,9 @@ function versuchen(feldAlle: VergleichsBahnhof[], kategorie: Kategorie,
  * Baut eine Runde. Geht eine Kategorie nicht auf, kommt die nächste dran, und
  * zuletzt wird ohne Verengung gesucht. So bleibt das Spiel nie stehen.
  */
-function rundeBauen(daten: Vergleichsdaten, feld: VergleichsBahnhof[],
+function rundeBauen(kategorien: Kategorie[], feld: Gegenstand[],
                     serie: number): Runde | null {
-  const reihenfolge = [...daten.kategorien].sort(() => Math.random() - 0.5)
+  const reihenfolge = [...kategorien].sort(() => Math.random() - 0.5)
   for (const eng of [true, false]) {
     for (const kategorie of reihenfolge) {
       const runde = versuchen(feld, kategorie, serie, eng)
@@ -118,7 +133,10 @@ function rundeBauen(daten: Vergleichsdaten, feld: VergleichsBahnhof[],
 }
 
 function zahl(n: number, k: Kategorie) {
-  return `${n.toLocaleString('de-CH', { maximumFractionDigits: 20 })} ${k.einheit}`
+  const text = k.format === 'jahr'
+    ? String(n)
+    : n.toLocaleString('de-CH', { maximumFractionDigits: 20 })
+  return k.einheit ? `${text} ${k.einheit}` : text
 }
 
 /** Setzt den Punkt nur, wenn nicht schon einer dasteht: «m ü. M.» endet selbst
@@ -135,6 +153,7 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
   const [serie, setSerie] = useState(0)
   const [stand, setStand] = useState<Duellstand>(() => duellstandLesen())
   const [auswahl, setAuswahl] = useState<string>(() => auswahlLesen())
+  const tunnelFeld = auswahl === TUNNEL
 
   /** Die Kantone, die genug Bahnhöfe für faire Paare haben. */
   const kantone = useMemo(() => {
@@ -149,12 +168,26 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
       .sort((a, b) => a.name.localeCompare(b.name, 'de-CH'))
   }, [daten])
 
-  const feld = useMemo(() => {
+  const feld = useMemo((): Gegenstand[] => {
     if (!daten) return []
-    return auswahl === 'CH'
-      ? daten.bahnhoefe
-      : daten.bahnhoefe.filter((b) => b.kanton === auswahl)
+    if (auswahl === TUNNEL) {
+      return (daten.tunnel ?? []).map((t) => ({
+        schluessel: t.id, name: t.name, unterzeile: `Linie ${t.linie}`,
+        bemerkung: t.bemerkung, werte: t.werte,
+      }))
+    }
+    return daten.bahnhoefe
+      .filter((b) => auswahl === 'CH' || b.kanton === auswahl)
+      .map((b) => ({
+        schluessel: String(b.uic), name: b.name,
+        unterzeile: b.kanton ? kantonText(b.kanton) : null, werte: b.werte,
+      }))
   }, [daten, auswahl])
+
+  const kategorien = useMemo(
+    () => (daten ? (tunnelFeld ? daten.tunnel_kategorien ?? [] : daten.kategorien) : []),
+    [daten, tunnelFeld],
+  )
 
   useEffect(() => {
     vergleichLaden().then(setDaten).catch((e: Error) => setFehler(e.message))
@@ -163,8 +196,8 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
   const naechste = useCallback((mitSerie: number) => {
     if (!daten) return
     setGewaehlt(null)
-    setRunde(rundeBauen(daten, feld, mitSerie))
-  }, [daten, feld])
+    setRunde(rundeBauen(kategorien, feld, mitSerie))
+  }, [daten, feld, kategorien])
 
   useEffect(() => { if (daten && !runde) naechste(0) }, [daten, runde, naechste])
 
@@ -230,6 +263,9 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
                      dark:text-sbb-white"
         >
           <option value="CH">Ganze Schweiz ({daten.bahnhoefe.length} Bahnhöfe)</option>
+          {daten.tunnel && daten.tunnel.length > 0 && (
+            <option value={TUNNEL}>Tunnel ({daten.tunnel.length} Tunnel)</option>
+          )}
           {kantone.map((kt) => (
             <option key={kt.kuerzel} value={kt.kuerzel}>
               {kt.name} ({kt.anzahl} Bahnhöfe)
@@ -244,11 +280,11 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
             {k.titel}
           </p>
           <p className="mt-1 text-lg font-medium">
-            {runde.bahnhoefe.length > 2 ? k.frage_mehrere : k.frage}
+            {runde.eintraege.length > 2 ? k.frage_mehrere : k.frage}
           </p>
 
           <ul className="mt-4 space-y-2">
-            {runde.bahnhoefe.map((b, i) => {
+            {runde.eintraege.map((b, i) => {
               const istRichtig = i === runde.richtig
               const rahmen = !aufgeloest
                 ? 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'
@@ -258,7 +294,7 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
                     ? 'border-sbb-red bg-white dark:bg-sbb-midnight'
                     : 'border-sbb-cloud bg-white opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight'
               return (
-                <li key={b.uic}>
+                <li key={b.schluessel}>
                   <button
                     type="button" onClick={() => waehlen(i)} disabled={aufgeloest}
                     className={`flex w-full items-center justify-between gap-3 border px-4 py-4
@@ -266,9 +302,9 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
                   >
                     <span className="min-w-0">
                       <span className="block truncate font-medium">{b.name}</span>
-                      {b.kanton && (
+                      {b.unterzeile && (
                         <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                          {kantonText(b.kanton)}
+                          {b.unterzeile}
                         </span>
                       )}
                     </span>
@@ -295,9 +331,16 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
                     Einheiten lassen sich nicht zuverlässig beugen. Der
                     Doppelpunkt umgeht das. */}
                 <p className="mt-0.5">
-                  {runde.bahnhoefe[runde.richtig].name} liegt vorn:{' '}
-                  {mitPunkt(zahl(wertVon(runde.bahnhoefe[runde.richtig], k), k))}
+                  {runde.eintraege[runde.richtig].name} liegt vorn:{' '}
+                  {mitPunkt(zahl(wertVon(runde.eintraege[runde.richtig], k), k))}
                 </p>
+                {/* Was eine Tunnellänge umfasst, sagt manchmal nur die Bemerkung
+                    («Länge der Oströhre», «4947m gehört Frankreich») */}
+                {runde.eintraege.filter((b) => b.bemerkung).map((b) => (
+                  <p key={b.schluessel} className="mt-1">
+                    Die Quelle vermerkt zu {b.name}: «{b.bemerkung}»
+                  </p>
+                ))}
                 {/* Bei art «erfasst» verlangt generator/validate_vergleich.py
                     einen hinweis, der das sagt. Darum hier keine zweite, fast
                     gleich lautende Zeile. */}
@@ -320,26 +363,29 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
       ) : (
         <div className="mt-6">
           <p>
-            {auswahl === 'CH'
+            {auswahl === 'CH' || tunnelFeld
               ? 'Zu dieser Runde liess sich kein faires Paar finden.'
               : `Im Kanton ${KANTONSNAME[auswahl] ?? auswahl} liessen sich keine `
                 + 'Bahnhöfe finden, die weit genug auseinanderliegen.'}
           </p>
           <button
             type="button"
-            onClick={() => (auswahl === 'CH' ? naechste(0) : auswahlWechseln('CH'))}
+            onClick={() => (auswahl === 'CH' || tunnelFeld ? naechste(0) : auswahlWechseln('CH'))}
             className="mt-4 bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125"
-          >{auswahl === 'CH' ? 'Nochmals versuchen' : 'Ganze Schweiz spielen'}</button>
+          >{auswahl === 'CH' || tunnelFeld ? 'Nochmals versuchen' : 'Ganze Schweiz spielen'}</button>
         </div>
       )}
 
       <p className="mt-8 text-xs text-sbb-metal dark:text-sbb-storm">
-        {auswahl === 'CH'
-          ? `Alle ${daten.bahnhoefe.length} Bahnhöfe sind dabei, auch die ohne Lernkapitel.`
-          : `${feld.length} Bahnhöfe im Kanton ${KANTONSNAME[auswahl] ?? auswahl}, `
-            + 'auch die ohne Lernkapitel.'}{' '}
-        Jeder Wert stammt unverändert aus den offenen Daten. Datenstand: {daten.datenstand}.
-        {kantone.length < 26 && ' Kantone mit zu wenigen Bahnhöfen für faire Paare fehlen in der Auswahl.'}
+        {tunnelFeld
+          ? `Alle ${feld.length} Tunnel aus den offenen Daten sind dabei.`
+          : auswahl === 'CH'
+            ? `Alle ${daten.bahnhoefe.length} Bahnhöfe sind dabei.`
+            : `${feld.length} Bahnhöfe im Kanton ${KANTONSNAME[auswahl] ?? auswahl}.`}{' '}
+        Jeder Wert stammt unverändert aus den offenen Daten. Datenstand:{' '}
+        {tunnelFeld ? daten.tunnel_datenstand ?? daten.datenstand : daten.datenstand}.
+        {!tunnelFeld && kantone.length < 26
+          && ' Kantone mit zu wenigen Bahnhöfen für faire Paare fehlen in der Auswahl.'}
       </p>
     </div>
   )
