@@ -161,6 +161,16 @@
    ]
   }
  },
+ "8500119": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Laufen",
+    "Sissach"
+   ]
+  }
+ },
  "8500120": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -257,6 +267,16 @@
    ]
   }
  },
+ "8500205": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Wasseramt",
+    "Gäu"
+   ]
+  }
+ },
  "8500206": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -272,6 +292,16 @@
    "distraktoren": [
     "SW",
     "SOAD"
+   ]
+  }
+ },
+ "8500210": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Biel/Bienne",
+    "Jura bernois"
    ]
   }
  },
@@ -415,6 +445,15 @@
     "Laufenburg",
     "Aarau",
     "Brugg"
+   ]
+  }
+ },
+ "8500322": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "EI",
+    "FCK"
    ]
   }
  },
@@ -826,6 +865,16 @@
    ]
   }
  },
+ "8501426": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Saint-Gingolph",
+    "Villeneuve (VD)",
+    "Roche (VD)"
+   ]
+  }
+ },
  "8501500": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1201,6 +1250,16 @@
    ]
   }
  },
+ "8502104": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aarau",
+    "Brugg",
+    "Bremgarten"
+   ]
+  }
+ },
  "8502105": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1217,6 +1276,16 @@
     "Lenzburg",
     "Brugg",
     "Bremgarten"
+   ]
+  }
+ },
+ "8502110": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gösgen",
+    "Gäu",
+    "Wasseramt"
    ]
   }
  },
@@ -1321,6 +1390,15 @@
    "distraktoren": [
     "ZGSE",
     "ZGPP"
+   ]
+  }
+ },
+ "8502205": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "WCHO",
+    "IM"
    ]
   }
  },
@@ -1769,6 +1847,16 @@
    ]
   }
  },
+ "8503119": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sarganserland",
+    "Toggenburg",
+    "Wil"
+   ]
+  }
+ },
  "8503120": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -2055,6 +2143,16 @@
    "distraktoren": [
     "GLA",
     "GS"
+   ]
+  }
+ },
+ "8503231": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus Süd",
+    "Glarus Nord",
+    "Schänis"
    ]
   }
  },
@@ -2451,6 +2549,16 @@
    ]
   }
  },
+ "8503525": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Dietikon",
+    "Zürich",
+    "Bülach"
+   ]
+  }
+ },
  "8503526": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2536,6 +2644,26 @@
     "La Gruyère",
     "La Sarine",
     "La Veveyse"
+   ]
+  }
+ },
+ "8504024": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Sarine",
+    "La Broye",
+    "Sense"
+   ]
+  }
+ },
+ "8504026": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Glâne",
+    "La Broye",
+    "Sense"
    ]
   }
  },
@@ -3503,6 +3631,24 @@
    ]
   }
  },
+ "8506043": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "PFU",
+    "WTOE"
+   ]
+  }
+ },
+ "8506044": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "W",
+    "WWUE"
+   ]
+  }
+ },
  "8506045": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3569,6 +3715,26 @@
    ]
   }
  },
+ "8506106": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kreuzlingen",
+    "Arbon",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8506107": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
  "8506109": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3605,6 +3771,16 @@
    "distraktoren": [
     "KL",
     "KRL"
+   ]
+  }
+ },
+ "8506132": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frauenfeld",
+    "Weinfelden",
+    "Arbon"
    ]
   }
  },
@@ -3774,6 +3950,16 @@
    "distraktoren": [
     "RO",
     "ROR"
+   ]
+  }
+ },
+ "8506312": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rorschach",
+    "Rheineck",
+    "Goldach"
    ]
   }
  },
@@ -4274,6 +4460,16 @@
     "Buchrain",
     "Dierikon",
     "Root"
+   ]
+  }
+ },
+ "8516353": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hitzkirch",
+    "Ballwil",
+    "Ermensee"
    ]
   }
  },
