@@ -94,6 +94,16 @@
    ]
   }
  },
+ "8500102": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Sorvilier",
+    "Reconvilier",
+    "Court"
+   ]
+  }
+ },
  "8500105": {
   "stammdaten": {
    "frage": "kanton",
@@ -200,6 +210,15 @@
    ]
   }
  },
+ "8500125": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "POR",
+    "SU"
+   ]
+  }
+ },
  "8500126": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -296,6 +315,16 @@
   }
  },
  "8500210": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Biel/Bienne",
+    "Jura bernois"
+   ]
+  }
+ },
+ "8500211": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -530,6 +559,15 @@
     "Genthod",
     "Pregny-Chambésy",
     "Versoix"
+   ]
+  }
+ },
+ "8501012": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GDBE",
+    "VSX"
    ]
   }
  },
@@ -819,6 +857,16 @@
    ]
   }
  },
+ "8501301": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "La Tour-de-Peilz"
+   ]
+  }
+ },
  "8501303": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1091,6 +1139,16 @@
     "Nottwil",
     "Rothenburg",
     "Sempach"
+   ]
+  }
+ },
+ "8502011": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Willisau",
+    "Entlebuch",
+    "Hochdorf"
    ]
   }
  },
@@ -1575,6 +1633,15 @@
    ]
   }
  },
+ "8502230": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "STRI",
+    "CHAA"
+   ]
+  }
+ },
  "8503000": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1959,6 +2026,16 @@
    "distraktoren": [
     "HIN",
     "HW"
+   ]
+  }
+ },
+ "8503134": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Hinwil",
+    "Winterthur",
+    "Uster"
    ]
   }
  },
@@ -2773,6 +2850,16 @@
    ]
   }
  },
+ "8504117": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Wünnewil-Flamatt",
+    "Neuenegg"
+   ]
+  }
+ },
  "8504120": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2908,6 +2995,16 @@
     "Morges",
     "Broye-Vully",
     "Gros-de-Vaud"
+   ]
+  }
+ },
+ "8504205": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rochefort",
+    "Concise",
+    "Val-de-Travers"
    ]
   }
  },
@@ -3448,6 +3545,16 @@
    ]
   }
  },
+ "8505417": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bellinzona",
+    "Lugano",
+    "Riviera"
+   ]
+  }
+ },
  "8506000": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3505,6 +3612,16 @@
    ]
   }
  },
+ "8506006": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Pfäffikon",
+    "Hinwil",
+    "Uster"
+   ]
+  }
+ },
  "8506007": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3551,6 +3668,16 @@
     "Andelfingen",
     "Bülach",
     "Pfäffikon"
+   ]
+  }
+ },
+ "8506015": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Winterthur",
+    "Wiesendangen",
+    "Rickenbach (ZH)"
    ]
   }
  },
@@ -3609,6 +3736,16 @@
    "distraktoren": [
     "OWT",
     "WD"
+   ]
+  }
+ },
+ "8506039": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bülach",
+    "Winterthur",
+    "Dielsdorf"
    ]
   }
  },
@@ -3784,6 +3921,16 @@
    ]
   }
  },
+ "8506133": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frauenfeld",
+    "Weinfelden",
+    "Münchwilen"
+   ]
+  }
+ },
  "8506136": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3800,6 +3947,16 @@
    "distraktoren": [
     "EZ",
     "EW"
+   ]
+  }
+ },
+ "8506190": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Münchwilen",
+    "Frauenfeld",
+    "Kreuzlingen"
    ]
   }
  },
@@ -3858,6 +4015,16 @@
     "Rorschach",
     "Toggenburg",
     "Wil"
+   ]
+  }
+ },
+ "8506211": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hauptwil-Gottshaus",
+    "Flawil",
+    "St. Gallen"
    ]
   }
  },
@@ -4065,6 +4232,16 @@
    ]
   }
  },
+ "8507008": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Emmental",
+    "Seeland"
+   ]
+  }
+ },
  "8507009": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4180,6 +4357,16 @@
    "distraktoren": [
     "LG",
     "LNE"
+   ]
+  }
+ },
+ "8508208": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Thun",
+    "Oberaargau"
    ]
   }
  },
@@ -4536,6 +4723,15 @@
    "distraktoren": [
     "MEN",
     "CAP"
+   ]
+  }
+ },
+ "8518771": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BIM",
+    "FRIN"
    ]
   }
  },
