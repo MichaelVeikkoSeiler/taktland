@@ -230,18 +230,19 @@ def stammdaten(f, frage="abkuerzung", distraktoren=()):
                    "explanation": f"In den Stammdaten ist {st['abkuerzung']} als "
                                   "Abkürzung erfasst.",
                    "factRef": "stammdaten.abkuerzung", "difficulty": 2})
-    elif frage in ("bezirk", "gemeinde") and distraktoren:
+    elif frage in ("bezirk", "gemeinde", "kanton") and distraktoren:
+        # Kanton: etwa Moutier, das in den Stammdaten beim Kanton Jura steht
         wert = st[frage]
         opts = sorted({wert, *distraktoren})
-        facts.append({"label": frage.capitalize(), "value": wert,
+        wort = {"bezirk": "Bezirk", "gemeinde": "Gemeinde", "kanton": "Kanton"}[frage]
+        facts.append({"label": wort, "value": wert,
                       "source": "haltestelle-haltekante", "factRef": f"stammdaten.{frage}"})
         fr.append({"type": "single_choice",
-                   "prompt": f"In welche{'m Bezirk' if frage == 'bezirk' else 'r Gemeinde'} "
+                   "prompt": f"In welche{'r' if frage == 'gemeinde' else 'm'} {wort} "
                              f"liegt der Bahnhof {name}?",
                    "options": opts, "correct": opts.index(wert),
                    "optionen_aus_fakten": True,
-                   "explanation": f"Als {'Bezirk' if frage == 'bezirk' else 'Gemeinde'} "
-                                  f"ist {wert} eingetragen.",
+                   "explanation": f"Als {wort} ist {wert} eingetragen.",
                    "factRef": f"stammdaten.{frage}", "difficulty": 2})
     return {"id": "stammdaten", "title": "Stammdaten", "body": body,
             "facts": facts, "questions": fr}

@@ -84,8 +84,9 @@ python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne 
 .venv/bin/python generator/sortieren_richten.py --alle   # knappe Sortierfragen zeigen
 ```
 
-Neue Profile entstehen in Schüben von acht mit `generator/baukasten.py`. Jedes
-wird mit `zeigen()` gelesen, bevor es gespeichert wird. Was dabei auffällt,
+Neue Profile entstehen in Schüben von 20 mit `generator/baukasten.py`, gelesen
+in Gruppen von fünf. Jedes wird mit `zeigen()` gelesen, bevor es gespeichert
+wird. Was dabei auffällt,
 wird zur Prüfregel oder zum Abschnitt in `generator/SCHEMA.md`.
 
 ## Gestaltung
