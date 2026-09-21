@@ -67,6 +67,11 @@ class Data:
 
         self.perron = self._with_uic("perron", "bpuic")
         self.perronoberflache = self._with_uic("perronoberflache", "bpuic")
+        # dst_id ist die DiDok-Nummer: In allen 2211 Zeilen mit bpuic gilt
+        # bpuic = 8500000 + dst_id. Jestetten und Lottstetten fehlt bpuic,
+        # ihre Zeilen haengen sonst an keinem Bahnhof.
+        po = self.perronoberflache
+        po["uic"] = po.uic.fillna(8500000 + pd.to_numeric(po.dst_id, errors="coerce").astype("Int64"))
         self.mobiliar = self._with_uic("mobiliar-im-bahnhof", "bpuic")
         self.sektor = self._with_uic("sektortafel", "bpuic")
         self.wartehalle = self._with_uic("haltestelle-wartehallen", "bpuic")
@@ -83,18 +88,32 @@ class Data:
         hk["uic"] = as_uic(hk["number"])
         self.dienststelle = hk[hk.validto.astype(str).str.startswith("9999")]
 
-        zz = load("zugzahlen")
-        zz["jahr"] = pd.to_numeric(zz.jahr, errors="coerce")
-        zz["von_bpuic"] = as_uic(zz.von_bpuic)
-        zz["bis_bpuic"] = as_uic(zz.bis_bpuic)
-        self.zugzahlen = zz[zz.jahr == zz.jahr.max()]
-
         # Ausstattung haengt am Betriebspunkt-Kuerzel, nicht am UIC
         paare = self.betriebspunkte.dropna(subset=["abkurzung_bpk", "uic"])
         self.bps2uic = dict(zip(paare.abkurzung_bpk.astype(str), paare.uic))
         self.uic2bps = {}
         for k, v in self.bps2uic.items():
             self.uic2bps.setdefault(int(v), k)
+        # Zweite Quelle fuer das Kuerzel: die Passagierfrequenz fuehrt es je
+        # Bahnhof mit. Wo beide Quellen eines nennen, stimmen sie ueberein.
+        # Jestetten (JE), Lottstetten (LOT), Koeniz (KOE) und Muentschemier (MM)
+        # fehlen in linie-mit-betriebspunkten und haben es nur hier.
+        self.code2uic = {}
+        for _, r in self.pf.sort_values("jahr").groupby("uic").tail(1).iterrows():
+            code = txt(r.code_codice)
+            if code and code not in self.bps2uic and int(r.uic) not in self.uic2bps:
+                self.uic2bps[int(r.uic)] = code
+                self.code2uic[code] = int(r.uic)
+
+        zz = load("zugzahlen")
+        zz["jahr"] = pd.to_numeric(zz.jahr, errors="coerce")
+        zz["von_bpuic"] = as_uic(zz.von_bpuic)
+        zz["bis_bpuic"] = as_uic(zz.bis_bpuic)
+        # Bei Jestetten und Lottstetten ist bpuic leer, das Kuerzel steht da
+        for seite in ["von", "bis"]:
+            code = zz[f"bp_{seite}_abschnitt"].astype(str).map(self.code2uic)
+            zz[f"{seite}_bpuic"] = zz[f"{seite}_bpuic"].fillna(code.astype("Int64"))
+        self.zugzahlen = zz[zz.jahr == zz.jahr.max()]
         self.automat = load("billetautomat")
         self.entwerter = load("billetentwerter")
         # didok ist die DiDok-Nummer ohne Laenderpraefix: 3000 -> 8503000
@@ -657,6 +676,17 @@ def luecken(d, uic, f):
                "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, "
                "dass es vor Ort einen Warteraum gibt.",
                "haltestelle-wartehallen")
+    if not f.get("zuege"):
+        # Mols hat Zugzahlen bis 2024, geladen wird nur das neueste Jahr
+        lueckt("Zugzahlen",
+               f"In den Zugzahlen {int(d.zugzahlen.jahr.max())} ist für diesen Bahnhof "
+               "kein Streckenabschnitt mit Fahrten erfasst.",
+               "zugzahlen")
+    if not f.get("linien"):
+        lueckt("Linien",
+               "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, "
+               "aus der die Angaben zu Linie und Kilometer stammen.",
+               "linie-mit-betriebspunkten")
     lueckt("Fahrplan",
            "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. "
            "Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",

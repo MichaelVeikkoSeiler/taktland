@@ -2,7 +2,7 @@
   "uic": 8507083,
   "name": "Köniz",
   "kanton": "BE",
-  "bps": null,
+  "bps": "KOE",
   "tier": "S",
   "datenstand": "2026-09-20",
   "steckbrief": {
@@ -177,6 +177,11 @@
     "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
     "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
     "wlan_erfasst": false,
+    "billettautomaten_erfasst": 1,
+    "automat_typen": [
+      "AFA 470"
+    ],
+    "billettentwerter_erfasst": 0,
     "wartehallen_erfasst": 0
   },
   "ausstattung": null,
@@ -218,11 +223,6 @@
       "quelle": "wifistation"
     },
     {
-      "thema": "Ausstattung",
-      "grund": "Zu Billettautomaten und Entwertern liegen für diesen Bahnhof keine Daten vor. Die Quelle ordnet diese Geräte über ein Betriebspunkt-Kürzel zu, das hier fehlt.",
-      "quelle": "billetautomat, billetentwerter"
-    },
-    {
       "thema": "Stand der BehiG-Daten",
       "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
       "quelle": "21197_behig-haltekantesegment"
@@ -231,6 +231,11 @@
       "thema": "Wartehallen",
       "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
       "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
     },
     {
       "thema": "Fahrplan",

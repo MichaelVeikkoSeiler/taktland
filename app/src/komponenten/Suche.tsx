@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
+import { kantonText } from '../kanton'
 
 const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
@@ -236,7 +237,7 @@ function Eintrag({ e, oeffnen }: { e: IndexEintrag; oeffnen: (uic: number) => vo
             {e.name}
           </span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-            {e.kanton ? `Kanton ${e.kanton} · ` : ''}{STUFE_TEXT[e.tier]}
+            {e.kanton ? `${kantonText(e.kanton)} · ` : ''}{STUFE_TEXT[e.tier]}
             {e.dwv != null && ` · ${e.dwv.toLocaleString('de-CH')} pro Werktag`}
           </span>
         </span>

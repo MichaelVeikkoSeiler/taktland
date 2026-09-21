@@ -14,10 +14,10 @@ ROOT = Path(__file__).resolve().parent.parent
 FACTS = ROOT / "data" / "facts"
 PROFILES = ROOT / "data" / "profiles"
 
-#: Zurückgestellt. Jestetten und Lottstetten liegen in Deutschland und fehlen
-#: im Haltestellenverzeichnis (keine Stammdaten). Auf Michaels Wunsch vom
-#: 2026-09-21 vorerst ohne Profil.
-ZURUECKGESTELLT = {"8503420", "8503421"}
+#: Zurückgestellt. Vaumarcus kommt auf Michaels Wunsch vom 2026-09-21 als
+#: letzter Bahnhof dran, wenn er es sagt. Jestetten und Lottstetten waren hier,
+#: bis ihr Betriebspunkt-Kürzel aus der Passagierfrequenz kam.
+ZURUECKGESTELLT = {"8504204"}
 
 
 def offene(n=10):

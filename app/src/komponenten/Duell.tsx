@@ -4,6 +4,7 @@ import {
 } from '../fortschritt'
 import { vergleichLaden } from '../daten'
 import type { Kategorie, Vergleichsdaten, VergleichsBahnhof } from '../typen'
+import { kantonText } from '../kanton'
 
 /**
  * Bahnhöfe gegeneinander. Die Fragen entstehen hier aus den Werten in
@@ -267,7 +268,7 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
                       <span className="block truncate font-medium">{b.name}</span>
                       {b.kanton && (
                         <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                          Kanton {b.kanton}
+                          {kantonText(b.kanton)}
                         </span>
                       )}
                     </span>

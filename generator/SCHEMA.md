@@ -579,9 +579,24 @@ meldet «keine verzeichnet», wenn das Feld fehlt.
 
 **Bahnhöfe ohne Stammdaten.** Jestetten und Lottstetten liegen in Deutschland
 und fehlen im Haltestellenverzeichnis. Höhe, Gemeinde, Bezirk und Abkürzung
-gibt es für sie nicht. `build_facts.py` führt das jetzt als Lücke
-«Stammdaten». Beide sind vorerst zurückgestellt (`ZURUECKGESTELLT` in
-`offen.py`).
+gibt es für sie nicht. `build_facts.py` führt das als Lücke «Stammdaten».
+Den Kanton gibt die Passagierfrequenz als «Ausland» an; die App schreibt
+dann «Ausland», nicht «Kanton Ausland».
+
+**Das Kürzel hat zwei Quellen.** Automaten, Entwerter und Zugzahlen hängen am
+Betriebspunkt-Kürzel. Es kam nur aus `linie-mit-betriebspunkten`, dort fehlen
+Jestetten (JE), Lottstetten (LOT), Köniz (KOE) und Müntschemier (MM). Die
+Passagierfrequenz führt es für jeden Bahnhof mit, und wo beide Quellen eines
+nennen, stimmen sie bei allen 767 Bahnhöfen überein. Sie ist jetzt die zweite
+Quelle. In den Zugzahlen ist bei Jestetten und Lottstetten die UIC-Nummer
+leer, die Zeilen werden über das Kürzel zugeordnet. Im Perronbelag fehlt bei
+beiden `bpuic`; dort hilft `dst_id`, die DiDok-Nummer: In allen 2211 Zeilen
+mit beidem gilt `bpuic = 8500000 + dst_id`.
+
+**Fehlende Kapitel sind Lücken.** Ohne Linien (Jestetten, Lottstetten, Köniz,
+Müntschemier) oder ohne Zugzahlen (Mols, Bure-Casernes, Grandgourt) fehlte
+das Kapitel still. Beides steht jetzt in `luecken`. Mols hat Zugzahlen bis
+2024, geladen wird nur das neueste Jahr; die Lücke nennt es darum mit Jahr.
 
 **Keine geschenkten Fragen.** «In welchem Bezirk liegt Meilen?» mit der Antwort
 Meilen prüft nichts. Steckt die Antwort im Namen des Bahnhofs, muss auch eine

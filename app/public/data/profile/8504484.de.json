@@ -7,6 +7,8 @@
   "generated": "2026-09-21",
   "sources": [
     "21197_behig-haltekantesegment",
+    "billetautomat",
+    "billetentwerter",
     "haltestelle-haltekante",
     "passagierfrequenz",
     "wifistation",
@@ -341,7 +343,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Wartehallen sind keine verzeichnet. Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor. Müntschemier steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst ist 1 Billettautomat vom Typ S-POS. Billettentwerter und Wartehallen sind keine verzeichnet. Müntschemier steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -349,6 +351,18 @@
           "unit": "",
           "source": "wifistation",
           "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 0,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
         }
       ],
       "questions": [
@@ -401,11 +415,6 @@
       "quelle": "wifistation"
     },
     {
-      "thema": "Ausstattung",
-      "grund": "Zu Billettautomaten und Entwertern liegen für diesen Bahnhof keine Daten vor. Die Quelle ordnet diese Geräte über ein Betriebspunkt-Kürzel zu, das hier fehlt.",
-      "quelle": "billetautomat, billetentwerter"
-    },
-    {
       "thema": "Stand der BehiG-Daten",
       "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
       "quelle": "21197_behig-haltekantesegment"
@@ -414,6 +423,11 @@
       "thema": "Wartehallen",
       "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
       "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
     },
     {
       "thema": "Fahrplan",

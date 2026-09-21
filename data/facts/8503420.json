@@ -2,7 +2,7 @@
   "uic": 8503420,
   "name": "Lottstetten",
   "kanton": "Ausland",
-  "bps": null,
+  "bps": "LOT",
   "tier": "S",
   "datenstand": "2026-09-20",
   "steckbrief": {
@@ -93,26 +93,114 @@
     "gleise_mit_55cm": 0,
     "gleise_mit_daten": 1
   },
-  "zuege": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Jestetten Süd",
+      "bis": "Lottstetten",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46532,
+      "zuege_pro_tag": 127
+    },
+    "staerkster_personenverkehr": {
+      "von": "Jestetten Süd",
+      "bis": "Lottstetten",
+      "strecke_nr": 56,
+      "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 46532,
+      "zuege_pro_tag": 127
+    },
+    "abschnitte": [
+      {
+        "von": "Jestetten Süd",
+        "bis": "Lottstetten",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46532,
+        "zuege_pro_tag": 127
+      },
+      {
+        "von": "Lottstetten",
+        "bis": "Rafz",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 46532,
+        "zuege_pro_tag": 127
+      },
+      {
+        "von": "Jestetten Süd",
+        "bis": "Lottstetten",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3864,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Lottstetten",
+        "bis": "Rafz",
+        "strecke_nr": 56,
+        "strecke": "Opfikon Süd - Bülach - Eglisau - Schaffhausen RB",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 3864,
+        "zuege_pro_tag": 11
+      }
+    ]
+  },
   "linien": null,
   "services": {
     "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
     "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
     "wlan_erfasst": false,
+    "billettautomaten_erfasst": 1,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter_erfasst": 1,
     "wartehallen_erfasst": 0
   },
-  "ausstattung": null,
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "perronbelag": {
+      "anzahl_perrons_mit_daten": 1,
+      "belagsarten": [
+        "Bituminöses Mischgut"
+      ],
+      "items": [
+        {
+          "nr": "1",
+          "typ": "Hausperron",
+          "belaege": [
+            {
+              "belag": "Bituminöses Mischgut",
+              "flaeche_m2": 990
+            }
+          ],
+          "flaeche_m2": 990
+        }
+      ]
+    }
+  },
   "bahnhofplan": null,
   "luecken": [
     {
       "thema": "Stammdaten",
       "grund": "Höhe über Meer, Gemeinde, Bezirk und Abkürzung sind für diesen Bahnhof nicht erfasst. Er fehlt im Haltestellenverzeichnis, aus dem diese Angaben stammen.",
       "quelle": "haltestelle-haltekante"
-    },
-    {
-      "thema": "Ausstattung",
-      "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
-      "quelle": "mobiliar-im-bahnhof, perronoberflache"
     },
     {
       "thema": "Bahnhofplan",
@@ -145,14 +233,14 @@
       "quelle": "wifistation"
     },
     {
-      "thema": "Ausstattung",
-      "grund": "Zu Billettautomaten und Entwertern liegen für diesen Bahnhof keine Daten vor. Die Quelle ordnet diese Geräte über ein Betriebspunkt-Kürzel zu, das hier fehlt.",
-      "quelle": "billetautomat, billetentwerter"
-    },
-    {
       "thema": "Wartehallen",
       "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
       "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
     },
     {
       "thema": "Fahrplan",
@@ -165,6 +253,8 @@
     "perrons",
     "gleise",
     "hindernisfreiheit",
-    "services"
+    "zuege",
+    "services",
+    "ausstattung"
   ]
 }

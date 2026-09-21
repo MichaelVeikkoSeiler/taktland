@@ -37,10 +37,28 @@ def test_jede_genutzte_quelle_wird_genannt():
 
 
 def test_ohne_geraetedaten_keine_erfundene_null():
-    # Köniz: die Quelle ordnet keine Automaten und Entwerter zu
-    k = services(fakten(8507083))
+    # Köniz hatte kein Kürzel, also keine Gerätedaten. Seit das Kürzel aus der
+    # Passagierfrequenz kommt, fehlt das keinem Bahnhof mehr: darum nachgestellt
+    f = fakten(8507083)
+    f["services"] = {k: v for k, v in f["services"].items() if "billett" not in k}
+    k = services(f)
     assert "Billettentwerter sind keine verzeichnet" not in k["body"]
     assert "Zu Billettautomaten und Billettentwertern liegen für diesen Bahnhof keine Daten vor." in k["body"]
+
+
+def test_kuerzel_aus_der_passagierfrequenz():
+    # Jestetten fehlt in linie-mit-betriebspunkten. Mit dem Kürzel JE aus der
+    # Passagierfrequenz finden sich Zugzahlen, Automaten und Perronbelag
+    f = fakten(8503421)
+    assert f["bps"] == "JE"
+    assert f["zuege"] and f["services"]["billettautomaten_erfasst"] == 1
+    assert f["ausstattung"]["perronbelag"]
+    assert fakten(8507083)["services"]["billettautomaten_erfasst"] == 1  # Köniz
+
+
+def test_fehlende_linien_und_zugzahlen_sind_luecken():
+    assert "Linien" in {x["thema"] for x in fakten(8503421)["luecken"]}
+    assert "Zugzahlen" in {x["thema"] for x in fakten(8509415)["luecken"]}  # Mols
 
 
 def test_tagesrhythmus_fragt_nicht_gegen_knappe_werte():
