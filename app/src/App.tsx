@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { allesZuruecksetzen, bearbeiteBahnhoefe } from './fortschritt'
+import { Anleitung } from './komponenten/Anleitung'
 import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
 import { Suche, type ListenStand } from './komponenten/Suche'
@@ -16,11 +17,16 @@ function istDuell() {
   return window.location.hash === '#/duell'
 }
 
+function istAnleitung() {
+  return window.location.hash === '#/anleitung'
+}
+
 export default function App() {
   const [index, setIndex] = useState<BahnhofIndex | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [uic, setUic] = useState<number | null>(uicAusAdresse())
   const [duell, setDuell] = useState(istDuell())
+  const [anleitung, setAnleitung] = useState(istAnleitung())
   // bleibt stehen, während ein Bahnhof offen ist: zurück auf derselben Seite
   const [liste, setListe] = useState<ListenStand>({
     begriff: '', nurMitProfil: true, seite: 0, sortierung: 'alphabet',
@@ -28,12 +34,14 @@ export default function App() {
 
   useEffect(() => {
     indexLaden().then(setIndex).catch((e: Error) => setFehler(e.message))
-    const beiWechsel = () => { setUic(uicAusAdresse()); setDuell(istDuell()) }
+    const beiWechsel = () => {
+      setUic(uicAusAdresse()); setDuell(istDuell()); setAnleitung(istAnleitung())
+    }
     window.addEventListener('hashchange', beiWechsel)
     return () => window.removeEventListener('hashchange', beiWechsel)
   }, [])
 
-  useEffect(() => { window.scrollTo(0, 0) }, [uic, duell])
+  useEffect(() => { window.scrollTo(0, 0) }, [uic, duell, anleitung])
 
   function oeffnen(neu: number) { window.location.hash = `#/bahnhof/${neu}` }
   function zurueck() { window.location.hash = '' }
@@ -41,10 +49,17 @@ export default function App() {
   return (
     <div className="min-h-dvh bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <div className="mx-auto max-w-2xl">
-        {uic === null && !duell && (
+        {uic === null && !duell && !anleitung && (
           <header className="border-b border-sbb-cloud px-4 pb-5 pt-8 dark:border-sbb-iron">
             <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />
-            <h1 className="mt-3 text-3xl font-bold tracking-tight">Taktland</h1>
+            <div className="mt-3 flex items-baseline justify-between gap-4">
+              <h1 className="text-3xl font-bold tracking-tight">Taktland</h1>
+              <a href="#/anleitung"
+                 className="shrink-0 text-sm text-sbb-metal underline underline-offset-2
+                            hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white">
+                So funktioniert’s
+              </a>
+            </div>
             <p className="mt-1 text-sbb-metal dark:text-sbb-storm">Bahnhöfe entdecken</p>
           </header>
         )}
@@ -55,7 +70,9 @@ export default function App() {
 
         {!index && !fehler && <p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>}
 
-        {duell
+        {anleitung
+          ? <Anleitung index={index} zurueck={zurueck} />
+          : duell
           ? <Duell zurueck={zurueck} />
           : index && (uic === null
             ? <Suche index={index} oeffnen={oeffnen} stand={liste} aendern={setListe} />
@@ -64,8 +81,14 @@ export default function App() {
         <footer className="mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
           <p>
-            Datenquelle: SBB Open Data, data.sbb.ch. Taktland ist ein privates Lernprojekt
-            und kein Angebot der SBB.
+            Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss.
+            Taktland ist ein privates Lernprojekt und kein Angebot der SBB.
+          </p>
+          <p className="mt-1">
+            <a href="#/anleitung" className="underline underline-offset-2 hover:text-sbb-black
+                                             dark:hover:text-sbb-white">
+              Anleitung und Datenquellen
+            </a>
           </p>
           <p className="mt-1">
             Der Lernfortschritt bleibt auf diesem Gerät. Es gibt kein Konto und keine Auswertung.
