@@ -1,0 +1,571 @@
+{
+  "uic": 8506313,
+  "name": "Rheineck",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "21197_behig-haltekantesegment",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "linie-mit-betriebspunkten",
+    "passagierfrequenz",
+    "perron",
+    "sektortafel",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Rheineck 2'000 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 1'700, an einem freien Tag 1'200. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SOB und Thurbo erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne AB.»",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 2000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 1700,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 1200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Abgrenzung der Zahl",
+          "value": "Ohne AB.",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.bemerkung"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Rheineck ein und aus?",
+          "options": [
+            "2'000",
+            "2'400",
+            "2'800",
+            "3'400"
+          ],
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 2'000 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 1700,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 1900,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 2000,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 1'700 (2022), 1'900 (2023), 2'000 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Rheineck ___ Personen ein und aus.",
+          "options": [
+            "1'000",
+            "1'200",
+            "1'400"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 1'200 Personen, an einem Werktag 2'000. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Die Zahl der Ein- und Aussteigenden in Rheineck umfasst auch AB.",
+          "correct": false,
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne AB.». Wofür AB steht, führt sie nicht aus.",
+          "factRef": "steckbrief.bemerkung",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Rheineck liegt auf 399.9 Metern über Meer in der Gemeinde Rheineck, Bezirk Rheintal, Kanton St. Gallen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet RCK.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 399.9,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "RCK",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Rheineck?",
+          "min": 320,
+          "max": 580,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 399.9,
+          "explanation": "Der Bahnhof liegt auf 399.9 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Rheineck lautet ___.",
+          "options": [
+            "RCK",
+            "RH",
+            "RHE"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "In den Stammdaten ist RCK als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 2 Perrons in Rheineck liegen offene Daten vor. Perron 2 misst 320 Meter, Perron 1 misst 319 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 320,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Rheineck?",
+          "options": [
+            "220 m",
+            "270 m",
+            "320 m",
+            "380 m"
+          ],
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 320 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Rheineck sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. An beiden erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Sektoren an Gleis 1",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Rheineck sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "7",
+            "12"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Rheineck kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Rheineck sind 4 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 4,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "type": "cloze",
+          "prompt": "In Rheineck sind ___ Perronsegmente erfasst.",
+          "options": [
+            "4",
+            "6",
+            "7"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 4 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "type": "true_false",
+          "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 4 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Rheineck – St. Margrethen SG 212 Züge pro Tag, das sind 77'450 im Jahr. Auf dem Abschnitt Altenrhein – Rheineck sind es ebenfalls 212 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 13 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Rheineck – St. Margrethen SG",
+          "value": 212,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Rheineck – St. Margrethen SG",
+          "value": 77450,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Rheineck – St. Margrethen SG?",
+          "options": [
+            "180",
+            "212",
+            "250",
+            "300"
+          ],
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 212 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Rheineck – St. Margrethen SG?",
+          "min": 63500,
+          "max": 112500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 77450,
+          "explanation": "Die Erhebung zählt 77'450 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Rheineck sind 2 Linien erfasst: die Linie 858 Rheineck - Walzenhausen und die Linie 880 Sargans Ost - St.Gallen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 880",
+          "value": 57.8334,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[1].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 880 ist Rheineck eingetragen?",
+          "min": 47,
+          "max": 84,
+          "step": 1,
+          "unit": "km",
+          "correct": 57.8334,
+          "explanation": "Die Kilometrierung von Rheineck auf der Linie 880 beträgt 57.8334. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[1].km_am_bahnhof",
+          "difficulty": 3
+        },
+        {
+          "type": "match",
+          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
+          "pairs": [
+            {
+              "links": "Linie 858",
+              "rechts": "Rheineck - Walzenhausen",
+              "factRef": "linien.items[0].name"
+            },
+            {
+              "links": "Linie 880",
+              "rechts": "Sargans Ost - St.Gallen",
+              "factRef": "linien.items[1].name"
+            }
+          ],
+          "factRef": "linien.items",
+          "explanation": "Die Linie 858 heisst Rheineck - Walzenhausen, die Linie 880 heisst Sargans Ost - St.Gallen.",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 5 Billettentwerter und 1 Wartehalle. Rheineck steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 5,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "type": "true_false",
+          "prompt": "Rheineck steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "In Rheineck sind ___ Billettentwerter erfasst.",
+          "options": [
+            "5",
+            "6",
+            "7"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 5 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Rheineck 9 Sitzbänke sowie 2 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 9,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 2,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "8",
+            "9",
+            "11",
+            "15"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 9 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "1",
+            "2",
+            "6",
+            "8"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Abgrenzung der Frequenzzahl",
+      "grund": "Die Quelle vermerkt zur Zahl der Ein- und Aussteigenden: «Ohne AB.» Die Zahl deckt also nicht zwingend dasselbe ab wie die Gleis- und Perrondaten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}
