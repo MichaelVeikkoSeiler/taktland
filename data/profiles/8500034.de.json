@@ -1,0 +1,480 @@
+{
+  "uic": 8500034,
+  "name": "Buckten",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Buckten 250 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 210, an einem freien Tag 130. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 250,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 210,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 130,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2018",
+          "value": 190,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 210,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2024",
+          "value": 300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 250,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:f7381f23",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Buckten ein und aus?",
+          "options": [
+            "180",
+            "250",
+            "350",
+            "420"
+          ],
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 250 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 190,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2022",
+              "value": 210,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 250,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 300,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 190 (2018), 210 (2022), 250 (2025), 300 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:dccf3052",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Buckten ___ Personen ein und aus.",
+          "options": [
+            "130",
+            "160",
+            "180"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 130 Personen, an einem Werktag 250. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Buckten liegt auf 520.49 Metern über Meer in der Gemeinde Buckten, Bezirk Sissach, Kanton Basel-Landschaft. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BUC.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 520.49,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "BUC",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Sissach",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:af3e91a3",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Buckten?",
+          "min": 420,
+          "max": 760,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 520.49,
+          "explanation": "Der Bahnhof liegt auf 520.49 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:dbfe01bc",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Buckten?",
+          "options": [
+            "Arlesheim",
+            "Laufen",
+            "Liestal",
+            "Sissach"
+          ],
+          "correct": 3,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Bezirk ist Sissach eingetragen.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 1 Perron in Buckten liegen offene Daten vor. Perron 1 ist ein Hausperron von 75 Metern. Es ist niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 1,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 75,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "perrons:7e0ff954",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das erfasste Perron in Buckten?",
+          "options": [
+            "64 m",
+            "75 m",
+            "90 m",
+            "100 m"
+          ],
+          "correct": 1,
+          "explanation": "Das erfasste Perron misst 75 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:7f165139",
+          "type": "true_false",
+          "prompt": "Das erfasste Perron in Buckten ist niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Buckten keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 1,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:03c5e9c4",
+          "type": "true_false",
+          "prompt": "Für Buckten sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "correct": false,
+          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
+          "factRef": "hindernisfreiheit.perrons_mit_daten",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Buckten – Läufelfingen 40 Züge pro Tag, das sind 14'420 im Jahr. Auf dem Abschnitt Rümlingen – Buckten sind es ebenfalls 40 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 2 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Buckten – Läufelfingen",
+          "value": 40,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Buckten – Läufelfingen",
+          "value": 14420,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "id": "zuege:38766b60",
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Buckten – Läufelfingen?",
+          "options": [
+            "34",
+            "40",
+            "48",
+            "56"
+          ],
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 40 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:72d5c26a",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Buckten – Läufelfingen?",
+          "min": 11500,
+          "max": 21000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 14420,
+          "explanation": "Die Erhebung zählt 14'420 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Buckten ist 1 Linie erfasst: die Linie 503 Sissach - Laufelfingen - Olten. Der Bahnhof ist darauf bei Kilometer 28.815 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 503",
+          "value": 28.815,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:786d65da",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 503 ist Buckten eingetragen?",
+          "min": 23,
+          "max": 42,
+          "step": 1,
+          "unit": "km",
+          "correct": 28.815,
+          "explanation": "Die Kilometrierung von Buckten auf der Linie 503 beträgt 28.815. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 1 Billettentwerter und 1 Wartehalle. Buckten steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 1,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:184cb0fc",
+          "type": "true_false",
+          "prompt": "Buckten steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "id": "services:78b4334c",
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Buckten erfasst?",
+          "options": [
+            "1",
+            "3",
+            "4"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst ist 1 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Buckten 2 Sitzbänke erfasst. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 2,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        }
+      ],
+      "questions": [
+        {
+          "id": "ausstattung:e6085503",
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "6"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 2 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Perronbelag",
+      "grund": "Womit die Perrons belegt sind, ist für diesen Bahnhof nicht erfasst.",
+      "quelle": "perronoberflache"
+    },
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

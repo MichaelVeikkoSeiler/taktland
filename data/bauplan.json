@@ -95,6 +95,16 @@
    ]
   }
  },
+ "8500034": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Laufen",
+    "Arlesheim"
+   ]
+  }
+ },
  "8500035": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1084,6 +1094,16 @@
    ]
   }
  },
+ "8501302": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aigle",
+    "Lavaux-Oron",
+    "Lausanne"
+   ]
+  }
+ },
  "8501303": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1791,6 +1811,16 @@
    ]
   }
  },
+ "8502122": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aarau",
+    "Lenzburg",
+    "Kulm"
+   ]
+  }
+ },
  "8502128": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2075,6 +2105,15 @@
     "Baden",
     "Lenzburg",
     "Bremgarten"
+   ]
+  }
+ },
+ "8502306": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HUZY",
+    "CHAM"
    ]
   }
  },
@@ -2492,6 +2531,16 @@
     "Hinwil",
     "Winterthur",
     "Uster"
+   ]
+  }
+ },
+ "8503135": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bauma",
+    "Wald (ZH)",
+    "Hinwil"
    ]
   }
  },
@@ -3083,6 +3132,26 @@
     "Bülach",
     "Winterthur",
     "Dielsdorf"
+   ]
+  }
+ },
+ "8503426": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schlatt (TG)",
+    "Schaffhausen",
+    "Neuhausen am Rheinfall"
+   ]
+  }
+ },
+ "8503427": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Münchwilen",
+    "Kreuzlingen"
    ]
   }
  },
@@ -4272,6 +4341,26 @@
    ]
   }
  },
+ "8505202": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Airolo",
+    "Faido",
+    "Göschenen"
+   ]
+  }
+ },
+ "8505204": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Riviera",
+    "Locarno",
+    "Bellinzona"
+   ]
+  }
+ },
  "8505207": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -5043,12 +5132,42 @@
    ]
   }
  },
+ "8506135": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kreuzlingen",
+    "Weinfelden",
+    "Münchwilen"
+   ]
+  }
+ },
  "8506136": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
     "Kreuzlingen",
     "Weinfelden",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8506137": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8506138": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Kreuzlingen",
     "Münchwilen"
    ]
   }
@@ -5072,6 +5191,16 @@
    ]
   }
  },
+ "8506182": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Frauenfeld",
+    "Kreuzlingen"
+   ]
+  }
+ },
  "8506183": {
   "stammdaten": {
    "frage": "bezirk",
@@ -5079,6 +5208,16 @@
     "Weinfelden",
     "Frauenfeld",
     "Kreuzlingen"
+   ]
+  }
+ },
+ "8506184": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bussnang",
+    "Tobel-Tägerschen",
+    "Weinfelden"
    ]
   }
  },
@@ -5199,7 +5338,27 @@
    ]
   }
  },
+ "8506212": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
  "8506213": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8506214": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -5852,6 +6011,26 @@
    ]
   }
  },
+ "8509417": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus Nord",
+    "Walenstadt",
+    "Flums"
+   ]
+  }
+ },
+ "8509418": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Quarten",
+    "Schänis",
+    "Glarus"
+   ]
+  }
+ },
  "8515992": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -6077,6 +6256,15 @@
    ]
   }
  },
+ "8517527": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZGFR",
+    "ZGPP"
+   ]
+  }
+ },
  "8518452": {
   "stammdaten": {
    "frage": "bezirk",
@@ -6139,6 +6327,16 @@
     "Sense",
     "La Broye",
     "See"
+   ]
+  }
+ },
+ "8588122": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Altnau",
+    "Bottighofen",
+    "Güttingen"
    ]
   }
  }

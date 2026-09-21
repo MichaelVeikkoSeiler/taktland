@@ -1,0 +1,460 @@
+{
+  "uic": 8503426,
+  "name": "Langwiesen",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Langwiesen 280 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 260, an einem freien Tag 220. Die Infrastruktur gehört der SBB, als Bahnunternehmen ist Thurbo erfasst.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 280,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 260,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 220,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:47135f7c",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Langwiesen ein und aus?",
+          "options": [
+            "280",
+            "340",
+            "390",
+            "480"
+          ],
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 280 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:3dd746d0",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Langwiesen ___ Personen ein und aus.",
+          "options": [
+            "220",
+            "310",
+            "370"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 220 Personen, an einem Werktag 280. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Langwiesen liegt auf 408.7 Metern über Meer in der Gemeinde Feuerthalen, Bezirk Andelfingen, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LAN.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 408.7,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "LAN",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Feuerthalen",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:b7528e10",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Langwiesen?",
+          "min": 330,
+          "max": 600,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 408.7,
+          "explanation": "Der Bahnhof liegt auf 408.7 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:2c8dc6e5",
+          "type": "single_choice",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Langwiesen?",
+          "options": [
+            "Feuerthalen",
+            "Neuhausen am Rheinfall",
+            "Schaffhausen",
+            "Schlatt (TG)"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Feuerthalen eingetragen.",
+          "factRef": "stammdaten.gemeinde",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 1 Perron in Langwiesen liegen offene Daten vor. Perron 1 ist ein Aussenperron von 120 Metern. Es ist niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 1,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 120,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "perrons:24b307b8",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das erfasste Perron in Langwiesen?",
+          "options": [
+            "100 m",
+            "120 m",
+            "140 m",
+            "170 m"
+          ],
+          "correct": 1,
+          "explanation": "Das erfasste Perron misst 120 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:60a3eaf6",
+          "type": "true_false",
+          "prompt": "Das erfasste Perron in Langwiesen ist niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Langwiesen keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 1,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:aef92746",
+          "type": "true_false",
+          "prompt": "Für Langwiesen sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "correct": false,
+          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
+          "factRef": "hindernisfreiheit.perrons_mit_daten",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Feuerthalen – Langwiesen 83 Züge pro Tag, das sind 30'303 im Jahr. Auf dem Abschnitt Langwiesen – Schlatt TG sind es ebenfalls 83 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 143 Züge im Jahr auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Feuerthalen – Langwiesen",
+          "value": 83,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Feuerthalen – Langwiesen",
+          "value": 30303,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "id": "zuege:7a3848f1",
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Feuerthalen – Langwiesen?",
+          "options": [
+            "58",
+            "71",
+            "83",
+            "100"
+          ],
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 83 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:2bd23010",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Feuerthalen – Langwiesen?",
+          "min": 24500,
+          "max": 44000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 30303,
+          "explanation": "Die Erhebung zählt 30'303 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Langwiesen ist 1 Linie erfasst: die Linie 820 Etzwilen - Schaffhausen. Der Bahnhof ist darauf bei Kilometer 45.33157 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 820",
+          "value": 45.33157,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:9cb1a0a5",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 820 ist Langwiesen eingetragen?",
+          "min": 37,
+          "max": 66,
+          "step": 1,
+          "unit": "km",
+          "correct": 45.33157,
+          "explanation": "Die Kilometrierung von Langwiesen auf der Linie 820 beträgt 45.33157. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 1 Billettentwerter und 1 Wartehalle. Langwiesen steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 1,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:20b4c460",
+          "type": "true_false",
+          "prompt": "Langwiesen steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "id": "services:fe22dd21",
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Langwiesen erfasst?",
+          "options": [
+            "1",
+            "2",
+            "4"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst ist 1 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Langwiesen 3 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 3,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 3,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 1,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "ausstattung:e6085503",
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "7"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "id": "ausstattung:a8529c11",
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "7"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "id": "ausstattung:f5b7373c",
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für das erfasste Perron verzeichnet?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 3,
+          "explanation": "Für das Perron mit Daten ist Verbundstein-Pflästerung erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}
