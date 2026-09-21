@@ -85,7 +85,10 @@ export default function App() {
         {seite.art === 'linie' && <Linie key={seite.nr} nr={seite.nr} zurueck={zuDenLinien} />}
         {seite.art === 'liste' && index
           && <Suche index={index} oeffnen={oeffnen} stand={liste} aendern={setListe} />}
-        {seite.art === 'bahnhof' && index && <Bahnhof uic={seite.uic} zurueck={zurueck} />}
+        {seite.art === 'bahnhof' && index && (
+          <Bahnhof uic={seite.uic} zurueck={zurueck}
+                   kanton={index.bahnhoefe.find((b) => b.uic === seite.uic)?.kanton ?? null} />
+        )}
 
         <footer className="mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">

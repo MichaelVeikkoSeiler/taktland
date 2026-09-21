@@ -5,12 +5,18 @@ import type { Fakt, Gleis, Kapitel, LinienEintrag, Profil } from '../typen'
 import { Frage } from './Frage'
 import { Luecken } from './Luecken'
 import { Zurueck } from './Zurueck'
+import { kantonText } from '../kanton'
 
 const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
 }
 
-export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) {
+/** kanton aus dem Index, wie in der Liste: «Kanton TG», bei Jestetten «Ausland» */
+export function Bahnhof({ uic, zurueck, kanton }: {
+  uic: number
+  zurueck: () => void
+  kanton: string | null
+}) {
   const [profil, setProfil] = useState<Profil | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [antworten, setAntworten] = useState<Record<string, { richtig: boolean }>>({})
@@ -69,7 +75,8 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
       <header className="px-4">
         <h1 className="text-2xl font-bold text-sbb-black dark:text-sbb-white">{profil.name}</h1>
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
-          {STUFE_TEXT[profil.tier]} · Daten von {profil.dataYear} · {fragenGesamt} Fragen
+          {kanton ? `${kantonText(kanton)} · ` : ''}{STUFE_TEXT[profil.tier]} · Fahrgastzahlen{' '}
+          {profil.dataYear} · {fragenGesamt} Fragen
         </p>
         {beantwortet > 0 && (
           <p className="mt-2 flex items-center gap-3 text-sm text-sbb-metal dark:text-sbb-storm">

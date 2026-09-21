@@ -1040,7 +1040,10 @@ def profil(uic, **pro_kapitel):
     kuerzen(kap, f)
     quellen = sorted({x["source"] for k in kap for x in k["facts"]})
     return {"uic": f["uic"], "name": f["name"], "tier": f["tier"], "lang": "de",
-            "dataYear": DATENJAHR, "generated": str(date.today()), "sources": quellen,
+            # das Jahr der Fahrgastzahlen dieses Bahnhofs: Vaumarcus hat 2024, Mols 2018.
+            # Vorher stand im Kopf der App bei allen «2025»
+            "dataYear": f["steckbrief"].get("jahr") or DATENJAHR,
+            "generated": str(date.today()), "sources": quellen,
             "chapters": kap, "luecken": f["luecken"]}
 
 

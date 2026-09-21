@@ -430,6 +430,10 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
         b.fehlt("Profil", f"UIC {profil['uic']} passt nicht zu den Fakten {fakten['uic']}")
     if profil["tier"] != fakten["tier"]:
         b.fehlt("Profil", f"Stufe {profil['tier']} statt {fakten['tier']}")
+    # Die App zeigt dataYear im Kopf als Jahr der Fahrgastzahlen (Vaumarcus: 2024, nicht 2025)
+    jahr = (fakten.get("steckbrief") or {}).get("jahr")
+    if jahr and profil.get("dataYear") != jahr:
+        b.fehlt("Profil", f"dataYear {profil.get('dataYear')}, die Fahrgastzahlen stammen aus {jahr}")
     if fix:
         profil["luecken"] = fakten.get("luecken", [])
         if any(f.get("type") == "hotspot"

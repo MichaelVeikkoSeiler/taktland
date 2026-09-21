@@ -82,6 +82,7 @@ export interface Profil {
   name: string
   tier: Stufe
   lang: string
+  /** Jahr der Fahrgastzahlen dieses Bahnhofs */
   dataYear: number
   generated: string
   sources: string[]

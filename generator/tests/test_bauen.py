@@ -148,3 +148,9 @@ def test_platzhalter_49_ist_keine_zahl():
     assert "an einem freien Tag weniger als 50" in st["body"]
     assert "49" not in json.dumps(st, ensure_ascii=False)
     assert any(l["thema"] == "Genaue Fahrgastzahl" for l in d["luecken"])
+
+
+def test_jahr_im_kopf_ist_das_jahr_der_fahrgastzahlen():
+    # Im Kopf stand bei allen «Daten von 2025», Vaumarcus hat Zahlen von 2024
+    assert B.bauen("8504204")["dataYear"] == 2024
+    assert B.bauen("8509415")["dataYear"] == 2018  # Mols
