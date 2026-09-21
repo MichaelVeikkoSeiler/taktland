@@ -86,23 +86,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2018",
-              "value": 28700,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 29200,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 30100,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr stieg von 25'800 (2022) über 28'300 (2023) und 29'200 (2024) auf 30'100 (2025), 2018 lag er bei 28'700.",
+          "explanation": "Die erfassten Werte, aufsteigend: 25'800 (2022), 28'300 (2023), 30'100 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 2
         }
       ]

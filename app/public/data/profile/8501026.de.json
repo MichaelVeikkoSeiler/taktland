@@ -69,7 +69,7 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Werktagswerte nach Jahr, tiefster Wert zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
@@ -83,23 +83,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2025",
-              "value": 15500,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 15800,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2018",
               "value": 16300,
               "factRef": "steckbrief.verlauf[0].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Werktagswerte steigen von 11'900 im Jahr 2022 über 14'600 (2023), 15'500 (2025) und 15'800 (2024) bis zu 16'300 im Jahr 2018.",
+          "explanation": "Die erfassten Werte, aufsteigend: 11'900 (2022), 14'600 (2023), 16'300 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 2
         }
       ]

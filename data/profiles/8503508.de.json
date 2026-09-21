@@ -159,30 +159,6 @@
           "explanation": "Das Perron 5/6 misst 407 Meter, das längste erfasste Perron.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Perron 5/6",
-              "value": 407,
-              "factRef": "perrons.items[0].laenge_m"
-            },
-            {
-              "label": "Perron 3/4",
-              "value": 401,
-              "factRef": "perrons.items[1].laenge_m"
-            },
-            {
-              "label": "Perron 1",
-              "value": 330,
-              "factRef": "perrons.items[2].laenge_m"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Die Längen betragen 407, 401 und 330 Meter, absteigend geordnet."
         }
       ]
     },

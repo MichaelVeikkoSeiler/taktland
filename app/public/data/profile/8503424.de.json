@@ -91,18 +91,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 26900,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 27600,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr stieg von 19'400 (2022) über 21'500 (2018), 25'200 (2023) und 26'900 (2024) auf 27'600 (2025)."
+          "explanation": "Die erfassten Werte, aufsteigend: 19'400 (2022), 21'500 (2018), 25'200 (2023), 27'600 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },
@@ -204,11 +199,6 @@
               "factRef": "perrons.items[3].laenge_m"
             },
             {
-              "label": "Perron 4/5",
-              "value": 307,
-              "factRef": "perrons.items[2].laenge_m"
-            },
-            {
               "label": "Perron 2/3",
               "value": 316,
               "factRef": "perrons.items[1].laenge_m"
@@ -220,7 +210,7 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Die Längen betragen 170, 307, 316 und 345 Meter, wie in den Perrondaten erfasst."
+          "explanation": "Richtig ist diese Reihenfolge: Perron 6 mit 170, Perron 2/3 mit 316 und Perron 1 mit 345 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "match",
@@ -287,24 +277,9 @@
               "factRef": "gleise.items[2].perronkante_m"
             },
             {
-              "label": "Gleis 2",
-              "value": 314,
-              "factRef": "gleise.items[1].perronkante_m"
-            },
-            {
-              "label": "Gleis 1",
-              "value": 302,
-              "factRef": "gleise.items[0].perronkante_m"
-            },
-            {
               "label": "Gleis 5",
               "value": 276,
               "factRef": "gleise.items[4].perronkante_m"
-            },
-            {
-              "label": "Gleis 4",
-              "value": 274,
-              "factRef": "gleise.items[3].perronkante_m"
             },
             {
               "label": "Gleis 6",
@@ -313,7 +288,7 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Die Perronkanten messen der Reihe nach 316, 314, 302, 276, 274 und 142 Meter."
+          "explanation": "Richtig ist diese Reihenfolge: Gleis 3 mit 316, Gleis 5 mit 276 und Gleis 6 mit 142 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "hotspot",

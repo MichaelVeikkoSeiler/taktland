@@ -57,14 +57,9 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Jahre nach dwv-Wert, kleinster Wert zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
-            {
-              "label": "2018",
-              "value": 22500,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
             {
               "label": "2022",
               "value": 23200,
@@ -87,7 +82,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "51'800 Personen pro Werktag, Stand 2025.",
+          "explanation": "Die erfassten Werte, aufsteigend: 23'200 (2022), 26'700 (2023), 29'800 (2024), 51'800 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 2
         }
       ]
@@ -477,11 +472,6 @@
               "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
             },
             {
-              "label": "Perron 2/3",
-              "value": 3387,
-              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
-            },
-            {
               "label": "Perron 1",
               "value": 1927,
               "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
@@ -490,10 +480,15 @@
               "label": "Perron 7",
               "value": 1238,
               "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
+            },
+            {
+              "label": "Perron 41/42",
+              "value": 231,
+              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 4/5 hat mit 3'501 Quadratmetern die grösste erfasste Fläche, Perron 7 mit 1'238 die kleinste der gezeigten.",
+          "explanation": "Perron 4/5 hat mit 3'501 Quadratmetern die grösste erfasste Fläche, Perron 41/42 mit 231 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

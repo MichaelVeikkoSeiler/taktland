@@ -78,23 +78,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2025",
-              "value": 19800,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 20100,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2024",
               "value": 20200,
               "factRef": "steckbrief.verlauf[3].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr lag 2022 bei 16'300, 2023 bei 18'900, 2025 bei 19'800, 2018 bei 20'100 und 2024 bei 20'200 Personen."
+          "explanation": "Die erfassten Werte, aufsteigend: 16'300 (2022), 18'900 (2023), 20'200 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },

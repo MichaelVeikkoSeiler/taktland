@@ -29,6 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generator"))
 from distraktoren import vorschlaege  # noqa: E402
+from taktland import klar_getrennt  # noqa: E402
 
 SEKTOR = ("Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten "
           "können, wo ihr Wagen zu stehen kommt.")
@@ -125,11 +126,10 @@ def steckbrief(f, extra_body="", extra_fragen=()):
     fr = [sc(uic, f"Wie viele Personen steigen an einem Werktag in {name} ein und aus?",
              s["dwv"], f"An einem Werktag sind es {ch(s['dwv'])} Ein- und Aussteigende, "
              "Stand 2025.", "steckbrief.dwv")]
-    # Verlauf: nur Jahre mit eindeutigem Wert
-    v = [(i, x) for i, x in enumerate(s.get("verlauf") or []) if x.get("dwv")]
-    zahlen = [x["dwv"] for _, x in v]
-    doppelte = {z for z in zahlen if zahlen.count(z) > 1}
-    v = [(i, x) for i, x in v if x["dwv"] not in doppelte]
+    # Verlauf: nur Jahre, deren Werte man auseinanderhalten kann
+    alle_v = [(i, x) for i, x in enumerate(s.get("verlauf") or []) if x.get("dwv")]
+    v = klar_getrennt(alle_v, wert=lambda t: t[1]["dwv"])
+    doppelte = len(v) < len(alle_v)
     if len(v) >= 3:
         v.sort(key=lambda t: t[1]["dwv"])
         items = [{"label": str(x["jahr"]), "value": x["dwv"],
@@ -138,7 +138,7 @@ def steckbrief(f, extra_body="", extra_fragen=()):
         fr.append(sortier("Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
                           items, "aufsteigend",
                           f"Die erfassten Werte, aufsteigend: {reihe}."
-                          + (" Jahre mit gleichem Wert bleiben weg." if doppelte else ""),
+                          + (" Jahre mit gleichem oder fast gleichem Wert bleiben weg." if doppelte else ""),
                           "steckbrief.verlauf"))
     fr.append(sc(uic, f"An einem freien Tag steigen in {name} ___ Personen ein und aus.",
                  s["dnwv"], f"An einem freien Tag sind es {ch(s['dnwv'])} Personen, an "
@@ -147,6 +147,17 @@ def steckbrief(f, extra_body="", extra_fragen=()):
     if s.get("bemerkung"):
         facts.append({"label": "Abgrenzung der Zahl", "value": s["bemerkung"],
                       "source": "passagierfrequenz", "factRef": "steckbrief.bemerkung"})
+        # «Ohne AB.» grenzt die wichtigste Zahl des Steckbriefs ein und
+        # verdient eine eigene Frage. Nur die einfache Form wird automatisch
+        # gebaut; längere Bemerkungen schreibe ich von Hand.
+        import re
+        m = re.fullmatch(r"Ohne ([^.]+)\.", s["bemerkung"].strip())
+        if m:
+            wer = m.group(1)
+            fr.append(tf(f"Die Zahl der Ein- und Aussteigenden in {name} umfasst auch {wer}.",
+                         False, f"Die Quelle vermerkt zu dieser Zahl «{s['bemerkung']}». "
+                         f"Wofür {wer} {'stehen' if ' und ' in wer else 'steht'}, führt sie nicht aus.",
+                         "steckbrief.bemerkung", diff=3))
     fr += list(extra_fragen)
     return {"id": "steckbrief", "title": "Steckbrief", "body": " ".join(teile),
             "facts": facts, "questions": fr}
@@ -236,15 +247,17 @@ def perrons(f):
              {"label": "Längstes erfasstes Perron", "value": pr["laengste_m"], "unit": "m",
               "source": "perron", "factRef": "perrons.laengste_m"}]
     fr = []
-    laengen = [it["laenge_m"] for _, it in mit_laenge]
-    if len(mit_laenge) >= 3 and eindeutig(laengen):
-        s = sorted(mit_laenge, key=lambda t: -t[1]["laenge_m"])[:5]
+    klar = klar_getrennt(mit_laenge, wert=lambda t: t[1]["laenge_m"])
+    if len(klar) >= 3:
+        s = klar[:5]
         fr.append(sortier("Ordne die Perrons nach Länge, längstes zuerst.",
                           [{"label": f"Perron {it['nr']}", "value": it["laenge_m"],
                             "factRef": f"perrons.items[{i}].laenge_m"} for i, it in s],
                           "absteigend",
                           ", ".join(f"Perron {it['nr']} misst {it['laenge_m']} Meter"
-                                    for _, it in s) + ".", "perrons.items", diff=2))
+                                    for _, it in s) + "."
+                          + (" Perrons mit fast gleicher Länge bleiben weg."
+                             if len(klar) < len(mit_laenge) else ""), "perrons.items", diff=2))
     else:
         einzig = n == 1
         fr.append(sc(uic, f"Wie lang ist das {'' if einzig else 'längste '}erfasste Perron in {name}?",
@@ -310,7 +323,9 @@ def gleise(f):
     ohne_sektor = [it["nr"] for it in items if not it["sektoren_anzahl"]]
     mit_sektor = [(i, it) for i, it in enumerate(items) if it["sektoren_anzahl"]]
     if ohne_sektor and mit_sektor:
-        satz.append(f"Zu {'Gleis ' + ohne_sektor[0] if len(ohne_sektor) == 1 else 'den Gleisen ' + ', '.join(ohne_sektor)} "
+        liste = (ohne_sektor[0] if len(ohne_sektor) == 1
+                 else ", ".join(ohne_sektor[:-1]) + " und " + ohne_sektor[-1])
+        satz.append(f"Zu {'Gleis' if len(ohne_sektor) == 1 else 'den Gleisen'} {liste} "
                     "sind keine Sektortafeln erfasst.")
     elif not mit_sektor:
         satz.append("Sektortafeln sind zu keinem dieser Gleise erfasst.")
@@ -334,14 +349,17 @@ def gleise(f):
                        "explanation": f"Gleis {it['nr']} hat mit {hoechst} Metern die "
                                       f"längste erfasste Perronkante, die nächste misst {zweit} Meter.",
                        "difficulty": 2})
-        if len(kanten) >= 3 and eindeutig(werte):
-            s = sorted(kanten, key=lambda t: -t[1]["perronkante_m"])[:5]
+        klar = klar_getrennt(kanten, wert=lambda t: t[1]["perronkante_m"])
+        if len(klar) >= 3:
+            s = klar[:5]
             fr.append(sortier("Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
                               [{"label": f"Gleis {it['nr']}", "value": it["perronkante_m"],
                                 "factRef": f"gleise.items[{i}].perronkante_m"} for i, it in s],
                               "absteigend",
                               ", ".join(f"Gleis {it['nr']} misst {it['perronkante_m']} Meter"
-                                        for _, it in s) + ".", "gleise.items"))
+                                        for _, it in s) + "."
+                              + (" Gleise mit fast gleicher Kante bleiben weg."
+                                 if len(klar) < len(kanten) else ""), "gleise.items"))
     if mit_sektor:
         i, it = mit_sektor[0]
         k = it["sektoren_anzahl"]
@@ -475,13 +493,22 @@ def zuege(f):
     gv = [(i, a) for i, a in ab if a["art"] == "Gueterverkehr" and a["zuege_pro_tag"]]
     def abschn(a):
         return f"{a['von']} – {a['bis']}"
-    satz = [f"Am stärksten befahren ist der Abschnitt {abschn(st)}: Im Personenverkehr "
-            f"verkehren dort {st['zuege_pro_tag']} Züge pro Tag, das sind "
-            f"{ch(st['zuege_pro_jahr'])} im Jahr."]
     weitere = [a for _, a in pv[1:3]]
+    # Steht ein anderer Abschnitt pro Tag gleich, wäre «am stärksten» ein
+    # Vorzug, den nur die Jahreszahl hergibt. Dann nennen wir nur die Werte.
+    gleichauf = any(a["zuege_pro_tag"] == st["zuege_pro_tag"] for a in weitere)
+    if gleichauf:
+        satz = [f"Im Personenverkehr zählt die Erhebung auf dem Abschnitt {abschn(st)} "
+                f"{st['zuege_pro_tag']} Züge pro Tag, das sind {ch(st['zuege_pro_jahr'])} im Jahr."]
+    else:
+        satz = [f"Am stärksten befahren ist der Abschnitt {abschn(st)}: Im Personenverkehr "
+                f"verkehren dort {st['zuege_pro_tag']} Züge pro Tag, das sind "
+                f"{ch(st['zuege_pro_jahr'])} im Jahr."]
     if weitere:
-        satz.append("Auf " + " und auf ".join(f"dem Abschnitt {abschn(a)} sind es {a['zuege_pro_tag']}"
-                                              for a in weitere) + " Züge pro Tag.")
+        satz.append("Auf " + " und auf ".join(
+            f"dem Abschnitt {abschn(a)} sind es "
+            f"{'ebenfalls ' if a['zuege_pro_tag'] == st['zuege_pro_tag'] else ''}{a['zuege_pro_tag']}"
+            for a in weitere) + " Züge pro Tag.")
     if gv:
         m = max(a['zuege_pro_tag'] for _, a in gv)
         satz.append(f"Im Güterverkehr zählt die Erhebung bis zu {m} {'Zug' if m == 1 else 'Züge'} "
@@ -498,16 +525,18 @@ def zuege(f):
              st["zuege_pro_tag"], f"Auf diesem Abschnitt zählt die Erhebung {st['zuege_pro_tag']} "
              "Züge pro Tag, beide Richtungen zusammen.", "zuege.staerkster_abschnitt.zuege_pro_tag")]
     alle = [(i, a) for i, a in ab if a["zuege_pro_jahr"] >= 100]
-    werte = [a["zuege_pro_jahr"] for _, a in alle]
-    if len(alle) >= 3 and eindeutig(werte):
-        s = sorted(alle, key=lambda t: -t[1]["zuege_pro_jahr"])[:4]
+    klar = klar_getrennt(alle, wert=lambda t: t[1]["zuege_pro_jahr"])
+    if len(klar) >= 3:
+        s = klar[:4]
         art = lambda a: "Personenverkehr" if a["art"] == "Personenverkehr" else "Güterverkehr"
         fr.append(sortier("Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
                           [{"label": f"{abschn(a)}, {art(a)}", "value": a["zuege_pro_jahr"],
                             "factRef": f"zuege.abschnitte[{i}].zuege_pro_jahr"} for i, a in s],
                           "absteigend",
                           ", ".join(f"{abschn(a)} ({art(a)}) {ch(a['zuege_pro_jahr'])}" for _, a in s)
-                          + " Züge im Jahr.", "zuege.abschnitte"))
+                          + " Züge im Jahr."
+                          + (" Abschnitte mit fast gleicher Zahl bleiben weg."
+                             if len(klar) < len(alle) else ""), "zuege.abschnitte"))
     else:
         fr.append(schieber(f"Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt {abschn(st)}?",
                            st["zuege_pro_jahr"], f"Die Erhebung zählt {ch(st['zuege_pro_jahr'])} "
@@ -560,7 +589,7 @@ def services(f):
     if sv["billettautomaten_erfasst"]:
         typen = sv.get("automat_typen") or []
         t = f"{sv['billettautomaten_erfasst']} {'Billettautomat' if sv['billettautomaten_erfasst'] == 1 else 'Billettautomaten'}"
-        if typen and not any(x in ("Andere", "Altri") for x in typen):
+        if typen and not any(x.lower() in ("andere", "altri", "autres") for x in typen):
             t += f" vom Typ {' und '.join(typen)}" if len(typen) == 1 else f" der Typen {' und '.join(typen)}"
         teile.append(t)
     if sv["billettentwerter_erfasst"]:

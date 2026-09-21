@@ -73,37 +73,32 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Werte des Werktagsverkehrs nach Jahr, älteste zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2018",
-              "value": 2018,
-              "factRef": "steckbrief.verlauf[0].jahr"
-            },
-            {
               "label": "2022",
-              "value": 2022,
-              "factRef": "steckbrief.verlauf[1].jahr"
+              "value": 13200,
+              "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
               "label": "2023",
-              "value": 2023,
-              "factRef": "steckbrief.verlauf[2].jahr"
-            },
-            {
-              "label": "2024",
-              "value": 2024,
-              "factRef": "steckbrief.verlauf[3].jahr"
+              "value": 15200,
+              "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
               "label": "2025",
-              "value": 2025,
-              "factRef": "steckbrief.verlauf[4].jahr"
+              "value": 16200,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 17100,
+              "factRef": "steckbrief.verlauf[0].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Jahre 2018, 2022, 2023, 2024 und 2025 sind in dieser Reihenfolge in der Verlaufsstatistik erfasst."
+          "explanation": "Die erfassten Werte, aufsteigend: 13'200 (2022), 15'200 (2023), 16'200 (2025), 17'100 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },
@@ -261,35 +256,6 @@
           "explanation": "Die Perronkante von Gleis 3 misst 315 Meter.",
           "factRef": "gleise.items[0].perronkante_m",
           "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Gleis 3",
-              "value": 315,
-              "factRef": "gleise.items[0].perronkante_m"
-            },
-            {
-              "label": "Gleis 4",
-              "value": 315,
-              "factRef": "gleise.items[1].perronkante_m"
-            },
-            {
-              "label": "Gleis 6",
-              "value": 233,
-              "factRef": "gleise.items[3].perronkante_m"
-            },
-            {
-              "label": "Gleis 5",
-              "value": 232,
-              "factRef": "gleise.items[2].perronkante_m"
-            }
-          ],
-          "factRef": "gleise.items",
-          "explanation": "Die Perronkanten messen 315 m (Gleis 3 und 4), 233 m (Gleis 6) und 232 m (Gleis 5)."
         },
         {
           "type": "hotspot",

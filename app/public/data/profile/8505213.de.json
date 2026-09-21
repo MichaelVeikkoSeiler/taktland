@@ -75,38 +75,33 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Werktagsverkehrswerte von Bellinzona nach Jahr, älteste zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
               "label": "2018",
-              "value": 2018,
-              "factRef": "steckbrief.verlauf[0].jahr"
+              "value": 16900,
+              "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
               "label": "2022",
-              "value": 2022,
-              "factRef": "steckbrief.verlauf[1].jahr"
+              "value": 19200,
+              "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
               "label": "2023",
-              "value": 2023,
-              "factRef": "steckbrief.verlauf[2].jahr"
-            },
-            {
-              "label": "2024",
-              "value": 2024,
-              "factRef": "steckbrief.verlauf[3].jahr"
+              "value": 20300,
+              "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
               "label": "2025",
-              "value": 2025,
-              "factRef": "steckbrief.verlauf[4].jahr"
+              "value": 21900,
+              "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
           "optionen_aus_fakten": true,
-          "explanation": "Die Jahre 2018, 2022, 2023, 2024 und 2025 sind in dieser zeitlichen Reihenfolge im Verlauf erfasst."
+          "explanation": "Die erfassten Werte, aufsteigend: 16'900 (2018), 19'200 (2022), 20'300 (2023), 21'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "single_choice",

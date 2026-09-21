@@ -87,16 +87,6 @@
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2024",
-              "value": 11600,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 11900,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
               "label": "2025",
               "value": 12000,
               "factRef": "steckbrief.verlauf[4].dwv"
@@ -108,14 +98,14 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert stammt von 2022 mit 11'100, der höchste von 2018 mit 13'500. Dazwischen liegen 11'600 (2024), 11'900 (2023) und 12'000 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 11'100 (2022), 12'000 (2025), 13'500 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Langenthal umfasst auch die asm.",
           "correct": false,
-          "explanation": "Die Quelle vermerkt «Ohne asm.». Die Zahl deckt also nicht den gesamten Verkehr am Bahnhof ab.",
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne asm.». Wofür asm steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
           "difficulty": 3
         }
@@ -309,11 +299,6 @@
               "factRef": "gleise.items[1].perronkante_m"
             },
             {
-              "label": "Gleis 3",
-              "value": 402,
-              "factRef": "gleise.items[2].perronkante_m"
-            },
-            {
               "label": "Gleis 4",
               "value": 188,
               "factRef": "gleise.items[3].perronkante_m"
@@ -330,7 +315,7 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Die Gleise 2 und 3 liegen mit 403 und 402 Metern vorn, dann folgen Gleis 4 mit 188, Gleis 1 mit 151 und Gleis 13 mit 90 Metern.",
+          "explanation": "Richtig ist diese Reihenfolge: Gleis 2 mit 403, Gleis 4 mit 188, Gleis 1 mit 151 und Gleis 13 mit 90 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {

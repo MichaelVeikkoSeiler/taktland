@@ -92,40 +92,6 @@
           "explanation": "Als EVU sind SBB und SOB erfasst.",
           "factRef": "steckbrief.evu",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Werte des Werktagsverkehrs nach Jahr, älteste zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2018",
-              "value": 2018,
-              "factRef": "steckbrief.verlauf[0].jahr"
-            },
-            {
-              "label": "2022",
-              "value": 2022,
-              "factRef": "steckbrief.verlauf[1].jahr"
-            },
-            {
-              "label": "2023",
-              "value": 2023,
-              "factRef": "steckbrief.verlauf[2].jahr"
-            },
-            {
-              "label": "2024",
-              "value": 2024,
-              "factRef": "steckbrief.verlauf[3].jahr"
-            },
-            {
-              "label": "2025",
-              "value": 2025,
-              "factRef": "steckbrief.verlauf[4].jahr"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Die Jahre der erfassten Werktagsverkehrswerte sind 2018, 2022, 2023, 2024 und 2025, in dieser zeitlichen Reihenfolge."
         }
       ]
     },

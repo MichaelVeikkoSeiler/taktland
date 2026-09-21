@@ -75,36 +75,6 @@
           "explanation": "An einem Werktag sind es 12'400 Personen, an einem freien Tag 11'100. Der Abstand ist damit kleiner als an vielen anderen erfassten Bahnhöfen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2022",
-              "value": 10000,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 10100,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 12100,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 12400,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert stammt von 2022 mit 10'000, danach folgen 10'100 (2018), 12'100 (2023) und 12'400 (2025). Für 2024 ist derselbe Wert wie für 2023 erfasst.",
-          "difficulty": 3
         }
       ]
     },
@@ -201,11 +171,6 @@
               "factRef": "perrons.items[0].laenge_m"
             },
             {
-              "label": "Perron 5/6",
-              "value": 425,
-              "factRef": "perrons.items[1].laenge_m"
-            },
-            {
               "label": "Perron 7/8",
               "value": 384,
               "factRef": "perrons.items[2].laenge_m"
@@ -217,7 +182,7 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 9/10 misst 429 Meter, Perron 5/6 misst 425, Perron 7/8 misst 384 und das Dienstperron 1 misst 140 Meter.",
+          "explanation": "Richtig ist diese Reihenfolge: Perron 9/10 mit 429, Perron 7/8 mit 384 und Perron 1 mit 140 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
@@ -432,15 +397,10 @@
               "label": "Ziegelbrücke – Nieder- und Oberurnen",
               "value": 81,
               "factRef": "zuege.abschnitte[2].zuege_pro_tag"
-            },
-            {
-              "label": "Schänis – Ziegelbrücke",
-              "value": 77,
-              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Von Bilten her sind es 232 Züge pro Tag, Richtung Weesen 149, Richtung Nieder- und Oberurnen 81 und von Schänis her 77.",
+          "explanation": "Richtig ist diese Reihenfolge: Bilten – Ziegelbrücke mit 232, Ziegelbrücke – Weesen mit 149 und Ziegelbrücke – Nieder- und Oberurnen mit 81 Zügen pro Tag. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
@@ -633,11 +593,6 @@
               "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
             },
             {
-              "label": "Perron 9/10",
-              "value": 2581,
-              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
-            },
-            {
               "label": "Perron 7/8",
               "value": 2466,
               "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
@@ -649,7 +604,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 5/6 hat mit 2'681 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 278 die kleinste der gezeigten.",
+          "explanation": "Perron 5/6 hat mit 2'681 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 278 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

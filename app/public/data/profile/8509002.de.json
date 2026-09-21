@@ -84,7 +84,7 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Jahre nach Werktagsverkehr, aufsteigend.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
@@ -103,18 +103,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 18200,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 18400,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr stieg von 13'900 (2018) über 15'200 (2022), 16'700 (2023) und 18'200 (2024) auf 18'400 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 13'900 (2018), 15'200 (2022), 16'700 (2023), 18'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 2
         }
       ]

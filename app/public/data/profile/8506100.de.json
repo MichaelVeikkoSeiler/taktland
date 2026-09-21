@@ -85,30 +85,20 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 11700,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 11800,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2025",
               "value": 11900,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert liegt 2022 bei 10'000, der höchste 2025 bei 11'900. Der Wert von 2018 liegt mit 11'800 nur knapp darunter.",
+          "explanation": "Die erfassten Werte, aufsteigend: 10'000 (2022), 11'300 (2023), 11'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Frauenfeld umfasst auch die FW.",
           "correct": false,
-          "explanation": "Die Quelle vermerkt «Ohne FW.». Die Zahl deckt also nicht den gesamten Verkehr am Bahnhof ab.",
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne FW.». Wofür FW steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
           "difficulty": 3
         }
@@ -355,7 +345,7 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Richtung Felben-Wellhausen: Im Personenverkehr verkehren dort 167 Züge pro Tag, das sind 60'917 im Jahr. Von Islikon her sind es ebenfalls 167 Züge pro Tag. Dazu kommt der Güterverkehr mit 26 und 21 Zügen pro Tag sowie ein Anschluss zur Frauenfeld Paketpost.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Richtung Felben-Wellhausen 167 Züge pro Tag, das sind 60'917 im Jahr. Von Islikon her sind es ebenfalls 167 Züge pro Tag. Dazu kommt der Güterverkehr mit 26 und 21 Zügen pro Tag sowie ein Anschluss zur Frauenfeld Paketpost.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
@@ -399,11 +389,6 @@
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Von Islikon, Personenverkehr",
-              "value": 60873,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
               "label": "Von Islikon, Güterverkehr",
               "value": 9640,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
@@ -415,7 +400,7 @@
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr liegen die beiden Richtungen mit 60'917 und 60'873 Zügen fast gleichauf. Im Güterverkehr sind es 9'640 und 7'766.",
+          "explanation": "Richtig ist diese Reihenfolge: Richtung Felben-Wellhausen im Personenverkehr mit 60'917, von Islikon im Güterverkehr mit 9'640 und Richtung Felben-Wellhausen im Güterverkehr mit 7'766 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {

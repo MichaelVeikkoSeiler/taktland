@@ -192,32 +192,6 @@
           "explanation": "Gleis 1 mit 479 Metern. Die vier Gleise unterscheiden sich nur um wenige Meter.",
           "factRef": "gleise.items[0].nr",
           "difficulty": 3
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Gleise nach Länge der Perronkante, die längste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Gleis 1",
-              "value": 479,
-              "factRef": "gleise.items[0].perronkante_m"
-            },
-            {
-              "label": "Gleis 3",
-              "value": 466,
-              "factRef": "gleise.items[2].perronkante_m"
-            },
-            {
-              "label": "Gleis 4",
-              "value": 459,
-              "factRef": "gleise.items[3].perronkante_m"
-            }
-          ],
-          "correct": null,
-          "explanation": "479, 466 und 459 Meter. Die Unterschiede sind klein.",
-          "factRef": "gleise.items",
-          "difficulty": 3
         }
       ]
     },

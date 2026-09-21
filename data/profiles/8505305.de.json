@@ -81,19 +81,9 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2018",
-              "value": 9000,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2022",
               "value": 9200,
               "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 11500,
-              "factRef": "steckbrief.verlauf[4].dwv"
             },
             {
               "label": "2023",
@@ -107,7 +97,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert liegt 2018 bei 9'000, der höchste 2024 bei 12'400. Für 2025 sind 11'500 erfasst, also weniger als im Vorjahr.",
+          "explanation": "Die erfassten Werte, aufsteigend: 9'200 (2022), 11'600 (2023), 12'400 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -414,11 +404,6 @@
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Richtung Balerna, Personenverkehr",
-              "value": 80572,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
               "label": "Von Stabio Cargo, Personenverkehr",
               "value": 25031,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
@@ -430,7 +415,7 @@
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr sind es 81'393 und 80'572 Züge im Jahr, von Stabio Cargo her 25'031. Der Güterverkehr Richtung Mendrisio S. Martino kommt auf 20'865.",
+          "explanation": "Richtig ist diese Reihenfolge: Richtung Mendrisio S. Martino im Personenverkehr mit 81'393, von Stabio Cargo im Personenverkehr mit 25'031 und Richtung Mendrisio S. Martino im Güterverkehr mit 20'865 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]

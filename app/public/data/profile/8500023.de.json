@@ -76,35 +76,6 @@
           "explanation": "Der Wert für den freien Tag umfasst Wochenenden und Feiertage zusammen, nicht nur Sonntage.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, kleinster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2022",
-              "value": 17800,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 18500,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 18600,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 20500,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr lag 2022 bei 17'800, 2023 bei 18'500, 2024 bei 18'600 und 2018 bei 20'500 Personen."
         }
       ]
     },
@@ -379,35 +350,6 @@
           "explanation": "Auf diesem Abschnitt sind es rund 323 Züge pro Tag im Personenverkehr, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Streckenabschnitte nach Zügen pro Tag, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Liestal Nord (Abzw)–Liestal, Personenverkehr",
-              "value": 323,
-              "factRef": "zuege.abschnitte[0].zuege_pro_tag"
-            },
-            {
-              "label": "Liestal Süd (Spw)–Liestal, Personenverkehr",
-              "value": 320,
-              "factRef": "zuege.abschnitte[1].zuege_pro_tag"
-            },
-            {
-              "label": "Liestal Süd (Spw)–Liestal, Güterverkehr",
-              "value": 62,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
-            },
-            {
-              "label": "Liestal Nord (Abzw)–Liestal, Güterverkehr",
-              "value": 61,
-              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Die Reihenfolge nach Zügen pro Tag: 323 (Personenverkehr Nord), 320 (Personenverkehr Süd), 62 (Güterverkehr Süd), 61 (Güterverkehr Nord)."
         },
         {
           "type": "cloze",

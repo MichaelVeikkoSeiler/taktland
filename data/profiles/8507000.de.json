@@ -201,32 +201,6 @@
           "explanation": "539 Meter, das Perron an den Gleisen 1 und 2.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, das längste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Perron 1/2",
-              "value": 539,
-              "factRef": "perrons.items[0].laenge_m"
-            },
-            {
-              "label": "Perron 9/10",
-              "value": 369,
-              "factRef": "perrons.items[4].laenge_m"
-            },
-            {
-              "label": "Perron 12/13",
-              "value": 362,
-              "factRef": "perrons.items[6].laenge_m"
-            }
-          ],
-          "correct": null,
-          "explanation": "Perron 1/2 ist mit 539 Metern das längste der erfassten.",
-          "factRef": "perrons.items",
-          "difficulty": 2
         }
       ]
     },
@@ -626,13 +600,13 @@
               "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
             },
             {
-              "label": "Perron 5/6",
-              "value": 3565,
-              "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
+              "label": "Perron 49/50",
+              "value": 3177,
+              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1/2 hat mit 4'038 Quadratmetern die grösste erfasste Fläche, Perron 5/6 mit 3'565 die kleinste der gezeigten.",
+          "explanation": "Perron 1/2 hat mit 4'038 Quadratmetern die grösste erfasste Fläche, Perron 49/50 mit 3'177 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

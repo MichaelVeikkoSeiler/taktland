@@ -96,18 +96,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 10000,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 10200,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Reihe steigt durchgehend: 6'300 (2018), 7'500 (2022), 9'600 (2023), 10'000 (2024) und 10'200 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 6'300 (2018), 7'500 (2022), 9'600 (2023), 10'200 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -341,15 +336,10 @@
               "label": "Gleis 5",
               "value": 243,
               "factRef": "gleise.items[2].perronkante_m"
-            },
-            {
-              "label": "Gleis 11",
-              "value": 238,
-              "factRef": "gleise.items[4].perronkante_m"
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Gleis 1 misst 565 Meter, Gleis 6 misst 489, Gleis 4 misst 287, Gleis 5 misst 243 und Gleis 11 misst 238 Meter. Zu Gleis 38 liegt keine Länge vor.",
+          "explanation": "Richtig ist diese Reihenfolge: Gleis 1 mit 565, Gleis 6 mit 489, Gleis 4 mit 287 und Gleis 5 mit 243 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {

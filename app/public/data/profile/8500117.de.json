@@ -343,15 +343,10 @@
               "label": "Aesch BL – Dornach-Arlesheim, Güterverkehr",
               "value": 331,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Duggingen – Aesch BL, Güterverkehr",
-              "value": 322,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Aesch BL – Dornach-Arlesheim (Personenverkehr) 50'217, Duggingen – Aesch BL (Personenverkehr) 26'188, Aesch BL – Dornach-Arlesheim (Güterverkehr) 331, Duggingen – Aesch BL (Güterverkehr) 322 Züge im Jahr.",
+          "explanation": "Richtig ist diese Reihenfolge: Aesch BL – Dornach-Arlesheim im Personenverkehr mit 50'217, Duggingen – Aesch BL im Personenverkehr mit 26'188 und Aesch BL – Dornach-Arlesheim im Güterverkehr mit 331 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]

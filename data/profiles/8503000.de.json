@@ -550,23 +550,18 @@
               "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
             },
             {
-              "label": "Perron 8/9",
-              "value": 3855,
-              "factRef": "ausstattung.perronbelag.items[8].flaeche_m2"
+              "label": "Perron 16/17",
+              "value": 3704,
+              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
             },
             {
-              "label": "Perron 6/7",
-              "value": 3787,
-              "factRef": "ausstattung.perronbelag.items[7].flaeche_m2"
-            },
-            {
-              "label": "Perron 4/5",
-              "value": 3755,
-              "factRef": "ausstattung.perronbelag.items[6].flaeche_m2"
+              "label": "Perron 18",
+              "value": 2238,
+              "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 12/13 hat mit 3'908 Quadratmetern die grösste erfasste Fläche, Perron 4/5 mit 3'755 die kleinste der gezeigten.",
+          "explanation": "Perron 12/13 hat mit 3'908 Quadratmetern die grösste erfasste Fläche, Perron 18 mit 2'238 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

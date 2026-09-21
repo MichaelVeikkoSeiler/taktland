@@ -72,19 +72,9 @@
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2023",
-              "value": 9200,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
               "label": "2018",
               "value": 9300,
               "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 9400,
-              "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
               "label": "2025",
@@ -93,7 +83,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert liegt 2022 bei 8'100, danach folgen 9'200 (2023), 9'300 (2018), 9'400 (2024) und 9'800 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 8'100 (2022), 9'300 (2018), 9'800 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]

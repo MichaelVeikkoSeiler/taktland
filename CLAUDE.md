@@ -43,6 +43,12 @@ wenn eine Aussage allgemein bekannt oder offensichtlich richtig ist.
    Worten («die Hälfte»). Steht eine Zahl nicht in den Fakten und wird sie
    gebraucht, gehört sie in die Pipeline, nicht in den Text.
 
+9. **Keine Glücksfragen.** Was gefragt wird, muss man wissen können. Werte, die
+   weniger als 5 % auseinanderliegen, werden nicht gegeneinander gefragt,
+   weder beim Sortieren noch beim Zuordnen oder beim Hotspot. Gleichstand ist
+   kein Vorsprung: Bei gleich vielen Zügen pro Tag ist kein Abschnitt «am
+   stärksten befahren».
+
 ### Wie es geprüft wird
 
 ```bash
@@ -74,6 +80,7 @@ python pipeline/fetch.py                    # Datasets laden
 .venv/bin/python pipeline/build_facts.py --all   # Fakten für alle Bahnhöfe
 .venv/bin/python generator/validate.py --alle    # Profile prüfen
 python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne Profil
+.venv/bin/python generator/sortieren_richten.py --alle   # knappe Sortierfragen zeigen
 ```
 
 Neue Profile entstehen in Schüben von acht mit `generator/baukasten.py`. Jedes

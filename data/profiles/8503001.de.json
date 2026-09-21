@@ -91,7 +91,7 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Werte des Werktagsverkehrs nach Jahr, aufsteigend nach Personenzahl.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
@@ -105,23 +105,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2018",
-              "value": 46500,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 47600,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 48700,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Werktagswerte steigen von 37'600 (2022) über 44'600 (2023), 46'500 (2018), 47'600 (2024) bis 48'700 (2025)."
+          "explanation": "Die erfassten Werte, aufsteigend: 37'600 (2022), 44'600 (2023), 48'700 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },

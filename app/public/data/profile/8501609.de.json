@@ -107,40 +107,6 @@
           "explanation": "2025 lag der Wert bei 21'400 Personen an einem Werktag.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr in Brig, aufsteigend.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2018",
-              "value": 17000,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2022",
-              "value": 17500,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 20700,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 21000,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 21400,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr stieg von 17'000 Personen im Jahr 2018 auf 21'400 Personen im Jahr 2025 stetig an."
         }
       ]
     },
@@ -260,11 +226,6 @@
               "factRef": "perrons.items[0].laenge_m"
             },
             {
-              "label": "Perron 6/7",
-              "value": 455,
-              "factRef": "perrons.items[1].laenge_m"
-            },
-            {
               "label": "Perron 8/9",
               "value": 416,
               "factRef": "perrons.items[2].laenge_m"
@@ -276,7 +237,7 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Die Reihenfolge nach Länge ist: Perron 3/4 mit 456 m, Perron 6/7 mit 455 m, Perron 8/9 mit 416 m und Perron 1 mit 390 m."
+          "explanation": "Richtig ist diese Reihenfolge: Perron 3/4 mit 456, Perron 8/9 mit 416 und Perron 1 mit 390 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "match",
@@ -664,18 +625,13 @@
               "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
             },
             {
-              "label": "Perron 6/7",
-              "value": 3409,
-              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
-            },
-            {
               "label": "Perron 1",
               "value": 2545,
               "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 3/4 hat mit 4'191 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 2'545 die kleinste der gezeigten.",
+          "explanation": "Perron 3/4 hat mit 4'191 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 2'545 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

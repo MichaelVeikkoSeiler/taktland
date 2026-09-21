@@ -79,19 +79,9 @@
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2018",
-              "value": 9500,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2023",
               "value": 9900,
               "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 10400,
-              "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
               "label": "2025",
@@ -100,7 +90,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert liegt 2022 bei 8'500, danach folgen 9'500 (2018), 9'900 (2023), 10'400 (2024) und 10'700 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 8'500 (2022), 9'900 (2023), 10'700 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
@@ -368,36 +358,6 @@
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 292 Züge pro Tag, beide Richtungen zusammen. Richtung Au ZH ist es dieselbe Zahl.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Oberrieden – Horgen, Personenverkehr",
-              "value": 106539,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Horgen – Au ZH, Personenverkehr",
-              "value": 106499,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
-              "label": "Oberrieden – Horgen, Güterverkehr",
-              "value": 8993,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Horgen – Au ZH, Güterverkehr",
-              "value": 8990,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr liegen die beiden Richtungen mit 106'539 und 106'499 Zügen fast gleichauf, im Güterverkehr mit 8'993 und 8'990 ebenso.",
-          "difficulty": 3
         },
         {
           "type": "slider",

@@ -80,37 +80,27 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Werktagsverkehrswerte nach Jahr, das früheste zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2018",
-              "value": 2018,
-              "factRef": "steckbrief.verlauf[0].jahr"
-            },
-            {
               "label": "2022",
-              "value": 2022,
-              "factRef": "steckbrief.verlauf[1].jahr"
-            },
-            {
-              "label": "2023",
-              "value": 2023,
-              "factRef": "steckbrief.verlauf[2].jahr"
+              "value": 15900,
+              "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
               "label": "2024",
-              "value": 2024,
-              "factRef": "steckbrief.verlauf[3].jahr"
+              "value": 17700,
+              "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
-              "label": "2025",
-              "value": 2025,
-              "factRef": "steckbrief.verlauf[4].jahr"
+              "label": "2018",
+              "value": 18700,
+              "factRef": "steckbrief.verlauf[0].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Jahre der erfassten Werktagsverkehrswerte sind 2018, 2022, 2023, 2024 und 2025, aufsteigend sortiert."
+          "explanation": "Die erfassten Werte, aufsteigend: 15'900 (2022), 17'700 (2024), 18'700 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },
@@ -647,31 +637,6 @@
           "correct": 18,
           "explanation": "Erfasst sind 18 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.schliessfaecher",
-          "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Perron 1/11",
-              "value": 1748,
-              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
-            },
-            {
-              "label": "Perron 2/3",
-              "value": 1705,
-              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
-            },
-            {
-              "label": "Perron 4/5",
-              "value": 1107,
-              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
-            }
-          ],
-          "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1/11 hat mit 1'748 Quadratmetern die grösste erfasste Fläche, Perron 4/5 mit 1'107 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

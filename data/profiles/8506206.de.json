@@ -75,41 +75,6 @@
           "explanation": "Der Wert für einen freien Tag (dnwv) liegt bei 14'300 Personen, Stand 2025.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2022",
-              "value": 16800,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 19200,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 19900,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 20000,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 20200,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr lag 2022 bei 16'800, 2023 bei 19'200, 2024 bei 19'900, 2025 bei 20'000 und 2018 bei 20'200 Personen.",
-          "difficulty": 2
         }
       ]
     },

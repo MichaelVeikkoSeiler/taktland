@@ -70,45 +70,10 @@
           "difficulty": 1
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2018",
-              "value": 9800,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2022",
-              "value": 10100,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 11500,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 11900,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 12100,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert liegt 2018 bei 9'800, der höchste 2024 bei 12'100. Für 2025 sind 11'900 erfasst, also etwas weniger als im Vorjahr.",
-          "difficulty": 3
-        },
-        {
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in La Chaux-de-Fonds umfasst auch CJ und transN.",
           "correct": false,
-          "explanation": "Die Quelle vermerkt «Ohne CJ und transN.». Die Zahl deckt also nicht den gesamten Verkehr am Bahnhof ab.",
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne CJ und transN.». Wofür CJ und transN stehen, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
           "difficulty": 3
         }

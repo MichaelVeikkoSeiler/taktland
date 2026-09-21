@@ -73,41 +73,6 @@
           "explanation": "An einem freien Tag sind es 6'100 Personen, an einem Werktag 11'900.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2022",
-              "value": 10300,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 11500,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 11700,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 11900,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 12000,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert liegt 2022 bei 10'300, der höchste 2018 bei 12'000. Dazwischen liegen 11'500 (2023), 11'700 (2024) und 11'900 (2025).",
-          "difficulty": 3
         }
       ]
     },
@@ -391,36 +356,6 @@
           "correct": 116370,
           "explanation": "Die Erhebung zählt 116'370 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
-          "difficulty": 3
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Richtung Nänikon-Greifensee, Personenverkehr",
-              "value": 116370,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Von Dübendorf, Personenverkehr",
-              "value": 116125,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
-              "label": "Von Dübendorf, Güterverkehr",
-              "value": 1882,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Richtung Nänikon-Greifensee, Güterverkehr",
-              "value": 1838,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr liegen die beiden Richtungen mit 116'370 und 116'125 Zügen fast gleichauf, im Güterverkehr mit 1'882 und 1'838 ebenso.",
           "difficulty": 3
         }
       ]

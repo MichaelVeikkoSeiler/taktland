@@ -101,11 +101,6 @@
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
-              "label": "2023",
-              "value": 17600,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
               "label": "2024",
               "value": 18100,
               "factRef": "steckbrief.verlauf[3].dwv"
@@ -117,7 +112,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die tiefste Werktagsfrequenz in der Reihe war 2022 mit 15'400 Personen, die höchste 2025 mit 19'900 Personen."
+          "explanation": "Die erfassten Werte, aufsteigend: 15'400 (2022), 16'500 (2018), 18'100 (2024), 19'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "single_choice",
@@ -287,11 +282,6 @@
               "factRef": "perrons.items[0].laenge_m"
             },
             {
-              "label": "Perron 3",
-              "value": 405,
-              "factRef": "perrons.items[1].laenge_m"
-            },
-            {
               "label": "Perron 7",
               "value": 200,
               "factRef": "perrons.items[2].laenge_m"
@@ -303,7 +293,7 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Nach Länge geordnet folgen die Perrons 1 (410 m), 3 (405 m), 7 (200 m) und 4 (170 m) aufeinander."
+          "explanation": "Richtig ist diese Reihenfolge: Perron 1 mit 410, Perron 7 mit 200 und Perron 4 mit 170 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "true_false",
@@ -699,11 +689,6 @@
               "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
             },
             {
-              "label": "Perron 4",
-              "value": 1449,
-              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
-            },
-            {
               "label": "Perron 7",
               "value": 850,
               "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
@@ -715,7 +700,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 3 hat mit 1'519 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 21 die kleinste der gezeigten.",
+          "explanation": "Perron 3 hat mit 1'519 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 21 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

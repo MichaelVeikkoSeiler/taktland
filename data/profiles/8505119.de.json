@@ -128,32 +128,6 @@
           "explanation": "An Gleis 1 mit 41 Metern, gegenüber rund 400 Metern an den Gleisen 2 und 3.",
           "factRef": "gleise.items[0].nr",
           "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Gleise nach Länge der Perronkante, die längste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Gleis 2",
-              "value": 401,
-              "factRef": "gleise.items[1].perronkante_m"
-            },
-            {
-              "label": "Gleis 3",
-              "value": 400,
-              "factRef": "gleise.items[2].perronkante_m"
-            },
-            {
-              "label": "Gleis 1",
-              "value": 41,
-              "factRef": "gleise.items[0].perronkante_m"
-            }
-          ],
-          "correct": null,
-          "explanation": "Gleis 2 mit 401 Metern, Gleis 3 mit 400 Metern, Gleis 1 mit 41 Metern.",
-          "factRef": "gleise.items",
-          "difficulty": 3
         }
       ]
     },

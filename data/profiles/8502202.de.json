@@ -94,23 +94,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2018",
-              "value": 17300,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 17800,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            },
-            {
               "label": "2024",
               "value": 17900,
               "factRef": "steckbrief.verlauf[3].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr stieg von 15'200 im Jahr 2022 über 17'000 (2023) und 17'300 (2018) auf 17'800 (2025) und 17'900 (2024)."
+          "explanation": "Die erfassten Werte, aufsteigend: 15'200 (2022), 17'000 (2023), 17'900 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },
@@ -302,11 +292,6 @@
               "factRef": "gleise.items[1].perronkante_m"
             },
             {
-              "label": "Gleis 3",
-              "value": 319,
-              "factRef": "gleise.items[2].perronkante_m"
-            },
-            {
               "label": "Gleis 5",
               "value": 180,
               "factRef": "gleise.items[3].perronkante_m"
@@ -318,7 +303,7 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Die erfassten Perronkanten messen 320, 319, 180 und 150 Meter, absteigend nach Gleis 2, 3, 5 und 1."
+          "explanation": "Richtig ist diese Reihenfolge: Gleis 2 mit 320, Gleis 5 mit 180 und Gleis 1 mit 150 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "hotspot",

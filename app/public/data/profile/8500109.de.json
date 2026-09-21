@@ -63,41 +63,6 @@
           "difficulty": 1
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2018",
-              "value": 7900,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2022",
-              "value": 8100,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 8800,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 9000,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 9100,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 7'900 (2018), 8'100 (2022), 8'800 (2025), 9'000 (2024), 9'100 (2023).",
-          "difficulty": 3
-        },
-        {
           "type": "cloze",
           "prompt": "An einem freien Tag steigen in Delémont ___ Personen ein und aus.",
           "options": [
@@ -181,31 +146,6 @@
       ],
       "questions": [
         {
-          "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Perron 1",
-              "value": 389,
-              "factRef": "perrons.items[0].laenge_m"
-            },
-            {
-              "label": "Perron 2/3",
-              "value": 380,
-              "factRef": "perrons.items[1].laenge_m"
-            },
-            {
-              "label": "Perron 4/5",
-              "value": 230,
-              "factRef": "perrons.items[2].laenge_m"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 1 misst 389 Meter, Perron 2/3 misst 380 Meter, Perron 4/5 misst 230 Meter.",
-          "difficulty": 2
-        },
-        {
           "type": "match",
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
@@ -270,11 +210,6 @@
               "factRef": "gleise.items[1].perronkante_m"
             },
             {
-              "label": "Gleis 3",
-              "value": 358,
-              "factRef": "gleise.items[2].perronkante_m"
-            },
-            {
               "label": "Gleis 1",
               "value": 288,
               "factRef": "gleise.items[0].perronkante_m"
@@ -291,7 +226,7 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Gleis 2 misst 361 Meter, Gleis 3 misst 358 Meter, Gleis 1 misst 288 Meter, Gleis 4 misst 230 Meter, Gleis 5 misst 149 Meter.",
+          "explanation": "Richtig ist diese Reihenfolge: Gleis 2 mit 361, Gleis 1 mit 288, Gleis 4 mit 230 und Gleis 5 mit 149 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
@@ -426,11 +361,6 @@
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Delémont – Soyhières, Personenverkehr",
-              "value": 29145,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
               "label": "Choindez – Delémont, Personenverkehr",
               "value": 27127,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
@@ -442,7 +372,7 @@
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Delémont – Courtételle (Personenverkehr) 30'171, Delémont – Soyhières (Personenverkehr) 29'145, Choindez – Delémont (Personenverkehr) 27'127, Delémont – Courtételle (Güterverkehr) 1'410 Züge im Jahr.",
+          "explanation": "Richtig ist diese Reihenfolge: Delémont – Courtételle im Personenverkehr mit 30'171, Choindez – Delémont im Personenverkehr mit 27'127 und Delémont – Courtételle im Güterverkehr mit 1'410 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]

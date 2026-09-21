@@ -41,6 +41,9 @@ FALSCHDEUTUNG = [
     (r"Gleisquerung (ist )?(nötig|notwendig|erforderlich)|mit einer Gleisquerung zu rechnen",
      "eine fehlende Zugangsangabe heisst nicht, dass man die Gleise queren muss. "
      "Die Daten sagen nur, dass zu diesem Perron nichts vermerkt ist"),
+    (r"deckt (also |damit |somit )?nicht den (gesamten|ganzen)",
+     "«Ohne X.» sagt nur, dass X nicht mitgezählt ist. Was daraus für den Verkehr "
+     "am Bahnhof folgt, ist ein Schluss. Gib die Bemerkung wieder, mehr nicht"),
 ]
 
 # In linie-mit-betriebspunkten steht die Kilometrierung des Bahnhofs auf der
@@ -57,6 +60,31 @@ NUR_ERFASST = (r"(Hilfstritt|Billettautomat\w*|Billettentwerter\w*|Wartehalle\w*
                r"[^.,;]{0,40}\b(vorhanden|gibt es|existiert|fehlt)\b"
                r"|\b(vorhanden|gibt es|existiert|fehlt)\b[^.,;]{0,40}"
                r"(Hilfstritt|Billettautomat\w*|Billettentwerter\w*|Wartehalle\w*)")
+
+#: Mindestabstand zwischen Werten, deren Reihenfolge gefragt wird. Liegen zwei
+#: Werte näher beieinander, ist die Antwort Glückssache: 55'122 gegen 54'972
+#: Züge im Jahr kann niemand wissen, auch wer das Kapitel gelesen hat. Beim
+#: Hotspot gilt dieselbe Schwelle.
+MINDESTABSTAND = 0.05
+
+
+def zu_nah(a, b, anteil=MINDESTABSTAND):
+    """Zwei Werte, die man beim Lernen nicht auseinanderhalten kann."""
+    return a == b or abs(a - b) < anteil * max(abs(a), abs(b))
+
+
+def klar_getrennt(items, anteil=MINDESTABSTAND, wert=lambda it: it["value"]):
+    """Behält von fast gleichen Werten nur den höheren, absteigend geordnet.
+
+    Aus 420, 417, 380 m wird 420, 380 m. Die Aufrufer brauchen danach
+    mindestens drei Einträge, sonst entfällt die Sortierfrage.
+    """
+    raus = []
+    for it in sorted(items, key=lambda it: -wert(it)):
+        if not raus or not zu_nah(wert(raus[-1]), wert(it), anteil):
+            raus.append(it)
+    return raus
+
 
 LEERFORMELN = [
     r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",
@@ -200,8 +228,15 @@ def _pruefe_frage(fr, i, kap_id, fb, fakten, b, raus):
                 b.fehlt(wo, f"items sind nicht absteigend sortiert: {werte}")
             if richtung == "aufsteigend" and not auf:
                 b.fehlt(wo, f"items sind nicht aufsteigend sortiert: {werte}")
-            if len(set(werte)) == 1 and len(werte) > 1:
-                b.fehlt(wo, "alle Werte sind gleich, es gibt nichts zu sortieren")
+            w = sorted(werte)
+            if nah := [(x, y) for x, y in zip(w, w[1:]) if zu_nah(x, y)]:
+                x, y = nah[0]
+                b.fehlt(wo, f"{x:g} und {y:g} liegen weniger als "
+                            f"{MINDESTABSTAND:.0%} auseinander, die Reihenfolge "
+                            "wäre Glückssache. Einen der beiden weglassen")
+            if all(zahl(it.get("label")) == zahl(it.get("value")) for it in items):
+                b.fehlt(wo, "sortiert wird nach der Beschriftung selbst "
+                            "(etwa Jahreszahlen), die Lösung steht schon auf den Karten")
 
     elif typ == "match":
         paare = fr.get("pairs")
@@ -289,9 +324,13 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             if m := re.search(muster, kap.get("body", ""), re.I):
                 b.fehlt(f"{wo}/body", f"«{m.group(0)}» ist ein Feldname aus den Daten. "
                                       "Schreibe, was der Wert bedeutet")
-        for muster, warum in FALSCHDEUTUNG:
-            if m := re.search(muster, kap.get("body", ""), re.I):
-                b.fehlt(f"{wo}/body", f"«{m.group(0)}»: {warum}")
+        for feld, text in [("body", kap.get("body", ""))] + [
+                (f"questions[{i}]/{f}", q.get(f) or "")
+                for i, q in enumerate(kap.get("questions", []))
+                for f in ("prompt", "explanation")]:
+            for muster, warum in FALSCHDEUTUNG:
+                if m := re.search(muster, text, re.I):
+                    b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: {warum}")
         for muster in LEERFORMELN:
             if m := re.search(muster, kap.get("body", ""), re.I):
                 b.fehlt(f"{wo}/body", f"«{m.group(0)}» sagt nichts aus. "
@@ -304,6 +343,20 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                 b.fehlt(f"{wo}/{feld}",
                         f"«{m.group(0)[:50]}»: die Daten sagen nur, was erfasst ist. "
                         "Schreibe «erfasst» oder «verzeichnet», nicht «vorhanden»")
+
+        if kid == "zuege" and (zu := fakten.get("zuege")) and zu.get("staerkster_abschnitt"):
+            st = zu["staerkster_abschnitt"]
+            gleich = [a for a in zu.get("abschnitte", [])
+                      if a.get("art") == st.get("art") and a is not st
+                      and (a.get("von"), a.get("bis")) != (st.get("von"), st.get("bis"))
+                      and a.get("zuege_pro_tag") == st.get("zuege_pro_tag")]
+            text = " ".join([kap.get("body", "")] + [q.get(f) or "" for q in kap.get("questions", [])
+                                                      for f in ("prompt", "explanation")])
+            if gleich and (m := re.search(r"am stärksten|stärkste[nr]? (befahren|Abschnitt)",
+                                          text, re.I)):
+                b.fehlt(f"{wo}", f"«{m.group(0)}»: pro Tag zählt die Erhebung auf "
+                                 f"{gleich[0]['von']} – {gleich[0]['bis']} gleich viele Züge "
+                                 f"({st['zuege_pro_tag']}). Nenne die Werte, ohne einen Abschnitt vorzuziehen")
 
         if kid == "linien":
             for feld, text in [("body", kap.get("body", ""))] + [

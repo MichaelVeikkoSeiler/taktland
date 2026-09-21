@@ -191,6 +191,16 @@ Jedes Element trägt den Wert, nach dem sortiert wird, und seinen `factRef`.
 Der Validator prüft beides: dass jeder Wert stimmt und dass die Reihenfolge
 tatsächlich sortiert ist. Damit kann keine falsche Reihenfolge entstehen.
 
+Zwei weitere Regeln prüft der Validator als Fehler:
+
+- **Mindestabstand 5 %** zwischen benachbarten Werten (`MINDESTABSTAND` in
+  `taktland.py`). Liegen zwei Werte näher beieinander, fällt einer weg,
+  `klar_getrennt()` erledigt das. Bleiben weniger als drei, gibt es keine
+  Sortierfrage. Die Erklärung sagt dann: «… bleiben weg.»
+- **Nicht nach der Beschriftung sortieren.** Jahreszahlen nach Jahr zu ordnen
+  ist keine Frage, die Lösung steht auf den Karten. Sortiert wird nach dem
+  Wert, der zum Jahr gehört.
+
 ```json
 { "type": "sort", "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
   "richtung": "absteigend",
@@ -342,8 +352,21 @@ Abschnitte», «höher als die meisten Bahnhöfe», «schweizweit» - der
 Vergleichswert steht nicht in dieser Faktendatei. Auch wenn es stimmt.
 
 **Keine Frage, die ein Münzwurf ist.** 562 gegen 564 Meter oder zwei
-Abschnitte mit je 292 Zügen taugen nicht für «welches ist grösser». Bei
-Sortierfragen dürfen gleiche Werte vorkommen, die App wertet das richtig.
+Abschnitte mit je 292 Zügen taugen nicht für «welches ist grösser». Das gilt
+auch beim Sortieren: 55'122 gegen 54'972 Züge im Jahr kann niemand wissen,
+auch wer das Kapitel gelesen hat. Beim ersten Durchgang durch alle Profile
+waren 140 Sortierfragen betroffen, 37 davon fielen ganz weg
+(`generator/sortieren_richten.py`). Schwelle: 5 % Abstand.
+
+**Gleichstand ist kein Vorsprung.** «Am stärksten befahren ist A mit 226
+Zügen pro Tag. Auf B sind es 226.» Der Vorsprung steckt nur in der
+Jahreszahl, der Leser sieht einen Widerspruch. Bei Gleichstand pro Tag nennt
+der Text beide Werte («ebenfalls 226»), ohne einen Abschnitt vorzuziehen.
+
+**Eine Bemerkung wiedergeben, nicht auslegen.** Aus «Ohne AB.» folgt nicht,
+dass die Zahl «nicht den gesamten Verkehr am Bahnhof» abdeckt. Das ist ein
+Schluss. Die Quelle sagt auch nicht, wofür die Abkürzung steht, also steht
+genau das in der Erklärung.
 
 **Stammdaten wörtlich übernehmen.** Der Kanton heisst in den Daten manchmal
 «Valais», «Vaud» oder «Ticino». Dann steht das so auf der Faktenkarte, mit

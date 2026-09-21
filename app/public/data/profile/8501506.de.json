@@ -84,11 +84,6 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2022",
-              "value": 12900,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
               "label": "2018",
               "value": 13400,
               "factRef": "steckbrief.verlauf[0].dwv"
@@ -99,18 +94,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 15500,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 16000,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr stieg von 12'900 Personen (2022) über 13'400 (2018), 14'900 (2023) und 15'500 (2024) auf 16'000 Personen (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 13'400 (2018), 14'900 (2023), 16'000 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 2
         },
         {
@@ -272,31 +262,6 @@
           "correct": "2",
           "factRef": "gleise.items[1].nr",
           "explanation": "Gleis 2 hat eine Perronkante von 443 Metern.",
-          "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Gleise nach Länge der Perronkante, kürzeste zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "Gleis 1",
-              "value": 150,
-              "factRef": "gleise.items[0].perronkante_m"
-            },
-            {
-              "label": "Gleis 2",
-              "value": 443,
-              "factRef": "gleise.items[1].perronkante_m"
-            },
-            {
-              "label": "Gleis 3",
-              "value": 443,
-              "factRef": "gleise.items[2].perronkante_m"
-            }
-          ],
-          "factRef": "gleise.items",
-          "explanation": "Gleis 1 hat eine Perronkante von 150 Metern, Gleis 2 und Gleis 3 je 443 Meter.",
           "difficulty": 2
         },
         {

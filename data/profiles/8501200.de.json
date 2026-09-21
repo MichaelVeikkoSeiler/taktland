@@ -84,11 +84,6 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2022",
-              "value": 24000,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
               "label": "2018",
               "value": 24100,
               "factRef": "steckbrief.verlauf[0].dwv"
@@ -109,7 +104,7 @@
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
-          "explanation": "Der Werktagsverkehr stieg von 24'000 (2022) über 24'100 (2018), 26'700 (2023) und 28'800 (2024) auf 30'400 Personen im Jahr 2025.",
+          "explanation": "Die erfassten Werte, aufsteigend: 24'100 (2018), 26'700 (2023), 28'800 (2024), 30'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "factRef": "steckbrief.verlauf"
         },
         {
@@ -272,11 +267,6 @@
               "factRef": "gleise.items[2].perronkante_m"
             },
             {
-              "label": "Gleis 2",
-              "value": 424,
-              "factRef": "gleise.items[1].perronkante_m"
-            },
-            {
               "label": "Gleis 1",
               "value": 367,
               "factRef": "gleise.items[0].perronkante_m"
@@ -287,7 +277,7 @@
               "factRef": "gleise.items[3].perronkante_m"
             }
           ],
-          "explanation": "Die Perronkanten messen 425 Meter (Gleis 4), 424 Meter (Gleis 2), 367 Meter (Gleis 1) und 137 Meter (Gleis 5).",
+          "explanation": "Richtig ist diese Reihenfolge: Gleis 4 mit 425, Gleis 1 mit 367 und Gleis 5 mit 137 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "factRef": "gleise.items"
         },
         {
@@ -408,30 +398,6 @@
           "explanation": "Auf dem Abschnitt St-Saphorin–Vevey verkehren rund 237 Züge pro Tag im Personenverkehr, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Personenverkehrs-Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "St-Saphorin–Vevey",
-              "value": 86544,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Vevey–La Tour-de-Peilz",
-              "value": 84483,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
-              "label": "Vevey-Funi–Vevey",
-              "value": 14141,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            }
-          ],
-          "explanation": "St-Saphorin–Vevey verzeichnet 86'544 Züge pro Jahr, Vevey–La Tour-de-Peilz 84'483 und Vevey-Funi–Vevey 14'141, jeweils im Personenverkehr 2025.",
-          "factRef": "zuege.abschnitte"
         },
         {
           "type": "true_false",

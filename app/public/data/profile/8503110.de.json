@@ -361,18 +361,13 @@
               "factRef": "zuege.abschnitte[1].zuege_pro_tag"
             },
             {
-              "label": "Rapperswil Ost–Rapperswil SG",
-              "value": 153,
-              "factRef": "zuege.abschnitte[2].zuege_pro_tag"
-            },
-            {
               "label": "Rapperswil Nord–Rapperswil SG",
               "value": 76,
               "factRef": "zuege.abschnitte[3].zuege_pro_tag"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr verkehren pro Tag 185 Züge auf Rapperswil SG–West, 156 auf Rapperswil–Nordost, 153 auf Rapperswil Ost–Rapperswil SG und 76 auf Rapperswil Nord–Rapperswil SG."
+          "explanation": "Richtig ist diese Reihenfolge: Rapperswil SG–Rapperswil West mit 185, Rapperswil SG–Rapperswil Nordost mit 156 und Rapperswil Nord–Rapperswil SG mit 76 Zügen pro Tag. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "cloze",
@@ -641,18 +636,13 @@
               "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
             },
             {
-              "label": "Perron 4/5",
-              "value": 1769,
-              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
-            },
-            {
               "label": "Perron 6/7",
               "value": 686,
               "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'229 Quadratmetern die grösste erfasste Fläche, Perron 6/7 mit 686 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 2'229 Quadratmetern die grösste erfasste Fläche, Perron 6/7 mit 686 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

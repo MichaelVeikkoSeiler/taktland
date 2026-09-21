@@ -73,7 +73,7 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Werktagsverkehrswerte nach Jahr, tiefster Wert zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
@@ -87,23 +87,13 @@
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
-              "label": "2023",
-              "value": 25200,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 25700,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 26400,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr war 2022 mit 21'600 am tiefsten und stieg über 24'500 (2018), 25'200 (2023) und 25'700 (2024) auf 26'400 im Jahr 2025."
+          "explanation": "Die erfassten Werte, aufsteigend: 21'600 (2022), 24'500 (2018), 26'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },
@@ -283,40 +273,6 @@
           "optionen_aus_fakten": true
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Gleise nach Perronkante, längste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Gleis 2",
-              "value": 317,
-              "factRef": "gleise.items[1].perronkante_m"
-            },
-            {
-              "label": "Gleis 4",
-              "value": 316,
-              "factRef": "gleise.items[3].perronkante_m"
-            },
-            {
-              "label": "Gleis 5",
-              "value": 315,
-              "factRef": "gleise.items[4].perronkante_m"
-            },
-            {
-              "label": "Gleis 3",
-              "value": 314,
-              "factRef": "gleise.items[2].perronkante_m"
-            },
-            {
-              "label": "Gleis 1",
-              "value": 256,
-              "factRef": "gleise.items[0].perronkante_m"
-            }
-          ],
-          "factRef": "gleise.items",
-          "explanation": "Die Perronkanten messen 317 m (Gleis 2), 316 m (Gleis 4), 315 m (Gleis 5), 314 m (Gleis 3) und 256 m (Gleis 1)."
-        },
-        {
           "type": "multiple_choice",
           "prompt": "Welche Perronhöhen sind für die Gleise in Brugg AG erfasst?",
           "options": [
@@ -447,15 +403,10 @@
               "label": "Brugg AG–Brugg AG Süd (Abzw)",
               "value": 79,
               "factRef": "zuege.abschnitte[2].zuege_pro_tag"
-            },
-            {
-              "label": "Brugg AG Nord (Abzw)–Brugg AG",
-              "value": 78,
-              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Auf den Personenverkehrsabschnitten verkehren 362, 160, 79 und 78 Züge pro Tag, in dieser absteigenden Reihenfolge."
+          "explanation": "Richtig ist diese Reihenfolge: Brugg AG Ost–Brugg AG mit 362, Brugg AG–Brugg AG West mit 160 und Brugg AG–Brugg AG Süd (Abzw) mit 79 Zügen pro Tag. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "slider",
@@ -527,35 +478,6 @@
           ],
           "factRef": "linien.items",
           "explanation": "Linie 647 heisst Brugg - Hendschiken Nord, Linie 700 Brugg - Pratteln Ost, Linie 640 Brugg - Rupperswil und Linie 710 Zurich HB - Brugg AG."
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Linien nach Kilometerangabe, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "Linie 647",
-              "value": -0.00105,
-              "factRef": "linien.items[0].km_am_bahnhof"
-            },
-            {
-              "label": "Linie 710",
-              "value": 31.26561,
-              "factRef": "linien.items[3].km_am_bahnhof"
-            },
-            {
-              "label": "Linie 700",
-              "value": 31.27262,
-              "factRef": "linien.items[1].km_am_bahnhof"
-            },
-            {
-              "label": "Linie 640",
-              "value": 31.27592,
-              "factRef": "linien.items[2].km_am_bahnhof"
-            }
-          ],
-          "factRef": "linien.items",
-          "explanation": "Unter den 4 für Brugg AG erfassten Linien hat nur die Linie 647 einen negativen Kilometerwert, sie steht daher an erster Stelle. Es folgen Linie 710, Linie 700 und Linie 640 mit steigenden Werten."
         }
       ]
     },

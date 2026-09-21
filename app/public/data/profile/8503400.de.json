@@ -82,7 +82,7 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Werktagsverkehr-Werte nach Jahr, kleinster zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
@@ -96,23 +96,13 @@
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
-              "label": "2023",
-              "value": 17600,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 17700,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 18300,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr stieg von 15'000 (2022) über 16'300 (2018), 17'600 (2023) und 17'700 (2024) auf 18'300 (2025)."
+          "explanation": "Die erfassten Werte, aufsteigend: 15'000 (2022), 16'300 (2018), 18'300 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },
@@ -220,35 +210,6 @@
           "explanation": "Perron 3 misst 430 Meter, das längste erfasste Perron.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Perrons nach Länge, längstes zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Perron 3",
-              "value": 430,
-              "factRef": "perrons.items[0].laenge_m"
-            },
-            {
-              "label": "Perron 1/2",
-              "value": 409,
-              "factRef": "perrons.items[1].laenge_m"
-            },
-            {
-              "label": "Perron 4",
-              "value": 227,
-              "factRef": "perrons.items[2].laenge_m"
-            },
-            {
-              "label": "Perron 5/6",
-              "value": 220,
-              "factRef": "perrons.items[3].laenge_m"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Nach Länge geordnet: Perron 3 mit 430 m, Perron 1/2 mit 409 m, Perron 4 mit 227 m und Perron 5/6 mit 220 m."
         },
         {
           "type": "match",
@@ -662,15 +623,10 @@
               "label": "Perron 5/6",
               "value": 1359,
               "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
-            },
-            {
-              "label": "Perron 4",
-              "value": 1302,
-              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 1/2 hat mit 2'682 Quadratmetern die grösste erfasste Fläche, Perron 4 mit 1'302 die kleinste der gezeigten.",
+          "explanation": "Perron 1/2 hat mit 2'682 Quadratmetern die grösste erfasste Fläche, Perron 5/6 mit 1'359 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

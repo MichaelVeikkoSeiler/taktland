@@ -89,25 +89,20 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 11900,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 12500,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Reihe steigt durchgehend: 7'700 (2018), 9'700 (2022), 11'400 (2023), 11'900 (2024) und 12'500 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 7'700 (2018), 9'700 (2022), 11'400 (2023), 12'500 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Aigle umfasst auch die TPC.",
           "correct": false,
-          "explanation": "Die Quelle vermerkt «Ohne TPC.». Die Zahl deckt also nicht den gesamten Verkehr am Bahnhof ab.",
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne TPC.». Wofür TPC steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
           "difficulty": 3
         }
@@ -421,36 +416,6 @@
           "explanation": "Auf diesem Abschnitt zählt die Erhebung 228 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Aigle – St-Triphon, Personenverkehr",
-              "value": 83092,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Roche VD – Aigle, Personenverkehr",
-              "value": 82405,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
-              "label": "Aigle – St-Triphon, Güterverkehr",
-              "value": 9474,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Roche VD – Aigle, Güterverkehr",
-              "value": 9384,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr liegen die beiden Abschnitte mit 83'092 und 82'405 Zügen fast gleichauf, im Güterverkehr mit 9'474 und 9'384 ebenso.",
-          "difficulty": 3
         }
       ]
     },

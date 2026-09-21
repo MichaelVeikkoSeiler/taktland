@@ -88,16 +88,6 @@
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2023",
-              "value": 12200,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 12300,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2024",
               "value": 12800,
               "factRef": "steckbrief.verlauf[3].dwv"
@@ -109,7 +99,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Werktagsverkehrswerte steigen von 11'800 im Jahr 2022 über 12'200 (2023), 12'300 (2018) und 12'800 (2024) auf 16'400 im Jahr 2025."
+          "explanation": "Die erfassten Werte, aufsteigend: 11'800 (2022), 12'800 (2024), 16'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },
@@ -249,11 +239,6 @@
               "factRef": "perrons.items[0].laenge_m"
             },
             {
-              "label": "Perron 2",
-              "value": 436,
-              "factRef": "perrons.items[1].laenge_m"
-            },
-            {
               "label": "Perron 3/4",
               "value": 420,
               "factRef": "perrons.items[2].laenge_m"
@@ -270,7 +255,7 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Die erfassten Längen betragen 446, 436, 420, 355 und 300 Meter."
+          "explanation": "Richtig ist diese Reihenfolge: Perron 5 mit 446, Perron 3/4 mit 420, Perron 6 mit 355 und Perron 7 mit 300 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },

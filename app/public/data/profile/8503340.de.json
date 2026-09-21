@@ -67,13 +67,13 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr (DWV), absteigend beginnend beim höchsten Wert.",
-          "richtung": "absteigend",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2018",
-              "value": 2800,
-              "factRef": "steckbrief.verlauf[0].dwv"
+              "label": "2022",
+              "value": 2200,
+              "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
               "label": "2024",
@@ -81,18 +81,13 @@
               "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
-              "label": "2023",
-              "value": 2400,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2022",
-              "value": 2200,
-              "factRef": "steckbrief.verlauf[1].dwv"
+              "label": "2018",
+              "value": 2800,
+              "factRef": "steckbrief.verlauf[0].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "2025 war der Wert am höchsten, 2022 am tiefsten."
+          "explanation": "Die erfassten Werte, aufsteigend: 2'200 (2022), 2'500 (2024), 2'800 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "true_false",

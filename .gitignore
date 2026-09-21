@@ -23,3 +23,6 @@ secrets*
 # OS
 .DS_Store
 data/gescheitert/
+
+# Sperrdatei für einen laufenden Schub, nur lokal
+.lauf.lock

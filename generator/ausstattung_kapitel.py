@@ -11,6 +11,12 @@ die es in den Daten nicht gibt.
 
     python generator/ausstattung_kapitel.py data/profiles/8502113.de.json
     python generator/ausstattung_kapitel.py --alle
+    python generator/ausstattung_kapitel.py --alle --neu   # bestehende Kapitel neu bauen
+
+Vorsicht mit --neu: Es baut auch die Antwortoptionen neu, und zwar mit dem
+aktuellen Generator. Nachbesserungen von distraktoren_richten.py gehen dabei
+verloren. Für eine einzelne geänderte Regel lieber gezielt ersetzen, wie es
+sortieren_richten.py mit den Sortierfragen tut.
 """
 import json
 import sys
@@ -20,7 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from distraktoren import vorschlaege  # noqa: E402
-from taktland import PROFILES, fakten_laden  # noqa: E402
+from taktland import PROFILES, fakten_laden, klar_getrennt  # noqa: E402
 
 #: Wie die Bestände im Text heissen. Immer «erfasst», nie «vorhanden»:
 #: ein fehlender Eintrag heisst nicht, dass der Gegenstand fehlt.
@@ -153,11 +159,12 @@ def frage_flaeche(a):
     for i, e in enumerate(pb["items"]):
         items.append({"label": f"Perron {e['nr']}", "value": e["flaeche_m2"],
                       "factRef": f"ausstattung.perronbelag.items[{i}].flaeche_m2"})
-    if len(items) < 3 or len({i["value"] for i in items}) == 1:
+    # Fast gleiche Flächen lassen sich nicht auseinanderhalten: nur die
+    # deutlich verschiedenen bleiben, sonst entfällt die Frage.
+    klar = klar_getrennt(items)
+    if len(klar) < 3:
         return None
-    items = sorted(items, key=lambda x: -x["value"])[:4]
-    if len({i["value"] for i in items}) < 2:
-        return None
+    items = klar[:4]
     gross, klein = items[0], items[-1]
     return {
         "type": "sort",
@@ -167,7 +174,9 @@ def frage_flaeche(a):
         "factRef": "ausstattung.perronbelag.items",
         "explanation": (f"{gross['label']} hat mit {ch(gross['value'])} Quadratmetern "
                         f"die grösste erfasste Fläche, {klein['label']} mit "
-                        f"{ch(klein['value'])} die kleinste der gezeigten."),
+                        f"{ch(klein['value'])} die kleinste der gezeigten."
+                        + (" Perrons mit fast gleicher Fläche bleiben weg."
+                           if len(klar) < len(pb["items"]) else "")),
         "difficulty": 2,
     }
 
@@ -193,14 +202,21 @@ def kapitel_bauen(uic, name, a):
     }
 
 
-def einfuegen(profil, fakten):
+def einfuegen(profil, fakten, neu=False):
     """Setzt das Kapitel hinter services, sonst ans Ende."""
     a = fakten.get("ausstattung")
     if not a:
         return False
-    if any(k.get("id") == "ausstattung" for k in profil["chapters"]):
+    da = [i for i, k in enumerate(profil["chapters"]) if k.get("id") == "ausstattung"]
+    if da and not neu:
         return False
     kap = kapitel_bauen(fakten["uic"], fakten["name"], a)
+    if da:
+        if kap:
+            profil["chapters"][da[0]] = kap
+        else:
+            del profil["chapters"][da[0]]
+        return True
     if not kap:
         return False
     stellen = [i for i, k in enumerate(profil["chapters"]) if k.get("id") == "services"]
@@ -218,10 +234,13 @@ def main():
     n = 0
     for p in pfade:
         profil = json.loads(p.read_text(encoding="utf-8"))
-        if einfuegen(profil, fakten_laden(profil["uic"])):
-            p.write_text(json.dumps(profil, ensure_ascii=False, indent=2), encoding="utf-8")
-            n += 1
-    print(f"{n} Profile um das Kapitel Ausstattung ergänzt")
+        vorher = json.dumps(profil, ensure_ascii=False, indent=2)
+        if einfuegen(profil, fakten_laden(profil["uic"]), neu="--neu" in sys.argv):
+            nachher = json.dumps(profil, ensure_ascii=False, indent=2)
+            if nachher != vorher:
+                p.write_text(nachher, encoding="utf-8")
+                n += 1
+    print(f"{n} Profile mit neuem oder geändertem Kapitel Ausstattung")
     return 0
 
 

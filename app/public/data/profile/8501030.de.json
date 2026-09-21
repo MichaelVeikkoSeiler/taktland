@@ -85,11 +85,6 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2022",
-              "value": 18800,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
               "label": "2018",
               "value": 19500,
               "factRef": "steckbrief.verlauf[0].dwv"
@@ -100,18 +95,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 22200,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 22800,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Werktagszahlen stiegen von 18'800 im Jahr 2022 über 19'500 (2018), 21'400 (2023) und 22'200 (2024) auf 22'800 im Jahr 2025."
+          "explanation": "Die erfassten Werte, aufsteigend: 19'500 (2018), 21'400 (2023), 22'800 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         },
         {
           "type": "single_choice",

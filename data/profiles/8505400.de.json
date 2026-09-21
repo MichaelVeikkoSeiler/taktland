@@ -98,25 +98,20 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 11400,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 11500,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Reihe steigt durchgehend: 6'600 (2018), 9'400 (2022), 9'900 (2023), 11'400 (2024) und 11'500 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 6'600 (2018), 9'400 (2022), 9'900 (2023), 11'500 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Locarno umfasst auch die FART.",
           "correct": false,
-          "explanation": "Die Quelle vermerkt «Ohne FART.». Die Zahl deckt also nicht den gesamten Verkehr am Bahnhof ab.",
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne FART.». Wofür FART steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
           "difficulty": 3
         }

@@ -97,7 +97,7 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Werktagswerte nach Jahr, tiefster Wert zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
@@ -111,23 +111,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2018",
-              "value": 44800,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 45300,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 46600,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Werktagswerte steigen von 38'200 (2022) über 43'400 (2023) und 44'800 (2018) auf 45'300 (2024) und 46'600 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 38'200 (2022), 43'400 (2023), 46'600 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -432,15 +422,10 @@
               "label": "Aarau–Aarau GB, Güterverkehr",
               "value": 120,
               "factRef": "zuege.abschnitte[2].zuege_pro_tag"
-            },
-            {
-              "label": "Wöschnau SBB–Aarau, Güterverkehr",
-              "value": 119,
-              "factRef": "zuege.abschnitte[3].zuege_pro_tag"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Die Züge pro Tag sinken von 635 (Aarau–Aarau GB, Personenverkehr) über 553, 120 bis 119 (Wöschnau SBB–Aarau, Güterverkehr).",
+          "explanation": "Richtig ist diese Reihenfolge: Aarau–Aarau GB im Personenverkehr mit 635, Wöschnau SBB–Aarau im Personenverkehr mit 553 und Aarau–Aarau GB im Güterverkehr mit 120 Zügen pro Tag. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 2
         },
         {
@@ -666,11 +651,6 @@
               "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
             },
             {
-              "label": "Perron 4/5",
-              "value": 3224,
-              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
-            },
-            {
               "label": "Perron 1/10",
               "value": 2882,
               "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
@@ -679,10 +659,15 @@
               "label": "Perron 6",
               "value": 2259,
               "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
+            },
+            {
+              "label": "Perron 0",
+              "value": 202,
+              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 3'329 Quadratmetern die grösste erfasste Fläche, Perron 6 mit 2'259 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 3'329 Quadratmetern die grösste erfasste Fläche, Perron 0 mit 202 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

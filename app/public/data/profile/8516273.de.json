@@ -83,11 +83,6 @@
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
-              "label": "2023",
-              "value": 9900,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
               "label": "2024",
               "value": 10100,
               "factRef": "steckbrief.verlauf[2].dwv"
@@ -99,7 +94,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfasste Reihe beginnt 2022 mit 7'700 und steigt über 9'900 (2023) und 10'100 (2024) auf 11'700 im Jahr 2025. Ältere Werte stehen nicht in den Daten.",
+          "explanation": "Die erfassten Werte, aufsteigend: 7'700 (2022), 10'100 (2024), 11'700 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {

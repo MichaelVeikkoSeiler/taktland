@@ -93,7 +93,7 @@
         },
         {
           "type": "sort",
-          "prompt": "Ordne die Jahre nach Werktagsverkehr, tiefster Wert zuerst.",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
           "richtung": "aufsteigend",
           "items": [
             {
@@ -112,18 +112,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 34200,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 35600,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der Werktagsverkehr stieg von 18'600 im Jahr 2018 auf 35'600 im Jahr 2025 kontinuierlich an."
+          "explanation": "Die erfassten Werte, aufsteigend: 18'600 (2018), 27'400 (2022), 33'300 (2023), 35'600 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },
@@ -248,16 +243,6 @@
               "factRef": "tagesrhythmus.wochentage[3].prozent"
             },
             {
-              "label": "Dienstag",
-              "value": 15.0,
-              "factRef": "tagesrhythmus.wochentage[1].prozent"
-            },
-            {
-              "label": "Mittwoch",
-              "value": 14.9,
-              "factRef": "tagesrhythmus.wochentage[2].prozent"
-            },
-            {
               "label": "Montag",
               "value": 14.4,
               "factRef": "tagesrhythmus.wochentage[0].prozent"
@@ -274,7 +259,7 @@
             }
           ],
           "factRef": "tagesrhythmus.wochentage",
-          "explanation": "Der Freitag hat mit 16.5 Prozent den höchsten Anteil, der Sonntag mit 10.7 Prozent den niedrigsten."
+          "explanation": "Richtig ist diese Reihenfolge: Freitag mit 16.5, Donnerstag mit 15.6, Montag mit 14.4, Samstag mit 12.9 und Sonntag mit 10.7 Prozent. Einträge mit gleichem oder fast gleichem Wert bleiben weg."
         }
       ]
     },

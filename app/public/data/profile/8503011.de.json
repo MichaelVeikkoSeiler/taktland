@@ -91,23 +91,13 @@
               "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
-              "label": "2023",
-              "value": 13900,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 14500,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
               "label": "2025",
               "value": 14600,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert stammt von 2022 mit 12'000, danach steigt die Reihe über 13'800 (2018), 13'900 (2023) und 14'500 (2024) auf 14'600 im Jahr 2025.",
+          "explanation": "Die erfassten Werte, aufsteigend: 12'000 (2022), 13'800 (2018), 14'600 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -387,11 +377,6 @@
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Wiedikon – Zürich Enge, Personenverkehr",
-              "value": 89079,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
               "label": "Aussersihl – Wiedikon, Güterverkehr",
               "value": 1220,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
@@ -403,7 +388,7 @@
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr liegen die beiden Abschnitte mit 91'220 und 89'079 Zügen nahe beieinander. Der Güterverkehr kommt auf 1'220 und 679 Züge im Jahr.",
+          "explanation": "Richtig ist diese Reihenfolge: Aussersihl – Wiedikon im Personenverkehr mit 91'220, Aussersihl – Wiedikon im Güterverkehr mit 1'220 und Wiedikon – Zürich Enge im Güterverkehr mit 679 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]

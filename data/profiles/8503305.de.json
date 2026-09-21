@@ -68,40 +68,6 @@
           "explanation": "Sowohl isb als auch evu sind mit SBB erfasst.",
           "factRef": "steckbrief.isb",
           "difficulty": 1
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2022",
-              "value": 17500,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 19400,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 19700,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 20000,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 20300,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            }
-          ],
-          "explanation": "Der Werktagsverkehr stieg von 17'500 im Jahr 2022 über 19'400 (2023) und 20'000 (2024) auf 20'300 im Jahr 2025, mit 19'700 im Jahr 2018 dazwischen.",
-          "factRef": "steckbrief.verlauf"
         }
       ]
     },

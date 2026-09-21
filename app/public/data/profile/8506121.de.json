@@ -95,11 +95,6 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2022",
-              "value": 11200,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
               "label": "2018",
               "value": 11300,
               "factRef": "steckbrief.verlauf[0].dwv"
@@ -110,13 +105,13 @@
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2025",
+              "label": "2024",
               "value": 12900,
-              "factRef": "steckbrief.verlauf[4].dwv"
+              "factRef": "steckbrief.verlauf[3].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Der tiefste erfasste Wert stammt von 2022 mit 11'200, danach folgen 11'300 (2018), 12'000 (2023) und 12'900 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 11'300 (2018), 12'000 (2023), 12'900 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -671,31 +666,6 @@
           "explanation": "Für alle Perrons mit Daten ist Verbundstein-Pflästerung erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
-          "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Perron 2/3",
-              "value": 2926,
-              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
-            },
-            {
-              "label": "Perron 4/5",
-              "value": 1470,
-              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
-            },
-            {
-              "label": "Perron 1",
-              "value": 1402,
-              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
-            }
-          ],
-          "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'926 Quadratmetern die grösste erfasste Fläche, Perron 1 mit 1'402 die kleinste der gezeigten.",
           "difficulty": 2
         }
       ]

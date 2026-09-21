@@ -66,9 +66,9 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2023",
-              "value": 8200,
-              "factRef": "steckbrief.verlauf[2].dwv"
+              "label": "2018",
+              "value": 7000,
+              "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
               "label": "2024",
@@ -82,7 +82,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 8'200 (2023), 8'400 (2024), 9'000 (2025). Jahre mit gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 7'000 (2018), 8'400 (2024), 9'000 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
@@ -283,7 +283,7 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Gland – Gilly-Bursinel: Im Personenverkehr verkehren dort 246 Züge pro Tag, das sind 89'881 im Jahr. Auf dem Abschnitt Gland – Nyon sind es 246 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 34 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Gland – Gilly-Bursinel 246 Züge pro Tag, das sind 89'881 im Jahr. Auf dem Abschnitt Gland – Nyon sind es ebenfalls 246 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 34 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
@@ -327,11 +327,6 @@
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Gland – Nyon, Personenverkehr",
-              "value": 89828,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
               "label": "Gland – Gilly-Bursinel, Güterverkehr",
               "value": 12246,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
@@ -343,7 +338,7 @@
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Gland – Gilly-Bursinel (Personenverkehr) 89'881, Gland – Nyon (Personenverkehr) 89'828, Gland – Gilly-Bursinel (Güterverkehr) 12'246, Gland – Nyon (Güterverkehr) 10'599 Züge im Jahr.",
+          "explanation": "Richtig ist diese Reihenfolge: Gland – Gilly-Bursinel im Personenverkehr mit 89'881, Gland – Gilly-Bursinel im Güterverkehr mit 12'246 und Gland – Nyon im Güterverkehr mit 10'599 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]

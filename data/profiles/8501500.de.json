@@ -89,11 +89,6 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2018",
-              "value": 9300,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2022",
               "value": 9500,
               "factRef": "steckbrief.verlauf[1].dwv"
@@ -115,14 +110,14 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die Reihe steigt durchgehend: 9'300 (2018), 9'500 (2022), 10'800 (2023), 11'600 (2024) und 12'600 (2025).",
+          "explanation": "Die erfassten Werte, aufsteigend: 9'500 (2022), 10'800 (2023), 11'600 (2024), 12'600 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
           "type": "true_false",
           "prompt": "Die Zahl der Ein- und Aussteigenden in Martigny umfasst auch die TMR.",
           "correct": false,
-          "explanation": "Die Quelle vermerkt «Ohne TMR.». Die Zahl deckt also nicht den gesamten Verkehr am Bahnhof ab.",
+          "explanation": "Die Quelle vermerkt zu dieser Zahl «Ohne TMR.». Wofür TMR steht, führt sie nicht aus.",
           "factRef": "steckbrief.bemerkung",
           "difficulty": 3
         }
@@ -233,11 +228,6 @@
               "factRef": "perrons.items[0].laenge_m"
             },
             {
-              "label": "Perron 1",
-              "value": 420,
-              "factRef": "perrons.items[1].laenge_m"
-            },
-            {
               "label": "Perron 50",
               "value": 160,
               "factRef": "perrons.items[2].laenge_m"
@@ -254,7 +244,7 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2/3 misst 441 Meter, Perron 1 misst 420, Perron 50 misst 160. Die beiden Hilfskanten 20 und 21 messen 100 und 52 Meter.",
+          "explanation": "Richtig ist diese Reihenfolge: Perron 2/3 mit 441, Perron 50 mit 160, Perron 20 mit 100 und Perron 21 mit 52 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
@@ -343,11 +333,6 @@
               "factRef": "gleise.items[1].perronkante_m"
             },
             {
-              "label": "Gleis 3",
-              "value": 441,
-              "factRef": "gleise.items[2].perronkante_m"
-            },
-            {
               "label": "Gleis 1",
               "value": 420,
               "factRef": "gleise.items[0].perronkante_m"
@@ -359,7 +344,7 @@
             }
           ],
           "factRef": "gleise.items",
-          "explanation": "Gleis 2 misst 444 Meter, Gleis 3 misst 441, Gleis 1 misst 420 und Gleis 57 misst 161 Meter. Zu Gleis 50 liegt keine Länge vor, es fehlt darum in dieser Reihe.",
+          "explanation": "Richtig ist diese Reihenfolge: Gleis 2 mit 444, Gleis 1 mit 420 und Gleis 57 mit 161 Metern. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
@@ -503,15 +488,10 @@
               "label": "Vernayaz – Martigny, Güterverkehr",
               "value": 5644,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Ranconnex – Martigny, Güterverkehr",
-              "value": 5404,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Im Personenverkehr sind es 66'657 und 56'705 Züge im Jahr, im Güterverkehr 5'644 und 5'404.",
+          "explanation": "Richtig ist diese Reihenfolge: Vernayaz – Martigny im Personenverkehr mit 66'657, Ranconnex – Martigny im Personenverkehr mit 56'705 und Vernayaz – Martigny im Güterverkehr mit 5'644 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -737,13 +717,13 @@
               "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
             },
             {
-              "label": "Perron 50",
-              "value": 410,
-              "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
+              "label": "Perron 21",
+              "value": 170,
+              "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'744 Quadratmetern die grösste erfasste Fläche, Perron 50 mit 410 die kleinste der gezeigten.",
+          "explanation": "Perron 2/3 hat mit 2'744 Quadratmetern die grösste erfasste Fläche, Perron 21 mit 170 die kleinste der gezeigten. Perrons mit fast gleicher Fläche bleiben weg.",
           "difficulty": 2
         }
       ]

@@ -457,31 +457,6 @@
           "explanation": "Erfasst sind 10 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.schliessfaecher",
           "difficulty": 2
-        },
-        {
-          "type": "sort",
-          "prompt": "Ordne die Perrons nach erfasster Fläche, grösste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Perron 2/3",
-              "value": 2532,
-              "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
-            },
-            {
-              "label": "Perron 5/6",
-              "value": 2531,
-              "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
-            },
-            {
-              "label": "Perron 7",
-              "value": 843,
-              "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
-            }
-          ],
-          "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 2'532 Quadratmetern die grösste erfasste Fläche, Perron 7 mit 843 die kleinste der gezeigten.",
-          "difficulty": 2
         }
       ]
     }
