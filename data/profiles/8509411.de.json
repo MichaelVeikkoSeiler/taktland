@@ -517,7 +517,24 @@
           "factRef": "linien.anzahl"
         }
       ],
-      "questions": []
+      "questions": [
+        {
+          "id": "linien:b052f272",
+          "type": "single_choice",
+          "prompt": "Auf welcher Linie ist Sargans in den offenen Daten erfasst?",
+          "options": [
+            "Linie 880",
+            "Linie 890",
+            "Linie 900",
+            "Linie 910"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "factRef": "linien.items[0].nummer",
+          "explanation": "Sargans ist auf der Linie 890 Sargans Ost - Ziegelbrucke erfasst.",
+          "difficulty": 1
+        }
+      ]
     },
     {
       "id": "services",

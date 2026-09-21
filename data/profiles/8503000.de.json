@@ -609,7 +609,24 @@
           "factRef": "linien.anzahl"
         }
       ],
-      "questions": []
+      "questions": [
+        {
+          "id": "linien:e1bb5a79",
+          "type": "single_choice",
+          "prompt": "Auf welcher Linie ist Zürich HB in den offenen Daten erfasst?",
+          "options": [
+            "Linie 710",
+            "Linie 717",
+            "Linie 730",
+            "Linie 745"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "factRef": "linien.items[0].nummer",
+          "explanation": "Zürich HB ist auf der Linie 710 Zurich HB - Brugg AG erfasst.",
+          "difficulty": 1
+        }
+      ]
     },
     {
       "id": "services",

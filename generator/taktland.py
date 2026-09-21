@@ -489,6 +489,10 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             continue
         if not kap.get("title") or not kap.get("body"):
             b.fehlt(wo, "title oder body fehlt")
+        # Zürich HB, Sargans: Kapitel Linien ohne Frage, obwohl der Baukasten
+        # «kein Kapitel ohne Frage» als Regel führte
+        if not kap.get("questions"):
+            b.fehlt(wo, "Kapitel ohne Frage")
         REGELWERK.pruefe_text(kap.get("body", ""), f"{wo}/body", fb, b)
         for i, q in enumerate(kap.get("questions", [])):
             if fehlt := unsichtbar(kap, q):

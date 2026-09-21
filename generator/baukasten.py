@@ -21,7 +21,9 @@ fiel dabei bisher etwas auf, das keine Regel gefunden hätte.
     zeigen(d)        # lesen
     speichern(d)     # erst danach
 """
+import functools
 import json
+import math
 import sys
 from datetime import date
 from pathlib import Path
@@ -767,6 +769,31 @@ def zuege(f):
             "facts": facts, "questions": fr}
 
 
+@functools.lru_cache(maxsize=1)
+def _linien_nach_ort():
+    """uic -> (Breite, Länge, Liniennummern) aus allen Faktendateien."""
+    raus = {}
+    for p in (ROOT / "data" / "facts").glob("*.json"):
+        g = json.loads(p.read_text(encoding="utf-8"))
+        sb = g.get("steckbrief") or {}
+        if sb.get("lat") and (g.get("linien") or {}).get("items"):
+            raus[g["uic"]] = (sb["lat"], sb["lon"], [x["nummer"] for x in g["linien"]["items"]])
+    return raus
+
+
+def linien_in_der_naehe(f, n=3):
+    """Nummern anderer Linien, gesammelt bei den nächstgelegenen Bahnhöfen."""
+    eigene = {x["nummer"] for x in f["linien"]["items"]}
+    lat, lon = f["steckbrief"]["lat"], f["steckbrief"]["lon"]
+    raus = []
+    for _, (la, lo, nummern) in sorted(_linien_nach_ort().items(),
+                                      key=lambda t: math.hypot(t[1][0] - lat, (t[1][1] - lon) * 0.67)):
+        raus += [nr for nr in nummern if nr not in eigene and nr not in raus]
+        if len(raus) >= n:
+            break
+    return raus[:n]
+
+
 def linien(f):
     li = f["linien"]; name = f["name"]; uic = f["uic"]
     items = li["items"]
@@ -801,6 +828,20 @@ def linien(f):
                    "explanation": punkt("Die " + ", die ".join(f"Linie {x['nummer']} heisst {x['name']}"
                                                                for x in items[:3])),
                    "difficulty": 2})
+    if not fr and f["steckbrief"].get("lat"):
+        # Zürich HB, Sargans und Immensee liegen am Anfang ihrer einzigen
+        # Linie. Kilometer 0 bis 1 taugt nicht für den Schieberegler, und
+        # ohne zweite Linie gibt es nichts zuzuordnen. Ein Kapitel ohne Frage
+        # taugt nicht: gefragt wird die Nummer, die falschen Antworten sind
+        # Linien der nächstgelegenen Bahnhöfe.
+        it = items[0]
+        opts = sorted([it["nummer"], *linien_in_der_naehe(f, 3)])
+        fr.append({"type": "single_choice",
+                   "prompt": f"Auf welcher Linie ist {name} in den offenen Daten erfasst?",
+                   "options": [f"Linie {x}" for x in opts], "correct": opts.index(it["nummer"]),
+                   "optionen_aus_fakten": True, "factRef": "linien.items[0].nummer",
+                   "explanation": punkt(f"{name} ist auf der Linie {it['nummer']} {it['name']} erfasst"),
+                   "difficulty": 1})
     return {"id": "linien", "title": "Linien", "body": body, "facts": facts, "questions": fr}
 
 

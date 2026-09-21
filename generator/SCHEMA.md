@@ -366,6 +366,17 @@ von Sortier- oder Zuordnungsfrage braucht dort einen Eintrag in `ZEILEN`,
 sonst bricht der Bau ab. Der Validator prüft die Regel mit `unsichtbar()` in
 `taktland.py`.
 
+## Kein Kapitel ohne Frage
+
+Der Baukasten führte die Regel, der Validator prüfte sie nicht. Zürich HB
+(Kilometer 0), Sargans (0.1684) und Immensee (0.25695) liegen am Anfang
+ihrer einzigen Linie: Für einen Schieberegler taugt das nicht, und ohne
+zweite Linie gibt es nichts zuzuordnen. Das Kapitel Linien blieb ohne
+Frage. Jetzt fragt es in diesem Fall nach der Liniennummer. Die falschen
+Antworten sind echte Linien der nächstgelegenen Bahnhöfe
+(`linien_in_der_naehe` im Baukasten). Der Validator meldet jedes Kapitel
+ohne Frage als Fehler.
+
 ## Drei Regeln, an denen Profile am häufigsten scheitern
 
 **1. Jede Frage braucht eine Erklärung.** `explanation` ist Pflicht, nicht Kür.

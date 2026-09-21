@@ -260,6 +260,16 @@
    ]
   }
  },
+ "8500124": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Haute-Sorne",
+    "Courgenay",
+    "Porrentruy"
+   ]
+  }
+ },
  "8500125": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -535,6 +545,16 @@
     "Laufenburg",
     "Aarau",
     "Brugg"
+   ]
+  }
+ },
+ "8500304": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rheinfelden",
+    "Brugg",
+    "Aarau"
    ]
   }
  },
@@ -900,6 +920,16 @@
    ]
   }
  },
+ "8501113": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Gros-de-Vaud",
+    "Ouest lausannois"
+   ]
+  }
+ },
  "8501114": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1055,6 +1085,16 @@
    ]
   }
  },
+ "8501304": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Riviera-Pays-d'Enhaut",
+    "Lavaux-Oron",
+    "Lausanne"
+   ]
+  }
+ },
  "8501400": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1098,6 +1138,16 @@
    "distraktoren": [
     "Martigny",
     "Monthey",
+    "Conthey"
+   ]
+  }
+ },
+ "8501420": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Monthey",
+    "Martigny",
     "Conthey"
    ]
   }
@@ -1187,6 +1237,16 @@
     "Conthey",
     "Sion",
     "Saint-Maurice"
+   ]
+  }
+ },
+ "8501504": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Martigny",
+    "Sion",
+    "Sierre"
    ]
   }
  },
@@ -1950,6 +2010,15 @@
    ]
   }
  },
+ "8502231": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZGFR",
+    "ZGCA"
+   ]
+  }
+ },
  "8502237": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2242,6 +2311,16 @@
    ]
   }
  },
+ "8503117": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Toggenburg",
+    "Sarganserland",
+    "Wil"
+   ]
+  }
+ },
  "8503118": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2394,6 +2473,16 @@
     "Meilen",
     "Pfäffikon",
     "Uster"
+   ]
+  }
+ },
+ "8503139": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Meilen",
+    "Pfäffikon",
+    "Horgen"
    ]
   }
  },
@@ -2618,6 +2707,16 @@
     "Glarus",
     "Glarus Nord",
     "Schwanden"
+   ]
+  }
+ },
+ "8503236": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Glarus Nord",
+    "Schänis"
    ]
   }
  },
@@ -3162,6 +3261,16 @@
    ]
   }
  },
+ "8504025": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Glâne",
+    "La Broye",
+    "Sense"
+   ]
+  }
+ },
  "8504026": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3189,6 +3298,16 @@
     "Neyruz (FR)",
     "Matran",
     "Cottens (FR)"
+   ]
+  }
+ },
+ "8504030": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sense",
+    "La Broye",
+    "La Glâne"
    ]
   }
  },
@@ -3416,6 +3535,16 @@
    ]
   }
  },
+ "8504137": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montagny (FR)",
+    "Corcelles-près-Payerne",
+    "Grolley-Ponthaux"
+   ]
+  }
+ },
  "8504138": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3541,6 +3670,26 @@
    "distraktoren": [
     "NOI",
     "CDM"
+   ]
+  }
+ },
+ "8504216": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rochefort",
+    "La Grande Béroche",
+    "Boudry"
+   ]
+  }
+ },
+ "8504218": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Boudry",
+    "Rochefort",
+    "Neuchâtel"
    ]
   }
  },
@@ -3926,6 +4075,16 @@
    "distraktoren": [
     "KSN",
     "KUS"
+   ]
+  }
+ },
+ "8505003": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Walchwil",
+    "Root",
+    "Risch"
    ]
   }
  },
@@ -4706,6 +4865,16 @@
    ]
   }
  },
+ "8506125": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Weinfelden",
+    "Frauenfeld"
+   ]
+  }
+ },
  "8506128": {
   "stammdaten": {
    "frage": "kanton",
@@ -4790,6 +4959,16 @@
    "distraktoren": [
     "KR",
     "KRH"
+   ]
+  }
+ },
+ "8506198": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Frauenfeld",
+    "Arbon"
    ]
   }
  },
@@ -4924,6 +5103,16 @@
    "distraktoren": [
     "SGS",
     "STF"
+   ]
+  }
+ },
+ "8506304": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "St. Gallen",
+    "Rheintal",
+    "Wil"
    ]
   }
  },
@@ -5211,6 +5400,16 @@
     "Emmental",
     "Seeland",
     "Thun"
+   ]
+  }
+ },
+ "8508101": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Biel/Bienne",
+    "Bern-Mittelland"
    ]
   }
  },

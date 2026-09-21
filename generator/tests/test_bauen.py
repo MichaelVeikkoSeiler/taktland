@@ -91,3 +91,13 @@ def test_gleisnummer_steht_bei_der_laengsten_kante():
     d = B.bauen("8508004")
     gl = next(k for k in d["chapters"] if k["id"] == "gleise")
     assert any(f["label"] == "Längste erfasste Perronkante (Gleis 1)" for f in gl["facts"])
+
+
+def test_kein_kapitel_ohne_frage():
+    # Immensee liegt bei Kilometer 0.25695 seiner einzigen Linie: kein
+    # Schieberegler, nichts zuzuordnen, das Kapitel blieb ohne Frage
+    d = B.bauen("8505003")
+    li = next(k for k in d["chapters"] if k["id"] == "linien")
+    q = li["questions"][0]
+    assert q["options"][q["correct"]] == "Linie 600"
+    assert all(k["questions"] for k in d["chapters"])
