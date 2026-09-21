@@ -366,6 +366,11 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             b.fehlt("Profil/luecken", f"Lücke «{t}» wird verschwiegen")
         for t in sorted(ist - soll):
             b.fehlt("Profil/luecken", f"Lücke «{t}» steht nicht in den Fakten")
+        # unverändert übernommen, auch im Wortlaut: Als die Pipeline «60 der
+        # 769» zu «60 der 771» korrigierte, blieben die Profile sonst beim alten
+        if soll == ist and profil.get("luecken") != fakten.get("luecken"):
+            b.fehlt("Profil/luecken", "Lücken weichen im Wortlaut oder in der Reihenfolge "
+                                      "von den Fakten ab. Neu bauen")
 
     verfuegbar = set(fakten.get("verfuegbare_kapitel", []))
     kapitel_raus, fragen_gesamt = [], 0

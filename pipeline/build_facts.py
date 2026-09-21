@@ -8,10 +8,10 @@ Aufruf:
     python pipeline/build_facts.py 8503000 8500218 8508001
     python pipeline/build_facts.py --all
 """
+import functools
 import json
 import re
 import sys
-from datetime import date
 from pathlib import Path
 
 import pandas as pd
@@ -110,6 +110,29 @@ class Data:
         df = load(name)
         df["uic"] = as_uic(df[col])
         return df
+
+    @functools.cached_property
+    def zaehlung(self):
+        """Zahlen, die in den Lücken-Texten stehen. Gezählt statt eingetippt:
+        Dort stand «60 der 769 SBB-Bahnhöfe», es waren längst 771."""
+        alle = set(self.alle_sbb())
+        return {
+            "bahnhoefe": len(alle),
+            "bahnhofplan": len(alle & {int(u) for u in self.plan.uic.dropna()}),
+            "tagesverlauf": int(self.tagesverlauf.dropna(subset=["uhrzeit", "prozentsatz"]).uic.nunique()),
+            "bahnhofbenutzer": int(self.benutzer.bahnhof_gare_stazione.nunique()),
+            "wlan_standorte": len(self.wifi),
+        }
+
+    @functools.cached_property
+    def datenstand(self):
+        """Wann die Daten abgerufen wurden, nicht wann gebaut wurde. Vorher
+        stand hier das Baudatum: Ein Neubau ohne neue Daten änderte das Datum
+        in der App und alle 771 Dateien."""
+        pfad = RAW / "_abruf.json"
+        if not pfad.exists():
+            sys.exit("data/raw/_abruf.json fehlt: pipeline/fetch.py schreibt es beim Laden")
+        return max(json.loads(pfad.read_text(encoding="utf-8")).values())
 
     def alle_sbb(self):
         neu = self.pf.sort_values("jahr").groupby("uic").tail(1)
@@ -505,7 +528,8 @@ def luecken(d, uic, f):
     if not f.get("bahnhofplan"):
         lueckt("Bahnhofplan",
                "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. "
-               "Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+               f"Pläne liegen für {d.zaehlung['bahnhofplan']} der "
+               f"{d.zaehlung['bahnhoefe']} SBB-Bahnhöfe vor.",
                "haltestelle-karte-trafimage")
     tr = f.get("tagesrhythmus") or {}
     if tr and not tr.get("stunden"):
@@ -521,12 +545,13 @@ def luecken(d, uic, f):
     if not f.get("tagesrhythmus"):
         lueckt("Tagesrhythmus",
                "Wie sich die Besucherzahl über den Tag verteilt, ist nur für "
-               "26 grosse Bahnhöfe erhoben.",
+               f"{d.zaehlung['tagesverlauf']} Bahnhöfe erhoben.",
                "anzahl-sbb-bahnhofbenutzer-tagesverlauf")
     if not f.get("bahnhofbenutzer"):
         lueckt("Bahnhofbenutzer",
                "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für "
-               "28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+               f"{d.zaehlung['bahnhofbenutzer']} Bahnhöfe erhoben. Erfasst sind hier nur "
+               "Ein- und Aussteigende.",
                "anzahl-sbb-bahnhofbenutzer")
     gl = f.get("gleise")
     if not gl:
@@ -574,7 +599,8 @@ def luecken(d, uic, f):
     if not sv.get("wlan_erfasst"):
         lueckt("WLAN",
                "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. "
-               "Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+               f"Die Liste umfasst {d.zaehlung['wlan_standorte']} Standorte und ist "
+               "keine vollständige Auskunft.",
                "wifistation")
     if "billettautomaten_erfasst" not in sv:
         lueckt("Ausstattung",
@@ -708,7 +734,7 @@ def build(d, uic):
         "kanton": sb["kanton"],
         "bps": d.uic2bps.get(uic),
         "tier": bestimme_tier(sb, plan),
-        "datenstand": str(date.today()),
+        "datenstand": d.datenstand,
         "steckbrief": sb,
         "stammdaten": stammdaten(d, uic),
         "bahnhofbenutzer": bahnhofbenutzer(d, name),

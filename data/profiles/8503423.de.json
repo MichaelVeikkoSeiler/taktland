@@ -546,12 +546,12 @@
   "luecken": [
     {
       "thema": "Bahnhofplan",
-      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
       "quelle": "haltestelle-karte-trafimage"
     },
     {
       "thema": "Tagesrhythmus",
-      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
       "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
     },
     {

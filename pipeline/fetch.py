@@ -8,10 +8,12 @@ Aufruf:
 """
 import gzip
 import io
+import json
 import sys
 import time
 import urllib.parse
 import urllib.request
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -35,6 +37,14 @@ def download(dataset_id, dest):
     return len(text.splitlines()) - 1, len(raw)
 
 
+def abruf_merken(did):
+    """Hält das Abrufdatum fest. build_facts.py übernimmt es als Datenstand."""
+    pfad = RAW / "_abruf.json"
+    abruf = json.loads(pfad.read_text(encoding="utf-8")) if pfad.exists() else {}
+    abruf[did] = str(date.today())
+    pfad.write_text(json.dumps(dict(sorted(abruf.items())), indent=1), encoding="utf-8")
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     force = "--force" in sys.argv
@@ -48,6 +58,7 @@ def main():
         t0 = time.time()
         try:
             rows, size = download(did, dest)
+            abruf_merken(did)
             print(f"ok   {did:<48} {rows:>7} Zeilen  {size/1e6:>6.1f} MB  {time.time()-t0:.1f}s")
         except Exception as e:  # noqa: BLE001
             print(f"FEHL {did:<48} {e}")

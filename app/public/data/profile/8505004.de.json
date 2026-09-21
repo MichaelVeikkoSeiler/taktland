@@ -697,7 +697,7 @@
   "luecken": [
     {
       "thema": "Tagesrhythmus",
-      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
       "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
     },
     {

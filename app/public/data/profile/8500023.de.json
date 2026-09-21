@@ -586,12 +586,12 @@
   "luecken": [
     {
       "thema": "Bahnhofplan",
-      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 769 SBB-Bahnhöfe vor.",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
       "quelle": "haltestelle-karte-trafimage"
     },
     {
       "thema": "Tagesrhythmus",
-      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
       "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
     },
     {
@@ -611,7 +611,7 @@
     },
     {
       "thema": "Zugang zum Perron",
-      "grund": "Von 3 erfassten Perrons ist 1 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
+      "grund": "Zu 1 von 3 erfassten Perrons steht in den Daten keine Angabe zum Zugang. Wie man dorthin gelangt, sagen die offenen Daten nicht.",
       "quelle": "perron"
     },
     {

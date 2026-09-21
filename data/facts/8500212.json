@@ -4,7 +4,7 @@
   "kanton": "SO",
   "bps": "OEN",
   "tier": "L",
-  "datenstand": "2026-09-21",
+  "datenstand": "2026-09-20",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -285,7 +285,7 @@
   "luecken": [
     {
       "thema": "Tagesrhythmus",
-      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 grosse Bahnhöfe erhoben.",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
       "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
     },
     {

@@ -103,6 +103,15 @@ Gleisschema, die Gleisfrage war in der App nicht zu beantworten. Und das
 Kapitel Ausstattung nutzte zwei Datensätze, die in `sources` fehlten, obwohl die
 Lizenz die Quellenangabe verlangt. Beides prüft jetzt der Validator.
 
+**Auch die Pipeline tippt keine Zahlen ein.** In den Lücken-Texten stand «Pläne
+liegen für 60 der 769 SBB-Bahnhöfe vor», es waren längst 771, und «nur für 26
+grosse Bahnhöfe erhoben», wobei «grosse» eine Deutung war. Jetzt zählt
+`Data.zaehlung` in `build_facts.py` diese Zahlen aus den Quellen. Der
+`datenstand` einer Faktendatei ist das Abrufdatum der Daten
+(`data/raw/_abruf.json`, geschrieben von `fetch.py`), nicht das Baudatum: Ein
+Neubau ohne neue Daten ändert nichts. Der Validator vergleicht die Lücken eines
+Profils im Wortlaut mit den Fakten.
+
 ## Aufbau eines Profils
 
 ```json
