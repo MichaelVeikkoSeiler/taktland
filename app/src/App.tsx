@@ -69,7 +69,6 @@ export default function App() {
                 So funktioniert’s
               </a>
             </div>
-            <p className="mt-1 text-sbb-metal dark:text-sbb-storm">Bahnhöfe entdecken</p>
           </header>
         )}
 
