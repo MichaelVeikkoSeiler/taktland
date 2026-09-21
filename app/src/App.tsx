@@ -102,13 +102,11 @@ export default function App() {
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss.
             Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
-          </p>
-          <p className="mt-1">
             Hinweise und Fehler gern an{' '}
             <a href={`mailto:${KONTAKT}`} className="underline underline-offset-2
                                                   hover:text-sbb-black dark:hover:text-sbb-white">
               {KONTAKT}
-            </a>
+            </a>.
           </p>
           <p className="mt-2 font-medium text-sbb-black dark:text-sbb-white">
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
