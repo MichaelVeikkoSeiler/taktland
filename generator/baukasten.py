@@ -29,7 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "generator"))
 from distraktoren import vorschlaege  # noqa: E402
-from taktland import klar_getrennt  # noqa: E402
+from taktland import klar_getrennt, umfang_erwartet  # noqa: E402
 
 SEKTOR = ("Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten "
           "können, wo ihr Wagen zu stehen kommt.")
@@ -278,6 +278,10 @@ def perrons(f):
     if ja == n:
         satz.append(("Beide erfassten Perrons sind" if n == 2 else "Alle erfassten Perrons sind")
                     + " niveaufrei erreichbar." if n > 1 else "Es ist niveaufrei erreichbar.")
+    elif n == 1:
+        # ein einziges Perron (Beinwil am See): kein «0 sind …, 1 …»
+        satz.append("Es ist ausdrücklich als nicht niveaufrei vermerkt." if nein
+                    else "Zum Zugang fehlt die Angabe.")
     else:
         t = f"{ja} {'ist' if ja == 1 else 'sind'} als niveaufrei vermerkt"
         if nein:
@@ -338,10 +342,11 @@ def perrons(f):
                 e += f" Zu {ohne} fehlt die Angabe."
             fr.append(tf(f"Zu {alle_n(n, 'Perrons')} in {name} ist ein niveaufreier "
                          "Zugang vermerkt.", False, e, "perrons.niveaufrei_erreichbar"))
-    else:
+    elif ja or nein:  # ohne Angabe wäre «falsch» eine erfundene Tatsache
         fr.append(tf(f"Das erfasste Perron in {name} ist niveaufrei erreichbar.", ja == 1,
-                     "Für das Perron mit Daten ist ein niveaufreier Zugang "
-                     + ("verzeichnet." if ja else "nicht verzeichnet."),
+                     "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet." if ja
+                     else "Das Perron mit Daten ist ausdrücklich als nicht niveaufrei vermerkt."
+                     if nein else "Für das Perron mit Daten fehlt die Angabe zum Zugang.",
                      "perrons.niveaufrei_erreichbar", diff=1))
     return {"id": "perrons", "title": "Perrons", "body": " ".join(satz),
             "facts": facts, "questions": fr}
@@ -560,13 +565,18 @@ def hindernisfreiheit(f):
 
 def zuege(f):
     zu = f["zuege"]; name = f["name"]; uic = f["uic"]
-    st = zu["staerkster_abschnitt"]
+    # Der stärkste Abschnitt überhaupt kann ein Güterabschnitt sein (Sins:
+    # 99 Güterzüge, 84 im Personenverkehr). Der Text spricht vom
+    # Personenverkehr, also gilt dessen stärkster Abschnitt.
+    st = zu["staerkster_personenverkehr"]
     ab = [(i, a) for i, a in enumerate(zu["abschnitte"])]
     pv = [(i, a) for i, a in ab if a["art"] == "Personenverkehr" and a["zuege_pro_tag"]]
-    gv = [(i, a) for i, a in ab if a["art"] == "Gueterverkehr" and a["zuege_pro_tag"]]
+    # Güterzüge zählen nach dem Jahr: 119 im Jahr sind pro Tag gerundet 0,
+    # aber nicht «keiner» (Seuzach).
+    gv = [(i, a) for i, a in ab if a["art"] == "Gueterverkehr" and a["zuege_pro_jahr"]]
     def abschn(a):
         return f"{a['von']} – {a['bis']}"
-    weitere = [a for _, a in pv[1:3]]
+    weitere = [a for _, a in pv if a != st][:2]
     # Steht ein anderer Abschnitt pro Tag gleich, wäre «am stärksten» ein
     # Vorzug, den nur die Jahreszahl hergibt. Dann nennen wir nur die Werte.
     gleichauf = any(a["zuege_pro_tag"] == st["zuege_pro_tag"] for a in weitere)
@@ -584,21 +594,26 @@ def zuege(f):
             f"dem Abschnitt {abschn(a)} sind es "
             f"{'ebenfalls ' if a['zuege_pro_tag'] == st['zuege_pro_tag'] else ''}{a['zuege_pro_tag']}"
             for a in weitere) + " Züge pro Tag.")
-    if gv:
-        m = max(a['zuege_pro_tag'] for _, a in gv)
+    if gv and (m := max(a['zuege_pro_tag'] for _, a in gv)):
         satz.append(f"Im Güterverkehr zählt die Erhebung bis zu {m} {'Zug' if m == 1 else 'Züge'} "
                     "pro Tag auf einem Abschnitt.")
+    elif gv:
+        mj = max(a['zuege_pro_jahr'] for _, a in gv)
+        satz.append(f"Im Güterverkehr zählt die Erhebung bis zu {ch(mj)} "
+                    f"{'Zug' if mj == 1 else 'Züge'} im Jahr auf einem Abschnitt.")
     else:
-        satz.append("Güterverkehr ist auf diesen Abschnitten keiner erfasst.")
+        # ein einziger Abschnitt (Niederweningen, Endstation): Einzahl
+        satz.append("Güterverkehr ist auf diesem Abschnitt keiner erfasst." if len(ab) == 1
+                    else "Güterverkehr ist auf diesen Abschnitten keiner erfasst.")
     facts = [{"label": f"Züge pro Tag, Personenverkehr {abschn(st)}", "value": st["zuege_pro_tag"],
               "unit": "Züge/Tag", "source": "zugzahlen",
-              "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"},
+              "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"},
              {"label": f"Züge pro Jahr, Personenverkehr {abschn(st)}", "value": st["zuege_pro_jahr"],
               "unit": "Züge/Jahr", "source": "zugzahlen",
-              "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"}]
+              "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"}]
     fr = [sc(uic, f"Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt {abschn(st)}?",
              st["zuege_pro_tag"], f"Auf diesem Abschnitt zählt die Erhebung {st['zuege_pro_tag']} "
-             "Züge pro Tag, beide Richtungen zusammen.", "zuege.staerkster_abschnitt.zuege_pro_tag")]
+             "Züge pro Tag, beide Richtungen zusammen.", "zuege.staerkster_personenverkehr.zuege_pro_tag")]
     alle = [(i, a) for i, a in ab if a["zuege_pro_jahr"] >= 100]
     klar = klar_getrennt(alle, wert=lambda t: t[1]["zuege_pro_jahr"])
     if len(klar) >= 3:
@@ -616,7 +631,7 @@ def zuege(f):
         fr.append(schieber(f"Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt {abschn(st)}?",
                            st["zuege_pro_jahr"], f"Die Erhebung zählt {ch(st['zuege_pro_jahr'])} "
                            "Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
-                           "zuege.staerkster_abschnitt.zuege_pro_jahr", "Züge/Jahr", diff=3))
+                           "zuege.staerkster_personenverkehr.zuege_pro_jahr", "Züge/Jahr", diff=3))
     return {"id": "zuege", "title": "Züge", "body": " ".join(satz), "erlaeuterung": ZUG,
             "facts": facts, "questions": fr}
 
@@ -745,6 +760,41 @@ BAUER = {"steckbrief": steckbrief, "stammdaten": stammdaten, "perrons": perrons,
          "linien": linien, "services": services, "bahnhofplan": bahnhofplan}
 
 
+#: Was zuerst wegfällt, wenn die Daten weniger Fragen tragen, als gebaut
+#: sind (Steinmaur: 17 statt höchstens 14). Zuerst, was einen schon
+#: gefragten Wert wiederholt.
+VERZICHTBAR = [
+    # Züge pro Jahr auf demselben Abschnitt wie die Frage nach Zügen pro Tag
+    lambda kid, q: kid == "zuege" and q["type"] == "slider"
+    and q.get("factRef", "").endswith(".zuege_pro_jahr"),
+    # der Jahresverlauf enthält den Werktagswert noch einmal
+    lambda kid, q: kid == "steckbrief" and q["type"] == "sort",
+    # «keine Perronhöhe vermerkt» steht schon im Text
+    lambda kid, q: kid == "gleise" and q.get("factRef") == "gleise.perronhoehen_cm"
+    and q["type"] == "true_false" and q.get("correct") is False,
+]
+
+
+def kuerzen(kap, f):
+    """Streicht Fragen nach VERZICHTBAR, bis der Umfang zur Datenlage passt.
+    Das Kapitel Ausstattung kommt später dazu und zählt schon mit."""
+    from ausstattung_kapitel import kapitel_bauen
+    hoechst = umfang_erwartet(f)[3]
+    a = kapitel_bauen(f["uic"], f["name"], f["ausstattung"]) if f.get("ausstattung") else None
+    spaeter = len(a["questions"]) if a else 0
+    zahl = lambda: sum(len(k["questions"]) for k in kap) + spaeter
+    for weg in VERZICHTBAR:
+        for k in kap:
+            if zahl() <= hoechst:
+                return
+            treffer = [q for q in k["questions"] if weg(k["id"], q)]
+            if treffer and len(k["questions"]) > len(treffer):
+                k["questions"] = [q for q in k["questions"] if q not in treffer]
+    if zahl() > hoechst:
+        raise ValueError(f"{f['name']}: {zahl()} Fragen, die Daten tragen höchstens {hoechst}. "
+                         "VERZICHTBAR ergänzen")
+
+
 def profil(uic, **pro_kapitel):
     """Baut ein Profil. pro_kapitel: {'steckbrief': dict(extra_body=..., ...), ...}
     oder None, um ein Kapitel auszulassen."""
@@ -758,6 +808,7 @@ def profil(uic, **pro_kapitel):
         opts = pro_kapitel.get(kid) or {}
         if kid in BAUER:
             kap.append(BAUER[kid](f, **opts))
+    kuerzen(kap, f)
     quellen = sorted({x["source"] for k in kap for x in k["facts"]})
     return {"uic": f["uic"], "name": f["name"], "tier": f["tier"], "lang": "de",
             "dataYear": 2025, "generated": str(date.today()), "sources": quellen,

@@ -484,6 +484,14 @@ def luecken(d, uic, f):
     def lueckt(thema, grund, quelle):
         fehlt.append({"thema": thema, "grund": grund, "quelle": quelle})
 
+    if not f.get("stammdaten"):
+        # Jestetten und Lottstetten (Kanton «Ausland») fehlen im Haltestellen-
+        # verzeichnis. Ohne diesen Eintrag verschwiegen die Fakten, dass Höhe,
+        # Gemeinde und Abkürzung fehlen.
+        lueckt("Stammdaten",
+               "Höhe über Meer, Gemeinde, Bezirk und Abkürzung sind für diesen Bahnhof nicht "
+               "erfasst. Er fehlt im Haltestellenverzeichnis, aus dem diese Angaben stammen.",
+               "haltestelle-haltekante")
     if not f.get("ausstattung"):
         lueckt("Ausstattung",
                "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine "

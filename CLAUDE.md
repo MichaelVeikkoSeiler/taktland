@@ -31,6 +31,8 @@ wenn eine Aussage allgemein bekannt oder offensichtlich richtig ist.
 
 6. **Eine 0 heisst «nicht erfasst», nicht «nicht vorhanden».** Deshalb heissen die
    Felder `wlan_erfasst`, `billettautomaten_erfasst`, `anzahl_mit_daten`.
+   Auch eine gerundete 0 ist nicht «keiner»: 119 Güterzüge im Jahr sind pro
+   Tag 0, aber es sind welche.
 
 7. **Eine fehlende Angabe ist keine Tatsache.** Das ist die häufigste Fehlerklasse
    im ganzen Projekt, und sie steckte mehrfach in den Feldnamen selbst: `km`

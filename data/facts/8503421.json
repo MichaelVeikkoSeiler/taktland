@@ -141,6 +141,11 @@
   "bahnhofplan": null,
   "luecken": [
     {
+      "thema": "Stammdaten",
+      "grund": "Höhe über Meer, Gemeinde, Bezirk und Abkürzung sind für diesen Bahnhof nicht erfasst. Er fehlt im Haltestellenverzeichnis, aus dem diese Angaben stammen.",
+      "quelle": "haltestelle-haltekante"
+    },
+    {
       "thema": "Ausstattung",
       "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
       "quelle": "mobiliar-im-bahnhof, perronoberflache"

@@ -442,6 +442,45 @@ Bemerkungen bekommen ihre Frage von Hand über `extra_fragen`. Die Bemerkung
 zum Auslandverkehr an Grenzbahnhöfen (Buchs SG, St. Margrethen) kehrt wörtlich
 wieder, dafür baut der Baukasten die Frage selbst.
 
+**Der stärkste Abschnitt kann ein Güterabschnitt sein.** In Sins verkehren
+auf Sins – Oberrüti 99 Güterzüge pro Tag, im Personenverkehr 84. Der Baukasten
+nahm `staerkster_abschnitt` und schrieb «Im Personenverkehr verkehren dort 99
+Züge». Wer vom Personenverkehr spricht, nimmt `staerkster_personenverkehr`.
+Der Validator prüft jetzt, ob «Personenverkehr» oder «Güterverkehr» in
+Beschriftung und Frage zur Art des Abschnitts passt, auf den der factRef zeigt.
+
+**Güterzüge nach dem Jahr zählen, nicht nach dem Tag.** Seuzach hat 119
+Güterzüge im Jahr, pro Tag gerundet 0. Da stand «Güterverkehr ist auf diesen
+Abschnitten keiner erfasst», bei 18 älteren Profilen ebenso. Ist pro Tag
+keiner, aber im Jahr einige, heisst der Satz «Im Güterverkehr zählt die
+Erhebung bis zu 119 Züge im Jahr auf einem Abschnitt». Der Validator meldet
+«keiner», sobald ein Güterabschnitt Züge im Jahr hat.
+
+**Ein einziges Perron, ein einziger Abschnitt.** «0 sind als niveaufrei
+vermerkt, 1 ausdrücklich als nicht niveaufrei» (Beinwil am See) und «auf
+diesen Abschnitten» bei einem Abschnitt (Niederweningen) sind jetzt Einzahl.
+Fehlt beim einzigen Perron die Zugangsangabe ganz, entfällt die Frage «ist
+niveaufrei erreichbar»: «falsch» wäre dort eine erfundene Tatsache.
+
+**«Niveaufrei» heisst nicht «kein Gleis queren».** Cortébert und Pfäffikon SZ
+schrieben «niveaufrei erreichbar, man muss also kein Gleis überqueren», und
+Cortébert fragte danach. Ob der Weg über ein Gleis führt, steht nirgends. Der
+Validator kennt die Wendung jetzt als Fehldeutung.
+
+**Auch mit Ausstattung nicht mehr Fragen, als die Daten tragen.** Steinmaur
+hat ein Perron, ein Gleis und eine Linie. Der Baukasten baute 15 Fragen, das
+Kapitel Ausstattung brachte 2 dazu, die Daten tragen 14. `kuerzen()` zählt
+die Ausstattung schon beim Bauen mit und streicht nach `VERZICHTBAR`, zuerst
+was einen schon gefragten Wert wiederholt: Züge pro Jahr neben Zügen pro Tag
+auf demselben Abschnitt, den Jahresverlauf neben dem Werktagswert, die Frage
+nach einer Perronhöhe, wenn keine vermerkt ist.
+
+**Bahnhöfe ohne Stammdaten.** Jestetten und Lottstetten liegen in Deutschland
+und fehlen im Haltestellenverzeichnis. Höhe, Gemeinde, Bezirk und Abkürzung
+gibt es für sie nicht. `build_facts.py` führt das jetzt als Lücke
+«Stammdaten». Beide sind vorerst zurückgestellt (`ZURUECKGESTELLT` in
+`offen.py`).
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:

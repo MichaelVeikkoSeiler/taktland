@@ -224,7 +224,7 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Basel Dreispitz – Basel SBB 135 Züge pro Tag, das sind 49'238 im Jahr. Auf dem Abschnitt Ruchfeld – Basel Dreispitz sind es ebenfalls 135 Züge pro Tag. Güterverkehr ist auf diesen Abschnitten keiner erfasst.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Basel Dreispitz – Basel SBB 135 Züge pro Tag, das sind 49'238 im Jahr. Auf dem Abschnitt Ruchfeld – Basel Dreispitz sind es ebenfalls 135 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 5 Züge im Jahr auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {

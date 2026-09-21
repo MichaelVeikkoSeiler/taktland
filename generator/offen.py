@@ -14,12 +14,17 @@ ROOT = Path(__file__).resolve().parent.parent
 FACTS = ROOT / "data" / "facts"
 PROFILES = ROOT / "data" / "profiles"
 
+#: Zurückgestellt. Jestetten und Lottstetten liegen in Deutschland und fehlen
+#: im Haltestellenverzeichnis (keine Stammdaten). Auf Michaels Wunsch vom
+#: 2026-09-21 vorerst ohne Profil.
+ZURUECKGESTELLT = {"8503420", "8503421"}
+
 
 def offene(n=10):
     fertig = {p.name.split(".")[0] for p in PROFILES.glob("*.json")}
     raus = []
     for p in FACTS.glob("*.json"):
-        if p.stem in fertig:
+        if p.stem in fertig or p.stem in ZURUECKGESTELLT:
             continue
         d = json.loads(p.read_text(encoding="utf-8"))
         raus.append(((d.get("steckbrief") or {}).get("dwv") or 0, d))
@@ -33,7 +38,7 @@ def main():
     fertig = len(list(PROFILES.glob("*.json")))
     gesamt = len(list(FACTS.glob("*.json")))
     print(f"{fertig} von {gesamt} Bahnhöfen haben ein Profil, "
-          f"{gesamt - fertig} sind offen.\n")
+          f"{gesamt - fertig} sind offen, davon {len(ZURUECKGESTELLT)} zurückgestellt.\n")
     for d in liste:
         kap = ", ".join(d["verfuegbare_kapitel"])
         print(f"{d['uic']}  {d['name'][:26]:<27}{d.get('kanton') or '--':<4}"

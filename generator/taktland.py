@@ -41,6 +41,10 @@ FALSCHDEUTUNG = [
     (r"Gleisquerung (ist )?(nötig|notwendig|erforderlich)|mit einer Gleisquerung zu rechnen",
      "eine fehlende Zugangsangabe heisst nicht, dass man die Gleise queren muss. "
      "Die Daten sagen nur, dass zu diesem Perron nichts vermerkt ist"),
+    (r"\bGleis(e)?\s+(zu\s+)?(über)?queren\b",
+     "«niveaufrei» ist eine Angabe zum Zugang. Ob man dabei ein Gleis quert, "
+     "steht nicht in den Daten (Cortébert, Pfäffikon SZ: «man muss also kein "
+     "Gleis überqueren»)"),
     (r"deckt (also |damit |somit )?nicht den (gesamten|ganzen)",
      "«Ohne X.» sagt nur, dass X nicht mitgezählt ist. Was daraus für den Verkehr "
      "am Bahnhof folgt, ist ein Schluss. Gib die Bemerkung wieder, mehr nicht"),
@@ -379,8 +383,40 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                         f"«{m.group(0)[:50]}»: die Daten sagen nur, was erfasst ist. "
                         "Schreibe «erfasst» oder «verzeichnet», nicht «vorhanden»")
 
+        if kid == "zuege" and (zu := fakten.get("zuege")) and zu.get("abschnitte"):
+            # Personenverkehr und Güterverkehr: Was der Text sagt, muss zur
+            # Art des Abschnitts passen, auf den der factRef zeigt. In Sins war
+            # der stärkste Abschnitt ein Güterabschnitt und hiess im Text
+            # «Personenverkehr».
+            eintraege = [(f"facts[{i}]", x.get("label") or "", x.get("factRef") or "")
+                         for i, x in enumerate(kap.get("facts") or [])]
+            for i, q in enumerate(kap.get("questions", [])):
+                eintraege.append((f"questions[{i}]", q.get("prompt") or "", q.get("factRef") or ""))
+                eintraege += [(f"questions[{i}]/items[{j}]", it.get("label") or "", it.get("factRef") or "")
+                              for j, it in enumerate(q.get("items") or [])]
+            for stelle, text, ref in eintraege:
+                try:
+                    art = fb.aufloesen(ref.rsplit(".", 1)[0]).get("art")
+                except (KeyError, AttributeError):
+                    continue
+                # nur was der Art ausdrücklich widerspricht; «Sargans - Bad Ragaz»
+                # nennt keine Art, «mehr Güter- als Personenzüge» nennt beide
+                pv = bool(re.search(r"Personen(verkehr|z[uü]g|-)", text))
+                gv = bool(re.search(r"Güter(verkehr|z[uü]g|-)", text))
+                if art and pv != gv and pv != (art == "Personenverkehr"):
+                    b.fehlt(f"{wo}/{stelle}", f"«{text[:60]}» zeigt auf einen Abschnitt im "
+                                              f"{'Personenverkehr' if art == 'Personenverkehr' else 'Güterverkehr'}")
+            # Güterzüge pro Tag können auf 0 gerundet sein, im Jahr sind es
+            # trotzdem welche (Seuzach: 119). Dann ist «keiner» falsch.
+            gueter = [a for a in zu["abschnitte"]
+                      if a.get("art") == "Gueterverkehr" and a.get("zuege_pro_jahr")]
+            if gueter and (m := re.search(r"Güterverkehr ist [^.]*keiner", kap.get("body", ""))):
+                b.fehlt(f"{wo}/body", f"«{m.group(0)}»: im Güterverkehr zählt die Erhebung bis zu "
+                                      f"{max(a['zuege_pro_jahr'] for a in gueter)} Züge im Jahr")
+
         if kid == "zuege" and (zu := fakten.get("zuege")) and zu.get("staerkster_abschnitt"):
-            st = zu["staerkster_abschnitt"]
+            # der Text spricht vom Personenverkehr, also zählt dessen stärkster Abschnitt
+            st = zu.get("staerkster_personenverkehr") or zu["staerkster_abschnitt"]
             gleich = [a for a in zu.get("abschnitte", [])
                       if a.get("art") == st.get("art") and a is not st
                       and (a.get("von"), a.get("bis")) != (st.get("von"), st.get("bis"))

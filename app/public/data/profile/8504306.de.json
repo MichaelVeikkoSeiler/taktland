@@ -98,7 +98,7 @@
     {
       "id": "perrons",
       "title": "Perron",
-      "body": "Erfasst ist 1 Perron: ein Aussenperron von 150 Metern Länge. Es ist niveaufrei erreichbar, man muss also kein Gleis überqueren.",
+      "body": "Erfasst ist 1 Perron: ein Aussenperron von 150 Metern Länge. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit Daten",
@@ -163,9 +163,9 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Wer in Cortébert zum Perron will, muss ein Gleis überqueren.",
-          "correct": false,
-          "explanation": "Das erfasste Perron ist niveaufrei erreichbar.",
+          "prompt": "Das erfasste Perron in Cortébert ist als niveaufrei erreichbar vermerkt.",
+          "correct": true,
+          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "hindernisfreiheit.perrons_niveaufrei",
           "difficulty": 2
         }
