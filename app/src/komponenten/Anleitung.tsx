@@ -155,7 +155,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
           </li>
           <li>
             Vor jeder Veröffentlichung gleicht ein Prüfprogramm Texte und Fragen mit den Daten
-            ab.
+            ab. Es findet viele Fehler, aber nicht jeden.
           </li>
           <li>
             Unter jeder Zahl in den Kästchen steht ihr Datensatz. Die Liste aller Datensätze
@@ -163,12 +163,25 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
           </li>
           {stand && <li>Die Daten wurden am {stand} geladen.</li>}
         </Punkte>
-        <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-          Laut ihren{' '}
-          <Verweis href="https://data.sbb.ch/page/licence/">Nutzungsbedingungen</Verweis>{' '}
-          übernimmt die SBB keine Gewähr für Aktualität, Richtigkeit und Vollständigkeit der
-          Rohdaten. Taktland ist ein privates Lernprojekt und kein Angebot der SBB.
-        </p>
+      </Abschnitt>
+
+      <Abschnitt titel="Fehler sind möglich">
+        <Punkte>
+          <li>
+            Die Rohdaten können Fehler enthalten, unvollständig oder veraltet sein. Laut ihren{' '}
+            <Verweis href="https://data.sbb.ch/page/licence/">Nutzungsbedingungen</Verweis>{' '}
+            übernimmt die SBB keine Gewähr für Aktualität, Richtigkeit und Vollständigkeit der
+            Rohdaten.
+          </li>
+          <li>
+            Auch beim Aufbereiten, also beim Zählen, Umrechnen und Formulieren, können Fehler
+            passieren.
+          </li>
+          <li>
+            Taktland ist ein Lernspiel und nicht für die Reiseplanung gedacht. Es ist ein
+            privates Lernprojekt und kein Angebot der SBB.
+          </li>
+        </Punkte>
       </Abschnitt>
     </div>
   )

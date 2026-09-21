@@ -166,6 +166,9 @@ function Quellen({ profil }: { profil: Profil }) {
           </li>
         ))}
       </ul>
+      <p className="mt-2 text-sm text-sbb-black dark:text-sbb-white">
+        Trotz Prüfung können Fehler enthalten sein, in den Rohdaten wie in der Aufbereitung.
+      </p>
       <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
         Stand der Aufbereitung: {profil.generated}
       </p>

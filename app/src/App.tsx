@@ -84,7 +84,12 @@ export default function App() {
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss.
             Taktland ist ein privates Lernprojekt und kein Angebot der SBB.
           </p>
-          <p className="mt-1">
+          <p className="mt-2 font-medium text-sbb-black dark:text-sbb-white">
+            Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
+            sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist ein Lernspiel
+            und nicht für die Reiseplanung gedacht.
+          </p>
+          <p className="mt-2">
             <a href="#/anleitung" className="underline underline-offset-2 hover:text-sbb-black
                                              dark:hover:text-sbb-white">
               Anleitung und Datenquellen
