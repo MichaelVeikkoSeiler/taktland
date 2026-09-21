@@ -317,6 +317,15 @@
    ]
   }
  },
+ "8500128": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BX",
+    "GRA"
+   ]
+  }
+ },
  "8500131": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -898,6 +907,16 @@
    ]
   }
  },
+ "8501100": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Vallorbe",
+    "Romainmôtier-Envy",
+    "Bretonnières"
+   ]
+  }
+ },
  "8501103": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1061,6 +1080,16 @@
     "Riviera-Pays-d'Enhaut",
     "Lausanne",
     "Aigle"
+   ]
+  }
+ },
+ "8501127": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Riviera-Pays-d'Enhaut",
+    "Aigle",
+    "Lausanne"
    ]
   }
  },
@@ -1440,6 +1469,16 @@
    ]
   }
  },
+ "8502002": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sursee",
+    "Hochdorf",
+    "Entlebuch"
+   ]
+  }
+ },
  "8502003": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1633,6 +1672,16 @@
    "distraktoren": [
     "EBG",
     "GER"
+   ]
+  }
+ },
+ "8502029": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Ermensee",
+    "Beinwil am See",
+    "Birrwil"
    ]
   }
  },
@@ -2019,6 +2068,16 @@
     "Mühlau",
     "Muri (AG)",
     "Mettmenstetten"
+   ]
+  }
+ },
+ "8502217": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kulm",
+    "Bremgarten",
+    "Lenzburg"
    ]
   }
  },
@@ -2807,6 +2866,16 @@
    ]
   }
  },
+ "8503223": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Höfe",
+    "Schwyz",
+    "Küssnacht (SZ)"
+   ]
+  }
+ },
  "8503225": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3194,6 +3263,16 @@
    ]
   }
  },
+ "8503413": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glattfelden",
+    "Mellikon",
+    "Niederweningen"
+   ]
+  }
+ },
  "8503423": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3477,6 +3556,16 @@
    ]
   }
  },
+ "8504021": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rue",
+    "Oron",
+    "Moudon"
+   ]
+  }
+ },
  "8504023": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3712,6 +3801,16 @@
    ]
   }
  },
+ "8504127": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura-Nord vaudois",
+    "Lavaux-Oron",
+    "Morges"
+   ]
+  }
+ },
  "8504128": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3897,6 +3996,16 @@
    "distraktoren": [
     "Morges",
     "Broye-Vully",
+    "Gros-de-Vaud"
+   ]
+  }
+ },
+ "8504203": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Broye-Vully",
+    "Morges",
     "Gros-de-Vaud"
    ]
   }
@@ -4179,6 +4288,16 @@
     "Biel/Bienne",
     "Oberaargau",
     "Seeland"
+   ]
+  }
+ },
+ "8504311": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -4496,6 +4615,16 @@
     "Riviera",
     "Locarno",
     "Bellinzona"
+   ]
+  }
+ },
+ "8505205": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Giornico",
+    "Quinto",
+    "Biasca"
    ]
   }
  },
@@ -4959,6 +5088,16 @@
    ]
   }
  },
+ "8506022": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Winterthur",
+    "Pfäffikon",
+    "Bülach"
+   ]
+  }
+ },
  "8506023": {
   "stammdaten": {
    "frage": "bezirk",
@@ -5122,6 +5261,16 @@
    ]
   }
  },
+ "8506102": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Münchwilen",
+    "Kreuzlingen"
+   ]
+  }
+ },
  "8506103": {
   "stammdaten": {
    "frage": "bezirk",
@@ -5168,6 +5317,16 @@
     "Arbon",
     "Kreuzlingen",
     "Münchwilen"
+   ]
+  }
+ },
+ "8506108": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Erlen",
+    "Zihlschlacht-Sitterdorf",
+    "Kesswil"
    ]
   }
  },
@@ -5396,6 +5555,16 @@
     "Bussnang",
     "Tobel-Tägerschen",
     "Weinfelden"
+   ]
+  }
+ },
+ "8506188": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bettwiesen",
+    "Sirnach",
+    "Tobel-Tägerschen"
    ]
   }
  },
@@ -6009,6 +6178,16 @@
    ]
   }
  },
+ "8508206": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Langnau im Emmental",
+    "Signau",
+    "Bowil"
+   ]
+  }
+ },
  "8508207": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -6138,6 +6317,16 @@
    "distraktoren": [
     "Werdenberg",
     "Rorschach",
+    "St. Gallen"
+   ]
+  }
+ },
+ "8509402": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rheintal",
+    "Sarganserland",
     "St. Gallen"
    ]
   }
@@ -6488,6 +6677,16 @@
    "distraktoren": [
     "MEN",
     "CAP"
+   ]
+  }
+ },
+ "8518749": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Jura bernois",
+    "Bern-Mittelland"
    ]
   }
  },
