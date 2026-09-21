@@ -1,0 +1,531 @@
+{
+  "linie": 600,
+  "name": "Immensee - Bellinzona - Chiasso",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 600 heisst in den offenen Daten «Immensee - Bellinzona - Chiasso». Als Anfang ist der Betriebspunkt Immensee West (Abzw) erfasst, als Ende Chiasso Est. Die Kilometrierung reicht von km 0 bis km 206.654.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Immensee West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Chiasso Est",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 0,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 206.654,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:bbee1548",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 600?",
+          "min": 160,
+          "max": 300,
+          "step": 1,
+          "unit": "km",
+          "correct": 206.654,
+          "explanation": "Die Kilometrierung der Linie 600 reicht bis km 206.654. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 600 führt die Liste der Betriebspunkte 82 Einträge. Davon sind 32 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 82,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 32,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Immensee",
+          "value": 0.25695,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8505003
+        },
+        {
+          "label": "Arth-Goldau",
+          "value": 8.86435,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8505004
+        },
+        {
+          "label": "Steinen",
+          "value": 13.92185,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8505005
+        },
+        {
+          "label": "Schwyz",
+          "value": 17.00715,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8505006
+        },
+        {
+          "label": "Brunnen",
+          "value": 20.5245,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8505007
+        },
+        {
+          "label": "Sisikon",
+          "value": 26.38269,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8505111
+        },
+        {
+          "label": "Flüelen",
+          "value": 32.30055,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8505112
+        },
+        {
+          "label": "Altdorf UR",
+          "value": 35.25017,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8505113
+        },
+        {
+          "label": "Erstfeld",
+          "value": 41.5832,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8505114
+        },
+        {
+          "label": "Göschenen",
+          "value": 70.44657,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8505119
+        },
+        {
+          "label": "Airolo",
+          "value": 86.20893,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8505201
+        },
+        {
+          "label": "Ambrì-Piotta",
+          "value": 93.04375,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8505202
+        },
+        {
+          "label": "Faido",
+          "value": 106.03713,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8505204
+        },
+        {
+          "label": "Lavorgo",
+          "value": 112.58013,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8505205
+        },
+        {
+          "label": "Bodio TI",
+          "value": 125.49506,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8505207
+        },
+        {
+          "label": "Biasca",
+          "value": 131.795,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8505209
+        },
+        {
+          "label": "Castione-Arbedo",
+          "value": 147.525,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8505212
+        },
+        {
+          "label": "Bellinzona",
+          "value": 150.89101,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8505213
+        },
+        {
+          "label": "Giubiasco",
+          "value": 154.04336,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[18].km",
+          "uic": 8505214
+        },
+        {
+          "label": "Rivera-Bironico",
+          "value": 165.21442,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[19].km",
+          "uic": 8505216
+        },
+        {
+          "label": "Mezzovico",
+          "value": 168.8616,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[20].km",
+          "uic": 8505217
+        },
+        {
+          "label": "Taverne-Torricella",
+          "value": 173.99196,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[21].km",
+          "uic": 8505218
+        },
+        {
+          "label": "Lamone-Cadempino",
+          "value": 176.09835,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[22].km",
+          "uic": 8505219
+        },
+        {
+          "label": "Lugano",
+          "value": 180.44953,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[23].km",
+          "uic": 8505300
+        },
+        {
+          "label": "Paradiso",
+          "value": 182.885,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[24].km",
+          "uic": 8505301
+        },
+        {
+          "label": "Melide",
+          "value": 187.2297,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[25].km",
+          "uic": 8505302
+        },
+        {
+          "label": "Maroggia-Melano",
+          "value": 191.03053,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[26].km",
+          "uic": 8505303
+        },
+        {
+          "label": "Capolago-Riva S. Vitale",
+          "value": 194.61388,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[27].km",
+          "uic": 8505304
+        },
+        {
+          "label": "Mendrisio S. Martino",
+          "value": 197.702,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[28].km",
+          "uic": 8518475
+        },
+        {
+          "label": "Mendrisio",
+          "value": 198.71338,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[29].km",
+          "uic": 8505305
+        },
+        {
+          "label": "Balerna",
+          "value": 203.53433,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[30].km",
+          "uic": 8505306
+        },
+        {
+          "label": "Chiasso",
+          "value": 206.16614,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[31].km",
+          "uic": 8505307
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:90adf8ce",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 600, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Immensee",
+              "value": 0.25695,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Flüelen",
+              "value": 32.30055,
+              "factRef": "bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Lavorgo",
+              "value": 112.58013,
+              "factRef": "bahnhoefe.items[13].km"
+            },
+            {
+              "label": "Chiasso",
+              "value": 206.16614,
+              "factRef": "bahnhoefe.items[31].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Immensee bei km 0.25695, Flüelen bei km 32.30055, Lavorgo bei km 112.58013 und Chiasso bei km 206.16614.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:a1661126",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 600 liegt Airolo?",
+          "options": [
+            "0.25695 km",
+            "70.44657 km",
+            "86.20893 km",
+            "206.16614 km"
+          ],
+          "correct": 2,
+          "explanation": "Airolo liegt auf der Linie 600 bei km 86.20893.",
+          "factRef": "bahnhoefe.items[10].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 600 sind 58 Tunnel erfasst. Der längste: Gotthardtunnel, 15'000 Meter, erstmals in Betrieb 1882, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 1874, bei 8 der erfassten Tunnel. Die Liste zeigt die längsten davon.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 58,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Gotthardtunnel",
+          "value": 15000,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[30].laenge_m"
+        },
+        {
+          "label": "Oelbergtunnel",
+          "value": 1987,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[4].laenge_m"
+        },
+        {
+          "label": "Galleria Monte Ceneri I sinistra",
+          "value": 1675,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[51].laenge_m"
+        },
+        {
+          "label": "Naxbergtunnel",
+          "value": 1570,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[29].laenge_m"
+        },
+        {
+          "label": "Galleria Freggio",
+          "value": 1568,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[34].laenge_m"
+        },
+        {
+          "label": "Galleria Prato",
+          "value": 1567,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[37].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Gotthardtunnel",
+              "value": 15000,
+              "factRef": "tunnel.items[30].laenge_m"
+            },
+            {
+              "label": "Oelbergtunnel",
+              "value": 1987,
+              "factRef": "tunnel.items[4].laenge_m"
+            },
+            {
+              "label": "Galleria Monte Ceneri I sinistra",
+              "value": 1675,
+              "factRef": "tunnel.items[51].laenge_m"
+            },
+            {
+              "label": "Naxbergtunnel",
+              "value": 1570,
+              "factRef": "tunnel.items[29].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Gotthardtunnel 15'000 m, Oelbergtunnel 1'987 m, Galleria Monte Ceneri I sinistra 1'675 m und Naxbergtunnel 1'570 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:74a46938",
+          "type": "single_choice",
+          "prompt": "Gotthardtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1882",
+            "1894",
+            "1906",
+            "1918"
+          ],
+          "correct": 0,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1882 erfasst.",
+          "factRef": "tunnel.items[30].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:5a0903ee",
+          "type": "single_choice",
+          "prompt": "Gotthardtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[30].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 32 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 82 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

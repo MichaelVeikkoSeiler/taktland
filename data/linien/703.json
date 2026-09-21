@@ -1,0 +1,97 @@
+{
+ "linie": 703,
+ "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Zurich Oerlikon Nord (Abzw)",
+  "ende": "Gruemet (Abzw)",
+  "km_anfang": 22.596,
+  "km_ende": 50.647
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 15,
+  "anzahl_in_taktland": 8,
+  "items": [
+   {
+    "uic": 8503007,
+    "name": "Zürich Seebach",
+    "km": 23.30243
+   },
+   {
+    "uic": 8503008,
+    "name": "Zürich Affoltern",
+    "km": 26.14225
+   },
+   {
+    "uic": 8503526,
+    "name": "Regensdorf-Watt",
+    "km": 29.49171
+   },
+   {
+    "uic": 8503527,
+    "name": "Buchs-Dällikon",
+    "km": 32.85719
+   },
+   {
+    "uic": 8503525,
+    "name": "Otelfingen Golfpark",
+    "km": 35.3969
+   },
+   {
+    "uic": 8503528,
+    "name": "Otelfingen",
+    "km": 36.52178
+   },
+   {
+    "uic": 8503529,
+    "name": "Würenlos",
+    "km": 39.04548
+   },
+   {
+    "uic": 8503505,
+    "name": "Wettingen",
+    "km": 42.73435
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 15 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

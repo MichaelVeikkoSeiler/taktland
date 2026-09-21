@@ -430,9 +430,6 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
         b.fehlt("Profil", f"UIC {profil['uic']} passt nicht zu den Fakten {fakten['uic']}")
     if profil["tier"] != fakten["tier"]:
         b.fehlt("Profil", f"Stufe {profil['tier']} statt {fakten['tier']}")
-    if "ß" in json.dumps(profil, ensure_ascii=False):
-        b.fehlt("Profil", "ß gefunden, Schweizer Rechtschreibung verlangt ss")
-
     if fix:
         profil["luecken"] = fakten.get("luecken", [])
         if any(f.get("type") == "hotspot"
@@ -448,6 +445,29 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
         if profil.get("gleise") != (fakten.get("gleise") or {}).get("items"):
             b.fehlt("Profil", "Gleisfrage ohne passendes Gleisschema: 'gleise' fehlt "
                               "oder weicht von den Fakten ab")
+
+    pruefe_rahmen(profil, fakten, b)
+
+    fragen_gesamt = pruefe_kapitel(profil, fakten, fb, b, entfernen)
+
+    min_k, max_k, min_f, max_f = umfang_erwartet(fakten)
+    n_k = len(profil["chapters"])
+    if not min_k <= n_k <= max_k:
+        b.warnt("Umfang", f"{n_k} Kapitel, die Datenlage trägt {min_k}–{max_k}")
+    if fragen_gesamt > hoechstens_fragen(fakten):
+        b.fehlt("Umfang", f"{fragen_gesamt} Fragen, die Datenlage trägt höchstens {max_f}. "
+                          "Mehr Fragen heisst hier, dieselben Werte mehrfach abzufragen")
+    elif not min_f <= fragen_gesamt <= max_f:
+        b.warnt("Umfang", f"{fragen_gesamt} Fragen, die Datenlage trägt {min_f}–{max_f}")
+
+    return b, profil
+
+
+def pruefe_rahmen(profil, fakten, b):
+    """Was für jedes Profil gilt, ob Bahnhof oder Linie: Rechtschreibung,
+    Quellen, Lücken und feste Kennungen der Fragen."""
+    if "ß" in json.dumps(profil, ensure_ascii=False):
+        b.fehlt("Profil", "ß gefunden, Schweizer Rechtschreibung verlangt ss")
 
     # Die Lizenz verlangt die Quellenangabe. Das Kapitel Ausstattung nutzte
     # zwei Datensätze, die in 'sources' fehlten.
@@ -478,6 +498,10 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
     elif len(set(ids)) != len(ids):
         b.fehlt("Profil", "Zwei Fragen mit derselben Kennung")
 
+
+def pruefe_kapitel(profil, fakten, fb, b, entfernen=False):
+    """Prüft jedes Kapitel: Texte, Faktenzeilen und Fragen gegen die Fakten.
+    Gibt die Zahl der Fragen zurück."""
     verfuegbar = set(fakten.get("verfuegbare_kapitel", []))
     kapitel_raus, fragen_gesamt = [], 0
 
@@ -710,17 +734,7 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
     if entfernen and kapitel_raus:
         profil["chapters"] = [k for k in profil["chapters"] if k not in kapitel_raus]
 
-    min_k, max_k, min_f, max_f = umfang_erwartet(fakten)
-    n_k = len(profil["chapters"])
-    if not min_k <= n_k <= max_k:
-        b.warnt("Umfang", f"{n_k} Kapitel, die Datenlage trägt {min_k}–{max_k}")
-    if fragen_gesamt > hoechstens_fragen(fakten):
-        b.fehlt("Umfang", f"{fragen_gesamt} Fragen, die Datenlage trägt höchstens {max_f}. "
-                          "Mehr Fragen heisst hier, dieselben Werte mehrfach abzufragen")
-    elif not min_f <= fragen_gesamt <= max_f:
-        b.warnt("Umfang", f"{fragen_gesamt} Fragen, die Datenlage trägt {min_f}–{max_f}")
-
-    return b, profil
+    return fragen_gesamt
 
 
 def fakten_laden(uic):

@@ -1,0 +1,122 @@
+{
+ "linie": 650,
+ "name": "Killwangen West - Lenzburg - Daniken Ost",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Killwangen West (Abzw)",
+  "ende": "Daniken Ost",
+  "km_anfang": 16.519,
+  "km_ende": 48.119
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 18,
+  "anzahl_in_taktland": 6,
+  "items": [
+   {
+    "uic": 8516219,
+    "name": "Mellingen Heitersberg",
+    "km": 22.24
+   },
+   {
+    "uic": 8502106,
+    "name": "Mägenwil",
+    "km": 25.93644
+   },
+   {
+    "uic": 8502105,
+    "name": "Othmarsingen",
+    "km": 27.68041
+   },
+   {
+    "uic": 8502119,
+    "name": "Lenzburg",
+    "km": 31.93612
+   },
+   {
+    "uic": 8502114,
+    "name": "Rupperswil",
+    "km": 35.6368
+   },
+   {
+    "uic": 8502113,
+    "name": "Aarau",
+    "km": 41.50577
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 3,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Heitersbergtunnel",
+    "laenge_m": 4930,
+    "inbetriebnahme_jahr": 1972,
+    "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
+    "km": 19.554,
+    "bemerkung": "Inkl: Heitersberg2 (DfA 698) und Heitersberg3 (DfA 650)"
+   },
+   {
+    "name": "Aarauer Stadttunnel II Süd",
+    "laenge_m": 615,
+    "inbetriebnahme_jahr": 1993,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 42.018,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel Eppenberg",
+    "laenge_m": 3113,
+    "inbetriebnahme_jahr": 2020,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 45.767,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 6 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 18 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

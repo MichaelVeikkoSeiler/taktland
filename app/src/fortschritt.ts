@@ -9,6 +9,9 @@ try {
   // gesperrter Speicher: nichts zu verwerfen
 }
 const DUELL_SCHLUESSEL = 'taktland.duell.v1'
+/** Linien getrennt von den Bahnhöfen: sonst zählte «Antworten bei N
+ *  Bahnhöfen» beim Zurücksetzen die Linien mit. */
+const LINIEN_SCHLUESSEL = 'taktland.linien.v1'
 
 export interface Antwort {
   richtig: boolean
@@ -18,48 +21,57 @@ export interface Antwort {
 /** { "8503000": { "steckbrief:0": { richtig: true, zeitpunkt: … } } } */
 type Speicher = Record<string, Record<string, Antwort>>
 
-function lesen(): Speicher {
+function lesen(schluessel = SCHLUESSEL): Speicher {
   try {
-    return JSON.parse(localStorage.getItem(SCHLUESSEL) ?? '{}') as Speicher
+    return JSON.parse(localStorage.getItem(schluessel) ?? '{}') as Speicher
   } catch {
     return {}
   }
 }
 
-function schreiben(s: Speicher) {
+function schreiben(s: Speicher, schluessel = SCHLUESSEL) {
   try {
-    localStorage.setItem(SCHLUESSEL, JSON.stringify(s))
+    localStorage.setItem(schluessel, JSON.stringify(s))
   } catch {
     // Privater Modus oder voller Speicher: Fortschritt geht verloren, die App läuft weiter
   }
 }
 
-export function antwortSpeichern(uic: number, frageId: string, richtig: boolean) {
-  const s = lesen()
+export function antwortSpeichern(uic: number, frageId: string, richtig: boolean,
+                                 schluessel = SCHLUESSEL) {
+  const s = lesen(schluessel)
   s[uic] = { ...(s[uic] ?? {}), [frageId]: { richtig, zeitpunkt: Date.now() } }
-  schreiben(s)
+  schreiben(s, schluessel)
 }
 
-export function antwortenLesen(uic: number): Record<string, Antwort> {
-  return lesen()[uic] ?? {}
+export function antwortenLesen(uic: number, schluessel = SCHLUESSEL): Record<string, Antwort> {
+  return lesen(schluessel)[uic] ?? {}
 }
 
-export function bahnhofZuruecksetzen(uic: number) {
-  const s = lesen()
+export function bahnhofZuruecksetzen(uic: number, schluessel = SCHLUESSEL) {
+  const s = lesen(schluessel)
   delete s[uic]
-  schreiben(s)
+  schreiben(s, schluessel)
 }
+
+/* ---------- Linien: dieselben Funktionen, eigener Speicher ---------- */
+
+export const linienAntwortSpeichern = (nr: number, frageId: string, richtig: boolean) =>
+  antwortSpeichern(nr, frageId, richtig, LINIEN_SCHLUESSEL)
+export const linienAntwortenLesen = (nr: number) => antwortenLesen(nr, LINIEN_SCHLUESSEL)
+export const linieZuruecksetzen = (nr: number) => bahnhofZuruecksetzen(nr, LINIEN_SCHLUESSEL)
+export const bearbeiteteLinien = () => Object.keys(lesen(LINIEN_SCHLUESSEL)).map(Number)
 
 /**
  * Löscht alles, was der Nutzer erarbeitet hat: beantwortete Fragen bei allen
- * Bahnhöfen und die Bestwerte im Duell. Die Kantonsauswahl bleibt - das ist
+ * Bahnhöfen und Linien und die Bestwerte im Duell. Die Kantonsauswahl bleibt - das ist
  * eine Einstellung und kein Ergebnis.
  *
  * Die Schlüssel stehen hier ausgeschrieben, damit ein neuer Speicherort nicht
  * stillschweigend vom Zurücksetzen ausgenommen bleibt.
  */
 export function allesZuruecksetzen() {
-  for (const schluessel of [SCHLUESSEL, DUELL_SCHLUESSEL]) {
+  for (const schluessel of [SCHLUESSEL, DUELL_SCHLUESSEL, LINIEN_SCHLUESSEL]) {
     try {
       localStorage.removeItem(schluessel)
     } catch {

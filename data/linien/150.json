@@ -1,0 +1,209 @@
+{
+ "linie": 150,
+ "name": "Lausanne - Geneve-Aeroport",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Lausanne",
+  "ende": "Geneve-Aeroport (cul-de-sac)",
+  "km_anfang": 0,
+  "km_ende": 66.6
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 53,
+  "anzahl_in_taktland": 25,
+  "items": [
+   {
+    "uic": 8501120,
+    "name": "Lausanne",
+    "km": 0
+   },
+   {
+    "uic": 8518452,
+    "name": "Prilly-Malley",
+    "km": 2.354
+   },
+   {
+    "uic": 8501118,
+    "name": "Renens VD",
+    "km": 4.51005
+   },
+   {
+    "uic": 8501045,
+    "name": "Denges-Echandens",
+    "km": 8.3784
+   },
+   {
+    "uic": 8501048,
+    "name": "Lonay-Préverenges",
+    "km": 10.12288
+   },
+   {
+    "uic": 8501047,
+    "name": "Morges-St-Jean",
+    "km": 11.162
+   },
+   {
+    "uic": 8501037,
+    "name": "Morges",
+    "km": 12.5035
+   },
+   {
+    "uic": 8501036,
+    "name": "St-Prex",
+    "km": 16.91372
+   },
+   {
+    "uic": 8501042,
+    "name": "Etoy",
+    "km": 19.34854
+   },
+   {
+    "uic": 8501035,
+    "name": "Allaman",
+    "km": 21.48029
+   },
+   {
+    "uic": 8501033,
+    "name": "Rolle",
+    "km": 26.663
+   },
+   {
+    "uic": 8501031,
+    "name": "Gland",
+    "km": 33.78925
+   },
+   {
+    "uic": 8501030,
+    "name": "Nyon",
+    "km": 38.52748
+   },
+   {
+    "uic": 8501023,
+    "name": "Coppet",
+    "km": 47.00292
+   },
+   {
+    "uic": 8501015,
+    "name": "Tannay",
+    "km": 48.2246
+   },
+   {
+    "uic": 8501014,
+    "name": "Mies",
+    "km": 49.678
+   },
+   {
+    "uic": 8501013,
+    "name": "Pont-Céard",
+    "km": 51.126
+   },
+   {
+    "uic": 8501022,
+    "name": "Versoix",
+    "km": 51.954
+   },
+   {
+    "uic": 8501012,
+    "name": "Creux-de-Genthod",
+    "km": 53.80043
+   },
+   {
+    "uic": 8501021,
+    "name": "Genthod-Bellevue",
+    "km": 54.77341
+   },
+   {
+    "uic": 8501011,
+    "name": "Les Tuileries",
+    "km": 55.78
+   },
+   {
+    "uic": 8501020,
+    "name": "Chambésy",
+    "km": 56.781
+   },
+   {
+    "uic": 8516283,
+    "name": "Genève-Sécheron",
+    "km": 58.86
+   },
+   {
+    "uic": 8501008,
+    "name": "Genève",
+    "km": 60.26063
+   },
+   {
+    "uic": 8501026,
+    "name": "Genève-Aéroport",
+    "km": 66.17882
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 2,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   1
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Couverture St-Jean",
+    "laenge_m": 821,
+    "inbetriebnahme_jahr": 1995,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 61.236,
+    "bemerkung": null
+   },
+   {
+    "name": "Galerie ICC",
+    "laenge_m": 327,
+    "inbetriebnahme_jahr": 1985,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 64.832,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 25 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 53 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

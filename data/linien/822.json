@@ -1,0 +1,112 @@
+{
+ "linie": 822,
+ "name": "Etzwilen - Konstanz",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Etzwilen",
+  "ende": "Konstanz",
+  "km_anfang": 31.809,
+  "km_ende": 61.847
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 12,
+  "anzahl_in_taktland": 11,
+  "items": [
+   {
+    "uic": 8506025,
+    "name": "Etzwilen",
+    "km": 31.80917
+   },
+   {
+    "uic": 8506139,
+    "name": "Stein am Rhein",
+    "km": 34.86062
+   },
+   {
+    "uic": 8506138,
+    "name": "Eschenz",
+    "km": 36.92798
+   },
+   {
+    "uic": 8506137,
+    "name": "Mammern",
+    "km": 39.83575
+   },
+   {
+    "uic": 8506136,
+    "name": "Steckborn",
+    "km": 45.59265
+   },
+   {
+    "uic": 8506135,
+    "name": "Berlingen",
+    "km": 48.91312
+   },
+   {
+    "uic": 8506134,
+    "name": "Mannenbach-Salenstein",
+    "km": 51.33097
+   },
+   {
+    "uic": 8506133,
+    "name": "Ermatingen",
+    "km": 54.00502
+   },
+   {
+    "uic": 8506118,
+    "name": "Triboltingen",
+    "km": 55.97358
+   },
+   {
+    "uic": 8506132,
+    "name": "Tägerwilen-Gottlieben",
+    "km": 57.86013
+   },
+   {
+    "uic": 8506131,
+    "name": "Kreuzlingen",
+    "km": 60.68801
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 11 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

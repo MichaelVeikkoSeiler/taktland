@@ -1,0 +1,416 @@
+{
+  "linie": 150,
+  "name": "Lausanne - Geneve-Aeroport",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 150 heisst in den offenen Daten «Lausanne - Geneve-Aeroport». Als Anfang ist der Betriebspunkt Lausanne erfasst, als Ende Geneve-Aeroport (cul-de-sac). Die Kilometrierung reicht von km 0 bis km 66.6.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Lausanne",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Geneve-Aeroport (cul-de-sac)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 0,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 66.6,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:79906f0e",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 150?",
+          "min": 54,
+          "max": 97,
+          "step": 1,
+          "unit": "km",
+          "correct": 66.6,
+          "explanation": "Die Kilometrierung der Linie 150 reicht bis km 66.6. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 150 führt die Liste der Betriebspunkte 53 Einträge. Davon sind 25 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 53,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 25,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Lausanne",
+          "value": 0,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501120
+        },
+        {
+          "label": "Prilly-Malley",
+          "value": 2.354,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8518452
+        },
+        {
+          "label": "Renens VD",
+          "value": 4.51005,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501118
+        },
+        {
+          "label": "Denges-Echandens",
+          "value": 8.3784,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501045
+        },
+        {
+          "label": "Lonay-Préverenges",
+          "value": 10.12288,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501048
+        },
+        {
+          "label": "Morges-St-Jean",
+          "value": 11.162,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8501047
+        },
+        {
+          "label": "Morges",
+          "value": 12.5035,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8501037
+        },
+        {
+          "label": "St-Prex",
+          "value": 16.91372,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8501036
+        },
+        {
+          "label": "Etoy",
+          "value": 19.34854,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8501042
+        },
+        {
+          "label": "Allaman",
+          "value": 21.48029,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8501035
+        },
+        {
+          "label": "Rolle",
+          "value": 26.663,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8501033
+        },
+        {
+          "label": "Gland",
+          "value": 33.78925,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8501031
+        },
+        {
+          "label": "Nyon",
+          "value": 38.52748,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8501030
+        },
+        {
+          "label": "Coppet",
+          "value": 47.00292,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8501023
+        },
+        {
+          "label": "Tannay",
+          "value": 48.2246,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8501015
+        },
+        {
+          "label": "Mies",
+          "value": 49.678,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8501014
+        },
+        {
+          "label": "Pont-Céard",
+          "value": 51.126,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8501013
+        },
+        {
+          "label": "Versoix",
+          "value": 51.954,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8501022
+        },
+        {
+          "label": "Creux-de-Genthod",
+          "value": 53.80043,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[18].km",
+          "uic": 8501012
+        },
+        {
+          "label": "Genthod-Bellevue",
+          "value": 54.77341,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[19].km",
+          "uic": 8501021
+        },
+        {
+          "label": "Les Tuileries",
+          "value": 55.78,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[20].km",
+          "uic": 8501011
+        },
+        {
+          "label": "Chambésy",
+          "value": 56.781,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[21].km",
+          "uic": 8501020
+        },
+        {
+          "label": "Genève-Sécheron",
+          "value": 58.86,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[22].km",
+          "uic": 8516283
+        },
+        {
+          "label": "Genève",
+          "value": 60.26063,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[23].km",
+          "uic": 8501008
+        },
+        {
+          "label": "Genève-Aéroport",
+          "value": 66.17882,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[24].km",
+          "uic": 8501026
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:78302171",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 150, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Lausanne",
+              "value": 0,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Morges",
+              "value": 12.5035,
+              "factRef": "bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Nyon",
+              "value": 38.52748,
+              "factRef": "bahnhoefe.items[12].km"
+            },
+            {
+              "label": "Genève-Aéroport",
+              "value": 66.17882,
+              "factRef": "bahnhoefe.items[24].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Lausanne bei km 0, Morges bei km 12.5035, Nyon bei km 38.52748 und Genève-Aéroport bei km 66.17882.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:a5d2dd01",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 150 liegt Allaman?",
+          "options": [
+            "0 km",
+            "19.34854 km",
+            "21.48029 km",
+            "66.17882 km"
+          ],
+          "correct": 2,
+          "explanation": "Allaman liegt auf der Linie 150 bei km 21.48029.",
+          "factRef": "bahnhoefe.items[9].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 150 sind 2 Tunnel erfasst. Der längste: Couverture St-Jean, 821 Meter, erstmals in Betrieb 1995, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 1985, bei Galerie ICC.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 2,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Couverture St-Jean",
+          "value": 821,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Galerie ICC",
+          "value": 327,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:635055d0",
+          "type": "single_choice",
+          "prompt": "Couverture St-Jean: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1959",
+            "1971",
+            "1983",
+            "1995"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1995 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:19d2cea5",
+          "type": "single_choice",
+          "prompt": "Couverture St-Jean: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 25 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 53 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

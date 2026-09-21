@@ -1,0 +1,169 @@
+{
+  "linie": 605,
+  "name": "Sisikon - Gruonbach (Gleis links)",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 605 heisst in den offenen Daten «Sisikon - Gruonbach (Gleis links)». Als Anfang ist der Betriebspunkt Sisikon erfasst, als Ende Gruonbach (Spw). Die Kilometrierung reicht von km 26.383 bis km 30.384. Als Bahnhof in Taktland ist auf dieser Linie Sisikon erfasst, bei km 26.38272.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Sisikon",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Gruonbach (Spw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 26.383,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 30.384,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        },
+        {
+          "label": "Sisikon",
+          "value": 26.38272,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8505111
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:095278a6",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 605?",
+          "min": 24,
+          "max": 45,
+          "step": 1,
+          "unit": "km",
+          "correct": 30.384,
+          "explanation": "Die Kilometrierung der Linie 605 reicht bis km 30.384. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:93cd23ee",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 605?",
+          "min": 21,
+          "max": 39,
+          "step": 1,
+          "unit": "km",
+          "correct": 26.383,
+          "explanation": "Die Kilometrierung der Linie 605 beginnt bei km 26.383.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 605 sind 2 Tunnel erfasst. Der längste: Stutzeck-Axenbergtunnel, 3'375 Meter, erstmals in Betrieb 1941, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1882, bei Alte Gruonbachgalerie li. G100.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 2,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Stutzeck-Axenbergtunnel",
+          "value": 3375,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Alte Gruonbachgalerie li. G100",
+          "value": 100,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:77d415a1",
+          "type": "single_choice",
+          "prompt": "Stutzeck-Axenbergtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1905",
+            "1917",
+            "1929",
+            "1941"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1941 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:42c9b95d",
+          "type": "single_choice",
+          "prompt": "Stutzeck-Axenbergtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 1 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 2 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

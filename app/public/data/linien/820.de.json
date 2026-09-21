@@ -1,0 +1,301 @@
+{
+  "linie": 820,
+  "name": "Etzwilen - Schaffhausen",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 820 heisst in den offenen Daten «Etzwilen - Schaffhausen». Als Anfang ist der Betriebspunkt Etzwilen erfasst, als Ende Schaffhausen. Die Kilometrierung reicht von km 31.809 bis km 48.76.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Etzwilen",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Schaffhausen",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 31.809,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 48.76,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:ed95ef0e",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 820?",
+          "min": 39,
+          "max": 71,
+          "step": 1,
+          "unit": "km",
+          "correct": 48.76,
+          "explanation": "Die Kilometrierung der Linie 820 reicht bis km 48.76. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:47cbc160",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 820?",
+          "min": 26,
+          "max": 47,
+          "step": 1,
+          "unit": "km",
+          "correct": 31.809,
+          "explanation": "Die Kilometrierung der Linie 820 beginnt bei km 31.809.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 820 führt die Liste der Betriebspunkte 10 Einträge. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 10,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Etzwilen",
+          "value": 31.80917,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506025
+        },
+        {
+          "label": "Schlattingen",
+          "value": 35.56775,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8503429
+        },
+        {
+          "label": "Diessenhofen",
+          "value": 38.18616,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8503428
+        },
+        {
+          "label": "St. Katharinental",
+          "value": 39.75519,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506148
+        },
+        {
+          "label": "Schlatt TG",
+          "value": 43.28408,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8503427
+        },
+        {
+          "label": "Langwiesen",
+          "value": 45.33157,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8503426
+        },
+        {
+          "label": "Feuerthalen",
+          "value": 46.92914,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8503425
+        },
+        {
+          "label": "Schaffhausen",
+          "value": 48.76002,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8503424
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:1abdff9b",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 820, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Etzwilen",
+              "value": 31.80917,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Schlattingen",
+              "value": 35.56775,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Langwiesen",
+              "value": 45.33157,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Schaffhausen",
+              "value": 48.76002,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Etzwilen bei km 31.80917, Schlattingen bei km 35.56775, Langwiesen bei km 45.33157 und Schaffhausen bei km 48.76002.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:dc6773e4",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 820 liegt St. Katharinental?",
+          "options": [
+            "31.80917 km",
+            "39.75519 km",
+            "45.33157 km",
+            "48.76002 km"
+          ],
+          "correct": 1,
+          "explanation": "St. Katharinental liegt auf der Linie 820 bei km 39.75519.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 820 ist 1 Tunnel erfasst: Emmersbergtunnel, 760 Meter, erstmals in Betrieb 1895, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Emmersbergtunnel",
+          "value": 760,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:3a0df53c",
+          "type": "single_choice",
+          "prompt": "Emmersbergtunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "530 m",
+            "650 m",
+            "760 m",
+            "910 m"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 760 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:add16c25",
+          "type": "single_choice",
+          "prompt": "Emmersbergtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1859",
+            "1871",
+            "1883",
+            "1895"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1895 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:7834782a",
+          "type": "single_choice",
+          "prompt": "Emmersbergtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 10 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

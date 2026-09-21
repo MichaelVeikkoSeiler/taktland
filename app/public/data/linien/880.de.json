@@ -1,0 +1,368 @@
+{
+  "linie": 880,
+  "name": "Sargans Ost - St.Gallen",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 880 heisst in den offenen Daten «Sargans Ost - St.Gallen». Als Anfang ist der Betriebspunkt Sargans Ost erfasst, als Ende St. Gallen. Die Kilometrierung reicht von km -0.105 bis km 80.492.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Sargans Ost",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "St. Gallen",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": -0.105,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 80.492,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:60061c8f",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 880?",
+          "min": 66,
+          "max": 117,
+          "step": 1,
+          "unit": "km",
+          "correct": 80.492,
+          "explanation": "Die Kilometrierung der Linie 880 reicht bis km 80.492. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 880 führt die Liste der Betriebspunkte 28 Einträge. Davon sind 18 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 28,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 18,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Sevelen",
+          "value": 10.94734,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8509406
+        },
+        {
+          "label": "Buchs SG",
+          "value": 15.86893,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8509404
+        },
+        {
+          "label": "Salez-Sennwald",
+          "value": 24.57438,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8509402
+        },
+        {
+          "label": "Rüthi SG",
+          "value": 30.22315,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8509401
+        },
+        {
+          "label": "Oberriet SG",
+          "value": 35.3212,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8509400
+        },
+        {
+          "label": "Altstätten SG",
+          "value": 41.17789,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506319
+        },
+        {
+          "label": "Rebstein-Marbach",
+          "value": 44.28637,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506318
+        },
+        {
+          "label": "Heerbrugg",
+          "value": 47.92854,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8506317
+        },
+        {
+          "label": "Au SG",
+          "value": 51.04704,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8506316
+        },
+        {
+          "label": "St. Margrethen SG",
+          "value": 53.81952,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8506314
+        },
+        {
+          "label": "Rheineck",
+          "value": 57.8334,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8506313
+        },
+        {
+          "label": "Staad SG",
+          "value": 62.714,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8506312
+        },
+        {
+          "label": "Rorschach",
+          "value": 65.05045,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8506311
+        },
+        {
+          "label": "Rorschach Stadt",
+          "value": 66.27202,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8506322
+        },
+        {
+          "label": "Goldach",
+          "value": 67.99557,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8506305
+        },
+        {
+          "label": "Mörschwil",
+          "value": 72.81977,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8506304
+        },
+        {
+          "label": "St. Gallen St. Fiden",
+          "value": 78.15556,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8506303
+        },
+        {
+          "label": "St. Gallen",
+          "value": 80.49223,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8506302
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:a2d3fb51",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 880, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Sevelen",
+              "value": 10.94734,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Altstätten SG",
+              "value": 41.17789,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "St. Margrethen SG",
+              "value": 53.81952,
+              "factRef": "bahnhoefe.items[9].km"
+            },
+            {
+              "label": "St. Gallen",
+              "value": 80.49223,
+              "factRef": "bahnhoefe.items[17].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Sevelen bei km 10.94734, Altstätten SG bei km 41.17789, St. Margrethen SG bei km 53.81952 und St. Gallen bei km 80.49223.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:a6da47ce",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 880 liegt Heerbrugg?",
+          "options": [
+            "10.94734 km",
+            "44.28637 km",
+            "47.92854 km",
+            "80.49223 km"
+          ],
+          "correct": 2,
+          "explanation": "Heerbrugg liegt auf der Linie 880 bei km 47.92854.",
+          "factRef": "bahnhoefe.items[7].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 880 ist 1 Tunnel erfasst: Rosenbergtunnel, 1'466 Meter, erstmals in Betrieb 1912, Tunnelsystem «1-Röhre / 2-Spuren».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Rosenbergtunnel",
+          "value": 1466,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:7d1936e9",
+          "type": "single_choice",
+          "prompt": "Rosenbergtunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "810 m",
+            "1'000 m",
+            "1'200 m",
+            "1'466 m"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 1'466 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:6d70c5d2",
+          "type": "single_choice",
+          "prompt": "Rosenbergtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1912",
+            "1924",
+            "1936",
+            "1948"
+          ],
+          "correct": 0,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1912 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:c1034198",
+          "type": "single_choice",
+          "prompt": "Rosenbergtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 18 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 28 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

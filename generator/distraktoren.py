@@ -17,15 +17,19 @@ from belegt.fakten import Faktenbasis  # noqa: E402
 FACTS = Path(__file__).resolve().parent.parent / "data" / "facts"
 
 
-def vorschlaege(uic, wert, anzahl=3, auffuellen=True):
+def vorschlaege(uic, wert, anzahl=3, auffuellen=True, fb=None):
     """Gibt (liste, alle_frei) zurueck.
 
     alle_frei ist False, wenn nicht genug unbelegte Zahlen zu finden waren und
     aufgefuellt werden musste. Bei kleinen Werten ist das der Normalfall, weil
     fast jede kleine Zahl irgendwo in den Fakten steht, etwa als Gleisnummer.
     Die Frage muss dann optionen_aus_fakten setzen.
+
+    Mit fb prüft es gegen eine andere Faktenbasis, etwa die einer Linie; uic
+    dient dann nur als Schlüssel für die feste Streuung.
     """
-    fb = Faktenbasis.aus_datei(FACTS / f"{uic}.json")
+    if fb is None:
+        fb = Faktenbasis.aus_datei(FACTS / f"{uic}.json")
     belegt = fb.zahlen
 
     def runden(x):

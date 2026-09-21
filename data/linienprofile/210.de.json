@@ -1,0 +1,488 @@
+{
+  "linie": 210,
+  "name": "Daillens - Biel/Bienne",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 210 heisst in den offenen Daten «Daillens - Biel/Bienne». Als Anfang ist der Betriebspunkt Daillens (bif) erfasst, als Ende Biel/Bienne. Die Kilometrierung reicht von km 19.115 bis km 104.5.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Daillens (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Biel/Bienne",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 19.115,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 104.5,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:d152f4a9",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 210?",
+          "min": 85,
+          "max": 152,
+          "step": 1,
+          "unit": "km",
+          "correct": 104.5,
+          "explanation": "Die Kilometrierung der Linie 210 reicht bis km 104.5. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:f9bedb5c",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 210?",
+          "min": 15.5,
+          "max": 28.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 19.115,
+          "explanation": "Die Kilometrierung der Linie 210 beginnt bei km 19.115.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 210 führt die Liste der Betriebspunkte 36 Einträge. Davon sind 25 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 36,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 25,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Eclépens",
+          "value": 21.379,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501114
+        },
+        {
+          "label": "Bavois",
+          "value": 24.87822,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8501113
+        },
+        {
+          "label": "Chavornay",
+          "value": 27.45883,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501112
+        },
+        {
+          "label": "Essert-Pittet",
+          "value": 29.67427,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501111
+        },
+        {
+          "label": "Ependes VD",
+          "value": 32.69977,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501110
+        },
+        {
+          "label": "Yverdon-les-Bains",
+          "value": 39.1341,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8504200
+        },
+        {
+          "label": "Grandson",
+          "value": 42.71125,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8504201
+        },
+        {
+          "label": "Concise",
+          "value": 50.752,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8504203
+        },
+        {
+          "label": "Vaumarcus",
+          "value": 54.85391,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8504204
+        },
+        {
+          "label": "Gorgier-St-Aubin",
+          "value": 58.097,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8504205
+        },
+        {
+          "label": "Bevaix",
+          "value": 62.27922,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8504206
+        },
+        {
+          "label": "Boudry",
+          "value": 66.25347,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8504208
+        },
+        {
+          "label": "Colombier NE",
+          "value": 67.66967,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8504209
+        },
+        {
+          "label": "Auvernier",
+          "value": 70.34416,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8504219
+        },
+        {
+          "label": "Neuchâtel-Serrières",
+          "value": 72.39006,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8504220
+        },
+        {
+          "label": "Neuchâtel",
+          "value": 75.29488,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8504221
+        },
+        {
+          "label": "St-Blaise CFF",
+          "value": 79.36773,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8504222
+        },
+        {
+          "label": "Cornaux NE",
+          "value": 83.60063,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8504223
+        },
+        {
+          "label": "Cressier NE",
+          "value": 85.55013,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[18].km",
+          "uic": 8504224
+        },
+        {
+          "label": "Le Landeron",
+          "value": 87.71714,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[19].km",
+          "uic": 8504225
+        },
+        {
+          "label": "La Neuveville",
+          "value": 90.04861,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[20].km",
+          "uic": 8504226
+        },
+        {
+          "label": "Ligerz",
+          "value": 94.00279,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[21].km",
+          "uic": 8504227
+        },
+        {
+          "label": "Twann",
+          "value": 95.976,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[22].km",
+          "uic": 8504228
+        },
+        {
+          "label": "Tüscherz",
+          "value": 99.953,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[23].km",
+          "uic": 8504229
+        },
+        {
+          "label": "Biel/Bienne",
+          "value": 104.5,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[24].km",
+          "uic": 8504300
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:5dd93e20",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 210, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Eclépens",
+              "value": 21.379,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Grandson",
+              "value": 42.71125,
+              "factRef": "bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Auvernier",
+              "value": 70.34416,
+              "factRef": "bahnhoefe.items[13].km"
+            },
+            {
+              "label": "Biel/Bienne",
+              "value": 104.5,
+              "factRef": "bahnhoefe.items[24].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Eclépens bei km 21.379, Grandson bei km 42.71125, Auvernier bei km 70.34416 und Biel/Bienne bei km 104.5.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:2b125b7e",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 210 liegt Gorgier-St-Aubin?",
+          "options": [
+            "21.379 km",
+            "54.85391 km",
+            "58.097 km",
+            "104.5 km"
+          ],
+          "correct": 2,
+          "explanation": "Gorgier-St-Aubin liegt auf der Linie 210 bei km 58.097.",
+          "factRef": "bahnhoefe.items[9].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 210 sind 11 Tunnel erfasst. Der längste: Tunnel Vingelz (092), 2'432 Meter, erstmals in Betrieb 1968, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 1856, bei Tunnel du Mormont sud 1 und Tunnel du Mormont nord 2. Die Liste zeigt die längsten davon.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 11,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel Vingelz (092)",
+          "value": 2432,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[10].laenge_m"
+        },
+        {
+          "label": "Tunnel St-Aubin-Sauges (097)",
+          "value": 2253,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[7].laenge_m"
+        },
+        {
+          "label": "Tunnel de la Raisse (098)",
+          "value": 1256,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[6].laenge_m"
+        },
+        {
+          "label": "Tunnel de Concise",
+          "value": 366,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[4].laenge_m"
+        },
+        {
+          "label": "Tunnel du Mormont sud 3",
+          "value": 328,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Tunnel du Mormont sud 1",
+          "value": 303,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Tunnel Vingelz (092)",
+              "value": 2432,
+              "factRef": "tunnel.items[10].laenge_m"
+            },
+            {
+              "label": "Tunnel St-Aubin-Sauges (097)",
+              "value": 2253,
+              "factRef": "tunnel.items[7].laenge_m"
+            },
+            {
+              "label": "Tunnel de la Raisse (098)",
+              "value": 1256,
+              "factRef": "tunnel.items[6].laenge_m"
+            },
+            {
+              "label": "Tunnel de Concise",
+              "value": 366,
+              "factRef": "tunnel.items[4].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Tunnel Vingelz (092) 2'432 m, Tunnel St-Aubin-Sauges (097) 2'253 m, Tunnel de la Raisse (098) 1'256 m und Tunnel de Concise 366 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:0e24e56d",
+          "type": "single_choice",
+          "prompt": "Tunnel Vingelz (092): In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1956",
+            "1968",
+            "1980",
+            "1992"
+          ],
+          "correct": 1,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1968 erfasst.",
+          "factRef": "tunnel.items[10].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:07090cf6",
+          "type": "single_choice",
+          "prompt": "Tunnel Vingelz (092): Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[10].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 25 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 36 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

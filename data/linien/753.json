@@ -1,0 +1,92 @@
+{
+ "linie": 753,
+ "name": "Effretikon - Wetzikon - Hinwil",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Effretikon",
+  "ende": "Hinwil",
+  "km_anfang": -0.019,
+  "km_ende": 22.543
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 8,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8503305,
+    "name": "Effretikon",
+    "km": -0.01948
+   },
+   {
+    "uic": 8503303,
+    "name": "Illnau",
+    "km": 4.45785
+   },
+   {
+    "uic": 8503302,
+    "name": "Fehraltorf",
+    "km": 8.01575
+   },
+   {
+    "uic": 8503301,
+    "name": "Pfäffikon ZH",
+    "km": 11.33125
+   },
+   {
+    "uic": 8503300,
+    "name": "Kempten",
+    "km": 15.75999
+   },
+   {
+    "uic": 8503123,
+    "name": "Wetzikon ZH",
+    "km": 18.10051
+   },
+   {
+    "uic": 8503130,
+    "name": "Hinwil",
+    "km": 22.54311
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 8 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

@@ -14,7 +14,6 @@ const PRO_SEITE = 20
  *  wenn ein Bahnhof offen ist: Wer zurückkommt, landet auf derselben Seite. */
 export interface ListenStand {
   begriff: string
-  nurMitProfil: boolean
   seite: number
   sortierung: 'alphabet' | 'frequenz'
 }
@@ -30,13 +29,12 @@ export function Suche({ index, oeffnen, stand, aendern }: {
   stand: ListenStand
   aendern: (neu: ListenStand) => void
 }) {
-  const { begriff, nurMitProfil, sortierung } = stand
+  const { begriff, sortierung } = stand
   const listeOben = useRef<HTMLDivElement>(null)
 
   const treffer = useMemo(() => {
     const b = vereinfachen(begriff.trim())
     let liste = index.bahnhoefe
-    if (nurMitProfil) liste = liste.filter((e) => e.sprachen.length > 0)
     if (b) liste = liste.filter((e) => vereinfachen(e.name).includes(b) ||
                                        String(e.uic).startsWith(b) ||
                                        vereinfachen(e.kanton ?? '').includes(b))
@@ -45,7 +43,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
       liste = [...liste].sort((a, b) => a.name.localeCompare(b.name, 'de-CH', { sensitivity: 'base' }))
     }
     return liste
-  }, [begriff, nurMitProfil, sortierung, index.bahnhoefe])
+  }, [begriff, sortierung, index.bahnhoefe])
 
   const seiten = Math.max(1, Math.ceil(treffer.length / PRO_SEITE))
   const seite = Math.min(stand.seite, seiten - 1)
@@ -97,16 +95,6 @@ export function Suche({ index, oeffnen, stand, aendern }: {
       </label>
 
       <label className="mt-3 flex items-center gap-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        <input
-          type="checkbox"
-          checked={nurMitProfil}
-          onChange={(e) => aendern({ ...stand, nurMitProfil: e.target.checked, seite: 0 })}
-          className="size-4 accent-sbb-red"
-        />
-        Nur Bahnhöfe mit Lerninhalten
-      </label>
-
-      <label className="mt-3 flex items-center gap-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Sortierung
         <select
           value={sortierung}
@@ -120,7 +108,11 @@ export function Suche({ index, oeffnen, stand, aendern }: {
       </label>
 
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        {index.mit_profil} von {index.bahnhoefe_gesamt} Bahnhöfen mit Lerninhalten
+        {begriff.trim()
+          ? `${treffer.length} von ${index.bahnhoefe_gesamt} Bahnhöfen`
+          : index.mit_profil === index.bahnhoefe_gesamt
+            ? `${index.bahnhoefe_gesamt} Bahnhöfe`
+            : `${index.mit_profil} von ${index.bahnhoefe_gesamt} Bahnhöfen mit Lerninhalten`}
       </p>
 
       <a
@@ -140,6 +132,21 @@ export function Suche({ index, oeffnen, stand, aendern }: {
         <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">→</span>
       </a>
 
+      <a
+        href="#/linien"
+        className="mt-2 flex items-center justify-between gap-3 border border-sbb-cloud
+                   bg-white px-4 py-3 transition hover:border-sbb-black dark:border-sbb-iron
+                   dark:bg-sbb-midnight dark:hover:border-sbb-white"
+      >
+        <span className="min-w-0">
+          <span className="block font-medium text-sbb-black dark:text-sbb-white">Linien</span>
+          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+            Strecken mit ihren Bahnhöfen und Tunneln
+          </span>
+        </span>
+        <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">→</span>
+      </a>
+
       <div ref={listeOben} className="scroll-mt-2">
         <Blaettern {...leiste} blaettern={(n) => blaettern(n)} name="Seiten" />
       </div>
@@ -154,7 +161,6 @@ export function Suche({ index, oeffnen, stand, aendern }: {
       {treffer.length === 0 && (
         <p className="mt-8 text-center text-sbb-metal dark:text-sbb-storm">
           Kein Bahnhof gefunden.
-          {nurMitProfil && ' Versuche es ohne den Filter für Lerninhalte.'}
         </p>
       )}
     </div>

@@ -1,0 +1,225 @@
+{
+  "linie": 852,
+  "name": "Sulgen - Gossau SG",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 852 heisst in den offenen Daten «Sulgen - Gossau SG». Als Anfang ist der Betriebspunkt Sulgen erfasst, als Ende Gossau SG. Die Kilometrierung reicht von km 0.01 bis km 22.946.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Sulgen",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Gossau SG",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 0.01,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 22.946,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:868f1f70",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 852?",
+          "min": 18,
+          "max": 34,
+          "step": 1,
+          "unit": "km",
+          "correct": 22.946,
+          "explanation": "Die Kilometrierung der Linie 852 reicht bis km 22.946. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 852 führt die Liste der Betriebspunkte 9 Einträge. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 9,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Sulgen",
+          "value": 0.01,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506217
+        },
+        {
+          "label": "Kradolf",
+          "value": 2.1194,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506216
+        },
+        {
+          "label": "Bischofszell Nord",
+          "value": 6.78324,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506215
+        },
+        {
+          "label": "Sitterdorf",
+          "value": 8.19829,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506214
+        },
+        {
+          "label": "Bischofszell Stadt",
+          "value": 10.04624,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506213
+        },
+        {
+          "label": "Hauptwil",
+          "value": 14.3738,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506212
+        },
+        {
+          "label": "Arnegg",
+          "value": 18.58709,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506211
+        },
+        {
+          "label": "Gossau SG",
+          "value": 22.94553,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8506210
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:cc3c83fe",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 852, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Sulgen",
+              "value": 0.01,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Bischofszell Nord",
+              "value": 6.78324,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Hauptwil",
+              "value": 14.3738,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Gossau SG",
+              "value": 22.94553,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Sulgen bei km 0.01, Bischofszell Nord bei km 6.78324, Hauptwil bei km 14.3738 und Gossau SG bei km 22.94553.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:a739c50a",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 852 liegt Bischofszell Stadt?",
+          "options": [
+            "0.01 km",
+            "8.19829 km",
+            "10.04624 km",
+            "22.94553 km"
+          ],
+          "correct": 2,
+          "explanation": "Bischofszell Stadt liegt auf der Linie 852 bei km 10.04624.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 9 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

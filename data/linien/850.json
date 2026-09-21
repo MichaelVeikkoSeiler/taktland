@@ -1,0 +1,137 @@
+{
+ "linie": 850,
+ "name": "St.Gallen - Winterthur Nord",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "St. Gallen",
+  "ende": "Winterthur Nord",
+  "km_anfang": 80.456,
+  "km_ende": 137.463
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 24,
+  "anzahl_in_taktland": 16,
+  "items": [
+   {
+    "uic": 8506302,
+    "name": "St. Gallen",
+    "km": 80.45623
+   },
+   {
+    "uic": 8506301,
+    "name": "St. Gallen Bruggen",
+    "km": 84.0467
+   },
+   {
+    "uic": 8506300,
+    "name": "St. Gallen Winkeln",
+    "km": 86.38234
+   },
+   {
+    "uic": 8506210,
+    "name": "Gossau SG",
+    "km": 90.1274
+   },
+   {
+    "uic": 8506209,
+    "name": "Flawil",
+    "km": 95.32622
+   },
+   {
+    "uic": 8506208,
+    "name": "Uzwil",
+    "km": 100.93553
+   },
+   {
+    "uic": 8506206,
+    "name": "Wil SG",
+    "km": 110.62133
+   },
+   {
+    "uic": 8506010,
+    "name": "Sirnach",
+    "km": 113.83192
+   },
+   {
+    "uic": 8506011,
+    "name": "Eschlikon TG",
+    "km": 117.4467
+   },
+   {
+    "uic": 8506012,
+    "name": "Guntershausen",
+    "km": 120.94994
+   },
+   {
+    "uic": 8506013,
+    "name": "Aadorf",
+    "km": 122.89829
+   },
+   {
+    "uic": 8506014,
+    "name": "Elgg",
+    "km": 126.14657
+   },
+   {
+    "uic": 8506035,
+    "name": "Schottikon",
+    "km": 130.5056
+   },
+   {
+    "uic": 8506015,
+    "name": "Räterschen",
+    "km": 131.83907
+   },
+   {
+    "uic": 8516218,
+    "name": "Winterthur Hegi",
+    "km": 133.898
+   },
+   {
+    "uic": 8506001,
+    "name": "Winterthur Grüze",
+    "km": 135.2914
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 24 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

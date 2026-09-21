@@ -1,0 +1,154 @@
+{
+  "linie": 235,
+  "name": "Tavannes - Le Noirmont",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 235 heisst in den offenen Daten «Tavannes - Le Noirmont». Als Anfang ist der Betriebspunkt Tavannes erfasst, als Ende La Chaux-de-Fonds. Die Kilometrierung reicht von km 0 bis km 44.033.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Tavannes",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "La Chaux-de-Fonds",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 0,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 44.033,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:fae2898c",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 235?",
+          "min": 36,
+          "max": 64,
+          "step": 1,
+          "unit": "km",
+          "correct": 44.033,
+          "explanation": "Die Kilometrierung der Linie 235 reicht bis km 44.033. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:98d8ac7b",
+          "type": "single_choice",
+          "prompt": "Welcher Betriebspunkt ist als Ende der Linie 235 erfasst?",
+          "options": [
+            "La Chaux-de-Fonds",
+            "La Neuveville",
+            "Le Brassus",
+            "Massagno Nord"
+          ],
+          "correct": 0,
+          "explanation": "Als Ende der Linie 235 ist La Chaux-de-Fonds erfasst.",
+          "factRef": "strecke.ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 235 führt die Liste der Betriebspunkte 2 Einträge. Davon sind 2 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Tavannes",
+          "value": 0,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500100
+        },
+        {
+          "label": "La Chaux-de-Fonds",
+          "value": 44.033,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504314
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:171280da",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 235 liegt La Chaux-de-Fonds?",
+          "options": [
+            "0 km",
+            "44.033 km"
+          ],
+          "correct": 1,
+          "explanation": "La Chaux-de-Fonds liegt auf der Linie 235 bei km 44.033.",
+          "factRef": "bahnhoefe.items[1].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

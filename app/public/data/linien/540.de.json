@@ -1,0 +1,269 @@
+{
+  "linie": 540,
+  "name": "Olten - Woschnau",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 540 heisst in den offenen Daten «Olten - Woschnau». Als Anfang ist der Betriebspunkt Olten erfasst, als Ende Woschnau SBB. Die Kilometrierung reicht von km 39.302 bis km 50.9.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Olten",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Woschnau SBB",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 39.302,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 50.9,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:74477314",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 540?",
+          "min": 41,
+          "max": 74,
+          "step": 1,
+          "unit": "km",
+          "correct": 50.9,
+          "explanation": "Die Kilometrierung der Linie 540 reicht bis km 50.9. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:4f605bb4",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 540?",
+          "min": 32,
+          "max": 57,
+          "step": 1,
+          "unit": "km",
+          "correct": 39.302,
+          "explanation": "Die Kilometrierung der Linie 540 beginnt bei km 39.302.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 540 führt die Liste der Betriebspunkte 8 Einträge. Davon sind 4 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 4,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Olten",
+          "value": 39.30213,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500218
+        },
+        {
+          "label": "Dulliken",
+          "value": 42.94104,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8502110
+        },
+        {
+          "label": "Däniken SO",
+          "value": 45.67343,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8502111
+        },
+        {
+          "label": "Schönenwerd SO",
+          "value": 48.1296,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8502112
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:ba41ff9e",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 540, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Olten",
+              "value": 39.30213,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Dulliken",
+              "value": 42.94104,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Däniken SO",
+              "value": 45.67343,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Schönenwerd SO",
+              "value": 48.1296,
+              "factRef": "bahnhoefe.items[3].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Olten bei km 39.30213, Dulliken bei km 42.94104, Däniken SO bei km 45.67343 und Schönenwerd SO bei km 48.1296.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:59125ca4",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 540 liegt Däniken SO?",
+          "options": [
+            "39.30213 km",
+            "42.94104 km",
+            "45.67343 km",
+            "48.1296 km"
+          ],
+          "correct": 2,
+          "explanation": "Däniken SO liegt auf der Linie 540 bei km 45.67343.",
+          "factRef": "bahnhoefe.items[2].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 540 ist 1 Tunnel erfasst: Tunnel Wöschnau, 488 Meter, erstmals in Betrieb 2019, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel Wöschnau",
+          "value": 488,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:3877df64",
+          "type": "single_choice",
+          "prompt": "Tunnel Wöschnau: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "270 m",
+            "340 m",
+            "410 m",
+            "488 m"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 488 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:e0e5e93a",
+          "type": "single_choice",
+          "prompt": "Tunnel Wöschnau: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1983",
+            "1995",
+            "2007",
+            "2019"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 2019 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:c926638e",
+          "type": "single_choice",
+          "prompt": "Tunnel Wöschnau: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 4 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 8 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

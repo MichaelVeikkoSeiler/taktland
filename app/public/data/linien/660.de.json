@@ -1,0 +1,406 @@
+{
+  "linie": 660,
+  "name": "Thalwil - Zug - Fluhmuhle",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 660 heisst in den offenen Daten «Thalwil - Zug - Fluhmuhle». Als Anfang ist der Betriebspunkt Thalwil erfasst, als Ende Fluhmuhle (Abzw). Die Kilometrierung reicht von km 12.094 bis km 64.009.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Thalwil",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Fluhmuhle (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 12.094,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 64.009,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:749751e2",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 660?",
+          "min": 52,
+          "max": 93,
+          "step": 1,
+          "unit": "km",
+          "correct": 64.009,
+          "explanation": "Die Kilometrierung der Linie 660 reicht bis km 64.009. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:57ff07dd",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 660?",
+          "min": 9.5,
+          "max": 18.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 12.094,
+          "explanation": "Die Kilometrierung der Linie 660 beginnt bei km 12.094.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 660 führt die Liste der Betriebspunkte 25 Einträge. Davon sind 18 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 25,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 18,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Thalwil",
+          "value": 12.09403,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503202
+        },
+        {
+          "label": "Oberrieden Dorf",
+          "value": 14.51771,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8502209
+        },
+        {
+          "label": "Horgen Oberdorf",
+          "value": 16.81272,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8502208
+        },
+        {
+          "label": "Baar",
+          "value": 26.60834,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8502206
+        },
+        {
+          "label": "Baar Neufeld",
+          "value": 27.56,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8515992
+        },
+        {
+          "label": "Baar Lindenpark",
+          "value": 28.158,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8515993
+        },
+        {
+          "label": "Zug",
+          "value": 38.82898,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8502204
+        },
+        {
+          "label": "Zug Schutzengel",
+          "value": 39.475,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8516187
+        },
+        {
+          "label": "Zug Chollermüli",
+          "value": 41.196,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8502230
+        },
+        {
+          "label": "Cham Alpenblick",
+          "value": 42.425,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8515995
+        },
+        {
+          "label": "Cham",
+          "value": 43.57412,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8502203
+        },
+        {
+          "label": "Hünenberg Zythus",
+          "value": 44.355,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8515996
+        },
+        {
+          "label": "Hünenberg Chämleten",
+          "value": 44.855,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8502306
+        },
+        {
+          "label": "Rotkreuz",
+          "value": 48.9998,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8502202
+        },
+        {
+          "label": "Gisikon-Root",
+          "value": 52.823,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8502201
+        },
+        {
+          "label": "Root D4",
+          "value": 55.268,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8515997
+        },
+        {
+          "label": "Buchrain",
+          "value": 57.065,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8516350
+        },
+        {
+          "label": "Ebikon",
+          "value": 58.58004,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8502200
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:0254e90c",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 660, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Thalwil",
+              "value": 12.09403,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Baar",
+              "value": 26.60834,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Hünenberg Chämleten",
+              "value": 44.855,
+              "factRef": "bahnhoefe.items[12].km"
+            },
+            {
+              "label": "Ebikon",
+              "value": 58.58004,
+              "factRef": "bahnhoefe.items[17].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Thalwil bei km 12.09403, Baar bei km 26.60834, Hünenberg Chämleten bei km 44.855 und Ebikon bei km 58.58004.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:b2cac299",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 660 liegt Zug Schutzengel?",
+          "options": [
+            "12.09403 km",
+            "28.158 km",
+            "39.475 km",
+            "58.58004 km"
+          ],
+          "correct": 2,
+          "explanation": "Zug Schutzengel liegt auf der Linie 660 bei km 39.475.",
+          "factRef": "bahnhoefe.items[7].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 660 sind 3 Tunnel erfasst. Der längste: Albistunnel, 3'360 Meter, erstmals in Betrieb 1897, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1864, bei Friedentaltunnel.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 3,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Albistunnel",
+          "value": 3360,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Zimmerbergtunnel",
+          "value": 1984,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Friedentaltunnel",
+          "value": 120,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Albistunnel",
+              "value": 3360,
+              "factRef": "tunnel.items[1].laenge_m"
+            },
+            {
+              "label": "Zimmerbergtunnel",
+              "value": 1984,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Friedentaltunnel",
+              "value": 120,
+              "factRef": "tunnel.items[2].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Albistunnel 3'360 m, Zimmerbergtunnel 1'984 m und Friedentaltunnel 120 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:8904a279",
+          "type": "single_choice",
+          "prompt": "Albistunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1873",
+            "1885",
+            "1897",
+            "1909"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1897 erfasst.",
+          "factRef": "tunnel.items[1].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:50c3c523",
+          "type": "single_choice",
+          "prompt": "Albistunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[1].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 18 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 25 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

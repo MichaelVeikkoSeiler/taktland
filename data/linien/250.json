@@ -1,0 +1,259 @@
+{
+ "linie": 250,
+ "name": "Lausanne Est - Bern",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Lausanne Est",
+  "ende": "Bern",
+  "km_anfang": 0.522,
+  "km_ende": 97.103
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 42,
+  "anzahl_in_taktland": 30,
+  "items": [
+   {
+    "uic": 8504000,
+    "name": "Pully-Nord",
+    "km": 2.3668
+   },
+   {
+    "uic": 8504010,
+    "name": "La Conversion",
+    "km": 4.0037
+   },
+   {
+    "uic": 8504003,
+    "name": "Bossière",
+    "km": 5.7756
+   },
+   {
+    "uic": 8504011,
+    "name": "Grandvaux",
+    "km": 8.3099
+   },
+   {
+    "uic": 8504012,
+    "name": "Puidoux",
+    "km": 12.1579
+   },
+   {
+    "uic": 8504007,
+    "name": "Moreillon",
+    "km": 14.6198
+   },
+   {
+    "uic": 8504014,
+    "name": "Palézieux",
+    "km": 20.5975
+   },
+   {
+    "uic": 8504020,
+    "name": "Oron",
+    "km": 24.37065
+   },
+   {
+    "uic": 8504021,
+    "name": "Vauderens",
+    "km": 30.49915
+   },
+   {
+    "uic": 8504023,
+    "name": "Romont FR",
+    "km": 40.1979
+   },
+   {
+    "uic": 8504024,
+    "name": "Villaz-St-Pierre",
+    "km": 45.04215
+   },
+   {
+    "uic": 8504025,
+    "name": "Chénens",
+    "km": 49.622
+   },
+   {
+    "uic": 8504026,
+    "name": "Cottens FR",
+    "km": 52.4199
+   },
+   {
+    "uic": 8504027,
+    "name": "Neyruz FR",
+    "km": 55.38
+   },
+   {
+    "uic": 8504028,
+    "name": "Rosé",
+    "km": 57.53535
+   },
+   {
+    "uic": 8504029,
+    "name": "Matran",
+    "km": 60.377
+   },
+   {
+    "uic": 8504030,
+    "name": "Villars-sur-Glâne",
+    "km": 62.1187
+   },
+   {
+    "uic": 8504100,
+    "name": "Fribourg/Freiburg",
+    "km": 65.99265
+   },
+   {
+    "uic": 8519133,
+    "name": "Fribourg/Freiburg Poya",
+    "km": 67.477
+   },
+   {
+    "uic": 8504101,
+    "name": "Düdingen",
+    "km": 72.21455
+   },
+   {
+    "uic": 8504102,
+    "name": "Schmitten FR",
+    "km": 77.85982
+   },
+   {
+    "uic": 8504113,
+    "name": "Wünnewil",
+    "km": 80.34335
+   },
+   {
+    "uic": 8504103,
+    "name": "Flamatt",
+    "km": 84.07302
+   },
+   {
+    "uic": 8504115,
+    "name": "Thörishaus Dorf",
+    "km": 86.88105
+   },
+   {
+    "uic": 8504104,
+    "name": "Thörishaus Station",
+    "km": 88.1977
+   },
+   {
+    "uic": 8504117,
+    "name": "Oberwangen",
+    "km": 89.3712
+   },
+   {
+    "uic": 8504105,
+    "name": "Niederwangen",
+    "km": 91.0415
+   },
+   {
+    "uic": 8504106,
+    "name": "Bern Bümpliz Süd",
+    "km": 92.99537
+   },
+   {
+    "uic": 8504108,
+    "name": "Bern Europaplatz",
+    "km": 94.111
+   },
+   {
+    "uic": 8507000,
+    "name": "Bern",
+    "km": 97.10255
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 5,
+  "laengste": [
+   2
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   3,
+   4
+  ],
+  "anzahl_aelteste": 2,
+  "items": [
+   {
+    "name": "Tunnel de Grandvaux (030)",
+    "laenge_m": 392,
+    "inbetriebnahme_jahr": 1862,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 8.858,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de la Cornallaz(031)",
+    "laenge_m": 494,
+    "inbetriebnahme_jahr": 1862,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 11.238,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Vauderens (101)",
+    "laenge_m": 1980,
+    "inbetriebnahme_jahr": 2001,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 32.56,
+    "bemerkung": null
+   },
+   {
+    "name": "Mühletaltunnel (012)",
+    "laenge_m": 400,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 78.827,
+    "bemerkung": null
+   },
+   {
+    "name": "Flamattertunnel (011)",
+    "laenge_m": 189,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 83.507,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 30 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 42 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

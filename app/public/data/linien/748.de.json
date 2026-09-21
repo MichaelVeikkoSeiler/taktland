@@ -1,0 +1,202 @@
+{
+  "linie": 748,
+  "name": "ZH Altstetten - ZH Oerlikon, DML",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 748 heisst in den offenen Daten «ZH Altstetten - ZH Oerlikon, DML». Als Anfang ist der Betriebspunkt Zurich Altstetten Ost (Abzw) erfasst, als Ende Zurich Oerlikon. Die Kilometrierung reicht von km 197.16 bis km 206.72. Als Bahnhof in Taktland ist auf dieser Linie Zürich Oerlikon erfasst, bei km 206.71983.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Zurich Altstetten Ost (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Zurich Oerlikon",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 197.16,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 206.72,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        },
+        {
+          "label": "Zürich Oerlikon",
+          "value": 206.71983,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503006
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:6c3d65ea",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 748?",
+          "min": 160,
+          "max": 300,
+          "step": 1,
+          "unit": "km",
+          "correct": 206.72,
+          "explanation": "Die Kilometrierung der Linie 748 reicht bis km 206.72. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:f3730fc4",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 748?",
+          "min": 161,
+          "max": 286,
+          "step": 1,
+          "unit": "km",
+          "correct": 197.16,
+          "explanation": "Die Kilometrierung der Linie 748 beginnt bei km 197.16.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 748 sind 3 Tunnel erfasst. Der längste: Zürich Weinbergtunnel, 4'977 Meter, erstmals in Betrieb 2014, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 2012, bei Tunnel Bahnhof Löwenstrasse.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 3,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Zürich Weinbergtunnel",
+          "value": 4977,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Tunnel Bahnhof Löwenstrasse",
+          "value": 584,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Oerlikontunnel",
+          "value": 124,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Zürich Weinbergtunnel",
+              "value": 4977,
+              "factRef": "tunnel.items[1].laenge_m"
+            },
+            {
+              "label": "Tunnel Bahnhof Löwenstrasse",
+              "value": 584,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Oerlikontunnel",
+              "value": 124,
+              "factRef": "tunnel.items[2].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Zürich Weinbergtunnel 4'977 m, Tunnel Bahnhof Löwenstrasse 584 m und Oerlikontunnel 124 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:be158eae",
+          "type": "single_choice",
+          "prompt": "Zürich Weinbergtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1978",
+            "1990",
+            "2002",
+            "2014"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 2014 erfasst.",
+          "factRef": "tunnel.items[1].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:44563b1e",
+          "type": "single_choice",
+          "prompt": "Zürich Weinbergtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[1].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 1 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 6 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

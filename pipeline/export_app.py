@@ -3,6 +3,8 @@
 
 - index.json  : alle SBB-Bahnhoefe, mit Angabe ob ein Profil vorliegt
 - profile/    : die fertigen Profile
+- linien.json : die Linien mit Seite, und welcher Bahnhof auf welcher liegt
+- linien/     : die fertigen Linienprofile
 
 Der Index fuehrt auch Bahnhoefe ohne Profil auf. Die App soll zeigen, was es
 noch nicht gibt, statt so zu tun, als gaebe es nur die vier fertigen.
@@ -14,6 +16,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 FACTS = ROOT / "data" / "facts"
 PROFILES = ROOT / "data" / "profiles"
+LINIEN = ROOT / "data" / "linien"
+LINIENPROFILE = ROOT / "data" / "linienprofile"
 ZIEL = ROOT / "app" / "public" / "data"
 
 
@@ -62,6 +66,33 @@ def main():
     print(f"index.json: {len(eintraege)} Bahnhöfe, davon {index['mit_profil']} mit Profil "
           f"({groesse/1024:.0f} KB)")
     print(f"profile/: {len(list((ZIEL / 'profile').glob('*.json')))} Dateien")
+    linien()
+
+
+def linien():
+    """Das Verzeichnis der Linienseiten. nach_bahnhof führt von der
+    Bahnhofsseite zu den Linien, auf denen der Bahnhof erfasst ist."""
+    (ZIEL / "linien").mkdir(parents=True, exist_ok=True)
+    for alt in (ZIEL / "linien").glob("*.json"):
+        alt.unlink()
+    eintraege, nach_bahnhof, staende = [], {}, []
+    for p in sorted(LINIENPROFILE.glob("*.json"), key=lambda x: int(x.name.split(".")[0])):
+        d = json.loads(p.read_text(encoding="utf-8"))
+        f = json.loads((LINIEN / f"{d['linie']}.json").read_text(encoding="utf-8"))
+        shutil.copy(p, ZIEL / "linien" / p.name)
+        staende.append(f["datenstand"])
+        eintraege.append({
+            "linie": d["linie"],
+            "name": d["name"],
+            "bahnhoefe": f["bahnhoefe"]["anzahl_in_taktland"],
+            "tunnel": (f.get("tunnel") or {}).get("anzahl_erfasst", 0),
+        })
+        for it in f["bahnhoefe"]["items"]:
+            nach_bahnhof.setdefault(str(it["uic"]), []).append(d["linie"])
+    verzeichnis = {"stand": max(staende) if staende else None, "linien": eintraege,
+                   "nach_bahnhof": nach_bahnhof}
+    (ZIEL / "linien.json").write_text(json.dumps(verzeichnis, ensure_ascii=False), encoding="utf-8")
+    print(f"linien.json: {len(eintraege)} Linien, {len(nach_bahnhof)} Bahnhöfe verknüpft")
 
 
 if __name__ == "__main__":

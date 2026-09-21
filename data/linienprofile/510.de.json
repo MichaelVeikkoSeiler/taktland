@@ -1,0 +1,212 @@
+{
+  "linie": 510,
+  "name": "Mulhouse-Ville - Basel SBB",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 510 heisst in den offenen Daten «Mulhouse-Ville - Basel SBB». Als Anfang ist der Betriebspunkt Mulhouse erfasst, als Ende Basel SBB. Die Kilometrierung reicht von km 108.32 bis km 142.203.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Mulhouse",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Basel SBB",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 108.32,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 142.203,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:9b294ad5",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 510?",
+          "min": 116,
+          "max": 207,
+          "step": 1,
+          "unit": "km",
+          "correct": 142.203,
+          "explanation": "Die Kilometrierung der Linie 510 reicht bis km 142.203. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:5aef6b5f",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 510?",
+          "min": 88,
+          "max": 158,
+          "step": 1,
+          "unit": "km",
+          "correct": 108.32,
+          "explanation": "Die Kilometrierung der Linie 510 beginnt bei km 108.32.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 510 führt die Liste der Betriebspunkte 4 Einträge. Davon sind 2 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 4,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Basel St. Johann",
+          "value": 137.81135,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500016
+        },
+        {
+          "label": "Basel SBB",
+          "value": 142.20294,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8500010
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:71eddfa4",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 510 liegt Basel SBB?",
+          "options": [
+            "137.81135 km",
+            "142.20294 km"
+          ],
+          "correct": 1,
+          "explanation": "Basel SBB liegt auf der Linie 510 bei km 142.20294.",
+          "factRef": "bahnhoefe.items[1].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 510 sind 2 Tunnel erfasst. Der längste: Kannenfeldtunnel, 800 Meter, erstmals in Betrieb 1901, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 1901, bei Kannenfeldtunnel und Schützenmatttunnel.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 2,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Kannenfeldtunnel",
+          "value": 800,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Schützenmatttunnel",
+          "value": 286,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:35f9235c",
+          "type": "single_choice",
+          "prompt": "Kannenfeldtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1889",
+            "1901",
+            "1913",
+            "1925"
+          ],
+          "correct": 1,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1901 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:7c2f59f9",
+          "type": "single_choice",
+          "prompt": "Kannenfeldtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 2 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 4 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

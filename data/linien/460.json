@@ -1,0 +1,229 @@
+{
+ "linie": 460,
+ "name": "Gumligen Sud - Fluhmuhle",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Gumligen Sud (Abzw)",
+  "ende": "Fluhmuhle (Abzw)",
+  "km_anfang": 8.44,
+  "km_ende": 91.831
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 27,
+  "anzahl_in_taktland": 18,
+  "items": [
+   {
+    "uic": 8508200,
+    "name": "Worb SBB",
+    "km": 12.98805
+   },
+   {
+    "uic": 8508201,
+    "name": "Tägertschi",
+    "km": 17.22084
+   },
+   {
+    "uic": 8508202,
+    "name": "Konolfingen",
+    "km": 20.51824
+   },
+   {
+    "uic": 8508203,
+    "name": "Zäziwil",
+    "km": 24.33955
+   },
+   {
+    "uic": 8508204,
+    "name": "Bowil",
+    "km": 27.27282
+   },
+   {
+    "uic": 8508205,
+    "name": "Signau",
+    "km": 30.3682
+   },
+   {
+    "uic": 8508206,
+    "name": "Emmenmatt",
+    "km": 34.09164
+   },
+   {
+    "uic": 8508207,
+    "name": "Langnau i.E.",
+    "km": 37.4672
+   },
+   {
+    "uic": 8508208,
+    "name": "Trubschachen",
+    "km": 43.13448
+   },
+   {
+    "uic": 8508210,
+    "name": "Escholzmatt",
+    "km": 52.18869
+   },
+   {
+    "uic": 8508211,
+    "name": "Schüpfheim",
+    "km": 60.06505
+   },
+   {
+    "uic": 8508212,
+    "name": "Hasle LU",
+    "km": 64.14717
+   },
+   {
+    "uic": 8508213,
+    "name": "Entlebuch",
+    "km": 66.36673
+   },
+   {
+    "uic": 8508215,
+    "name": "Wolhusen",
+    "km": 74.35719
+   },
+   {
+    "uic": 8508216,
+    "name": "Werthenstein",
+    "km": 76.1464
+   },
+   {
+    "uic": 8508217,
+    "name": "Schachen LU",
+    "km": 80.136
+   },
+   {
+    "uic": 8508218,
+    "name": "Malters",
+    "km": 83.115
+   },
+   {
+    "uic": 8508219,
+    "name": "Luzern Littau",
+    "km": 89.17591
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 8,
+  "laengste": [
+   7
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "anzahl_aelteste": 8,
+  "items": [
+   {
+    "name": "Wiggentunnel",
+    "laenge_m": 40,
+    "inbetriebnahme_jahr": 1875,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 48.727,
+    "bemerkung": null
+   },
+   {
+    "name": "Wilzigentunnel",
+    "laenge_m": 250,
+    "inbetriebnahme_jahr": 1875,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 67.466,
+    "bemerkung": null
+   },
+   {
+    "name": "Entlenstaldentunnel",
+    "laenge_m": 58,
+    "inbetriebnahme_jahr": 1875,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 68.599,
+    "bemerkung": null
+   },
+   {
+    "name": "Oberer Schächlitunnel",
+    "laenge_m": 45,
+    "inbetriebnahme_jahr": 1875,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 69.429,
+    "bemerkung": null
+   },
+   {
+    "name": "Unterer Schächlitunnel",
+    "laenge_m": 95,
+    "inbetriebnahme_jahr": 1875,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 69.551,
+    "bemerkung": null
+   },
+   {
+    "name": "Wolhusentunnel",
+    "laenge_m": 150,
+    "inbetriebnahme_jahr": 1875,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 73.699,
+    "bemerkung": null
+   },
+   {
+    "name": "Werthensteintunnel",
+    "laenge_m": 30,
+    "inbetriebnahme_jahr": 1875,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 75.916,
+    "bemerkung": null
+   },
+   {
+    "name": "Zimmereggtunnel",
+    "laenge_m": 1134,
+    "inbetriebnahme_jahr": 1875,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 90.855,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 18 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 27 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

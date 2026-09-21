@@ -1,0 +1,333 @@
+{
+  "linie": 711,
+  "name": "ZH Hardbrucke - Kollermuhle",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 711 heisst in den offenen Daten «ZH Hardbrucke - Kollermuhle». Als Anfang ist der Betriebspunkt Zurich Hardbrucke erfasst, als Ende Kollermuhle (Abzw). Die Kilometrierung reicht von km 1.912 bis km 36.368.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Zurich Hardbrucke",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Kollermuhle (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 1.912,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 36.368,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:df3da903",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 711?",
+          "min": 29,
+          "max": 53,
+          "step": 1,
+          "unit": "km",
+          "correct": 36.368,
+          "explanation": "Die Kilometrierung der Linie 711 reicht bis km 36.368. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:1bbc9dba",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 711?",
+          "min": 1.5,
+          "max": 3.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 1.912,
+          "explanation": "Die Kilometrierung der Linie 711 beginnt bei km 1.912.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 711 führt die Liste der Betriebspunkte 17 Einträge. Davon sind 12 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 17,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Zürich Hardbrücke",
+          "value": 1.91229,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503020
+        },
+        {
+          "label": "Zürich Altstetten",
+          "value": 4.16414,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8503001
+        },
+        {
+          "label": "Urdorf",
+          "value": 8.57532,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8502220
+        },
+        {
+          "label": "Urdorf Weihermatt",
+          "value": 9.8447,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8502229
+        },
+        {
+          "label": "Birmensdorf ZH",
+          "value": 12.72008,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8502221
+        },
+        {
+          "label": "Bonstetten-Wettswil",
+          "value": 18.05825,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8502222
+        },
+        {
+          "label": "Hedingen",
+          "value": 22.10764,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8502223
+        },
+        {
+          "label": "Affoltern am Albis",
+          "value": 24.84132,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8502224
+        },
+        {
+          "label": "Mettmenstetten",
+          "value": 28.91015,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8502225
+        },
+        {
+          "label": "Knonau",
+          "value": 31.72842,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8502226
+        },
+        {
+          "label": "Steinhausen",
+          "value": 34.73388,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8502227
+        },
+        {
+          "label": "Steinhausen Rigiblick",
+          "value": 35.487,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8518459
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:d1a8084b",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 711, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Zürich Hardbrücke",
+              "value": 1.91229,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Urdorf Weihermatt",
+              "value": 9.8447,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Affoltern am Albis",
+              "value": 24.84132,
+              "factRef": "bahnhoefe.items[7].km"
+            },
+            {
+              "label": "Steinhausen Rigiblick",
+              "value": 35.487,
+              "factRef": "bahnhoefe.items[11].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Zürich Hardbrücke bei km 1.91229, Urdorf Weihermatt bei km 9.8447, Affoltern am Albis bei km 24.84132 und Steinhausen Rigiblick bei km 35.487.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:189c4103",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 711 liegt Bonstetten-Wettswil?",
+          "options": [
+            "1.91229 km",
+            "12.72008 km",
+            "18.05825 km",
+            "35.487 km"
+          ],
+          "correct": 2,
+          "explanation": "Bonstetten-Wettswil liegt auf der Linie 711 bei km 18.05825.",
+          "factRef": "bahnhoefe.items[5].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 711 ist 1 Tunnel erfasst: Landikontunnel, 484 Meter, erstmals in Betrieb 1864, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Landikontunnel",
+          "value": 484,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:1dca37f9",
+          "type": "single_choice",
+          "prompt": "Landikontunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "410 m",
+            "484 m",
+            "580 m",
+            "680 m"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 484 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:bff4542c",
+          "type": "single_choice",
+          "prompt": "Landikontunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1840",
+            "1852",
+            "1864",
+            "1876"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1864 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:a6ecbf03",
+          "type": "single_choice",
+          "prompt": "Landikontunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 12 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 17 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

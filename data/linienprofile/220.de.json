@@ -1,0 +1,164 @@
+{
+  "linie": 220,
+  "name": "Bern - Neuchatel Est (bif)",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 220 heisst in den offenen Daten «Bern - Neuchatel Est (bif)». Als Anfang ist der Betriebspunkt Bern Henkerbrunnli erfasst, als Ende Neuchatel Est (bif). Die Kilometrierung reicht von km -0.4 bis km 42.087. Als Bahnhof in Taktland ist auf dieser Linie Bern erfasst, bei km 0.10552.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Bern Henkerbrunnli",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Neuchatel Est (bif)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": -0.4,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 42.087,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        },
+        {
+          "label": "Bern",
+          "value": 0.10552,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8507000
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:d78584df",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 220?",
+          "min": 34,
+          "max": 62,
+          "step": 1,
+          "unit": "km",
+          "correct": 42.087,
+          "explanation": "Die Kilometrierung der Linie 220 reicht bis km 42.087. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 220 ist 1 Tunnel erfasst: Donnerbühltunnel, 400 Meter, erstmals in Betrieb 1959, Tunnelsystem «1-Röhre / 2-Spuren».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Donnerbühltunnel",
+          "value": 400,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:76d245ea",
+          "type": "single_choice",
+          "prompt": "Donnerbühltunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "340 m",
+            "400 m",
+            "480 m",
+            "560 m"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 400 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:39d196d5",
+          "type": "single_choice",
+          "prompt": "Donnerbühltunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1923",
+            "1935",
+            "1947",
+            "1959"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1959 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:f8c4ac81",
+          "type": "single_choice",
+          "prompt": "Donnerbühltunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 1 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 5 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

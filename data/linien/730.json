@@ -1,0 +1,182 @@
+{
+ "linie": 730,
+ "name": "Zurich Stadelhofen - Rapperswil",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Zurich Stadelhofen",
+  "ende": "Rapperswil SG",
+  "km_anfang": 5.699,
+  "km_ende": 35.973
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 18,
+  "anzahl_in_taktland": 16,
+  "items": [
+   {
+    "uic": 8503003,
+    "name": "Zürich Stadelhofen",
+    "km": 5.69924
+   },
+   {
+    "uic": 8503004,
+    "name": "Zürich Tiefenbrunnen",
+    "km": 7.94141
+   },
+   {
+    "uic": 8503100,
+    "name": "Zollikon",
+    "km": 9.53595
+   },
+   {
+    "uic": 8503141,
+    "name": "Küsnacht Goldbach",
+    "km": 10.80557
+   },
+   {
+    "uic": 8503101,
+    "name": "Küsnacht ZH",
+    "km": 11.73777
+   },
+   {
+    "uic": 8503102,
+    "name": "Erlenbach ZH",
+    "km": 13.47249
+   },
+   {
+    "uic": 8503111,
+    "name": "Winkel am Zürichsee",
+    "km": 14.58931
+   },
+   {
+    "uic": 8503103,
+    "name": "Herrliberg-Feldmeilen",
+    "km": 16.61921
+   },
+   {
+    "uic": 8503104,
+    "name": "Meilen",
+    "km": 19.46176
+   },
+   {
+    "uic": 8503105,
+    "name": "Uetikon",
+    "km": 22.41884
+   },
+   {
+    "uic": 8503106,
+    "name": "Männedorf",
+    "km": 23.64843
+   },
+   {
+    "uic": 8503107,
+    "name": "Stäfa",
+    "km": 26.48672
+   },
+   {
+    "uic": 8503108,
+    "name": "Uerikon",
+    "km": 28.96939
+   },
+   {
+    "uic": 8503109,
+    "name": "Feldbach",
+    "km": 31.40364
+   },
+   {
+    "uic": 8503112,
+    "name": "Kempraten",
+    "km": 33.83199
+   },
+   {
+    "uic": 8503110,
+    "name": "Rapperswil SG",
+    "km": 35.97301
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 4,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1,
+   3
+  ],
+  "anzahl_aelteste": 3,
+  "items": [
+   {
+    "name": "Riesbachtunnel",
+    "laenge_m": 1355,
+    "inbetriebnahme_jahr": 1894,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 6.544,
+    "bemerkung": null
+   },
+   {
+    "name": "Erlenbachtunnel",
+    "laenge_m": 72,
+    "inbetriebnahme_jahr": 1894,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 13.927,
+    "bemerkung": null
+   },
+   {
+    "name": "Hitzbergtunnel",
+    "laenge_m": 71,
+    "inbetriebnahme_jahr": 1967,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 13.933,
+    "bemerkung": null
+   },
+   {
+    "name": "Lattenbergtunnel",
+    "laenge_m": 93,
+    "inbetriebnahme_jahr": 1894,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 25.999,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 18 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

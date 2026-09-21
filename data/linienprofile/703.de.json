@@ -1,0 +1,238 @@
+{
+  "linie": 703,
+  "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 703 heisst in den offenen Daten «ZH Oerlikon Nord - Wettingen - Gruemet». Als Anfang ist der Betriebspunkt Zurich Oerlikon Nord (Abzw) erfasst, als Ende Gruemet (Abzw). Die Kilometrierung reicht von km 22.596 bis km 50.647.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Zurich Oerlikon Nord (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Gruemet (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 22.596,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 50.647,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:75161ae3",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 703?",
+          "min": 41,
+          "max": 74,
+          "step": 1,
+          "unit": "km",
+          "correct": 50.647,
+          "explanation": "Die Kilometrierung der Linie 703 reicht bis km 50.647. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:51b50ff1",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 703?",
+          "min": 18,
+          "max": 33,
+          "step": 1,
+          "unit": "km",
+          "correct": 22.596,
+          "explanation": "Die Kilometrierung der Linie 703 beginnt bei km 22.596.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 703 führt die Liste der Betriebspunkte 15 Einträge. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 15,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Zürich Seebach",
+          "value": 23.30243,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503007
+        },
+        {
+          "label": "Zürich Affoltern",
+          "value": 26.14225,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8503008
+        },
+        {
+          "label": "Regensdorf-Watt",
+          "value": 29.49171,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8503526
+        },
+        {
+          "label": "Buchs-Dällikon",
+          "value": 32.85719,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8503527
+        },
+        {
+          "label": "Otelfingen Golfpark",
+          "value": 35.3969,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8503525
+        },
+        {
+          "label": "Otelfingen",
+          "value": 36.52178,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8503528
+        },
+        {
+          "label": "Würenlos",
+          "value": 39.04548,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8503529
+        },
+        {
+          "label": "Wettingen",
+          "value": 42.73435,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8503505
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:fd107316",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 703, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Zürich Seebach",
+              "value": 23.30243,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Regensdorf-Watt",
+              "value": 29.49171,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Otelfingen",
+              "value": 36.52178,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Wettingen",
+              "value": 42.73435,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Zürich Seebach bei km 23.30243, Regensdorf-Watt bei km 29.49171, Otelfingen bei km 36.52178 und Wettingen bei km 42.73435.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:8d373ac0",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 703 liegt Buchs-Dällikon?",
+          "options": [
+            "23.30243 km",
+            "29.49171 km",
+            "32.85719 km",
+            "42.73435 km"
+          ],
+          "correct": 2,
+          "explanation": "Buchs-Dällikon liegt auf der Linie 703 bei km 32.85719.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 15 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

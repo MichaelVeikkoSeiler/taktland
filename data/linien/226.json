@@ -1,0 +1,252 @@
+{
+ "linie": 226,
+ "name": "Sonceboz-Sombeval - Moutier - Delemont",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Sonceboz-Sombeval Ouest",
+  "ende": "Delemont",
+  "km_anfang": 49.496,
+  "km_ende": 84.607
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 11,
+  "anzahl_in_taktland": 8,
+  "items": [
+   {
+    "uic": 8500100,
+    "name": "Tavannes",
+    "km": 55.17409
+   },
+   {
+    "uic": 8500101,
+    "name": "Reconvilier",
+    "km": 58.01717
+   },
+   {
+    "uic": 8500135,
+    "name": "Pontenet",
+    "km": 60.1214
+   },
+   {
+    "uic": 8500102,
+    "name": "Malleray-Bévilard",
+    "km": 61.78915
+   },
+   {
+    "uic": 8500103,
+    "name": "Sorvilier",
+    "km": 64.19957
+   },
+   {
+    "uic": 8500104,
+    "name": "Court",
+    "km": 67.04431
+   },
+   {
+    "uic": 8500105,
+    "name": "Moutier",
+    "km": 73.39849
+   },
+   {
+    "uic": 8500109,
+    "name": "Delémont",
+    "km": 84.6069
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 18,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Tunnel de Pierre-Pertuis (045)",
+    "laenge_m": 1294,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 54.085,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Court 1 (066)",
+    "laenge_m": 12,
+    "inbetriebnahme_jahr": 1877,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 67.838,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Court 2 (067)",
+    "laenge_m": 184,
+    "inbetriebnahme_jahr": 1900,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 68.061,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de la Verrerie (068)",
+    "laenge_m": 604,
+    "inbetriebnahme_jahr": 1877,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 70.564,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 1 (048)",
+    "laenge_m": 31,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 73.806,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 2 (049)",
+    "laenge_m": 14,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 73.94,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 3 (050)",
+    "laenge_m": 7,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 73.962,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 4 (051)",
+    "laenge_m": 8,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 74.073,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 5 (052)",
+    "laenge_m": 60,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 74.576,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 6 (053)",
+    "laenge_m": 23,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 74.721,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 7 (054)",
+    "laenge_m": 54,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 74.786,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 8 (055)",
+    "laenge_m": 19,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 74.98,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Moutier 9 (056)",
+    "laenge_m": 13,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 75.133,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel Verrerie de Roches",
+    "laenge_m": 108,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 77.585,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel Verrerie de Moutier",
+    "laenge_m": 32,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 77.896,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Choindez 1 (059)",
+    "laenge_m": 29,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 79.343,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Choindez 3 (086)",
+    "laenge_m": 254,
+    "inbetriebnahme_jahr": 1932,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 79.825,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Choindez 2 (060)",
+    "laenge_m": 165,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 79.826,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 11 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

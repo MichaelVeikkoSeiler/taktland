@@ -1,0 +1,87 @@
+{
+ "linie": 253,
+ "name": "Payerne Est - Fribourg Nord",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Payerne Est (bif)",
+  "ende": "Fribourg Nord",
+  "km_anfang": 28.927,
+  "km_ende": 48.925
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 12,
+  "anzahl_in_taktland": 6,
+  "items": [
+   {
+    "uic": 8504135,
+    "name": "Corcelles-Sud",
+    "km": 29.73142
+   },
+   {
+    "uic": 8504136,
+    "name": "Cousset",
+    "km": 31.76659
+   },
+   {
+    "uic": 8504137,
+    "name": "Léchelles",
+    "km": 35.47849
+   },
+   {
+    "uic": 8504138,
+    "name": "Grolley",
+    "km": 40.11814
+   },
+   {
+    "uic": 8504139,
+    "name": "Belfaux CFF",
+    "km": 44.44635
+   },
+   {
+    "uic": 8504181,
+    "name": "Givisiez",
+    "km": 46.269
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 6 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

@@ -105,6 +105,25 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
         </Punkte>
       </Abschnitt>
 
+      <Abschnitt titel="Linien">
+        <Punkte>
+          <li>
+            Unter «Linien» stehen Strecken der Infrastruktur mit ihrer Nummer, etwa Linie 600.
+            Das sind keine Zuglinien wie eine S-Bahn.
+          </li>
+          <li>
+            Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach ihrem Kilometer geordnet
+            und die erfassten Tunnel mit Länge, Jahr der ersten Inbetriebnahme und
+            Tunnelsystem. Jeder Bahnhof in der Liste führt zu seiner Seite, und die
+            Bahnhofsseite führt zu seinen Linien.
+          </li>
+          <li>
+            Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Länge, Baujahr und
+            Anzahl Gleise einer Linie stehen nicht in den offenen Daten.
+          </li>
+        </Punkte>
+      </Abschnitt>
+
       <Abschnitt titel="Grosser, mittlerer, kleiner Bahnhof">
         <Punkte>
           <li>Grosser Bahnhof: Für ihn ist ein Bahnhofplan veröffentlicht.</li>

@@ -1,0 +1,282 @@
+{
+ "linie": 210,
+ "name": "Daillens - Biel/Bienne",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Daillens (bif)",
+  "ende": "Biel/Bienne",
+  "km_anfang": 19.115,
+  "km_ende": 104.5
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 36,
+  "anzahl_in_taktland": 25,
+  "items": [
+   {
+    "uic": 8501114,
+    "name": "Eclépens",
+    "km": 21.379
+   },
+   {
+    "uic": 8501113,
+    "name": "Bavois",
+    "km": 24.87822
+   },
+   {
+    "uic": 8501112,
+    "name": "Chavornay",
+    "km": 27.45883
+   },
+   {
+    "uic": 8501111,
+    "name": "Essert-Pittet",
+    "km": 29.67427
+   },
+   {
+    "uic": 8501110,
+    "name": "Ependes VD",
+    "km": 32.69977
+   },
+   {
+    "uic": 8504200,
+    "name": "Yverdon-les-Bains",
+    "km": 39.1341
+   },
+   {
+    "uic": 8504201,
+    "name": "Grandson",
+    "km": 42.71125
+   },
+   {
+    "uic": 8504203,
+    "name": "Concise",
+    "km": 50.752
+   },
+   {
+    "uic": 8504204,
+    "name": "Vaumarcus",
+    "km": 54.85391
+   },
+   {
+    "uic": 8504205,
+    "name": "Gorgier-St-Aubin",
+    "km": 58.097
+   },
+   {
+    "uic": 8504206,
+    "name": "Bevaix",
+    "km": 62.27922
+   },
+   {
+    "uic": 8504208,
+    "name": "Boudry",
+    "km": 66.25347
+   },
+   {
+    "uic": 8504209,
+    "name": "Colombier NE",
+    "km": 67.66967
+   },
+   {
+    "uic": 8504219,
+    "name": "Auvernier",
+    "km": 70.34416
+   },
+   {
+    "uic": 8504220,
+    "name": "Neuchâtel-Serrières",
+    "km": 72.39006
+   },
+   {
+    "uic": 8504221,
+    "name": "Neuchâtel",
+    "km": 75.29488
+   },
+   {
+    "uic": 8504222,
+    "name": "St-Blaise CFF",
+    "km": 79.36773
+   },
+   {
+    "uic": 8504223,
+    "name": "Cornaux NE",
+    "km": 83.60063
+   },
+   {
+    "uic": 8504224,
+    "name": "Cressier NE",
+    "km": 85.55013
+   },
+   {
+    "uic": 8504225,
+    "name": "Le Landeron",
+    "km": 87.71714
+   },
+   {
+    "uic": 8504226,
+    "name": "La Neuveville",
+    "km": 90.04861
+   },
+   {
+    "uic": 8504227,
+    "name": "Ligerz",
+    "km": 94.00279
+   },
+   {
+    "uic": 8504228,
+    "name": "Twann",
+    "km": 95.976
+   },
+   {
+    "uic": 8504229,
+    "name": "Tüscherz",
+    "km": 99.953
+   },
+   {
+    "uic": 8504300,
+    "name": "Biel/Bienne",
+    "km": 104.5
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 11,
+  "laengste": [
+   10
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   3
+  ],
+  "anzahl_aelteste": 2,
+  "items": [
+   {
+    "name": "Tunnel du Mormont sud 1",
+    "laenge_m": 303,
+    "inbetriebnahme_jahr": 1856,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 21.709,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel du Mormont sud 3",
+    "laenge_m": 328,
+    "inbetriebnahme_jahr": 2010,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 21.738,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel du Mormont nord 4",
+    "laenge_m": 188,
+    "inbetriebnahme_jahr": 2010,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 22.061,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel du Mormont nord 2",
+    "laenge_m": 182,
+    "inbetriebnahme_jahr": 1856,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 22.068,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Concise",
+    "laenge_m": 366,
+    "inbetriebnahme_jahr": 2000,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 50.487,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Fin de Lance (099)",
+    "laenge_m": 287,
+    "inbetriebnahme_jahr": 2000,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 51.286,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de la Raisse (098)",
+    "laenge_m": 1256,
+    "inbetriebnahme_jahr": 2000,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 53.401,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel St-Aubin-Sauges (097)",
+    "laenge_m": 2253,
+    "inbetriebnahme_jahr": 1999,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 56.813,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Vauseyon (005)",
+    "laenge_m": 58,
+    "inbetriebnahme_jahr": 1859,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 73.534,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de St-Blaise (004)",
+    "laenge_m": 155,
+    "inbetriebnahme_jahr": 1927,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 80.141,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel Vingelz (092)",
+    "laenge_m": 2432,
+    "inbetriebnahme_jahr": 1968,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 103.11,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 25 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 36 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

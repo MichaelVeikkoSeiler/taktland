@@ -1,0 +1,134 @@
+{
+ "linie": 503,
+ "name": "Sissach - Laufelfingen - Olten",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Sissach",
+  "ende": "Olten",
+  "km_anfang": 21.104,
+  "km_ende": 39.292
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 9,
+  "anzahl_in_taktland": 8,
+  "items": [
+   {
+    "uic": 8500026,
+    "name": "Sissach",
+    "km": 21.10387
+   },
+   {
+    "uic": 8500031,
+    "name": "Diepflingen",
+    "km": 23.7
+   },
+   {
+    "uic": 8500032,
+    "name": "Sommerau",
+    "km": 25.27831
+   },
+   {
+    "uic": 8500033,
+    "name": "Rümlingen",
+    "km": 26.889
+   },
+   {
+    "uic": 8500034,
+    "name": "Buckten",
+    "km": 28.815
+   },
+   {
+    "uic": 8500035,
+    "name": "Läufelfingen",
+    "km": 30.82169
+   },
+   {
+    "uic": 8500037,
+    "name": "Trimbach",
+    "km": 36.2721
+   },
+   {
+    "uic": 8500218,
+    "name": "Olten",
+    "km": 39.29156
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 3,
+  "laengste": [
+   2
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1,
+   2
+  ],
+  "anzahl_aelteste": 3,
+  "items": [
+   {
+    "name": "Bucktentunnel",
+    "laenge_m": 263,
+    "inbetriebnahme_jahr": 1857,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 29.161,
+    "bemerkung": null
+   },
+   {
+    "name": "Mühlefluhtunnel BL",
+    "laenge_m": 60,
+    "inbetriebnahme_jahr": 1857,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 29.915,
+    "bemerkung": null
+   },
+   {
+    "name": "Ob. Hauensteintunnel",
+    "laenge_m": 2495,
+    "inbetriebnahme_jahr": 1857,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 32.245,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 9 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

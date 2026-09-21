@@ -1,0 +1,120 @@
+{
+ "linie": 770,
+ "name": "Bulach - Eglisau - Neuhausen",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Bulach",
+  "ende": "Neuhausen",
+  "km_anfang": 16.254,
+  "km_ende": 40.126
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 9,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8503400,
+    "name": "Bülach",
+    "km": 16.25419
+   },
+   {
+    "uic": 8503401,
+    "name": "Glattfelden",
+    "km": 19.39512
+   },
+   {
+    "uic": 8503402,
+    "name": "Eglisau",
+    "km": 22.24718
+   },
+   {
+    "uic": 8503403,
+    "name": "Hüntwangen-Wil",
+    "km": 23.60162
+   },
+   {
+    "uic": 8503404,
+    "name": "Rafz",
+    "km": 27.03774
+   },
+   {
+    "uic": 8518924,
+    "name": "Neuhausen Rheinfall",
+    "km": 39.05
+   },
+   {
+    "uic": 8503423,
+    "name": "Neuhausen",
+    "km": 40.12551
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 2,
+  "laengste": [
+   1
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1
+  ],
+  "anzahl_aelteste": 2,
+  "items": [
+   {
+    "name": "Fischerhölzlitunnel",
+    "laenge_m": 112,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 38.159,
+    "bemerkung": null
+   },
+   {
+    "name": "Neuhausertunnel",
+    "laenge_m": 143,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 39.222,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 9 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

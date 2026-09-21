@@ -1,0 +1,206 @@
+{
+ "linie": 225,
+ "name": "Biel/Bienne West - La Chaux-de-Fonds",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Biel/Bienne West",
+  "ende": "La Chaux-de-Fonds Nord",
+  "km_anfang": 34.119,
+  "km_ende": 77.401
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 18,
+  "anzahl_in_taktland": 12,
+  "items": [
+   {
+    "uic": 8504301,
+    "name": "Frinvillier-Taubenloch",
+    "km": 39.11025
+   },
+   {
+    "uic": 8504302,
+    "name": "Reuchenette-Péry",
+    "km": 42.0368
+   },
+   {
+    "uic": 8504303,
+    "name": "La Heutte",
+    "km": 43.68453
+   },
+   {
+    "uic": 8504304,
+    "name": "Sonceboz-Sombeval",
+    "km": 48.28167
+   },
+   {
+    "uic": 8504305,
+    "name": "Corgémont",
+    "km": 50.22
+   },
+   {
+    "uic": 8504306,
+    "name": "Cortébert",
+    "km": 53.11778
+   },
+   {
+    "uic": 8504307,
+    "name": "Courtelary",
+    "km": 56.46951
+   },
+   {
+    "uic": 8504308,
+    "name": "Cormoret",
+    "km": 57.63528
+   },
+   {
+    "uic": 8504309,
+    "name": "Villeret",
+    "km": 60.62795
+   },
+   {
+    "uic": 8504310,
+    "name": "St-Imier",
+    "km": 62.38107
+   },
+   {
+    "uic": 8504311,
+    "name": "Sonvilier",
+    "km": 65.17342
+   },
+   {
+    "uic": 8504312,
+    "name": "Renan BE",
+    "km": 69.02207
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 9,
+  "laengste": [
+   7
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "anzahl_aelteste": 7,
+  "items": [
+   {
+    "name": "Tunnel de Pasquart (038)",
+    "laenge_m": 52,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 34.716,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Taubenloch 1 ( 039 )",
+    "laenge_m": 239,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 37.973,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Taubenloch 2 ( 040 )",
+    "laenge_m": 320,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 38.338,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Taubenloch 3 ( 041 )",
+    "laenge_m": 220,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 39.316,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Taubenloch 4 ( 042 )",
+    "laenge_m": 163,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 39.627,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Taubenloch 5 ( 043 )",
+    "laenge_m": 164,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 40.349,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Tournedos (044)",
+    "laenge_m": 104,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 47.287,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel des Crosettes (075)",
+    "laenge_m": 1618,
+    "inbetriebnahme_jahr": 1888,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 75.255,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Combe (Creux, 076)",
+    "laenge_m": 230,
+    "inbetriebnahme_jahr": 1888,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 77.08,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 12 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 18 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

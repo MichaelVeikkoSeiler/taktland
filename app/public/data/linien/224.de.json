@@ -1,0 +1,330 @@
+{
+  "linie": 224,
+  "name": "Chambrelien Nord - Le Locle (Frontiere)",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 224 heisst in den offenen Daten «Chambrelien Nord - Le Locle (Frontiere)». Als Anfang ist der Betriebspunkt Chambrelien Nord (bif) erfasst, als Ende Le Locle-Frontiere. Die Kilometrierung reicht von km 10.585 bis km 39.58.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Chambrelien Nord (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Le Locle-Frontiere",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 10.585,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 39.58,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:916994ee",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 224?",
+          "min": 32,
+          "max": 58,
+          "step": 1,
+          "unit": "km",
+          "correct": 39.58,
+          "explanation": "Die Kilometrierung der Linie 224 reicht bis km 39.58. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:0f49b2b2",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 224?",
+          "min": 8.5,
+          "max": 15.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 10.585,
+          "explanation": "Die Kilometrierung der Linie 224 beginnt bei km 10.585.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 224 führt die Liste der Betriebspunkte 12 Einträge. Davon sind 7 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 7,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Les Geneveys-sur-Coffrane",
+          "value": 16.8975,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8504236
+        },
+        {
+          "label": "Les Hauts-Geneveys",
+          "value": 20.98843,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504237
+        },
+        {
+          "label": "La Chaux-de-Fonds",
+          "value": 29.457,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8504314
+        },
+        {
+          "label": "La Chaux-de-Fonds Les Forges",
+          "value": 30.73,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8504321
+        },
+        {
+          "label": "Le Crêt-du-Locle",
+          "value": 33.4,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8504315
+        },
+        {
+          "label": "Le Locle",
+          "value": 37.06721,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8504316
+        },
+        {
+          "label": "Le Locle-Col-des-Roches",
+          "value": 38.86171,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8504317
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:60b278b0",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 224, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Les Geneveys-sur-Coffrane",
+              "value": 16.8975,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Les Hauts-Geneveys",
+              "value": 20.98843,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Le Crêt-du-Locle",
+              "value": 33.4,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Le Locle-Col-des-Roches",
+              "value": 38.86171,
+              "factRef": "bahnhoefe.items[6].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Les Geneveys-sur-Coffrane bei km 16.8975, Les Hauts-Geneveys bei km 20.98843, Le Crêt-du-Locle bei km 33.4 und Le Locle-Col-des-Roches bei km 38.86171.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:dc67ff02",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 224 liegt La Chaux-de-Fonds Les Forges?",
+          "options": [
+            "16.8975 km",
+            "30.73 km",
+            "33.4 km",
+            "38.86171 km"
+          ],
+          "correct": 1,
+          "explanation": "La Chaux-de-Fonds Les Forges liegt auf der Linie 224 bei km 30.73.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 224 sind 4 Tunnel erfasst. Der längste: Tunnel des Loges (013), 3'260 Meter, erstmals in Betrieb 1860, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1858, bei Tunnel de Combe (Convers, 006). Die Quelle vermerkt zu Tunnel du col des Roches (073): «107m gehört Frankreich».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 4,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel des Loges (013)",
+          "value": 3260,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Tunnel du Mont Sagne(007)",
+          "value": 1880,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Tunnel du col des Roches (073)",
+          "value": 433,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        },
+        {
+          "label": "Tunnel de Combe (Convers, 006)",
+          "value": 254,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Tunnel des Loges (013)",
+              "value": 3260,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Tunnel du Mont Sagne(007)",
+              "value": 1880,
+              "factRef": "tunnel.items[1].laenge_m"
+            },
+            {
+              "label": "Tunnel du col des Roches (073)",
+              "value": 433,
+              "factRef": "tunnel.items[3].laenge_m"
+            },
+            {
+              "label": "Tunnel de Combe (Convers, 006)",
+              "value": 254,
+              "factRef": "tunnel.items[2].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Tunnel des Loges (013) 3'260 m, Tunnel du Mont Sagne(007) 1'880 m, Tunnel du col des Roches (073) 433 m und Tunnel de Combe (Convers, 006) 254 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:16fe9c88",
+          "type": "single_choice",
+          "prompt": "Tunnel des Loges (013): In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1848",
+            "1860",
+            "1872",
+            "1896"
+          ],
+          "correct": 1,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1860 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:113f3a10",
+          "type": "single_choice",
+          "prompt": "Tunnel des Loges (013): Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

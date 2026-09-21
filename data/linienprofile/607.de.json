@@ -1,0 +1,168 @@
+{
+  "linie": 607,
+  "name": "Mt. Ceneri - Rivera  (binario destro)",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 607 heisst in den offenen Daten «Mt. Ceneri - Rivera  (binario destro)». Als Anfang ist der Betriebspunkt Monte Ceneri Nord erfasst, als Ende Rivera-Bironico Nord. Die Kilometrierung reicht von km 162.683 bis km 164.749. Keiner der erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Monte Ceneri Nord",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Rivera-Bironico Nord",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 162.683,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 164.749,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:71b8a489",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 607?",
+          "min": 135,
+          "max": 239,
+          "step": 1,
+          "unit": "km",
+          "correct": 164.749,
+          "explanation": "Die Kilometrierung der Linie 607 reicht bis km 164.749. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:829f603f",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 607?",
+          "min": 133,
+          "max": 236,
+          "step": 1,
+          "unit": "km",
+          "correct": 162.683,
+          "explanation": "Die Kilometrierung der Linie 607 beginnt bei km 162.683.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 607 ist 1 Tunnel erfasst: Galleria Monte Ceneri II destra, 1'693 Meter, erstmals in Betrieb 1941, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Galleria Monte Ceneri II destra",
+          "value": 1693,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:d6f92d7e",
+          "type": "single_choice",
+          "prompt": "Galleria Monte Ceneri II destra: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "1'693 m",
+            "2'000 m",
+            "2'400 m",
+            "2'900 m"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 1'693 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:1d0c8100",
+          "type": "single_choice",
+          "prompt": "Galleria Monte Ceneri II destra: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1941",
+            "1953",
+            "1965",
+            "1977"
+          ],
+          "correct": 0,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1941 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:ca56b390",
+          "type": "single_choice",
+          "prompt": "Galleria Monte Ceneri II destra: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Bahnhöfe",
+      "grund": "Keiner der 2 erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

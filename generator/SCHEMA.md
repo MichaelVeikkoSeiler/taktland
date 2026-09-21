@@ -666,3 +666,43 @@ männlich (Hausperron, Mittelperron), bis auf die Hilfskante. «Perron 1 ist
 ein Hilfskante» stand bei Egnach. Wo ein Wort aus den Daten in einen Satz
 mit Artikel kommt, richtet sich der Artikel nach dem Wort, nicht nach dem
 häufigsten Fall. Der Validator meldet «ein …kante».
+
+## Linienseiten
+
+Gebaut aus `data/linien/{nr}.json` mit `generator/linien_baukasten.py`, geprüft mit
+`generator/linien.py --validieren`. Die Kapitelprüfung ist dieselbe wie bei den
+Bahnhöfen (`pruefe_kapitel` in `taktland.py`), dazu gilt:
+
+**Welche Linien.** Mindestens zwei Bahnhöfe in Taktland oder mindestens ein Tunnel.
+Mit nur der ersten Regel fehlten Gotthard- und Ceneri-Basistunnel, Grauholz-,
+Zimmerberg-, Adler- und Weinbergtunnel: Sie liegen auf eigenen Linien ohne Bahnhof
+(594 «GBT West», 580, 400, 722, 501, 748). Das Kapitel Bahnhöfe gibt es ab zwei
+Bahnhöfen; ein einzelner steht im Kapitel Strecke.
+
+**Kilometrierung ist keine Länge.** Das Kapitel Strecke darf weder «Länge» noch
+«lang» noch «misst» sagen. Die Erläuterung erklärt die Kilometrierung allgemein.
+
+**Negative Kilometer.** Linie 220 beginnt bei km -0.4. Die Zahlprüfung las das Minus
+nicht mit und meldete 0.4 als unbelegt. Jetzt gehört ein Minus direkt vor der Zahl,
+davor ein Leerschlag, zur Zahl («St-Aubin 2», «1-Röhre» bleiben unberührt).
+
+**Gleichstand bei den Tunneln.** Auf Linie 600 gingen acht Tunnel 1874 erstmals in
+Betrieb. Keiner ist «der älteste». Bis drei nennt der Text alle, darüber die Zahl
+(`anzahl_aelteste` aus der Pipeline, nicht gezählt im Text).
+
+**Tunnelnamen ohne Artikel.** «der Galleria Crocetto» wäre falsch, das Geschlecht
+steht nicht in den Daten. Fragen stellen den Namen voran: «Gotthardtunnel: In welchem
+Jahr ging dieser Tunnel erstmals in Betrieb?»
+
+**Bemerkungen im Wortlaut.** Wird ein Tunnel genannt, steht seine Bemerkung aus der
+Quelle dabei («Länge der Oströhre, da länger als Weströhre»). Sie sagt, was die Zahl
+umfasst.
+
+**Die Antwort steckt im Namen.** Linie 748 heisst «ZH Altstetten - ZH Oerlikon, DML»,
+gefragt war das Ende «Zurich Oerlikon». `geschenkt()` übersah es wegen Komma und
+Umlaut, bei «Wil - Weinfelden» wegen des kurzen «Wil». `verraet()` vergleicht ohne
+Umlaute und auch die Abschnitte des Namens.
+
+**Die Form verrät die Antwort.** Stand nur die richtige Antwort mit Klammer da
+(«Pozzo Negro (dira)» neben Bahnhofsnamen), war sie ohne Wissen zu erkennen. Die
+falschen Antworten haben jetzt dieselbe Form.

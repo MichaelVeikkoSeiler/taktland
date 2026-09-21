@@ -1,0 +1,373 @@
+{
+  "linie": 651,
+  "name": "Hubeli - Beinwil - Lenzburg",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 651 heisst in den offenen Daten «Hubeli - Beinwil - Lenzburg». Als Anfang ist der Betriebspunkt Hubeli LU erfasst, als Ende Lenzburg West (Abzw). Die Kilometrierung reicht von km 1.739 bis km 42.491.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Hubeli LU",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Lenzburg West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 1.739,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 42.491,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:d873022f",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 651?",
+          "min": 34,
+          "max": 62,
+          "step": 1,
+          "unit": "km",
+          "correct": 42.491,
+          "explanation": "Die Kilometrierung der Linie 651 reicht bis km 42.491. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:c5ded342",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 651?",
+          "min": 1.0,
+          "max": 3.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 1.739,
+          "explanation": "Die Kilometrierung der Linie 651 beginnt bei km 1.739.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 651 führt die Liste der Betriebspunkte 21 Einträge. Davon sind 17 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 21,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 17,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Waldibrücke",
+          "value": 5.58945,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8502017
+        },
+        {
+          "label": "Eschenbach LU",
+          "value": 8.567,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8502022
+        },
+        {
+          "label": "Ballwil",
+          "value": 10.99329,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8502023
+        },
+        {
+          "label": "Hochdorf Schönau",
+          "value": 12.87,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8502042
+        },
+        {
+          "label": "Hochdorf",
+          "value": 13.71482,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8502024
+        },
+        {
+          "label": "Baldegg Kloster",
+          "value": 15.362,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8516353
+        },
+        {
+          "label": "Baldegg",
+          "value": 15.92736,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8502025
+        },
+        {
+          "label": "Gelfingen",
+          "value": 19.35953,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8502026
+        },
+        {
+          "label": "Hitzkirch",
+          "value": 20.78944,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8502027
+        },
+        {
+          "label": "Ermensee",
+          "value": 21.86913,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8502019
+        },
+        {
+          "label": "Mosen",
+          "value": 24.1432,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8502029
+        },
+        {
+          "label": "Beinwil am See",
+          "value": 27.20359,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8502034
+        },
+        {
+          "label": "Birrwil",
+          "value": 29.51503,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8502033
+        },
+        {
+          "label": "Boniswil",
+          "value": 32.85,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8502032
+        },
+        {
+          "label": "Hallwil",
+          "value": 34.487,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8502031
+        },
+        {
+          "label": "Seon",
+          "value": 36.85872,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8502030
+        },
+        {
+          "label": "Seon Nord",
+          "value": 37.65,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8502043
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:2606936f",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 651, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Waldibrücke",
+              "value": 5.58945,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Hochdorf",
+              "value": 13.71482,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Mosen",
+              "value": 24.1432,
+              "factRef": "bahnhoefe.items[10].km"
+            },
+            {
+              "label": "Seon Nord",
+              "value": 37.65,
+              "factRef": "bahnhoefe.items[16].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Waldibrücke bei km 5.58945, Hochdorf bei km 13.71482, Mosen bei km 24.1432 und Seon Nord bei km 37.65.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:94528bdd",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 651 liegt Gelfingen?",
+          "options": [
+            "5.58945 km",
+            "19.35953 km",
+            "21.86913 km",
+            "37.65 km"
+          ],
+          "correct": 1,
+          "explanation": "Gelfingen liegt auf der Linie 651 bei km 19.35953.",
+          "factRef": "bahnhoefe.items[7].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 651 ist 1 Tunnel erfasst: Hüslentunnel, 606 Meter, erstmals in Betrieb 1998, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Hüslentunnel",
+          "value": 606,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:3fe2ca95",
+          "type": "single_choice",
+          "prompt": "Hüslentunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "330 m",
+            "420 m",
+            "520 m",
+            "606 m"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 606 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:dd9a088b",
+          "type": "single_choice",
+          "prompt": "Hüslentunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1962",
+            "1974",
+            "1986",
+            "1998"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1998 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:5ccd100b",
+          "type": "single_choice",
+          "prompt": "Hüslentunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 17 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 21 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

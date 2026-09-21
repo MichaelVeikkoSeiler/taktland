@@ -1,0 +1,175 @@
+{
+  "linie": 595,
+  "name": "GBT Ost",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 595 heisst in den offenen Daten «GBT Ost». Als Anfang ist der Betriebspunkt Rynacht (Spw) erfasst, als Ende Giustizia (dira). Die Kilometrierung reicht von km 99.451 bis km 164.016. Keiner der erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Rynacht (Spw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Giustizia (dira)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 99.451,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 164.016,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:5be21adb",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 595?",
+          "min": 134,
+          "max": 238,
+          "step": 1,
+          "unit": "km",
+          "correct": 164.016,
+          "explanation": "Die Kilometrierung der Linie 595 reicht bis km 164.016. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:d212c536",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 595?",
+          "min": 81,
+          "max": 145,
+          "step": 1,
+          "unit": "km",
+          "correct": 99.451,
+          "explanation": "Die Kilometrierung der Linie 595 beginnt bei km 99.451.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        },
+        {
+          "id": "strecke:9a3ade40",
+          "type": "single_choice",
+          "prompt": "Welcher Betriebspunkt ist als Ende der Linie 595 erfasst?",
+          "options": [
+            "Giustizia (dira)",
+            "Renens VD Ouest (bif)",
+            "St-Jean (bif)",
+            "Wil Sud (Abzw)"
+          ],
+          "correct": 0,
+          "explanation": "Als Ende der Linie 595 ist Giustizia (dira) erfasst.",
+          "factRef": "strecke.ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 595 sind 2 Tunnel erfasst. Der längste: Galleria Svincolo A2 Biasca, 260 Meter, erstmals in Betrieb 2016, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 2016, bei Galleria Svincolo A2 Biasca und Galleria artificiale Giustizia.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 2,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Galleria Svincolo A2 Biasca",
+          "value": 260,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Galleria artificiale Giustizia",
+          "value": 106,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:7f4ebb92",
+          "type": "single_choice",
+          "prompt": "Galleria Svincolo A2 Biasca: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1980",
+            "1992",
+            "2004",
+            "2016"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 2016 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:8254069b",
+          "type": "single_choice",
+          "prompt": "Galleria Svincolo A2 Biasca: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Bahnhöfe",
+      "grund": "Keiner der 7 erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

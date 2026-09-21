@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { profilLaden } from '../daten'
+import { useEffect, useState, type ReactNode } from 'react'
+import { linienLaden, profilLaden } from '../daten'
 import { antwortSpeichern, antwortenLesen, bahnhofZuruecksetzen } from '../fortschritt'
-import type { Fakt, Gleis, Kapitel, Profil } from '../typen'
+import type { Fakt, Gleis, Kapitel, LinienEintrag, Profil } from '../typen'
 import { Frage } from './Frage'
 import { Luecken } from './Luecken'
 
@@ -13,6 +13,20 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
   const [profil, setProfil] = useState<Profil | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [antworten, setAntworten] = useState<Record<string, { richtig: boolean }>>({})
+  // die Linien mit eigener Seite, auf denen dieser Bahnhof erfasst ist
+  const [linien, setLinien] = useState<LinienEintrag[]>([])
+
+  useEffect(() => {
+    let abgebrochen = false
+    linienLaden()
+      .then((v) => {
+        if (abgebrochen) return
+        const nummern = v.nach_bahnhof[String(uic)] ?? []
+        setLinien(v.linien.filter((l) => nummern.includes(l.linie)))
+      })
+      .catch(() => { if (!abgebrochen) setLinien([]) })
+    return () => { abgebrochen = true }
+  }, [uic])
 
   useEffect(() => {
     let abgebrochen = false
@@ -73,7 +87,9 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
       <div className="px-4">
         {profil.chapters.map((k) => (
           <KapitelBlock key={k.id} kapitel={k} antworten={antworten} merken={merken}
-                        gleise={profil.gleise} />
+                        gleise={profil.gleise}
+                        anhang={k.id === 'linien' && linien.length > 0
+                          ? <LinienLinks linien={linien} /> : undefined} />
         ))}
         <Luecken luecken={profil.luecken} />
         <Quellen profil={profil} />
@@ -82,22 +98,53 @@ export function Bahnhof({ uic, zurueck }: { uic: number; zurueck: () => void }) 
   )
 }
 
-function KapitelBlock({ kapitel, antworten, merken, gleise }: {
+/** Von der Bahnhofsseite zu den Linien, auf denen der Bahnhof erfasst ist */
+function LinienLinks({ linien }: { linien: LinienEintrag[] }) {
+  return (
+    <ul className="mt-3 space-y-1.5">
+      {linien.map((l) => (
+        <li key={l.linie}>
+          <a href={`#/linie/${l.linie}`}
+             className="flex items-center justify-between gap-3 border border-sbb-cloud bg-white
+                        px-3 py-2 hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
+                        dark:hover:border-sbb-white">
+            <span className="min-w-0">
+              <span className="font-medium text-sbb-black dark:text-sbb-white">Linie {l.linie}</span>
+              <span className="ml-2 text-sm text-sbb-metal dark:text-sbb-storm">{l.name}</span>
+            </span>
+            <span className="shrink-0 text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang }: {
   kapitel: Kapitel
   antworten: Record<string, { richtig: boolean }>
   merken: (id: string, richtig: boolean) => void
   gleise?: Gleis[]
+  /** zusätzlicher Inhalt nach den Fakten, etwa Links zu den Linienseiten */
+  anhang?: ReactNode
 }) {
+  // Zeilen mit Bahnhof werden zur Liste mit Links (Linienseite, Kapitel Bahnhöfe)
+  const kaesten = kapitel.facts.filter((f) => f.uic === undefined)
+  const bahnhoefe = kapitel.facts.filter((f) => f.uic !== undefined)
   return (
     <section className="mt-8">
       <h2 className="text-xl font-semibold text-sbb-black dark:text-sbb-white">{kapitel.title}</h2>
       <p className="mt-2 leading-relaxed text-sbb-black dark:text-sbb-white">{kapitel.body}</p>
 
-      {kapitel.facts.length > 0 && (
+      {kaesten.length > 0 && (
         <dl className="mt-4 grid gap-2 sm:grid-cols-2">
-          {kapitel.facts.map((f) => <FaktZeile key={f.factRef + f.label} fakt={f} />)}
+          {kaesten.map((f) => <FaktZeile key={f.factRef + f.label} fakt={f} />)}
         </dl>
       )}
+
+      {bahnhoefe.length > 0 && <BahnhofListe fakten={bahnhoefe} />}
+
+      {anhang}
 
       {kapitel.erlaeuterung && (
         <aside className="mt-4 border-l-4 border-sbb-red bg-sbb-milk px-4 py-3
@@ -129,9 +176,43 @@ function KapitelBlock({ kapitel, antworten, merken, gleise }: {
   )
 }
 
+/** Bahnhöfe einer Linie, jeder mit Link zu seiner Seite */
+function BahnhofListe({ fakten }: { fakten: Fakt[] }) {
+  return (
+    <div className="mt-4">
+      <ol className="divide-y divide-sbb-cloud border border-sbb-cloud bg-white
+                     dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
+        {fakten.map((f) => (
+          <li key={f.factRef}>
+            <a href={`#/bahnhof/${f.uic}`}
+               className="flex items-baseline justify-between gap-3 px-3 py-2
+                          hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
+              <span className="min-w-0 font-medium text-sbb-black dark:text-sbb-white">
+                {f.label}
+              </span>
+              <span className="shrink-0 text-sm tabular-nums text-sbb-metal dark:text-sbb-storm">
+                km {genau(f.value)}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+      <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">Quelle: {fakten[0].source}</p>
+    </div>
+  )
+}
+
+/** Zahlen so, wie sie in den Daten stehen. toLocaleString rundet sonst auf
+ *  drei Nachkommastellen: aus km 54.85391 wurde 54.854. */
+function genau(wert: Fakt['value']) {
+  return typeof wert === 'number'
+    ? wert.toLocaleString('de-CH', { maximumFractionDigits: 20 })
+    : String(wert ?? '—')
+}
+
 function FaktZeile({ fakt }: { fakt: Fakt }) {
   const wert = typeof fakt.value === 'number'
-    ? fakt.value.toLocaleString('de-CH')
+    ? genau(fakt.value)
     : typeof fakt.value === 'boolean'
       ? (fakt.value ? 'ja' : 'nein')
       : String(fakt.value ?? '—')
@@ -149,7 +230,7 @@ function FaktZeile({ fakt }: { fakt: Fakt }) {
   )
 }
 
-function Quellen({ profil }: { profil: Profil }) {
+export function Quellen({ profil }: { profil: { sources: string[]; generated: string } }) {
   return (
     <section className="mt-8 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
       <h2 className="text-sm font-semibold text-sbb-black dark:text-sbb-white">
@@ -176,7 +257,11 @@ function Quellen({ profil }: { profil: Profil }) {
   )
 }
 
-function Rahmen({ children, zurueck }: { children: React.ReactNode; zurueck: () => void }) {
+export function Rahmen({ children, zurueck, zurueckText = 'Alle Bahnhöfe' }: {
+  children: ReactNode
+  zurueck: () => void
+  zurueckText?: string
+}) {
   return (
     <div className="pb-16">
       <button
@@ -184,7 +269,7 @@ function Rahmen({ children, zurueck }: { children: React.ReactNode; zurueck: () 
         onClick={zurueck}
         className="mx-4 mb-4 mt-2 text-sbb-metal underline underline-offset-2 dark:text-sbb-storm"
       >
-        ← Alle Bahnhöfe
+        ← {zurueckText}
       </button>
       {children}
     </div>

@@ -1,0 +1,310 @@
+{
+  "linie": 650,
+  "name": "Killwangen West - Lenzburg - Daniken Ost",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 650 heisst in den offenen Daten «Killwangen West - Lenzburg - Daniken Ost». Als Anfang ist der Betriebspunkt Killwangen West (Abzw) erfasst, als Ende Daniken Ost. Die Kilometrierung reicht von km 16.519 bis km 48.119.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Killwangen West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Daniken Ost",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 16.519,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 48.119,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:832aaeab",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 650?",
+          "min": 39,
+          "max": 70,
+          "step": 1,
+          "unit": "km",
+          "correct": 48.119,
+          "explanation": "Die Kilometrierung der Linie 650 reicht bis km 48.119. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:d0b3ee45",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 650?",
+          "min": 13.5,
+          "max": 24.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 16.519,
+          "explanation": "Die Kilometrierung der Linie 650 beginnt bei km 16.519.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 650 führt die Liste der Betriebspunkte 18 Einträge. Davon sind 6 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 18,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 6,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Mellingen Heitersberg",
+          "value": 22.24,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8516219
+        },
+        {
+          "label": "Mägenwil",
+          "value": 25.93644,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8502106
+        },
+        {
+          "label": "Othmarsingen",
+          "value": 27.68041,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8502105
+        },
+        {
+          "label": "Lenzburg",
+          "value": 31.93612,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8502119
+        },
+        {
+          "label": "Rupperswil",
+          "value": 35.6368,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8502114
+        },
+        {
+          "label": "Aarau",
+          "value": 41.50577,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8502113
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:c3fa6ae1",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 650, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Mellingen Heitersberg",
+              "value": 22.24,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Othmarsingen",
+              "value": 27.68041,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Lenzburg",
+              "value": 31.93612,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Aarau",
+              "value": 41.50577,
+              "factRef": "bahnhoefe.items[5].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Mellingen Heitersberg bei km 22.24, Othmarsingen bei km 27.68041, Lenzburg bei km 31.93612 und Aarau bei km 41.50577.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:55d500f0",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 650 liegt Lenzburg?",
+          "options": [
+            "22.24 km",
+            "27.68041 km",
+            "31.93612 km",
+            "41.50577 km"
+          ],
+          "correct": 2,
+          "explanation": "Lenzburg liegt auf der Linie 650 bei km 31.93612.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 650 sind 3 Tunnel erfasst. Der längste: Heitersbergtunnel, 4'930 Meter, erstmals in Betrieb 1972, Tunnelsystem «Y / 2-Spur + 2x 1-Spur». Die Quelle vermerkt zu Heitersbergtunnel: «Inkl: Heitersberg2 (DfA 698) und Heitersberg3 (DfA 650)».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 3,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Heitersbergtunnel",
+          "value": 4930,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Tunnel Eppenberg",
+          "value": 3113,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Aarauer Stadttunnel II Süd",
+          "value": 615,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Heitersbergtunnel",
+              "value": 4930,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Tunnel Eppenberg",
+              "value": 3113,
+              "factRef": "tunnel.items[2].laenge_m"
+            },
+            {
+              "label": "Aarauer Stadttunnel II Süd",
+              "value": 615,
+              "factRef": "tunnel.items[1].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Heitersbergtunnel 4'930 m, Tunnel Eppenberg 3'113 m und Aarauer Stadttunnel II Süd 615 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:d178f2f9",
+          "type": "single_choice",
+          "prompt": "Heitersbergtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1948",
+            "1960",
+            "1972",
+            "1984"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1972 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:a1c705f1",
+          "type": "single_choice",
+          "prompt": "Heitersbergtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst ist «Y / 2-Spur + 2x 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 6 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 18 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

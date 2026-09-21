@@ -1,0 +1,335 @@
+{
+ "linie": 100,
+ "name": "Lausanne - Simplon Tunnel I - Iselle",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Lausanne",
+  "ende": "Iselle di Trasquera",
+  "km_anfang": 0,
+  "km_ende": 167.478
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 59,
+  "anzahl_in_taktland": 39,
+  "items": [
+   {
+    "uic": 8501120,
+    "name": "Lausanne",
+    "km": 0
+   },
+   {
+    "uic": 8501121,
+    "name": "Pully",
+    "km": 2.506
+   },
+   {
+    "uic": 8501122,
+    "name": "Lutry",
+    "km": 5.073
+   },
+   {
+    "uic": 8501123,
+    "name": "Villette VD",
+    "km": 6.67962
+   },
+   {
+    "uic": 8501124,
+    "name": "Cully",
+    "km": 8.52314
+   },
+   {
+    "uic": 8501125,
+    "name": "Epesses",
+    "km": 9.97763
+   },
+   {
+    "uic": 8501126,
+    "name": "Rivaz",
+    "km": 13.55225
+   },
+   {
+    "uic": 8501127,
+    "name": "St-Saphorin",
+    "km": 14.54959
+   },
+   {
+    "uic": 8501200,
+    "name": "Vevey",
+    "km": 18.39805
+   },
+   {
+    "uic": 8501201,
+    "name": "La Tour-de-Peilz",
+    "km": 19.90245
+   },
+   {
+    "uic": 8501202,
+    "name": "Burier",
+    "km": 21.5267
+   },
+   {
+    "uic": 8501203,
+    "name": "Clarens",
+    "km": 23.0952
+   },
+   {
+    "uic": 8501300,
+    "name": "Montreux",
+    "km": 24.5365
+   },
+   {
+    "uic": 8501301,
+    "name": "Territet",
+    "km": 26.01975
+   },
+   {
+    "uic": 8501302,
+    "name": "Veytaux-Chillon",
+    "km": 27.09045
+   },
+   {
+    "uic": 8501303,
+    "name": "Villeneuve VD",
+    "km": 29.34185
+   },
+   {
+    "uic": 8501304,
+    "name": "Roche VD",
+    "km": 33.84125
+   },
+   {
+    "uic": 8501400,
+    "name": "Aigle",
+    "km": 39.31241
+   },
+   {
+    "uic": 8501402,
+    "name": "Bex",
+    "km": 47.56
+   },
+   {
+    "uic": 8501403,
+    "name": "St-Maurice",
+    "km": 51.56494
+   },
+   {
+    "uic": 8501404,
+    "name": "Evionnaz",
+    "km": 57.85466
+   },
+   {
+    "uic": 8501405,
+    "name": "Vernayaz",
+    "km": 61.50874
+   },
+   {
+    "uic": 8501500,
+    "name": "Martigny",
+    "km": 66.49553
+   },
+   {
+    "uic": 8501501,
+    "name": "Charrat-Fully",
+    "km": 70.8598
+   },
+   {
+    "uic": 8501502,
+    "name": "Saxon",
+    "km": 75.27183
+   },
+   {
+    "uic": 8501503,
+    "name": "Riddes",
+    "km": 79.56962
+   },
+   {
+    "uic": 8501504,
+    "name": "Chamoson-St-Pierre-de-Clages",
+    "km": 82.12316
+   },
+   {
+    "uic": 8501505,
+    "name": "Ardon",
+    "km": 85.30586
+   },
+   {
+    "uic": 8501510,
+    "name": "Châteauneuf-Conthey",
+    "km": 88.06912
+   },
+   {
+    "uic": 8501506,
+    "name": "Sion",
+    "km": 92.43206
+   },
+   {
+    "uic": 8501507,
+    "name": "St-Léonard",
+    "km": 98.15345
+   },
+   {
+    "uic": 8501509,
+    "name": "Sierre/Siders",
+    "km": 108.13264
+   },
+   {
+    "uic": 8501600,
+    "name": "Salgesch",
+    "km": 112.253
+   },
+   {
+    "uic": 8501601,
+    "name": "Leuk",
+    "km": 117.694
+   },
+   {
+    "uic": 8501602,
+    "name": "Turtmann",
+    "km": 122.11129
+   },
+   {
+    "uic": 8501603,
+    "name": "Gampel-Steg",
+    "km": 125.8725
+   },
+   {
+    "uic": 8501604,
+    "name": "Raron",
+    "km": 130.09
+   },
+   {
+    "uic": 8501605,
+    "name": "Visp",
+    "km": 136.6589
+   },
+   {
+    "uic": 8501609,
+    "name": "Brig",
+    "km": 145.5485
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 9,
+  "laengste": [
+   8
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   3
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Tunnel de Paudex ( 026 )",
+    "laenge_m": 72,
+    "inbetriebnahme_jahr": 1999,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 3.689,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Bertholod ( 027 )",
+    "laenge_m": 141,
+    "inbetriebnahme_jahr": 2020,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 5.195,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel des Crêtes (025)",
+    "laenge_m": 302,
+    "inbetriebnahme_jahr": 1880,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 22.013,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de St-Maurice (003)",
+    "laenge_m": 490,
+    "inbetriebnahme_jahr": 1859,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 50.999,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Sierre (Gobet)",
+    "laenge_m": 370,
+    "inbetriebnahme_jahr": 2015,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 108.896,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de la Raspille (072)",
+    "laenge_m": 80,
+    "inbetriebnahme_jahr": 2018,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 110.95,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Varen (102)",
+    "laenge_m": 2799,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 115.109,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Leuk (103)",
+    "laenge_m": 1376,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 116.588,
+    "bemerkung": null
+   },
+   {
+    "name": "Simplontunnel",
+    "laenge_m": 19820,
+    "inbetriebnahme_jahr": 1900,
+    "tunnelsystem": "2-Röhren / 2 x 1-Spur",
+    "km": 165.714,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 39 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 59 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

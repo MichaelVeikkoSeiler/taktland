@@ -1,0 +1,152 @@
+{
+  "linie": 823,
+  "name": "Kreuzlingen - Kreuzlingen Hafen",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 823 heisst in den offenen Daten «Kreuzlingen - Kreuzlingen Hafen». Als Anfang ist der Betriebspunkt Kreuzlingen erfasst, als Ende Kreuzlingen Hafen. Die Kilometrierung reicht von km 60.688 bis km 61.802.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Kreuzlingen",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Kreuzlingen Hafen",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 60.688,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 61.802,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:03957086",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 823?",
+          "min": 50,
+          "max": 90,
+          "step": 1,
+          "unit": "km",
+          "correct": 61.802,
+          "explanation": "Die Kilometrierung der Linie 823 reicht bis km 61.802. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:b724c949",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 823?",
+          "min": 49,
+          "max": 88,
+          "step": 1,
+          "unit": "km",
+          "correct": 60.688,
+          "explanation": "Die Kilometrierung der Linie 823 beginnt bei km 60.688.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 823 führt die Liste der Betriebspunkte 2 Einträge. Davon sind 2 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Kreuzlingen",
+          "value": 60.68801,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506131
+        },
+        {
+          "label": "Kreuzlingen Hafen",
+          "value": 61.80192,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506128
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:75b327d0",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 823 liegt Kreuzlingen Hafen?",
+          "options": [
+            "60.68801 km",
+            "61.80192 km"
+          ],
+          "correct": 1,
+          "explanation": "Kreuzlingen Hafen liegt auf der Linie 823 bei km 61.80192.",
+          "factRef": "bahnhoefe.items[1].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

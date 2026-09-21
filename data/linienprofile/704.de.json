@@ -1,0 +1,177 @@
+{
+  "linie": 704,
+  "name": "Wurenlos - Killwangen West (RBL)",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 704 heisst in den offenen Daten «Wurenlos - Killwangen West (RBL)». Als Anfang ist der Betriebspunkt Wurenlos erfasst, als Ende Killwangen West (Abzw). Die Kilometrierung reicht von km 39.045 bis km 40.992. Als Bahnhof in Taktland ist auf dieser Linie Würenlos erfasst, bei km 39.04548.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Wurenlos",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Killwangen West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 39.045,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 40.992,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        },
+        {
+          "label": "Würenlos",
+          "value": 39.04548,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503529
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:3333a756",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 704?",
+          "min": 33,
+          "max": 60,
+          "step": 1,
+          "unit": "km",
+          "correct": 40.992,
+          "explanation": "Die Kilometrierung der Linie 704 reicht bis km 40.992. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:dca5144a",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 704?",
+          "min": 32,
+          "max": 57,
+          "step": 1,
+          "unit": "km",
+          "correct": 39.045,
+          "explanation": "Die Kilometrierung der Linie 704 beginnt bei km 39.045.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 704 ist 1 Tunnel erfasst: Tägerhardtunnel, 400 Meter, erstmals in Betrieb 1981, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tägerhardtunnel",
+          "value": 400,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:faa3427b",
+          "type": "single_choice",
+          "prompt": "Tägerhardtunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "400 m",
+            "480 m",
+            "560 m",
+            "680 m"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 400 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:c63fa8fd",
+          "type": "single_choice",
+          "prompt": "Tägerhardtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1969",
+            "1981",
+            "1993",
+            "2005"
+          ],
+          "correct": 1,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1981 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:65db4262",
+          "type": "single_choice",
+          "prompt": "Tägerhardtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 1 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 2 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

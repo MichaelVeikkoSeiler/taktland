@@ -1,0 +1,96 @@
+{
+ "linie": 540,
+ "name": "Olten - Woschnau",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Olten",
+  "ende": "Woschnau SBB",
+  "km_anfang": 39.302,
+  "km_ende": 50.9
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 8,
+  "anzahl_in_taktland": 4,
+  "items": [
+   {
+    "uic": 8500218,
+    "name": "Olten",
+    "km": 39.30213
+   },
+   {
+    "uic": 8502110,
+    "name": "Dulliken",
+    "km": 42.94104
+   },
+   {
+    "uic": 8502111,
+    "name": "Däniken SO",
+    "km": 45.67343
+   },
+   {
+    "uic": 8502112,
+    "name": "Schönenwerd SO",
+    "km": 48.1296
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 1,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Tunnel Wöschnau",
+    "laenge_m": 488,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 50.279,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 4 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 8 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

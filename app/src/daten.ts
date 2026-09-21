@@ -1,4 +1,6 @@
-import type { BahnhofIndex, Profil, Vergleichsdaten } from './typen'
+import type {
+  BahnhofIndex, LinienProfil, LinienVerzeichnis, Profil, Vergleichsdaten,
+} from './typen'
 
 const BASIS = import.meta.env.BASE_URL
 
@@ -38,6 +40,14 @@ export async function profilLaden(uic: number, sprache = 'de'): Promise<Profil> 
     throw new Error(`Profil ${schluessel} ist nicht eingebettet`)
   }
   return holen<Profil>(`data/profile/${schluessel}.json`)
+}
+
+export async function linienLaden(): Promise<LinienVerzeichnis> {
+  return holen<LinienVerzeichnis>('data/linien.json')
+}
+
+export async function linienProfilLaden(nr: number, sprache = 'de'): Promise<LinienProfil> {
+  return holen<LinienProfil>(`data/linien/${nr}.${sprache}.json`)
 }
 
 export async function vergleichLaden(): Promise<Vergleichsdaten> {

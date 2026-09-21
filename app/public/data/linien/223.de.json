@@ -1,0 +1,254 @@
+{
+  "linie": 223,
+  "name": "Neuchatel-Vauseyon - Chambrelien",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 223 heisst in den offenen Daten «Neuchatel-Vauseyon - Chambrelien». Als Anfang ist der Betriebspunkt Neuchatel-Vauseyon (bif) erfasst, als Ende Chambrelien (cul-de-sac). Die Kilometrierung reicht von km 1.373 bis km 10.735.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Neuchatel-Vauseyon (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Chambrelien (cul-de-sac)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 1.373,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 10.735,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:cb4ba588",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 223?",
+          "min": 8.5,
+          "max": 16.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 10.735,
+          "explanation": "Die Kilometrierung der Linie 223 reicht bis km 10.735. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:47c4d530",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 223?",
+          "min": 1.0,
+          "max": 2.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 1.373,
+          "explanation": "Die Kilometrierung der Linie 223 beginnt bei km 1.373.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 223 führt die Liste der Betriebspunkte 7 Einträge. Davon sind 3 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 7,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 3,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Les Deurres",
+          "value": 3.102,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8504231
+        },
+        {
+          "label": "Corcelles-Peseux",
+          "value": 4.32248,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504232
+        },
+        {
+          "label": "Chambrelien",
+          "value": 10.3982,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8504234
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:f9d1660a",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 223, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Les Deurres",
+              "value": 3.102,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Corcelles-Peseux",
+              "value": 4.32248,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Chambrelien",
+              "value": 10.3982,
+              "factRef": "bahnhoefe.items[2].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Les Deurres bei km 3.102, Corcelles-Peseux bei km 4.32248 und Chambrelien bei km 10.3982.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:a41c1af0",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 223 liegt Corcelles-Peseux?",
+          "options": [
+            "3.102 km",
+            "4.32248 km",
+            "10.3982 km"
+          ],
+          "correct": 1,
+          "explanation": "Corcelles-Peseux liegt auf der Linie 223 bei km 4.32248.",
+          "factRef": "bahnhoefe.items[1].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 223 sind 3 Tunnel erfasst. Der längste: Tunnel du Gibet(010), 678 Meter, erstmals in Betrieb 1859, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1859, bei Tunnel du Gibet(010), Tunnel de la Luche (008) und Tunnel de la Sauge (009).",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 3,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel du Gibet(010)",
+          "value": 678,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Tunnel de la Sauge (009)",
+          "value": 118,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Tunnel de la Luche (008)",
+          "value": 116,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:f57b244c",
+          "type": "single_choice",
+          "prompt": "Tunnel du Gibet(010): In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1859",
+            "1871",
+            "1883",
+            "1895"
+          ],
+          "correct": 0,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1859 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:83bfda3c",
+          "type": "single_choice",
+          "prompt": "Tunnel du Gibet(010): Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 3 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 7 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

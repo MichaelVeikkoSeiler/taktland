@@ -1,0 +1,136 @@
+{
+ "linie": 710,
+ "name": "Zurich HB - Brugg AG",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Zurich Limmatquai Verl. Km-Axe",
+  "ende": "Brugg AG",
+  "km_anfang": -0.1,
+  "km_ende": 31.266
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 21,
+  "anzahl_in_taktland": 12,
+  "items": [
+   {
+    "uic": 8503000,
+    "name": "Zürich HB",
+    "km": 0
+   },
+   {
+    "uic": 8503020,
+    "name": "Zürich Hardbrücke",
+    "km": 1.91834
+   },
+   {
+    "uic": 8503001,
+    "name": "Zürich Altstetten",
+    "km": 4.1655
+   },
+   {
+    "uic": 8503509,
+    "name": "Schlieren",
+    "km": 7.50708
+   },
+   {
+    "uic": 8503512,
+    "name": "Glanzenberg",
+    "km": 9.5493
+   },
+   {
+    "uic": 8503508,
+    "name": "Dietikon",
+    "km": 11.06546
+   },
+   {
+    "uic": 8503506,
+    "name": "Killwangen-Spreitenbach",
+    "km": 16.1125
+   },
+   {
+    "uic": 8503511,
+    "name": "Neuenhof",
+    "km": 18.79211
+   },
+   {
+    "uic": 8503505,
+    "name": "Wettingen",
+    "km": 20.33388
+   },
+   {
+    "uic": 8503504,
+    "name": "Baden",
+    "km": 22.52873
+   },
+   {
+    "uic": 8503503,
+    "name": "Turgi",
+    "km": 27.43018
+   },
+   {
+    "uic": 8500309,
+    "name": "Brugg AG",
+    "km": 31.26561
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 1,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Kreuzlibergtunnel",
+    "laenge_m": 905,
+    "inbetriebnahme_jahr": 1961,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 21.839,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 12 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 21 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

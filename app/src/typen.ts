@@ -13,6 +13,8 @@ export interface Fakt {
   /** Dataset-ID bei data.sbb.ch, wird in der App angezeigt */
   source: string
   factRef: string
+  /** Linienseite: der Bahnhof zu dieser Zeile, die App verlinkt ihn */
+  uic?: number
 }
 
 export interface SortItem {
@@ -87,6 +89,33 @@ export interface Profil {
   luecken: Luecke[]
   /** Gleisdaten für das Schema, aus den Fakten übernommen */
   gleise?: Gleis[]
+}
+
+/** Linienseite: gleich aufgebaut wie ein Bahnhofsprofil, ohne Stufe */
+export interface LinienProfil {
+  linie: number
+  name: string
+  lang: string
+  generated: string
+  sources: string[]
+  chapters: Kapitel[]
+  luecken: Luecke[]
+}
+
+export interface LinienEintrag {
+  linie: number
+  name: string
+  /** Bahnhöfe in Taktland auf dieser Linie */
+  bahnhoefe: number
+  /** erfasste Tunnel */
+  tunnel: number
+}
+
+export interface LinienVerzeichnis {
+  stand: string | null
+  linien: LinienEintrag[]
+  /** UIC des Bahnhofs → Nummern der Linien mit Seite */
+  nach_bahnhof: Record<string, number[]>
 }
 
 export interface IndexEintrag {

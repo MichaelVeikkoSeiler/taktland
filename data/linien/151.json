@@ -1,0 +1,106 @@
+{
+ "linie": 151,
+ "name": "Geneve St-Jean - La Plaine-Frontiere",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "St-Jean (bif)",
+  "ende": "La Plaine-Frontiere",
+  "km_anfang": 61.59,
+  "km_ende": 75.559
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 11,
+  "anzahl_in_taktland": 6,
+  "items": [
+   {
+    "uic": 8501007,
+    "name": "Vernier",
+    "km": 64.775
+   },
+   {
+    "uic": 8501006,
+    "name": "Meyrin",
+    "km": 66.114
+   },
+   {
+    "uic": 8501000,
+    "name": "Zimeysa",
+    "km": 66.965
+   },
+   {
+    "uic": 8501003,
+    "name": "Satigny",
+    "km": 69.365
+   },
+   {
+    "uic": 8501002,
+    "name": "Russin",
+    "km": 72.752
+   },
+   {
+    "uic": 8501001,
+    "name": "La Plaine",
+    "km": 74.778
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 1,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Tunnel du Saut-de-Mouton (093)",
+    "laenge_m": 425,
+    "inbetriebnahme_jahr": 1993,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 62.234,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 6 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 11 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

@@ -1,0 +1,101 @@
+{
+ "linie": 769,
+ "name": "Winterthur West - Bulach",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Winterthur West (Abzw)",
+  "ende": "Bulach",
+  "km_anfang": 1.002,
+  "km_ende": 16.258
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 6,
+  "anzahl_in_taktland": 5,
+  "items": [
+   {
+    "uic": 8506044,
+    "name": "Winterthur Töss",
+    "km": 1.7178
+   },
+   {
+    "uic": 8506043,
+    "name": "Winterthur Wülflingen",
+    "km": 4.68091
+   },
+   {
+    "uic": 8506042,
+    "name": "Pfungen",
+    "km": 7.57943
+   },
+   {
+    "uic": 8506041,
+    "name": "Embrach-Rorbas",
+    "km": 12.3183
+   },
+   {
+    "uic": 8503400,
+    "name": "Bülach",
+    "km": 16.25824
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 1,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Dettenbergtunnel",
+    "laenge_m": 1801,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 13.824,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 5 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 6 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

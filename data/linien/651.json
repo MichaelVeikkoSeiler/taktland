@@ -1,0 +1,161 @@
+{
+ "linie": 651,
+ "name": "Hubeli - Beinwil - Lenzburg",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Hubeli LU",
+  "ende": "Lenzburg West (Abzw)",
+  "km_anfang": 1.739,
+  "km_ende": 42.491
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 21,
+  "anzahl_in_taktland": 17,
+  "items": [
+   {
+    "uic": 8502017,
+    "name": "Waldibrücke",
+    "km": 5.58945
+   },
+   {
+    "uic": 8502022,
+    "name": "Eschenbach LU",
+    "km": 8.567
+   },
+   {
+    "uic": 8502023,
+    "name": "Ballwil",
+    "km": 10.99329
+   },
+   {
+    "uic": 8502042,
+    "name": "Hochdorf Schönau",
+    "km": 12.87
+   },
+   {
+    "uic": 8502024,
+    "name": "Hochdorf",
+    "km": 13.71482
+   },
+   {
+    "uic": 8516353,
+    "name": "Baldegg Kloster",
+    "km": 15.362
+   },
+   {
+    "uic": 8502025,
+    "name": "Baldegg",
+    "km": 15.92736
+   },
+   {
+    "uic": 8502026,
+    "name": "Gelfingen",
+    "km": 19.35953
+   },
+   {
+    "uic": 8502027,
+    "name": "Hitzkirch",
+    "km": 20.78944
+   },
+   {
+    "uic": 8502019,
+    "name": "Ermensee",
+    "km": 21.86913
+   },
+   {
+    "uic": 8502029,
+    "name": "Mosen",
+    "km": 24.1432
+   },
+   {
+    "uic": 8502034,
+    "name": "Beinwil am See",
+    "km": 27.20359
+   },
+   {
+    "uic": 8502033,
+    "name": "Birrwil",
+    "km": 29.51503
+   },
+   {
+    "uic": 8502032,
+    "name": "Boniswil",
+    "km": 32.85
+   },
+   {
+    "uic": 8502031,
+    "name": "Hallwil",
+    "km": 34.487
+   },
+   {
+    "uic": 8502030,
+    "name": "Seon",
+    "km": 36.85872
+   },
+   {
+    "uic": 8502043,
+    "name": "Seon Nord",
+    "km": 37.65
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 1,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Hüslentunnel",
+    "laenge_m": 606,
+    "inbetriebnahme_jahr": 1998,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 3.933,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 17 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 21 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

@@ -1,0 +1,346 @@
+{
+  "linie": 200,
+  "name": "Renens VD Ouest - Vallorbe",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 200 heisst in den offenen Daten «Renens VD Ouest - Vallorbe». Als Anfang ist der Betriebspunkt Renens VD Ouest (bif) erfasst, als Ende Vallorbe. Die Kilometrierung reicht von km 5.18 bis km 46.306.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Renens VD Ouest (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Vallorbe",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 5.18,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 46.306,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:72baefe9",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 200?",
+          "min": 37,
+          "max": 68,
+          "step": 1,
+          "unit": "km",
+          "correct": 46.306,
+          "explanation": "Die Kilometrierung der Linie 200 reicht bis km 46.306. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:886b2f00",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 200?",
+          "min": 4.0,
+          "max": 8.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 5.18,
+          "explanation": "Die Kilometrierung der Linie 200 beginnt bei km 5.18.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 200 führt die Liste der Betriebspunkte 14 Einträge. Davon sind 9 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 14,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 9,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Bussigny",
+          "value": 6.9281,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501117
+        },
+        {
+          "label": "Vufflens-la-Ville",
+          "value": 10.9739,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8501116
+        },
+        {
+          "label": "Cossonay-Penthalaz",
+          "value": 14.48582,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501115
+        },
+        {
+          "label": "La Sarraz",
+          "value": 22.74756,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501108
+        },
+        {
+          "label": "Arnex",
+          "value": 27.56496,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501107
+        },
+        {
+          "label": "Croy-Romainmôtier",
+          "value": 33.70166,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8501106
+        },
+        {
+          "label": "Bretonnières",
+          "value": 35.82299,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8501105
+        },
+        {
+          "label": "Le Day",
+          "value": 43.488,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8501104
+        },
+        {
+          "label": "Vallorbe",
+          "value": 46.30584,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8501103
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:841e9deb",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 200, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Bussigny",
+              "value": 6.9281,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "La Sarraz",
+              "value": 22.74756,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Croy-Romainmôtier",
+              "value": 33.70166,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Vallorbe",
+              "value": 46.30584,
+              "factRef": "bahnhoefe.items[8].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Bussigny bei km 6.9281, La Sarraz bei km 22.74756, Croy-Romainmôtier bei km 33.70166 und Vallorbe bei km 46.30584.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:0118036a",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 200 liegt Arnex?",
+          "options": [
+            "6.9281 km",
+            "27.56496 km",
+            "33.70166 km",
+            "46.30584 km"
+          ],
+          "correct": 1,
+          "explanation": "Arnex liegt auf der Linie 200 bei km 27.56496.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 200 sind 4 Tunnel erfasst. Der längste: Tunnel de la Sarraz (033), 148 Meter, erstmals in Betrieb 1870, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 1870, bei 4 der erfassten Tunnel.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 4,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel de la Sarraz (033)",
+          "value": 148,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Tunnel de Nanchau (036)",
+          "value": 132,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        },
+        {
+          "label": "Tunnel de Combes (035)",
+          "value": 100,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Tunnel du Moulin Bornu (034)",
+          "value": 72,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Tunnel de la Sarraz (033)",
+              "value": 148,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Tunnel de Nanchau (036)",
+              "value": 132,
+              "factRef": "tunnel.items[3].laenge_m"
+            },
+            {
+              "label": "Tunnel de Combes (035)",
+              "value": 100,
+              "factRef": "tunnel.items[2].laenge_m"
+            },
+            {
+              "label": "Tunnel du Moulin Bornu (034)",
+              "value": 72,
+              "factRef": "tunnel.items[1].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Tunnel de la Sarraz (033) 148 m, Tunnel de Nanchau (036) 132 m, Tunnel de Combes (035) 100 m und Tunnel du Moulin Bornu (034) 72 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:f0dbf1a3",
+          "type": "single_choice",
+          "prompt": "Tunnel de la Sarraz (033): In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1870",
+            "1882",
+            "1894",
+            "1906"
+          ],
+          "correct": 0,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1870 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:e76f8a90",
+          "type": "single_choice",
+          "prompt": "Tunnel de la Sarraz (033): Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 9 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 14 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "linie": 594,
+  "name": "GBT West",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 594 heisst in den offenen Daten «GBT West». Als Anfang ist der Betriebspunkt Rynacht (Abzw) erfasst, als Ende Pozzo Negro (dira). Die Kilometrierung reicht von km 198.882 bis km 256.838. Keiner der erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Rynacht (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Pozzo Negro (dira)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 198.882,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 256.838,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:eaa8f62c",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 594?",
+          "min": 210,
+          "max": 380,
+          "step": 1,
+          "unit": "km",
+          "correct": 256.838,
+          "explanation": "Die Kilometrierung der Linie 594 reicht bis km 256.838. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:c5c7926b",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 594?",
+          "min": 163,
+          "max": 289,
+          "step": 1,
+          "unit": "km",
+          "correct": 198.882,
+          "explanation": "Die Kilometrierung der Linie 594 beginnt bei km 198.882.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        },
+        {
+          "id": "strecke:b5be89d3",
+          "type": "single_choice",
+          "prompt": "Welcher Betriebspunkt ist als Ende der Linie 594 erfasst?",
+          "options": [
+            "Chambrelien (cul-de-sac)",
+            "Pozzo Negro (dira)",
+            "Vezia (bif)",
+            "Zollikofen Nord (Abzw)"
+          ],
+          "correct": 1,
+          "explanation": "Als Ende der Linie 594 ist Pozzo Negro (dira) erfasst.",
+          "factRef": "strecke.ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 594 ist 1 Tunnel erfasst: Gotthard-Basistunnel, 57'104 Meter, erstmals in Betrieb 2016, Tunnelsystem «2-Röhren / 2 x 1-Spur». Die Quelle vermerkt zu Gotthard-Basistunnel: «Länge der Oströhre, da länger als Weströhre».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Gotthard-Basistunnel",
+          "value": 57104,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:20cc880a",
+          "type": "single_choice",
+          "prompt": "Gotthard-Basistunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "40'000 m",
+            "49'000 m",
+            "57'104 m",
+            "69'000 m"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 57'104 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:d085fdf4",
+          "type": "single_choice",
+          "prompt": "Gotthard-Basistunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1980",
+            "1992",
+            "2004",
+            "2016"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 2016 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:35666ee6",
+          "type": "single_choice",
+          "prompt": "Gotthard-Basistunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst ist «2-Röhren / 2 x 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Bahnhöfe",
+      "grund": "Keiner der 6 erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

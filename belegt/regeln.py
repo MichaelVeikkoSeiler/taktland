@@ -130,6 +130,12 @@ class Regelwerk:
             n = zahl(roh)
             if n is None:
                 continue
+            # «km -0.4»: Ein Minus direkt vor der Zahl, davor ein Leerschlag,
+            # gehört zur Zahl (Linie 220 beginnt bei km -0.4). «St-Aubin 2»
+            # und «1-Röhre» bleiben unberührt.
+            if m.start() >= 1 and text[m.start() - 1] == "-" \
+                    and (m.start() == 1 or text[m.start() - 2].isspace()):
+                n, roh = -n, "-" + roh
             # Zahlen, die Teil einer Bezeichnung aus den Fakten sind, zaehlen
             # als belegt: «Perron 1/11» ist eine Bezeichnung, keine Rechnung.
             if _teil_einer_bezeichnung(text, m, faktenbasis):

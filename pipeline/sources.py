@@ -7,7 +7,8 @@ Stand: im Katalog verifiziert (siehe docs/datenquellen.md).
              uic    = wie bpuic, aber als Float geliefert
              bps    = Betriebspunkt-Kuerzel, braucht Uebersetzung
              name   = nur Bahnhofsname, braucht Uebersetzung
-`tier`     : core = fuer jedes Profil noetig, extra = Zusatzkapitel
+`tier`     : core = fuer jedes Profil noetig, extra = Zusatzkapitel,
+             linien = nur fuer die Linienseiten
 """
 
 DATASETS = {
@@ -79,6 +80,10 @@ DATASETS = {
         join=None, tier="extra", beschreibung="Streckennetz mit Anfang und Ende"),
     "bilder-von-bahnhofen": dict(
         join="nummer", tier="extra", beschreibung="Bilder von 20 Bahnhoefen"),
+    # --- nur fuer die Linienseiten (pipeline/build_linien.py) ---
+    "tunnel": dict(
+        join="linie", tier="linien",
+        beschreibung="Tunnel mit Laenge, Jahr der ersten Inbetriebnahme, Roehren und Spuren"),
 }
 
 # Nicht verwendet, aber geprueft:

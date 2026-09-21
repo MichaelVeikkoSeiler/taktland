@@ -1,0 +1,214 @@
+{
+  "linie": 735,
+  "name": "Ziegelbrucke West - Rapperswil Ost",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 735 heisst in den offenen Daten «Ziegelbrucke West - Rapperswil Ost». Als Anfang ist der Betriebspunkt Ziegelbrucke West (Abzw) erfasst, als Ende Rapperswil Ost (Abzw). Die Kilometrierung reicht von km 34.798 bis km 58.735.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Ziegelbrucke West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Rapperswil Ost (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 34.798,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 58.735,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:e9dbe0ed",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 735?",
+          "min": 48,
+          "max": 86,
+          "step": 1,
+          "unit": "km",
+          "correct": 58.735,
+          "explanation": "Die Kilometrierung der Linie 735 reicht bis km 58.735. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:71917573",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 735?",
+          "min": 28,
+          "max": 51,
+          "step": 1,
+          "unit": "km",
+          "correct": 34.798,
+          "explanation": "Die Kilometrierung der Linie 735 beginnt bei km 34.798.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 735 führt die Liste der Betriebspunkte 8 Einträge. Davon sind 5 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 5,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Schänis",
+          "value": 37.09457,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503119
+        },
+        {
+          "label": "Benken SG",
+          "value": 43.40673,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8503118
+        },
+        {
+          "label": "Uznach",
+          "value": 46.5021,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8503116
+        },
+        {
+          "label": "Schmerikon",
+          "value": 49.3304,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8503115
+        },
+        {
+          "label": "Blumenau",
+          "value": 57.34306,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8503113
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:721f1190",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 735, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Schänis",
+              "value": 37.09457,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Benken SG",
+              "value": 43.40673,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Schmerikon",
+              "value": 49.3304,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Blumenau",
+              "value": 57.34306,
+              "factRef": "bahnhoefe.items[4].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Schänis bei km 37.09457, Benken SG bei km 43.40673, Schmerikon bei km 49.3304 und Blumenau bei km 57.34306.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:4335a148",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 735 liegt Uznach?",
+          "options": [
+            "37.09457 km",
+            "46.5021 km",
+            "49.3304 km",
+            "57.34306 km"
+          ],
+          "correct": 1,
+          "explanation": "Uznach liegt auf der Linie 735 bei km 46.5021.",
+          "factRef": "bahnhoefe.items[2].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 5 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 8 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

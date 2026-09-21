@@ -69,3 +69,26 @@ Ebenso vorsichtig zu behandeln:
 - `21196_behig-haltekantepunkt` – 496 783 Records, Punktgenauigkeit ohne Mehrwert fürs Lernen
 - `dienststellen-gemass-opentransportdataswiss` – 60 111 Records aller Schweizer TU
 - `jahresformation`, `ist-daten-sbb`, `rollmaterial` – nicht bahnhofsbezogen
+
+## Linien und Tunnel (Linienseiten)
+
+Im Katalog von data.sbb.ch (60 Datensätze, geprüft 2026-09-21) steht zu Strecken:
+
+- `linie` – 432 Linien mit Name, Anfangs- und Endpunkt und Kilometrierung von–bis.
+  Die Differenz ist **nicht** als Länge belegt: Linie 210 beginnt bei km 19.115,
+  Linie 220 bei km -0.4.
+- `linie-mit-betriebspunkten` – welcher Betriebspunkt bei welchem Kilometer auf welcher Linie liegt.
+- `tunnel` – 289 Tunnel, vollständig mit Länge, Jahr der ersten Inbetriebnahme,
+  Tunnelsystem (Röhren und Spuren), Linie und Kilometer. Neun haben eine Bemerkung zur
+  Länge oder zum Umfang («Länge der Oströhre», «4947m gehört Frankreich»). Das Feld
+  Kanton ist nicht verlässlich («St.AuslandGallen») und wird nicht verwendet.
+- `brucken` (4057, ohne Länge und Baujahr), `bahnubergang` (1064, mit Sicherungsart und
+  Zahl der gekreuzten Gleise) – noch nicht verwendet.
+
+**Nicht in den offenen Daten:** die Länge einer Linie, ein Bau- oder Eröffnungsjahr der
+Linie, ob sie ein- oder mehrspurig ist (nur das Tunnelsystem sagt es, und nur für den
+Tunnel). Die Linienseiten führen das als Lücke.
+
+**Grauzone:** In `zugzahlen` ergibt Trassenkilometer geteilt durch Anzahl Züge bei 98 %
+der Abschnitte immer denselben Wert, sehr wahrscheinlich die Länge des Abschnitts. Die
+SBB beschreibt das nicht; verwendet wird es erst, wenn sie es bestätigt.

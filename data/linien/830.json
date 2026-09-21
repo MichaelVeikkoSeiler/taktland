@@ -1,0 +1,107 @@
+{
+ "linie": 830,
+ "name": "Wil - Weinfelden",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Wil SG",
+  "ende": "Weinfelden",
+  "km_anfang": -0.003,
+  "km_ende": 19.175
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 11,
+  "anzahl_in_taktland": 10,
+  "items": [
+   {
+    "uic": 8506206,
+    "name": "Wil SG",
+    "km": -0.00332
+   },
+   {
+    "uic": 8506181,
+    "name": "Bronschhofen",
+    "km": 2.57079
+   },
+   {
+    "uic": 8506188,
+    "name": "Bronschhofen AMP",
+    "km": 3.29024
+   },
+   {
+    "uic": 8506182,
+    "name": "Bettwiesen",
+    "km": 5.45048
+   },
+   {
+    "uic": 8506168,
+    "name": "Tägerschen",
+    "km": 6.71426
+   },
+   {
+    "uic": 8506183,
+    "name": "Tobel-Affeltrangen",
+    "km": 8.22472
+   },
+   {
+    "uic": 8506184,
+    "name": "Märwil",
+    "km": 11.25212
+   },
+   {
+    "uic": 8506185,
+    "name": "Oppikon",
+    "km": 14.05437
+   },
+   {
+    "uic": 8506190,
+    "name": "Bussnang",
+    "km": 16.35061
+   },
+   {
+    "uic": 8506105,
+    "name": "Weinfelden",
+    "km": 19.17482
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 10 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 11 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

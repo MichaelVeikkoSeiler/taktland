@@ -1,0 +1,172 @@
+{
+ "linie": 410,
+ "name": "Olten - Solothurn - Biel/Bienne",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Olten",
+  "ende": "Biel/Bienne",
+  "km_anfang": 39.292,
+  "km_ende": 99.369
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 30,
+  "anzahl_in_taktland": 23,
+  "items": [
+   {
+    "uic": 8500218,
+    "name": "Olten",
+    "km": 39.29156
+   },
+   {
+    "uic": 8500217,
+    "name": "Olten Hammer",
+    "km": 40.6274
+   },
+   {
+    "uic": 8500216,
+    "name": "Wangen bei Olten",
+    "km": 43.04188
+   },
+   {
+    "uic": 8500215,
+    "name": "Hägendorf",
+    "km": 45.30279
+   },
+   {
+    "uic": 8500214,
+    "name": "Egerkingen",
+    "km": 49.10147
+   },
+   {
+    "uic": 8500213,
+    "name": "Oberbuchsiten",
+    "km": 51.42227
+   },
+   {
+    "uic": 8500212,
+    "name": "Oensingen",
+    "km": 56.62735
+   },
+   {
+    "uic": 8500211,
+    "name": "Niederbipp",
+    "km": 58.61059
+   },
+   {
+    "uic": 8500210,
+    "name": "Wangen an der Aare",
+    "km": 64.29971
+   },
+   {
+    "uic": 8500209,
+    "name": "Deitingen",
+    "km": 67.59769
+   },
+   {
+    "uic": 8500208,
+    "name": "Luterbach-Attisholz",
+    "km": 70.34981
+   },
+   {
+    "uic": 8500207,
+    "name": "Solothurn",
+    "km": 73.81863
+   },
+   {
+    "uic": 8500206,
+    "name": "Solothurn West",
+    "km": 74.78302
+   },
+   {
+    "uic": 8518963,
+    "name": "Solothurn Allmend",
+    "km": 75.65197
+   },
+   {
+    "uic": 8500205,
+    "name": "Bellach",
+    "km": 76.68243
+   },
+   {
+    "uic": 8500204,
+    "name": "Selzach",
+    "km": 80.692
+   },
+   {
+    "uic": 8500203,
+    "name": "Bettlach",
+    "km": 82.92457
+   },
+   {
+    "uic": 8500202,
+    "name": "Grenchen Süd",
+    "km": 85.3135
+   },
+   {
+    "uic": 8500201,
+    "name": "Lengnau BE",
+    "km": 87.993
+   },
+   {
+    "uic": 8500200,
+    "name": "Pieterlen",
+    "km": 90.21118
+   },
+   {
+    "uic": 8518771,
+    "name": "Biel/Bienne Bözingenfeld/Champs-de-Boujean",
+    "km": 93.98099
+   },
+   {
+    "uic": 8504419,
+    "name": "Biel Mett",
+    "km": 96.25
+   },
+   {
+    "uic": 8504300,
+    "name": "Biel/Bienne",
+    "km": 99.3685
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 23 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 30 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

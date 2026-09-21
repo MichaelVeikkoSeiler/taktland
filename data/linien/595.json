@@ -1,0 +1,83 @@
+{
+ "linie": 595,
+ "name": "GBT Ost",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Rynacht (Spw)",
+  "ende": "Giustizia (dira)",
+  "km_anfang": 99.451,
+  "km_ende": 164.016
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 7,
+  "anzahl_in_taktland": 0,
+  "items": []
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 2,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1
+  ],
+  "anzahl_aelteste": 2,
+  "items": [
+   {
+    "name": "Galleria Svincolo A2 Biasca",
+    "laenge_m": 260,
+    "inbetriebnahme_jahr": 2016,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 159.916,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria artificiale Giustizia",
+    "laenge_m": 106,
+    "inbetriebnahme_jahr": 2016,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 163.608,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Bahnhöfe",
+   "grund": "Keiner der 7 erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "tunnel"
+ ]
+}

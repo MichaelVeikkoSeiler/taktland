@@ -1,0 +1,349 @@
+{
+  "linie": 736,
+  "name": "Ziegelbrucke Ost - Linthal Gleisende",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 736 heisst in den offenen Daten «Ziegelbrucke Ost - Linthal Gleisende». Als Anfang ist der Betriebspunkt Ziegelbrucke Ost (Abzw) erfasst, als Ende Linthal (Gleisende). Die Kilometrierung reicht von km 57.545 bis km 84.846.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Ziegelbrucke Ost (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Linthal (Gleisende)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 57.545,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 84.846,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:ca52dee2",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 736?",
+          "min": 69,
+          "max": 124,
+          "step": 1,
+          "unit": "km",
+          "correct": 84.846,
+          "explanation": "Die Kilometrierung der Linie 736 reicht bis km 84.846. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:2d3948ef",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 736?",
+          "min": 47,
+          "max": 84,
+          "step": 1,
+          "unit": "km",
+          "correct": 57.545,
+          "explanation": "Die Kilometrierung der Linie 736 beginnt bei km 57.545.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 736 führt die Liste der Betriebspunkte 16 Einträge. Davon sind 14 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 16,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 14,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Nieder- und Oberurnen",
+          "value": 58.9095,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503226
+        },
+        {
+          "label": "Näfels-Mollis",
+          "value": 61.65353,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8503227
+        },
+        {
+          "label": "Netstal",
+          "value": 65.63633,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8503228
+        },
+        {
+          "label": "Glarus",
+          "value": 68.60283,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8503230
+        },
+        {
+          "label": "Ennenda",
+          "value": 69.51085,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8503231
+        },
+        {
+          "label": "Mitlödi",
+          "value": 72.26972,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8503232
+        },
+        {
+          "label": "Schwanden GL",
+          "value": 73.81989,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8503233
+        },
+        {
+          "label": "Nidfurn-Haslen",
+          "value": 75.78335,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8503234
+        },
+        {
+          "label": "Leuggelbach",
+          "value": 77.35064,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8503235
+        },
+        {
+          "label": "Luchsingen-Hätzingen",
+          "value": 78.69079,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8503236
+        },
+        {
+          "label": "Diesbach-Betschwanden",
+          "value": 81.25597,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8503237
+        },
+        {
+          "label": "Rüti GL",
+          "value": 82.84649,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8503238
+        },
+        {
+          "label": "Linthal Braunwaldbahn",
+          "value": 83.96514,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8503240
+        },
+        {
+          "label": "Linthal",
+          "value": 84.4537,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8503239
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:2241ae14",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 736, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Näfels-Mollis",
+              "value": 61.65353,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Ennenda",
+              "value": 69.51085,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Schwanden GL",
+              "value": 73.81989,
+              "factRef": "bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Linthal",
+              "value": 84.4537,
+              "factRef": "bahnhoefe.items[13].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Näfels-Mollis bei km 61.65353, Ennenda bei km 69.51085, Schwanden GL bei km 73.81989 und Linthal bei km 84.4537.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:0fbb87ff",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 736 liegt Schwanden GL?",
+          "options": [
+            "61.65353 km",
+            "69.51085 km",
+            "73.81989 km",
+            "84.4537 km"
+          ],
+          "correct": 2,
+          "explanation": "Schwanden GL liegt auf der Linie 736 bei km 73.81989.",
+          "factRef": "bahnhoefe.items[6].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 736 ist 1 Tunnel erfasst: Erlenrunstunnel, 45 Meter, erstmals in Betrieb 1879, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Erlenrunstunnel",
+          "value": 45,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:15e76c3d",
+          "type": "single_choice",
+          "prompt": "Erlenrunstunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "31 m",
+            "38 m",
+            "45 m",
+            "54 m"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst sind 45 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:a39eb507",
+          "type": "single_choice",
+          "prompt": "Erlenrunstunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1879",
+            "1891",
+            "1903",
+            "1915"
+          ],
+          "correct": 0,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1879 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:aea9abe2",
+          "type": "single_choice",
+          "prompt": "Erlenrunstunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 14 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 16 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

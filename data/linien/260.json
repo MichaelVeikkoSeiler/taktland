@@ -1,0 +1,92 @@
+{
+ "linie": 260,
+ "name": "Zollikofen Nord - Biel/Bienne Aebistr.",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Zollikofen Nord (Abzw)",
+  "ende": "Biel/Bienne Aebistrasse",
+  "km_anfang": 8.152,
+  "km_ende": 33.069
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 11,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8504411,
+    "name": "Münchenbuchsee",
+    "km": 10.12482
+   },
+   {
+    "uic": 8504412,
+    "name": "Schüpfen",
+    "km": 15.69056
+   },
+   {
+    "uic": 8504413,
+    "name": "Suberg-Grossaffoltern",
+    "km": 19.92432
+   },
+   {
+    "uic": 8504414,
+    "name": "Lyss",
+    "km": 23.3666
+   },
+   {
+    "uic": 8504415,
+    "name": "Busswil BE",
+    "km": 26.15786
+   },
+   {
+    "uic": 8504441,
+    "name": "Studen BE",
+    "km": 28.265
+   },
+   {
+    "uic": 8504416,
+    "name": "Brügg BE",
+    "km": 30.51331
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 11 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

@@ -1,0 +1,285 @@
+{
+  "linie": 853,
+  "name": "Wil Sud - Wattwil - Uznach",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 853 heisst in den offenen Daten «Wil Sud - Wattwil - Uznach». Als Anfang ist der Betriebspunkt Wil Sud (Abzw) erfasst, als Ende Uznach. Die Kilometrierung reicht von km 1.304 bis km 34.387.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Wil Sud (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Uznach",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 1.304,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 34.387,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:9bd75f3c",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 853?",
+          "min": 28,
+          "max": 50,
+          "step": 1,
+          "unit": "km",
+          "correct": 34.387,
+          "explanation": "Die Kilometrierung der Linie 853 reicht bis km 34.387. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:58eff8bb",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 853?",
+          "min": 1.0,
+          "max": 2.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 1.304,
+          "explanation": "Die Kilometrierung der Linie 853 beginnt bei km 1.304.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 853 führt die Liste der Betriebspunkte 9 Einträge. Davon sind 6 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 9,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 6,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Bazenheid",
+          "value": 6.92195,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506205
+        },
+        {
+          "label": "Lütisburg",
+          "value": 10.034,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506204
+        },
+        {
+          "label": "Bütschwil",
+          "value": 12.92551,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506203
+        },
+        {
+          "label": "Dietfurt",
+          "value": 14.61546,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506202
+        },
+        {
+          "label": "Kaltbrunn",
+          "value": 30.98199,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8503117
+        },
+        {
+          "label": "Uznach",
+          "value": 34.38702,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8503116
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:743721bf",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 853, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Bazenheid",
+              "value": 6.92195,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Bütschwil",
+              "value": 12.92551,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Dietfurt",
+              "value": 14.61546,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Uznach",
+              "value": 34.38702,
+              "factRef": "bahnhoefe.items[5].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Bazenheid bei km 6.92195, Bütschwil bei km 12.92551, Dietfurt bei km 14.61546 und Uznach bei km 34.38702.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:36328354",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 853 liegt Dietfurt?",
+          "options": [
+            "6.92195 km",
+            "12.92551 km",
+            "14.61546 km",
+            "34.38702 km"
+          ],
+          "correct": 2,
+          "explanation": "Dietfurt liegt auf der Linie 853 bei km 14.61546.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 853 ist 1 Tunnel erfasst: Rickentunnel, 8'604 Meter, erstmals in Betrieb 1910, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Rickentunnel",
+          "value": 8604,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:550ce109",
+          "type": "single_choice",
+          "prompt": "Rickentunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "4'700 m",
+            "6'000 m",
+            "7'300 m",
+            "8'604 m"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 8'604 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:f7405fbf",
+          "type": "single_choice",
+          "prompt": "Rickentunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1886",
+            "1898",
+            "1910",
+            "1922"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1910 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:be58fbfe",
+          "type": "single_choice",
+          "prompt": "Rickentunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 6 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 9 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

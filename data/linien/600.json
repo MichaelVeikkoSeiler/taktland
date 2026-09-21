@@ -1,0 +1,699 @@
+{
+ "linie": 600,
+ "name": "Immensee - Bellinzona - Chiasso",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Immensee West (Abzw)",
+  "ende": "Chiasso Est",
+  "km_anfang": 0,
+  "km_ende": 206.654
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 82,
+  "anzahl_in_taktland": 32,
+  "items": [
+   {
+    "uic": 8505003,
+    "name": "Immensee",
+    "km": 0.25695
+   },
+   {
+    "uic": 8505004,
+    "name": "Arth-Goldau",
+    "km": 8.86435
+   },
+   {
+    "uic": 8505005,
+    "name": "Steinen",
+    "km": 13.92185
+   },
+   {
+    "uic": 8505006,
+    "name": "Schwyz",
+    "km": 17.00715
+   },
+   {
+    "uic": 8505007,
+    "name": "Brunnen",
+    "km": 20.5245
+   },
+   {
+    "uic": 8505111,
+    "name": "Sisikon",
+    "km": 26.38269
+   },
+   {
+    "uic": 8505112,
+    "name": "Flüelen",
+    "km": 32.30055
+   },
+   {
+    "uic": 8505113,
+    "name": "Altdorf UR",
+    "km": 35.25017
+   },
+   {
+    "uic": 8505114,
+    "name": "Erstfeld",
+    "km": 41.5832
+   },
+   {
+    "uic": 8505119,
+    "name": "Göschenen",
+    "km": 70.44657
+   },
+   {
+    "uic": 8505201,
+    "name": "Airolo",
+    "km": 86.20893
+   },
+   {
+    "uic": 8505202,
+    "name": "Ambrì-Piotta",
+    "km": 93.04375
+   },
+   {
+    "uic": 8505204,
+    "name": "Faido",
+    "km": 106.03713
+   },
+   {
+    "uic": 8505205,
+    "name": "Lavorgo",
+    "km": 112.58013
+   },
+   {
+    "uic": 8505207,
+    "name": "Bodio TI",
+    "km": 125.49506
+   },
+   {
+    "uic": 8505209,
+    "name": "Biasca",
+    "km": 131.795
+   },
+   {
+    "uic": 8505212,
+    "name": "Castione-Arbedo",
+    "km": 147.525
+   },
+   {
+    "uic": 8505213,
+    "name": "Bellinzona",
+    "km": 150.89101
+   },
+   {
+    "uic": 8505214,
+    "name": "Giubiasco",
+    "km": 154.04336
+   },
+   {
+    "uic": 8505216,
+    "name": "Rivera-Bironico",
+    "km": 165.21442
+   },
+   {
+    "uic": 8505217,
+    "name": "Mezzovico",
+    "km": 168.8616
+   },
+   {
+    "uic": 8505218,
+    "name": "Taverne-Torricella",
+    "km": 173.99196
+   },
+   {
+    "uic": 8505219,
+    "name": "Lamone-Cadempino",
+    "km": 176.09835
+   },
+   {
+    "uic": 8505300,
+    "name": "Lugano",
+    "km": 180.44953
+   },
+   {
+    "uic": 8505301,
+    "name": "Paradiso",
+    "km": 182.885
+   },
+   {
+    "uic": 8505302,
+    "name": "Melide",
+    "km": 187.2297
+   },
+   {
+    "uic": 8505303,
+    "name": "Maroggia-Melano",
+    "km": 191.03053
+   },
+   {
+    "uic": 8505304,
+    "name": "Capolago-Riva S. Vitale",
+    "km": 194.61388
+   },
+   {
+    "uic": 8518475,
+    "name": "Mendrisio S. Martino",
+    "km": 197.702
+   },
+   {
+    "uic": 8505305,
+    "name": "Mendrisio",
+    "km": 198.71338
+   },
+   {
+    "uic": 8505306,
+    "name": "Balerna",
+    "km": 203.53433
+   },
+   {
+    "uic": 8505307,
+    "name": "Chiasso",
+    "km": 206.16614
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 58,
+  "laengste": [
+   30
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   44,
+   45,
+   46,
+   48,
+   49,
+   55,
+   56,
+   57
+  ],
+  "anzahl_aelteste": 8,
+  "items": [
+   {
+    "name": "Rindelfluhtunnel re. Berg G200",
+    "laenge_m": 201,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 6.796,
+    "bemerkung": null
+   },
+   {
+    "name": "Rindelfluhtunnel li. See G100",
+    "laenge_m": 200,
+    "inbetriebnahme_jahr": 1904,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 6.842,
+    "bemerkung": null
+   },
+   {
+    "name": "Hochfluhtunnel",
+    "laenge_m": 584,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 22.146,
+    "bemerkung": null
+   },
+   {
+    "name": "Franziskustunnel",
+    "laenge_m": 193,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 22.943,
+    "bemerkung": null
+   },
+   {
+    "name": "Oelbergtunnel",
+    "laenge_m": 1987,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 24.755,
+    "bemerkung": null
+   },
+   {
+    "name": "Stutzecktunnel",
+    "laenge_m": 988,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 27.33,
+    "bemerkung": null
+   },
+   {
+    "name": "Tellsplattentunnel",
+    "laenge_m": 172,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 28.453,
+    "bemerkung": null
+   },
+   {
+    "name": "Axenbergtunnel",
+    "laenge_m": 1128,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 29.255,
+    "bemerkung": null
+   },
+   {
+    "name": "Sulzeggtunnel",
+    "laenge_m": 128,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 30.255,
+    "bemerkung": null
+   },
+   {
+    "name": "Neue Gruonbachgalerie re. G200",
+    "laenge_m": 98,
+    "inbetriebnahme_jahr": 1943,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 30.679,
+    "bemerkung": null
+   },
+   {
+    "name": "Windgällentunnel",
+    "laenge_m": 182,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 47.763,
+    "bemerkung": null
+   },
+   {
+    "name": "Bristentunnel",
+    "laenge_m": 710,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 48.847,
+    "bemerkung": null
+   },
+   {
+    "name": "Intschitunnel",
+    "laenge_m": 88,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 49.724,
+    "bemerkung": null
+   },
+   {
+    "name": "Zgraggentaltunnel",
+    "laenge_m": 70,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 50.943,
+    "bemerkung": null
+   },
+   {
+    "name": "Breitentunnel",
+    "laenge_m": 54,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 51.383,
+    "bemerkung": null
+   },
+   {
+    "name": "Meitschlingertunnel",
+    "laenge_m": 87,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 51.951,
+    "bemerkung": null
+   },
+   {
+    "name": "Märchlisbachgalerie Mitte",
+    "laenge_m": 25,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 54.061,
+    "bemerkung": null
+   },
+   {
+    "name": "Häggrigerbachgalerie",
+    "laenge_m": 32,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 55.64,
+    "bemerkung": null
+   },
+   {
+    "name": "Muhrentunnel",
+    "laenge_m": 53,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 57.487,
+    "bemerkung": null
+   },
+   {
+    "name": "Pfaffensprungtunnel",
+    "laenge_m": 1475,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 57.665,
+    "bemerkung": null
+   },
+   {
+    "name": "Mühletunnel",
+    "laenge_m": 88,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 59.226,
+    "bemerkung": null
+   },
+   {
+    "name": "Kirchbergtunnel",
+    "laenge_m": 304,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 59.489,
+    "bemerkung": null
+   },
+   {
+    "name": "Wattingentunnel",
+    "laenge_m": 1084,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 61.39,
+    "bemerkung": null
+   },
+   {
+    "name": "Rorbachtunnel",
+    "laenge_m": 230,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 62.097,
+    "bemerkung": null
+   },
+   {
+    "name": "Untere Entschigtalgalerie",
+    "laenge_m": 185,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 62.982,
+    "bemerkung": null
+   },
+   {
+    "name": "Strahllochtunnel",
+    "laenge_m": 39,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 64.123,
+    "bemerkung": null
+   },
+   {
+    "name": "Leggisteintunnel",
+    "laenge_m": 1092,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 64.96,
+    "bemerkung": null
+   },
+   {
+    "name": "Maienkreuztunnel",
+    "laenge_m": 78,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 65.503,
+    "bemerkung": null
+   },
+   {
+    "name": "Obere Entschigtalgalerie",
+    "laenge_m": 103,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 66.117,
+    "bemerkung": null
+   },
+   {
+    "name": "Naxbergtunnel",
+    "laenge_m": 1570,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 67.699,
+    "bemerkung": null
+   },
+   {
+    "name": "Gotthardtunnel",
+    "laenge_m": 15000,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 77.397,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Stalvedro",
+    "laenge_m": 194,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 87.685,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Dazio",
+    "laenge_m": 354,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 98.829,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Artoito",
+    "laenge_m": 74,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 99.226,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Freggio",
+    "laenge_m": 1568,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 99.841,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Monte Piottino",
+    "laenge_m": 147,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 101.41,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Pardorea",
+    "laenge_m": 286,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 102.23,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Prato",
+    "laenge_m": 1567,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 102.438,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Boscerina",
+    "laenge_m": 43,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 104.53,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Polmengo",
+    "laenge_m": 304,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 105.012,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria la Lume",
+    "laenge_m": 466,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 114.555,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Pianotondo",
+    "laenge_m": 1509,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 115.815,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Tourniquet",
+    "laenge_m": 72,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 117.011,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Travi",
+    "laenge_m": 1547,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 118.661,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Crocetto",
+    "laenge_m": 275,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 134.095,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Giustizia",
+    "laenge_m": 64,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 134.59,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Svitto",
+    "laenge_m": 291,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 151.463,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Dragonato",
+    "laenge_m": 33,
+    "inbetriebnahme_jahr": 2018,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 151.886,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Costa",
+    "laenge_m": 68,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 160.008,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Precassino Gl. 200",
+    "laenge_m": 402,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 160.451,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Meggiagra Gl. 200",
+    "laenge_m": 102,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 160.718,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Monte Ceneri I sinistra",
+    "laenge_m": 1675,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 163.76,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Molincero",
+    "laenge_m": 75,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 170.793,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Massagno I sinistra",
+    "laenge_m": 924,
+    "inbetriebnahme_jahr": 1882,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 179.327,
+    "bemerkung": null
+   },
+   {
+    "name": "Galeria Paradiso",
+    "laenge_m": 758,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 183.771,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria San Martino",
+    "laenge_m": 53,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 184.336,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Maroggia",
+    "laenge_m": 570,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 189.829,
+    "bemerkung": null
+   },
+   {
+    "name": "Galleria Coldrerio",
+    "laenge_m": 92,
+    "inbetriebnahme_jahr": 1874,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 200.313,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 32 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 82 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

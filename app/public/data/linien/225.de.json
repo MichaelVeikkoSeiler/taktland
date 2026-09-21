@@ -1,0 +1,384 @@
+{
+  "linie": 225,
+  "name": "Biel/Bienne West - La Chaux-de-Fonds",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 225 heisst in den offenen Daten «Biel/Bienne West - La Chaux-de-Fonds». Als Anfang ist der Betriebspunkt Biel/Bienne West erfasst, als Ende La Chaux-de-Fonds Nord. Die Kilometrierung reicht von km 34.119 bis km 77.401.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Biel/Bienne West",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "La Chaux-de-Fonds Nord",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 34.119,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 77.401,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:f872f40a",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 225?",
+          "min": 63,
+          "max": 113,
+          "step": 1,
+          "unit": "km",
+          "correct": 77.401,
+          "explanation": "Die Kilometrierung der Linie 225 reicht bis km 77.401. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:039af16f",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 225?",
+          "min": 27,
+          "max": 50,
+          "step": 1,
+          "unit": "km",
+          "correct": 34.119,
+          "explanation": "Die Kilometrierung der Linie 225 beginnt bei km 34.119.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 225 führt die Liste der Betriebspunkte 18 Einträge. Davon sind 12 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 18,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Frinvillier-Taubenloch",
+          "value": 39.11025,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8504301
+        },
+        {
+          "label": "Reuchenette-Péry",
+          "value": 42.0368,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504302
+        },
+        {
+          "label": "La Heutte",
+          "value": 43.68453,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8504303
+        },
+        {
+          "label": "Sonceboz-Sombeval",
+          "value": 48.28167,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8504304
+        },
+        {
+          "label": "Corgémont",
+          "value": 50.22,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8504305
+        },
+        {
+          "label": "Cortébert",
+          "value": 53.11778,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8504306
+        },
+        {
+          "label": "Courtelary",
+          "value": 56.46951,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8504307
+        },
+        {
+          "label": "Cormoret",
+          "value": 57.63528,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8504308
+        },
+        {
+          "label": "Villeret",
+          "value": 60.62795,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8504309
+        },
+        {
+          "label": "St-Imier",
+          "value": 62.38107,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8504310
+        },
+        {
+          "label": "Sonvilier",
+          "value": 65.17342,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8504311
+        },
+        {
+          "label": "Renan BE",
+          "value": 69.02207,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8504312
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:4c1afb1d",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 225, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Frinvillier-Taubenloch",
+              "value": 39.11025,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Corgémont",
+              "value": 50.22,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Villeret",
+              "value": 60.62795,
+              "factRef": "bahnhoefe.items[8].km"
+            },
+            {
+              "label": "Renan BE",
+              "value": 69.02207,
+              "factRef": "bahnhoefe.items[11].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Frinvillier-Taubenloch bei km 39.11025, Corgémont bei km 50.22, Villeret bei km 60.62795 und Renan BE bei km 69.02207.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:56439120",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 225 liegt Courtelary?",
+          "options": [
+            "39.11025 km",
+            "53.11778 km",
+            "56.46951 km",
+            "69.02207 km"
+          ],
+          "correct": 2,
+          "explanation": "Courtelary liegt auf der Linie 225 bei km 56.46951.",
+          "factRef": "bahnhoefe.items[6].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 225 sind 9 Tunnel erfasst. Der längste: Tunnel des Crosettes (075), 1'618 Meter, erstmals in Betrieb 1888, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1874, bei 7 der erfassten Tunnel. Die Liste zeigt die längsten davon.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 9,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel des Crosettes (075)",
+          "value": 1618,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[7].laenge_m"
+        },
+        {
+          "label": "Tunnel de Taubenloch 2 ( 040 )",
+          "value": 320,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Tunnel de Taubenloch 1 ( 039 )",
+          "value": 239,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Tunnel de Combe (Creux, 076)",
+          "value": 230,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[8].laenge_m"
+        },
+        {
+          "label": "Tunnel de Taubenloch 3 ( 041 )",
+          "value": 220,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        },
+        {
+          "label": "Tunnel de Taubenloch 5 ( 043 )",
+          "value": 164,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[5].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Tunnel des Crosettes (075)",
+              "value": 1618,
+              "factRef": "tunnel.items[7].laenge_m"
+            },
+            {
+              "label": "Tunnel de Taubenloch 2 ( 040 )",
+              "value": 320,
+              "factRef": "tunnel.items[2].laenge_m"
+            },
+            {
+              "label": "Tunnel de Taubenloch 1 ( 039 )",
+              "value": 239,
+              "factRef": "tunnel.items[1].laenge_m"
+            },
+            {
+              "label": "Tunnel de Taubenloch 3 ( 041 )",
+              "value": 220,
+              "factRef": "tunnel.items[3].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Tunnel des Crosettes (075) 1'618 m, Tunnel de Taubenloch 2 ( 040 ) 320 m, Tunnel de Taubenloch 1 ( 039 ) 239 m und Tunnel de Taubenloch 3 ( 041 ) 220 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:a4c86867",
+          "type": "single_choice",
+          "prompt": "Tunnel des Crosettes (075): In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1852",
+            "1864",
+            "1876",
+            "1888"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1888 erfasst.",
+          "factRef": "tunnel.items[7].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:9377e00a",
+          "type": "single_choice",
+          "prompt": "Tunnel des Crosettes (075): Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[7].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 12 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 18 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

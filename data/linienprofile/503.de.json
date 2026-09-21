@@ -1,0 +1,326 @@
+{
+  "linie": 503,
+  "name": "Sissach - Laufelfingen - Olten",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 503 heisst in den offenen Daten «Sissach - Laufelfingen - Olten». Als Anfang ist der Betriebspunkt Sissach erfasst, als Ende Olten. Die Kilometrierung reicht von km 21.104 bis km 39.292.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Sissach",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Olten",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 21.104,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 39.292,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:80fb885c",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 503?",
+          "min": 32,
+          "max": 57,
+          "step": 1,
+          "unit": "km",
+          "correct": 39.292,
+          "explanation": "Die Kilometrierung der Linie 503 reicht bis km 39.292. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:c1d17c45",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 503?",
+          "min": 17,
+          "max": 31,
+          "step": 1,
+          "unit": "km",
+          "correct": 21.104,
+          "explanation": "Die Kilometrierung der Linie 503 beginnt bei km 21.104.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 503 führt die Liste der Betriebspunkte 9 Einträge. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 9,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Sissach",
+          "value": 21.10387,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500026
+        },
+        {
+          "label": "Diepflingen",
+          "value": 23.7,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8500031
+        },
+        {
+          "label": "Sommerau",
+          "value": 25.27831,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8500032
+        },
+        {
+          "label": "Rümlingen",
+          "value": 26.889,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8500033
+        },
+        {
+          "label": "Buckten",
+          "value": 28.815,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8500034
+        },
+        {
+          "label": "Läufelfingen",
+          "value": 30.82169,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8500035
+        },
+        {
+          "label": "Trimbach",
+          "value": 36.2721,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8500037
+        },
+        {
+          "label": "Olten",
+          "value": 39.29156,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8500218
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:30282021",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 503, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Sissach",
+              "value": 21.10387,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Sommerau",
+              "value": 25.27831,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Läufelfingen",
+              "value": 30.82169,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Olten",
+              "value": 39.29156,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Sissach bei km 21.10387, Sommerau bei km 25.27831, Läufelfingen bei km 30.82169 und Olten bei km 39.29156.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:44707f2f",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 503 liegt Buckten?",
+          "options": [
+            "21.10387 km",
+            "26.889 km",
+            "28.815 km",
+            "39.29156 km"
+          ],
+          "correct": 2,
+          "explanation": "Buckten liegt auf der Linie 503 bei km 28.815.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 503 sind 3 Tunnel erfasst. Der längste: Ob. Hauensteintunnel, 2'495 Meter, erstmals in Betrieb 1857, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1857, bei Bucktentunnel, Mühlefluhtunnel BL und Ob. Hauensteintunnel.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 3,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Ob. Hauensteintunnel",
+          "value": 2495,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Bucktentunnel",
+          "value": 263,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Mühlefluhtunnel BL",
+          "value": 60,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Ob. Hauensteintunnel",
+              "value": 2495,
+              "factRef": "tunnel.items[2].laenge_m"
+            },
+            {
+              "label": "Bucktentunnel",
+              "value": 263,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Mühlefluhtunnel BL",
+              "value": 60,
+              "factRef": "tunnel.items[1].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Ob. Hauensteintunnel 2'495 m, Bucktentunnel 263 m und Mühlefluhtunnel BL 60 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:b7f73b29",
+          "type": "single_choice",
+          "prompt": "Ob. Hauensteintunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1845",
+            "1857",
+            "1869",
+            "1881"
+          ],
+          "correct": 1,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1857 erfasst.",
+          "factRef": "tunnel.items[2].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:e1579363",
+          "type": "single_choice",
+          "prompt": "Ob. Hauensteintunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[2].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 9 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

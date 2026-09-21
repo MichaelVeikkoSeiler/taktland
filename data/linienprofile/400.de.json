@@ -1,0 +1,219 @@
+{
+  "linie": 400,
+  "name": "Lochligut - Wanzwil - Rothrist West",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 400 heisst in den offenen Daten «Lochligut - Wanzwil - Rothrist West». Als Anfang ist der Betriebspunkt Lochligut (Abzw) erfasst, als Ende Rothrist West (Abzw). Die Kilometrierung reicht von km 4.849 bis km 55.228. Keiner der erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Lochligut (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Rothrist West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 4.849,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 55.228,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:711cf1ae",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 400?",
+          "min": 45,
+          "max": 81,
+          "step": 1,
+          "unit": "km",
+          "correct": 55.228,
+          "explanation": "Die Kilometrierung der Linie 400 reicht bis km 55.228. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:b80e0028",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 400?",
+          "min": 3.5,
+          "max": 7.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 4.849,
+          "explanation": "Die Kilometrierung der Linie 400 beginnt bei km 4.849.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 400 sind 11 Tunnel erfasst. Der längste: Grauholztunnel, 6'286 Meter, erstmals in Betrieb 1993, Tunnelsystem «1-Röhre / 2-Spuren». Die Liste zeigt die längsten davon.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 11,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Grauholztunnel",
+          "value": 6286,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Murgenthaltunnel",
+          "value": 4744,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[10].laenge_m"
+        },
+        {
+          "label": "Oenzbergtunnel",
+          "value": 3155,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[5].laenge_m"
+        },
+        {
+          "label": "Emmetunnel",
+          "value": 1633,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        },
+        {
+          "label": "Langenthaltunnel",
+          "value": 1105,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[8].laenge_m"
+        },
+        {
+          "label": "Hersiwiltunnel",
+          "value": 1000,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[4].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Grauholztunnel",
+              "value": 6286,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Murgenthaltunnel",
+              "value": 4744,
+              "factRef": "tunnel.items[10].laenge_m"
+            },
+            {
+              "label": "Oenzbergtunnel",
+              "value": 3155,
+              "factRef": "tunnel.items[5].laenge_m"
+            },
+            {
+              "label": "Emmetunnel",
+              "value": 1633,
+              "factRef": "tunnel.items[3].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Grauholztunnel 6'286 m, Murgenthaltunnel 4'744 m, Oenzbergtunnel 3'155 m und Emmetunnel 1'633 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:70076ece",
+          "type": "single_choice",
+          "prompt": "Grauholztunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1969",
+            "1981",
+            "1993",
+            "2005"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1993 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:35ca0dc9",
+          "type": "single_choice",
+          "prompt": "Grauholztunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Bahnhöfe",
+      "grund": "Keiner der 4 erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

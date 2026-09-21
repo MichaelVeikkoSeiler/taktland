@@ -17,7 +17,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sources import ZUSAETZLICH  # noqa: E402
+from sources import DATASETS, ZUSAETZLICH  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
@@ -151,7 +151,11 @@ class Data:
         pfad = RAW / "_abruf.json"
         if not pfad.exists():
             sys.exit("data/raw/_abruf.json fehlt: pipeline/fetch.py schreibt es beim Laden")
-        return max(json.loads(pfad.read_text(encoding="utf-8")).values())
+        # Datensaetze nur fuer die Linienseiten zaehlen nicht: Ein neuer
+        # Tunnel-Abruf aenderte sonst den Datenstand aller 771 Bahnhoefe
+        abruf = json.loads(pfad.read_text(encoding="utf-8"))
+        return max(v for k, v in abruf.items()
+                   if DATASETS.get(k, {}).get("tier") != "linien")
 
     def alle_sbb(self):
         neu = self.pf.sort_values("jahr").groupby("uic").tail(1)

@@ -1,0 +1,154 @@
+{
+ "linie": 400,
+ "name": "Lochligut - Wanzwil - Rothrist West",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Lochligut (Abzw)",
+  "ende": "Rothrist West (Abzw)",
+  "km_anfang": 4.849,
+  "km_ende": 55.228
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 4,
+  "anzahl_in_taktland": 0,
+  "items": []
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 11,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Grauholztunnel",
+    "laenge_m": 6286,
+    "inbetriebnahme_jahr": 1993,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 11.731,
+    "bemerkung": null
+   },
+   {
+    "name": "Birchiwaldtunnel",
+    "laenge_m": 39,
+    "inbetriebnahme_jahr": 2003,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 17.147,
+    "bemerkung": null
+   },
+   {
+    "name": "Rüdtligentunnel",
+    "laenge_m": 400,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 18.769,
+    "bemerkung": null
+   },
+   {
+    "name": "Emmetunnel",
+    "laenge_m": 1633,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 20.054,
+    "bemerkung": null
+   },
+   {
+    "name": "Hersiwiltunnel",
+    "laenge_m": 1000,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 30.55,
+    "bemerkung": null
+   },
+   {
+    "name": "Oenzbergtunnel",
+    "laenge_m": 3155,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 34.549,
+    "bemerkung": null
+   },
+   {
+    "name": "Gishübeltunnel",
+    "laenge_m": 845,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 37.149,
+    "bemerkung": null
+   },
+   {
+    "name": "Thunstettentunnel I Nord NBS",
+    "laenge_m": 889,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 40.749,
+    "bemerkung": null
+   },
+   {
+    "name": "Langenthaltunnel",
+    "laenge_m": 1105,
+    "inbetriebnahme_jahr": 2003,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 43.352,
+    "bemerkung": null
+   },
+   {
+    "name": "Aegertentunnel",
+    "laenge_m": 632,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 48.45,
+    "bemerkung": null
+   },
+   {
+    "name": "Murgenthaltunnel",
+    "laenge_m": 4744,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 51.29,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Bahnhöfe",
+   "grund": "Keiner der 4 erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "tunnel"
+ ]
+}

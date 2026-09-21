@@ -1,0 +1,340 @@
+{
+  "linie": 890,
+  "name": "Sargans Ost - Ziegelbrucke",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 890 heisst in den offenen Daten «Sargans Ost - Ziegelbrucke». Als Anfang ist der Betriebspunkt Sargans Ost erfasst, als Ende Ziegelbrucke. Die Kilometrierung reicht von km -0.098 bis km 33.605.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Sargans Ost",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Ziegelbrucke",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": -0.098,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 33.605,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:7e286684",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 890?",
+          "min": 27,
+          "max": 49,
+          "step": 1,
+          "unit": "km",
+          "correct": 33.605,
+          "explanation": "Die Kilometrierung der Linie 890 reicht bis km 33.605. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 890 führt die Liste der Betriebspunkte 13 Einträge. Davon sind 9 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 13,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 9,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Sargans",
+          "value": 0.1684,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8509411
+        },
+        {
+          "label": "Mels",
+          "value": 2.54876,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8509412
+        },
+        {
+          "label": "Flums",
+          "value": 9.7298,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8509413
+        },
+        {
+          "label": "Walenstadt",
+          "value": 13.47461,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8509414
+        },
+        {
+          "label": "Mols",
+          "value": 16.37362,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8509415
+        },
+        {
+          "label": "Unterterzen",
+          "value": 18.10677,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8509416
+        },
+        {
+          "label": "Murg",
+          "value": 21.21914,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8509417
+        },
+        {
+          "label": "Mühlehorn",
+          "value": 24.60025,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8509418
+        },
+        {
+          "label": "Ziegelbrücke",
+          "value": 33.60528,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8503225
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:01e2d62f",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 890, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Sargans",
+              "value": 0.1684,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Walenstadt",
+              "value": 13.47461,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Unterterzen",
+              "value": 18.10677,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Ziegelbrücke",
+              "value": 33.60528,
+              "factRef": "bahnhoefe.items[8].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Sargans bei km 0.1684, Walenstadt bei km 13.47461, Unterterzen bei km 18.10677 und Ziegelbrücke bei km 33.60528.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:4b493f83",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 890 liegt Mols?",
+          "options": [
+            "0.1684 km",
+            "16.37362 km",
+            "18.10677 km",
+            "33.60528 km"
+          ],
+          "correct": 1,
+          "explanation": "Mols liegt auf der Linie 890 bei km 16.37362.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 890 sind 5 Tunnel erfasst. Der längste: Kerenzerbergtunnel, 3'955 Meter, erstmals in Betrieb 1961, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 1859, bei Bühltunnel SG und Stutztunnel.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 5,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Kerenzerbergtunnel",
+          "value": 3955,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        },
+        {
+          "label": "Bommersteintunnel",
+          "value": 453,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Biberlikopftunnel",
+          "value": 289,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[4].laenge_m"
+        },
+        {
+          "label": "Stutztunnel",
+          "value": 133,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Bühltunnel SG",
+          "value": 114,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Kerenzerbergtunnel",
+              "value": 3955,
+              "factRef": "tunnel.items[3].laenge_m"
+            },
+            {
+              "label": "Bommersteintunnel",
+              "value": 453,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Biberlikopftunnel",
+              "value": 289,
+              "factRef": "tunnel.items[4].laenge_m"
+            },
+            {
+              "label": "Stutztunnel",
+              "value": 133,
+              "factRef": "tunnel.items[2].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Kerenzerbergtunnel 3'955 m, Bommersteintunnel 453 m, Biberlikopftunnel 289 m und Stutztunnel 133 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:91871817",
+          "type": "single_choice",
+          "prompt": "Kerenzerbergtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1937",
+            "1949",
+            "1961",
+            "1973"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1961 erfasst.",
+          "factRef": "tunnel.items[3].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:45f64a38",
+          "type": "single_choice",
+          "prompt": "Kerenzerbergtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[3].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 9 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 13 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

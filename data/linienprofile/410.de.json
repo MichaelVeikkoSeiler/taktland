@@ -1,0 +1,358 @@
+{
+  "linie": 410,
+  "name": "Olten - Solothurn - Biel/Bienne",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 410 heisst in den offenen Daten «Olten - Solothurn - Biel/Bienne». Als Anfang ist der Betriebspunkt Olten erfasst, als Ende Biel/Bienne. Die Kilometrierung reicht von km 39.292 bis km 99.369.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Olten",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Biel/Bienne",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 39.292,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 99.369,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:29140e8d",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 410?",
+          "min": 81,
+          "max": 145,
+          "step": 1,
+          "unit": "km",
+          "correct": 99.369,
+          "explanation": "Die Kilometrierung der Linie 410 reicht bis km 99.369. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:2e360fd6",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 410?",
+          "min": 32,
+          "max": 57,
+          "step": 1,
+          "unit": "km",
+          "correct": 39.292,
+          "explanation": "Die Kilometrierung der Linie 410 beginnt bei km 39.292.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 410 führt die Liste der Betriebspunkte 30 Einträge. Davon sind 23 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 30,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 23,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Olten",
+          "value": 39.29156,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500218
+        },
+        {
+          "label": "Olten Hammer",
+          "value": 40.6274,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8500217
+        },
+        {
+          "label": "Wangen bei Olten",
+          "value": 43.04188,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8500216
+        },
+        {
+          "label": "Hägendorf",
+          "value": 45.30279,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8500215
+        },
+        {
+          "label": "Egerkingen",
+          "value": 49.10147,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8500214
+        },
+        {
+          "label": "Oberbuchsiten",
+          "value": 51.42227,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8500213
+        },
+        {
+          "label": "Oensingen",
+          "value": 56.62735,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8500212
+        },
+        {
+          "label": "Niederbipp",
+          "value": 58.61059,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8500211
+        },
+        {
+          "label": "Wangen an der Aare",
+          "value": 64.29971,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8500210
+        },
+        {
+          "label": "Deitingen",
+          "value": 67.59769,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8500209
+        },
+        {
+          "label": "Luterbach-Attisholz",
+          "value": 70.34981,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8500208
+        },
+        {
+          "label": "Solothurn",
+          "value": 73.81863,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8500207
+        },
+        {
+          "label": "Solothurn West",
+          "value": 74.78302,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8500206
+        },
+        {
+          "label": "Solothurn Allmend",
+          "value": 75.65197,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8518963
+        },
+        {
+          "label": "Bellach",
+          "value": 76.68243,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8500205
+        },
+        {
+          "label": "Selzach",
+          "value": 80.692,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8500204
+        },
+        {
+          "label": "Bettlach",
+          "value": 82.92457,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8500203
+        },
+        {
+          "label": "Grenchen Süd",
+          "value": 85.3135,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8500202
+        },
+        {
+          "label": "Lengnau BE",
+          "value": 87.993,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[18].km",
+          "uic": 8500201
+        },
+        {
+          "label": "Pieterlen",
+          "value": 90.21118,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[19].km",
+          "uic": 8500200
+        },
+        {
+          "label": "Biel/Bienne Bözingenfeld/Champs-de-Boujean",
+          "value": 93.98099,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[20].km",
+          "uic": 8518771
+        },
+        {
+          "label": "Biel Mett",
+          "value": 96.25,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[21].km",
+          "uic": 8504419
+        },
+        {
+          "label": "Biel/Bienne",
+          "value": 99.3685,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[22].km",
+          "uic": 8504300
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:b01a9907",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 410, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Olten Hammer",
+              "value": 40.6274,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Niederbipp",
+              "value": 58.61059,
+              "factRef": "bahnhoefe.items[7].km"
+            },
+            {
+              "label": "Bettlach",
+              "value": 82.92457,
+              "factRef": "bahnhoefe.items[16].km"
+            },
+            {
+              "label": "Biel/Bienne",
+              "value": 99.3685,
+              "factRef": "bahnhoefe.items[22].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Olten Hammer bei km 40.6274, Niederbipp bei km 58.61059, Bettlach bei km 82.92457 und Biel/Bienne bei km 99.3685.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:31f2703a",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 410 liegt Luterbach-Attisholz?",
+          "options": [
+            "40.6274 km",
+            "64.29971 km",
+            "70.34981 km",
+            "99.3685 km"
+          ],
+          "correct": 2,
+          "explanation": "Luterbach-Attisholz liegt auf der Linie 410 bei km 70.34981.",
+          "factRef": "bahnhoefe.items[10].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 23 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 30 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

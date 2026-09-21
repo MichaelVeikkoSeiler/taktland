@@ -1,0 +1,254 @@
+{
+  "linie": 653,
+  "name": "Gexi Ost - Rotkreuz - Immensee West",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 653 heisst in den offenen Daten «Gexi Ost - Rotkreuz - Immensee West». Als Anfang ist der Betriebspunkt Gexi Ost (Abzw) erfasst, als Ende Immensee West (Abzw). Die Kilometrierung reicht von km 64.083 bis km 106.935.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Gexi Ost (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Immensee West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 64.083,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 106.935,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:f578741c",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 653?",
+          "min": 87,
+          "max": 156,
+          "step": 1,
+          "unit": "km",
+          "correct": 106.935,
+          "explanation": "Die Kilometrierung der Linie 653 reicht bis km 106.935. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:236f9a49",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 653?",
+          "min": 52,
+          "max": 93,
+          "step": 1,
+          "unit": "km",
+          "correct": 64.083,
+          "explanation": "Die Kilometrierung der Linie 653 beginnt bei km 64.083.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 653 führt die Liste der Betriebspunkte 18 Einträge. Davon sind 10 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 18,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 10,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Hendschiken",
+          "value": 65.17324,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8502211
+        },
+        {
+          "label": "Dottikon-Dintikon",
+          "value": 67.8927,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8502212
+        },
+        {
+          "label": "Wohlen AG",
+          "value": 71.7722,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8502213
+        },
+        {
+          "label": "Boswil-Bünzen",
+          "value": 77.7545,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8502214
+        },
+        {
+          "label": "Muri AG",
+          "value": 81.4905,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8502215
+        },
+        {
+          "label": "Benzenschwil",
+          "value": 85.40633,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8502216
+        },
+        {
+          "label": "Mühlau",
+          "value": 88.46876,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8502217
+        },
+        {
+          "label": "Sins",
+          "value": 92.66842,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8502218
+        },
+        {
+          "label": "Oberrüti",
+          "value": 95.21576,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8502219
+        },
+        {
+          "label": "Rotkreuz",
+          "value": 99.35989,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8502202
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:48c76627",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 653, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Dottikon-Dintikon",
+              "value": 67.8927,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Boswil-Bünzen",
+              "value": 77.7545,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Benzenschwil",
+              "value": 85.40633,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Rotkreuz",
+              "value": 99.35989,
+              "factRef": "bahnhoefe.items[9].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Dottikon-Dintikon bei km 67.8927, Boswil-Bünzen bei km 77.7545, Benzenschwil bei km 85.40633 und Rotkreuz bei km 99.35989.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:66761f06",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 653 liegt Benzenschwil?",
+          "options": [
+            "67.8927 km",
+            "77.7545 km",
+            "85.40633 km",
+            "99.35989 km"
+          ],
+          "correct": 2,
+          "explanation": "Benzenschwil liegt auf der Linie 653 bei km 85.40633.",
+          "factRef": "bahnhoefe.items[5].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 10 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 18 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

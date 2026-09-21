@@ -1,0 +1,322 @@
+{
+  "linie": 152,
+  "name": "St-Jean - Geneve-Eaux-Vives - Annemasse",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 152 heisst in den offenen Daten «St-Jean - Geneve-Eaux-Vives - Annemasse». Als Anfang ist der Betriebspunkt St-Jean (bif) erfasst, als Ende Annemasse. Die Kilometrierung reicht von km 61.59 bis km 76.39.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "St-Jean (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Annemasse",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 61.59,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 76.39,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:f4d5ca94",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 152?",
+          "min": 62,
+          "max": 111,
+          "step": 1,
+          "unit": "km",
+          "correct": 76.39,
+          "explanation": "Die Kilometrierung der Linie 152 reicht bis km 76.39. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:f55d5c73",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 152?",
+          "min": 50,
+          "max": 90,
+          "step": 1,
+          "unit": "km",
+          "correct": 61.59,
+          "explanation": "Die Kilometrierung der Linie 152 beginnt bei km 61.59.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 152 führt die Liste der Betriebspunkte 12 Einträge. Davon sind 5 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 5,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Lancy-Pont-Rouge",
+          "value": 64.222,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8516155
+        },
+        {
+          "label": "Lancy-Bachet",
+          "value": 65.649,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8517142
+        },
+        {
+          "label": "Genève-Champel",
+          "value": 68.986,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8516272
+        },
+        {
+          "label": "Genève-Eaux-Vives",
+          "value": 70.45,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8516273
+        },
+        {
+          "label": "Chêne-Bourg",
+          "value": 73.11,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8516274
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:eecfa040",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 152, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Lancy-Pont-Rouge",
+              "value": 64.222,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Genève-Champel",
+              "value": 68.986,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Chêne-Bourg",
+              "value": 73.11,
+              "factRef": "bahnhoefe.items[4].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Lancy-Pont-Rouge bei km 64.222, Genève-Champel bei km 68.986 und Chêne-Bourg bei km 73.11.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:23d2f580",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 152 liegt Genève-Champel?",
+          "options": [
+            "64.222 km",
+            "68.986 km",
+            "73.11 km"
+          ],
+          "correct": 1,
+          "explanation": "Genève-Champel liegt auf der Linie 152 bei km 68.986.",
+          "factRef": "bahnhoefe.items[2].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 152 sind 15 Tunnel erfasst. Der längste: Tunnel de Pinchat, 2'026 Meter, erstmals in Betrieb 2019, Tunnelsystem «1-Röhre / 2-Spuren». Das früheste Jahr der ersten Inbetriebnahme ist 1941, bei Tunnel de St. Jean (087). Die Liste zeigt die längsten davon.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 15,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel de Pinchat",
+          "value": 2026,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "TC Franck Thomas Gradelle",
+          "value": 1460,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[10].laenge_m"
+        },
+        {
+          "label": "TC du Foron",
+          "value": 1136,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[14].laenge_m"
+        },
+        {
+          "label": "Tunnel Bois de la Bâtie (088)",
+          "value": 1078,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Tunnel de Champel 2",
+          "value": 928,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[7].laenge_m"
+        },
+        {
+          "label": "Halte Genève-Eaux-Vives",
+          "value": 657,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[9].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Tunnel de Pinchat",
+              "value": 2026,
+              "factRef": "tunnel.items[2].laenge_m"
+            },
+            {
+              "label": "TC Franck Thomas Gradelle",
+              "value": 1460,
+              "factRef": "tunnel.items[10].laenge_m"
+            },
+            {
+              "label": "TC du Foron",
+              "value": 1136,
+              "factRef": "tunnel.items[14].laenge_m"
+            },
+            {
+              "label": "Tunnel Bois de la Bâtie (088)",
+              "value": 1078,
+              "factRef": "tunnel.items[1].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Tunnel de Pinchat 2'026 m, TC Franck Thomas Gradelle 1'460 m, TC du Foron 1'136 m und Tunnel Bois de la Bâtie (088) 1'078 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:f2793645",
+          "type": "single_choice",
+          "prompt": "Tunnel de Pinchat: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1983",
+            "1995",
+            "2007",
+            "2019"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 2019 erfasst.",
+          "factRef": "tunnel.items[2].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:3a72efd8",
+          "type": "single_choice",
+          "prompt": "Tunnel de Pinchat: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[2].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 5 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

@@ -81,6 +81,8 @@ data/raw/    heruntergeladene CSV, nicht in Git
 data/facts/  geprüfte Fakten je Bahnhof, 771 SBB-Bahnhöfe
 data/bauplan.json  was pro Bahnhof von Hand entschieden ist
 data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand geändert
+data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_linien.py
+data/linienprofile/ Linienseiten, gebaut mit generator/linien.py, nie von Hand geändert
 ```
 
 ## Befehle
@@ -95,7 +97,16 @@ python pipeline/fetch.py                    # Datasets laden
 .venv/bin/python generator/bauen.py --alle             # alle Profile neu bauen
 python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne Profil
 .venv/bin/python generator/sortieren_richten.py --alle   # knappe Sortierfragen zeigen
+.venv/bin/python pipeline/build_linien.py        # Fakten für die Linien
+.venv/bin/python generator/linien.py 600 --zeigen    # Linienseite bauen und lesen
+.venv/bin/python generator/linien.py --alle          # alle Linienseiten bauen
+.venv/bin/python generator/linien.py --validieren    # Linienseiten prüfen
 ```
+
+Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine
+Strecke der Infrastruktur (Linie 600), keine Zuglinie. Ihre Kilometrierung ist
+ein Standort, keine Länge; Länge, Baujahr und Spurzahl einer Linie stehen nicht
+in den Daten (`docs/datenlage.md`).
 
 **Ein Profil ist ein Ergebnis, kein Werkstück.** Es entsteht mit
 `generator/bauen.py` aus der Faktendatei und dem Eintrag in `data/bauplan.json`

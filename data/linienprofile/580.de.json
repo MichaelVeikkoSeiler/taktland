@@ -1,0 +1,183 @@
+{
+  "linie": 580,
+  "name": "CBT Est",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 580 heisst in den offenen Daten «CBT Est». Als Anfang ist der Betriebspunkt Camorino Nord erfasst, als Ende Vezia (bif). Die Kilometrierung reicht von km 227.243 bis km 243.021. Keiner der erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Camorino Nord",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Vezia (bif)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 227.243,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 243.021,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:414c2143",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 580?",
+          "min": 190,
+          "max": 360,
+          "step": 1,
+          "unit": "km",
+          "correct": 243.021,
+          "explanation": "Die Kilometrierung der Linie 580 reicht bis km 243.021. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:08296fdf",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 580?",
+          "min": 180,
+          "max": 330,
+          "step": 1,
+          "unit": "km",
+          "correct": 227.243,
+          "explanation": "Die Kilometrierung der Linie 580 beginnt bei km 227.243.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        },
+        {
+          "id": "strecke:78e921d6",
+          "type": "single_choice",
+          "prompt": "Welcher Betriebspunkt ist als Ende der Linie 580 erfasst?",
+          "options": [
+            "Basel SBB Ost (Abzw)",
+            "Tagermoos (Abzw)",
+            "Vezia (bif)",
+            "Ziegelbrucke Ost (Abzw)"
+          ],
+          "correct": 2,
+          "explanation": "Als Ende der Linie 580 ist Vezia (bif) erfasst.",
+          "factRef": "strecke.ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 580 ist 1 Tunnel erfasst: Galleria di base del Ceneri, 15'196 Meter, erstmals in Betrieb 2020, Tunnelsystem «2-Röhren / 2 x 1-Spur». Die Quelle vermerkt zu Galleria di base del Ceneri: «CBT Ovest, da länger als CBT Est (ohne Sarè, da Saré eine Abzweigung ist und den Tunnel nicht verlängert)».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Galleria di base del Ceneri",
+          "value": 15196,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:f826469a",
+          "type": "single_choice",
+          "prompt": "Galleria di base del Ceneri: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "13'000 m",
+            "15'196 m",
+            "18'000 m",
+            "21'000 m"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 15'196 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:e4b82016",
+          "type": "single_choice",
+          "prompt": "Galleria di base del Ceneri: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1984",
+            "1996",
+            "2008",
+            "2020"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 2020 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:91873447",
+          "type": "single_choice",
+          "prompt": "Galleria di base del Ceneri: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst ist «2-Röhren / 2 x 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Bahnhöfe",
+      "grund": "Keiner der 5 erfassten Betriebspunkte dieser Linie ist ein Bahnhof in Taktland.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

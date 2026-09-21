@@ -1,0 +1,193 @@
+{
+  "linie": 257,
+  "name": "Flamatt - Laupen - Gummenen",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 257 heisst in den offenen Daten «Flamatt - Laupen - Gummenen». Als Anfang ist der Betriebspunkt Flamatt erfasst, als Ende Laupen BE Gleisende. Die Kilometrierung reicht von km -0.044 bis km 6.8.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Flamatt",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Laupen BE Gleisende",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": -0.044,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 6.8,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:48438333",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 257?",
+          "min": 5.5,
+          "max": 10.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 6.8,
+          "explanation": "Die Kilometrierung der Linie 257 reicht bis km 6.8. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 257 führt die Liste der Betriebspunkte 5 Einträge. Davon sind 4 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 5,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 4,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Flamatt",
+          "value": -0.04402,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8504103
+        },
+        {
+          "label": "Flamatt Dorf",
+          "value": 0.68,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504191
+        },
+        {
+          "label": "Neuenegg",
+          "value": 1.72,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8504192
+        },
+        {
+          "label": "Laupen BE",
+          "value": 6.456,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8504194
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:c6113220",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 257, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Flamatt",
+              "value": -0.04402,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Flamatt Dorf",
+              "value": 0.68,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Neuenegg",
+              "value": 1.72,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Laupen BE",
+              "value": 6.456,
+              "factRef": "bahnhoefe.items[3].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Flamatt bei km -0.04402, Flamatt Dorf bei km 0.68, Neuenegg bei km 1.72 und Laupen BE bei km 6.456.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:964a7783",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 257 liegt Neuenegg?",
+          "options": [
+            "-0.04402 km",
+            "0.68 km",
+            "1.72 km",
+            "6.456 km"
+          ],
+          "correct": 2,
+          "explanation": "Neuenegg liegt auf der Linie 257 bei km 1.72.",
+          "factRef": "bahnhoefe.items[2].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 4 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 5 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

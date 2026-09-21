@@ -1,0 +1,178 @@
+{
+ "linie": 754,
+ "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Winterthur Gruze",
+  "ende": "Ruti ZH West (Abzw)",
+  "km_anfang": 2.519,
+  "km_ende": 45.858
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 16,
+  "anzahl_in_taktland": 15,
+  "items": [
+   {
+    "uic": 8506001,
+    "name": "Winterthur Grüze",
+    "km": 2.51899
+   },
+   {
+    "uic": 8506002,
+    "name": "Winterthur Seen",
+    "km": 4.43667
+   },
+   {
+    "uic": 8506003,
+    "name": "Sennhof-Kyburg",
+    "km": 7.20362
+   },
+   {
+    "uic": 8506004,
+    "name": "Kollbrunn",
+    "km": 8.64454
+   },
+   {
+    "uic": 8506005,
+    "name": "Rikon",
+    "km": 11.34951
+   },
+   {
+    "uic": 8506006,
+    "name": "Rämismühle-Zell",
+    "km": 13.52105
+   },
+   {
+    "uic": 8506007,
+    "name": "Turbenthal",
+    "km": 15.87563
+   },
+   {
+    "uic": 8506008,
+    "name": "Wila",
+    "km": 18.1048
+   },
+   {
+    "uic": 8506009,
+    "name": "Saland",
+    "km": 21.24776
+   },
+   {
+    "uic": 8503134,
+    "name": "Bauma",
+    "km": 25.14292
+   },
+   {
+    "uic": 8503135,
+    "name": "Steg",
+    "km": 29.81037
+   },
+   {
+    "uic": 8503136,
+    "name": "Fischenthal",
+    "km": 32.33724
+   },
+   {
+    "uic": 8503137,
+    "name": "Gibswil",
+    "km": 34.70027
+   },
+   {
+    "uic": 8503138,
+    "name": "Wald ZH",
+    "km": 39.61664
+   },
+   {
+    "uic": 8503139,
+    "name": "Tann-Dürnten",
+    "km": 44.51962
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 4,
+  "laengste": [
+   2
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "anzahl_aelteste": 4,
+  "items": [
+   {
+    "name": "Lipperschwenditunnel",
+    "laenge_m": 54,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 28.428,
+    "bemerkung": null
+   },
+   {
+    "name": "Jonaschluchttunnel",
+    "laenge_m": 31,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 38.256,
+    "bemerkung": null
+   },
+   {
+    "name": "Kühweidtunnel",
+    "laenge_m": 132,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 38.585,
+    "bemerkung": null
+   },
+   {
+    "name": "Platteneinschnitttunnel",
+    "laenge_m": 15,
+    "inbetriebnahme_jahr": 1876,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 39.37,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 15 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 16 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

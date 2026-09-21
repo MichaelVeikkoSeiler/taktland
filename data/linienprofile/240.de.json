@@ -1,0 +1,387 @@
+{
+  "linie": 240,
+  "name": "Delemont - Delle",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 240 heisst in den offenen Daten «Delemont - Delle». Als Anfang ist der Betriebspunkt Delemont erfasst, als Ende Delle-Frontiere. Die Kilometrierung reicht von km 84.607 bis km 124.534.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Delemont",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Delle-Frontiere",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 84.607,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 124.534,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:e254e2a7",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 240?",
+          "min": 102,
+          "max": 181,
+          "step": 1,
+          "unit": "km",
+          "correct": 124.534,
+          "explanation": "Die Kilometrierung der Linie 240 reicht bis km 124.534. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:12ff806f",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 240?",
+          "min": 69,
+          "max": 123,
+          "step": 1,
+          "unit": "km",
+          "correct": 84.607,
+          "explanation": "Die Kilometrierung der Linie 240 beginnt bei km 84.607.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 240 führt die Liste der Betriebspunkte 13 Einträge. Davon sind 13 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 13,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 13,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Delémont",
+          "value": 84.6069,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500109
+        },
+        {
+          "label": "Courtételle",
+          "value": 87.86985,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8500120
+        },
+        {
+          "label": "Courfaivre",
+          "value": 90.109,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8500121
+        },
+        {
+          "label": "Bassecourt",
+          "value": 93.49732,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8500122
+        },
+        {
+          "label": "Glovelier",
+          "value": 96.39549,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8500123
+        },
+        {
+          "label": "St-Ursanne",
+          "value": 101.66028,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8500124
+        },
+        {
+          "label": "Courgenay",
+          "value": 107.81941,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8500125
+        },
+        {
+          "label": "Porrentruy",
+          "value": 112.87444,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8500126
+        },
+        {
+          "label": "Courchavon",
+          "value": 116.12815,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8500141
+        },
+        {
+          "label": "Courtemaîche",
+          "value": 117.9938,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8500127
+        },
+        {
+          "label": "Grandgourt",
+          "value": 119.6638,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8500143
+        },
+        {
+          "label": "Buix",
+          "value": 121.45023,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8500144
+        },
+        {
+          "label": "Boncourt",
+          "value": 123.35159,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8500128
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:1adf4e31",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 240, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Delémont",
+              "value": 84.6069,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Glovelier",
+              "value": 96.39549,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Courgenay",
+              "value": 107.81941,
+              "factRef": "bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Boncourt",
+              "value": 123.35159,
+              "factRef": "bahnhoefe.items[12].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Delémont bei km 84.6069, Glovelier bei km 96.39549, Courgenay bei km 107.81941 und Boncourt bei km 123.35159.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:5bafe6f3",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 240 liegt St-Ursanne?",
+          "options": [
+            "84.6069 km",
+            "96.39549 km",
+            "101.66028 km",
+            "123.35159 km"
+          ],
+          "correct": 2,
+          "explanation": "St-Ursanne liegt auf der Linie 240 bei km 101.66028.",
+          "factRef": "bahnhoefe.items[5].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 240 sind 6 Tunnel erfasst. Der längste: Tunnel de la Croix (062), 2'966 Meter, erstmals in Betrieb 1877, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1877, bei 6 der erfassten Tunnel.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 6,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel de la Croix (062)",
+          "value": 2966,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[4].laenge_m"
+        },
+        {
+          "label": "Tunnel de Glovelier (063)",
+          "value": 2012,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Tunnel du Château (061)",
+          "value": 230,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        },
+        {
+          "label": "Tunnel de Montmelon (064)",
+          "value": 223,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Tunnel de Malvie ( 065 )",
+          "value": 213,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Tunnel de Courchavon (037)",
+          "value": 194,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[5].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Tunnel de la Croix (062)",
+              "value": 2966,
+              "factRef": "tunnel.items[4].laenge_m"
+            },
+            {
+              "label": "Tunnel de Glovelier (063)",
+              "value": 2012,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Tunnel du Château (061)",
+              "value": 230,
+              "factRef": "tunnel.items[3].laenge_m"
+            },
+            {
+              "label": "Tunnel de Malvie ( 065 )",
+              "value": 213,
+              "factRef": "tunnel.items[2].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Tunnel de la Croix (062) 2'966 m, Tunnel de Glovelier (063) 2'012 m, Tunnel du Château (061) 230 m und Tunnel de Malvie ( 065 ) 213 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:2176a2d4",
+          "type": "single_choice",
+          "prompt": "Tunnel de la Croix (062): In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1865",
+            "1877",
+            "1889",
+            "1901"
+          ],
+          "correct": 1,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1877 erfasst.",
+          "factRef": "tunnel.items[4].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:0c906390",
+          "type": "single_choice",
+          "prompt": "Tunnel de la Croix (062): Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[4].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "linie": 754,
+  "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 754 heisst in den offenen Daten «Winterthur Gruze - Bauma - Ruti ZH West». Als Anfang ist der Betriebspunkt Winterthur Gruze erfasst, als Ende Ruti ZH West (Abzw). Die Kilometrierung reicht von km 2.519 bis km 45.858.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Winterthur Gruze",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Ruti ZH West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 2.519,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 45.858,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:02a05b5d",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 754?",
+          "min": 37,
+          "max": 67,
+          "step": 1,
+          "unit": "km",
+          "correct": 45.858,
+          "explanation": "Die Kilometrierung der Linie 754 reicht bis km 45.858. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:8ef8082d",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 754?",
+          "min": 2.0,
+          "max": 4.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 2.519,
+          "explanation": "Die Kilometrierung der Linie 754 beginnt bei km 2.519.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 754 führt die Liste der Betriebspunkte 16 Einträge. Davon sind 15 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 16,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 15,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Winterthur Grüze",
+          "value": 2.51899,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506001
+        },
+        {
+          "label": "Winterthur Seen",
+          "value": 4.43667,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506002
+        },
+        {
+          "label": "Sennhof-Kyburg",
+          "value": 7.20362,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506003
+        },
+        {
+          "label": "Kollbrunn",
+          "value": 8.64454,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506004
+        },
+        {
+          "label": "Rikon",
+          "value": 11.34951,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506005
+        },
+        {
+          "label": "Rämismühle-Zell",
+          "value": 13.52105,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506006
+        },
+        {
+          "label": "Turbenthal",
+          "value": 15.87563,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506007
+        },
+        {
+          "label": "Wila",
+          "value": 18.1048,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8506008
+        },
+        {
+          "label": "Saland",
+          "value": 21.24776,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8506009
+        },
+        {
+          "label": "Bauma",
+          "value": 25.14292,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8503134
+        },
+        {
+          "label": "Steg",
+          "value": 29.81037,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8503135
+        },
+        {
+          "label": "Fischenthal",
+          "value": 32.33724,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8503136
+        },
+        {
+          "label": "Gibswil",
+          "value": 34.70027,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8503137
+        },
+        {
+          "label": "Wald ZH",
+          "value": 39.61664,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8503138
+        },
+        {
+          "label": "Tann-Dürnten",
+          "value": 44.51962,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8503139
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:d159f2ae",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 754, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Winterthur Grüze",
+              "value": 2.51899,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Rämismühle-Zell",
+              "value": 13.52105,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Bauma",
+              "value": 25.14292,
+              "factRef": "bahnhoefe.items[9].km"
+            },
+            {
+              "label": "Tann-Dürnten",
+              "value": 44.51962,
+              "factRef": "bahnhoefe.items[14].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Winterthur Grüze bei km 2.51899, Rämismühle-Zell bei km 13.52105, Bauma bei km 25.14292 und Tann-Dürnten bei km 44.51962.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:09686503",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 754 liegt Wila?",
+          "options": [
+            "2.51899 km",
+            "15.87563 km",
+            "18.1048 km",
+            "44.51962 km"
+          ],
+          "correct": 2,
+          "explanation": "Wila liegt auf der Linie 754 bei km 18.1048.",
+          "factRef": "bahnhoefe.items[7].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 754 sind 4 Tunnel erfasst. Der längste: Kühweidtunnel, 132 Meter, erstmals in Betrieb 1876, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1876, bei 4 der erfassten Tunnel.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 4,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Kühweidtunnel",
+          "value": 132,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Lipperschwenditunnel",
+          "value": 54,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Jonaschluchttunnel",
+          "value": 31,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Platteneinschnitttunnel",
+          "value": 15,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Kühweidtunnel",
+              "value": 132,
+              "factRef": "tunnel.items[2].laenge_m"
+            },
+            {
+              "label": "Lipperschwenditunnel",
+              "value": 54,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Jonaschluchttunnel",
+              "value": 31,
+              "factRef": "tunnel.items[1].laenge_m"
+            },
+            {
+              "label": "Platteneinschnitttunnel",
+              "value": 15,
+              "factRef": "tunnel.items[3].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Kühweidtunnel 132 m, Lipperschwenditunnel 54 m, Jonaschluchttunnel 31 m und Platteneinschnitttunnel 15 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:d40876fa",
+          "type": "single_choice",
+          "prompt": "Kühweidtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1840",
+            "1852",
+            "1864",
+            "1876"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1876 erfasst.",
+          "factRef": "tunnel.items[2].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:09495c83",
+          "type": "single_choice",
+          "prompt": "Kühweidtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[2].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 15 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 16 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

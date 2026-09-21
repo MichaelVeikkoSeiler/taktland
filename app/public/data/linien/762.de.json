@@ -1,0 +1,293 @@
+{
+  "linie": 762,
+  "name": "Winterthur Nord - Schaffhausen RB Ost",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 762 heisst in den offenen Daten «Winterthur Nord - Schaffhausen RB Ost». Als Anfang ist der Betriebspunkt Winterthur Nord erfasst, als Ende Schaffhausen RB Ost (Ende SBB). Die Kilometrierung reicht von km 26.489 bis km 58.834.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Winterthur Nord",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Schaffhausen RB Ost (Ende SBB)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 26.489,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 58.834,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:5eb580c6",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 762?",
+          "min": 48,
+          "max": 86,
+          "step": 1,
+          "unit": "km",
+          "correct": 58.834,
+          "explanation": "Die Kilometrierung der Linie 762 reicht bis km 58.834. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:6e5e1760",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 762?",
+          "min": 21,
+          "max": 39,
+          "step": 1,
+          "unit": "km",
+          "correct": 26.489,
+          "explanation": "Die Kilometrierung der Linie 762 beginnt bei km 26.489.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 762 führt die Liste der Betriebspunkte 13 Einträge. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 13,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Hettlingen",
+          "value": 32.70651,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506045
+        },
+        {
+          "label": "Henggart",
+          "value": 35.00994,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506046
+        },
+        {
+          "label": "Andelfingen",
+          "value": 39.16548,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506047
+        },
+        {
+          "label": "Marthalen",
+          "value": 45.988,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506048
+        },
+        {
+          "label": "Dachsen",
+          "value": 51.30854,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506049
+        },
+        {
+          "label": "Schloss Laufen am Rheinfall",
+          "value": 52.49224,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506039
+        },
+        {
+          "label": "Neuhausen",
+          "value": 53.8373,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8503423
+        },
+        {
+          "label": "Schaffhausen",
+          "value": 56.06425,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8503424
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:b4e7c878",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 762, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Hettlingen",
+              "value": 32.70651,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Andelfingen",
+              "value": 39.16548,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Marthalen",
+              "value": 45.988,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Schaffhausen",
+              "value": 56.06425,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Hettlingen bei km 32.70651, Andelfingen bei km 39.16548, Marthalen bei km 45.988 und Schaffhausen bei km 56.06425.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:2c48c1f0",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 762 liegt Marthalen?",
+          "options": [
+            "32.70651 km",
+            "39.16548 km",
+            "45.988 km",
+            "56.06425 km"
+          ],
+          "correct": 2,
+          "explanation": "Marthalen liegt auf der Linie 762 bei km 45.988.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 762 sind 2 Tunnel erfasst. Der längste: Rötitunnel, 153 Meter, erstmals in Betrieb 1964, Tunnelsystem «1-Röhre / 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1857, bei Schloss Laufentunnel.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 2,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Rötitunnel",
+          "value": 153,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Schloss Laufentunnel",
+          "value": 66,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:ef67bf8c",
+          "type": "single_choice",
+          "prompt": "Rötitunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1964",
+            "1976",
+            "1988",
+            "2000"
+          ],
+          "correct": 0,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1964 erfasst.",
+          "factRef": "tunnel.items[1].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:21430691",
+          "type": "single_choice",
+          "prompt": "Rötitunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[1].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 13 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

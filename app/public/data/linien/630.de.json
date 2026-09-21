@@ -1,0 +1,260 @@
+{
+  "linie": 630,
+  "name": "Giubiasco - Locarno",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 630 heisst in den offenen Daten «Giubiasco - Locarno». Als Anfang ist der Betriebspunkt Giubiasco Sud (bif) erfasst, als Ende Locarno (fine binario). Die Kilometrierung reicht von km 154.358 bis km 172.009.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Giubiasco Sud (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Locarno (fine binario)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 154.358,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 172.009,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:507ed531",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 630?",
+          "min": 141,
+          "max": 250,
+          "step": 1,
+          "unit": "km",
+          "correct": 172.009,
+          "explanation": "Die Kilometrierung der Linie 630 reicht bis km 172.009. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:d0bbf1aa",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 630?",
+          "min": 126,
+          "max": 224,
+          "step": 1,
+          "unit": "km",
+          "correct": 154.358,
+          "explanation": "Die Kilometrierung der Linie 630 beginnt bei km 154.358.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 630 führt die Liste der Betriebspunkte 12 Einträge. Davon sind 7 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 7,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "S. Antonino",
+          "value": 157.17,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8505415
+        },
+        {
+          "label": "Cadenazzo",
+          "value": 159.48,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8505404
+        },
+        {
+          "label": "Riazzino",
+          "value": 164.923,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8505412
+        },
+        {
+          "label": "Gordola",
+          "value": 166.56799,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8505402
+        },
+        {
+          "label": "Tenero",
+          "value": 167.76325,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8505401
+        },
+        {
+          "label": "Minusio",
+          "value": 170.485,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8505417
+        },
+        {
+          "label": "Locarno",
+          "value": 171.94048,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8505400
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:41950072",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 630 liegt Locarno?",
+          "options": [
+            "159.48 km",
+            "171.94048 km"
+          ],
+          "correct": 1,
+          "explanation": "Locarno liegt auf der Linie 630 bei km 171.94048.",
+          "factRef": "bahnhoefe.items[6].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 630 ist 1 Tunnel erfasst: Galleria Roca Bella, 754 Meter, erstmals in Betrieb 1980, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Galleria Roca Bella",
+          "value": 754,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:ecb52c4f",
+          "type": "single_choice",
+          "prompt": "Galleria Roca Bella: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "410 m",
+            "530 m",
+            "640 m",
+            "754 m"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst sind 754 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:ed23b112",
+          "type": "single_choice",
+          "prompt": "Galleria Roca Bella: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1956",
+            "1968",
+            "1980",
+            "1992"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1980 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:5ea98162",
+          "type": "single_choice",
+          "prompt": "Galleria Roca Bella: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

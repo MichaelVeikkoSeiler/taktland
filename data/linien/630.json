@@ -1,0 +1,111 @@
+{
+ "linie": 630,
+ "name": "Giubiasco - Locarno",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Giubiasco Sud (bif)",
+  "ende": "Locarno (fine binario)",
+  "km_anfang": 154.358,
+  "km_ende": 172.009
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 12,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8505415,
+    "name": "S. Antonino",
+    "km": 157.17
+   },
+   {
+    "uic": 8505404,
+    "name": "Cadenazzo",
+    "km": 159.48
+   },
+   {
+    "uic": 8505412,
+    "name": "Riazzino",
+    "km": 164.923
+   },
+   {
+    "uic": 8505402,
+    "name": "Gordola",
+    "km": 166.56799
+   },
+   {
+    "uic": 8505401,
+    "name": "Tenero",
+    "km": 167.76325
+   },
+   {
+    "uic": 8505417,
+    "name": "Minusio",
+    "km": 170.485
+   },
+   {
+    "uic": 8505400,
+    "name": "Locarno",
+    "km": 171.94048
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 1,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Galleria Roca Bella",
+    "laenge_m": 754,
+    "inbetriebnahme_jahr": 1980,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 168.868,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

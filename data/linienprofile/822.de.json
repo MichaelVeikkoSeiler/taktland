@@ -1,0 +1,262 @@
+{
+  "linie": 822,
+  "name": "Etzwilen - Konstanz",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 822 heisst in den offenen Daten «Etzwilen - Konstanz». Als Anfang ist der Betriebspunkt Etzwilen erfasst, als Ende Konstanz. Die Kilometrierung reicht von km 31.809 bis km 61.847.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Etzwilen",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Konstanz",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 31.809,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 61.847,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:83364154",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 822?",
+          "min": 50,
+          "max": 90,
+          "step": 1,
+          "unit": "km",
+          "correct": 61.847,
+          "explanation": "Die Kilometrierung der Linie 822 reicht bis km 61.847. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:4d5b2331",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 822?",
+          "min": 26,
+          "max": 47,
+          "step": 1,
+          "unit": "km",
+          "correct": 31.809,
+          "explanation": "Die Kilometrierung der Linie 822 beginnt bei km 31.809.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 822 führt die Liste der Betriebspunkte 12 Einträge. Davon sind 11 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 11,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Etzwilen",
+          "value": 31.80917,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506025
+        },
+        {
+          "label": "Stein am Rhein",
+          "value": 34.86062,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506139
+        },
+        {
+          "label": "Eschenz",
+          "value": 36.92798,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506138
+        },
+        {
+          "label": "Mammern",
+          "value": 39.83575,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506137
+        },
+        {
+          "label": "Steckborn",
+          "value": 45.59265,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506136
+        },
+        {
+          "label": "Berlingen",
+          "value": 48.91312,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506135
+        },
+        {
+          "label": "Mannenbach-Salenstein",
+          "value": 51.33097,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506134
+        },
+        {
+          "label": "Ermatingen",
+          "value": 54.00502,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8506133
+        },
+        {
+          "label": "Triboltingen",
+          "value": 55.97358,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8506118
+        },
+        {
+          "label": "Tägerwilen-Gottlieben",
+          "value": 57.86013,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8506132
+        },
+        {
+          "label": "Kreuzlingen",
+          "value": 60.68801,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8506131
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:ef8b89da",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 822, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Etzwilen",
+              "value": 31.80917,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Eschenz",
+              "value": 36.92798,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Mannenbach-Salenstein",
+              "value": 51.33097,
+              "factRef": "bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Kreuzlingen",
+              "value": 60.68801,
+              "factRef": "bahnhoefe.items[10].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Etzwilen bei km 31.80917, Eschenz bei km 36.92798, Mannenbach-Salenstein bei km 51.33097 und Kreuzlingen bei km 60.68801.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:5f696a8a",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 822 liegt Steckborn?",
+          "options": [
+            "31.80917 km",
+            "39.83575 km",
+            "45.59265 km",
+            "60.68801 km"
+          ],
+          "correct": 2,
+          "explanation": "Steckborn liegt auf der Linie 822 bei km 45.59265.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 11 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

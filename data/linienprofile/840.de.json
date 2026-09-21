@@ -1,0 +1,302 @@
+{
+  "linie": 840,
+  "name": "Winterthur Nord - Romanshorn",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 840 heisst in den offenen Daten «Winterthur Nord - Romanshorn». Als Anfang ist der Betriebspunkt Winterthur Nord erfasst, als Ende Romanshorn. Die Kilometrierung reicht von km 26.393 bis km 82.151.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Winterthur Nord",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Romanshorn",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 26.393,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 82.151,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:73a25478",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 840?",
+          "min": 67,
+          "max": 120,
+          "step": 1,
+          "unit": "km",
+          "correct": 82.151,
+          "explanation": "Die Kilometrierung der Linie 840 reicht bis km 82.151. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:ae3e4b07",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 840?",
+          "min": 21,
+          "max": 39,
+          "step": 1,
+          "unit": "km",
+          "correct": 26.393,
+          "explanation": "Die Kilometrierung der Linie 840 beginnt bei km 26.393.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 840 führt die Liste der Betriebspunkte 22 Einträge. Davon sind 16 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 22,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 16,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Oberwinterthur",
+          "value": 29.66282,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506016
+        },
+        {
+          "label": "Wiesendangen",
+          "value": 31.9436,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506017
+        },
+        {
+          "label": "Rickenbach-Attikon",
+          "value": 33.53471,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506018
+        },
+        {
+          "label": "Islikon",
+          "value": 38.05057,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506019
+        },
+        {
+          "label": "Frauenfeld",
+          "value": 42.05133,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506100
+        },
+        {
+          "label": "Felben-Wellhausen",
+          "value": 46.19635,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506101
+        },
+        {
+          "label": "Hüttlingen-Mettendorf",
+          "value": 48.67064,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506102
+        },
+        {
+          "label": "Müllheim-Wigoltingen",
+          "value": 52.11631,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8506103
+        },
+        {
+          "label": "Märstetten",
+          "value": 55.69039,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8506104
+        },
+        {
+          "label": "Weinfelden",
+          "value": 59.48791,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8506105
+        },
+        {
+          "label": "Bürglen TG",
+          "value": 63.28042,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8506106
+        },
+        {
+          "label": "Sulgen",
+          "value": 66.10733,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8506217
+        },
+        {
+          "label": "Erlen",
+          "value": 69.7048,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8506107
+        },
+        {
+          "label": "Oberaach",
+          "value": 73.20724,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8506108
+        },
+        {
+          "label": "Amriswil",
+          "value": 75.57473,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8506109
+        },
+        {
+          "label": "Romanshorn",
+          "value": 82.15072,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8506121
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:1abd0c7b",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 840, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Oberwinterthur",
+              "value": 29.66282,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Felben-Wellhausen",
+              "value": 46.19635,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Weinfelden",
+              "value": 59.48791,
+              "factRef": "bahnhoefe.items[9].km"
+            },
+            {
+              "label": "Romanshorn",
+              "value": 82.15072,
+              "factRef": "bahnhoefe.items[15].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Oberwinterthur bei km 29.66282, Felben-Wellhausen bei km 46.19635, Weinfelden bei km 59.48791 und Romanshorn bei km 82.15072.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:c0e0c9ee",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 840 liegt Müllheim-Wigoltingen?",
+          "options": [
+            "29.66282 km",
+            "52.11631 km",
+            "55.69039 km",
+            "82.15072 km"
+          ],
+          "correct": 1,
+          "explanation": "Müllheim-Wigoltingen liegt auf der Linie 840 bei km 52.11631.",
+          "factRef": "bahnhoefe.items[7].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 22 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

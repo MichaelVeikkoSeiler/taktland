@@ -1,0 +1,238 @@
+{
+  "linie": 131,
+  "name": "Les Paluds - St-Gingolph (Frontiere)",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 131 heisst in den offenen Daten «Les Paluds - St-Gingolph (Frontiere)». Als Anfang ist der Betriebspunkt Les Paluds erfasst, als Ende St-Gingolph (Frontiere). Die Kilometrierung reicht von km 1.472 bis km 26.988.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Les Paluds",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "St-Gingolph (Frontiere)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 1.472,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 26.988,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:99d86d0b",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 131?",
+          "min": 22,
+          "max": 40,
+          "step": 1,
+          "unit": "km",
+          "correct": 26.988,
+          "explanation": "Die Kilometrierung der Linie 131 reicht bis km 26.988. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:de49444a",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 131?",
+          "min": 1.0,
+          "max": 2.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 1.472,
+          "explanation": "Die Kilometrierung der Linie 131 beginnt bei km 1.472.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 131 führt die Liste der Betriebspunkte 15 Einträge. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 15,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Massongex",
+          "value": 3.19935,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501420
+        },
+        {
+          "label": "Monthey",
+          "value": 6.05475,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8501421
+        },
+        {
+          "label": "Collombey",
+          "value": 7.9055,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501422
+        },
+        {
+          "label": "Vionnaz",
+          "value": 13.386,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501423
+        },
+        {
+          "label": "Vouvry",
+          "value": 16.14,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501424
+        },
+        {
+          "label": "Les Evouettes",
+          "value": 19.52614,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8501425
+        },
+        {
+          "label": "Bouveret",
+          "value": 22.91132,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8501426
+        },
+        {
+          "label": "St-Gingolph (Suisse)",
+          "value": 26.8046,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8501428
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:5df3e91a",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 131, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Massongex",
+              "value": 3.19935,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Collombey",
+              "value": 7.9055,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Les Evouettes",
+              "value": 19.52614,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "St-Gingolph (Suisse)",
+              "value": 26.8046,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Massongex bei km 3.19935, Collombey bei km 7.9055, Les Evouettes bei km 19.52614 und St-Gingolph (Suisse) bei km 26.8046.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:d2893967",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 131 liegt Vouvry?",
+          "options": [
+            "3.19935 km",
+            "13.386 km",
+            "16.14 km",
+            "26.8046 km"
+          ],
+          "correct": 2,
+          "explanation": "Vouvry liegt auf der Linie 131 bei km 16.14.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 15 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

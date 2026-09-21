@@ -1,0 +1,587 @@
+{
+  "linie": 100,
+  "name": "Lausanne - Simplon Tunnel I - Iselle",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 100 heisst in den offenen Daten «Lausanne - Simplon Tunnel I - Iselle». Als Anfang ist der Betriebspunkt Lausanne erfasst, als Ende Iselle di Trasquera. Die Kilometrierung reicht von km 0 bis km 167.478.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Lausanne",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Iselle di Trasquera",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 0,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 167.478,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:ef0ef92f",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 100?",
+          "min": 137,
+          "max": 243,
+          "step": 1,
+          "unit": "km",
+          "correct": 167.478,
+          "explanation": "Die Kilometrierung der Linie 100 reicht bis km 167.478. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 100 führt die Liste der Betriebspunkte 59 Einträge. Davon sind 39 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 59,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 39,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Lausanne",
+          "value": 0,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501120
+        },
+        {
+          "label": "Pully",
+          "value": 2.506,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8501121
+        },
+        {
+          "label": "Lutry",
+          "value": 5.073,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501122
+        },
+        {
+          "label": "Villette VD",
+          "value": 6.67962,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501123
+        },
+        {
+          "label": "Cully",
+          "value": 8.52314,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501124
+        },
+        {
+          "label": "Epesses",
+          "value": 9.97763,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8501125
+        },
+        {
+          "label": "Rivaz",
+          "value": 13.55225,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8501126
+        },
+        {
+          "label": "St-Saphorin",
+          "value": 14.54959,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8501127
+        },
+        {
+          "label": "Vevey",
+          "value": 18.39805,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8501200
+        },
+        {
+          "label": "La Tour-de-Peilz",
+          "value": 19.90245,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8501201
+        },
+        {
+          "label": "Burier",
+          "value": 21.5267,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8501202
+        },
+        {
+          "label": "Clarens",
+          "value": 23.0952,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8501203
+        },
+        {
+          "label": "Montreux",
+          "value": 24.5365,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8501300
+        },
+        {
+          "label": "Territet",
+          "value": 26.01975,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8501301
+        },
+        {
+          "label": "Veytaux-Chillon",
+          "value": 27.09045,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8501302
+        },
+        {
+          "label": "Villeneuve VD",
+          "value": 29.34185,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8501303
+        },
+        {
+          "label": "Roche VD",
+          "value": 33.84125,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8501304
+        },
+        {
+          "label": "Aigle",
+          "value": 39.31241,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8501400
+        },
+        {
+          "label": "Bex",
+          "value": 47.56,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[18].km",
+          "uic": 8501402
+        },
+        {
+          "label": "St-Maurice",
+          "value": 51.56494,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[19].km",
+          "uic": 8501403
+        },
+        {
+          "label": "Evionnaz",
+          "value": 57.85466,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[20].km",
+          "uic": 8501404
+        },
+        {
+          "label": "Vernayaz",
+          "value": 61.50874,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[21].km",
+          "uic": 8501405
+        },
+        {
+          "label": "Martigny",
+          "value": 66.49553,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[22].km",
+          "uic": 8501500
+        },
+        {
+          "label": "Charrat-Fully",
+          "value": 70.8598,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[23].km",
+          "uic": 8501501
+        },
+        {
+          "label": "Saxon",
+          "value": 75.27183,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[24].km",
+          "uic": 8501502
+        },
+        {
+          "label": "Riddes",
+          "value": 79.56962,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[25].km",
+          "uic": 8501503
+        },
+        {
+          "label": "Chamoson-St-Pierre-de-Clages",
+          "value": 82.12316,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[26].km",
+          "uic": 8501504
+        },
+        {
+          "label": "Ardon",
+          "value": 85.30586,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[27].km",
+          "uic": 8501505
+        },
+        {
+          "label": "Châteauneuf-Conthey",
+          "value": 88.06912,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[28].km",
+          "uic": 8501510
+        },
+        {
+          "label": "Sion",
+          "value": 92.43206,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[29].km",
+          "uic": 8501506
+        },
+        {
+          "label": "St-Léonard",
+          "value": 98.15345,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[30].km",
+          "uic": 8501507
+        },
+        {
+          "label": "Sierre/Siders",
+          "value": 108.13264,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[31].km",
+          "uic": 8501509
+        },
+        {
+          "label": "Salgesch",
+          "value": 112.253,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[32].km",
+          "uic": 8501600
+        },
+        {
+          "label": "Leuk",
+          "value": 117.694,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[33].km",
+          "uic": 8501601
+        },
+        {
+          "label": "Turtmann",
+          "value": 122.11129,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[34].km",
+          "uic": 8501602
+        },
+        {
+          "label": "Gampel-Steg",
+          "value": 125.8725,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[35].km",
+          "uic": 8501603
+        },
+        {
+          "label": "Raron",
+          "value": 130.09,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[36].km",
+          "uic": 8501604
+        },
+        {
+          "label": "Visp",
+          "value": 136.6589,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[37].km",
+          "uic": 8501605
+        },
+        {
+          "label": "Brig",
+          "value": 145.5485,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[38].km",
+          "uic": 8501609
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:ba50ba16",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 100, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Lausanne",
+              "value": 0,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Clarens",
+              "value": 23.0952,
+              "factRef": "bahnhoefe.items[11].km"
+            },
+            {
+              "label": "Martigny",
+              "value": 66.49553,
+              "factRef": "bahnhoefe.items[22].km"
+            },
+            {
+              "label": "Brig",
+              "value": 145.5485,
+              "factRef": "bahnhoefe.items[38].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Lausanne bei km 0, Clarens bei km 23.0952, Martigny bei km 66.49553 und Brig bei km 145.5485.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:1488a6ee",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 100 liegt Aigle?",
+          "options": [
+            "0 km",
+            "39.31241 km",
+            "47.56 km",
+            "145.5485 km"
+          ],
+          "correct": 1,
+          "explanation": "Aigle liegt auf der Linie 100 bei km 39.31241.",
+          "factRef": "bahnhoefe.items[17].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 100 sind 9 Tunnel erfasst. Der längste: Simplontunnel, 19'820 Meter, erstmals in Betrieb 1900, Tunnelsystem «2-Röhren / 2 x 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1859, bei Tunnel de St-Maurice (003). Die Liste zeigt die längsten davon.",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 9,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Simplontunnel",
+          "value": 19820,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[8].laenge_m"
+        },
+        {
+          "label": "Tunnel de Varen (102)",
+          "value": 2799,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[6].laenge_m"
+        },
+        {
+          "label": "Tunnel de Leuk (103)",
+          "value": 1376,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[7].laenge_m"
+        },
+        {
+          "label": "Tunnel de St-Maurice (003)",
+          "value": 490,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        },
+        {
+          "label": "Tunnel de Sierre (Gobet)",
+          "value": 370,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[4].laenge_m"
+        },
+        {
+          "label": "Tunnel des Crêtes (025)",
+          "value": 302,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Simplontunnel",
+              "value": 19820,
+              "factRef": "tunnel.items[8].laenge_m"
+            },
+            {
+              "label": "Tunnel de Varen (102)",
+              "value": 2799,
+              "factRef": "tunnel.items[6].laenge_m"
+            },
+            {
+              "label": "Tunnel de Leuk (103)",
+              "value": 1376,
+              "factRef": "tunnel.items[7].laenge_m"
+            },
+            {
+              "label": "Tunnel de St-Maurice (003)",
+              "value": 490,
+              "factRef": "tunnel.items[3].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Simplontunnel 19'820 m, Tunnel de Varen (102) 2'799 m, Tunnel de Leuk (103) 1'376 m und Tunnel de St-Maurice (003) 490 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:28f5b4f9",
+          "type": "single_choice",
+          "prompt": "Simplontunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1876",
+            "1888",
+            "1900",
+            "1912"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1900 erfasst.",
+          "factRef": "tunnel.items[8].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:dc93b635",
+          "type": "single_choice",
+          "prompt": "Simplontunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 2,
+          "explanation": "Erfasst ist «2-Röhren / 2 x 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[8].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 39 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 59 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

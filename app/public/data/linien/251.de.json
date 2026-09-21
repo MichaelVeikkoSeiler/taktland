@@ -1,0 +1,421 @@
+{
+  "linie": 251,
+  "name": "Palezieux Est - Lyss Nord",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 251 heisst in den offenen Daten «Palezieux Est - Lyss Nord». Als Anfang ist der Betriebspunkt Palezieux Est (bif) erfasst, als Ende Lyss Nord. Die Kilometrierung reicht von km 21.203 bis km 100.421.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Palezieux Est (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Lyss Nord",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 21.203,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 100.421,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:8397c95c",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 251?",
+          "min": 82,
+          "max": 146,
+          "step": 1,
+          "unit": "km",
+          "correct": 100.421,
+          "explanation": "Die Kilometrierung der Linie 251 reicht bis km 100.421. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:ffdc852f",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 251?",
+          "min": 17,
+          "max": 31,
+          "step": 1,
+          "unit": "km",
+          "correct": 21.203,
+          "explanation": "Die Kilometrierung der Linie 251 beginnt bei km 21.203.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 251 führt die Liste der Betriebspunkte 31 Einträge. Davon sind 23 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 31,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 23,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Palézieux-Village",
+          "value": 23.41202,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8504016
+        },
+        {
+          "label": "Châtillens",
+          "value": 25.89436,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504017
+        },
+        {
+          "label": "Ecublens-Rue",
+          "value": 30.61342,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8504018
+        },
+        {
+          "label": "Moudon",
+          "value": 37.97572,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8504120
+        },
+        {
+          "label": "Lucens",
+          "value": 43.38158,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8504121
+        },
+        {
+          "label": "Henniez",
+          "value": 47.18078,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8504141
+        },
+        {
+          "label": "Granges-Marnand",
+          "value": 50.44178,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8504122
+        },
+        {
+          "label": "Payerne",
+          "value": 58.4689,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8504134
+        },
+        {
+          "label": "Corcelles-Nord",
+          "value": 60.75736,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8504123
+        },
+        {
+          "label": "Dompierre FR",
+          "value": 63.65763,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8504124
+        },
+        {
+          "label": "Domdidier",
+          "value": 66.18946,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8504125
+        },
+        {
+          "label": "Avenches",
+          "value": 69.11816,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8504126
+        },
+        {
+          "label": "Faoug",
+          "value": 72.80486,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8504127
+        },
+        {
+          "label": "Murten/Morat",
+          "value": 76.52106,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8504128
+        },
+        {
+          "label": "Muntelier-Löwenberg",
+          "value": 78.5725,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8504140
+        },
+        {
+          "label": "Galmiz",
+          "value": 80.674,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8504129
+        },
+        {
+          "label": "Kerzers",
+          "value": 84.81079,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8504400
+        },
+        {
+          "label": "Kerzers Papiliorama",
+          "value": 86.517,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8516444
+        },
+        {
+          "label": "Fräschels",
+          "value": 87.67316,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[18].km",
+          "uic": 8504401
+        },
+        {
+          "label": "Kallnach",
+          "value": 91.37025,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[19].km",
+          "uic": 8504402
+        },
+        {
+          "label": "Bargen BE",
+          "value": 93.93611,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[20].km",
+          "uic": 8504403
+        },
+        {
+          "label": "Aarberg",
+          "value": 95.49304,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[21].km",
+          "uic": 8504404
+        },
+        {
+          "label": "Lyss Grien",
+          "value": 99.03,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[22].km",
+          "uic": 8518749
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:a44e8507",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 251, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Palézieux-Village",
+              "value": 23.41202,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Henniez",
+              "value": 47.18078,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Avenches",
+              "value": 69.11816,
+              "factRef": "bahnhoefe.items[11].km"
+            },
+            {
+              "label": "Lyss Grien",
+              "value": 99.03,
+              "factRef": "bahnhoefe.items[22].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Palézieux-Village bei km 23.41202, Henniez bei km 47.18078, Avenches bei km 69.11816 und Lyss Grien bei km 99.03.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:b4699080",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 251 liegt Payerne?",
+          "options": [
+            "23.41202 km",
+            "50.44178 km",
+            "58.4689 km",
+            "99.03 km"
+          ],
+          "correct": 2,
+          "explanation": "Payerne liegt auf der Linie 251 bei km 58.4689.",
+          "factRef": "bahnhoefe.items[7].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 251 ist 1 Tunnel erfasst: Tunnel de Villangeaux (047), 424 Meter, erstmals in Betrieb 1876, Tunnelsystem «1-Röhre / 1-Spur».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel de Villangeaux (047)",
+          "value": 424,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:4365a2d6",
+          "type": "single_choice",
+          "prompt": "Tunnel de Villangeaux (047): Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "424 m",
+            "510 m",
+            "590 m",
+            "720 m"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 424 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:e2f2864b",
+          "type": "single_choice",
+          "prompt": "Tunnel de Villangeaux (047): In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1876",
+            "1888",
+            "1900",
+            "1912"
+          ],
+          "correct": 0,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1876 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:7e1b47d5",
+          "type": "single_choice",
+          "prompt": "Tunnel de Villangeaux (047): Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 23 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 31 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+ "linie": 450,
+ "name": "Olten Sud - Bern",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Olten Sud (Abzw)",
+  "ende": "Bern",
+  "km_anfang": 40,
+  "km_ende": 106.156
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 29,
+  "anzahl_in_taktland": 13,
+  "items": [
+   {
+    "uic": 8508103,
+    "name": "Rothrist",
+    "km": 46.20125
+   },
+   {
+    "uic": 8508102,
+    "name": "Murgenthal",
+    "km": 52.2224
+   },
+   {
+    "uic": 8508101,
+    "name": "Roggwil-Wynau",
+    "km": 54.48945
+   },
+   {
+    "uic": 8508100,
+    "name": "Langenthal",
+    "km": 59.19606
+   },
+   {
+    "uic": 8508008,
+    "name": "Herzogenbuchsee",
+    "km": 66.79461
+   },
+   {
+    "uic": 8508006,
+    "name": "Wynigen",
+    "km": 76.93381
+   },
+   {
+    "uic": 8508005,
+    "name": "Burgdorf",
+    "km": 83.3908
+   },
+   {
+    "uic": 8508004,
+    "name": "Lyssach",
+    "km": 86.54243
+   },
+   {
+    "uic": 8508003,
+    "name": "Hindelbank",
+    "km": 89.725
+   },
+   {
+    "uic": 8508001,
+    "name": "Schönbühl SBB",
+    "km": 94.91219
+   },
+   {
+    "uic": 8504410,
+    "name": "Zollikofen",
+    "km": 98.806
+   },
+   {
+    "uic": 8516161,
+    "name": "Bern Wankdorf",
+    "km": 102.95
+   },
+   {
+    "uic": 8507000,
+    "name": "Bern",
+    "km": 106.15556
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 4,
+  "laengste": [
+   1
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   2
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Borntunnel",
+    "laenge_m": 798,
+    "inbetriebnahme_jahr": 1981,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 42.98,
+    "bemerkung": null
+   },
+   {
+    "name": "Thunstettentunnel II Süd STL",
+    "laenge_m": 891,
+    "inbetriebnahme_jahr": 2004,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 62.3,
+    "bemerkung": null
+   },
+   {
+    "name": "Burgdorfertunnel",
+    "laenge_m": 510,
+    "inbetriebnahme_jahr": 1857,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 82.009,
+    "bemerkung": null
+   },
+   {
+    "name": "Wylerfeldtunnel",
+    "laenge_m": 300,
+    "inbetriebnahme_jahr": 2022,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 103.593,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 13 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 29 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

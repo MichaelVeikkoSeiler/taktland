@@ -1,0 +1,222 @@
+{
+  "linie": 253,
+  "name": "Payerne Est - Fribourg Nord",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 253 heisst in den offenen Daten «Payerne Est - Fribourg Nord». Als Anfang ist der Betriebspunkt Payerne Est (bif) erfasst, als Ende Fribourg Nord. Die Kilometrierung reicht von km 28.927 bis km 48.925.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Payerne Est (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Fribourg Nord",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 28.927,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 48.925,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:41ebfcea",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 253?",
+          "min": 40,
+          "max": 71,
+          "step": 1,
+          "unit": "km",
+          "correct": 48.925,
+          "explanation": "Die Kilometrierung der Linie 253 reicht bis km 48.925. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:f258b0a7",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 253?",
+          "min": 23,
+          "max": 42,
+          "step": 1,
+          "unit": "km",
+          "correct": 28.927,
+          "explanation": "Die Kilometrierung der Linie 253 beginnt bei km 28.927.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 253 führt die Liste der Betriebspunkte 12 Einträge. Davon sind 6 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 6,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Corcelles-Sud",
+          "value": 29.73142,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8504135
+        },
+        {
+          "label": "Cousset",
+          "value": 31.76659,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504136
+        },
+        {
+          "label": "Léchelles",
+          "value": 35.47849,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8504137
+        },
+        {
+          "label": "Grolley",
+          "value": 40.11814,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8504138
+        },
+        {
+          "label": "Belfaux CFF",
+          "value": 44.44635,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8504139
+        },
+        {
+          "label": "Givisiez",
+          "value": 46.269,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8504181
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:8af7296d",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 253, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Corcelles-Sud",
+              "value": 29.73142,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Cousset",
+              "value": 31.76659,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Grolley",
+              "value": 40.11814,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Givisiez",
+              "value": 46.269,
+              "factRef": "bahnhoefe.items[5].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Corcelles-Sud bei km 29.73142, Cousset bei km 31.76659, Grolley bei km 40.11814 und Givisiez bei km 46.269.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:e1718306",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 253 liegt Léchelles?",
+          "options": [
+            "29.73142 km",
+            "35.47849 km",
+            "40.11814 km",
+            "46.269 km"
+          ],
+          "correct": 1,
+          "explanation": "Léchelles liegt auf der Linie 253 bei km 35.47849.",
+          "factRef": "bahnhoefe.items[2].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 6 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "linie": 260,
+  "name": "Zollikofen Nord - Biel/Bienne Aebistr.",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 260 heisst in den offenen Daten «Zollikofen Nord - Biel/Bienne Aebistr.». Als Anfang ist der Betriebspunkt Zollikofen Nord (Abzw) erfasst, als Ende Biel/Bienne Aebistrasse. Die Kilometrierung reicht von km 8.152 bis km 33.069.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Zollikofen Nord (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Biel/Bienne Aebistrasse",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 8.152,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 33.069,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:71558f7c",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 260?",
+          "min": 27,
+          "max": 48,
+          "step": 1,
+          "unit": "km",
+          "correct": 33.069,
+          "explanation": "Die Kilometrierung der Linie 260 reicht bis km 33.069. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:5067becc",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 260?",
+          "min": 6.5,
+          "max": 12.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 8.152,
+          "explanation": "Die Kilometrierung der Linie 260 beginnt bei km 8.152.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 260 führt die Liste der Betriebspunkte 11 Einträge. Davon sind 7 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 11,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 7,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Münchenbuchsee",
+          "value": 10.12482,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8504411
+        },
+        {
+          "label": "Schüpfen",
+          "value": 15.69056,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504412
+        },
+        {
+          "label": "Suberg-Grossaffoltern",
+          "value": 19.92432,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8504413
+        },
+        {
+          "label": "Lyss",
+          "value": 23.3666,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8504414
+        },
+        {
+          "label": "Busswil BE",
+          "value": 26.15786,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8504415
+        },
+        {
+          "label": "Studen BE",
+          "value": 28.265,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8504441
+        },
+        {
+          "label": "Brügg BE",
+          "value": 30.51331,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8504416
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:de2ceccb",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 260, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Münchenbuchsee",
+              "value": 10.12482,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Suberg-Grossaffoltern",
+              "value": 19.92432,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Busswil BE",
+              "value": 26.15786,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Brügg BE",
+              "value": 30.51331,
+              "factRef": "bahnhoefe.items[6].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Münchenbuchsee bei km 10.12482, Suberg-Grossaffoltern bei km 19.92432, Busswil BE bei km 26.15786 und Brügg BE bei km 30.51331.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:b192cc77",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 260 liegt Lyss?",
+          "options": [
+            "10.12482 km",
+            "19.92432 km",
+            "23.3666 km",
+            "30.51331 km"
+          ],
+          "correct": 2,
+          "explanation": "Lyss liegt auf der Linie 260 bei km 23.3666.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 11 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

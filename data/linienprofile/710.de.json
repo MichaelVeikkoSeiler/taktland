@@ -1,0 +1,320 @@
+{
+  "linie": 710,
+  "name": "Zurich HB - Brugg AG",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 710 heisst in den offenen Daten «Zurich HB - Brugg AG». Als Anfang ist der Betriebspunkt Zurich Limmatquai Verl. Km-Axe erfasst, als Ende Brugg AG. Die Kilometrierung reicht von km -0.1 bis km 31.266.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Zurich Limmatquai Verl. Km-Axe",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Brugg AG",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": -0.1,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 31.266,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:25dc1f5d",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 710?",
+          "min": 25,
+          "max": 46,
+          "step": 1,
+          "unit": "km",
+          "correct": 31.266,
+          "explanation": "Die Kilometrierung der Linie 710 reicht bis km 31.266. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 710 führt die Liste der Betriebspunkte 21 Einträge. Davon sind 12 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 21,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Zürich HB",
+          "value": 0,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503000
+        },
+        {
+          "label": "Zürich Hardbrücke",
+          "value": 1.91834,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8503020
+        },
+        {
+          "label": "Zürich Altstetten",
+          "value": 4.1655,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8503001
+        },
+        {
+          "label": "Schlieren",
+          "value": 7.50708,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8503509
+        },
+        {
+          "label": "Glanzenberg",
+          "value": 9.5493,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8503512
+        },
+        {
+          "label": "Dietikon",
+          "value": 11.06546,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8503508
+        },
+        {
+          "label": "Killwangen-Spreitenbach",
+          "value": 16.1125,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8503506
+        },
+        {
+          "label": "Neuenhof",
+          "value": 18.79211,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8503511
+        },
+        {
+          "label": "Wettingen",
+          "value": 20.33388,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8503505
+        },
+        {
+          "label": "Baden",
+          "value": 22.52873,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8503504
+        },
+        {
+          "label": "Turgi",
+          "value": 27.43018,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8503503
+        },
+        {
+          "label": "Brugg AG",
+          "value": 31.26561,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8500309
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:ea560e14",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 710, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Zürich HB",
+              "value": 0,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Glanzenberg",
+              "value": 9.5493,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Neuenhof",
+              "value": 18.79211,
+              "factRef": "bahnhoefe.items[7].km"
+            },
+            {
+              "label": "Brugg AG",
+              "value": 31.26561,
+              "factRef": "bahnhoefe.items[11].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Zürich HB bei km 0, Glanzenberg bei km 9.5493, Neuenhof bei km 18.79211 und Brugg AG bei km 31.26561.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:125e4d20",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 710 liegt Killwangen-Spreitenbach?",
+          "options": [
+            "0 km",
+            "11.06546 km",
+            "16.1125 km",
+            "31.26561 km"
+          ],
+          "correct": 2,
+          "explanation": "Killwangen-Spreitenbach liegt auf der Linie 710 bei km 16.1125.",
+          "factRef": "bahnhoefe.items[6].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 710 ist 1 Tunnel erfasst: Kreuzlibergtunnel, 905 Meter, erstmals in Betrieb 1961, Tunnelsystem «1-Röhre / 2-Spuren».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Kreuzlibergtunnel",
+          "value": 905,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:857f0b3b",
+          "type": "single_choice",
+          "prompt": "Kreuzlibergtunnel: Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "770 m",
+            "905 m",
+            "1'100 m",
+            "1'300 m"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 905 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:7424086f",
+          "type": "single_choice",
+          "prompt": "Kreuzlibergtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1937",
+            "1949",
+            "1961",
+            "1973"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1961 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:7ac1f03b",
+          "type": "single_choice",
+          "prompt": "Kreuzlibergtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst ist «1-Röhre / 2-Spuren». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 12 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 21 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

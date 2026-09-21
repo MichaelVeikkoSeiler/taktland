@@ -1,0 +1,257 @@
+{
+  "linie": 745,
+  "name": "ZH Langstrasse - Dietlikon Sud (S-Bahn)",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 745 heisst in den offenen Daten «ZH Langstrasse - Dietlikon Sud (S-Bahn)». Als Anfang ist der Betriebspunkt Zurich Langstrasse erfasst, als Ende Dietlikon Sud (Abzw). Die Kilometrierung reicht von km 99.052 bis km 109.848.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Zurich Langstrasse",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Dietlikon Sud (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 99.052,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 109.848,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:3b8f4d45",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 745?",
+          "min": 90,
+          "max": 160,
+          "step": 1,
+          "unit": "km",
+          "correct": 109.848,
+          "explanation": "Die Kilometrierung der Linie 745 reicht bis km 109.848. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:aba76893",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 745?",
+          "min": 81,
+          "max": 144,
+          "step": 1,
+          "unit": "km",
+          "correct": 99.052,
+          "explanation": "Die Kilometrierung der Linie 745 beginnt bei km 99.052.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 745 führt die Liste der Betriebspunkte 10 Einträge. Davon sind 2 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 10,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 2,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Zürich Stadelhofen",
+          "value": 101.59088,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503003
+        },
+        {
+          "label": "Stettbach",
+          "value": 106.9411,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8503147
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:0aa0b29c",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 745 liegt Stettbach?",
+          "options": [
+            "101.59088 km",
+            "106.9411 km"
+          ],
+          "correct": 1,
+          "explanation": "Stettbach liegt auf der Linie 745 bei km 106.9411.",
+          "factRef": "bahnhoefe.items[1].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 745 sind 4 Tunnel erfasst. Der längste: Zürichbergtunnel, 5'295 Meter, erstmals in Betrieb 1990, Tunnelsystem «Y / 2-Spur + 2x 1-Spur». Das früheste Jahr der ersten Inbetriebnahme ist 1894, bei Hirschengrabentunnel. Die Quelle vermerkt zu Hirschengrabentunnel: «Inkl: Tunnel Hischengraben Axe 161 und Tunnel Hischengraben Axe 261». Die Quelle vermerkt zu Zürichbergtunnel: «Inkl: Tunnel Zürichbergtunnel Axe 33 (DfA 745) und Tunnel Zürichbergtunnel Axe 42 (DfA 730)».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 4,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Zürichbergtunnel",
+          "value": 5295,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[2].laenge_m"
+        },
+        {
+          "label": "Hirschengrabentunnel",
+          "value": 1334,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[1].laenge_m"
+        },
+        {
+          "label": "Tunnel Bahnhof Museumstrasse",
+          "value": 772,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        },
+        {
+          "label": "Föhrlibucktunnel",
+          "value": 193,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[3].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:2761110c",
+          "type": "sort",
+          "prompt": "Ordne diese Tunnel nach ihrer Länge, längster zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Zürichbergtunnel",
+              "value": 5295,
+              "factRef": "tunnel.items[2].laenge_m"
+            },
+            {
+              "label": "Hirschengrabentunnel",
+              "value": 1334,
+              "factRef": "tunnel.items[1].laenge_m"
+            },
+            {
+              "label": "Tunnel Bahnhof Museumstrasse",
+              "value": 772,
+              "factRef": "tunnel.items[0].laenge_m"
+            },
+            {
+              "label": "Föhrlibucktunnel",
+              "value": 193,
+              "factRef": "tunnel.items[3].laenge_m"
+            }
+          ],
+          "factRef": "tunnel.items",
+          "explanation": "Zürichbergtunnel 5'295 m, Hirschengrabentunnel 1'334 m, Tunnel Bahnhof Museumstrasse 772 m und Föhrlibucktunnel 193 m.",
+          "difficulty": 3
+        },
+        {
+          "id": "tunnel:194464ba",
+          "type": "single_choice",
+          "prompt": "Zürichbergtunnel: In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1954",
+            "1966",
+            "1978",
+            "1990"
+          ],
+          "correct": 3,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1990 erfasst.",
+          "factRef": "tunnel.items[2].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:e9bd76fa",
+          "type": "single_choice",
+          "prompt": "Zürichbergtunnel: Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 3,
+          "explanation": "Erfasst ist «Y / 2-Spur + 2x 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[2].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 2 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 10 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "linie": 850,
+  "name": "St.Gallen - Winterthur Nord",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 850 heisst in den offenen Daten «St.Gallen - Winterthur Nord». Als Anfang ist der Betriebspunkt St. Gallen erfasst, als Ende Winterthur Nord. Die Kilometrierung reicht von km 80.456 bis km 137.463.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "St. Gallen",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Winterthur Nord",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 80.456,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 137.463,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:77417140",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 850?",
+          "min": 112,
+          "max": 200,
+          "step": 1,
+          "unit": "km",
+          "correct": 137.463,
+          "explanation": "Die Kilometrierung der Linie 850 reicht bis km 137.463. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:1e7fa9b9",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 850?",
+          "min": 65,
+          "max": 117,
+          "step": 1,
+          "unit": "km",
+          "correct": 80.456,
+          "explanation": "Die Kilometrierung der Linie 850 beginnt bei km 80.456.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 850 führt die Liste der Betriebspunkte 24 Einträge. Davon sind 16 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 24,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 16,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "St. Gallen",
+          "value": 80.45623,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506302
+        },
+        {
+          "label": "St. Gallen Bruggen",
+          "value": 84.0467,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506301
+        },
+        {
+          "label": "St. Gallen Winkeln",
+          "value": 86.38234,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506300
+        },
+        {
+          "label": "Gossau SG",
+          "value": 90.1274,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506210
+        },
+        {
+          "label": "Flawil",
+          "value": 95.32622,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506209
+        },
+        {
+          "label": "Uzwil",
+          "value": 100.93553,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506208
+        },
+        {
+          "label": "Wil SG",
+          "value": 110.62133,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506206
+        },
+        {
+          "label": "Sirnach",
+          "value": 113.83192,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8506010
+        },
+        {
+          "label": "Eschlikon TG",
+          "value": 117.4467,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8506011
+        },
+        {
+          "label": "Guntershausen",
+          "value": 120.94994,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8506012
+        },
+        {
+          "label": "Aadorf",
+          "value": 122.89829,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8506013
+        },
+        {
+          "label": "Elgg",
+          "value": 126.14657,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8506014
+        },
+        {
+          "label": "Schottikon",
+          "value": 130.5056,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8506035
+        },
+        {
+          "label": "Räterschen",
+          "value": 131.83907,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8506015
+        },
+        {
+          "label": "Winterthur Hegi",
+          "value": 133.898,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8516218
+        },
+        {
+          "label": "Winterthur Grüze",
+          "value": 135.2914,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8506001
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:4b59f454",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 850, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "St. Gallen Bruggen",
+              "value": 84.0467,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Flawil",
+              "value": 95.32622,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Eschlikon TG",
+              "value": 117.4467,
+              "factRef": "bahnhoefe.items[8].km"
+            },
+            {
+              "label": "Winterthur Grüze",
+              "value": 135.2914,
+              "factRef": "bahnhoefe.items[15].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "St. Gallen Bruggen bei km 84.0467, Flawil bei km 95.32622, Eschlikon TG bei km 117.4467 und Winterthur Grüze bei km 135.2914.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:e0b7d9a2",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 850 liegt Wil SG?",
+          "options": [
+            "84.0467 km",
+            "100.93553 km",
+            "110.62133 km",
+            "135.2914 km"
+          ],
+          "correct": 2,
+          "explanation": "Wil SG liegt auf der Linie 850 bei km 110.62133.",
+          "factRef": "bahnhoefe.items[6].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 24 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

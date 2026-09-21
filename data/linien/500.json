@@ -1,0 +1,240 @@
+{
+ "linie": 500,
+ "name": "Basel SBB - Olten - Luzern",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Basel SBB",
+  "ende": "Luzern",
+  "km_anfang": 0,
+  "km_ende": 95.093
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 48,
+  "anzahl_in_taktland": 28,
+  "items": [
+   {
+    "uic": 8500010,
+    "name": "Basel SBB",
+    "km": 0
+   },
+   {
+    "uic": 8500020,
+    "name": "Muttenz",
+    "km": 4.83872
+   },
+   {
+    "uic": 8500021,
+    "name": "Pratteln",
+    "km": 8.33813
+   },
+   {
+    "uic": 8500022,
+    "name": "Frenkendorf-Füllinsdorf",
+    "km": 12.19992
+   },
+   {
+    "uic": 8500023,
+    "name": "Liestal",
+    "km": 14.376
+   },
+   {
+    "uic": 8500024,
+    "name": "Lausen",
+    "km": 17.04112
+   },
+   {
+    "uic": 8500025,
+    "name": "Itingen",
+    "km": 19.151
+   },
+   {
+    "uic": 8500026,
+    "name": "Sissach",
+    "km": 21.105
+   },
+   {
+    "uic": 8500027,
+    "name": "Gelterkinden",
+    "km": 24.05343
+   },
+   {
+    "uic": 8500028,
+    "name": "Tecknau",
+    "km": 28.16
+   },
+   {
+    "uic": 8500218,
+    "name": "Olten",
+    "km": 39.29245
+   },
+   {
+    "uic": 8502000,
+    "name": "Aarburg-Oftringen",
+    "km": 43.00505
+   },
+   {
+    "uic": 8502001,
+    "name": "Zofingen",
+    "km": 47.46243
+   },
+   {
+    "uic": 8502002,
+    "name": "Brittnau-Wikon",
+    "km": 50.476
+   },
+   {
+    "uic": 8502003,
+    "name": "Reiden",
+    "km": 52.99445
+   },
+   {
+    "uic": 8502004,
+    "name": "Dagmersellen",
+    "km": 55.8035
+   },
+   {
+    "uic": 8502005,
+    "name": "Nebikon",
+    "km": 58.7402
+   },
+   {
+    "uic": 8502006,
+    "name": "Wauwil",
+    "km": 62.53
+   },
+   {
+    "uic": 8502010,
+    "name": "St. Erhard-Knutwil",
+    "km": 66.80377
+   },
+   {
+    "uic": 8502007,
+    "name": "Sursee",
+    "km": 69.0362
+   },
+   {
+    "uic": 8502011,
+    "name": "Oberkirch LU",
+    "km": 71.1658
+   },
+   {
+    "uic": 8502008,
+    "name": "Nottwil",
+    "km": 73.7826
+   },
+   {
+    "uic": 8502009,
+    "name": "Sempach-Neuenkirch",
+    "km": 78.9919
+   },
+   {
+    "uic": 8502020,
+    "name": "Rothenburg Station",
+    "km": 84.54878
+   },
+   {
+    "uic": 8502012,
+    "name": "Emmenbrücke Kapf",
+    "km": 86.995
+   },
+   {
+    "uic": 8502028,
+    "name": "Emmenbrücke Gersag",
+    "km": 89.155
+   },
+   {
+    "uic": 8502021,
+    "name": "Emmenbrücke",
+    "km": 90.18571
+   },
+   {
+    "uic": 8505000,
+    "name": "Luzern",
+    "km": 95.09297
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 4,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   1
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Hauenstein Basistunnel HBT",
+    "laenge_m": 8135,
+    "inbetriebnahme_jahr": 1916,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 28.705,
+    "bemerkung": null
+   },
+   {
+    "name": "Aarburgertunnel",
+    "laenge_m": 87,
+    "inbetriebnahme_jahr": 1856,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 42.553,
+    "bemerkung": null
+   },
+   {
+    "name": "Gütschtunnel Luzern",
+    "laenge_m": 326,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 93.035,
+    "bemerkung": null
+   },
+   {
+    "name": "Schönheimtunnel",
+    "laenge_m": 199,
+    "inbetriebnahme_jahr": 1896,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 93.654,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 28 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 48 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

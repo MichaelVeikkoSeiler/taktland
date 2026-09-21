@@ -1,0 +1,137 @@
+{
+ "linie": 840,
+ "name": "Winterthur Nord - Romanshorn",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Winterthur Nord",
+  "ende": "Romanshorn",
+  "km_anfang": 26.393,
+  "km_ende": 82.151
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 22,
+  "anzahl_in_taktland": 16,
+  "items": [
+   {
+    "uic": 8506016,
+    "name": "Oberwinterthur",
+    "km": 29.66282
+   },
+   {
+    "uic": 8506017,
+    "name": "Wiesendangen",
+    "km": 31.9436
+   },
+   {
+    "uic": 8506018,
+    "name": "Rickenbach-Attikon",
+    "km": 33.53471
+   },
+   {
+    "uic": 8506019,
+    "name": "Islikon",
+    "km": 38.05057
+   },
+   {
+    "uic": 8506100,
+    "name": "Frauenfeld",
+    "km": 42.05133
+   },
+   {
+    "uic": 8506101,
+    "name": "Felben-Wellhausen",
+    "km": 46.19635
+   },
+   {
+    "uic": 8506102,
+    "name": "Hüttlingen-Mettendorf",
+    "km": 48.67064
+   },
+   {
+    "uic": 8506103,
+    "name": "Müllheim-Wigoltingen",
+    "km": 52.11631
+   },
+   {
+    "uic": 8506104,
+    "name": "Märstetten",
+    "km": 55.69039
+   },
+   {
+    "uic": 8506105,
+    "name": "Weinfelden",
+    "km": 59.48791
+   },
+   {
+    "uic": 8506106,
+    "name": "Bürglen TG",
+    "km": 63.28042
+   },
+   {
+    "uic": 8506217,
+    "name": "Sulgen",
+    "km": 66.10733
+   },
+   {
+    "uic": 8506107,
+    "name": "Erlen",
+    "km": 69.7048
+   },
+   {
+    "uic": 8506108,
+    "name": "Oberaach",
+    "km": 73.20724
+   },
+   {
+    "uic": 8506109,
+    "name": "Amriswil",
+    "km": 75.57473
+   },
+   {
+    "uic": 8506121,
+    "name": "Romanshorn",
+    "km": 82.15072
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 22 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

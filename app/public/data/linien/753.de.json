@@ -1,0 +1,217 @@
+{
+  "linie": 753,
+  "name": "Effretikon - Wetzikon - Hinwil",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 753 heisst in den offenen Daten «Effretikon - Wetzikon - Hinwil». Als Anfang ist der Betriebspunkt Effretikon erfasst, als Ende Hinwil. Die Kilometrierung reicht von km -0.019 bis km 22.543.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Effretikon",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Hinwil",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": -0.019,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 22.543,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:c5e59178",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 753?",
+          "min": 18,
+          "max": 33,
+          "step": 1,
+          "unit": "km",
+          "correct": 22.543,
+          "explanation": "Die Kilometrierung der Linie 753 reicht bis km 22.543. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 753 führt die Liste der Betriebspunkte 8 Einträge. Davon sind 7 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 7,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Effretikon",
+          "value": -0.01948,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8503305
+        },
+        {
+          "label": "Illnau",
+          "value": 4.45785,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8503303
+        },
+        {
+          "label": "Fehraltorf",
+          "value": 8.01575,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8503302
+        },
+        {
+          "label": "Pfäffikon ZH",
+          "value": 11.33125,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8503301
+        },
+        {
+          "label": "Kempten",
+          "value": 15.75999,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8503300
+        },
+        {
+          "label": "Wetzikon ZH",
+          "value": 18.10051,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8503123
+        },
+        {
+          "label": "Hinwil",
+          "value": 22.54311,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8503130
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:d915254e",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 753, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Effretikon",
+              "value": -0.01948,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Fehraltorf",
+              "value": 8.01575,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Kempten",
+              "value": 15.75999,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Hinwil",
+              "value": 22.54311,
+              "factRef": "bahnhoefe.items[6].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Effretikon bei km -0.01948, Fehraltorf bei km 8.01575, Kempten bei km 15.75999 und Hinwil bei km 22.54311.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:915e5e5e",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 753 liegt Kempten?",
+          "options": [
+            "-0.01948 km",
+            "8.01575 km",
+            "15.75999 km",
+            "22.54311 km"
+          ],
+          "correct": 2,
+          "explanation": "Kempten liegt auf der Linie 753 bei km 15.75999.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 8 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

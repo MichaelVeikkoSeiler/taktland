@@ -47,6 +47,13 @@ jobs:
       - name: Profile gegen die Fakten prüfen
         run: python3 generator/validate.py --alle
 
+      # Die Linienseiten: gleiche Regeln wie die Bahnhöfe, eigener Baukasten
+      - name: Linienprofile entsprechen den Fakten
+        run: python3 generator/linien.py --alle --pruefen
+
+      - name: Linienprofile gegen die Fakten prüfen
+        run: python3 generator/linien.py --validieren
+
       # Die Vergleichsfragen entstehen erst in der App, geprueft wird darum
       # ihre Grundlage: jeder Wert gegen die Faktendatei, aus der er stammt
       - name: Vergleichsdaten gegen die Fakten prüfen

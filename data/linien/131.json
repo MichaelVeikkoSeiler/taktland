@@ -1,0 +1,97 @@
+{
+ "linie": 131,
+ "name": "Les Paluds - St-Gingolph (Frontiere)",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Les Paluds",
+  "ende": "St-Gingolph (Frontiere)",
+  "km_anfang": 1.472,
+  "km_ende": 26.988
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 15,
+  "anzahl_in_taktland": 8,
+  "items": [
+   {
+    "uic": 8501420,
+    "name": "Massongex",
+    "km": 3.19935
+   },
+   {
+    "uic": 8501421,
+    "name": "Monthey",
+    "km": 6.05475
+   },
+   {
+    "uic": 8501422,
+    "name": "Collombey",
+    "km": 7.9055
+   },
+   {
+    "uic": 8501423,
+    "name": "Vionnaz",
+    "km": 13.386
+   },
+   {
+    "uic": 8501424,
+    "name": "Vouvry",
+    "km": 16.14
+   },
+   {
+    "uic": 8501425,
+    "name": "Les Evouettes",
+    "km": 19.52614
+   },
+   {
+    "uic": 8501426,
+    "name": "Bouveret",
+    "km": 22.91132
+   },
+   {
+    "uic": 8501428,
+    "name": "St-Gingolph (Suisse)",
+    "km": 26.8046
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 15 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Tunnel",
+   "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+   "quelle": "tunnel"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe"
+ ]
+}

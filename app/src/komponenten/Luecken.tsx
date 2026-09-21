@@ -17,8 +17,8 @@ export function Luecken({ luecken }: { luecken: Luecke[] }) {
         fehlen oder sind eingeschränkt.
       </p>
       <ul className="mt-3 space-y-3">
-        {luecken.map((l) => (
-          <li key={l.thema}>
+        {luecken.map((l, i) => (
+          <li key={`${i}-${l.thema}`}>
             <p className="font-bold text-sbb-black dark:text-sbb-white">{l.thema}</p>
             <p className="text-sm text-sbb-iron dark:text-sbb-storm">{l.grund}</p>
             <p className="mt-0.5 text-xs text-sbb-metal">Quelle: {l.quelle}</p>

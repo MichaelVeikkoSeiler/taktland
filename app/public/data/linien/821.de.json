@@ -1,0 +1,238 @@
+{
+  "linie": 821,
+  "name": "Oberwinterthur - Etzwilen West (Abzw)",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 821 heisst in den offenen Daten «Oberwinterthur - Etzwilen West (Abzw)». Als Anfang ist der Betriebspunkt Oberwinterthur erfasst, als Ende Etzwilen West (Abzw). Die Kilometrierung reicht von km 3.603 bis km 31.556.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Oberwinterthur",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Etzwilen West (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 3.603,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 31.556,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:7966bc7f",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 821?",
+          "min": 25,
+          "max": 46,
+          "step": 1,
+          "unit": "km",
+          "correct": 31.556,
+          "explanation": "Die Kilometrierung der Linie 821 reicht bis km 31.556. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:006dd5c2",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 821?",
+          "min": 2.5,
+          "max": 5.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 3.603,
+          "explanation": "Die Kilometrierung der Linie 821 beginnt bei km 3.603.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 821 führt die Liste der Betriebspunkte 9 Einträge. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 9,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Oberwinterthur",
+          "value": 3.60299,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506016
+        },
+        {
+          "label": "Winterthur Wallrüti",
+          "value": 4.6252,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506038
+        },
+        {
+          "label": "Reutlingen",
+          "value": 6.29538,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506036
+        },
+        {
+          "label": "Seuzach",
+          "value": 7.51319,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506020
+        },
+        {
+          "label": "Dinhard",
+          "value": 9.96916,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506021
+        },
+        {
+          "label": "Thalheim-Altikon",
+          "value": 11.83809,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506022
+        },
+        {
+          "label": "Ossingen",
+          "value": 19.47161,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506023
+        },
+        {
+          "label": "Stammheim",
+          "value": 26.87864,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8506024
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:f85248d7",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 821, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Oberwinterthur",
+              "value": 3.60299,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Reutlingen",
+              "value": 6.29538,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Thalheim-Altikon",
+              "value": 11.83809,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Stammheim",
+              "value": 26.87864,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Oberwinterthur bei km 3.60299, Reutlingen bei km 6.29538, Thalheim-Altikon bei km 11.83809 und Stammheim bei km 26.87864.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:49e2c52f",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 821 liegt Dinhard?",
+          "options": [
+            "3.60299 km",
+            "7.51319 km",
+            "9.96916 km",
+            "26.87864 km"
+          ],
+          "correct": 2,
+          "explanation": "Dinhard liegt auf der Linie 821 bei km 9.96916.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 9 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

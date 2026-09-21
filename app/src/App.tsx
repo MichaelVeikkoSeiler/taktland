@@ -1,57 +1,63 @@
 import { useEffect, useState } from 'react'
-import { allesZuruecksetzen, bearbeiteBahnhoefe } from './fortschritt'
+import { allesZuruecksetzen, bearbeiteBahnhoefe, bearbeiteteLinien } from './fortschritt'
 import { Anleitung } from './komponenten/Anleitung'
 import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
+import { Linie } from './komponenten/Linie'
+import { Linien } from './komponenten/Linien'
 import { Suche, type ListenStand } from './komponenten/Suche'
 import { indexLaden } from './daten'
 import type { BahnhofIndex } from './typen'
 import auftaktDunkel from './assets/auftakt-dunkel.webp'
 import auftaktHell from './assets/auftakt-hell.webp'
 
-/** Adresse im Format #/bahnhof/8503000, damit Seiten teilbar und zurücknavigierbar sind. */
-function uicAusAdresse(): number | null {
-  const treffer = /^#\/bahnhof\/(\d+)$/.exec(window.location.hash)
-  return treffer ? Number(treffer[1]) : null
-}
+/** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
+ *  Seiten teilbar und mit «Zurück» erreichbar sind. */
+type Seite =
+  | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
 
-function istDuell() {
-  return window.location.hash === '#/duell'
-}
-
-function istAnleitung() {
-  return window.location.hash === '#/anleitung'
+function seiteAusAdresse(): Seite {
+  const h = window.location.hash
+  const bahnhof = /^#\/bahnhof\/(\d+)$/.exec(h)
+  if (bahnhof) return { art: 'bahnhof', uic: Number(bahnhof[1]) }
+  const linie = /^#\/linie\/(\d+)$/.exec(h)
+  if (linie) return { art: 'linie', nr: Number(linie[1]) }
+  if (h === '#/duell') return { art: 'duell' }
+  if (h === '#/anleitung') return { art: 'anleitung' }
+  if (h === '#/linien') return { art: 'linien' }
+  return { art: 'liste' }
 }
 
 export default function App() {
   const [index, setIndex] = useState<BahnhofIndex | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
-  const [uic, setUic] = useState<number | null>(uicAusAdresse())
-  const [duell, setDuell] = useState(istDuell())
-  const [anleitung, setAnleitung] = useState(istAnleitung())
+  const [seite, setSeite] = useState<Seite>(seiteAusAdresse())
   // bleibt stehen, während ein Bahnhof offen ist: zurück auf derselben Seite
   const [liste, setListe] = useState<ListenStand>({
-    begriff: '', nurMitProfil: true, seite: 0, sortierung: 'alphabet',
+    begriff: '', seite: 0, sortierung: 'alphabet',
   })
 
   useEffect(() => {
     indexLaden().then(setIndex).catch((e: Error) => setFehler(e.message))
-    const beiWechsel = () => {
-      setUic(uicAusAdresse()); setDuell(istDuell()); setAnleitung(istAnleitung())
-    }
+    const beiWechsel = () => setSeite(seiteAusAdresse())
     window.addEventListener('hashchange', beiWechsel)
     return () => window.removeEventListener('hashchange', beiWechsel)
   }, [])
 
-  useEffect(() => { window.scrollTo(0, 0) }, [uic, duell, anleitung])
+  // nach der Adresse, nicht nach dem Objekt: sonst sprang die Seite bei
+  // jedem Neuzeichnen nach oben
+  const adresse = seite.art === 'bahnhof' ? `b${seite.uic}` : seite.art === 'linie' ? `l${seite.nr}` : seite.art
+  useEffect(() => { window.scrollTo(0, 0) }, [adresse])
 
   function oeffnen(neu: number) { window.location.hash = `#/bahnhof/${neu}` }
   function zurueck() { window.location.hash = '' }
+  function zuDenLinien() { window.location.hash = '#/linien' }
 
   return (
     <div className="min-h-dvh bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <div className="mx-auto max-w-2xl">
-        {uic === null && !duell && !anleitung && (
+        {seite.art === 'liste' && (
           <header className="border-b border-sbb-cloud px-4 pb-5 pt-8 dark:border-sbb-iron">
             {/* Auftaktbild von Michael, am Tag und in der Nacht. Die dunkle
                 Fassung folgt derselben Geräteeinstellung wie die dunkle Ansicht. */}
@@ -82,13 +88,13 @@ export default function App() {
 
         {!index && !fehler && <p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>}
 
-        {anleitung
-          ? <Anleitung index={index} zurueck={zurueck} />
-          : duell
-          ? <Duell zurueck={zurueck} />
-          : index && (uic === null
-            ? <Suche index={index} oeffnen={oeffnen} stand={liste} aendern={setListe} />
-            : <Bahnhof uic={uic} zurueck={zurueck} />)}
+        {seite.art === 'anleitung' && <Anleitung index={index} zurueck={zurueck} />}
+        {seite.art === 'duell' && <Duell zurueck={zurueck} />}
+        {seite.art === 'linien' && <Linien zurueck={zurueck} />}
+        {seite.art === 'linie' && <Linie key={seite.nr} nr={seite.nr} zurueck={zuDenLinien} />}
+        {seite.art === 'liste' && index
+          && <Suche index={index} oeffnen={oeffnen} stand={liste} aendern={setListe} />}
+        {seite.art === 'bahnhof' && index && <Bahnhof uic={seite.uic} zurueck={zurueck} />}
 
         <footer className="mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
@@ -126,6 +132,11 @@ function Zuruecksetzen() {
   const [fragt, setFragt] = useState(false)
   const [fertig, setFertig] = useState(false)
   const anzahl = fragt ? bearbeiteBahnhoefe().length : 0
+  const linien = fragt ? bearbeiteteLinien().length : 0
+  const teile = [
+    ...(anzahl ? [`bei ${anzahl} ${anzahl === 1 ? 'Bahnhof' : 'Bahnhöfen'}`] : []),
+    ...(linien ? [`bei ${linien} ${linien === 1 ? 'Linie' : 'Linien'}`] : []),
+  ]
 
   // Die Bestätigung soll nicht für immer stehen bleiben
   useEffect(() => {
@@ -153,8 +164,8 @@ function Zuruecksetzen() {
   return (
     <div className="mt-2 border-l-2 border-sbb-red pl-3">
       <p className="text-sbb-black dark:text-sbb-white">
-        {anzahl > 0
-          ? `Damit werden die Antworten bei ${anzahl} ${anzahl === 1 ? 'Bahnhof' : 'Bahnhöfen'} `
+        {teile.length > 0
+          ? `Damit werden die Antworten ${teile.join(' und ')} `
             + 'und alle Bestwerte im Duell gelöscht. Das lässt sich nicht rückgängig machen.'
           : 'Damit werden alle Antworten und alle Bestwerte im Duell gelöscht. '
             + 'Das lässt sich nicht rückgängig machen.'}

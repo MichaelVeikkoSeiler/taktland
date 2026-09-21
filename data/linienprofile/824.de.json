@@ -1,0 +1,262 @@
+{
+  "linie": 824,
+  "name": "Romanshorn - Konstanz",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 824 heisst in den offenen Daten «Romanshorn - Konstanz». Als Anfang ist der Betriebspunkt Romanshorn erfasst, als Ende Konstanz. Die Kilometrierung reicht von km 82.152 bis km 101.285.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Romanshorn",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Konstanz",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 82.152,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 101.285,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:7f0aec0f",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 824?",
+          "min": 83,
+          "max": 147,
+          "step": 1,
+          "unit": "km",
+          "correct": 101.285,
+          "explanation": "Die Kilometrierung der Linie 824 reicht bis km 101.285. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:10d14a9f",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 824?",
+          "min": 67,
+          "max": 120,
+          "step": 1,
+          "unit": "km",
+          "correct": 82.152,
+          "explanation": "Die Kilometrierung der Linie 824 beginnt bei km 82.152.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 824 führt die Liste der Betriebspunkte 12 Einträge. Davon sind 11 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 12,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 11,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Romanshorn",
+          "value": 82.15161,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506121
+        },
+        {
+          "label": "Uttwil",
+          "value": 86.11476,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506122
+        },
+        {
+          "label": "Kesswil",
+          "value": 88.08993,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506123
+        },
+        {
+          "label": "Güttingen",
+          "value": 90.48996,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506124
+        },
+        {
+          "label": "Altnau",
+          "value": 92.91919,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506125
+        },
+        {
+          "label": "Landschlacht",
+          "value": 94.57485,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8588122
+        },
+        {
+          "label": "Münsterlingen Spital",
+          "value": 95.46374,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506143
+        },
+        {
+          "label": "Münsterlingen-Scherzingen",
+          "value": 96.16578,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8506126
+        },
+        {
+          "label": "Bottighofen",
+          "value": 97.51655,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8506127
+        },
+        {
+          "label": "Kurzrickenbach Seepark",
+          "value": 98.85022,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8506119
+        },
+        {
+          "label": "Kreuzlingen Hafen",
+          "value": 100.17151,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8506128
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:226e50d1",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 824, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Romanshorn",
+              "value": 82.15161,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Kesswil",
+              "value": 88.08993,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Landschlacht",
+              "value": 94.57485,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Kreuzlingen Hafen",
+              "value": 100.17151,
+              "factRef": "bahnhoefe.items[10].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Romanshorn bei km 82.15161, Kesswil bei km 88.08993, Landschlacht bei km 94.57485 und Kreuzlingen Hafen bei km 100.17151.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:3b75ed3a",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 824 liegt Landschlacht?",
+          "options": [
+            "82.15161 km",
+            "88.08993 km",
+            "94.57485 km",
+            "100.17151 km"
+          ],
+          "correct": 2,
+          "explanation": "Landschlacht liegt auf der Linie 824 bei km 94.57485.",
+          "factRef": "bahnhoefe.items[5].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 11 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

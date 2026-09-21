@@ -1,0 +1,230 @@
+{
+  "linie": 831,
+  "name": "Weinfelden - Tagermoos",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 831 heisst in den offenen Daten «Weinfelden - Tagermoos». Als Anfang ist der Betriebspunkt Weinfelden erfasst, als Ende Tagermoos (Abzw). Die Kilometrierung reicht von km 19.175 bis km 39.594.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Weinfelden",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Tagermoos (Abzw)",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 19.175,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 39.594,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:9c073d21",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 831?",
+          "min": 32,
+          "max": 58,
+          "step": 1,
+          "unit": "km",
+          "correct": 39.594,
+          "explanation": "Die Kilometrierung der Linie 831 reicht bis km 39.594. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:a748e2fa",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 831?",
+          "min": 15.5,
+          "max": 28.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 19.175,
+          "explanation": "Die Kilometrierung der Linie 831 beginnt bei km 19.175.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 831 führt die Liste der Betriebspunkte 9 Einträge. Davon sind 7 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 9,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 7,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Weinfelden",
+          "value": 19.17482,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8506105
+        },
+        {
+          "label": "Kehlhof",
+          "value": 24.31774,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8506193
+        },
+        {
+          "label": "Berg",
+          "value": 27.284,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8506194
+        },
+        {
+          "label": "Siegershausen",
+          "value": 30.77812,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8506195
+        },
+        {
+          "label": "Lengwil",
+          "value": 33.44794,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8506196
+        },
+        {
+          "label": "Kreuzlingen Bernrain",
+          "value": 36.23236,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8506197
+        },
+        {
+          "label": "Tägerwilen Dorf",
+          "value": 38.61918,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8506198
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:bdb303e1",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 831, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Weinfelden",
+              "value": 19.17482,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Berg",
+              "value": 27.284,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Lengwil",
+              "value": 33.44794,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Tägerwilen Dorf",
+              "value": 38.61918,
+              "factRef": "bahnhoefe.items[6].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Weinfelden bei km 19.17482, Berg bei km 27.284, Lengwil bei km 33.44794 und Tägerwilen Dorf bei km 38.61918.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:ee9e414a",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 831 liegt Siegershausen?",
+          "options": [
+            "19.17482 km",
+            "27.284 km",
+            "30.77812 km",
+            "38.61918 km"
+          ],
+          "correct": 2,
+          "explanation": "Siegershausen liegt auf der Linie 831 bei km 30.77812.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 9 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "linie": 203,
+  "name": "Frasne - Vallorbe",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten",
+    "tunnel"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 203 heisst in den offenen Daten «Frasne - Vallorbe». Als Anfang ist der Betriebspunkt Frasne erfasst, als Ende Vallorbe. Die Kilometrierung reicht von km 437.16 bis km 461.63. Als Bahnhof in Taktland ist auf dieser Linie Vallorbe erfasst, bei km 461.62982.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Frasne",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Vallorbe",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 437.16,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 461.63,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        },
+        {
+          "label": "Vallorbe",
+          "value": 461.62982,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501103
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:8d7be688",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 203?",
+          "min": 370,
+          "max": 670,
+          "step": 1,
+          "unit": "km",
+          "correct": 461.63,
+          "explanation": "Die Kilometrierung der Linie 203 reicht bis km 461.63. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        },
+        {
+          "id": "strecke:9772c380",
+          "type": "slider",
+          "prompt": "Bei welchem Kilometer beginnt die Kilometrierung der Linie 203?",
+          "min": 350,
+          "max": 640,
+          "step": 1,
+          "unit": "km",
+          "correct": 437.16,
+          "explanation": "Die Kilometrierung der Linie 203 beginnt bei km 437.16.",
+          "factRef": "strecke.km_anfang",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel",
+      "body": "Für die Linie 203 ist 1 Tunnel erfasst: Tunnel du Mont d'Or (083), 5'936 Meter, erstmals in Betrieb 1915, Tunnelsystem «1-Röhre / 1-Spur». Die Quelle vermerkt zu Tunnel du Mont d'Or (083): «4947m gehört Frankreich».",
+      "facts": [
+        {
+          "label": "Erfasste Tunnel",
+          "value": 1,
+          "source": "tunnel",
+          "factRef": "tunnel.anzahl_erfasst"
+        },
+        {
+          "label": "Tunnel du Mont d'Or (083)",
+          "value": 5936,
+          "unit": "m",
+          "source": "tunnel",
+          "factRef": "tunnel.items[0].laenge_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "tunnel:6c23c293",
+          "type": "single_choice",
+          "prompt": "Tunnel du Mont d'Or (083): Wie lang ist dieser Tunnel laut den Daten?",
+          "options": [
+            "5'000 m",
+            "5'936 m",
+            "7'100 m",
+            "8'300 m"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 5'936 Meter.",
+          "factRef": "tunnel.items[0].laenge_m",
+          "difficulty": 1
+        },
+        {
+          "id": "tunnel:4e81f10d",
+          "type": "single_choice",
+          "prompt": "Tunnel du Mont d'Or (083): In welchem Jahr ging dieser Tunnel erstmals in Betrieb?",
+          "options": [
+            "1891",
+            "1903",
+            "1915",
+            "1927"
+          ],
+          "correct": 2,
+          "explanation": "Als Jahr der ersten Inbetriebnahme ist 1915 erfasst.",
+          "factRef": "tunnel.items[0].inbetriebnahme_jahr",
+          "difficulty": 2
+        },
+        {
+          "id": "tunnel:41c37ea0",
+          "type": "single_choice",
+          "prompt": "Tunnel du Mont d'Or (083): Welches Tunnelsystem ist für diesen Tunnel erfasst?",
+          "options": [
+            "1-Röhre / 1-Spur",
+            "1-Röhre / 2-Spuren",
+            "2-Röhren / 2 x 1-Spur",
+            "Y / 2-Spur + 2x 1-Spur"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist «1-Röhre / 1-Spur». Das Tunnelsystem ist die einzige Angabe in diesen Daten dazu, wie viele Spuren es gibt, und gilt nur für den Tunnel.",
+          "factRef": "tunnel.items[0].tunnelsystem",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 1 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 2 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

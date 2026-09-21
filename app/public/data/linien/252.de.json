@@ -1,0 +1,209 @@
+{
+  "linie": 252,
+  "name": "Yverdon Est - Payerne",
+  "lang": "de",
+  "generated": "2026-09-21",
+  "sources": [
+    "linie",
+    "linie-mit-betriebspunkten"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 252 heisst in den offenen Daten «Yverdon Est - Payerne». Als Anfang ist der Betriebspunkt Yverdon Est (bif) erfasst, als Ende Payerne. Die Kilometrierung reicht von km 0.485 bis km 27.895.",
+      "facts": [
+        {
+          "label": "Anfang",
+          "value": "Yverdon Est (bif)",
+          "source": "linie",
+          "factRef": "strecke.anfang"
+        },
+        {
+          "label": "Ende",
+          "value": "Payerne",
+          "source": "linie",
+          "factRef": "strecke.ende"
+        },
+        {
+          "label": "Kilometer am Anfang",
+          "value": 0.485,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_anfang"
+        },
+        {
+          "label": "Kilometer am Ende",
+          "value": 27.895,
+          "unit": "km",
+          "source": "linie",
+          "factRef": "strecke.km_ende"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:7394b627",
+          "type": "slider",
+          "prompt": "Bis zu welchem Kilometer reicht die Kilometrierung der Linie 252?",
+          "min": 22,
+          "max": 41,
+          "step": 1,
+          "unit": "km",
+          "correct": 27.895,
+          "explanation": "Die Kilometrierung der Linie 252 reicht bis km 27.895. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Für die Linie 252 führt die Liste der Betriebspunkte 9 Einträge. Davon sind 6 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 9,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 6,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Yverdon-les-Bains-Champ Pittet",
+          "value": 1.78,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8504144
+        },
+        {
+          "label": "Yvonand",
+          "value": 8.81,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8504130
+        },
+        {
+          "label": "Cheyres",
+          "value": 12.62074,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8504131
+        },
+        {
+          "label": "Estavayer-le-Lac",
+          "value": 18.07,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8504132
+        },
+        {
+          "label": "Cugy FR",
+          "value": 23.68366,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8504133
+        },
+        {
+          "label": "Payerne",
+          "value": 27.89476,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8504134
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:d2cea329",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 252, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Yverdon-les-Bains-Champ Pittet",
+              "value": 1.78,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Cheyres",
+              "value": 12.62074,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Estavayer-le-Lac",
+              "value": 18.07,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Payerne",
+              "value": 27.89476,
+              "factRef": "bahnhoefe.items[5].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Yverdon-les-Bains-Champ Pittet bei km 1.78, Cheyres bei km 12.62074, Estavayer-le-Lac bei km 18.07 und Payerne bei km 27.89476.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:1b45cb8e",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 252 liegt Estavayer-le-Lac?",
+          "options": [
+            "1.78 km",
+            "12.62074 km",
+            "18.07 km",
+            "27.89476 km"
+          ],
+          "correct": 2,
+          "explanation": "Estavayer-le-Lac liegt auf der Linie 252 bei km 18.07.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+      "quelle": "linie"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Ein- oder mehrspurig",
+      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+      "quelle": "linie, tunnel"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 6 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 9 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Tunnel",
+      "grund": "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, dass es einen gibt.",
+      "quelle": "tunnel"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "linie"
+    }
+  ]
+}

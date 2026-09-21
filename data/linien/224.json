@@ -1,0 +1,135 @@
+{
+ "linie": 224,
+ "name": "Chambrelien Nord - Le Locle (Frontiere)",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Chambrelien Nord (bif)",
+  "ende": "Le Locle-Frontiere",
+  "km_anfang": 10.585,
+  "km_ende": 39.58
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 12,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8504236,
+    "name": "Les Geneveys-sur-Coffrane",
+    "km": 16.8975
+   },
+   {
+    "uic": 8504237,
+    "name": "Les Hauts-Geneveys",
+    "km": 20.98843
+   },
+   {
+    "uic": 8504314,
+    "name": "La Chaux-de-Fonds",
+    "km": 29.457
+   },
+   {
+    "uic": 8504321,
+    "name": "La Chaux-de-Fonds Les Forges",
+    "km": 30.73
+   },
+   {
+    "uic": 8504315,
+    "name": "Le Crêt-du-Locle",
+    "km": 33.4
+   },
+   {
+    "uic": 8504316,
+    "name": "Le Locle",
+    "km": 37.06721
+   },
+   {
+    "uic": 8504317,
+    "name": "Le Locle-Col-des-Roches",
+    "km": 38.86171
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 4,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   2
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Tunnel des Loges (013)",
+    "laenge_m": 3260,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 22.703,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel du Mont Sagne(007)",
+    "laenge_m": 1880,
+    "inbetriebnahme_jahr": 1859,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 26.239,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Combe (Convers, 006)",
+    "laenge_m": 254,
+    "inbetriebnahme_jahr": 1858,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 28.752,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel du col des Roches (073)",
+    "laenge_m": 433,
+    "inbetriebnahme_jahr": 1884,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 39.507,
+    "bemerkung": "107m gehört Frankreich"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

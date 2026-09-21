@@ -1,0 +1,162 @@
+{
+ "linie": 665,
+ "name": "Zug Sud - Arth-Goldau",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Zug Sud",
+  "ende": "Arth-Goldau Nordwest",
+  "km_anfang": 0.003,
+  "km_ende": 15.758
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 10,
+  "anzahl_in_taktland": 6,
+  "items": [
+   {
+    "uic": 8502300,
+    "name": "Zug Postplatz",
+    "km": 0.605
+   },
+   {
+    "uic": 8517527,
+    "name": "Zug Casino",
+    "km": 1.406
+   },
+   {
+    "uic": 8515994,
+    "name": "Zug Fridbach",
+    "km": 2.09
+   },
+   {
+    "uic": 8502231,
+    "name": "Zug Oberwil",
+    "km": 3.135
+   },
+   {
+    "uic": 8517112,
+    "name": "Walchwil Hörndli",
+    "km": 7.978
+   },
+   {
+    "uic": 8502205,
+    "name": "Walchwil",
+    "km": 9.4524
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 8,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Zuger Stadttunnel",
+    "laenge_m": 585,
+    "inbetriebnahme_jahr": 1896,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 0.98,
+    "bemerkung": null
+   },
+   {
+    "name": "Lothenbachtunnel",
+    "laenge_m": 36,
+    "inbetriebnahme_jahr": 1898,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 7.045,
+    "bemerkung": null
+   },
+   {
+    "name": "Bühltunnel ZG",
+    "laenge_m": 94,
+    "inbetriebnahme_jahr": 2021,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 8.523,
+    "bemerkung": null
+   },
+   {
+    "name": "Rossplattentunnel",
+    "laenge_m": 48,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 10.049,
+    "bemerkung": null
+   },
+   {
+    "name": "St. Adriantunnel",
+    "laenge_m": 65,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 10.405,
+    "bemerkung": null
+   },
+   {
+    "name": "Rufibachtunnel",
+    "laenge_m": 39,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 10.661,
+    "bemerkung": null
+   },
+   {
+    "name": "Kalkofentunnel",
+    "laenge_m": 69,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 12.266,
+    "bemerkung": null
+   },
+   {
+    "name": "Mühlefluhtunnel SZ",
+    "laenge_m": 191,
+    "inbetriebnahme_jahr": 1897,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 14.416,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 6 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 10 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

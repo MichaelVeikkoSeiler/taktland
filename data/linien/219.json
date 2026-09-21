@@ -1,0 +1,191 @@
+{
+ "linie": 219,
+ "name": "Auvernier - Les Verrieres frontiere",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Auvernier",
+  "ende": "Les Verrieres-Frontiere",
+  "km_anfang": 4.979,
+  "km_ende": 41.065
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 12,
+  "anzahl_in_taktland": 5,
+  "items": [
+   {
+    "uic": 8504219,
+    "name": "Auvernier",
+    "km": 4.9791
+   },
+   {
+    "uic": 8504218,
+    "name": "Bôle",
+    "km": 8.3
+   },
+   {
+    "uic": 8504217,
+    "name": "Champ-du-Moulin",
+    "km": 13.64584
+   },
+   {
+    "uic": 8504216,
+    "name": "Noiraigue",
+    "km": 18.10913
+   },
+   {
+    "uic": 8504215,
+    "name": "Travers",
+    "km": 22.44673
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 11,
+  "laengste": [
+   8
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "anzahl_aelteste": 11,
+  "items": [
+   {
+    "name": "Tunnel de la Loge (014)",
+    "laenge_m": 54,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 11.503,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Rochefort (015)",
+    "laenge_m": 72,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 11.708,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Champ Rouge (016)",
+    "laenge_m": 85,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 12.95,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de la Verrière (017)",
+    "laenge_m": 156,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 13.269,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel du Bois-de-Ban (018)",
+    "laenge_m": 161,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 14.688,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel des Moyats (019)",
+    "laenge_m": 338,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 15.085,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel Places-Bourgeoises",
+    "laenge_m": 70,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 15.478,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Brot (021)",
+    "laenge_m": 455,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 15.832,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Fleurier (022)",
+    "laenge_m": 546,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 31.294,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de St-Sulpice (023)",
+    "laenge_m": 277,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 33.753,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel du Haut de la Tour (24)",
+    "laenge_m": 334,
+    "inbetriebnahme_jahr": 1860,
+    "tunnelsystem": "1-Röhre / 1-Spur",
+    "km": 34.21,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 5 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

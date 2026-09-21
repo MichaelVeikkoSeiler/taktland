@@ -1,0 +1,148 @@
+{
+ "linie": 200,
+ "name": "Renens VD Ouest - Vallorbe",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "Renens VD Ouest (bif)",
+  "ende": "Vallorbe",
+  "km_anfang": 5.18,
+  "km_ende": 46.306
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 14,
+  "anzahl_in_taktland": 9,
+  "items": [
+   {
+    "uic": 8501117,
+    "name": "Bussigny",
+    "km": 6.9281
+   },
+   {
+    "uic": 8501116,
+    "name": "Vufflens-la-Ville",
+    "km": 10.9739
+   },
+   {
+    "uic": 8501115,
+    "name": "Cossonay-Penthalaz",
+    "km": 14.48582
+   },
+   {
+    "uic": 8501108,
+    "name": "La Sarraz",
+    "km": 22.74756
+   },
+   {
+    "uic": 8501107,
+    "name": "Arnex",
+    "km": 27.56496
+   },
+   {
+    "uic": 8501106,
+    "name": "Croy-Romainmôtier",
+    "km": 33.70166
+   },
+   {
+    "uic": 8501105,
+    "name": "Bretonnières",
+    "km": 35.82299
+   },
+   {
+    "uic": 8501104,
+    "name": "Le Day",
+    "km": 43.488
+   },
+   {
+    "uic": 8501103,
+    "name": "Vallorbe",
+    "km": 46.30584
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 4,
+  "laengste": [
+   0
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "anzahl_aelteste": 4,
+  "items": [
+   {
+    "name": "Tunnel de la Sarraz (033)",
+    "laenge_m": 148,
+    "inbetriebnahme_jahr": 1870,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 22.972,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel du Moulin Bornu (034)",
+    "laenge_m": 72,
+    "inbetriebnahme_jahr": 1870,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 23.359,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Combes (035)",
+    "laenge_m": 100,
+    "inbetriebnahme_jahr": 1870,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 38.43,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Nanchau (036)",
+    "laenge_m": 132,
+    "inbetriebnahme_jahr": 1870,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 39.131,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 9 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 14 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}

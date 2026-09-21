@@ -1,0 +1,213 @@
+{
+ "linie": 152,
+ "name": "St-Jean - Geneve-Eaux-Vives - Annemasse",
+ "datenstand": "2026-09-21",
+ "strecke": {
+  "source": "linie",
+  "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
+  "anfang": "St-Jean (bif)",
+  "ende": "Annemasse",
+  "km_anfang": 61.59,
+  "km_ende": 76.39
+ },
+ "bahnhoefe": {
+  "source": "linie-mit-betriebspunkten",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+  "betriebspunkte_erfasst": 12,
+  "anzahl_in_taktland": 5,
+  "items": [
+   {
+    "uic": 8516155,
+    "name": "Lancy-Pont-Rouge",
+    "km": 64.222
+   },
+   {
+    "uic": 8517142,
+    "name": "Lancy-Bachet",
+    "km": 65.649
+   },
+   {
+    "uic": 8516272,
+    "name": "Genève-Champel",
+    "km": 68.986
+   },
+   {
+    "uic": 8516273,
+    "name": "Genève-Eaux-Vives",
+    "km": 70.45
+   },
+   {
+    "uic": 8516274,
+    "name": "Chêne-Bourg",
+    "km": 73.11
+   }
+  ]
+ },
+ "tunnel": {
+  "source": "tunnel",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "anzahl_erfasst": 15,
+  "laengste": [
+   2
+  ],
+  "anzahl_laengste": 1,
+  "aelteste": [
+   0
+  ],
+  "anzahl_aelteste": 1,
+  "items": [
+   {
+    "name": "Tunnel de St. Jean (087)",
+    "laenge_m": 221,
+    "inbetriebnahme_jahr": 1941,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 61.859,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel Bois de la Bâtie (088)",
+    "laenge_m": 1078,
+    "inbetriebnahme_jahr": 1949,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 63.516,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Pinchat",
+    "laenge_m": 2026,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 65.868,
+    "bemerkung": null
+   },
+   {
+    "name": "TC Voirie de Carouge",
+    "laenge_m": 99,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 67.853,
+    "bemerkung": null
+   },
+   {
+    "name": "TC Rive gauche",
+    "laenge_m": 411,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 67.965,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Champel 1",
+    "laenge_m": 494,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 68.674,
+    "bemerkung": null
+   },
+   {
+    "name": "Halte Genève-Champel",
+    "laenge_m": 222,
+    "inbetriebnahme_jahr": 2018,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 68.994,
+    "bemerkung": null
+   },
+   {
+    "name": "Tunnel de Champel 2",
+    "laenge_m": 928,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 69.44,
+    "bemerkung": null
+   },
+   {
+    "name": "TC Théodore Weber",
+    "laenge_m": 119,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 70.081,
+    "bemerkung": null
+   },
+   {
+    "name": "Halte Genève-Eaux-Vives",
+    "laenge_m": 657,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 70.457,
+    "bemerkung": null
+   },
+   {
+    "name": "TC Franck Thomas Gradelle",
+    "laenge_m": 1460,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 70.8,
+    "bemerkung": null
+   },
+   {
+    "name": "TC Gradelle - Seymaz",
+    "laenge_m": 435,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 72.26,
+    "bemerkung": null
+   },
+   {
+    "name": "TC Seymaz - Halte de CHEB",
+    "laenge_m": 271,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 72.719,
+    "bemerkung": null
+   },
+   {
+    "name": "Halte Chêne-Bourg",
+    "laenge_m": 250,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 73.103,
+    "bemerkung": null
+   },
+   {
+    "name": "TC du Foron",
+    "laenge_m": 1136,
+    "inbetriebnahme_jahr": 2019,
+    "tunnelsystem": "1-Röhre / 2-Spuren",
+    "km": 73.24,
+    "bemerkung": null
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+   "quelle": "linie"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Ein- oder mehrspurig",
+   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "quelle": "linie, tunnel"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 5 Bahnhöfe, die Taktland kennt. Die Liste der Betriebspunkte führt für diese Linie 12 Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "linie-mit-betriebspunkten"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "linie"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "tunnel"
+ ]
+}
