@@ -21,7 +21,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Yverdon-les-Bains-Champ Pittet 240 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 200, an einem freien Tag 90. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Yverdon-les-Bains-Champ Pittet 240 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 200, an einem freien Tag 90. Der Datenstand dieser Zahlen ist 2024. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -78,7 +78,7 @@
             "240"
           ],
           "correct": 3,
-          "explanation": "An einem Werktag sind es 240 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 240 Ein- und Aussteigende, Stand 2024.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },

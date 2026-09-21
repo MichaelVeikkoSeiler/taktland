@@ -23,7 +23,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Bôle 400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 350, an einem freien Tag 240. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und transN erfasst.",
+      "body": "An einem Werktag steigen in Bôle 400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 350, an einem freien Tag 240. Der Datenstand dieser Zahlen ist 2022. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und transN erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -59,7 +59,7 @@
             "680"
           ],
           "correct": 0,
-          "explanation": "An einem Werktag sind es 400 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 400 Ein- und Aussteigende, Stand 2022.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },

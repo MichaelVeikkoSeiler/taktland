@@ -1,6 +1,6 @@
 {
-  "uic": 8504227,
-  "name": "Ligerz",
+  "uic": 8501111,
+  "name": "Essert-Pittet",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -22,64 +22,71 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Ligerz 530 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 540, an einem freien Tag 550. Der Datenstand dieser Zahlen ist 2024. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Essert-Pittet 90 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 80, an einem freien Tag 49. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 530,
+          "value": 90,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 540,
+          "value": 80,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 550,
+          "value": 49,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
         },
         {
+          "label": "Ein- und Aussteigende an einem Werktag 2018",
+          "value": 50,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
           "label": "Ein- und Aussteigende an einem Werktag 2022",
-          "value": 480,
+          "value": 70,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.verlauf[1].dwv"
         },
         {
-          "label": "Ein- und Aussteigende an einem Werktag 2023",
-          "value": 600,
-          "unit": "Personen",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[2].dwv"
-        },
-        {
           "label": "Ein- und Aussteigende an einem Werktag 2024",
-          "value": 530,
+          "value": 80,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.verlauf[3].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 90,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
         {
-          "id": "steckbrief:16d0558d",
+          "id": "steckbrief:ea7a90b7",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Ligerz ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Essert-Pittet ein und aus?",
           "options": [
-            "530",
-            "640",
-            "740",
-            "900"
+            "63",
+            "76",
+            "90",
+            "110"
           ],
-          "correct": 0,
-          "explanation": "An einem Werktag sind es 530 Ein- und Aussteigende, Stand 2024.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 90 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -90,36 +97,41 @@
           "richtung": "aufsteigend",
           "items": [
             {
+              "label": "2018",
+              "value": 50,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
               "label": "2022",
-              "value": 480,
+              "value": 70,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
               "label": "2024",
-              "value": 530,
+              "value": 80,
               "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
-              "label": "2023",
-              "value": 600,
-              "factRef": "steckbrief.verlauf[2].dwv"
+              "label": "2025",
+              "value": 90,
+              "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 480 (2022), 530 (2024), 600 (2023). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 50 (2018), 70 (2022), 80 (2024), 90 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:239dae63",
+          "id": "steckbrief:31240d3b",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Ligerz ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Essert-Pittet ___ Personen ein und aus.",
           "options": [
-            "380",
-            "470",
-            "550"
+            "49",
+            "59",
+            "69"
           ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 550 Personen, an einem Werktag 530. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 49 Personen, an einem Werktag 90. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -128,56 +140,56 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Ligerz liegt auf 433.64 Metern über Meer in der Gemeinde Ligerz, Bezirk Biel/Bienne, Kanton Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LIG.",
+      "body": "Essert-Pittet liegt auf 438.19 Metern über Meer in der Gemeinde Chavornay, Bezirk Jura-Nord vaudois. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet ESP.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 433.64,
+          "value": 438.19,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "LIG",
+          "value": "ESP",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Bezirk",
-          "value": "Biel/Bienne",
+          "label": "Gemeinde",
+          "value": "Chavornay",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
+          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:54b04ec1",
+          "id": "stammdaten:25c7e3a8",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Ligerz?",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Essert-Pittet?",
           "min": 350,
-          "max": 630,
+          "max": 640,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 433.64,
-          "explanation": "Der Bahnhof liegt auf 433.64 Metern über Meer.",
+          "correct": 438.19,
+          "explanation": "Der Bahnhof liegt auf 438.19 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:1f5e9752",
+          "id": "stammdaten:e22cc6b6",
           "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Ligerz?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Essert-Pittet?",
           "options": [
-            "Bern-Mittelland",
-            "Biel/Bienne",
-            "Jura bernois",
-            "Seeland"
+            "Arnex-sur-Orbe",
+            "Bavois",
+            "Chavornay",
+            "Ependes (VD)"
           ],
-          "correct": 1,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Biel/Bienne eingetragen.",
-          "factRef": "stammdaten.bezirk",
+          "explanation": "Als Gemeinde ist Chavornay eingetragen.",
+          "factRef": "stammdaten.gemeinde",
           "difficulty": 2
         }
       ]
@@ -185,44 +197,78 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Ligerz liegen offene Daten vor. Perron 1 ist ein Hausperron von 186 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Essert-Pittet liegen offene Daten vor. Perron 2 misst 170 Meter, Perron 1 misst 165 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
-          "value": 1,
+          "value": 2,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 186,
+          "value": 170,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche Perron 1",
+          "value": 340.52,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 2",
+          "value": 260.98,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
         }
       ],
       "questions": [
         {
-          "id": "perrons:0c3ecb34",
+          "id": "perrons:94f2ee05",
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Ligerz?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Essert-Pittet?",
           "options": [
-            "130 m",
-            "160 m",
-            "186 m",
-            "220 m"
+            "140 m",
+            "170 m",
+            "200 m",
+            "240 m"
           ],
-          "correct": 2,
-          "explanation": "Das erfasste Perron misst 186 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "correct": 1,
+          "explanation": "Das längste erfasste Perron misst 170 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:6cd50402",
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2",
+              "rechts": "260.98 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "340.52 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2 hat 260.98 Quadratmeter, Perron 1 hat 340.52 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:9d046f1f",
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Ligerz ist niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in Essert-Pittet sind niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
@@ -231,12 +277,12 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Perronsegmente zur Hindernisfreiheit sind für Ligerz keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Essert-Pittet keine erhoben. Von den 2 erfassten Perrons sind 2 als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Niveaufrei erreichbare Perrons",
-          "value": 1,
+          "value": 2,
           "source": "perron",
           "factRef": "hindernisfreiheit.perrons_niveaufrei"
         },
@@ -249,11 +295,11 @@
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:b0dbf944",
+          "id": "hindernisfreiheit:5b25b30c",
           "type": "true_false",
-          "prompt": "Für Ligerz sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "prompt": "Für Essert-Pittet sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
-          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
+          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zu den Perrons.",
           "factRef": "hindernisfreiheit.perrons_mit_daten",
           "difficulty": 3
         }
@@ -262,19 +308,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Ligerz – Twann 139 Züge pro Tag, das sind 50'897 im Jahr. Auf dem Abschnitt Chavannes – Ligerz sind es ebenfalls 139 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 67 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Chavornay – Essert-Pittet 168 Züge pro Tag, das sind 61'242 im Jahr. Auf dem Abschnitt Essert-Pittet – Ependes VD sind es ebenfalls 168 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 64 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Ligerz – Twann",
-          "value": 139,
+          "label": "Züge pro Tag, Personenverkehr Chavornay – Essert-Pittet",
+          "value": 168,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Ligerz – Twann",
-          "value": 50897,
+          "label": "Züge pro Jahr, Personenverkehr Chavornay – Essert-Pittet",
+          "value": 61242,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -282,30 +328,30 @@
       ],
       "questions": [
         {
-          "id": "zuege:33b596db",
+          "id": "zuege:6306c623",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Ligerz – Twann?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Chavornay – Essert-Pittet?",
           "options": [
-            "139",
-            "170",
-            "190",
-            "240"
+            "168",
+            "200",
+            "240",
+            "290"
           ],
           "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 139 Züge pro Tag, beide Richtungen zusammen.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 168 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:fb5f88b8",
+          "id": "zuege:af08abf0",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Ligerz – Twann?",
-          "min": 41500,
-          "max": 74000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Chavornay – Essert-Pittet?",
+          "min": 50000,
+          "max": 89000,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 50897,
-          "explanation": "Die Erhebung zählt 50'897 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 61242,
+          "explanation": "Die Erhebung zählt 61'242 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -314,7 +360,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Ligerz ist 1 Linie erfasst: die Linie 210 Daillens - Biel/Bienne. Der Bahnhof ist darauf bei Kilometer 94.00279 eingetragen.",
+      "body": "Für Essert-Pittet ist 1 Linie erfasst: die Linie 210 Daillens - Biel/Bienne. Der Bahnhof ist darauf bei Kilometer 29.67427 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -324,7 +370,7 @@
         },
         {
           "label": "Kilometrierung auf der Linie 210",
-          "value": 94.00279,
+          "value": 29.67427,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -332,15 +378,15 @@
       ],
       "questions": [
         {
-          "id": "linien:89aa7b67",
+          "id": "linien:5ac5b59a",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 210 ist Ligerz eingetragen?",
-          "min": 77,
-          "max": 137,
+          "prompt": "Bei welchem Streckenkilometer der Linie 210 ist Essert-Pittet eingetragen?",
+          "min": 24,
+          "max": 44,
           "step": 1,
           "unit": "km",
-          "correct": 94.00279,
-          "explanation": "Die Kilometrierung von Ligerz auf der Linie 210 beträgt 94.00279. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 29.67427,
+          "explanation": "Die Kilometrierung von Essert-Pittet auf der Linie 210 beträgt 29.67427. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -349,7 +395,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS und 1 Billettentwerter. Wartehallen sind keine verzeichnet. Ligerz steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 1 Billettentwerter und 1 Wartehalle. Essert-Pittet steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -373,22 +419,22 @@
       ],
       "questions": [
         {
-          "id": "services:524a1b29",
+          "id": "services:9f302cc7",
           "type": "true_false",
-          "prompt": "Ligerz steht in der Liste der WLAN-Standorte.",
+          "prompt": "Essert-Pittet steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:b9b59927",
+          "id": "services:c644ca98",
           "type": "single_choice",
-          "prompt": "Wie viele Billettentwerter sind in Ligerz erfasst?",
+          "prompt": "Wie viele Billettentwerter sind in Essert-Pittet erfasst?",
           "options": [
             "1",
             "2",
-            "4"
+            "3"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
@@ -401,17 +447,23 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Ligerz 3 Sitzbänke erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Essert-Pittet 4 Sitzbänke sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 3,
+          "value": 4,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
         {
-          "label": "Perrons mit erfasstem Belag",
+          "label": "Infopunkte erfasst",
           "value": 1,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
         }
@@ -427,15 +479,31 @@
             "5",
             "7"
           ],
-          "correct": 0,
-          "explanation": "Erfasst sind 3 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 1,
+          "explanation": "Erfasst sind 4 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
-          "id": "ausstattung:f5b7373c",
+          "id": "ausstattung:05728d58",
           "type": "single_choice",
-          "prompt": "Welcher Belag ist für das erfasste Perron verzeichnet?",
+          "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist 1 Infopunkt. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "id": "ausstattung:92d1d5cd",
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
           "options": [
             "Beton-Belag",
             "Bituminöses Mischgut",
@@ -443,7 +511,7 @@
             "Verbundstein-Pflästerung"
           ],
           "correct": 1,
-          "explanation": "Für das Perron mit Daten ist Bituminöses Mischgut erfasst.",
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
           "difficulty": 2
@@ -476,11 +544,6 @@
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
-    },
-    {
-      "thema": "Wartehallen",
-      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
-      "quelle": "haltestelle-wartehallen"
     },
     {
       "thema": "Fahrplan",

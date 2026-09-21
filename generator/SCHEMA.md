@@ -544,7 +544,20 @@ Toleranz, dieselbe Grenze wie im Validator). `kuerzen()` zählt
 die Ausstattung schon beim Bauen mit und streicht nach `VERZICHTBAR`, zuerst
 was einen schon gefragten Wert wiederholt: Züge pro Jahr neben Zügen pro Tag
 auf demselben Abschnitt, den Jahresverlauf neben dem Werktagswert, die Frage
-nach einer Perronhöhe, wenn keine vermerkt ist.
+nach einer Perronhöhe, wenn keine vermerkt ist. Mols hat weder Zugzahlen noch
+Gleise, keine dieser Regeln griff, und der Bau brach mit 11 statt 10 Fragen
+ab. Zuletzt entfällt darum die Frage, ob der Bahnhof in der WLAN-Liste steht,
+wenn er es nicht tut: Sie prüft ein Fehlen, keinen Wert.
+
+**Jahreszahlen kommen aus den Fakten, nie aus dem Baukasten.** Die Erklärung
+zur Werktagsfrage endete fest eingetippt mit «Stand 2025». Die Fahrgastzahlen
+von Mols und Matran stammen aber aus 2018, von Bôle und Noiraigue aus 2022,
+von drei weiteren Bahnhöfen aus 2024. Der Validator merkte es nur bei Mols,
+weil bei den anderen die Zahl 2025 zufällig anderswo in den Fakten stand. Jetzt
+nimmt der Baukasten das Jahr aus `steckbrief.jahr` und `zuege.jahr`, und der
+Validator vergleicht jedes «Stand JJJJ» in diesen Kapiteln mit dem Jahr der
+Quelle. Weicht es vom Datenjahr ab, das die App oben anzeigt, sagt der
+Steckbrief «Der Datenstand dieser Zahlen ist 2018.»
 
 **Keine Gerätedaten ist nicht null Geräte.** Für Köniz und Müntschemier
 ordnet die Quelle keine Billettautomaten und Entwerter zu, das Feld
@@ -566,7 +579,11 @@ daneben «Wildegg»), sonst meldet der Validator die Frage.
 
 **Keine Null als Satzgegenstand.** «0 sind als niveaufrei vermerkt, 2
 ausdrücklich als nicht niveaufrei» (Rorschach Hafen) heisst jetzt «Beide
-erfassten Perrons sind ausdrücklich als nicht niveaufrei vermerkt».
+erfassten Perrons sind ausdrücklich als nicht niveaufrei vermerkt». Dieselbe
+Null stand im Kapitel Hindernisfreiheit nachgestellt und blieb dort stehen:
+«Von den 2 erfassten Perrons sind 0 als niveaufrei erreichbar vermerkt»
+(Rorschach Hafen, Meggen). Jetzt «Keines der 2 erfassten Perrons ist …». Der
+Validator meldet beide Wortstellungen.
 
 **Nettofläche und Belagsfläche sind zwei Grössen.** Die Nettofläche stammt aus
 `perron`, die Belagsfläche aus `perronoberflache`. Basel SBB, Perron 5/6: 4'033

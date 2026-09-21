@@ -510,9 +510,16 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             for muster, warum in FALSCHDEUTUNG:
                 if m := re.search(muster, text, re.I):
                     b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: {warum}")
+            # «Stand 2025» war fest eingetippt, die Fahrgastzahlen von Mols
+            # stammen aus 2018. Das Jahr muss dem der Datenquelle entsprechen.
+            soll = (fakten.get(kid) or {}).get("jahr") if kid in ("steckbrief", "zuege") else None
+            for m in re.finditer(r"\bStand (\d{4})\b", text):
+                if soll and int(m.group(1)) != soll:
+                    b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}», die Daten stammen aus {soll}")
             # «0 sind als niveaufrei vermerkt» (Rorschach Hafen): eine Null als
             # Satzgegenstand liest sich wie ein Fehler
-            if m := re.search(r"(?:^|[.;:!?] )0 (?:sind|ist)\b", text):
+            # auch nachgestellt: «Von den 2 Perrons sind 0 als niveaufrei vermerkt» (Meggen)
+            if m := re.search(r"(?:^|[.;:!?] )0 (?:sind|ist)\b|\b(?:sind|ist) 0 [a-zäöü]", text):
                 b.fehlt(f"{wo}/{feld}", f"«{m.group(0).strip()}»: sag, was erfasst ist, "
                                         "nicht wie viele nicht")
             # «Für Blumenau sind 2 Perronsegmente erfasst: .» - leere Aufzählung

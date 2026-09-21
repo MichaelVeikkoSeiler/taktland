@@ -1,6 +1,6 @@
 {
-  "uic": 8504227,
-  "name": "Ligerz",
+  "uic": 8500144,
+  "name": "Buix",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -22,64 +22,64 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Ligerz 530 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 540, an einem freien Tag 550. Der Datenstand dieser Zahlen ist 2024. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Buix 100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 80, an einem freien Tag 49. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 530,
+          "value": 100,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 540,
+          "value": 80,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 550,
+          "value": 49,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
         },
         {
+          "label": "Ein- und Aussteigende an einem Werktag 2018",
+          "value": 60,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
           "label": "Ein- und Aussteigende an einem Werktag 2022",
-          "value": 480,
+          "value": 90,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.verlauf[1].dwv"
         },
         {
-          "label": "Ein- und Aussteigende an einem Werktag 2023",
-          "value": 600,
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 100,
           "unit": "Personen",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[2].dwv"
-        },
-        {
-          "label": "Ein- und Aussteigende an einem Werktag 2024",
-          "value": 530,
-          "unit": "Personen",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[3].dwv"
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
         {
-          "id": "steckbrief:16d0558d",
+          "id": "steckbrief:17f0cce7",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Ligerz ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Buix ein und aus?",
           "options": [
-            "530",
-            "640",
-            "740",
-            "900"
+            "55",
+            "70",
+            "85",
+            "100"
           ],
-          "correct": 0,
-          "explanation": "An einem Werktag sind es 530 Ein- und Aussteigende, Stand 2024.",
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 100 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -90,36 +90,36 @@
           "richtung": "aufsteigend",
           "items": [
             {
+              "label": "2018",
+              "value": 60,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
               "label": "2022",
-              "value": 480,
+              "value": 90,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2024",
-              "value": 530,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 600,
-              "factRef": "steckbrief.verlauf[2].dwv"
+              "label": "2025",
+              "value": 100,
+              "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 480 (2022), 530 (2024), 600 (2023). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 60 (2018), 90 (2022), 100 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:239dae63",
+          "id": "steckbrief:b01f521f",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Ligerz ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Buix ___ Personen ein und aus.",
           "options": [
-            "380",
-            "470",
-            "550"
+            "34",
+            "42",
+            "49"
           ],
           "correct": 2,
-          "explanation": "An einem freien Tag sind es 550 Personen, an einem Werktag 530. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "explanation": "An einem freien Tag sind es 49 Personen, an einem Werktag 100. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -128,56 +128,56 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Ligerz liegt auf 433.64 Metern über Meer in der Gemeinde Ligerz, Bezirk Biel/Bienne, Kanton Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LIG.",
+      "body": "Buix liegt auf 381.62 Metern über Meer in der Gemeinde Basse-Allaine, Bezirk Porrentruy, Kanton Jura. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BX.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 433.64,
+          "value": 381.62,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "LIG",
+          "value": "BX",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Bezirk",
-          "value": "Biel/Bienne",
+          "label": "Gemeinde",
+          "value": "Basse-Allaine",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
+          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:54b04ec1",
+          "id": "stammdaten:bda57d24",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Ligerz?",
-          "min": 350,
-          "max": 630,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Buix?",
+          "min": 310,
+          "max": 560,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 433.64,
-          "explanation": "Der Bahnhof liegt auf 433.64 Metern über Meer.",
+          "correct": 381.62,
+          "explanation": "Der Bahnhof liegt auf 381.62 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:1f5e9752",
+          "id": "stammdaten:99bd715d",
           "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Ligerz?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Buix?",
           "options": [
-            "Bern-Mittelland",
-            "Biel/Bienne",
-            "Jura bernois",
-            "Seeland"
+            "Basse-Allaine",
+            "Boncourt",
+            "Bure",
+            "Courchavon"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Biel/Bienne eingetragen.",
-          "factRef": "stammdaten.bezirk",
+          "explanation": "Als Gemeinde ist Basse-Allaine eingetragen.",
+          "factRef": "stammdaten.gemeinde",
           "difficulty": 2
         }
       ]
@@ -185,7 +185,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Ligerz liegen offene Daten vor. Perron 1 ist ein Hausperron von 186 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 1 Perron in Buix liegen offene Daten vor. Perron 1 ist ein Hausperron von 150 Metern. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -195,7 +195,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 186,
+          "value": 150,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -203,24 +203,24 @@
       ],
       "questions": [
         {
-          "id": "perrons:0c3ecb34",
+          "id": "perrons:bfc472cb",
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Ligerz?",
+          "prompt": "Wie lang ist das erfasste Perron in Buix?",
           "options": [
+            "45 m",
+            "82 m",
             "130 m",
-            "160 m",
-            "186 m",
-            "220 m"
+            "150 m"
           ],
-          "correct": 2,
-          "explanation": "Das erfasste Perron misst 186 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "correct": 3,
+          "explanation": "Das erfasste Perron misst 150 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:6cd50402",
+          "id": "perrons:7d2dd05f",
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Ligerz ist niveaufrei erreichbar.",
+          "prompt": "Das erfasste Perron in Buix ist niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -231,7 +231,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Perronsegmente zur Hindernisfreiheit sind für Ligerz keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Buix keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
@@ -249,9 +249,9 @@
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:b0dbf944",
+          "id": "hindernisfreiheit:d3cb4372",
           "type": "true_false",
-          "prompt": "Für Ligerz sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "prompt": "Für Buix sind Perronsegmente zur Hindernisfreiheit erhoben.",
           "correct": false,
           "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
           "factRef": "hindernisfreiheit.perrons_mit_daten",
@@ -262,19 +262,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Ligerz – Twann 139 Züge pro Tag, das sind 50'897 im Jahr. Auf dem Abschnitt Chavannes – Ligerz sind es ebenfalls 139 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 67 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Courtemaîche – Buix 43 Züge pro Tag, das sind 15'662 im Jahr. Auf dem Abschnitt Buix – Boncourt sind es ebenfalls 43 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 8 Züge im Jahr auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Ligerz – Twann",
-          "value": 139,
+          "label": "Züge pro Tag, Personenverkehr Courtemaîche – Buix",
+          "value": 43,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Ligerz – Twann",
-          "value": 50897,
+          "label": "Züge pro Jahr, Personenverkehr Courtemaîche – Buix",
+          "value": 15662,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -282,30 +282,30 @@
       ],
       "questions": [
         {
-          "id": "zuege:33b596db",
+          "id": "zuege:69cd5d8e",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Ligerz – Twann?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Courtemaîche – Buix?",
           "options": [
-            "139",
-            "170",
-            "190",
-            "240"
+            "43",
+            "52",
+            "73",
+            "95"
           ],
           "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 139 Züge pro Tag, beide Richtungen zusammen.",
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 43 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:fb5f88b8",
+          "id": "zuege:eca3afc6",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Ligerz – Twann?",
-          "min": 41500,
-          "max": 74000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Courtemaîche – Buix?",
+          "min": 12500,
+          "max": 23000,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 50897,
-          "explanation": "Die Erhebung zählt 50'897 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 15662,
+          "explanation": "Die Erhebung zählt 15'662 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -314,7 +314,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Ligerz ist 1 Linie erfasst: die Linie 210 Daillens - Biel/Bienne. Der Bahnhof ist darauf bei Kilometer 94.00279 eingetragen.",
+      "body": "Für Buix ist 1 Linie erfasst: die Linie 240 Delemont - Delle. Der Bahnhof ist darauf bei Kilometer 121.45023 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -323,8 +323,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 210",
-          "value": 94.00279,
+          "label": "Kilometrierung auf der Linie 240",
+          "value": 121.45023,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -332,15 +332,15 @@
       ],
       "questions": [
         {
-          "id": "linien:89aa7b67",
+          "id": "linien:fa875acc",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 210 ist Ligerz eingetragen?",
-          "min": 77,
-          "max": 137,
+          "prompt": "Bei welchem Streckenkilometer der Linie 240 ist Buix eingetragen?",
+          "min": 99,
+          "max": 177,
           "step": 1,
           "unit": "km",
-          "correct": 94.00279,
-          "explanation": "Die Kilometrierung von Ligerz auf der Linie 210 beträgt 94.00279. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 121.45023,
+          "explanation": "Die Kilometrierung von Buix auf der Linie 240 beträgt 121.45023. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -349,7 +349,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS und 1 Billettentwerter. Wartehallen sind keine verzeichnet. Ligerz steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 1 Billettentwerter und 1 Wartehalle. Buix steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -373,21 +373,21 @@
       ],
       "questions": [
         {
-          "id": "services:524a1b29",
+          "id": "services:82b6801d",
           "type": "true_false",
-          "prompt": "Ligerz steht in der Liste der WLAN-Standorte.",
+          "prompt": "Buix steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:b9b59927",
+          "id": "services:1f3f198a",
           "type": "single_choice",
-          "prompt": "Wie viele Billettentwerter sind in Ligerz erfasst?",
+          "prompt": "Wie viele Billettentwerter sind in Buix erfasst?",
           "options": [
             "1",
-            "2",
+            "3",
             "4"
           ],
           "correct": 0,
@@ -401,11 +401,11 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Ligerz 3 Sitzbänke erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten ist für Buix 1 Sitzbank erfasst. Zu 1 Perron liegt der Belag vor: Naturstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 3,
+          "value": 1,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
@@ -422,15 +422,16 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
+            "1",
+            "2",
             "3",
-            "4",
-            "5",
-            "7"
+            "4"
           ],
           "correct": 0,
-          "explanation": "Erfasst sind 3 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "explanation": "Erfasst ist 1 Sitzbank. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
-          "difficulty": 1
+          "difficulty": 1,
+          "optionen_aus_fakten": true
         },
         {
           "id": "ausstattung:f5b7373c",
@@ -439,11 +440,11 @@
           "options": [
             "Beton-Belag",
             "Bituminöses Mischgut",
-            "Gussasphalt",
+            "Naturstein-Pflästerung",
             "Verbundstein-Pflästerung"
           ],
-          "correct": 1,
-          "explanation": "Für das Perron mit Daten ist Bituminöses Mischgut erfasst.",
+          "correct": 2,
+          "explanation": "Für das Perron mit Daten ist Naturstein-Pflästerung erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
           "difficulty": 2
@@ -476,11 +477,6 @@
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
-    },
-    {
-      "thema": "Wartehallen",
-      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
-      "quelle": "haltestelle-wartehallen"
     },
     {
       "thema": "Fahrplan",

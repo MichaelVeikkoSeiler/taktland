@@ -39,6 +39,8 @@ SEKTOR = ("Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten 
 # es für den Bahnhofsnamen in einer Erläuterung
 ZUG = ("Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. "
        "Durchfahrende Züge zählen gleich wie haltende.")
+#: Jahr, das die App als «Daten von …» zeigt
+DATENJAHR = 2025
 H55 = "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge."
 
 
@@ -130,6 +132,10 @@ def steckbrief(f, extra_body="", extra_fragen=()):
     teile = [f"An einem Werktag steigen in {name} {ch(s['dwv'])} Personen ein und aus.",
              f"Im Tagesmittel über das ganze Jahr sind es {ch(s['dtv'])}, an einem "
              f"freien Tag {ch(s['dnwv'])}."]
+    if s.get("jahr") and s["jahr"] != DATENJAHR:
+        # Die App zeigt «Daten von 2025», die Fahrgastzahlen von Mols sind
+        # aus 2018. Ohne diesen Satz läse man sie als Stand 2025.
+        teile.append(f"Der Datenstand dieser Zahlen ist {s['jahr']}.")
     if evu == s.get("isb"):
         teile.append(f"Infrastruktur und Züge sind der {evu} zugeordnet.")
     elif evu:
@@ -150,8 +156,9 @@ def steckbrief(f, extra_body="", extra_fragen=()):
         {"label": "Ein- und Aussteigende an einem freien Tag", "value": s["dnwv"],
          "unit": "Personen", "source": "passagierfrequenz", "factRef": "steckbrief.dnwv"}]
     fr = [sc(uic, f"Wie viele Personen steigen an einem Werktag in {name} ein und aus?",
+             # das Jahr aus den Fakten: Mols und Matran zählen 2018, Bôle 2022
              s["dwv"], f"An einem Werktag sind es {ch(s['dwv'])} Ein- und Aussteigende, "
-             "Stand 2025.", "steckbrief.dwv")]
+             f"Stand {s['jahr']}.", "steckbrief.dwv")]
     # Verlauf: nur Jahre, deren Werte man auseinanderhalten kann
     # neueste Jahre zuerst: bei gleichem Wert bleibt das neuere Jahr stehen
     alle_v = sorted([(i, x) for i, x in enumerate(s.get("verlauf") or []) if x.get("dwv")],
@@ -676,6 +683,10 @@ def hindernisfreiheit(f):
             if pd == 1:
                 satz.append("Das erfasste Perron ist "
                             f"{'' if pn == 1 else 'nicht '}als niveaufrei erreichbar vermerkt.")
+            elif pn == 0:
+                # Meggen, Rorschach Hafen: «Von den 2 erfassten Perrons sind 0 als
+                # niveaufrei erreichbar vermerkt» - eine Null als Satzgegenstand
+                satz.append(f"Keines der {pd} erfassten Perrons ist als niveaufrei erreichbar vermerkt.")
             else:
                 satz.append(f"Von den {pd} erfassten Perrons "
                             f"{'ist' if pn == 1 else 'sind'} {pn} als niveaufrei erreichbar vermerkt.")
@@ -763,7 +774,7 @@ def zuege(f):
     else:
         fr.append(schieber(f"Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt {abschn(st)}?",
                            st["zuege_pro_jahr"], f"Die Erhebung zählt {ch(st['zuege_pro_jahr'])} "
-                           "Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+                           f"Züge im Jahr, beide Richtungen zusammen, Stand {zu['jahr']}.",
                            "zuege.staerkster_personenverkehr.zuege_pro_jahr", "Züge/Jahr", diff=3))
     return {"id": "zuege", "title": "Züge", "body": " ".join(satz), "erlaeuterung": ZUG,
             "facts": facts, "questions": fr}
@@ -958,6 +969,10 @@ VERZICHTBAR = [
     # «keine Perronhöhe vermerkt» steht schon im Text
     lambda kid, q: kid == "gleise" and q.get("factRef") == "gleise.perronhoehen_cm"
     and q["type"] == "true_false" and q.get("correct") is False,
+    # zuletzt: «steht nicht in der WLAN-Liste» prüft ein Fehlen, keinen Wert.
+    # Mols hat weder Zugzahlen noch Gleise, keine der Regeln davor griff.
+    lambda kid, q: kid == "services" and q.get("factRef") == "services.wlan_erfasst"
+    and q.get("correct") is False,
 ]
 
 
@@ -997,7 +1012,7 @@ def profil(uic, **pro_kapitel):
     kuerzen(kap, f)
     quellen = sorted({x["source"] for k in kap for x in k["facts"]})
     return {"uic": f["uic"], "name": f["name"], "tier": f["tier"], "lang": "de",
-            "dataYear": 2025, "generated": str(date.today()), "sources": quellen,
+            "dataYear": DATENJAHR, "generated": str(date.today()), "sources": quellen,
             "chapters": kap, "luecken": f["luecken"]}
 
 

@@ -374,6 +374,16 @@
    ]
   }
  },
+ "8500144": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Boncourt",
+    "Bure",
+    "Courchavon"
+   ]
+  }
+ },
  "8500200": {
   "stammdaten": {
    "frage": "bezirk",
@@ -994,6 +1004,26 @@
     "Jura-Nord vaudois",
     "Gros-de-Vaud",
     "Ouest lausannois"
+   ]
+  }
+ },
+ "8501110": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Gros-de-Vaud",
+    "Broye-Vully"
+   ]
+  }
+ },
+ "8501111": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Ependes (VD)",
+    "Bavois",
+    "Arnex-sur-Orbe"
    ]
   }
  },
@@ -2976,6 +3006,16 @@
    ]
   }
  },
+ "8503224": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schänis",
+    "Reichenburg",
+    "Benken (SG)"
+   ]
+  }
+ },
  "8503225": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3066,6 +3106,16 @@
   }
  },
  "8503236": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Glarus Nord",
+    "Schänis"
+   ]
+  }
+ },
+ "8503237": {
   "stammdaten": {
    "frage": "gemeinde",
    "distraktoren": [
@@ -3706,6 +3756,16 @@
    ]
   }
  },
+ "8504015": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
+   ]
+  }
+ },
  "8504016": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3723,6 +3783,16 @@
     "Rue",
     "Ursy",
     "Puidoux"
+   ]
+  }
+ },
+ "8504018": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Sarine",
+    "La Broye",
+    "Sense"
    ]
   }
  },
@@ -4136,6 +4206,16 @@
     "Faoug",
     "Kerzers",
     "Müntschemier"
+   ]
+  }
+ },
+ "8504141": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura-Nord vaudois",
+    "Lavaux-Oron",
+    "Morges"
    ]
   }
  },
@@ -4740,6 +4820,16 @@
    "distraktoren": [
     "LZVH",
     "EBR"
+   ]
+  }
+ },
+ "8505001": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Luzern-Stadt",
+    "Hochdorf",
+    "Sursee"
    ]
   }
  },
@@ -6763,6 +6853,16 @@
    "distraktoren": [
     "WA",
     "WSD"
+   ]
+  }
+ },
+ "8509415": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Walenstadt",
+    "Flums",
+    "Glarus Nord"
    ]
   }
  },

@@ -1,6 +1,6 @@
 {
-  "uic": 8504216,
-  "name": "Noiraigue",
+  "uic": 8503224,
+  "name": "Bilten",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -10,11 +10,13 @@
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
     "perronoberflache",
+    "sektortafel",
     "wifistation",
     "zugzahlen"
   ],
@@ -22,57 +24,104 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Noiraigue 370 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 390, an einem freien Tag 440. Der Datenstand dieser Zahlen ist 2022. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und transN erfasst.",
+      "body": "An einem Werktag steigen in Bilten 100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 70, an einem freien Tag 49. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 370,
+          "value": 100,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 390,
+          "value": 70,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 440,
+          "value": 49,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2018",
+          "value": 110,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 80,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
         {
-          "id": "steckbrief:70b67fb2",
+          "id": "steckbrief:58462d87",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Noiraigue ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Bilten ein und aus?",
           "options": [
-            "370",
-            "520",
-            "630",
-            "810"
+            "100",
+            "120",
+            "140",
+            "170"
           ],
           "correct": 0,
-          "explanation": "An einem Werktag sind es 370 Ein- und Aussteigende, Stand 2022.",
+          "explanation": "An einem Werktag sind es 100 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "id": "steckbrief:ebcd6868",
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2023",
+              "value": 80,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 100,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 110,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 80 (2023), 100 (2025), 110 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:48dd6e03",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Noiraigue ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Bilten ___ Personen ein und aus.",
           "options": [
-            "440",
-            "530",
-            "620"
+            "49",
+            "59",
+            "69"
           ],
           "correct": 0,
-          "explanation": "An einem freien Tag sind es 440 Personen, an einem Werktag 370. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "explanation": "An einem freien Tag sind es 49 Personen, an einem Werktag 100. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -81,55 +130,55 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Noiraigue liegt auf 727.9 Metern über Meer in der Gemeinde Val-de-Travers. Als Kanton ist in den Stammdaten Neuchâtel eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet NOI.",
+      "body": "Bilten liegt auf 420.5 Metern über Meer in der Gemeinde Glarus Nord, Kanton Glarus. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BIL.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 727.9,
+          "value": 420.5,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "NOI",
+          "value": "BIL",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
           "label": "Gemeinde",
-          "value": "Val-de-Travers",
+          "value": "Glarus Nord",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:5c76af45",
+          "id": "stammdaten:cbfe729f",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Noiraigue?",
-          "min": 590,
-          "max": 1060,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bilten?",
+          "min": 340,
+          "max": 610,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 727.9,
-          "explanation": "Der Bahnhof liegt auf 727.9 Metern über Meer.",
+          "correct": 420.5,
+          "explanation": "Der Bahnhof liegt auf 420.5 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:d39f8b07",
+          "id": "stammdaten:c80eed2d",
           "type": "single_choice",
-          "prompt": "In welcher Gemeinde liegt der Bahnhof Noiraigue?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Bilten?",
           "options": [
-            "Boudry",
-            "La Grande Béroche",
-            "Rochefort",
-            "Val-de-Travers"
+            "Benken (SG)",
+            "Glarus Nord",
+            "Reichenburg",
+            "Schänis"
           ],
-          "correct": 3,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Als Gemeinde ist Val-de-Travers eingetragen.",
+          "explanation": "Als Gemeinde ist Glarus Nord eingetragen.",
           "factRef": "stammdaten.gemeinde",
           "difficulty": 2
         }
@@ -138,17 +187,17 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 3 Perrons in Noiraigue liegen offene Daten vor. Perron 3 misst 121 Meter, Perron 2 misst 120 Meter, Perron 1 misst 26 Meter. 1 ist als niveaufrei vermerkt, 2 ausdrücklich als nicht niveaufrei.",
+      "body": "Zu 1 Perron in Bilten liegen offene Daten vor. Perron 3/4 ist ein Mittelperron von 312 Metern. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
-          "value": 3,
+          "value": 1,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 121,
+          "value": 312,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -156,35 +205,35 @@
       ],
       "questions": [
         {
-          "id": "perrons:6cd02289",
+          "id": "perrons:2ed8429b",
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Noiraigue?",
+          "prompt": "Wie lang ist das erfasste Perron in Bilten?",
           "options": [
-            "121 m",
-            "150 m",
             "170 m",
-            "210 m"
+            "220 m",
+            "270 m",
+            "312 m"
           ],
-          "correct": 0,
-          "explanation": "Das längste erfasste Perron misst 121 Meter.",
+          "correct": 3,
+          "explanation": "Das erfasste Perron misst 312 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:f9fbf171",
+          "id": "perrons:8881b0d7",
           "type": "true_false",
-          "prompt": "Zu allen 3 erfassten Perrons in Noiraigue ist ein niveaufreier Zugang vermerkt.",
-          "correct": false,
-          "explanation": "Für 1 der 3 erfassten Perrons ist ein niveaufreier Zugang vermerkt. 2 sind ausdrücklich als nicht niveaufrei erfasst.",
+          "prompt": "Das erfasste Perron in Bilten ist niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
-          "difficulty": 2
+          "difficulty": 1
         }
       ]
     },
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 2 Gleisen liegen offene Daten vor: 2 und 3. An beiden erfassten Gleisen ist eine Perronhöhe von 20 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 3 und 4. An beiden erfassten Gleisen ist eine Perronhöhe von 35 Zentimetern verzeichnet.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -192,15 +241,36 @@
           "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Sektoren an Gleis 3",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "id": "gleise:09e5290f",
+          "id": "gleise:1d778dc2",
+          "type": "cloze",
+          "prompt": "An Gleis 3 in Bilten sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "5",
+            "7"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 3 trägt die Sektoren A, B und C, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:95c92d65",
           "type": "true_false",
-          "prompt": "An den erfassten Gleisen in Noiraigue kommt nur eine einzige Perronhöhe vor.",
+          "prompt": "An den erfassten Gleisen in Bilten kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
-          "explanation": "Für beide erfassten Gleise sind ausschliesslich 20 Zentimeter verzeichnet.",
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 35 Zentimeter verzeichnet.",
           "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
@@ -209,12 +279,12 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Noiraigue sind 234 Perronsegmente erfasst, alle mit einer Perronhöhe von 20 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Bilten sind 6 Perronsegmente erfasst, alle mit einer Perronhöhe von 35 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 234,
+          "value": 6,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
@@ -223,30 +293,36 @@
           "value": 0,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
         }
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:3e87af1f",
+          "id": "hindernisfreiheit:b9db2db4",
           "type": "cloze",
-          "prompt": "In Noiraigue sind ___ Perronsegmente erfasst.",
+          "prompt": "In Bilten sind ___ Perronsegmente erfasst.",
           "options": [
-            "234",
-            "280",
-            "330"
+            "5",
+            "6",
+            "7"
           ],
-          "correct": 0,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 234 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 6 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
-          "id": "hindernisfreiheit:2e682851",
+          "id": "hindernisfreiheit:1a53e4b8",
           "type": "true_false",
-          "prompt": "Bei keinem der 234 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 234 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 6 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -255,19 +331,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Travers – Noiraigue 58 Züge pro Tag, das sind 21'245 im Jahr. Auf dem Abschnitt Noiraigue – Champ-du-Moulin sind es ebenfalls 58 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 177 Züge im Jahr auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Bilten – Ziegelbrücke 232 Züge pro Tag, das sind 84'654 im Jahr. Auf dem Abschnitt Reichenburg – Bilten sind es ebenfalls 232 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 20 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Travers – Noiraigue",
-          "value": 58,
+          "label": "Züge pro Tag, Personenverkehr Bilten – Ziegelbrücke",
+          "value": 232,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Travers – Noiraigue",
-          "value": 21245,
+          "label": "Züge pro Jahr, Personenverkehr Bilten – Ziegelbrücke",
+          "value": 84654,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -275,30 +351,30 @@
       ],
       "questions": [
         {
-          "id": "zuege:c8c81c1f",
+          "id": "zuege:d86c28d7",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Travers – Noiraigue?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bilten – Ziegelbrücke?",
           "options": [
-            "49",
-            "58",
-            "70",
-            "81"
+            "160",
+            "200",
+            "232",
+            "280"
           ],
-          "correct": 1,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 58 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 232 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:68b5bb60",
+          "id": "zuege:6163bca8",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Travers – Noiraigue?",
-          "min": 17000,
-          "max": 31000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Bilten – Ziegelbrücke?",
+          "min": 69000,
+          "max": 123000,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 21245,
-          "explanation": "Die Erhebung zählt 21'245 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 84654,
+          "explanation": "Die Erhebung zählt 84'654 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -307,7 +383,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Noiraigue ist 1 Linie erfasst: die Linie 219 Auvernier - Les Verrieres frontiere. Der Bahnhof ist darauf bei Kilometer 18.10913 eingetragen.",
+      "body": "Für Bilten ist 1 Linie erfasst: die Linie 720 ZH Langstrasse - Thalwil - Ziegelbrucke. Der Bahnhof ist darauf bei Kilometer 54.2296 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -316,8 +392,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 219",
-          "value": 18.10913,
+          "label": "Kilometrierung auf der Linie 720",
+          "value": 54.2296,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -325,15 +401,15 @@
       ],
       "questions": [
         {
-          "id": "linien:6fe0e622",
+          "id": "linien:7c65b6ac",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 219 ist Noiraigue eingetragen?",
-          "min": 14.5,
-          "max": 26.5,
-          "step": 0.1,
+          "prompt": "Bei welchem Streckenkilometer der Linie 720 ist Bilten eingetragen?",
+          "min": 44,
+          "max": 79,
+          "step": 1,
           "unit": "km",
-          "correct": 18.10913,
-          "explanation": "Die Kilometrierung von Noiraigue auf der Linie 219 beträgt 18.10913. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 54.2296,
+          "explanation": "Die Kilometrierung von Bilten auf der Linie 720 beträgt 54.2296. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -342,7 +418,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat und 1 Billettentwerter. Wartehallen sind keine verzeichnet. Noiraigue steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 1 Billettentwerter und 1 Wartehalle. Bilten steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -366,22 +442,22 @@
       ],
       "questions": [
         {
-          "id": "services:bad8b92d",
+          "id": "services:2bf0efcf",
           "type": "true_false",
-          "prompt": "Noiraigue steht in der Liste der WLAN-Standorte.",
+          "prompt": "Bilten steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:24c0a1d1",
+          "id": "services:34871a76",
           "type": "single_choice",
-          "prompt": "Wie viele Billettentwerter sind in Noiraigue erfasst?",
+          "prompt": "Wie viele Billettentwerter sind in Bilten erfasst?",
           "options": [
             "1",
             "2",
-            "4"
+            "3"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
@@ -394,42 +470,42 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten ist für Noiraigue 1 Sitzbank erfasst. Zu 3 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Bilten 2 Infopunkte erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
-          "label": "Sitzbänke erfasst",
-          "value": 1,
+          "label": "Infopunkte erfasst",
+          "value": 2,
           "source": "mobiliar-im-bahnhof",
-          "factRef": "ausstattung.sitzbaenke"
+          "factRef": "ausstattung.infopunkte"
         },
         {
           "label": "Perrons mit erfasstem Belag",
-          "value": 3,
+          "value": 1,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
         }
       ],
       "questions": [
         {
-          "id": "ausstattung:e6085503",
-          "type": "single_choice",
-          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "id": "ausstattung:a8529c11",
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
             "1",
             "2",
             "3",
-            "4"
+            "8"
           ],
-          "correct": 0,
-          "explanation": "Erfasst ist 1 Sitzbank. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
-          "factRef": "ausstattung.sitzbaenke",
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
           "difficulty": 1,
           "optionen_aus_fakten": true
         },
         {
-          "id": "ausstattung:92d1d5cd",
+          "id": "ausstattung:f5b7373c",
           "type": "single_choice",
-          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "prompt": "Welcher Belag ist für das erfasste Perron verzeichnet?",
           "options": [
             "Beton-Belag",
             "Bituminöses Mischgut",
@@ -437,7 +513,7 @@
             "Verbundstein-Pflästerung"
           ],
           "correct": 1,
-          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "explanation": "Für das Perron mit Daten ist Bituminöses Mischgut erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
           "difficulty": 2
@@ -463,13 +539,8 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 2 Gleise (2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "grund": "Erfasst sind 2 Gleise (3, 4). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
-    },
-    {
-      "thema": "Sektoren",
-      "grund": "Zu den Gleisen 2, 3 sind keine Sektortafeln erfasst.",
-      "quelle": "sektortafel"
     },
     {
       "thema": "Stufenfreier Einstieg",
@@ -485,11 +556,6 @@
       "thema": "Stand der BehiG-Daten",
       "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
       "quelle": "21197_behig-haltekantesegment"
-    },
-    {
-      "thema": "Wartehallen",
-      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
-      "quelle": "haltestelle-wartehallen"
     },
     {
       "thema": "Fahrplan",

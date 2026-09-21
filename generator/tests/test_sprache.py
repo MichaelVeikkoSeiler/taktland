@@ -40,3 +40,11 @@ def test_hilfskante_ist_weiblich():
     d = B.bauen("8506309")
     body = next(k for k in d["chapters"] if k["id"] == "perrons")["body"]
     assert "ist eine Hilfskante von" in body
+
+
+def test_keine_null_als_satzgegenstand():
+    # Meggen: «Von den 2 erfassten Perrons sind 0 als niveaufrei erreichbar vermerkt»
+    d = B.bauen("8505001")
+    body = next(k for k in d["chapters"] if k["id"] == "hindernisfreiheit")["body"]
+    assert "Keines der 2 erfassten Perrons ist als niveaufrei erreichbar vermerkt." in body
+    assert "sind 0" not in body

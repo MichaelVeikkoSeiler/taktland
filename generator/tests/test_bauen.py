@@ -101,3 +101,20 @@ def test_kein_kapitel_ohne_frage():
     q = li["questions"][0]
     assert q["options"][q["correct"]] == "Linie 600"
     assert all(k["questions"] for k in d["chapters"])
+
+
+def test_ohne_zuege_und_gleise_passt_der_umfang():
+    # Mols: keine Zugzahlen, keine Gleise, der Bau brach mit 11 statt 10 Fragen ab
+    d = B.bauen("8509415")
+    b, _ = pruefe(d, fakten_laden(8509415))
+    assert not b.fehler
+    assert all(q.get("factRef") != "services.wlan_erfasst"
+               for k in d["chapters"] for q in k["questions"])
+
+
+def test_jahr_der_fahrgastzahlen_aus_den_fakten():
+    # Mols: Fahrgastzahlen aus 2018, die Erklärung sagte «Stand 2025»
+    d = B.bauen("8509415")
+    st = next(k for k in d["chapters"] if k["id"] == "steckbrief")
+    assert "Der Datenstand dieser Zahlen ist 2018." in st["body"]
+    assert st["questions"][0]["explanation"].endswith("Stand 2018.")

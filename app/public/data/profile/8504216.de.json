@@ -22,7 +22,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Noiraigue 370 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 390, an einem freien Tag 440. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und transN erfasst.",
+      "body": "An einem Werktag steigen in Noiraigue 370 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 390, an einem freien Tag 440. Der Datenstand dieser Zahlen ist 2022. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und transN erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -58,7 +58,7 @@
             "810"
           ],
           "correct": 0,
-          "explanation": "An einem Werktag sind es 370 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 370 Ein- und Aussteigende, Stand 2022.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },

@@ -22,7 +22,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Ligerz 530 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 540, an einem freien Tag 550. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Ligerz 530 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 540, an einem freien Tag 550. Der Datenstand dieser Zahlen ist 2024. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -79,7 +79,7 @@
             "900"
           ],
           "correct": 0,
-          "explanation": "An einem Werktag sind es 530 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 530 Ein- und Aussteigende, Stand 2024.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },

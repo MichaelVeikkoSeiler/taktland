@@ -1,20 +1,21 @@
 {
-  "uic": 8504227,
-  "name": "Ligerz",
+  "uic": 8504141,
+  "name": "Henniez",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
   "generated": "2026-09-21",
   "sources": [
+    "21197_behig-haltekantesegment",
     "billetautomat",
     "billetentwerter",
     "haltestelle-haltekante",
-    "haltestelle-visuell-taktile-sicherheitslinie",
     "linie-mit-betriebspunkten",
     "mobiliar-im-bahnhof",
     "passagierfrequenz",
     "perron",
     "perronoberflache",
+    "sektortafel",
     "wifistation",
     "zugzahlen"
   ],
@@ -22,64 +23,64 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Ligerz 530 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 540, an einem freien Tag 550. Der Datenstand dieser Zahlen ist 2024. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Henniez 90 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 80, an einem freien Tag 49. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 530,
+          "value": 90,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 540,
+          "value": 80,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 550,
+          "value": 49,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
         },
         {
-          "label": "Ein- und Aussteigende an einem Werktag 2022",
-          "value": 480,
-          "unit": "Personen",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[1].dwv"
-        },
-        {
           "label": "Ein- und Aussteigende an einem Werktag 2023",
-          "value": 600,
+          "value": 60,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.verlauf[2].dwv"
         },
         {
           "label": "Ein- und Aussteigende an einem Werktag 2024",
-          "value": 530,
+          "value": 50,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.verlauf[3].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 90,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
         {
-          "id": "steckbrief:16d0558d",
+          "id": "steckbrief:aa6a3c46",
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Ligerz ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Henniez ein und aus?",
           "options": [
-            "530",
-            "640",
-            "740",
-            "900"
+            "76",
+            "90",
+            "110",
+            "130"
           ],
-          "correct": 0,
-          "explanation": "An einem Werktag sind es 530 Ein- und Aussteigende, Stand 2024.",
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 90 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -90,36 +91,36 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2022",
-              "value": 480,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
               "label": "2024",
-              "value": 530,
+              "value": 50,
               "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
               "label": "2023",
-              "value": 600,
+              "value": 60,
               "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 90,
+              "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 480 (2022), 530 (2024), 600 (2023). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 50 (2024), 60 (2023), 90 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
-          "id": "steckbrief:239dae63",
+          "id": "steckbrief:50f49afe",
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Ligerz ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Henniez ___ Personen ein und aus.",
           "options": [
-            "380",
-            "470",
-            "550"
+            "34",
+            "42",
+            "49"
           ],
           "correct": 2,
-          "explanation": "An einem freien Tag sind es 550 Personen, an einem Werktag 530. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "explanation": "An einem freien Tag sind es 49 Personen, an einem Werktag 90. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -128,55 +129,55 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Ligerz liegt auf 433.64 Metern über Meer in der Gemeinde Ligerz, Bezirk Biel/Bienne, Kanton Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet LIG.",
+      "body": "Henniez liegt auf 475.86 Metern über Meer in der Gemeinde Henniez, Bezirk Broye-Vully. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet HEN.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 433.64,
+          "value": 475.86,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "LIG",
+          "value": "HEN",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
           "label": "Bezirk",
-          "value": "Biel/Bienne",
+          "value": "Broye-Vully",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
-          "id": "stammdaten:54b04ec1",
+          "id": "stammdaten:4776c012",
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Ligerz?",
-          "min": 350,
-          "max": 630,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Henniez?",
+          "min": 390,
+          "max": 690,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 433.64,
-          "explanation": "Der Bahnhof liegt auf 433.64 Metern über Meer.",
+          "correct": 475.86,
+          "explanation": "Der Bahnhof liegt auf 475.86 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "id": "stammdaten:1f5e9752",
+          "id": "stammdaten:699dbc7b",
           "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Ligerz?",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Henniez?",
           "options": [
-            "Bern-Mittelland",
-            "Biel/Bienne",
-            "Jura bernois",
-            "Seeland"
+            "Broye-Vully",
+            "Jura-Nord vaudois",
+            "Lavaux-Oron",
+            "Morges"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Biel/Bienne eingetragen.",
+          "explanation": "Als Bezirk ist Broye-Vully eingetragen.",
           "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
@@ -185,7 +186,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Ligerz liegen offene Daten vor. Perron 1 ist ein Hausperron von 186 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 1 Perron in Henniez liegen offene Daten vor. Perron 1 ist ein Hausperron von 165 Metern. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -195,7 +196,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 186,
+          "value": 165,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -203,24 +204,24 @@
       ],
       "questions": [
         {
-          "id": "perrons:0c3ecb34",
+          "id": "perrons:44105585",
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Ligerz?",
+          "prompt": "Wie lang ist das erfasste Perron in Henniez?",
           "options": [
-            "130 m",
-            "160 m",
-            "186 m",
-            "220 m"
+            "165 m",
+            "200 m",
+            "230 m",
+            "280 m"
           ],
-          "correct": 2,
-          "explanation": "Das erfasste Perron misst 186 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "correct": 0,
+          "explanation": "Das erfasste Perron misst 165 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "id": "perrons:6cd50402",
+          "id": "perrons:d986f803",
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Ligerz ist niveaufrei erreichbar.",
+          "prompt": "Das erfasste Perron in Henniez ist niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -229,52 +230,104 @@
       ]
     },
     {
-      "id": "hindernisfreiheit",
-      "title": "Hindernisfreiheit",
-      "body": "Perronsegmente zur Hindernisfreiheit sind für Ligerz keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
-      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu Gleis 1 liegen offene Daten vor. An dem erfassten Gleis ist eine Perronhöhe von 20 Zentimetern verzeichnet.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
-          "label": "Niveaufrei erreichbare Perrons",
+          "label": "Gleise mit offenen Daten",
           "value": 1,
-          "source": "perron",
-          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Sicherheitslinie",
-          "value": "Ja",
-          "source": "haltestelle-visuell-taktile-sicherheitslinie",
-          "factRef": "hindernisfreiheit.sicherheitslinie"
+          "label": "Sektoren an Gleis 1",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "id": "hindernisfreiheit:b0dbf944",
+          "id": "gleise:fcf0e718",
+          "type": "cloze",
+          "prompt": "An Gleis 1 in Henniez sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Henniez sind 2 Perronsegmente erfasst, beide mit einer Perronhöhe von 20 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 0,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:dcc3b71c",
+          "type": "cloze",
+          "prompt": "In Henniez sind ___ Perronsegmente erfasst.",
+          "options": [
+            "2",
+            "4",
+            "6"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 2 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:333e7d65",
           "type": "true_false",
-          "prompt": "Für Ligerz sind Perronsegmente zur Hindernisfreiheit erhoben.",
-          "correct": false,
-          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
-          "factRef": "hindernisfreiheit.perrons_mit_daten",
-          "difficulty": 3
+          "prompt": "Bei keinem der 2 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 2 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Ligerz – Twann 139 Züge pro Tag, das sind 50'897 im Jahr. Auf dem Abschnitt Chavannes – Ligerz sind es ebenfalls 139 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 67 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Henniez – Granges-Marnand 50 Züge pro Tag, das sind 18'238 im Jahr. Auf dem Abschnitt Lucens – Henniez sind es ebenfalls 50 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 2 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Ligerz – Twann",
-          "value": 139,
+          "label": "Züge pro Tag, Personenverkehr Henniez – Granges-Marnand",
+          "value": 50,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Ligerz – Twann",
-          "value": 50897,
+          "label": "Züge pro Jahr, Personenverkehr Henniez – Granges-Marnand",
+          "value": 18238,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
@@ -282,30 +335,30 @@
       ],
       "questions": [
         {
-          "id": "zuege:33b596db",
+          "id": "zuege:30377d51",
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Ligerz – Twann?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Henniez – Granges-Marnand?",
           "options": [
-            "139",
-            "170",
-            "190",
-            "240"
+            "42",
+            "50",
+            "70",
+            "85"
           ],
-          "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 139 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 1,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 50 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "id": "zuege:fb5f88b8",
+          "id": "zuege:1abd07e7",
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Ligerz – Twann?",
-          "min": 41500,
-          "max": 74000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Henniez – Granges-Marnand?",
+          "min": 14500,
+          "max": 26500,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 50897,
-          "explanation": "Die Erhebung zählt 50'897 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 18238,
+          "explanation": "Die Erhebung zählt 18'238 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -314,7 +367,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Ligerz ist 1 Linie erfasst: die Linie 210 Daillens - Biel/Bienne. Der Bahnhof ist darauf bei Kilometer 94.00279 eingetragen.",
+      "body": "Für Henniez ist 1 Linie erfasst: die Linie 251 Palezieux Est - Lyss Nord. Der Bahnhof ist darauf bei Kilometer 47.18078 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -323,8 +376,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 210",
-          "value": 94.00279,
+          "label": "Kilometrierung auf der Linie 251",
+          "value": 47.18078,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -332,15 +385,15 @@
       ],
       "questions": [
         {
-          "id": "linien:89aa7b67",
+          "id": "linien:c863be5b",
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 210 ist Ligerz eingetragen?",
-          "min": 77,
-          "max": 137,
+          "prompt": "Bei welchem Streckenkilometer der Linie 251 ist Henniez eingetragen?",
+          "min": 38,
+          "max": 69,
           "step": 1,
           "unit": "km",
-          "correct": 94.00279,
-          "explanation": "Die Kilometrierung von Ligerz auf der Linie 210 beträgt 94.00279. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 47.18078,
+          "explanation": "Die Kilometrierung von Henniez auf der Linie 251 beträgt 47.18078. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -349,7 +402,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS und 1 Billettentwerter. Wartehallen sind keine verzeichnet. Ligerz steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ S-POS und 1 Billettentwerter. Wartehallen sind keine verzeichnet. Henniez steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -373,18 +426,18 @@
       ],
       "questions": [
         {
-          "id": "services:524a1b29",
+          "id": "services:dedb166a",
           "type": "true_false",
-          "prompt": "Ligerz steht in der Liste der WLAN-Standorte.",
+          "prompt": "Henniez steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "id": "services:b9b59927",
+          "id": "services:e9255e84",
           "type": "single_choice",
-          "prompt": "Wie viele Billettentwerter sind in Ligerz erfasst?",
+          "prompt": "Wie viele Billettentwerter sind in Henniez erfasst?",
           "options": [
             "1",
             "2",
@@ -401,11 +454,11 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Ligerz 3 Sitzbänke erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten ist für Henniez 1 Sitzbank erfasst. Zu 1 Perron liegt der Belag vor: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 3,
+          "value": 1,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
@@ -422,15 +475,16 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
+            "1",
+            "2",
             "3",
-            "4",
-            "5",
-            "7"
+            "4"
           ],
           "correct": 0,
-          "explanation": "Erfasst sind 3 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "explanation": "Erfasst ist 1 Sitzbank. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
-          "difficulty": 1
+          "difficulty": 1,
+          "optionen_aus_fakten": true
         },
         {
           "id": "ausstattung:f5b7373c",
@@ -468,14 +522,24 @@
       "quelle": "anzahl-sbb-bahnhofbenutzer"
     },
     {
-      "thema": "Gleise",
-      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 1 Gleise (1). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
     },
     {
       "thema": "Wartehallen",

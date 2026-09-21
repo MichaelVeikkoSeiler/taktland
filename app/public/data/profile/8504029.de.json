@@ -21,7 +21,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Matran 180 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 150, an einem freien Tag 100. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Matran 180 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 150, an einem freien Tag 100. Der Datenstand dieser Zahlen ist 2018. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -57,7 +57,7 @@
             "310"
           ],
           "correct": 1,
-          "explanation": "An einem Werktag sind es 180 Ein- und Aussteigende, Stand 2025.",
+          "explanation": "An einem Werktag sind es 180 Ein- und Aussteigende, Stand 2018.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
