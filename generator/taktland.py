@@ -500,6 +500,11 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                     b.fehlt(f"{wo}/questions[{i}]", f"«{opts[c]}» steckt im Namen {name}. "
                                                      "Die Frage verrät ihre Antwort")
 
+        if kid == "services" and (m := re.search(r"\bTyp(?:en)? [^.]*\b(Andere|Autres?|Altri|Altro)\b",
+                                                 kap.get("body", ""), re.I)):
+            b.fehlt(f"{wo}/body", f"«{m.group(0)}»: «{m.group(1)}» ist kein Automatentyp, "
+                                  "sondern die Sammelangabe der Quelle")
+
         if kid == "services" and (sv := fakten.get("services")):
             # Eine 0 heisst «nicht erfasst». Der Text muss das sagen, nicht schweigen
             # (Emmenbrücke Gersag: Entwerter fehlten im Satz einfach).

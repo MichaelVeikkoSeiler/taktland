@@ -292,6 +292,16 @@
    ]
   }
  },
+ "8500303": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Laufenburg",
+    "Aarau",
+    "Brugg"
+   ]
+  }
+ },
  "8500305": {
   "stammdaten": {
    "frage": "bezirk",
@@ -505,6 +515,26 @@
    "frage": "bezirk",
    "distraktoren": [
     "Morges",
+    "Gros-de-Vaud",
+    "Ouest lausannois"
+   ]
+  }
+ },
+ "8501104": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bretonnières",
+    "Romainmôtier-Envy",
+    "L'Abbaye"
+   ]
+  }
+ },
+ "8501108": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura-Nord vaudois",
     "Gros-de-Vaud",
     "Ouest lausannois"
    ]
@@ -821,6 +851,16 @@
    ]
   }
  },
+ "8502008": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Hochdorf",
+    "Willisau",
+    "Entlebuch"
+   ]
+  }
+ },
  "8502009": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -838,6 +878,16 @@
     "Luzern-Stadt",
     "Luzern-Land",
     "Sursee"
+   ]
+  }
+ },
+ "8502017": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Eschenbach (LU)",
+    "Ebikon",
+    "Root"
    ]
   }
  },
@@ -867,6 +917,16 @@
    "distraktoren": [
     "HD",
     "HOD"
+   ]
+  }
+ },
+ "8502027": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sursee",
+    "Luzern-Land",
+    "Willisau"
    ]
   }
  },
@@ -1145,6 +1205,15 @@
    ]
   }
  },
+ "8502227": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "STRI",
+    "CHAA"
+   ]
+  }
+ },
  "8502229": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1354,6 +1423,16 @@
     "Hombrechtikon",
     "Männedorf",
     "Uerikon"
+   ]
+  }
+ },
+ "8503109": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rapperswil-Jona",
+    "Stäfa",
+    "Freienbach"
    ]
   }
  },
@@ -1567,6 +1646,16 @@
    ]
   }
  },
+ "8503205": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Meilen",
+    "Uetikon am See",
+    "Männedorf"
+   ]
+  }
+ },
  "8503206": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1634,6 +1723,16 @@
     "Glarus",
     "Mollis",
     "Näfels"
+   ]
+  }
+ },
+ "8503228": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus Nord",
+    "Glarus Süd",
+    "Schänis"
    ]
   }
  },
@@ -2039,6 +2138,16 @@
    ]
   }
  },
+ "8503529": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Brugg",
+    "Lenzburg",
+    "Bremgarten"
+   ]
+  }
+ },
  "8504012": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2240,6 +2349,15 @@
    ]
   }
  },
+ "8504225": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CRNE",
+    "NV"
+   ]
+  }
+ },
  "8504226": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2374,6 +2492,16 @@
    ]
   }
  },
+ "8504416": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Seeland",
+    "Jura bernois",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504484": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2488,6 +2616,16 @@
    ]
   }
  },
+ "8505216": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Mezzovico-Vira",
+    "Cadenazzo",
+    "Gambarogno"
+   ]
+  }
+ },
  "8505219": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -2513,6 +2651,16 @@
    "distraktoren": [
     "PAR",
     "PDS"
+   ]
+  }
+ },
+ "8505304": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Val Mara",
+    "Melide",
+    "Stabio"
    ]
   }
  },
@@ -2637,6 +2785,16 @@
    "distraktoren": [
     "TB",
     "TUR"
+   ]
+  }
+ },
+ "8506010": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Frauenfeld",
+    "Kreuzlingen"
    ]
   }
  },
@@ -2828,6 +2986,16 @@
     "Wil",
     "St. Gallen",
     "See-Gaster"
+   ]
+  }
+ },
+ "8506205": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lütisburg",
+    "Uzwil",
+    "Bütschwil-Ganterschwil"
    ]
   }
  },
@@ -3113,6 +3281,16 @@
    ]
   }
  },
+ "8508103": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aarau",
+    "Lenzburg",
+    "Kulm"
+   ]
+  }
+ },
  "8508202": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3299,6 +3477,15 @@
    ]
   }
  },
+ "8516187": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZG",
+    "ZGPP"
+   ]
+  }
+ },
  "8516218": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3380,6 +3567,15 @@
     "Gros-de-Vaud",
     "Lausanne",
     "Morges"
+   ]
+  }
+ },
+ "8518924": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SLF",
+    "NH"
    ]
   }
  }

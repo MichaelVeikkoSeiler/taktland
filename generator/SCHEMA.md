@@ -560,6 +560,11 @@ und Ziffern, die in einem Namen der Fakten stehen, gelten jetzt als Bezeichnung.
 Sitzbank erfasst» heisst jetzt «ist». Bei «12 Sitzbänke sowie 1 Infopunkt»
 bleibt «sind» richtig, die Prüfregel unterscheidet das.
 
+**«Andere» ist kein Automatentyp.** Die Quelle führt Sammelangaben in drei
+Sprachen: «Andere», «Autre», «Altri». Bei Le Day und Genève stand «Typen Autre
+und ePOS». Steht eine Sammelangabe unter den Typen, nennt der Text keine Typen.
+Der Validator meldet sie, wenn sie trotzdem im Text steht.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:

@@ -587,7 +587,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 21 Billettautomaten (Typen Autre und ePOS), 26 Billettentwerter und 1 Wartehalle. Genève steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 21 Billettautomaten, 26 Billettentwerter und 1 Wartehalle. Genève steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
