@@ -255,6 +255,11 @@ def perrons(f):
     ja, nein, ohne = (pr["niveaufrei_erreichbar"], hf.get("perrons_nicht_niveaufrei", 0),
                       hf.get("perrons_ohne_zugangsangabe", 0))
     mit_laenge = [(i, it) for i, it in enumerate(items) if it.get("laenge_m")]
+    # Muri AG führt zwei Perrons mit der Nummer 1. Zwei gleich beschriftete
+    # Karten kann niemand ordnen oder zuordnen: doppelte Nummern bleiben aus
+    # Sortier- und Zuordnungsfragen, der Text nennt die Doppelung.
+    nummern = [str(it["nr"]) for it in items]
+    doppelt = {x for x in nummern if nummern.count(x) > 1}
     satz = [f"Zu {n} {'Perron' if n == 1 else 'Perrons'} in {name} liegen offene Daten vor."]
     if n == 1:
         it = items[0]
@@ -263,6 +268,8 @@ def perrons(f):
         beschr = ", ".join(f"Perron {it['nr']} misst {it['laenge_m']} Meter"
                            for _, it in sorted(mit_laenge, key=lambda t: -t[1]["laenge_m"])[:4])
         satz.append(beschr[0].upper() + beschr[1:] + ".")
+        for x in sorted(doppelt):
+            satz.append(f"Die Nummer {x} kommt in den Daten zweimal vor.")
     if ja == n:
         satz.append(("Beide erfassten Perrons sind" if n == 2 else "Alle erfassten Perrons sind")
                     + " niveaufrei erreichbar." if n > 1 else "Es ist niveaufrei erreichbar.")
@@ -278,7 +285,8 @@ def perrons(f):
              {"label": "Längstes erfasstes Perron", "value": pr["laengste_m"], "unit": "m",
               "source": "perron", "factRef": "perrons.laengste_m"}]
     fr = []
-    klar = klar_getrennt(mit_laenge, wert=lambda t: t[1]["laenge_m"])
+    klar = klar_getrennt([t for t in mit_laenge if str(t[1]["nr"]) not in doppelt],
+                         wert=lambda t: t[1]["laenge_m"])
     if len(klar) >= 3:
         s = klar[:5]
         fr.append(sortier("Ordne die Perrons nach Länge, längstes zuerst.",
@@ -296,7 +304,8 @@ def perrons(f):
                      f"Das {'' if einzig else 'längste '}erfasste Perron misst {pr['laengste_m']} Meter."
                      + (" Es ist das einzige, zu dem offene Daten vorliegen." if einzig else ""),
                      "perrons.laengste_m", einheit="m", n=3))
-    fl = [(i, it) for i, it in enumerate(items) if it.get("flaeche_netto_m2")]
+    fl = [(i, it) for i, it in enumerate(items)
+          if it.get("flaeche_netto_m2") and str(it["nr"]) not in doppelt]
     def deutlich(werte, anteil=0.1):
         w = sorted(werte)
         return all(b - a >= anteil * b for a, b in zip(w, w[1:]))
@@ -483,7 +492,8 @@ def hindernisfreiheit(f):
     if seg:
         proh = hf["segmente_pro_perronhoehe_cm"]
         if len(proh) == 1:
-            satz.append(f"Für {name} sind {seg} Perronsegmente erfasst, alle mit einer "
+            satz.append(f"Für {name} sind {seg} Perronsegmente erfasst, "
+                        f"{'beide' if seg == 2 else 'alle'} mit einer "
                         f"Perronhöhe von {next(iter(proh))} Zentimetern.")
         else:
             teile = sorted(proh.items(), key=lambda t: -t[1])
@@ -552,7 +562,9 @@ def zuege(f):
     # Steht ein anderer Abschnitt pro Tag gleich, wäre «am stärksten» ein
     # Vorzug, den nur die Jahreszahl hergibt. Dann nennen wir nur die Werte.
     gleichauf = any(a["zuege_pro_tag"] == st["zuege_pro_tag"] for a in weitere)
-    if gleichauf:
+    # Ist nur ein Abschnitt im Personenverkehr erfasst (Hinwil), gibt es
+    # nichts, gegenüber dem er «am stärksten» wäre.
+    if gleichauf or not weitere:
         satz = [f"Im Personenverkehr zählt die Erhebung auf dem Abschnitt {abschn(st)} "
                 f"{st['zuege_pro_tag']} Züge pro Tag, das sind {ch(st['zuege_pro_jahr'])} im Jahr."]
     else:

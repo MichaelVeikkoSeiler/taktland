@@ -288,6 +288,14 @@ def _pruefe_frage(fr, i, kap_id, fb, fakten, b, raus):
             b.fehlt(wo, f"«1 {m.group(1)}»: mit der Antwort 1 passt die Mehrzahl nicht. "
                         "Anders fragen, etwa «Wie viele … sind erfasst?»")
 
+    # Zwei gleich beschriftete Karten kann niemand ordnen oder zuordnen (Muri AG:
+    # zwei Perrons mit der Nummer 1)
+    beschriftungen = ([it.get("label") for it in fr.get("items") or []]
+                      + [pr.get("links") for pr in fr.get("pairs") or []])
+    if len(beschriftungen) != len(set(beschriftungen)):
+        doppelt = sorted({x for x in beschriftungen if beschriftungen.count(x) > 1}, key=str)
+        b.fehlt(wo, f"gleiche Beschriftung mehrfach: {doppelt}")
+
     if not fr.get("explanation"):
         b.fehlt(wo, "explanation fehlt. Wer falsch antwortet, muss erfahren warum")
     elif len(fr["explanation"]) < 15:
@@ -379,6 +387,11 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                       and a.get("zuege_pro_tag") == st.get("zuege_pro_tag")]
             text = " ".join([kap.get("body", "")] + [q.get(f) or "" for q in kap.get("questions", [])
                                                       for f in ("prompt", "explanation")])
+            einzig = len([a for a in zu.get("abschnitte", [])
+                          if a.get("art") == st.get("art") and a.get("zuege_pro_tag")]) <= 1
+            if einzig and (m := re.search(r"am stärksten|stärkste[nr]? (befahren|Abschnitt)", text, re.I)):
+                b.fehlt(f"{wo}", f"«{m.group(0)}»: es ist nur ein Abschnitt erfasst, "
+                                 "ein Superlativ ohne Vergleich sagt nichts")
             if gleich and (m := re.search(r"am stärksten|stärkste[nr]? (befahren|Abschnitt)",
                                           text, re.I)):
                 b.fehlt(f"{wo}", f"«{m.group(0)}»: pro Tag zählt die Erhebung auf "

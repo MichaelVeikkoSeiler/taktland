@@ -395,6 +395,15 @@ dass eine 0 im Text vorkommt.
 Aebistr.» plus Satzpunkt ergab «Aebistr..». Der Baukasten schliesst Sätze
 mit `punkt()`, der Validator meldet doppelte Punkte.
 
+**Gleiche Nummern in den Daten.** Muri AG führt zwei Perrons mit der Nummer 1
+(180 und 83 Meter). Zwei Karten «Perron 1» kann niemand ordnen oder zuordnen.
+Doppelte Nummern bleiben aus Sortier- und Zuordnungsfragen, der Text nennt
+die Doppelung («Die Nummer 1 kommt in den Daten zweimal vor»), und der
+Validator lehnt gleich beschriftete Karten ab.
+
+**Kein Superlativ ohne Vergleich.** «Am stärksten befahren» bei nur einem
+erfassten Abschnitt (Hinwil) sagt nichts. Dann nennt der Text den Wert.
+
 **Der Grenzfall eins.** Sätze, die für mehrere Gleise, Perrons oder Geräte
 geschrieben sind, kippen bei genau einem: «Von den 1 erfassten Perrons»,
 «Perronhöhen sind zu diesen Gleisen nicht vermerkt» bei einem Gleis,
