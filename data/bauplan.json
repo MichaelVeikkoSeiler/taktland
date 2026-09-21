@@ -423,6 +423,16 @@
    ]
   }
  },
+ "8500143": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bure",
+    "Courchavon",
+    "Boncourt"
+   ]
+  }
+ },
  "8500144": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -5339,6 +5349,16 @@
    ]
   }
  },
+ "8505405": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Locarno",
+    "Gordola",
+    "Tenero-Contra"
+   ]
+  }
+ },
  "8505406": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -5350,6 +5370,16 @@
   }
  },
  "8505407": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Muralto",
+    "Minusio",
+    "Tenero-Contra"
+   ]
+  }
+ },
+ "8505408": {
   "stammdaten": {
    "frage": "gemeinde",
    "distraktoren": [
@@ -6130,6 +6160,16 @@
    "distraktoren": [
     "Bussnang",
     "Tobel-Tägerschen",
+    "Weinfelden"
+   ]
+  }
+ },
+ "8506185": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Affeltrangen",
+    "Märstetten",
     "Weinfelden"
    ]
   }
