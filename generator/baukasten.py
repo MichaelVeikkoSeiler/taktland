@@ -49,6 +49,13 @@ def ch(n):
     return f"{int(n):,}".replace(",", "'")
 
 
+def aufzaehlung(teile):
+    """«A», «A und B», «A, B und C». Zweimal stand hier «A und B und C»,
+    einmal bei den Bahnunternehmen, einmal bei den Automatentypen."""
+    teile = [str(t) for t in teile]
+    return teile[0] if len(teile) == 1 else ", ".join(teile[:-1]) + " und " + teile[-1]
+
+
 def fakten(uic):
     return json.loads((ROOT / "data" / "facts" / f"{uic}.json").read_text(encoding="utf-8"))
 
@@ -118,7 +125,7 @@ def steckbrief(f, extra_body="", extra_fragen=()):
         teile.append(f"Infrastruktur und Züge sind der {evu} zugeordnet.")
     elif evu:
         namen = evu.split(", ")
-        liste = namen[0] if len(namen) == 1 else ", ".join(namen[:-1]) + " und " + namen[-1]
+        liste = aufzaehlung(namen)
         teile.append(f"Die Infrastruktur gehört der {s['isb']}, als Bahnunternehmen "
                      f"{'sind' if len(namen) > 1 else 'ist'} {liste} erfasst.")
     if extra_body:
@@ -316,7 +323,7 @@ def gleise(f):
     items = gl["items"]; n = gl["anzahl_mit_daten"]
     nummern = gl["nummern"]
     satz = [f"Zu {n} {'Gleis' if n == 1 else 'Gleisen'} liegen offene Daten vor: "
-            + (", ".join(nummern[:-1]) + " und " + nummern[-1] if n > 1 else nummern[0]) + "."]
+            + aufzaehlung(nummern) + "."]
     hoehen = gl["perronhoehen_cm"]
     if not hoehen:
         satz.append("Perronhöhen sind zu diesen Gleisen nicht vermerkt.")
@@ -326,7 +333,7 @@ def gleise(f):
                     f"ist eine Perronhöhe von {hoehen[0]} Zentimetern verzeichnet.")
     elif len(hoehen) == 1:
         mit_h = [it["nr"] for it in items if it["perronhoehen_cm"]]
-        liste = mit_h[0] if len(mit_h) == 1 else ", ".join(mit_h[:-1]) + " und " + mit_h[-1]
+        liste = aufzaehlung(mit_h)
         satz.append(f"Zu {'Gleis' if len(mit_h) == 1 else 'den Gleisen'} {liste} ist eine "
                     f"Perronhöhe von {hoehen[0]} Zentimetern vermerkt, zu den übrigen keine.")
     else:
@@ -375,12 +382,16 @@ def gleise(f):
                               + (" Gleise mit fast gleicher Kante bleiben weg."
                                  if len(klar) < len(kanten) else ""), "gleise.items"))
     if mit_sektor:
-        i, it = mit_sektor[0]
+        # Lieber ein Gleis mit mehreren Sektoren: «An Gleis 1 sind ___ Sektoren
+        # erfasst» mit der Antwort 1 ergab «1 Sektoren» (Giubiasco, Delémont).
+        i, it = sorted(mit_sektor, key=lambda t: t[1]["sektoren_anzahl"] < 2)[0]
         k = it["sektoren_anzahl"]
         facts.append({"label": f"Sektoren an Gleis {it['nr']}", "value": k,
                       "source": "sektortafel", "factRef": f"gleise.items[{i}].sektoren_anzahl"})
         texte, idx, alle = auswahl(uic, k, 2)
-        q = {"type": "cloze", "prompt": f"An Gleis {it['nr']} in {name} sind ___ Sektoren erfasst.",
+        q = {"type": "cloze" if k > 1 else "single_choice",
+             "prompt": (f"An Gleis {it['nr']} in {name} sind ___ Sektoren erfasst." if k > 1 else
+                        f"Wie viele Sektoren sind an Gleis {it['nr']} in {name} erfasst?"),
              "options": texte, "correct": idx, "optionen_aus_fakten": True,
              "explanation": (f"Gleis {it['nr']} trägt die Sektoren "
                              f"{', '.join(it['sektoren'][:-1])} und {it['sektoren'][-1]}, also {k} Stück."
@@ -405,7 +416,7 @@ def gleise(f):
                        "correct": [opts_h.index(h) for h in it["perronhoehen_cm"]],
                        "optionen_aus_fakten": True,
                        "explanation": f"An Gleis {it['nr']} sind "
-                                      + (", ".join(str(h) for h in eigene[:-1]) + " und " + str(eigene[-1]))
+                                      + aufzaehlung(eigene)
                                       + " Zentimeter verzeichnet.",
                        "factRef": f"gleise.items[{i}].perronhoehen_cm", "difficulty": 3})
     elif len(hoehen) == 1 and n >= 2 and all(it["perronhoehen_cm"] for it in items):
@@ -605,7 +616,9 @@ def services(f):
         typen = sv.get("automat_typen") or []
         t = f"{sv['billettautomaten_erfasst']} {'Billettautomat' if sv['billettautomaten_erfasst'] == 1 else 'Billettautomaten'}"
         if typen and not any(x.lower() in ("andere", "altri", "autres") for x in typen):
-            t += f" vom Typ {' und '.join(typen)}" if len(typen) == 1 else f" der Typen {' und '.join(typen)}"
+            # mehrere Typen in Klammern, sonst verschachteln sich zwei Listen:
+            # «der Typen BATS, S-POS und ePOS und 2 Billettentwerter»
+            t += f" vom Typ {typen[0]}" if len(typen) == 1 else f" (Typen {aufzaehlung(typen)})"
         teile.append(t)
     if sv["billettentwerter_erfasst"]:
         teile.append(f"{sv['billettentwerter_erfasst']} Billettentwerter")
@@ -615,14 +628,14 @@ def services(f):
     if sv["wlan_erfasst"]:
         satz.append(f"{name} steht in der Liste der WLAN-Standorte.")
     if teile:
-        satz.append("Erfasst sind " + (", ".join(teile[:-1]) + " und " + teile[-1] if len(teile) > 1 else teile[0]) + ".")
+        satz.append("Erfasst sind " + aufzaehlung(teile) + ".")
     fehlt = []
     if not sv["billettautomaten_erfasst"]:
         fehlt.append("Billettautomaten")
     if not sv["wartehallen_erfasst"]:
         fehlt.append("Wartehallen")
     if fehlt:
-        satz.append(" und ".join(fehlt) + " sind keine verzeichnet.")
+        satz.append(aufzaehlung(fehlt) + " sind keine verzeichnet.")
     if not sv["wlan_erfasst"]:
         satz.append(f"{name} steht nicht in der Liste der WLAN-Standorte.")
     facts = [{"label": "WLAN erfasst", "value": sv["wlan_erfasst"], "unit": "",

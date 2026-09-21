@@ -86,6 +86,12 @@ def klar_getrennt(items, anteil=MINDESTABSTAND, wert=lambda it: it["value"]):
     return raus
 
 
+#: Lücke gefolgt von einem Wort in der Mehrzahl. Setzt man 1 ein, stimmt der
+#: Satz nicht mehr: «An Gleis 1 sind 1 Sektoren erfasst».
+MEHRZAHL_NACH_LUECKE = (r"___ (Sektoren|Perrons|Gleise[n]?|Züge[n]?|Personen|Linien|"
+                        r"Billettentwerter|Billettautomaten|Wartehallen|Perronsegmente|"
+                        r"Sitzbänke|Infopunkte|Schliessfächer|Segmente|Meter[n]?)\b")
+
 LEERFORMELN = [
     r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",
     r"ist unterschiedlich", r"variiert", r"in gewissem Masse", r"mehr oder weniger",
@@ -269,6 +275,15 @@ def _pruefe_frage(fr, i, kap_id, fb, fakten, b, raus):
         REGELWERK.pruefe_text(str(paar.get("links", "")), f"{wo}/pairs", fb, b)
     REGELWERK.pruefe_text(fr.get("prompt", ""), f"{wo}/prompt", fb, b)
     REGELWERK.pruefe_text(fr.get("explanation", ""), f"{wo}/explanation", fb, b)
+    if typ == "cloze" and isinstance(fr.get("correct"), int) and fr.get("options"):
+        try:
+            eingesetzt = str(fr["options"][fr["correct"]]).strip()
+        except IndexError:
+            eingesetzt = ""
+        if eingesetzt == "1" and (m := re.search(MEHRZAHL_NACH_LUECKE, fr.get("prompt", ""))):
+            b.fehlt(wo, f"«1 {m.group(1)}»: mit der Antwort 1 passt die Mehrzahl nicht. "
+                        "Anders fragen, etwa «Wie viele … sind erfasst?»")
+
     if not fr.get("explanation"):
         b.fehlt(wo, "explanation fehlt. Wer falsch antwortet, muss erfahren warum")
     elif len(fr["explanation"]) < 15:

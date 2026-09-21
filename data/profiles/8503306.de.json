@@ -240,8 +240,8 @@
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "An Gleis 1 in Dietlikon sind ___ Sektoren erfasst.",
+          "type": "single_choice",
+          "prompt": "Wie viele Sektoren sind an Gleis 1 in Dietlikon erfasst?",
           "options": [
             "1",
             "2",

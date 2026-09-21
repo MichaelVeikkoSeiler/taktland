@@ -310,8 +310,8 @@
           "difficulty": 1
         },
         {
-          "type": "cloze",
-          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "type": "single_choice",
+          "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
           "options": [
             "1",
             "2",

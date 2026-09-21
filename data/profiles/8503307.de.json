@@ -1,6 +1,6 @@
 {
-  "uic": 8501117,
-  "name": "Bussigny",
+  "uic": 8503307,
+  "name": "Bassersdorf",
   "tier": "M",
   "lang": "de",
   "dataYear": 2025,
@@ -14,6 +14,7 @@
     "linie-mit-betriebspunkten",
     "passagierfrequenz",
     "perron",
+    "sektortafel",
     "wifistation",
     "zugzahlen"
   ],
@@ -21,25 +22,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Bussigny 7'100 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 6'100, an einem freien Tag 3'700. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Bassersdorf 6'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 5'800, an einem freien Tag 4'900. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 7100,
+          "value": 6300,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 6100,
+          "value": 5800,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 3700,
+          "value": 4900,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -48,15 +49,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Bussigny ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Bassersdorf ein und aus?",
           "options": [
-            "7'100",
-            "8'500",
-            "9'900",
-            "12'000"
+            "4'400",
+            "5'400",
+            "6'300",
+            "7'600"
           ],
-          "correct": 0,
-          "explanation": "An einem Werktag sind es 7'100 Ein- und Aussteigende, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 6'300 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -67,39 +68,34 @@
           "items": [
             {
               "label": "2022",
-              "value": 4400,
+              "value": 4600,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2023",
-              "value": 5400,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 6400,
-              "factRef": "steckbrief.verlauf[3].dwv"
+              "label": "2018",
+              "value": 5300,
+              "factRef": "steckbrief.verlauf[0].dwv"
             },
             {
               "label": "2025",
-              "value": 7100,
+              "value": 6300,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 4'400 (2022), 5'400 (2023), 6'400 (2024), 7'100 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 4'600 (2022), 5'300 (2018), 6'300 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Bussigny ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Bassersdorf ___ Personen ein und aus.",
           "options": [
-            "2'600",
-            "3'100",
-            "3'700"
+            "4'200",
+            "4'900",
+            "5'900"
           ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 3'700 Personen, an einem Werktag 7'100. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 4'900 Personen, an einem Werktag 6'300. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -108,47 +104,54 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Bussigny liegt auf 406.8 Metern über Meer in der Gemeinde Bussigny, Bezirk Ouest lausannois. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BY.",
+      "body": "Bassersdorf liegt auf 454.8 Metern über Meer in der Gemeinde Bassersdorf, Bezirk Bülach, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BSD.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 406.8,
+          "value": 454.8,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "BY",
+          "value": "BSD",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Bülach",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bussigny?",
-          "min": 330,
-          "max": 590,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bassersdorf?",
+          "min": 370,
+          "max": 660,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 406.8,
-          "explanation": "Der Bahnhof liegt auf 406.8 Metern über Meer.",
+          "correct": 454.8,
+          "explanation": "Der Bahnhof liegt auf 454.8 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "cloze",
-          "prompt": "Die offizielle Abkürzung des Bahnhofs Bussigny lautet ___.",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Bassersdorf?",
           "options": [
-            "BSG",
-            "BU",
-            "BY"
+            "Bülach",
+            "Dielsdorf",
+            "Uster",
+            "Winterthur"
           ],
-          "correct": 2,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "In den Stammdaten ist BY als Abkürzung erfasst.",
-          "factRef": "stammdaten.abkuerzung",
+          "explanation": "Als Bezirk ist Bülach eingetragen.",
+          "factRef": "stammdaten.bezirk",
           "difficulty": 2
         }
       ]
@@ -156,7 +159,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Bussigny liegen offene Daten vor. Perron 3/4 misst 220 Meter, Perron 1 misst 150 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Bassersdorf liegen offene Daten vor. Perron 2/3 misst 315 Meter, Perron 2 misst 238 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -166,7 +169,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 220,
+          "value": 315,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -175,15 +178,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Bussigny?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Bassersdorf?",
           "options": [
-            "66 m",
-            "120 m",
-            "190 m",
-            "220 m"
+            "170 m",
+            "220 m",
+            "270 m",
+            "315 m"
           ],
           "correct": 3,
-          "explanation": "Das längste erfasste Perron misst 220 Meter.",
+          "explanation": "Das längste erfasste Perron misst 315 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
@@ -192,23 +195,23 @@
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
             {
-              "links": "Perron 3/4",
-              "rechts": "1106.84 m²",
+              "links": "Perron 2/3",
+              "rechts": "1419.23 m²",
               "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
-              "links": "Perron 1",
-              "rechts": "346.64 m²",
+              "links": "Perron 2",
+              "rechts": "746.45 m²",
               "factRef": "perrons.items[1].flaeche_netto_m2"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 3/4 hat 1106.84 Quadratmeter, Perron 1 hat 346.64 Quadratmeter.",
+          "explanation": "Perron 2/3 hat 1419.23 Quadratmeter, Perron 2 hat 746.45 Quadratmeter.",
           "difficulty": 3
         },
         {
           "type": "true_false",
-          "prompt": "Beide erfassten Perrons in Bussigny sind niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in Bassersdorf sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -219,7 +222,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 3 und 4. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 25, 30 und 55 Zentimetern. Zu Gleis 1 sind keine Sektortafeln erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -227,34 +230,80 @@
           "value": 3,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante",
+          "value": 239,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Sektoren an Gleis 2",
+          "value": 3,
+          "source": "sektortafel",
+          "factRef": "gleise.items[1].sektoren_anzahl"
         }
       ],
       "questions": [
         {
-          "type": "true_false",
-          "prompt": "An den erfassten Gleisen in Bussigny kommt nur eine einzige Perronhöhe vor.",
-          "correct": true,
-          "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
-          "factRef": "gleise.perronhoehen_cm",
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "1",
+          "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 1 hat mit 239 Metern die längste erfasste Perronkante, die nächste misst 216 Meter.",
           "difficulty": 2
+        },
+        {
+          "type": "cloze",
+          "prompt": "An Gleis 2 in Bassersdorf sind ___ Sektoren erfasst.",
+          "options": [
+            "3",
+            "4",
+            "5"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Gleis 2 trägt die Sektoren A, B und C, also 3 Stück.",
+          "factRef": "gleise.items[1].sektoren_anzahl",
+          "difficulty": 2
+        },
+        {
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 2 in Bassersdorf erfasst? (Mehrfachauswahl)",
+          "options": [
+            "25 cm",
+            "30 cm",
+            "35 cm",
+            "55 cm"
+          ],
+          "correct": [
+            1,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 2 sind 30 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[1].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Bussigny sind 6 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Bassersdorf sind 11 Perronsegmente erfasst: 6 mit 30 Zentimetern, 3 mit 25 Zentimetern, 2 mit 55 Zentimetern. An 2 der 3 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 6,
+          "value": 11,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
           "label": "Gleise mit Perronhöhe 55 cm",
-          "value": 3,
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
@@ -268,23 +317,23 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "In Bussigny sind ___ Perronsegmente erfasst.",
+          "prompt": "In Bassersdorf sind ___ Perronsegmente erfasst.",
           "options": [
-            "6",
-            "7",
-            "8"
+            "9",
+            "11",
+            "13"
           ],
-          "correct": 0,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 6 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 11 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
           "type": "true_false",
-          "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 11 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 6 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 11 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -293,19 +342,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Bussigny – Vufflens-la-Ville: Im Personenverkehr verkehren dort 256 Züge pro Tag, das sind 93'595 im Jahr. Auf dem Abschnitt Renens VD Ouest (bif) – Bussigny sind es 245 und auf dem Abschnitt Lausanne-Triage Nord – Bussigny sind es 11 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 88 Züge pro Tag auf einem Abschnitt.",
+      "body": "Am stärksten befahren ist der Abschnitt Dorfnest (Abzw) – Bassersdorf: Im Personenverkehr verkehren dort 380 Züge pro Tag, das sind 138'863 im Jahr. Auf dem Abschnitt Bassersdorf – Hürlistein (Abzw) sind es 349 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 38 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Bussigny – Vufflens-la-Ville",
-          "value": 256,
+          "label": "Züge pro Tag, Personenverkehr Dorfnest (Abzw) – Bassersdorf",
+          "value": 380,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Bussigny – Vufflens-la-Ville",
-          "value": 93595,
+          "label": "Züge pro Jahr, Personenverkehr Dorfnest (Abzw) – Bassersdorf",
+          "value": 138863,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
@@ -314,15 +363,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bussigny – Vufflens-la-Ville?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Dorfnest (Abzw) – Bassersdorf?",
           "options": [
-            "256",
-            "310",
-            "360",
-            "440"
+            "270",
+            "320",
+            "380",
+            "460"
           ],
-          "correct": 0,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 256 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 380 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
         },
@@ -332,28 +381,23 @@
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Bussigny – Vufflens-la-Ville, Personenverkehr",
-              "value": 93595,
+              "label": "Dorfnest (Abzw) – Bassersdorf, Personenverkehr",
+              "value": 138863,
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Bussigny – Vufflens-la-Ville, Güterverkehr",
-              "value": 32222,
+              "label": "Bassersdorf – Hürlistein (Abzw), Personenverkehr",
+              "value": 127561,
+              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+            },
+            {
+              "label": "Dorfnest (Abzw) – Bassersdorf, Güterverkehr",
+              "value": 13878,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Lausanne-Triage Nord – Bussigny, Güterverkehr",
-              "value": 14450,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
-            },
-            {
-              "label": "Lausanne-Triage Est – Bussigny, Güterverkehr",
-              "value": 13555,
-              "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Bussigny – Vufflens-la-Ville (Personenverkehr) 93'595, Bussigny – Vufflens-la-Ville (Güterverkehr) 32'222, Lausanne-Triage Nord – Bussigny (Güterverkehr) 14'450, Lausanne-Triage Est – Bussigny (Güterverkehr) 13'555 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "explanation": "Dorfnest (Abzw) – Bassersdorf (Personenverkehr) 138'863, Bassersdorf – Hürlistein (Abzw) (Personenverkehr) 127'561, Dorfnest (Abzw) – Bassersdorf (Güterverkehr) 13'878 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -361,17 +405,17 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Bussigny sind 2 Linien erfasst: die Linie 169 Lausanne-Triage sect. - Bussigny und die Linie 200 Renens VD Ouest - Vallorbe.",
+      "body": "Für Bassersdorf ist 1 Linie erfasst: die Linie 752 Zurich Oerlikon Nord - Hurlistein (Abzw). Der Bahnhof ist darauf bei Kilometer 14.75314 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
-          "value": 2,
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 169",
-          "value": 14.92027,
+          "label": "Kilometrierung auf der Linie 752",
+          "value": 14.75314,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -380,41 +424,22 @@
       "questions": [
         {
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 169 ist Bussigny eingetragen?",
+          "prompt": "Bei welchem Streckenkilometer der Linie 752 ist Bassersdorf eingetragen?",
           "min": 12.0,
-          "max": 22.0,
+          "max": 21.5,
           "step": 0.1,
           "unit": "km",
-          "correct": 14.92027,
-          "explanation": "Die Kilometrierung von Bussigny auf der Linie 169 beträgt 14.92027. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 14.75314,
+          "explanation": "Die Kilometrierung von Bassersdorf auf der Linie 752 beträgt 14.75314. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
-        },
-        {
-          "type": "match",
-          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
-          "pairs": [
-            {
-              "links": "Linie 169",
-              "rechts": "Lausanne-Triage sect. - Bussigny",
-              "factRef": "linien.items[0].name"
-            },
-            {
-              "links": "Linie 200",
-              "rechts": "Renens VD Ouest - Vallorbe",
-              "factRef": "linien.items[1].name"
-            }
-          ],
-          "factRef": "linien.items",
-          "explanation": "Die Linie 169 heisst Lausanne-Triage sect. - Bussigny, die Linie 200 heisst Renens VD Ouest - Vallorbe.",
-          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 3 Billettentwerter und 1 Wartehalle. Bussigny steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 1 Wartehalle. Bassersdorf steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -431,7 +456,7 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 3,
+          "value": 2,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
@@ -439,7 +464,7 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Bussigny steht in der Liste der WLAN-Standorte.",
+          "prompt": "Bassersdorf steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
@@ -447,15 +472,15 @@
         },
         {
           "type": "cloze",
-          "prompt": "In Bussigny sind ___ Billettentwerter erfasst.",
+          "prompt": "In Bassersdorf sind ___ Billettentwerter erfasst.",
           "options": [
-            "3",
-            "7",
-            "9"
+            "2",
+            "4",
+            "8"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 2 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -464,17 +489,17 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Bussigny 5 Sitzbänke sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Bassersdorf 7 Sitzbänke sowie 3 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 5,
+          "value": 7,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
         {
           "label": "Infopunkte erfasst",
-          "value": 1,
+          "value": 3,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.infopunkte"
         },
@@ -490,45 +515,29 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
+            "4",
             "5",
             "7",
-            "8",
-            "15"
+            "8"
           ],
-          "correct": 0,
-          "explanation": "Erfasst sind 5 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 2,
+          "explanation": "Erfasst sind 7 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
         {
-          "type": "single_choice",
-          "prompt": "Wie viele Infopunkte sind in den offenen Daten erfasst?",
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "1",
-            "2",
             "3",
-            "4"
+            "4",
+            "5",
+            "9"
           ],
           "correct": 0,
-          "explanation": "Erfasst sind 1 Infopunkt. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "explanation": "Erfasst sind 3 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
-        },
-        {
-          "type": "single_choice",
-          "prompt": "Welcher Belag ist für die Perrons erfasst?",
-          "options": [
-            "Beton-Belag",
-            "Bituminöses Mischgut",
-            "Gussasphalt",
-            "Verbundstein-Pflästerung"
-          ],
-          "correct": 1,
-          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
-          "factRef": "ausstattung.perronbelag.belagsarten",
-          "optionen_aus_fakten": true,
-          "difficulty": 2
+          "difficulty": 1
         }
       ]
     }
@@ -551,12 +560,12 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 3 Gleise (1, 3, 4). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {
       "thema": "Sektoren",
-      "grund": "Zu den Gleisen 1, 3, 4 sind keine Sektortafeln erfasst.",
+      "grund": "Zu Gleis 1 sind keine Sektortafeln erfasst.",
       "quelle": "sektortafel"
     },
     {

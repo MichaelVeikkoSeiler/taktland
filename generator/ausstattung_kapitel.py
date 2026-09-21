@@ -112,10 +112,13 @@ def frage_bestand(uic, a, feld, einz, mehrz, nummer=0):
     optionen = sorted({wert, *[int(f) for f in frei]})
     if len(optionen) < 3:
         return None
+    # Lückentext nur ab 2: «sind ___ Infopunkte erfasst» mit der Antwort 1
+    # ergab «1 Infopunkte». Dann die Frageform, die für jede Zahl passt.
+    luecke = nummer % 3 == 1 and wert != 1
     fr = {
-        "type": "cloze" if nummer % 3 == 1 else "single_choice",
+        "type": "cloze" if luecke else "single_choice",
         "prompt": (f"In den offenen Daten sind ___ {mehrz} erfasst."
-                   if nummer % 3 == 1
+                   if luecke
                    else f"Wie viele {mehrz} sind in den offenen Daten erfasst?"),
         "options": [ch(o) for o in optionen],
         "correct": optionen.index(wert),

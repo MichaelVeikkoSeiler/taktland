@@ -230,8 +230,8 @@
           "difficulty": 3
         },
         {
-          "type": "cloze",
-          "prompt": "An Gleis 1 in Delémont sind ___ Sektoren erfasst.",
+          "type": "single_choice",
+          "prompt": "Wie viele Sektoren sind an Gleis 1 in Delémont erfasst?",
           "options": [
             "1",
             "2",

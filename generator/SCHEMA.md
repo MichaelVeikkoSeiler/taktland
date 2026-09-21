@@ -377,6 +377,19 @@ Gleisen 30 cm und bekam einen Satz, der nicht sagte, wo. Eine Regel, die für
 den häufigsten Wert geschrieben ist, gilt meist auch für die anderen, und
 «alle» nur dann, wenn wirklich jedes Gleis eine Höhe trägt.
 
+**Ein Lückentext muss zur Antwort passen.** «An Gleis 1 sind ___ Sektoren
+erfasst» mit der Antwort 1 ergibt «1 Sektoren». Das stand in zwei Profilen,
+und das Ausstattungskapitel fragte elfmal «sind ___ Infopunkte erfasst» mit
+der Antwort 1. Bei 1 fragt der Baukasten «Wie viele … sind erfasst?», und der
+Validator meldet eine Mehrzahl nach der Lücke, wenn die Antwort 1 ist
+(`MEHRZAHL_NACH_LUECKE` in `taktland.py`).
+
+**Aufzählungen über `aufzaehlung()`.** «SBB und SOB und Thurbo» und «der
+Typen BATS und S-POS und ePOS» entstanden an zwei Stellen, die ihre Listen
+selbst zusammensetzten. Jetzt gibt es eine Funktion dafür. Eine Liste in einer
+Liste steht in Klammern: «3 Billettautomaten (Typen BATS, S-POS und ePOS)
+und 2 Billettentwerter».
+
 **Eine Bemerkung wiedergeben, nicht auslegen.** Aus «Ohne AB.» folgt nicht,
 dass die Zahl «nicht den gesamten Verkehr am Bahnhof» abdeckt. Das ist ein
 Schluss. Die Quelle sagt auch nicht, wofür die Abkürzung steht, also steht
