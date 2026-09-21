@@ -89,7 +89,7 @@ def fakten_karten(a):
 def frage_bestand(uic, a, feld, einz, mehrz, nummer=0):
     """Frage auf eine erfasste Stückzahl. Der Typ wechselt nach Reihenfolge."""
     wert = a[feld]
-    erklaerung = (f"Erfasst sind {ch(wert)} {mehrz if wert != 1 else einz}. "
+    erklaerung = (f"Erfasst {'ist' if wert == 1 else 'sind'} {ch(wert)} {mehrz if wert != 1 else einz}. "
                   "Die Zahl gibt den erhobenen Bestand wieder, nicht "
                   "zwingend den Bestand vor Ort.")
 

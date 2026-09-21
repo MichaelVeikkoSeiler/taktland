@@ -1,7 +1,7 @@
 {
-  "uic": 8503106,
-  "name": "Männedorf",
-  "tier": "M",
+  "uic": 8501013,
+  "name": "Pont-Céard",
+  "tier": "S",
   "lang": "de",
   "dataYear": 2025,
   "generated": "2026-09-21",
@@ -22,25 +22,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Männedorf 6'000 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 5'200, an einem freien Tag 3'300. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Pont-Céard 4'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 4'200, an einem freien Tag 2'600. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 6000,
+          "value": 4900,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 5200,
+          "value": 4200,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 3300,
+          "value": 2600,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -49,15 +49,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Männedorf ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Pont-Céard ein und aus?",
           "options": [
-            "2'400",
-            "4'200",
-            "6'000",
-            "7'200"
+            "3'400",
+            "4'900",
+            "5'900",
+            "6'900"
           ],
-          "correct": 2,
-          "explanation": "An einem Werktag sind es 6'000 Ein- und Aussteigende, Stand 2025.",
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 4'900 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -67,35 +67,40 @@
           "richtung": "aufsteigend",
           "items": [
             {
+              "label": "2018",
+              "value": 3500,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
               "label": "2022",
-              "value": 5100,
+              "value": 3900,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2023",
-              "value": 5700,
-              "factRef": "steckbrief.verlauf[2].dwv"
+              "label": "2024",
+              "value": 4600,
+              "factRef": "steckbrief.verlauf[3].dwv"
             },
             {
               "label": "2025",
-              "value": 6000,
+              "value": 4900,
               "factRef": "steckbrief.verlauf[4].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 5'100 (2022), 5'700 (2023), 6'000 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 3'500 (2018), 3'900 (2022), 4'600 (2024), 4'900 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Männedorf ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Pont-Céard ___ Personen ein und aus.",
           "options": [
-            "2'300",
-            "2'800",
-            "3'300"
+            "2'200",
+            "2'600",
+            "3'100"
           ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 3'300 Personen, an einem Werktag 6'000. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 2'600 Personen, an einem Werktag 4'900. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -104,47 +109,54 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Männedorf liegt auf 419.4 Metern über Meer in der Gemeinde Männedorf, Bezirk Meilen, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet MAEN.",
+      "body": "Pont-Céard liegt auf 392.17 Metern über Meer in der Gemeinde Versoix. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet PTC.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 419.4,
+          "value": 392.17,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "MAEN",
+          "value": "PTC",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Versoix",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Männedorf?",
-          "min": 340,
-          "max": 610,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Pont-Céard?",
+          "min": 320,
+          "max": 570,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 419.4,
-          "explanation": "Der Bahnhof liegt auf 419.4 Metern über Meer.",
+          "correct": 392.17,
+          "explanation": "Der Bahnhof liegt auf 392.17 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "cloze",
-          "prompt": "Die offizielle Abkürzung des Bahnhofs Männedorf lautet ___.",
+          "type": "single_choice",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Pont-Céard?",
           "options": [
-            "MAEN",
-            "MAN",
-            "MDF"
+            "Collex-Bossy",
+            "Genthod",
+            "Pont-Céard",
+            "Versoix"
           ],
-          "correct": 0,
+          "correct": 3,
           "optionen_aus_fakten": true,
-          "explanation": "In den Stammdaten ist MAEN als Abkürzung erfasst.",
-          "factRef": "stammdaten.abkuerzung",
+          "explanation": "Als Gemeinde ist Versoix eingetragen.",
+          "factRef": "stammdaten.gemeinde",
           "difficulty": 2
         }
       ]
@@ -152,7 +164,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 1 Perron in Männedorf liegen offene Daten vor. Perron 1 ist ein Hausperron von 313 Metern. Es ist niveaufrei erreichbar.",
+      "body": "Zu 1 Perron in Pont-Céard liegen offene Daten vor. Perron 1 ist ein Hausperron von 171 Metern. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -162,7 +174,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 313,
+          "value": 171,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -171,21 +183,21 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie lang ist das erfasste Perron in Männedorf?",
+          "prompt": "Wie lang ist das erfasste Perron in Pont-Céard?",
           "options": [
-            "170 m",
-            "220 m",
-            "270 m",
-            "313 m"
+            "68 m",
+            "94 m",
+            "120 m",
+            "171 m"
           ],
           "correct": 3,
-          "explanation": "Das erfasste Perron misst 313 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
+          "explanation": "Das erfasste Perron misst 171 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
           "type": "true_false",
-          "prompt": "Das erfasste Perron in Männedorf ist niveaufrei erreichbar.",
+          "prompt": "Das erfasste Perron in Pont-Céard ist niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -196,7 +208,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu Gleis 1 liegen offene Daten vor. An dem erfassten Gleis ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
+      "body": "Zu Gleis 1 liegen offene Daten vor. Zu diesem Gleis ist keine Perronhöhe vermerkt.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -215,37 +227,39 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "An Gleis 1 in Männedorf sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 1 in Pont-Céard sind ___ Sektoren erfasst.",
           "options": [
             "3",
             "4",
-            "9"
+            "5"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
           "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
           "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
+        },
+        {
+          "type": "true_false",
+          "prompt": "Zum erfassten Gleis in Pont-Céard ist eine Perronhöhe vermerkt.",
+          "correct": false,
+          "explanation": "Zum erfassten Gleis ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Männedorf sind 3 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An dem erfassten Gleis liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Pont-Céard keine erhoben. Das erfasste Perron ist als niveaufrei erreichbar vermerkt. Eine visuell-taktile Sicherheitslinie ist erfasst.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
-          "label": "Erfasste Perronsegmente",
-          "value": 3,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.segmente"
-        },
-        {
-          "label": "Gleise mit Perronhöhe 55 cm",
+          "label": "Niveaufrei erreichbare Perrons",
           "value": 1,
-          "source": "21197_behig-haltekantesegment",
-          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
         },
         {
           "label": "Sicherheitslinie",
@@ -256,45 +270,31 @@
       ],
       "questions": [
         {
-          "type": "cloze",
-          "prompt": "In Männedorf sind ___ Perronsegmente erfasst.",
-          "options": [
-            "3",
-            "4",
-            "9"
-          ],
-          "correct": 0,
-          "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 3 Segmente, Stand 2023.",
-          "factRef": "hindernisfreiheit.segmente",
-          "difficulty": 1
-        },
-        {
           "type": "true_false",
-          "prompt": "Bei keinem der 3 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
-          "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 3 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
-          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
-          "difficulty": 2
+          "prompt": "Für Pont-Céard sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "correct": false,
+          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zum Perron.",
+          "factRef": "hindernisfreiheit.perrons_mit_daten",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Männedorf – Stäfa 94 Züge pro Tag, das sind 34'308 im Jahr. Auf dem Abschnitt Uetikon – Männedorf sind es ebenfalls 94 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 3 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Pont-Céard – Mies 413 Züge pro Tag, das sind 150'837 im Jahr. Auf dem Abschnitt Versoix – Pont-Céard sind es ebenfalls 413 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Männedorf – Stäfa",
-          "value": 94,
+          "label": "Züge pro Tag, Personenverkehr Pont-Céard – Mies",
+          "value": 413,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Männedorf – Stäfa",
-          "value": 34308,
+          "label": "Züge pro Jahr, Personenverkehr Pont-Céard – Mies",
+          "value": 150837,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
@@ -303,27 +303,27 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Männedorf – Stäfa?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Pont-Céard – Mies?",
           "options": [
-            "80",
-            "94",
-            "110",
-            "130"
+            "290",
+            "350",
+            "413",
+            "500"
           ],
-          "correct": 1,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 94 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 2,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 413 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
         },
         {
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Männedorf – Stäfa?",
-          "min": 28000,
-          "max": 50000,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Pont-Céard – Mies?",
+          "min": 123500,
+          "max": 219000,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 34308,
-          "explanation": "Die Erhebung zählt 34'308 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 150837,
+          "explanation": "Die Erhebung zählt 150'837 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -332,7 +332,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Männedorf ist 1 Linie erfasst: die Linie 730 Zurich Stadelhofen - Rapperswil. Der Bahnhof ist darauf bei Kilometer 23.64843 eingetragen.",
+      "body": "Für Pont-Céard ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 51.126 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -341,8 +341,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 730",
-          "value": 23.64843,
+          "label": "Kilometrierung auf der Linie 150",
+          "value": 51.126,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -351,13 +351,13 @@
       "questions": [
         {
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 730 ist Männedorf eingetragen?",
-          "min": 19,
-          "max": 35,
+          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Pont-Céard eingetragen?",
+          "min": 41,
+          "max": 75,
           "step": 1,
           "unit": "km",
-          "correct": 23.64843,
-          "explanation": "Die Kilometrierung von Männedorf auf der Linie 730 beträgt 23.64843. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 51.126,
+          "explanation": "Die Kilometrierung von Pont-Céard auf der Linie 150 beträgt 51.126. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -366,7 +366,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 5 Billettentwerter und 1 Wartehalle. Männedorf steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ BATS, 1 Billettentwerter und 1 Wartehalle. Pont-Céard steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -383,7 +383,7 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 5,
+          "value": 1,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
@@ -391,23 +391,23 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Männedorf steht in der Liste der WLAN-Standorte.",
+          "prompt": "Pont-Céard steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "type": "cloze",
-          "prompt": "In Männedorf sind ___ Billettentwerter erfasst.",
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Pont-Céard erfasst?",
           "options": [
-            "4",
-            "5",
-            "6"
+            "1",
+            "2",
+            "4"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 5 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst ist 1 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -416,26 +416,8 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Männedorf 7 Sitzbänke, 5 Infopunkte sowie 12 Schliessfächer erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
-        {
-          "label": "Sitzbänke erfasst",
-          "value": 7,
-          "source": "mobiliar-im-bahnhof",
-          "factRef": "ausstattung.sitzbaenke"
-        },
-        {
-          "label": "Infopunkte erfasst",
-          "value": 5,
-          "source": "mobiliar-im-bahnhof",
-          "factRef": "ausstattung.infopunkte"
-        },
-        {
-          "label": "Schliessfächer erfasst",
-          "value": 12,
-          "source": "mobiliar-im-bahnhof",
-          "factRef": "ausstattung.schliessfaecher"
-        },
         {
           "label": "Perrons mit erfasstem Belag",
           "value": 1,
@@ -444,46 +426,6 @@
         }
       ],
       "questions": [
-        {
-          "type": "single_choice",
-          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
-          "options": [
-            "6",
-            "7",
-            "8",
-            "10"
-          ],
-          "correct": 1,
-          "explanation": "Erfasst sind 7 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
-          "factRef": "ausstattung.sitzbaenke",
-          "difficulty": 1
-        },
-        {
-          "type": "cloze",
-          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
-          "options": [
-            "5",
-            "6",
-            "8",
-            "11"
-          ],
-          "correct": 0,
-          "explanation": "Erfasst sind 5 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
-          "factRef": "ausstattung.infopunkte",
-          "difficulty": 1
-        },
-        {
-          "type": "slider",
-          "prompt": "Wie viele Schliessfächer sind in den offenen Daten erfasst?",
-          "min": 7,
-          "max": 22,
-          "step": 1,
-          "unit": "Schliessfächer",
-          "correct": 12,
-          "explanation": "Erfasst sind 12 Schliessfächer. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
-          "factRef": "ausstattung.schliessfaecher",
-          "difficulty": 2
-        },
         {
           "type": "single_choice",
           "prompt": "Welcher Belag ist für die Perrons erfasst?",
@@ -524,14 +466,14 @@
       "quelle": "21197_behig-haltekantesegment"
     },
     {
+      "thema": "Perronhöhen",
+      "grund": "Zu den erfassten Gleisen ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
-    },
-    {
-      "thema": "Stand der BehiG-Daten",
-      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
-      "quelle": "21197_behig-haltekantesegment"
     },
     {
       "thema": "Fahrplan",

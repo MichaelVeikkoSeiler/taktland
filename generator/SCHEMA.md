@@ -384,6 +384,14 @@ der Antwort 1. Bei 1 fragt der Baukasten «Wie viele … sind erfasst?», und de
 Validator meldet eine Mehrzahl nach der Lücke, wenn die Antwort 1 ist
 (`MEHRZAHL_NACH_LUECKE` in `taktland.py`).
 
+**Der Grenzfall eins.** Sätze, die für mehrere Gleise, Perrons oder Geräte
+geschrieben sind, kippen bei genau einem: «Von den 1 erfassten Perrons»,
+«Perronhöhen sind zu diesen Gleisen nicht vermerkt» bei einem Gleis,
+«Erfasst sind 1 Infopunkt» (15-mal im Ausstattungskapitel). Aufgefallen ist
+es bei Pont-Céard mit einem Gleis, einem Perron und einem Entwerter. Jeder
+Satz mit einer Zahl davor braucht eine Form für 1. Der Validator kennt die
+häufigsten Muster (`EINZAHL` in `taktland.py`).
+
 **Aufzählungen über `aufzaehlung()`.** «SBB und SOB und Thurbo» und «der
 Typen BATS und S-POS und ePOS» entstanden an zwei Stellen, die ihre Listen
 selbst zusammensetzten. Jetzt gibt es eine Funktion dafür. Eine Liste in einer

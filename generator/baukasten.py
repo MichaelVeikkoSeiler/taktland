@@ -325,11 +325,12 @@ def gleise(f):
     gl = f["gleise"]; name = f["name"]; uic = f["uic"]
     items = gl["items"]; n = gl["anzahl_mit_daten"]
     nummern = gl["nummern"]
-    satz = [f"Zu {n} {'Gleis' if n == 1 else 'Gleisen'} liegen offene Daten vor: "
-            + aufzaehlung(nummern) + "."]
+    satz = [f"Zu Gleis {nummern[0]} liegen offene Daten vor." if n == 1 else
+            f"Zu {n} Gleisen liegen offene Daten vor: " + aufzaehlung(nummern) + "."]
     hoehen = gl["perronhoehen_cm"]
     if not hoehen:
-        satz.append("Perronhöhen sind zu diesen Gleisen nicht vermerkt.")
+        satz.append("Zu diesem Gleis ist keine Perronhöhe vermerkt." if n == 1
+                    else "Perronhöhen sind zu diesen Gleisen nicht vermerkt.")
     elif len(hoehen) == 1 and all(it["perronhoehen_cm"] for it in items):
         # eine einzige Höhe an allen Gleisen, nicht nur bei 55 cm (Münsingen: 30)
         satz.append(f"An {alle_n(n, 'Gleisen') if n > 1 else 'dem erfassten Gleis'} "
@@ -431,9 +432,12 @@ def gleise(f):
                      True, f"Für {'beide' if n == 2 else 'alle ' + str(n)} erfassten Gleise sind "
                      f"ausschliesslich {hoehen[0]} Zentimeter verzeichnet.", "gleise.perronhoehen_cm"))
     elif not hoehen:
-        fr.append(tf(f"Zu den erfassten Gleisen in {name} ist eine Perronhöhe vermerkt.", False,
-                     "Zu keinem der erfassten Gleise ist eine Perronhöhe vermerkt. Ob der "
-                     "Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+        # Pont-Céard hat ein einziges Gleis: dann in der Einzahl fragen
+        fr.append(tf((f"Zum erfassten Gleis in {name} ist eine Perronhöhe vermerkt." if n == 1 else
+                      f"Zu den erfassten Gleisen in {name} ist eine Perronhöhe vermerkt."), False,
+                     ("Zum erfassten Gleis ist keine Perronhöhe vermerkt." if n == 1 else
+                      "Zu keinem der erfassten Gleise ist eine Perronhöhe vermerkt.")
+                     + " Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
                      "gleise.perronhoehen_cm", diff=3))
     # Rückfall: ein Kapitel ohne Frage taugt nicht
     if not fr:
@@ -450,9 +454,11 @@ def gleise(f):
                          else f"An Gleis {it['nr']} kommen mehrere Höhen vor: {liste} Zentimeter.",
                          f"gleise.items[{i}].perronhoehen_cm", diff=3))
         elif not mit_sektor:
-            fr.append(tf(f"Zu den erfassten Gleisen in {name} sind Sektortafeln verzeichnet.", False,
-                         "Zu keinem der erfassten Gleise ist eine Sektortafel in den Daten. Ob "
-                         "vor Ort Sektoren angeschrieben sind, sagen die offenen Daten nicht.",
+            fr.append(tf((f"Zum erfassten Gleis in {name} sind Sektortafeln verzeichnet." if n == 1 else
+                          f"Zu den erfassten Gleisen in {name} sind Sektortafeln verzeichnet."), False,
+                         ("Zum erfassten Gleis ist keine Sektortafel in den Daten." if n == 1 else
+                          "Zu keinem der erfassten Gleise ist eine Sektortafel in den Daten.")
+                         + " Ob vor Ort Sektoren angeschrieben sind, sagen die offenen Daten nicht.",
                          f"gleise.items[0].sektoren_anzahl"))
     return {"id": "gleise", "title": "Gleise", "body": " ".join(satz),
             "erlaeuterung": SEKTOR, "facts": facts, "questions": fr}
@@ -499,13 +505,18 @@ def hindernisfreiheit(f):
         satz.append(f"Perronsegmente zur Hindernisfreiheit sind für {name} keine erhoben.")
         pn, pd = hf.get("perrons_niveaufrei"), hf.get("perrons_mit_daten")
         if pd:
-            satz.append(f"Von den {pd} erfassten Perrons "
-                        f"{'ist' if pn == 1 else 'sind'} {pn} als niveaufrei erreichbar vermerkt.")
+            if pd == 1:
+                satz.append("Das erfasste Perron ist "
+                            f"{'' if pn == 1 else 'nicht '}als niveaufrei erreichbar vermerkt.")
+            else:
+                satz.append(f"Von den {pd} erfassten Perrons "
+                            f"{'ist' if pn == 1 else 'sind'} {pn} als niveaufrei erreichbar vermerkt.")
             facts.append({"label": "Niveaufrei erreichbare Perrons", "value": pn,
                           "source": "perron", "factRef": "hindernisfreiheit.perrons_niveaufrei"})
         fr.append(tf(f"Für {name} sind Perronsegmente zur Hindernisfreiheit erhoben.", False,
                      "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist "
-                     "nur der Zugang zu den Perrons.", "hindernisfreiheit.perrons_mit_daten", diff=3))
+                     f"nur der Zugang {'zum Perron' if pd == 1 else 'zu den Perrons'}.",
+                     "hindernisfreiheit.perrons_mit_daten", diff=3))
     if hf.get("sicherheitslinie"):
         satz.append("Eine visuell-taktile Sicherheitslinie ist erfasst.")
         facts.append({"label": "Sicherheitslinie", "value": hf["sicherheitslinie"],
@@ -657,9 +668,11 @@ def services(f):
     if sv["billettentwerter_erfasst"]:
         w = sv["billettentwerter_erfasst"]
         texte, i, alle = auswahl(uic, w, 2)
-        fr.append({"type": "cloze", "prompt": f"In {name} sind ___ Billettentwerter erfasst.",
+        fr.append({"type": "cloze" if w > 1 else "single_choice",
+                   "prompt": (f"In {name} sind ___ Billettentwerter erfasst." if w > 1 else
+                              f"Wie viele Billettentwerter sind in {name} erfasst?"),
                    "options": texte, "correct": i, "optionen_aus_fakten": True,
-                   "explanation": f"Erfasst sind {w} Billettentwerter. Die Zahl gibt wieder, "
+                   "explanation": f"Erfasst {'sind' if w > 1 else 'ist'} {w} Billettentwerter. Die Zahl gibt wieder, "
                                   "was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
                    "factRef": "services.billettentwerter_erfasst", "difficulty": 2})
     return {"id": "services", "title": "Services", "body": " ".join(satz),

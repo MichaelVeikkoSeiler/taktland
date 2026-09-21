@@ -92,6 +92,10 @@ MEHRZAHL_NACH_LUECKE = (r"___ (Sektoren|Perrons|Gleise[n]?|Züge[n]?|Personen|Li
                         r"Billettentwerter|Billettautomaten|Wartehallen|Perronsegmente|"
                         r"Sitzbänke|Infopunkte|Schliessfächer|Segmente|Meter[n]?)\b")
 
+#: Sätze, die für mehrere geschrieben sind und bei genau einem nicht passen
+#: (Pont-Céard: ein Gleis, ein Perron, ein Entwerter)
+EINZAHL = r"\b[Dd]en 1 \w+|\b[Ee]rfasst sind 1 [\wäöüÄÖÜ-]+\.|\bsind 1 [\wäöüÄÖÜ-]+ (erfasst|verzeichnet|vermerkt)\b"
+
 LEERFORMELN = [
     r"hat sich \w+ verändert", r"unterscheide[nt] sich (leicht|etwas|geringfügig)",
     r"ist unterschiedlich", r"variiert", r"in gewissem Masse", r"mehr oder weniger",
@@ -349,6 +353,8 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
             for muster, warum in FALSCHDEUTUNG:
                 if m := re.search(muster, text, re.I):
                     b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: {warum}")
+            if m := re.search(EINZAHL, text):
+                b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: bei genau einem passt die Mehrzahl nicht")
         for muster in LEERFORMELN:
             if m := re.search(muster, kap.get("body", ""), re.I):
                 b.fehlt(f"{wo}/body", f"«{m.group(0)}» sagt nichts aus. "

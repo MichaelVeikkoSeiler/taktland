@@ -1,6 +1,6 @@
 {
-  "uic": 8500117,
-  "name": "Aesch BL",
+  "uic": 8501022,
+  "name": "Versoix",
   "tier": "M",
   "lang": "de",
   "dataYear": 2025,
@@ -22,25 +22,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Aesch BL 9'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 8'200, an einem freien Tag 6'000. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Versoix 5'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 4'700, an einem freien Tag 3'000. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 9200,
+          "value": 5400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 8200,
+          "value": 4700,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 6000,
+          "value": 3000,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -49,28 +49,58 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Aesch BL ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Versoix ein und aus?",
           "options": [
-            "9'200",
-            "11'000",
-            "13'000",
-            "16'000"
+            "2'200",
+            "3'800",
+            "4'600",
+            "5'400"
           ],
-          "correct": 0,
-          "explanation": "An einem Werktag sind es 9'200 Ein- und Aussteigende, Stand 2025.",
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 5'400 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2018",
+              "value": 3500,
+              "factRef": "steckbrief.verlauf[0].dwv"
+            },
+            {
+              "label": "2022",
+              "value": 4200,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 5100,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 5400,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 3'500 (2018), 4'200 (2022), 5'100 (2024), 5'400 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Aesch BL ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Versoix ___ Personen ein und aus.",
           "options": [
-            "5'100",
-            "6'000",
-            "7'200"
+            "2'600",
+            "3'000",
+            "3'600"
           ],
           "correct": 1,
-          "explanation": "An einem freien Tag sind es 6'000 Personen, an einem Werktag 9'200. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "explanation": "An einem freien Tag sind es 3'000 Personen, an einem Werktag 5'400. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -79,54 +109,47 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Aesch BL liegt auf 298.73 Metern über Meer in der Gemeinde Aesch (BL), Bezirk Arlesheim, Kanton Basel-Landschaft. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet AE.",
+      "body": "Versoix liegt auf 387.741 Metern über Meer in der Gemeinde Versoix. Als Kanton ist in den Stammdaten Genève eingetragen. Ein Bezirk ist in den Stammdaten nicht eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet VSX.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 298.73,
+          "value": 387.741,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "AE",
+          "value": "VSX",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
-        },
-        {
-          "label": "Bezirk",
-          "value": "Arlesheim",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Aesch BL?",
-          "min": 240,
-          "max": 440,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Versoix?",
+          "min": 310,
+          "max": 570,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 298.73,
-          "explanation": "Der Bahnhof liegt auf 298.73 Metern über Meer.",
+          "correct": 387.741,
+          "explanation": "Der Bahnhof liegt auf 387.741 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Aesch BL?",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Versoix lautet ___.",
           "options": [
-            "Arlesheim",
-            "Liestal",
-            "Sissach",
-            "Waldenburg"
+            "VER",
+            "VS",
+            "VSX"
           ],
-          "correct": 0,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Arlesheim eingetragen.",
-          "factRef": "stammdaten.bezirk",
+          "explanation": "In den Stammdaten ist VSX als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
@@ -134,7 +157,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Aesch BL liegen offene Daten vor. Perron 2 misst 220 Meter, Perron 3 misst 218 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Versoix liegen offene Daten vor. Perron 2/3 misst 330 Meter, Perron 1 misst 223 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -144,7 +167,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 220,
+          "value": 330,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -153,15 +176,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Aesch BL?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Versoix?",
           "options": [
-            "190 m",
-            "220 m",
-            "260 m",
-            "310 m"
+            "330 m",
+            "400 m",
+            "460 m",
+            "560 m"
           ],
-          "correct": 1,
-          "explanation": "Das längste erfasste Perron misst 220 Meter.",
+          "correct": 0,
+          "explanation": "Das längste erfasste Perron misst 330 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
@@ -170,23 +193,23 @@
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
             {
-              "links": "Perron 2",
-              "rechts": "906.94 m²",
+              "links": "Perron 2/3",
+              "rechts": "651.64 m²",
               "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
-              "links": "Perron 3",
-              "rechts": "586.91 m²",
+              "links": "Perron 1",
+              "rechts": "1025.61 m²",
               "factRef": "perrons.items[1].flaeche_netto_m2"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 2 hat 906.94 Quadratmeter, Perron 3 hat 586.91 Quadratmeter.",
+          "explanation": "Perron 2/3 hat 651.64 Quadratmeter, Perron 1 hat 1025.61 Quadratmeter.",
           "difficulty": 3
         },
         {
           "type": "true_false",
-          "prompt": "Beide erfassten Perrons in Aesch BL sind niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in Versoix sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -197,7 +220,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Zu Gleis 1 sind keine Sektortafeln erfasst.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -207,30 +230,30 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Sektoren an Gleis 2",
+          "label": "Sektoren an Gleis 1",
           "value": 4,
           "source": "sektortafel",
-          "factRef": "gleise.items[1].sektoren_anzahl"
+          "factRef": "gleise.items[0].sektoren_anzahl"
         }
       ],
       "questions": [
         {
           "type": "cloze",
-          "prompt": "An Gleis 2 in Aesch BL sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 1 in Versoix sind ___ Sektoren erfasst.",
           "options": [
             "4",
             "5",
-            "6"
+            "7"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 2 trägt die Sektoren A, B, C und D, also 4 Stück.",
-          "factRef": "gleise.items[1].sektoren_anzahl",
+          "explanation": "Gleis 1 trägt die Sektoren A, B, C und D, also 4 Stück.",
+          "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         },
         {
           "type": "true_false",
-          "prompt": "An den erfassten Gleisen in Aesch BL kommt nur eine einzige Perronhöhe vor.",
+          "prompt": "An den erfassten Gleisen in Versoix kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
           "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
           "factRef": "gleise.perronhoehen_cm",
@@ -241,12 +264,12 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Aesch BL sind 8 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Versoix sind 9 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 8,
+          "value": 9,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
@@ -266,23 +289,23 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "In Aesch BL sind ___ Perronsegmente erfasst.",
+          "prompt": "In Versoix sind ___ Perronsegmente erfasst.",
           "options": [
             "8",
-            "10",
+            "9",
             "11"
           ],
-          "correct": 0,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 8 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 9 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
           "type": "true_false",
-          "prompt": "Bei keinem der 8 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 9 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 8 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 9 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -291,19 +314,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Aesch BL – Dornach-Arlesheim: Im Personenverkehr verkehren dort 138 Züge pro Tag, das sind 50'217 im Jahr. Auf dem Abschnitt Duggingen – Aesch BL sind es 72 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 1 Zug pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Creux-de-Genthod – Versoix 413 Züge pro Tag, das sind 150'851 im Jahr. Auf dem Abschnitt Versoix – Pont-Céard sind es ebenfalls 413 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 30 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Aesch BL – Dornach-Arlesheim",
-          "value": 138,
+          "label": "Züge pro Tag, Personenverkehr Creux-de-Genthod – Versoix",
+          "value": 413,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Aesch BL – Dornach-Arlesheim",
-          "value": 50217,
+          "label": "Züge pro Jahr, Personenverkehr Creux-de-Genthod – Versoix",
+          "value": 150851,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
@@ -312,41 +335,28 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Aesch BL – Dornach-Arlesheim?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Creux-de-Genthod – Versoix?",
           "options": [
-            "97",
-            "120",
-            "138",
-            "190"
+            "413",
+            "500",
+            "580",
+            "700"
           ],
-          "correct": 2,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 138 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 413 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Aesch BL – Dornach-Arlesheim, Personenverkehr",
-              "value": 50217,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Duggingen – Aesch BL, Personenverkehr",
-              "value": 26188,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
-              "label": "Aesch BL – Dornach-Arlesheim, Güterverkehr",
-              "value": 331,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Richtig ist diese Reihenfolge: Aesch BL – Dornach-Arlesheim im Personenverkehr mit 50'217, Duggingen – Aesch BL im Personenverkehr mit 26'188 und Aesch BL – Dornach-Arlesheim im Güterverkehr mit 331 Zügen im Jahr. Einträge mit gleichem oder fast gleichem Wert bleiben weg.",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Creux-de-Genthod – Versoix?",
+          "min": 123500,
+          "max": 219000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 150851,
+          "explanation": "Die Erhebung zählt 150'851 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -354,7 +364,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Aesch BL ist 1 Linie erfasst: die Linie 230 Delemont Est - Basel SBB Ost. Der Bahnhof ist darauf bei Kilometer 113.00006 eingetragen.",
+      "body": "Für Versoix ist 1 Linie erfasst: die Linie 150 Lausanne - Geneve-Aeroport. Der Bahnhof ist darauf bei Kilometer 51.954 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -363,8 +373,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 230",
-          "value": 113.00006,
+          "label": "Kilometrierung auf der Linie 150",
+          "value": 51.954,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -373,13 +383,13 @@
       "questions": [
         {
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 230 ist Aesch BL eingetragen?",
-          "min": 92,
-          "max": 164,
+          "prompt": "Bei welchem Streckenkilometer der Linie 150 ist Versoix eingetragen?",
+          "min": 42,
+          "max": 76,
           "step": 1,
           "unit": "km",
-          "correct": 113.00006,
-          "explanation": "Die Kilometrierung von Aesch BL auf der Linie 230 beträgt 113.00006. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 51.954,
+          "explanation": "Die Kilometrierung von Versoix auf der Linie 150 beträgt 51.954. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -388,7 +398,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 2 Wartehallen. Aesch BL steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 3 Billettentwerter und 2 Wartehallen. Versoix steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -405,7 +415,7 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 2,
+          "value": 3,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
@@ -413,7 +423,7 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Aesch BL steht in der Liste der WLAN-Standorte.",
+          "prompt": "Versoix steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
@@ -421,15 +431,15 @@
         },
         {
           "type": "cloze",
-          "prompt": "In Aesch BL sind ___ Billettentwerter erfasst.",
+          "prompt": "In Versoix sind ___ Billettentwerter erfasst.",
           "options": [
-            "1",
-            "2",
-            "6"
+            "3",
+            "5",
+            "7"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 2 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -438,11 +448,11 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Aesch BL 1 Sitzbank sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Verbundstein-Pflästerung. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Versoix 6 Sitzbänke sowie 1 Infopunkt erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 1,
+          "value": 6,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
@@ -464,16 +474,15 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "1",
-            "2",
-            "3",
-            "4"
+            "5",
+            "6",
+            "7",
+            "8"
           ],
-          "correct": 0,
-          "explanation": "Erfasst ist 1 Sitzbank. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 1,
+          "explanation": "Erfasst sind 6 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
-          "difficulty": 1,
-          "optionen_aus_fakten": true
+          "difficulty": 1
         },
         {
           "type": "single_choice",
@@ -499,8 +508,8 @@
             "Gussasphalt",
             "Verbundstein-Pflästerung"
           ],
-          "correct": 3,
-          "explanation": "Für alle Perrons mit Daten ist Verbundstein-Pflästerung erfasst.",
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
           "difficulty": 2
@@ -528,11 +537,6 @@
       "thema": "Vollständigkeit der Gleise",
       "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
-    },
-    {
-      "thema": "Sektoren",
-      "grund": "Zu Gleis 1 sind keine Sektortafeln erfasst.",
-      "quelle": "sektortafel"
     },
     {
       "thema": "WLAN",
