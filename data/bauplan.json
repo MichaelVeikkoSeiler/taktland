@@ -635,6 +635,15 @@
    ]
   }
  },
+ "8501002": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LP",
+    "SY"
+   ]
+  }
+ },
  "8501003": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1529,6 +1538,16 @@
    ]
   }
  },
+ "8502025": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hitzkirch",
+    "Ballwil",
+    "Ermensee"
+   ]
+  }
+ },
  "8502026": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -1568,11 +1587,31 @@
    ]
   }
  },
+ "8502031": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kulm",
+    "Bremgarten",
+    "Aarau"
+   ]
+  }
+ },
  "8502032": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
     "Kulm",
+    "Bremgarten",
+    "Muri"
+   ]
+  }
+ },
+ "8502033": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lenzburg",
     "Bremgarten",
     "Muri"
    ]
@@ -2651,6 +2690,16 @@
    ]
   }
  },
+ "8503226": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schänis",
+    "Glarus",
+    "Reichenburg"
+   ]
+  }
+ },
  "8503227": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -2721,6 +2770,16 @@
   }
  },
  "8503239": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Glarus",
+    "Glarus Nord",
+    "Schänis"
+   ]
+  }
+ },
+ "8503240": {
   "stammdaten": {
    "frage": "gemeinde",
    "distraktoren": [
@@ -3014,6 +3073,16 @@
    "distraktoren": [
     "FT",
     "NH"
+   ]
+  }
+ },
+ "8503425": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bülach",
+    "Winterthur",
+    "Dielsdorf"
    ]
   }
  },
@@ -3346,6 +3415,16 @@
     "Düdingen",
     "Flamatt",
     "Neuenegg"
+   ]
+  }
+ },
+ "8504104": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wünnewil-Flamatt",
+    "Neuenegg",
+    "Bern"
    ]
   }
  },
@@ -3952,6 +4031,16 @@
    ]
   }
  },
+ "8504402": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Jura bernois",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504404": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4180,6 +4269,16 @@
     "Riviera",
     "Locarno",
     "Bellinzona"
+   ]
+  }
+ },
+ "8505207": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Biasca",
+    "Faido",
+    "Arbedo-Castione"
    ]
   }
  },
@@ -4643,6 +4742,16 @@
    ]
   }
  },
+ "8506036": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Seuzach",
+    "Wiesendangen",
+    "Dinhard"
+   ]
+  }
+ },
  "8506038": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -4875,6 +4984,26 @@
    ]
   }
  },
+ "8506126": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Arbon",
+    "Frauenfeld"
+   ]
+  }
+ },
+ "8506127": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Arbon",
+    "Frauenfeld"
+   ]
+  }
+ },
  "8506128": {
   "stammdaten": {
    "frage": "kanton",
@@ -4943,6 +5072,16 @@
    ]
   }
  },
+ "8506183": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Frauenfeld",
+    "Kreuzlingen"
+   ]
+  }
+ },
  "8506190": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4950,6 +5089,16 @@
     "Münchwilen",
     "Frauenfeld",
     "Kreuzlingen"
+   ]
+  }
+ },
+ "8506194": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kreuzlingen",
+    "Arbon",
+    "Münchwilen"
    ]
   }
  },
@@ -4969,6 +5118,16 @@
     "Weinfelden",
     "Frauenfeld",
     "Arbon"
+   ]
+  }
+ },
+ "8506202": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lütisburg",
+    "Kirchberg (SG)",
+    "Fischenthal"
    ]
   }
  },
@@ -5041,6 +5200,16 @@
   }
  },
  "8506213": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8506215": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -5463,6 +5632,16 @@
    ]
   }
  },
+ "8508204": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Thun",
+    "Seeland"
+   ]
+  }
+ },
  "8508205": {
   "stammdaten": {
    "frage": "bezirk",
@@ -5615,6 +5794,16 @@
    ]
   }
  },
+ "8509406": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sarganserland",
+    "Rheintal",
+    "See-Gaster"
+   ]
+  }
+ },
  "8509411": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -5678,6 +5867,15 @@
    "distraktoren": [
     "BAA",
     "BLP"
+   ]
+  }
+ },
+ "8515994": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZGCA",
+    "ZGO"
    ]
   }
  },
