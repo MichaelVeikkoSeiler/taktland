@@ -8,6 +8,15 @@
    ]
   }
  },
+ "8500016": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BS",
+    "BSDH"
+   ]
+  }
+ },
  "8500020": {
   "stammdaten": {
    "frage": "bezirk",
@@ -141,6 +150,16 @@
     "Sorvilier",
     "Reconvilier",
     "Court"
+   ]
+  }
+ },
+ "8500104": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Oberaargau"
    ]
   }
  },
@@ -1035,6 +1054,16 @@
    ]
   }
  },
+ "8501126": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Riviera-Pays-d'Enhaut",
+    "Lausanne",
+    "Aigle"
+   ]
+  }
+ },
  "8501200": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1509,6 +1538,16 @@
    ]
   }
  },
+ "8502019": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sursee",
+    "Luzern-Land",
+    "Willisau"
+   ]
+  }
+ },
  "8502020": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1811,6 +1850,16 @@
    ]
   }
  },
+ "8502120": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zofingen",
+    "Aarburg",
+    "Safenwil"
+   ]
+  }
+ },
  "8502122": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1963,6 +2012,16 @@
    ]
   }
  },
+ "8502216": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Mühlau",
+    "Muri (AG)",
+    "Mettmenstetten"
+   ]
+  }
+ },
  "8502218": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2105,6 +2164,15 @@
     "Baden",
     "Lenzburg",
     "Bremgarten"
+   ]
+  }
+ },
+ "8502300": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ZG",
+    "ZGCA"
    ]
   }
  },
@@ -2541,6 +2609,16 @@
     "Bauma",
     "Wald (ZH)",
     "Hinwil"
+   ]
+  }
+ },
+ "8503136": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Pfäffikon",
+    "Winterthur",
+    "Meilen"
    ]
   }
  },
@@ -3096,6 +3174,16 @@
    ]
   }
  },
+ "8503410": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Koblenz",
+    "Klingnau",
+    "Döttingen"
+   ]
+  }
+ },
  "8503411": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3369,6 +3457,16 @@
    ]
   }
  },
+ "8504016": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rue",
+    "Puidoux",
+    "Ursy"
+   ]
+  }
+ },
  "8504017": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3584,6 +3682,16 @@
    ]
   }
  },
+ "8504123": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura-Nord vaudois",
+    "Lavaux-Oron",
+    "Morges"
+   ]
+  }
+ },
  "8504125": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3723,6 +3831,16 @@
    ]
   }
  },
+ "8504144": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Broye-Vully",
+    "Morges",
+    "Gros-de-Vaud"
+   ]
+  }
+ },
  "8504181": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3730,6 +3848,16 @@
     "Sense",
     "La Broye",
     "See"
+   ]
+  }
+ },
+ "8504191": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "See",
+    "La Sarine",
+    "La Broye"
    ]
   }
  },
@@ -4051,6 +4179,16 @@
     "Biel/Bienne",
     "Oberaargau",
     "Seeland"
+   ]
+  }
+ },
+ "8504312": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -4692,6 +4830,16 @@
    ]
   }
  },
+ "8506009": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wila",
+    "Turbenthal",
+    "Zell (ZH)"
+   ]
+  }
+ },
  "8506010": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4798,6 +4946,16 @@
    "distraktoren": [
     "SE",
     "SZH"
+   ]
+  }
+ },
+ "8506021": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Andelfingen",
+    "Pfäffikon",
+    "Bülach"
    ]
   }
  },
@@ -5053,6 +5211,16 @@
    ]
   }
  },
+ "8506123": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kreuzlingen",
+    "Weinfelden",
+    "Münchwilen"
+   ]
+  }
+ },
  "8506124": {
   "stammdaten": {
    "frage": "bezirk",
@@ -5123,6 +5291,16 @@
   }
  },
  "8506133": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frauenfeld",
+    "Weinfelden",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8506134": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -5241,6 +5419,16 @@
    ]
   }
  },
+ "8506196": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Arbon",
+    "Frauenfeld"
+   ]
+  }
+ },
  "8506197": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -5271,6 +5459,16 @@
   }
  },
  "8506203": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Wil",
+    "St. Gallen",
+    "See-Gaster"
+   ]
+  }
+ },
+ "8506204": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
