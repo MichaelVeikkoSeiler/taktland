@@ -74,7 +74,19 @@ def _teil_einer_bezeichnung(text, treffer, faktenbasis):
     for m in BEZEICHNUNG.finditer(text):
         if m.start() <= treffer.start() and m.end() >= treffer.end():
             wort = m.group(0)
-            return wort != treffer.group(0) and wort in texte
+            if wort != treffer.group(0) and wort in texte:
+                return True
+            break
+    # Bezeichnungen mit Leerschlag: Der Automatentyp «AFA 470» (Köniz) zerfällt
+    # oben in «AFA» und «470». Darum die ganze Bezeichnung an der Fundstelle suchen.
+    for t in texte:
+        if " " not in t or treffer.group(0) not in t or not re.search(r"[^\W\d_]", t):
+            continue
+        i = text.find(t)
+        while i != -1:
+            if i <= treffer.start() and i + len(t) >= treffer.end():
+                return True
+            i = text.find(t, i + 1)
     return False
 
 

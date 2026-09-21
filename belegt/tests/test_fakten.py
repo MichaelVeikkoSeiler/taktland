@@ -60,3 +60,21 @@ def test_bezeichnung_mit_schraegstrich_gilt_als_belegt():
     b = Bericht("t")
     r.pruefe_text("Es gibt 11 Perrons.", "x", fb, b)
     assert not b.ok
+
+
+def test_bezeichnung_mit_leerschlag_gilt_als_belegt():
+    """«AFA 470» ist ein Automatentyp (Köniz), keine Zahl 470."""
+    from belegt.bericht import Bericht
+    from belegt.regeln import Regelwerk
+
+    fb = Faktenbasis({"services": {"billettautomaten_erfasst": 1, "automat_typen": ["AFA 470"]}})
+    r = Regelwerk()
+
+    b = Bericht("t")
+    r.pruefe_text("Erfasst ist 1 Billettautomat vom Typ AFA 470.", "x", fb, b)
+    assert b.ok
+
+    # dieselbe Zahl ausserhalb der Bezeichnung bleibt unbelegt
+    b = Bericht("t")
+    r.pruefe_text("Erfasst sind 470 Billettautomaten vom Typ AFA 470.", "x", fb, b)
+    assert not b.ok
