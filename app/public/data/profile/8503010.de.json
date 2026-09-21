@@ -461,7 +461,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Für Zürich Enge ist WLAN erfasst. Erfasst sind 1 Billettautomat und 6 Billettentwerter.",
+      "body": "Für Zürich Enge ist WLAN erfasst. Erfasst sind 1 Billettautomat und 6 Billettentwerter. Wartehallen sind keine verzeichnet.",
       "facts": [
         {
           "label": "WLAN erfasst",

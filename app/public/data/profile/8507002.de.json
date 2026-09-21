@@ -1,6 +1,6 @@
 {
-  "uic": 8501303,
-  "name": "Villeneuve VD",
+  "uic": 8507002,
+  "name": "Ostermundigen",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -20,25 +20,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Villeneuve VD 4'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 4'500, an einem freien Tag 3'500. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Ostermundigen 4'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 3'800, an einem freien Tag 2'400. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS und SBB erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 4900,
+          "value": 4500,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 4500,
+          "value": 3800,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 3500,
+          "value": 2400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -47,63 +47,28 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Villeneuve VD ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Ostermundigen ein und aus?",
           "options": [
-            "2'700",
-            "4'200",
-            "4'900",
-            "5'900"
+            "1'800",
+            "2'500",
+            "3'200",
+            "4'500"
           ],
-          "correct": 2,
-          "explanation": "An einem Werktag sind es 4'900 Ein- und Aussteigende, Stand 2025.",
+          "correct": 3,
+          "explanation": "An einem Werktag sind es 4'500 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2018",
-              "value": 2400,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2022",
-              "value": 3400,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 3900,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 4300,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            },
-            {
-              "label": "2025",
-              "value": 4900,
-              "factRef": "steckbrief.verlauf[4].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 2'400 (2018), 3'400 (2022), 3'900 (2023), 4'300 (2024), 4'900 (2025).",
-          "difficulty": 3
-        },
-        {
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Villeneuve VD ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Ostermundigen ___ Personen ein und aus.",
           "options": [
-            "3'500",
-            "4'200",
-            "6'000"
+            "1'700",
+            "2'000",
+            "2'400"
           ],
-          "correct": 0,
-          "explanation": "An einem freien Tag sind es 3'500 Personen, an einem Werktag 4'900. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 2'400 Personen, an einem Werktag 4'500. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -112,54 +77,47 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Villeneuve VD liegt auf 374.754 Metern über Meer in der Gemeinde Villeneuve (VD), Bezirk Aigle. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet VIL.",
+      "body": "Ostermundigen liegt auf 557.954 Metern über Meer in der Gemeinde Ostermundigen, Bezirk Bern-Mittelland, Kanton Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet OST.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 374.754,
+          "value": 557.954,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "VIL",
+          "value": "OST",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
-        },
-        {
-          "label": "Bezirk",
-          "value": "Aigle",
-          "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
         }
       ],
       "questions": [
         {
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Villeneuve VD?",
-          "min": 300,
-          "max": 550,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Ostermundigen?",
+          "min": 450,
+          "max": 810,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 374.754,
-          "explanation": "Der Bahnhof liegt auf 374.754 Metern über Meer.",
+          "correct": 557.954,
+          "explanation": "Der Bahnhof liegt auf 557.954 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
-          "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Villeneuve VD?",
+          "type": "cloze",
+          "prompt": "Die offizielle Abkürzung des Bahnhofs Ostermundigen lautet ___.",
           "options": [
-            "Aigle",
-            "Lavaux-Oron",
-            "Nyon",
-            "Riviera-Pays-d'Enhaut"
+            "OM",
+            "OST",
+            "OSTM"
           ],
-          "correct": 0,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Aigle eingetragen.",
-          "factRef": "stammdaten.bezirk",
+          "explanation": "In den Stammdaten ist OST als Abkürzung erfasst.",
+          "factRef": "stammdaten.abkuerzung",
           "difficulty": 2
         }
       ]
@@ -167,7 +125,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Villeneuve VD liegen offene Daten vor. Perron 1 misst 320 Meter, Perron 2/3 misst 317 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Ostermundigen liegen offene Daten vor. Perron 2/3 misst 222 Meter, Perron 1 misst 193 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -177,7 +135,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 320,
+          "value": 222,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -186,15 +144,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Villeneuve VD?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Ostermundigen?",
           "options": [
-            "220 m",
+            "222 m",
             "270 m",
-            "320 m",
+            "310 m",
             "380 m"
           ],
-          "correct": 2,
-          "explanation": "Das längste erfasste Perron misst 320 Meter.",
+          "correct": 0,
+          "explanation": "Das längste erfasste Perron misst 222 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
@@ -203,23 +161,23 @@
           "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
           "pairs": [
             {
-              "links": "Perron 1",
-              "rechts": "1193.73 m²",
+              "links": "Perron 2/3",
+              "rechts": "954.2 m²",
               "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
-              "links": "Perron 2/3",
-              "rechts": "1693.87 m²",
+              "links": "Perron 1",
+              "rechts": "561.72 m²",
               "factRef": "perrons.items[1].flaeche_netto_m2"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1 hat 1193.73 Quadratmeter, Perron 2/3 hat 1693.87 Quadratmeter.",
+          "explanation": "Perron 2/3 hat 954.2 Quadratmeter, Perron 1 hat 561.72 Quadratmeter.",
           "difficulty": 3
         },
         {
           "type": "true_false",
-          "prompt": "Beide erfassten Perrons in Villeneuve VD sind niveaufrei erreichbar.",
+          "prompt": "Beide erfassten Perrons in Ostermundigen sind niveaufrei erreichbar.",
           "correct": true,
           "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
@@ -230,7 +188,7 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 20 und 55 Zentimetern. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 2 und 3. Erfasst sind Perronhöhen von 20, 30, 35 und 42 Zentimetern. Sektortafeln sind zu keinem dieser Gleise erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
@@ -241,10 +199,10 @@
         },
         {
           "label": "Längste erfasste Perronkante",
-          "value": 320,
+          "value": 214,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
-          "factRef": "gleise.items[0].perronkante_m"
+          "factRef": "gleise.items[2].perronkante_m"
         }
       ],
       "questions": [
@@ -252,34 +210,27 @@
           "type": "hotspot",
           "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
           "schema": "gleise",
-          "correct": "1",
-          "factRef": "gleise.items[0].nr",
-          "explanation": "Gleis 1 hat mit 320 Metern die längste erfasste Perronkante, die nächste misst 274 Meter.",
+          "correct": "3",
+          "factRef": "gleise.items[2].nr",
+          "explanation": "Gleis 3 hat mit 214 Metern die längste erfasste Perronkante, die nächste misst 143 Meter.",
           "difficulty": 2
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Gleise nach der erfassten Perronkante, längste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Gleis 1",
-              "value": 320,
-              "factRef": "gleise.items[0].perronkante_m"
-            },
-            {
-              "label": "Gleis 2",
-              "value": 274,
-              "factRef": "gleise.items[1].perronkante_m"
-            },
-            {
-              "label": "Gleis 3",
-              "value": 26,
-              "factRef": "gleise.items[2].perronkante_m"
-            }
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 1 in Ostermundigen erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "30 cm",
+            "35 cm",
+            "42 cm"
           ],
-          "factRef": "gleise.items",
-          "explanation": "Gleis 1 misst 320 Meter, Gleis 2 misst 274 Meter, Gleis 3 misst 26 Meter.",
+          "correct": [
+            0,
+            1
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 1 sind 20 und 30 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[0].perronhoehen_cm",
           "difficulty": 3
         }
       ]
@@ -287,18 +238,18 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Villeneuve VD sind 9 Perronsegmente erfasst: 5 mit 20 Zentimetern, 4 mit 55 Zentimetern. An 1 der 3 erfassten Gleise liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Ostermundigen sind 14 Perronsegmente erfasst: 6 mit 42 Zentimetern, 3 mit 30 Zentimetern, 3 mit 35 Zentimetern, 2 mit 20 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 9,
+          "value": 14,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
           "label": "Gleise mit Perronhöhe 55 cm",
-          "value": 1,
+          "value": 0,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         }
@@ -306,23 +257,23 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "In Villeneuve VD sind ___ Perronsegmente erfasst.",
+          "prompt": "In Ostermundigen sind ___ Perronsegmente erfasst.",
           "options": [
-            "9",
-            "11",
-            "13"
+            "10",
+            "12",
+            "14"
           ],
-          "correct": 0,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 9 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 14 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
           "type": "true_false",
-          "prompt": "Bei keinem der 9 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 14 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 9 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 14 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -331,19 +282,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Veytaux-Chillon – Villeneuve VD: Im Personenverkehr verkehren dort 231 Züge pro Tag, das sind 84'295 im Jahr. Auf dem Abschnitt Villeneuve VD – Roche VD sind es 226 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 26 Züge pro Tag auf einem Abschnitt.",
+      "body": "Am stärksten befahren ist der Abschnitt Wankdorf (Abzw) – Ostermundigen: Im Personenverkehr verkehren dort 334 Züge pro Tag, das sind 122'017 im Jahr. Auf dem Abschnitt Ostermundigen – Gümligen sind es 332 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 49 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Veytaux-Chillon – Villeneuve VD",
-          "value": 231,
+          "label": "Züge pro Tag, Personenverkehr Wankdorf (Abzw) – Ostermundigen",
+          "value": 334,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Veytaux-Chillon – Villeneuve VD",
-          "value": 84295,
+          "label": "Züge pro Jahr, Personenverkehr Wankdorf (Abzw) – Ostermundigen",
+          "value": 122017,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
@@ -352,27 +303,27 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Veytaux-Chillon – Villeneuve VD?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Wankdorf (Abzw) – Ostermundigen?",
           "options": [
-            "200",
-            "231",
+            "180",
+            "230",
             "280",
-            "390"
+            "334"
           ],
-          "correct": 1,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 231 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 334 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
         },
         {
           "type": "slider",
-          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Veytaux-Chillon – Villeneuve VD?",
-          "min": 69000,
-          "max": 122500,
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Wankdorf (Abzw) – Ostermundigen?",
+          "min": 100000,
+          "max": 177000,
           "step": 500,
           "unit": "Züge/Jahr",
-          "correct": 84295,
-          "explanation": "Die Erhebung zählt 84'295 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "correct": 122017,
+          "explanation": "Die Erhebung zählt 122'017 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
           "difficulty": 3
         }
@@ -381,7 +332,7 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Villeneuve VD ist 1 Linie erfasst: die Linie 100 Lausanne - Simplon Tunnel I - Iselle. Der Bahnhof ist darauf bei Kilometer 29.34185 eingetragen.",
+      "body": "Für Ostermundigen ist 1 Linie erfasst: die Linie 290 Bern Wylerfeld - Thun. Der Bahnhof ist darauf bei Kilometer 110.765 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
@@ -390,8 +341,8 @@
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 100",
-          "value": 29.34185,
+          "label": "Kilometrierung auf der Linie 290",
+          "value": 110.765,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -400,13 +351,13 @@
       "questions": [
         {
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Villeneuve VD eingetragen?",
-          "min": 24,
-          "max": 43,
+          "prompt": "Bei welchem Streckenkilometer der Linie 290 ist Ostermundigen eingetragen?",
+          "min": 90,
+          "max": 161,
           "step": 1,
           "unit": "km",
-          "correct": 29.34185,
-          "explanation": "Die Kilometrierung von Villeneuve VD auf der Linie 100 beträgt 29.34185. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 110.765,
+          "explanation": "Die Kilometrierung von Ostermundigen auf der Linie 290 beträgt 110.765. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         }
@@ -415,7 +366,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 2 Billettautomaten (Typen S-POS und ePOS) und 3 Billettentwerter. Wartehallen sind keine verzeichnet. Villeneuve VD steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst ist 1 Billettentwerter. Billettautomaten und Wartehallen sind keine verzeichnet. Ostermundigen steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -426,13 +377,13 @@
         },
         {
           "label": "Billettautomaten erfasst",
-          "value": 2,
+          "value": 0,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 3,
+          "value": 1,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
@@ -440,23 +391,23 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Villeneuve VD steht in der Liste der WLAN-Standorte.",
+          "prompt": "Ostermundigen steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
           "difficulty": 2
         },
         {
-          "type": "cloze",
-          "prompt": "In Villeneuve VD sind ___ Billettentwerter erfasst.",
+          "type": "single_choice",
+          "prompt": "Wie viele Billettentwerter sind in Ostermundigen erfasst?",
           "options": [
-            "3",
-            "7",
-            "12"
+            "1",
+            "2",
+            "4"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 3 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst ist 1 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -465,17 +416,17 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Villeneuve VD 6 Sitzbänke sowie 10 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut sowie Holz. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Ostermundigen 11 Sitzbänke sowie 3 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst sind Bituminöses Mischgut, Gussasphalt sowie Holz. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 6,
+          "value": 11,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
         {
           "label": "Infopunkte erfasst",
-          "value": 10,
+          "value": 3,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.infopunkte"
         },
@@ -491,13 +442,13 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "6",
-            "7",
-            "8",
-            "13"
+            "9",
+            "11",
+            "13",
+            "15"
           ],
-          "correct": 0,
-          "explanation": "Erfasst sind 6 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 1,
+          "explanation": "Erfasst sind 11 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
@@ -505,13 +456,13 @@
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "7",
-            "8",
-            "10",
-            "12"
+            "3",
+            "4",
+            "5",
+            "7"
           ],
-          "correct": 2,
-          "explanation": "Erfasst sind 10 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1
         }
@@ -545,9 +496,19 @@
       "quelle": "sektortafel"
     },
     {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
+    },
+    {
+      "thema": "Billettautomaten",
+      "grund": "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, dass vor Ort einer steht.",
+      "quelle": "billetautomat"
     },
     {
       "thema": "Stand der BehiG-Daten",

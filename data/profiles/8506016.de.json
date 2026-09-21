@@ -1,6 +1,6 @@
 {
-  "uic": 8500329,
-  "name": "Koblenz",
+  "uic": 8506016,
+  "name": "Oberwinterthur",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -22,25 +22,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Koblenz 4'800 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 4'200, an einem freien Tag 2'800. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
+      "body": "An einem Werktag steigen in Oberwinterthur 4'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 3'800, an einem freien Tag 2'600. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 4800,
+          "value": 4400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 4200,
+          "value": 3800,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 2800,
+          "value": 2600,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -49,15 +49,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Koblenz ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Oberwinterthur ein und aus?",
           "options": [
-            "2'600",
-            "3'400",
-            "4'100",
-            "4'800"
+            "3'100",
+            "3'700",
+            "4'400",
+            "5'300"
           ],
-          "correct": 3,
-          "explanation": "An einem Werktag sind es 4'800 Ein- und Aussteigende, Stand 2025.",
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 4'400 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
@@ -68,39 +68,39 @@
           "items": [
             {
               "label": "2022",
-              "value": 2800,
+              "value": 3800,
               "factRef": "steckbrief.verlauf[1].dwv"
             },
             {
-              "label": "2018",
-              "value": 3300,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
               "label": "2023",
-              "value": 4300,
+              "value": 4100,
               "factRef": "steckbrief.verlauf[2].dwv"
             },
             {
-              "label": "2024",
-              "value": 5000,
-              "factRef": "steckbrief.verlauf[3].dwv"
+              "label": "2025",
+              "value": 4400,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            },
+            {
+              "label": "2018",
+              "value": 5700,
+              "factRef": "steckbrief.verlauf[0].dwv"
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 2'800 (2022), 3'300 (2018), 4'300 (2023), 5'000 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 3'800 (2022), 4'100 (2023), 4'400 (2025), 5'700 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
         },
         {
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Koblenz ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Oberwinterthur ___ Personen ein und aus.",
           "options": [
-            "2'400",
-            "2'800",
-            "3'400"
+            "1'800",
+            "2'200",
+            "2'600"
           ],
-          "correct": 1,
-          "explanation": "An einem freien Tag sind es 2'800 Personen, an einem Werktag 4'800. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 2'600 Personen, an einem Werktag 4'400. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -109,54 +109,54 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Koblenz liegt auf 320.3 Metern über Meer in der Gemeinde Koblenz, Bezirk Zurzach, Kanton Aargau. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet KB.",
+      "body": "Oberwinterthur liegt auf 457 Metern über Meer in der Gemeinde Winterthur, Bezirk Winterthur, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet OWT.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 320.3,
+          "value": 457,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "KB",
+          "value": "OWT",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Bezirk",
-          "value": "Zurzach",
+          "label": "Gemeinde",
+          "value": "Winterthur",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
+          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Koblenz?",
-          "min": 260,
-          "max": 470,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Oberwinterthur?",
+          "min": 370,
+          "max": 670,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 320.3,
-          "explanation": "Der Bahnhof liegt auf 320.3 Metern über Meer.",
+          "correct": 457,
+          "explanation": "Der Bahnhof liegt auf 457 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
           "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Koblenz?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Oberwinterthur?",
           "options": [
-            "Baden",
-            "Brugg",
-            "Laufenburg",
-            "Zurzach"
+            "Oberwinterthur",
+            "Seuzach",
+            "Wiesendangen",
+            "Winterthur"
           ],
           "correct": 3,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Zurzach eingetragen.",
-          "factRef": "stammdaten.bezirk",
+          "explanation": "Als Gemeinde ist Winterthur eingetragen.",
+          "factRef": "stammdaten.gemeinde",
           "difficulty": 2
         }
       ]
@@ -164,7 +164,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Koblenz liegen offene Daten vor. Perron 3/4 misst 230 Meter, Perron 1 misst 220 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 2 Perrons in Oberwinterthur liegen offene Daten vor. Perron 3/4 misst 328 Meter, Perron 2 misst 271 Meter. 1 ist als niveaufrei vermerkt, 1 ausdrücklich als nicht niveaufrei.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
@@ -174,7 +174,7 @@
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 230,
+          "value": 328,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -183,106 +183,97 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Koblenz?",
+          "prompt": "Wie lang ist das längste erfasste Perron in Oberwinterthur?",
           "options": [
-            "130 m",
-            "160 m",
-            "200 m",
-            "230 m"
+            "230 m",
+            "280 m",
+            "328 m",
+            "390 m"
           ],
-          "correct": 3,
-          "explanation": "Das längste erfasste Perron misst 230 Meter.",
+          "correct": 2,
+          "explanation": "Das längste erfasste Perron misst 328 Meter.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "type": "match",
-          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
-          "pairs": [
-            {
-              "links": "Perron 3/4",
-              "rechts": "1297.35 m²",
-              "factRef": "perrons.items[0].flaeche_netto_m2"
-            },
-            {
-              "links": "Perron 1",
-              "rechts": "569.45 m²",
-              "factRef": "perrons.items[1].flaeche_netto_m2"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 3/4 hat 1297.35 Quadratmeter, Perron 1 hat 569.45 Quadratmeter.",
-          "difficulty": 3
-        },
-        {
           "type": "true_false",
-          "prompt": "Beide erfassten Perrons in Koblenz sind niveaufrei erreichbar.",
-          "correct": true,
-          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "prompt": "Zu beiden erfassten Perrons in Oberwinterthur ist ein niveaufreier Zugang vermerkt.",
+          "correct": false,
+          "explanation": "Für 1 der 2 erfassten Perrons ist ein niveaufreier Zugang vermerkt. 1 ist ausdrücklich als nicht niveaufrei erfasst.",
           "factRef": "perrons.niveaufrei_erreichbar",
-          "difficulty": 1
+          "difficulty": 2
         }
       ]
     },
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 3 und 4. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
+      "body": "Zu 4 Gleisen liegen offene Daten vor: 1, 2, 3 und 4. Erfasst sind Perronhöhen von 20, 25 und 55 Zentimetern. Zu den Gleisen 1 und 2 sind keine Sektortafeln erfasst.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
-          "value": 3,
+          "value": 4,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Sektoren an Gleis 1",
-          "value": 3,
+          "label": "Sektoren an Gleis 3",
+          "value": 6,
           "source": "sektortafel",
-          "factRef": "gleise.items[0].sektoren_anzahl"
+          "factRef": "gleise.items[2].sektoren_anzahl"
         }
       ],
       "questions": [
         {
           "type": "cloze",
-          "prompt": "An Gleis 1 in Koblenz sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 3 in Oberwinterthur sind ___ Sektoren erfasst.",
           "options": [
-            "3",
-            "5",
-            "7"
+            "6",
+            "7",
+            "8"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
-          "factRef": "gleise.items[0].sektoren_anzahl",
+          "explanation": "Gleis 3 trägt die Sektoren A, B, C, D, E und F, also 6 Stück.",
+          "factRef": "gleise.items[2].sektoren_anzahl",
           "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "An den erfassten Gleisen in Koblenz kommt nur eine einzige Perronhöhe vor.",
-          "correct": true,
-          "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
-          "factRef": "gleise.perronhoehen_cm",
-          "difficulty": 2
+          "type": "multiple_choice",
+          "prompt": "Welche Perronhöhen sind für Gleis 2 in Oberwinterthur erfasst? (Mehrfachauswahl)",
+          "options": [
+            "20 cm",
+            "25 cm",
+            "30 cm",
+            "55 cm"
+          ],
+          "correct": [
+            0,
+            3
+          ],
+          "optionen_aus_fakten": true,
+          "explanation": "An Gleis 2 sind 20 und 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.items[1].perronhoehen_cm",
+          "difficulty": 3
         }
       ]
     },
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Koblenz sind 6 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Oberwinterthur sind 16 Perronsegmente erfasst: 13 mit 55 Zentimetern, 2 mit 20 Zentimetern, 1 mit 25 Zentimetern. An allen 4 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 6,
+          "value": 16,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
           "label": "Gleise mit Perronhöhe 55 cm",
-          "value": 3,
+          "value": 4,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
@@ -296,23 +287,23 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "In Koblenz sind ___ Perronsegmente erfasst.",
+          "prompt": "In Oberwinterthur sind ___ Perronsegmente erfasst.",
           "options": [
-            "5",
-            "6",
-            "7"
+            "11",
+            "14",
+            "16"
           ],
-          "correct": 1,
+          "correct": 2,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 6 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 16 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
           "type": "true_false",
-          "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 16 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 6 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 16 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -321,19 +312,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Koblenz – Koblenz Süd: Im Personenverkehr verkehren dort 89 Züge pro Tag, das sind 32'601 im Jahr. Auf dem Abschnitt Koblenz – Koblenz Dorf sind es 79 und auf dem Abschnitt Koblenz Grenze – Koblenz sind es 4 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 6 Züge pro Tag auf einem Abschnitt.",
+      "body": "Am stärksten befahren ist der Abschnitt Oberwinterthur – Schwalmenacker (Spw): Im Personenverkehr verkehren dort 333 Züge pro Tag, das sind 121'719 im Jahr. Auf dem Abschnitt Oberwinterthur Ost – Oberwinterthur sind es 225 und auf dem Abschnitt Winterthur Wallrüti – Oberwinterthur sind es 127 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 29 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Koblenz – Koblenz Süd",
-          "value": 89,
+          "label": "Züge pro Tag, Personenverkehr Oberwinterthur – Schwalmenacker (Spw)",
+          "value": 333,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Koblenz – Koblenz Süd",
-          "value": 32601,
+          "label": "Züge pro Jahr, Personenverkehr Oberwinterthur – Schwalmenacker (Spw)",
+          "value": 121719,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
@@ -342,15 +333,15 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Koblenz – Koblenz Süd?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Oberwinterthur – Schwalmenacker (Spw)?",
           "options": [
-            "49",
-            "62",
-            "76",
-            "89"
+            "333",
+            "400",
+            "470",
+            "570"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 89 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 333 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
         },
@@ -360,28 +351,28 @@
           "richtung": "absteigend",
           "items": [
             {
-              "label": "Koblenz – Koblenz Süd, Personenverkehr",
-              "value": 32601,
+              "label": "Oberwinterthur – Schwalmenacker (Spw), Personenverkehr",
+              "value": 121719,
               "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
             },
             {
-              "label": "Koblenz – Koblenz Dorf, Personenverkehr",
-              "value": 29013,
+              "label": "Oberwinterthur Ost – Oberwinterthur, Personenverkehr",
+              "value": 82118,
               "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
             },
             {
-              "label": "Koblenz – Koblenz Dorf, Güterverkehr",
-              "value": 2360,
+              "label": "Winterthur Wallrüti – Oberwinterthur, Personenverkehr",
+              "value": 46270,
               "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
             },
             {
-              "label": "Felsenau AG – Koblenz, Güterverkehr",
-              "value": 2170,
+              "label": "Oberwinterthur – Schwalmenacker (Spw), Güterverkehr",
+              "value": 10549,
               "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
             }
           ],
           "factRef": "zuege.abschnitte",
-          "explanation": "Koblenz – Koblenz Süd (Personenverkehr) 32'601, Koblenz – Koblenz Dorf (Personenverkehr) 29'013, Koblenz – Koblenz Dorf (Güterverkehr) 2'360, Felsenau AG – Koblenz (Güterverkehr) 2'170 Züge im Jahr.",
+          "explanation": "Oberwinterthur – Schwalmenacker (Spw) (Personenverkehr) 121'719, Oberwinterthur Ost – Oberwinterthur (Personenverkehr) 82'118, Winterthur Wallrüti – Oberwinterthur (Personenverkehr) 46'270, Oberwinterthur – Schwalmenacker (Spw) (Güterverkehr) 10'549 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
           "difficulty": 3
         }
       ]
@@ -389,17 +380,17 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Koblenz sind 2 Linien erfasst: die Linie 701 Eglisau - Koblenz - Stein Sackingen Ost und die Linie 702 Turgi - Koblenz - Waldshut.",
+      "body": "Für Oberwinterthur sind 4 Linien erfasst: die Linie 842 Oberwinterthur - SA Punten, die Linie 841 Oberwinterthur - Oberw. Unterhaltanlage, die Linie 840 Winterthur Nord - Romanshorn und die Linie 821 Oberwinterthur - Etzwilen West (Abzw).",
       "facts": [
         {
           "label": "Erfasste Linien",
-          "value": 2,
+          "value": 4,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 701",
-          "value": 48.3789,
+          "label": "Kilometrierung auf der Linie 842",
+          "value": 29.66282,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -408,13 +399,13 @@
       "questions": [
         {
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 701 ist Koblenz eingetragen?",
-          "min": 39,
-          "max": 71,
+          "prompt": "Bei welchem Streckenkilometer der Linie 842 ist Oberwinterthur eingetragen?",
+          "min": 24,
+          "max": 44,
           "step": 1,
           "unit": "km",
-          "correct": 48.3789,
-          "explanation": "Die Kilometrierung von Koblenz auf der Linie 701 beträgt 48.3789. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 29.66282,
+          "explanation": "Die Kilometrierung von Oberwinterthur auf der Linie 842 beträgt 29.66282. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
         },
@@ -423,18 +414,23 @@
           "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
           "pairs": [
             {
-              "links": "Linie 701",
-              "rechts": "Eglisau - Koblenz - Stein Sackingen Ost",
+              "links": "Linie 842",
+              "rechts": "Oberwinterthur - SA Punten",
               "factRef": "linien.items[0].name"
             },
             {
-              "links": "Linie 702",
-              "rechts": "Turgi - Koblenz - Waldshut",
+              "links": "Linie 841",
+              "rechts": "Oberwinterthur - Oberw. Unterhaltanlage",
               "factRef": "linien.items[1].name"
+            },
+            {
+              "links": "Linie 840",
+              "rechts": "Winterthur Nord - Romanshorn",
+              "factRef": "linien.items[2].name"
             }
           ],
           "factRef": "linien.items",
-          "explanation": "Die Linie 701 heisst Eglisau - Koblenz - Stein Sackingen Ost, die Linie 702 heisst Turgi - Koblenz - Waldshut.",
+          "explanation": "Die Linie 842 heisst Oberwinterthur - SA Punten, die Linie 841 heisst Oberwinterthur - Oberw. Unterhaltanlage, die Linie 840 heisst Winterthur Nord - Romanshorn.",
           "difficulty": 2
         }
       ]
@@ -442,7 +438,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 4 Billettentwerter und 1 Wartehalle. Koblenz steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 4 Billettentwerter und 1 Wartehalle. Oberwinterthur steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -467,7 +463,7 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Koblenz steht in der Liste der WLAN-Standorte.",
+          "prompt": "Oberwinterthur steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
@@ -475,11 +471,11 @@
         },
         {
           "type": "cloze",
-          "prompt": "In Koblenz sind ___ Billettentwerter erfasst.",
+          "prompt": "In Oberwinterthur sind ___ Billettentwerter erfasst.",
           "options": [
             "4",
-            "5",
-            "7"
+            "7",
+            "9"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
@@ -492,17 +488,17 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Koblenz 8 Sitzbänke sowie 3 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Oberwinterthur 6 Sitzbänke sowie 10 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 8,
+          "value": 6,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
         {
           "label": "Infopunkte erfasst",
-          "value": 3,
+          "value": 10,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.infopunkte"
         },
@@ -518,13 +514,13 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
+            "6",
             "7",
             "8",
-            "10",
-            "11"
+            "18"
           ],
-          "correct": 1,
-          "explanation": "Erfasst sind 8 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 0,
+          "explanation": "Erfasst sind 6 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
@@ -532,13 +528,13 @@
           "type": "cloze",
           "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
           "options": [
-            "3",
-            "5",
             "7",
-            "9"
+            "8",
+            "10",
+            "12"
           ],
-          "correct": 0,
-          "explanation": "Erfasst sind 3 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 2,
+          "explanation": "Erfasst sind 10 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.infopunkte",
           "difficulty": 1
         },
@@ -578,8 +574,13 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 3 Gleise (1, 3, 4). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "grund": "Erfasst sind 4 Gleise (1, 2, 3, 4). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
     },
     {
       "thema": "WLAN",

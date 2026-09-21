@@ -242,7 +242,7 @@
     {
       "id": "services",
       "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 1 Billettautomat und 1 Wartehalle. Cortébert steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat und 1 Wartehalle. Billettentwerter sind keine verzeichnet. Cortébert steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "Billettautomaten",

@@ -226,7 +226,7 @@
     {
       "id": "services",
       "title": "Was es am Bahnhof gibt",
-      "body": "Müntschemier steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten liegen für diesen Bahnhof keine Daten vor.",
+      "body": "Müntschemier steht nicht in der Liste der WLAN-Standorte. Eine Wartehalle ist nicht erfasst. Zu Billettautomaten liegen für diesen Bahnhof keine Daten vor. Billettentwerter sind keine verzeichnet.",
       "facts": [
         {
           "label": "WLAN erfasst",

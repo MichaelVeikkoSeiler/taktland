@@ -445,7 +445,7 @@
     {
       "id": "services",
       "title": "Was es am Bahnhof gibt",
-      "body": "Erfasst sind 21 Billettautomaten und 34 Billettentwerter. Der Bahnhof steht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 21 Billettautomaten und 34 Billettentwerter. Wartehallen sind keine verzeichnet. Der Bahnhof steht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "Billettautomaten",

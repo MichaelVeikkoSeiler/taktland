@@ -1,6 +1,6 @@
 {
-  "uic": 8500329,
-  "name": "Koblenz",
+  "uic": 8502222,
+  "name": "Bonstetten-Wettswil",
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
@@ -22,25 +22,25 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Koblenz 4'800 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 4'200, an einem freien Tag 2'800. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
+      "body": "An einem Werktag steigen in Bonstetten-Wettswil 4'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 3'700, an einem freien Tag 2'400. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 4800,
+          "value": 4300,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dwv"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 4200,
+          "value": 3700,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dtv"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 2800,
+          "value": 2400,
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
@@ -49,58 +49,28 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Koblenz ein und aus?",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Bonstetten-Wettswil ein und aus?",
           "options": [
-            "2'600",
-            "3'400",
-            "4'100",
-            "4'800"
+            "3'000",
+            "4'300",
+            "5'200",
+            "6'000"
           ],
-          "correct": 3,
-          "explanation": "An einem Werktag sind es 4'800 Ein- und Aussteigende, Stand 2025.",
+          "correct": 1,
+          "explanation": "An einem Werktag sind es 4'300 Ein- und Aussteigende, Stand 2025.",
           "factRef": "steckbrief.dwv",
           "difficulty": 1
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
-          "richtung": "aufsteigend",
-          "items": [
-            {
-              "label": "2022",
-              "value": 2800,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
-              "label": "2018",
-              "value": 3300,
-              "factRef": "steckbrief.verlauf[0].dwv"
-            },
-            {
-              "label": "2023",
-              "value": 4300,
-              "factRef": "steckbrief.verlauf[2].dwv"
-            },
-            {
-              "label": "2024",
-              "value": 5000,
-              "factRef": "steckbrief.verlauf[3].dwv"
-            }
-          ],
-          "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 2'800 (2022), 3'300 (2018), 4'300 (2023), 5'000 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
-          "difficulty": 3
-        },
-        {
           "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Koblenz ___ Personen ein und aus.",
+          "prompt": "An einem freien Tag steigen in Bonstetten-Wettswil ___ Personen ein und aus.",
           "options": [
-            "2'400",
-            "2'800",
-            "3'400"
+            "1'700",
+            "2'000",
+            "2'400"
           ],
-          "correct": 1,
-          "explanation": "An einem freien Tag sind es 2'800 Personen, an einem Werktag 4'800. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 2'400 Personen, an einem Werktag 4'300. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }
@@ -109,54 +79,54 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Koblenz liegt auf 320.3 Metern über Meer in der Gemeinde Koblenz, Bezirk Zurzach, Kanton Aargau. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet KB.",
+      "body": "Bonstetten-Wettswil liegt auf 527 Metern über Meer in der Gemeinde Bonstetten, Bezirk Affoltern, Kanton Zürich. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet BON.",
       "facts": [
         {
           "label": "Höhe über Meer",
-          "value": 320.3,
+          "value": 527,
           "unit": "m",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.hoehe_m_ue_m"
         },
         {
           "label": "Offizielle Abkürzung",
-          "value": "KB",
+          "value": "BON",
           "source": "haltestelle-haltekante",
           "factRef": "stammdaten.abkuerzung"
         },
         {
-          "label": "Bezirk",
-          "value": "Zurzach",
+          "label": "Gemeinde",
+          "value": "Bonstetten",
           "source": "haltestelle-haltekante",
-          "factRef": "stammdaten.bezirk"
+          "factRef": "stammdaten.gemeinde"
         }
       ],
       "questions": [
         {
           "type": "slider",
-          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Koblenz?",
-          "min": 260,
-          "max": 470,
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Bonstetten-Wettswil?",
+          "min": 430,
+          "max": 770,
           "step": 1,
           "unit": "m ü. M.",
-          "correct": 320.3,
-          "explanation": "Der Bahnhof liegt auf 320.3 Metern über Meer.",
+          "correct": 527,
+          "explanation": "Der Bahnhof liegt auf 527 Metern über Meer.",
           "factRef": "stammdaten.hoehe_m_ue_m",
           "difficulty": 2
         },
         {
           "type": "single_choice",
-          "prompt": "In welchem Bezirk liegt der Bahnhof Koblenz?",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Bonstetten-Wettswil?",
           "options": [
-            "Baden",
-            "Brugg",
-            "Laufenburg",
-            "Zurzach"
+            "Bonstetten",
+            "Hedingen",
+            "Stallikon",
+            "Wettswil am Albis"
           ],
-          "correct": 3,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Als Bezirk ist Zurzach eingetragen.",
-          "factRef": "stammdaten.bezirk",
+          "explanation": "Als Gemeinde ist Bonstetten eingetragen.",
+          "factRef": "stammdaten.gemeinde",
           "difficulty": 2
         }
       ]
@@ -164,17 +134,17 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Koblenz liegen offene Daten vor. Perron 3/4 misst 230 Meter, Perron 1 misst 220 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "body": "Zu 1 Perron in Bonstetten-Wettswil liegen offene Daten vor. Perron 2/3 ist ein Mittelperron von 320 Metern. Es ist niveaufrei erreichbar.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",
-          "value": 2,
+          "value": 1,
           "source": "perron",
           "factRef": "perrons.anzahl_mit_daten"
         },
         {
           "label": "Längstes erfasstes Perron",
-          "value": 230,
+          "value": 320,
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
@@ -183,42 +153,23 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie lang ist das längste erfasste Perron in Koblenz?",
+          "prompt": "Wie lang ist das erfasste Perron in Bonstetten-Wettswil?",
           "options": [
-            "130 m",
-            "160 m",
-            "200 m",
-            "230 m"
+            "270 m",
+            "320 m",
+            "380 m",
+            "450 m"
           ],
-          "correct": 3,
-          "explanation": "Das längste erfasste Perron misst 230 Meter.",
+          "correct": 1,
+          "explanation": "Das erfasste Perron misst 320 Meter. Es ist das einzige, zu dem offene Daten vorliegen.",
           "factRef": "perrons.laengste_m",
           "difficulty": 1
         },
         {
-          "type": "match",
-          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
-          "pairs": [
-            {
-              "links": "Perron 3/4",
-              "rechts": "1297.35 m²",
-              "factRef": "perrons.items[0].flaeche_netto_m2"
-            },
-            {
-              "links": "Perron 1",
-              "rechts": "569.45 m²",
-              "factRef": "perrons.items[1].flaeche_netto_m2"
-            }
-          ],
-          "factRef": "perrons.items",
-          "explanation": "Perron 3/4 hat 1297.35 Quadratmeter, Perron 1 hat 569.45 Quadratmeter.",
-          "difficulty": 3
-        },
-        {
           "type": "true_false",
-          "prompt": "Beide erfassten Perrons in Koblenz sind niveaufrei erreichbar.",
+          "prompt": "Das erfasste Perron in Bonstetten-Wettswil ist niveaufrei erreichbar.",
           "correct": true,
-          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "explanation": "Für das Perron mit Daten ist ein niveaufreier Zugang verzeichnet.",
           "factRef": "perrons.niveaufrei_erreichbar",
           "difficulty": 1
         }
@@ -227,17 +178,17 @@
     {
       "id": "gleise",
       "title": "Gleise",
-      "body": "Zu 3 Gleisen liegen offene Daten vor: 1, 3 und 4. An allen 3 erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 2 und 3. An beiden erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet.",
       "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
       "facts": [
         {
           "label": "Gleise mit offenen Daten",
-          "value": 3,
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Sektoren an Gleis 1",
+          "label": "Sektoren an Gleis 2",
           "value": 3,
           "source": "sektortafel",
           "factRef": "gleise.items[0].sektoren_anzahl"
@@ -246,23 +197,23 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "An Gleis 1 in Koblenz sind ___ Sektoren erfasst.",
+          "prompt": "An Gleis 2 in Bonstetten-Wettswil sind ___ Sektoren erfasst.",
           "options": [
             "3",
             "5",
-            "7"
+            "9"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Gleis 1 trägt die Sektoren A, B und C, also 3 Stück.",
+          "explanation": "Gleis 2 trägt die Sektoren A, B und C, also 3 Stück.",
           "factRef": "gleise.items[0].sektoren_anzahl",
           "difficulty": 2
         },
         {
           "type": "true_false",
-          "prompt": "An den erfassten Gleisen in Koblenz kommt nur eine einzige Perronhöhe vor.",
+          "prompt": "An den erfassten Gleisen in Bonstetten-Wettswil kommt nur eine einzige Perronhöhe vor.",
           "correct": true,
-          "explanation": "Für alle 3 erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
           "factRef": "gleise.perronhoehen_cm",
           "difficulty": 2
         }
@@ -271,18 +222,18 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Koblenz sind 6 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An allen 3 erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "body": "Für Bonstetten-Wettswil sind 7 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
       "facts": [
         {
           "label": "Erfasste Perronsegmente",
-          "value": 6,
+          "value": 7,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.segmente"
         },
         {
           "label": "Gleise mit Perronhöhe 55 cm",
-          "value": 3,
+          "value": 2,
           "source": "21197_behig-haltekantesegment",
           "factRef": "hindernisfreiheit.gleise_mit_55cm"
         },
@@ -296,23 +247,23 @@
       "questions": [
         {
           "type": "cloze",
-          "prompt": "In Koblenz sind ___ Perronsegmente erfasst.",
+          "prompt": "In Bonstetten-Wettswil sind ___ Perronsegmente erfasst.",
           "options": [
-            "5",
-            "6",
-            "7"
+            "7",
+            "8",
+            "10"
           ],
-          "correct": 1,
+          "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Die BehiG-Erhebung führt 6 Segmente, Stand 2023.",
+          "explanation": "Die BehiG-Erhebung führt 7 Segmente, Stand 2023.",
           "factRef": "hindernisfreiheit.segmente",
           "difficulty": 1
         },
         {
           "type": "true_false",
-          "prompt": "Bei keinem der 6 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "prompt": "Bei keinem der 7 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
           "correct": true,
-          "explanation": "Die Erhebung weist bei 0 der 6 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "explanation": "Die Erhebung weist bei 0 der 7 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
           "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
           "difficulty": 2
         }
@@ -321,19 +272,19 @@
     {
       "id": "zuege",
       "title": "Züge",
-      "body": "Am stärksten befahren ist der Abschnitt Koblenz – Koblenz Süd: Im Personenverkehr verkehren dort 89 Züge pro Tag, das sind 32'601 im Jahr. Auf dem Abschnitt Koblenz – Koblenz Dorf sind es 79 und auf dem Abschnitt Koblenz Grenze – Koblenz sind es 4 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 6 Züge pro Tag auf einem Abschnitt.",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Bonstetten Nord (Abzw) – Bonstetten-Wettswil 146 Züge pro Tag, das sind 53'375 im Jahr. Auf dem Abschnitt Bonstetten-Wettswil – Bonstetten Süd (Abzw) sind es ebenfalls 146 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 2 Züge pro Tag auf einem Abschnitt.",
       "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Ein Zug, der durchfährt, zählt gleich wie einer, der hält.",
       "facts": [
         {
-          "label": "Züge pro Tag, Personenverkehr Koblenz – Koblenz Süd",
-          "value": 89,
+          "label": "Züge pro Tag, Personenverkehr Bonstetten Nord (Abzw) – Bonstetten-Wettswil",
+          "value": 146,
           "unit": "Züge/Tag",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag"
         },
         {
-          "label": "Züge pro Jahr, Personenverkehr Koblenz – Koblenz Süd",
-          "value": 32601,
+          "label": "Züge pro Jahr, Personenverkehr Bonstetten Nord (Abzw) – Bonstetten-Wettswil",
+          "value": 53375,
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr"
@@ -342,46 +293,28 @@
       "questions": [
         {
           "type": "single_choice",
-          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Koblenz – Koblenz Süd?",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bonstetten Nord (Abzw) – Bonstetten-Wettswil?",
           "options": [
-            "49",
-            "62",
-            "76",
-            "89"
+            "146",
+            "180",
+            "200",
+            "250"
           ],
-          "correct": 3,
-          "explanation": "Auf diesem Abschnitt zählt die Erhebung 89 Züge pro Tag, beide Richtungen zusammen.",
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 146 Züge pro Tag, beide Richtungen zusammen.",
           "factRef": "zuege.staerkster_abschnitt.zuege_pro_tag",
           "difficulty": 1
         },
         {
-          "type": "sort",
-          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
-          "richtung": "absteigend",
-          "items": [
-            {
-              "label": "Koblenz – Koblenz Süd, Personenverkehr",
-              "value": 32601,
-              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
-            },
-            {
-              "label": "Koblenz – Koblenz Dorf, Personenverkehr",
-              "value": 29013,
-              "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
-            },
-            {
-              "label": "Koblenz – Koblenz Dorf, Güterverkehr",
-              "value": 2360,
-              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
-            },
-            {
-              "label": "Felsenau AG – Koblenz, Güterverkehr",
-              "value": 2170,
-              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
-            }
-          ],
-          "factRef": "zuege.abschnitte",
-          "explanation": "Koblenz – Koblenz Süd (Personenverkehr) 32'601, Koblenz – Koblenz Dorf (Personenverkehr) 29'013, Koblenz – Koblenz Dorf (Güterverkehr) 2'360, Felsenau AG – Koblenz (Güterverkehr) 2'170 Züge im Jahr.",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Bonstetten Nord (Abzw) – Bonstetten-Wettswil?",
+          "min": 43500,
+          "max": 77500,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 53375,
+          "explanation": "Die Erhebung zählt 53'375 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_abschnitt.zuege_pro_jahr",
           "difficulty": 3
         }
       ]
@@ -389,17 +322,17 @@
     {
       "id": "linien",
       "title": "Linien",
-      "body": "Für Koblenz sind 2 Linien erfasst: die Linie 701 Eglisau - Koblenz - Stein Sackingen Ost und die Linie 702 Turgi - Koblenz - Waldshut.",
+      "body": "Für Bonstetten-Wettswil ist 1 Linie erfasst: die Linie 711 ZH Hardbrucke - Kollermuhle. Der Bahnhof ist darauf bei Kilometer 18.05825 eingetragen.",
       "facts": [
         {
           "label": "Erfasste Linien",
-          "value": 2,
+          "value": 1,
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.anzahl"
         },
         {
-          "label": "Kilometrierung auf der Linie 701",
-          "value": 48.3789,
+          "label": "Kilometrierung auf der Linie 711",
+          "value": 18.05825,
           "unit": "km",
           "source": "linie-mit-betriebspunkten",
           "factRef": "linien.items[0].km_am_bahnhof"
@@ -408,41 +341,22 @@
       "questions": [
         {
           "type": "slider",
-          "prompt": "Bei welchem Streckenkilometer der Linie 701 ist Koblenz eingetragen?",
-          "min": 39,
-          "max": 71,
-          "step": 1,
+          "prompt": "Bei welchem Streckenkilometer der Linie 711 ist Bonstetten-Wettswil eingetragen?",
+          "min": 14.5,
+          "max": 26.5,
+          "step": 0.1,
           "unit": "km",
-          "correct": 48.3789,
-          "explanation": "Die Kilometrierung von Koblenz auf der Linie 701 beträgt 48.3789. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "correct": 18.05825,
+          "explanation": "Die Kilometrierung von Bonstetten-Wettswil auf der Linie 711 beträgt 18.05825. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
           "factRef": "linien.items[0].km_am_bahnhof",
           "difficulty": 3
-        },
-        {
-          "type": "match",
-          "prompt": "Welche Bezeichnung gehört zu welcher Liniennummer?",
-          "pairs": [
-            {
-              "links": "Linie 701",
-              "rechts": "Eglisau - Koblenz - Stein Sackingen Ost",
-              "factRef": "linien.items[0].name"
-            },
-            {
-              "links": "Linie 702",
-              "rechts": "Turgi - Koblenz - Waldshut",
-              "factRef": "linien.items[1].name"
-            }
-          ],
-          "factRef": "linien.items",
-          "explanation": "Die Linie 701 heisst Eglisau - Koblenz - Stein Sackingen Ost, die Linie 702 heisst Turgi - Koblenz - Waldshut.",
-          "difficulty": 2
         }
       ]
     },
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 4 Billettentwerter und 1 Wartehalle. Koblenz steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 2 Wartehallen. Bonstetten-Wettswil steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -459,7 +373,7 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 4,
+          "value": 2,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
@@ -467,7 +381,7 @@
       "questions": [
         {
           "type": "true_false",
-          "prompt": "Koblenz steht in der Liste der WLAN-Standorte.",
+          "prompt": "Bonstetten-Wettswil steht in der Liste der WLAN-Standorte.",
           "correct": false,
           "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
           "factRef": "services.wlan_erfasst",
@@ -475,15 +389,15 @@
         },
         {
           "type": "cloze",
-          "prompt": "In Koblenz sind ___ Billettentwerter erfasst.",
+          "prompt": "In Bonstetten-Wettswil sind ___ Billettentwerter erfasst.",
           "options": [
-            "4",
-            "5",
-            "7"
+            "2",
+            "6",
+            "8"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 4 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 2 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -492,11 +406,11 @@
     {
       "id": "ausstattung",
       "title": "Ausstattung",
-      "body": "In den offenen Daten sind für Koblenz 8 Sitzbänke sowie 3 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "body": "In den offenen Daten sind für Bonstetten-Wettswil 4 Sitzbänke sowie 3 Infopunkte erfasst. Zu 1 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
       "facts": [
         {
           "label": "Sitzbänke erfasst",
-          "value": 8,
+          "value": 4,
           "source": "mobiliar-im-bahnhof",
           "factRef": "ausstattung.sitzbaenke"
         },
@@ -508,7 +422,7 @@
         },
         {
           "label": "Perrons mit erfasstem Belag",
-          "value": 2,
+          "value": 1,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
         }
@@ -518,13 +432,13 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "7",
-            "8",
-            "10",
-            "11"
+            "4",
+            "5",
+            "6",
+            "9"
           ],
-          "correct": 1,
-          "explanation": "Erfasst sind 8 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "correct": 0,
+          "explanation": "Erfasst sind 4 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
           "factRef": "ausstattung.sitzbaenke",
           "difficulty": 1
         },
@@ -534,8 +448,8 @@
           "options": [
             "3",
             "5",
-            "7",
-            "9"
+            "9",
+            "12"
           ],
           "correct": 0,
           "explanation": "Erfasst sind 3 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
@@ -578,7 +492,7 @@
     },
     {
       "thema": "Vollständigkeit der Gleise",
-      "grund": "Erfasst sind 3 Gleise (1, 3, 4). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "grund": "Erfasst sind 2 Gleise (2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {

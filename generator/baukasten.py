@@ -56,6 +56,11 @@ def aufzaehlung(teile):
     return teile[0] if len(teile) == 1 else ", ".join(teile[:-1]) + " und " + teile[-1]
 
 
+def punkt(text):
+    """Satzende ohne doppelten Punkt: Linie 260 heisst «… Biel/Bienne Aebistr.»."""
+    return text if text.endswith(".") else text + "."
+
+
 def fakten(uic):
     return json.loads((ROOT / "data" / "facts" / f"{uic}.json").read_text(encoding="utf-8"))
 
@@ -316,7 +321,7 @@ def perrons(f):
                 e += f" {nein} {'ist' if nein == 1 else 'sind'} ausdrücklich als nicht niveaufrei erfasst."
             if ohne:
                 e += f" Zu {ohne} fehlt die Angabe."
-            fr.append(tf(f"Zu allen {n} erfassten Perrons in {name} ist ein niveaufreier "
+            fr.append(tf(f"Zu {alle_n(n, 'Perrons')} in {name} ist ein niveaufreier "
                          "Zugang vermerkt.", False, e, "perrons.niveaufrei_erreichbar"))
     else:
         fr.append(tf(f"Das erfasste Perron in {name} ist niveaufrei erreichbar.", ja == 1,
@@ -600,12 +605,12 @@ def linien(f):
     items = li["items"]
     if len(items) == 1:
         it = items[0]
-        body = (f"Für {name} ist 1 Linie erfasst: die Linie {it['nummer']} {it['name']}. "
-                f"Der Bahnhof ist darauf bei Kilometer {it['km_am_bahnhof']} eingetragen.")
+        body = (punkt(f"Für {name} ist 1 Linie erfasst: die Linie {it['nummer']} {it['name']}")
+                + f" Der Bahnhof ist darauf bei Kilometer {it['km_am_bahnhof']} eingetragen.")
     else:
         teile = [f"die Linie {it['nummer']} {it['name']}" for it in items]
         body = (f"Für {name} sind {len(items)} Linien erfasst: "
-                + ", ".join(teile[:-1]) + " und " + teile[-1] + ".")
+                + punkt(", ".join(teile[:-1]) + " und " + teile[-1]))
     facts = [{"label": "Erfasste Linien", "value": li["anzahl"],
               "source": "linie-mit-betriebspunkten", "factRef": "linien.anzahl"}]
     fr = []
@@ -626,8 +631,8 @@ def linien(f):
                    "pairs": [{"links": f"Linie {x['nummer']}", "rechts": x["name"],
                               "factRef": f"linien.items[{i}].name"} for i, x in enumerate(items[:3])],
                    "factRef": "linien.items",
-                   "explanation": ("Die " + ", die ".join(f"Linie {x['nummer']} heisst {x['name']}"
-                                                          for x in items[:3]) + "."),
+                   "explanation": punkt("Die " + ", die ".join(f"Linie {x['nummer']} heisst {x['name']}"
+                                                               for x in items[:3])),
                    "difficulty": 2})
     return {"id": "linien", "title": "Linien", "body": body, "facts": facts, "questions": fr}
 
@@ -651,10 +656,16 @@ def services(f):
     if sv["wlan_erfasst"]:
         satz.append(f"{name} steht in der Liste der WLAN-Standorte.")
     if teile:
-        satz.append("Erfasst sind " + aufzaehlung(teile) + ".")
+        # «Erfasst ist 1 Billettentwerter.» (Ostermundigen), sonst «sind»
+        einzeln = len(teile) == 1 and teile[0].startswith("1 ")
+        satz.append(f"Erfasst {'ist' if einzeln else 'sind'} " + aufzaehlung(teile) + ".")
+    # Jede fehlende Angabe wird genannt. Die Entwerter fehlten hier, und bei
+    # Emmenbrücke Gersag verschwieg der Text, dass keine verzeichnet sind.
     fehlt = []
     if not sv["billettautomaten_erfasst"]:
         fehlt.append("Billettautomaten")
+    if not sv["billettentwerter_erfasst"]:
+        fehlt.append("Billettentwerter")
     if not sv["wartehallen_erfasst"]:
         fehlt.append("Wartehallen")
     if fehlt:

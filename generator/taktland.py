@@ -355,6 +355,9 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                     b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: {warum}")
             if m := re.search(EINZAHL, text):
                 b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: bei genau einem passt die Mehrzahl nicht")
+            # Namen aus den Daten enden manchmal mit einem Abkürzungspunkt
+            if m := re.search(r"\S{0,20}[^.]\.\.(?!\.)", text):
+                b.fehlt(f"{wo}/{feld}", f"«{m.group(0)}»: doppelter Punkt")
         for muster in LEERFORMELN:
             if m := re.search(muster, kap.get("body", ""), re.I):
                 b.fehlt(f"{wo}/body", f"«{m.group(0)}» sagt nichts aus. "
@@ -381,6 +384,16 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
                 b.fehlt(f"{wo}", f"«{m.group(0)}»: pro Tag zählt die Erhebung auf "
                                  f"{gleich[0]['von']} – {gleich[0]['bis']} gleich viele Züge "
                                  f"({st['zuege_pro_tag']}). Nenne die Werte, ohne einen Abschnitt vorzuziehen")
+
+        if kid == "services" and (sv := fakten.get("services")):
+            # Eine 0 heisst «nicht erfasst». Der Text muss das sagen, nicht schweigen
+            # (Emmenbrücke Gersag: Entwerter fehlten im Satz einfach).
+            for feld, wort in (("billettautomaten_erfasst", "Billettautomat"),
+                               ("billettentwerter_erfasst", "Billettentwerter"),
+                               ("wartehallen_erfasst", "Wartehalle")):
+                if feld in sv and not sv[feld] and wort not in kap.get("body", ""):
+                    b.fehlt(f"{wo}/body", f"{wort}: 0 erfasst, der Text verschweigt es. "
+                                          "Schreibe «… sind keine verzeichnet»")
 
         if kid == "linien":
             for feld, text in [("body", kap.get("body", ""))] + [

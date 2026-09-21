@@ -384,6 +384,17 @@ der Antwort 1. Bei 1 fragt der Baukasten «Wie viele … sind erfasst?», und de
 Validator meldet eine Mehrzahl nach der Lücke, wenn die Antwort 1 ist
 (`MEHRZAHL_NACH_LUECKE` in `taktland.py`).
 
+**Eine 0 wird genannt, nicht weggelassen.** Der Services-Text zählte auf, was
+erfasst ist, und nannte fehlende Automaten und Wartehallen. Die Entwerter
+hatte die Regel vergessen: Bei Emmenbrücke Gersag stand nichts darüber, dass
+keine verzeichnet sind, bei Zürich HB nichts über Wartehallen. Fünf ältere
+Profile waren betroffen. Der Validator prüft jetzt für alle drei Bestände,
+dass eine 0 im Text vorkommt.
+
+**Namen aus den Daten können mit einem Punkt enden.** «Biel/Bienne
+Aebistr.» plus Satzpunkt ergab «Aebistr..». Der Baukasten schliesst Sätze
+mit `punkt()`, der Validator meldet doppelte Punkte.
+
 **Der Grenzfall eins.** Sätze, die für mehrere Gleise, Perrons oder Geräte
 geschrieben sind, kippen bei genau einem: «Von den 1 erfassten Perrons»,
 «Perronhöhen sind zu diesen Gleisen nicht vermerkt» bei einem Gleis,
