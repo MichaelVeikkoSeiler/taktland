@@ -46,6 +46,27 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 560,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 630,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2024",
+          "value": 710,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
         }
       ],
       "questions": [

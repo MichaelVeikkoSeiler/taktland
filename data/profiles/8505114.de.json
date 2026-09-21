@@ -45,6 +45,34 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2018",
+          "value": 2300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 910,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 1100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 1000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
@@ -177,6 +205,20 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche Perron 1",
+          "value": 1267.71,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 2/4",
+          "value": 2089.62,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
         }
       ],
       "questions": [
@@ -322,6 +364,20 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Erstfeld Nord (Abzw) – Erstfeld",
+          "value": 1955,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Erstfeld – Amsteg-Silenen",
+          "value": 13450,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
         }
       ],
       "questions": [

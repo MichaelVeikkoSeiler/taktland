@@ -46,6 +46,27 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 15300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 17300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 18400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
@@ -222,7 +243,7 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste erfasste Perronkante",
+          "label": "Längste erfasste Perronkante (Gleis 3)",
           "value": 364,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
@@ -233,6 +254,34 @@
           "value": 8,
           "source": "sektortafel",
           "factRef": "gleise.items[1].sektoren_anzahl"
+        },
+        {
+          "label": "Perronkante Gleis 1",
+          "value": 322,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 2",
+          "value": 260,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 5",
+          "value": 342,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[3].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 7",
+          "value": 299,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[5].perronkante_m"
         }
       ],
       "questions": [
@@ -390,6 +439,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Freienbach SOB – Pfäffikon SZ",
+          "value": 39603,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Pfäffikon SZ – Altendorf",
+          "value": 76709,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Pfäffikon SZ – Pfäffikon SZ Nord (Abzw)",
+          "value": 67651,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
         }
       ],
       "questions": [

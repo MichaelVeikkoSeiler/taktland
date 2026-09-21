@@ -46,6 +46,27 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 1300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2024",
+          "value": 1500,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 1400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
@@ -319,6 +340,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Zürich Oerlikon Nord (Abzw) – Zürich Seebach",
+          "value": 381,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[5].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Zürich Seebach – Opfikon Süd",
+          "value": 12009,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Zürich Seebach – Opfikon Süd",
+          "value": 1407,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
         }
       ],
       "questions": [

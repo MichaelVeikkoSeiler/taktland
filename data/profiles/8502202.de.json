@@ -47,6 +47,27 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 15200,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 17000,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2024",
+          "value": 17900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
         }
       ],
       "questions": [
@@ -227,6 +248,27 @@
           "value": 3,
           "source": "sektortafel",
           "factRef": "gleise.items[0].sektoren_anzahl"
+        },
+        {
+          "label": "Perronkante Gleis 1",
+          "value": 150,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 2",
+          "value": 320,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 5",
+          "value": 180,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[3].perronkante_m"
         }
       ],
       "questions": [
@@ -363,6 +405,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Rotkreuz – Rotkreuz Südost",
+          "value": 36796,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Rotkreuz Nordwest – Rotkreuz",
+          "value": 30651,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Rotkreuz Südwest – Rotkreuz",
+          "value": 72588,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -543,6 +606,27 @@
           "value": 3,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        },
+        {
+          "label": "Belagsfläche Perron 1",
+          "value": 2560,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 2/3",
+          "value": 3070,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 5/6",
+          "value": 2791,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
         }
       ],
       "questions": [

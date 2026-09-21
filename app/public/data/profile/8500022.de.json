@@ -153,6 +153,20 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche Perron 1",
+          "value": 723.41,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 2/3",
+          "value": 570.53,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
         }
       ],
       "questions": [
@@ -215,11 +229,25 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste erfasste Perronkante",
+          "label": "Längste erfasste Perronkante (Gleis 2)",
           "value": 227,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.items[1].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 1",
+          "value": 165,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 3",
+          "value": 142,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[2].perronkante_m"
         }
       ],
       "questions": [
@@ -341,6 +369,20 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Frenkendorf-Füllinsdorf – Liestal Nord (Abzw)",
+          "value": 21490,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Pratteln – Frenkendorf-Füllinsdorf",
+          "value": 24386,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
         }
       ],
       "questions": [

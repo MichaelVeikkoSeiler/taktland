@@ -193,7 +193,7 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste erfasste Perronkante",
+          "label": "Längste erfasste Perronkante (Gleis 2)",
           "value": 170,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
@@ -303,6 +303,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Neyruz FR – Rosé",
+          "value": 2847,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Rosé – Avry-Matran",
+          "value": 4234,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Rosé – Matran",
+          "value": 79239,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
         }
       ],
       "questions": [

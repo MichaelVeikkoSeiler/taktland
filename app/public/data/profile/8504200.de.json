@@ -53,6 +53,27 @@
           "value": "Ohne TRAVYS.",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.bemerkung"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2018",
+          "value": 19800,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 20900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2024",
+          "value": 22300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
         }
       ],
       "questions": [
@@ -196,6 +217,20 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche Perron 1",
+          "value": 1734.06,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 2/3",
+          "value": 2824.01,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
         }
       ],
       "questions": [
@@ -269,7 +304,7 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste erfasste Perronkante",
+          "label": "Längste erfasste Perronkante (Gleis 3)",
           "value": 381,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
@@ -280,6 +315,20 @@
           "value": 4,
           "source": "sektortafel",
           "factRef": "gleise.items[0].sektoren_anzahl"
+        },
+        {
+          "label": "Perronkante Gleis 1",
+          "value": 272,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 2",
+          "value": 346,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
         }
       ],
       "questions": [
@@ -427,6 +476,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Ependes VD – Yverdon-les-Bains",
+          "value": 23500,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Ependes VD – Yverdon-les-Bains",
+          "value": 61244,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Yverdon-les-Bains – Yverdon-Champ Pittet",
+          "value": 28066,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -613,6 +683,27 @@
           "value": 3,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        },
+        {
+          "label": "Belagsfläche Perron 1",
+          "value": 1951,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 2/3",
+          "value": 3505,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 5",
+          "value": 215,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
         }
       ],
       "questions": [

@@ -145,6 +145,20 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche Perron 1",
+          "value": 497.09,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 2",
+          "value": 382.7,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
         }
       ],
       "questions": [
@@ -244,6 +258,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Solothurn West – Solothurn",
+          "value": 25017,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Langendorf – Solothurn West",
+          "value": 17294,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[4].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Solothurn West – Solothurn Allmend",
+          "value": 57215,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
         }
       ],
       "questions": [

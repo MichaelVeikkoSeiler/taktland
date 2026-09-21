@@ -55,6 +55,27 @@
           "value": "Umfasst auch ZLOE, ZMUS und ZUSZ.",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.bemerkung"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 360900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2024",
+          "value": 438300,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 480900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
@@ -323,6 +344,41 @@
           "value": 4,
           "source": "sektortafel",
           "factRef": "gleise.items[0].sektoren_anzahl"
+        },
+        {
+          "label": "Perronkante Gleis 6",
+          "value": 96,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[3].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 10",
+          "value": 236,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[7].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 12",
+          "value": 269,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[9].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 15",
+          "value": 223,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[12].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 17",
+          "value": 254,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[14].perronkante_m"
         }
       ],
       "questions": [
@@ -469,6 +525,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Zürich HB – Zürich Langstrasse",
+          "value": 4472,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Zürich HB – Zürich Stadelhofen",
+          "value": 260851,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Zürich HB – Zürich Wehntalerstrasse (Spw)",
+          "value": 158089,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -608,6 +685,27 @@
           "value": 9,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        },
+        {
+          "label": "Belagsfläche Perron 12/13",
+          "value": 3908,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 16/17",
+          "value": 3704,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 18",
+          "value": 2238,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
         }
       ],
       "questions": [

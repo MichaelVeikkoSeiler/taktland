@@ -187,11 +187,25 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste erfasste Perronkante",
+          "label": "Längste erfasste Perronkante (Gleis 4)",
           "value": 129,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",
           "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 2",
+          "value": 33,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 3",
+          "value": 36,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[1].perronkante_m"
         }
       ],
       "questions": [

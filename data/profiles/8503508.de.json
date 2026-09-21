@@ -318,6 +318,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Dietikon – Glanzenberg",
+          "value": 35993,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr RBL Kopf Zürich – Dietikon",
+          "value": 28917,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Silberen (Abzw) – Dietikon",
+          "value": 227643,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -484,6 +505,27 @@
           "value": 3,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        },
+        {
+          "label": "Belagsfläche Perron 1",
+          "value": 1244,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[0].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 3/4",
+          "value": 2659,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 5/6",
+          "value": 2391,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
         }
       ],
       "questions": [

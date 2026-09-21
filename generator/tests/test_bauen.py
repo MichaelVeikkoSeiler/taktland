@@ -65,3 +65,29 @@ def test_ziffer_im_namen_ist_keine_zahl():
     d = B.bauen("8515997")
     b, _ = pruefe(d, fakten_laden(8515997))
     assert not b.fehler
+
+
+def test_sortierwerte_stehen_in_der_faktenliste():
+    # Reconvilier: «Ordne die Perrons nach erfasster Belagsfläche» fragte nach
+    # 347, 202 und 152 Quadratmetern, die im Kapitel nirgends standen
+    d = B.bauen("8500101")
+    aus = next(k for k in d["chapters"] if k["id"] == "ausstattung")
+    zeilen = {f["label"]: f["value"] for f in aus["facts"]}
+    assert zeilen["Belagsfläche Perron 2"] == 347
+    b, _ = pruefe(d, fakten_laden(8500101))
+    assert not b.fehler
+
+
+def test_unsichtbarer_wert_faellt_auf():
+    d = B.bauen("8500101")
+    aus = next(k for k in d["chapters"] if k["id"] == "ausstattung")
+    aus["facts"] = [f for f in aus["facts"] if not f["label"].startswith("Belagsfläche")]
+    b, _ = pruefe(d, fakten_laden(8500101))
+    assert any("Faktenliste" in str(x) for x in b.fehler)
+
+
+def test_gleisnummer_steht_bei_der_laengsten_kante():
+    # «Längste erfasste Perronkante» ohne Gleis sagt nicht, welches Gleis
+    d = B.bauen("8508004")
+    gl = next(k for k in d["chapters"] if k["id"] == "gleise")
+    assert any(f["label"] == "Längste erfasste Perronkante (Gleis 1)" for f in gl["facts"])

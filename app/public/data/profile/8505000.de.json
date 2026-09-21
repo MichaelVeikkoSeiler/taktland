@@ -49,6 +49,34 @@
           "unit": "Personen",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2018",
+          "value": 97900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[0].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 88100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 104400,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 114900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
@@ -276,6 +304,20 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Länge Perron 10/11",
+          "value": 316,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.items[4].laenge_m"
+        },
+        {
+          "label": "Länge Perron 12/13",
+          "value": 274,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.items[5].laenge_m"
         }
       ],
       "questions": [
@@ -343,6 +385,41 @@
           "value": 3,
           "source": "sektortafel",
           "factRef": "gleise.items[0].sektoren_anzahl"
+        },
+        {
+          "label": "Perronkante Gleis 4",
+          "value": 395,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[2].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 7",
+          "value": 416,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[5].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 9",
+          "value": 353,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[7].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 11",
+          "value": 317,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[9].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 13",
+          "value": 255,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[11].perronkante_m"
         }
       ],
       "questions": [
@@ -618,6 +695,34 @@
           "value": 15,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        },
+        {
+          "label": "Belagsfläche Perron 2/3",
+          "value": 3660,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[7].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 8/9",
+          "value": 3130,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[13].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 10/11",
+          "value": 2803,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[1].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 14/15",
+          "value": 2277,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[5].flaeche_m2"
         }
       ],
       "questions": [

@@ -520,7 +520,8 @@ def gleise(f):
                 and hoechst - sorted(werte)[-2] >= max(10, 0.05 * hoechst):
             i, it = next(t for t in kanten if t[1]["perronkante_m"] == hoechst)
             zweit = sorted(werte)[-2]
-            facts.append({"label": "Längste erfasste Perronkante", "value": hoechst, "unit": "m",
+            facts.append({"label": f"Längste erfasste Perronkante (Gleis {it['nr']})",
+                          "value": hoechst, "unit": "m",
                           "source": "21197_behig-haltekantesegment",
                           "factRef": f"gleise.items[{i}].perronkante_m"})
             fr.append({"type": "hotspot",

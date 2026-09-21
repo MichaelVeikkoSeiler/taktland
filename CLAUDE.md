@@ -51,7 +51,9 @@ wenn eine Aussage allgemein bekannt oder offensichtlich richtig ist.
    darf höchstens ein Viertel seiner Spanne als richtig werten. Gleichstand ist
    kein Vorsprung: Bei gleich vielen Zügen pro Tag ist kein Abschnitt «am
    stärksten befahren». Genauso wenig darf eine Frage ihre Antwort verraten:
-   «In welchem Bezirk liegt Meilen?» mit der Antwort Meilen prüft nichts.
+   «In welchem Bezirk liegt Meilen?» mit der Antwort Meilen prüft nichts. Und
+   was gefragt wird, steht im Kapitel, im Text oder in der Faktenliste
+   darüber: Eine Sortierfrage nach Zahlen, die nirgends stehen, ist Raten.
 
 ### Wie es geprüft wird
 

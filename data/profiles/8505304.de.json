@@ -211,7 +211,7 @@
           "factRef": "gleise.anzahl_mit_daten"
         },
         {
-          "label": "Längste erfasste Perronkante",
+          "label": "Längste erfasste Perronkante (Gleis 1)",
           "value": 288,
           "unit": "m",
           "source": "21197_behig-haltekantesegment",

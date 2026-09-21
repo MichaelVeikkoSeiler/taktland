@@ -11,6 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from belegt import Bericht, Faktenbasis, Regelwerk  # noqa: E402
+from belegt.fakten import zahl  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 FACTS = ROOT / "data" / "facts"
@@ -103,6 +104,90 @@ def klar_getrennt(items, anteil=MINDESTABSTAND, wert=lambda it: it["value"]):
             raus.append(it)
     return raus
 
+
+
+def _wert(x):
+    """Zahl aus einem Wert oder einer Antwort mit Einheit ('429.92 m²')."""
+    if isinstance(x, bool):
+        return None
+    if isinstance(x, (int, float)):
+        return float(x)
+    # nur eine Zahl mit kurzer Einheit: «Rothrist Gleis 1» ist ein Name
+    m = re.fullmatch(r"\s*(\d[\d'’.,]*)\s*[^\d\s]{0,3}\s*", str(x))
+    return zahl(m.group(1)) if m else None
+
+
+def _formen(x):
+    """Wie ein Wert im Text stehen kann: 93595 als 93'595 oder 93595."""
+    w = _wert(x)
+    if w is None:
+        return [re.escape(str(x))]
+    if w.is_integer():
+        i = int(w)
+        return [re.escape(f"{i:,}".replace(",", "'")), str(i)]
+    return [re.escape(str(w))]
+
+
+def _teil_in(text, teil):
+    """«Perron 3» steht in «Nettofläche Perron 3», aber nicht in «Perron 30/31»."""
+    return re.search(r"(?<![\w/])" + re.escape(teil) + r"(?![\w/])", text) is not None
+
+
+def unsichtbar(kap, q):
+    """Was eine Frage als Antwort verlangt, aber im Kapitel nirgends steht.
+
+    Die App zeigt zu jedem Kapitel den Text und die Faktenliste, darunter die
+    Fragen. Beim Lesen von Reconvilier fiel auf: «Ordne die Perrons nach
+    erfasster Belagsfläche» fragte nach 347, 202 und 152 Quadratmetern, die
+    weder im Text noch in der Liste standen. So waren rund 1000 Sortier- und
+    Zuordnungsfragen gebaut. Wer das Kapitel gelesen hatte, konnte nur raten.
+
+    Beim Sortieren und Zuordnen muss jeder Wert zusammen mit dem stehen, wozu
+    er gehört: in einer Faktenzeile, deren Beschriftung ihn nennt («Nettofläche
+    Perron 2»), oder im Text im selben Satzteil («Perron 2 misst 181 Meter»).
+    Bei den übrigen Fragen genügt es, dass die Antwort im Kapitel vorkommt.
+    """
+    facts = kap.get("facts", [])
+    body = kap.get("body", "")
+    t = q.get("type")
+    if t in ("sort", "match"):
+        paare = ([(it.get("label", ""), it.get("value")) for it in q.get("items", [])] if t == "sort"
+                 else [(p.get("links", ""), p.get("rechts")) for p in q.get("pairs", [])])
+        raus = []
+        for label, wert in paare:
+            w = _wert(wert)
+            teile = str(label).split(", ")
+            in_liste = any(
+                (w is not None and _wert(f.get("value")) is not None
+                 and abs(_wert(f.get("value")) - w) < 1e-6
+                 or w is None and str(f.get("value")) == str(wert))
+                and all(_teil_in(f.get("label", ""), x) for x in teile)
+                for f in facts)
+            im_text = len(teile) == 1 and re.search(
+                r"(?<![\w/])" + re.escape(label) + r"(?![\w/])[^,.;]{0,30}?(?<![\d'.])(?:"
+                + "|".join(_formen(wert)) + r")(?![\d']|\.\d)", body)
+            if not (in_liste or im_text):
+                raus.append(f"{label}: {wert}")
+        return raus
+    if t in ("single_choice", "cloze"):
+        antworten = [q["options"][q["correct"]]]
+    elif t == "multiple_choice":
+        antworten = [q["options"][i] for i in q["correct"]]
+    elif t == "slider":
+        antworten = [q["correct"]]
+    else:
+        return []
+    werte = [_wert(f.get("value")) for f in facts]
+    werte += [zahl(z) for z in re.findall(r"\d[\d']*(?:\.\d+)?", body)]
+    texte = body + " " + " ".join(str(f.get("value")) for f in facts)
+    raus = []
+    for a in antworten:
+        w = _wert(a)
+        ok = (any(v is not None and abs(v - w) < 1e-6 for v in werte) if w is not None
+              else str(a) in texte)
+        if not ok:
+            raus.append(f"Antwort {a}")
+    return raus
 
 #: Lücke gefolgt von einem Wort in der Mehrzahl. Setzt man 1 ein, stimmt der
 #: Satz nicht mehr: «An Gleis 1 sind 1 Sektoren erfasst».
@@ -405,6 +490,11 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
         if not kap.get("title") or not kap.get("body"):
             b.fehlt(wo, "title oder body fehlt")
         REGELWERK.pruefe_text(kap.get("body", ""), f"{wo}/body", fb, b)
+        for i, q in enumerate(kap.get("questions", [])):
+            if fehlt := unsichtbar(kap, q):
+                b.fehlt(f"{wo}/questions[{i}]", f"steht weder im Text noch in der Faktenliste: "
+                                                f"{'; '.join(fehlt)}. Wer das Kapitel liest, "
+                                                "kann es nur raten")
         for muster in FELDJARGON:
             if m := re.search(muster, kap.get("body", ""), re.I):
                 b.fehlt(f"{wo}/body", f"«{m.group(0)}» ist ein Feldname aus den Daten. "

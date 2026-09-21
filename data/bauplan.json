@@ -94,6 +94,16 @@
    ]
   }
  },
+ "8500101": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8500102": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -325,6 +335,16 @@
   }
  },
  "8500208": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Lebern",
+    "Gäu"
+   ]
+  }
+ },
+ "8500209": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -611,6 +631,16 @@
    ]
   }
  },
+ "8501015": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Ouest lausannois",
+    "Gros-de-Vaud"
+   ]
+  }
+ },
  "8501020": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -722,6 +752,25 @@
    ]
   }
  },
+ "8501047": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LON",
+    "MOR"
+   ]
+  }
+ },
+ "8501048": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Ouest lausannois",
+    "Gros-de-Vaud",
+    "Lausanne"
+   ]
+  }
+ },
  "8501103": {
   "stammdaten": {
    "frage": "bezirk",
@@ -739,6 +788,16 @@
     "Bretonnières",
     "Romainmôtier-Envy",
     "L'Abbaye"
+   ]
+  }
+ },
+ "8501106": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Gros-de-Vaud",
+    "Ouest lausannois"
    ]
   }
  },
@@ -789,6 +848,16 @@
     "Cossonay",
     "Daillens",
     "Penthaz"
+   ]
+  }
+ },
+ "8501116": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Ouest lausannois",
+    "Morges",
+    "Lausanne"
    ]
   }
  },
@@ -1316,6 +1385,16 @@
    "distraktoren": [
     "HO",
     "BLL"
+   ]
+  }
+ },
+ "8502043": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bremgarten",
+    "Aarau",
+    "Kulm"
    ]
   }
  },
@@ -2794,6 +2873,16 @@
    ]
   }
  },
+ "8504013": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Riviera-Pays-d'Enhaut",
+    "Lausanne",
+    "Ouest lausannois"
+   ]
+  }
+ },
  "8504014": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3048,6 +3137,16 @@
    ]
   }
  },
+ "8504139": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Broye",
+    "Sense",
+    "See"
+   ]
+  }
+ },
  "8504181": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3108,6 +3207,16 @@
    ]
   }
  },
+ "8504206": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Boudry",
+    "Rochefort",
+    "Milvignes"
+   ]
+  }
+ },
  "8504215": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3132,6 +3241,25 @@
    "distraktoren": [
     "NESE",
     "DEU"
+   ]
+  }
+ },
+ "8504222": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Neuchâtel",
+    "Cornaux",
+    "Cressier (NE)"
+   ]
+  }
+ },
+ "8504223": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CRNE",
+    "LD"
    ]
   }
  },
@@ -3251,6 +3379,16 @@
    ]
   }
  },
+ "8504315": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Le Locle",
+    "Val-de-Ruz",
+    "Renan (BE)"
+   ]
+  }
+ },
  "8504316": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3260,12 +3398,31 @@
    ]
   }
  },
+ "8504321": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CF",
+    "CRET"
+   ]
+  }
+ },
  "8504400": {
   "stammdaten": {
    "frage": "abkuerzung",
    "distraktoren": [
     "KE",
     "KRZ"
+   ]
+  }
+ },
+ "8504404": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Bern-Mittelland",
+    "Jura bernois"
    ]
   }
  },
@@ -4208,6 +4365,16 @@
    ]
   }
  },
+ "8506216": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
  "8506217": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4269,6 +4436,16 @@
    "distraktoren": [
     "RSST",
     "RS"
+   ]
+  }
+ },
+ "8506307": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Kreuzlingen",
+    "Münchwilen"
    ]
   }
  },
@@ -4443,6 +4620,16 @@
   }
  },
  "8508003": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Seeland",
+    "Oberaargau"
+   ]
+  }
+ },
+ "8508004": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -4801,6 +4988,15 @@
     "Heitersberg",
     "Niederrohrdorf",
     "Wohlenschwil"
+   ]
+  }
+ },
+ "8516270": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ARB",
+    "STCH"
    ]
   }
  },

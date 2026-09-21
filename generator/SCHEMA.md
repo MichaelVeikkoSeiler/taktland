@@ -342,6 +342,30 @@ queren muss.
 Datenbanksprache. Richtig: «An einem Werktag steigen hier 51'800 Personen ein
 und aus.»
 
+## Was gefragt wird, steht im Kapitel
+
+Die App zeigt zu jedem Kapitel den Text und die Faktenliste, direkt darunter
+die Fragen. Eine Frage darf nur verlangen, was dort zu lesen ist. Beim Lesen
+von Reconvilier fiel auf: «Ordne die Perrons nach erfasster Belagsfläche»
+fragte nach 347, 202 und 152 Quadratmetern, die nirgends standen. Die
+Prüfung über alle Profile fand 1025 solche Fragen: Werktagszahlen früherer
+Jahre, Nettoflächen, Zugzahlen je Abschnitt, Belagsflächen, Perronkanten,
+Perronlängen jenseits der vier längsten. Wer das Kapitel gelesen hatte,
+konnte nur raten.
+
+- **Sortieren und Zuordnen:** Jeder Wert steht zusammen mit dem, wozu er
+  gehört. Entweder in einer Faktenzeile, deren Beschriftung ihn nennt
+  («Nettofläche Perron 2»), oder im Text im selben Satzteil («Perron 2 misst
+  181 Meter»). Eine Zeile «Längste erfasste Perronkante» ohne Gleisnummer
+  genügt nicht.
+- **Übrige Fragen:** Die Antwort kommt im Text oder in der Faktenliste vor.
+
+`generator/sichtbar.py` setzt fehlende Werte beim Bauen als Zeilen in die
+Faktenliste, geordnet nach Beschriftung, nicht nach Lösung. Eine neue Art
+von Sortier- oder Zuordnungsfrage braucht dort einen Eintrag in `ZEILEN`,
+sonst bricht der Bau ab. Der Validator prüft die Regel mit `unsichtbar()` in
+`taktland.py`.
+
 ## Drei Regeln, an denen Profile am häufigsten scheitern
 
 **1. Jede Frage braucht eine Erklärung.** `explanation` ist Pflicht, nicht Kür.

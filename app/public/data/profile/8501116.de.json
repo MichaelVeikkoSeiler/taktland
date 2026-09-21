@@ -1,0 +1,601 @@
+{
+  "uic": 8501116,
+  "name": "Vufflens-la-Ville",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "21197_behig-haltekantesegment",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Vufflens-la-Ville 650 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 540, an einem freien Tag 290. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 650,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 540,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 290,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 540,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 610,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2024",
+          "value": 660,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:c48e601b",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Vufflens-la-Ville ein und aus?",
+          "options": [
+            "650",
+            "780",
+            "910",
+            "1'100"
+          ],
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 650 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 540,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2023",
+              "value": 610,
+              "factRef": "steckbrief.verlauf[2].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 660,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 540 (2022), 610 (2023), 660 (2024). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:4a31af8a",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Vufflens-la-Ville ___ Personen ein und aus.",
+          "options": [
+            "250",
+            "290",
+            "350"
+          ],
+          "correct": 1,
+          "explanation": "An einem freien Tag sind es 290 Personen, an einem Werktag 650. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Vufflens-la-Ville liegt auf 406.761 Metern über Meer in der Gemeinde Vufflens-la-Ville, Bezirk Gros-de-Vaud. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet VU.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 406.761,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "VU",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Gros-de-Vaud",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:ad2a848e",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Vufflens-la-Ville?",
+          "min": 330,
+          "max": 590,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 406.761,
+          "explanation": "Der Bahnhof liegt auf 406.761 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:5e20dd0d",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Vufflens-la-Ville?",
+          "options": [
+            "Gros-de-Vaud",
+            "Lausanne",
+            "Morges",
+            "Ouest lausannois"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Bezirk ist Gros-de-Vaud eingetragen.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 2 Perrons in Vufflens-la-Ville liegen offene Daten vor. Perron 2 misst 241 Meter, Perron 1 misst 240 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 241,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche Perron 1",
+          "value": 413.9,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 2",
+          "value": 337.74,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
+        }
+      ],
+      "questions": [
+        {
+          "id": "perrons:80a0bb53",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Vufflens-la-Ville?",
+          "options": [
+            "170 m",
+            "241 m",
+            "340 m",
+            "410 m"
+          ],
+          "correct": 1,
+          "explanation": "Das längste erfasste Perron misst 241 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2",
+              "rechts": "337.74 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "413.9 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2 hat 337.74 Quadratmeter, Perron 1 hat 413.9 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:dc1f9faf",
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Vufflens-la-Ville sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. An beiden erfassten Gleisen ist eine Perronhöhe von 20 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:fd4415e8",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Vufflens-la-Ville kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 20 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Vufflens-la-Ville sind 9 Perronsegmente erfasst, alle mit einer Perronhöhe von 20 Zentimetern. Bei 5 Segmenten ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 9,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 0,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:4bb88cec",
+          "type": "cloze",
+          "prompt": "In Vufflens-la-Ville sind ___ Perronsegmente erfasst.",
+          "options": [
+            "4",
+            "8",
+            "9"
+          ],
+          "correct": 2,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 9 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Bussigny – Vufflens-la-Ville 256 Züge pro Tag, das sind 93'595 im Jahr. Auf dem Abschnitt Vufflens-la-Ville – Cossonay-Penthalaz sind es ebenfalls 256 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 88 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Bussigny – Vufflens-la-Ville",
+          "value": 256,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Bussigny – Vufflens-la-Ville",
+          "value": 93595,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Bussigny – Vufflens-la-Ville",
+          "value": 32222,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Vufflens-la-Ville – Cossonay-Penthalaz",
+          "value": 27909,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "id": "zuege:ee06cabb",
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Bussigny – Vufflens-la-Ville?",
+          "options": [
+            "140",
+            "180",
+            "220",
+            "256"
+          ],
+          "correct": 3,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 256 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Bussigny – Vufflens-la-Ville, Personenverkehr",
+              "value": 93595,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Bussigny – Vufflens-la-Ville, Güterverkehr",
+              "value": 32222,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Vufflens-la-Ville – Cossonay-Penthalaz, Güterverkehr",
+              "value": 27909,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Bussigny – Vufflens-la-Ville (Personenverkehr) 93'595, Bussigny – Vufflens-la-Ville (Güterverkehr) 32'222, Vufflens-la-Ville – Cossonay-Penthalaz (Güterverkehr) 27'909 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Vufflens-la-Ville ist 1 Linie erfasst: die Linie 200 Renens VD Ouest - Vallorbe. Der Bahnhof ist darauf bei Kilometer 10.9739 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 200",
+          "value": 10.9739,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:6bb81e71",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 200 ist Vufflens-la-Ville eingetragen?",
+          "min": 8.5,
+          "max": 16.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 10.9739,
+          "explanation": "Die Kilometrierung von Vufflens-la-Ville auf der Linie 200 beträgt 10.9739. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 2 Wartehallen. Vufflens-la-Ville steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 2,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:27ff8d65",
+          "type": "true_false",
+          "prompt": "Vufflens-la-Ville steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "id": "services:ae2fd94a",
+          "type": "cloze",
+          "prompt": "In Vufflens-la-Ville sind ___ Billettentwerter erfasst.",
+          "options": [
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 2 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten ist für Vufflens-la-Ville 1 Sitzbank erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 1,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "ausstattung:e6085503",
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist 1 Sitzbank. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "id": "ausstattung:92d1d5cd",
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stufenfreier Einstieg",
+      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}

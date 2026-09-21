@@ -1,0 +1,585 @@
+{
+  "uic": 8506307,
+  "name": "Horn",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "21197_behig-haltekantesegment",
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "haltestelle-visuell-taktile-sicherheitslinie",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Horn 650 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 600, an einem freien Tag 490. Die Infrastruktur gehört der SBB, als Bahnunternehmen ist Thurbo erfasst.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 650,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 600,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 490,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:a01a4578",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Horn ein und aus?",
+          "options": [
+            "450",
+            "550",
+            "650",
+            "780"
+          ],
+          "correct": 2,
+          "explanation": "An einem Werktag sind es 650 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:12b509bf",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Horn ___ Personen ein und aus.",
+          "options": [
+            "340",
+            "420",
+            "490"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 490 Personen, an einem Werktag 650. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Horn liegt auf 402.5 Metern über Meer in der Gemeinde Horn, Bezirk Arbon, Kanton Thurgau. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet HN.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 402.5,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "HN",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Bezirk",
+          "value": "Arbon",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.bezirk"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:c0f78d55",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Horn?",
+          "min": 330,
+          "max": 590,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 402.5,
+          "explanation": "Der Bahnhof liegt auf 402.5 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:83ee3a80",
+          "type": "single_choice",
+          "prompt": "In welchem Bezirk liegt der Bahnhof Horn?",
+          "options": [
+            "Arbon",
+            "Kreuzlingen",
+            "Münchwilen",
+            "Weinfelden"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Bezirk ist Arbon eingetragen.",
+          "factRef": "stammdaten.bezirk",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 2 Perrons in Horn liegen offene Daten vor. Perron 1 misst 132 Meter, Perron 2 misst 121 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 132,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "perrons:f0b17e10",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Horn?",
+          "options": [
+            "73 m",
+            "92 m",
+            "110 m",
+            "132 m"
+          ],
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 132 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:d16cae23",
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Horn sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "gleise",
+      "title": "Gleise",
+      "body": "Zu 2 Gleisen liegen offene Daten vor: 1 und 2. An beiden erfassten Gleisen ist eine Perronhöhe von 55 Zentimetern verzeichnet. Sektortafeln sind zu keinem dieser Gleise erfasst.",
+      "erlaeuterung": "Sektoren teilen ein Perron in Abschnitte, damit Reisende dort warten können, wo ihr Wagen zu stehen kommt.",
+      "facts": [
+        {
+          "label": "Gleise mit offenen Daten",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.anzahl_mit_daten"
+        },
+        {
+          "label": "Längste erfasste Perronkante (Gleis 1)",
+          "value": 133,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[0].perronkante_m"
+        }
+      ],
+      "questions": [
+        {
+          "id": "gleise:d3eb63ed",
+          "type": "hotspot",
+          "prompt": "Welches Gleis hat die längste erfasste Perronkante?",
+          "schema": "gleise",
+          "correct": "1",
+          "factRef": "gleise.items[0].nr",
+          "explanation": "Gleis 1 hat mit 133 Metern die längste erfasste Perronkante, die nächste misst 122 Meter.",
+          "difficulty": 2
+        },
+        {
+          "id": "gleise:4f09f9c2",
+          "type": "true_false",
+          "prompt": "An den erfassten Gleisen in Horn kommt nur eine einzige Perronhöhe vor.",
+          "correct": true,
+          "explanation": "Für beide erfassten Gleise sind ausschliesslich 55 Zentimeter verzeichnet.",
+          "factRef": "gleise.perronhoehen_cm",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Für Horn sind 4 Perronsegmente erfasst, alle mit einer Perronhöhe von 55 Zentimetern. An beiden erfassten Gleisen liegt ein Abschnitt auf 55 Zentimetern. Bei keinem Segment ist ein Hilfstritt verzeichnet. Eine visuell-taktile Sicherheitslinie ist erfasst. Der Datenstand dieser Erhebung ist 2023.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Erfasste Perronsegmente",
+          "value": 4,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.segmente"
+        },
+        {
+          "label": "Gleise mit Perronhöhe 55 cm",
+          "value": 2,
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "hindernisfreiheit.gleise_mit_55cm"
+        },
+        {
+          "label": "Sicherheitslinie",
+          "value": "Ja",
+          "source": "haltestelle-visuell-taktile-sicherheitslinie",
+          "factRef": "hindernisfreiheit.sicherheitslinie"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:6044e745",
+          "type": "cloze",
+          "prompt": "In Horn sind ___ Perronsegmente erfasst.",
+          "options": [
+            "4",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Die BehiG-Erhebung führt 4 Segmente, Stand 2023.",
+          "factRef": "hindernisfreiheit.segmente",
+          "difficulty": 1
+        },
+        {
+          "id": "hindernisfreiheit:7df99317",
+          "type": "true_false",
+          "prompt": "Bei keinem der 4 erfassten Perronsegmente ist ein Hilfstritt verzeichnet.",
+          "correct": true,
+          "explanation": "Die Erhebung weist bei 0 der 4 Segmente einen Hilfstritt aus. Das heisst nicht, dass vor Ort keiner steht.",
+          "factRef": "hindernisfreiheit.segmente_mit_hilfstritt",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Horn – Rorschach Hafen 82 Züge pro Tag, das sind 29'775 im Jahr. Auf dem Abschnitt Steinach – Horn sind es ebenfalls 82 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 6 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Horn – Rorschach Hafen",
+          "value": 82,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Horn – Rorschach Hafen",
+          "value": 29775,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Horn – Rorschach Hafen",
+          "value": 2199,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Güterverkehr Steinach – Horn",
+          "value": 1779,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "id": "zuege:f88cc440",
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Horn – Rorschach Hafen?",
+          "options": [
+            "82",
+            "98",
+            "110",
+            "140"
+          ],
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 82 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:d38de786",
+          "type": "sort",
+          "prompt": "Ordne die Abschnitte nach Zügen pro Jahr, meiste zuerst.",
+          "richtung": "absteigend",
+          "items": [
+            {
+              "label": "Horn – Rorschach Hafen, Personenverkehr",
+              "value": 29775,
+              "factRef": "zuege.abschnitte[0].zuege_pro_jahr"
+            },
+            {
+              "label": "Horn – Rorschach Hafen, Güterverkehr",
+              "value": 2199,
+              "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
+            },
+            {
+              "label": "Steinach – Horn, Güterverkehr",
+              "value": 1779,
+              "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+            }
+          ],
+          "factRef": "zuege.abschnitte",
+          "explanation": "Horn – Rorschach Hafen (Personenverkehr) 29'775, Horn – Rorschach Hafen (Güterverkehr) 2'199, Steinach – Horn (Güterverkehr) 1'779 Züge im Jahr. Abschnitte mit fast gleicher Zahl bleiben weg.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Horn ist 1 Linie erfasst: die Linie 825 Romanshorn Feld H - Rorschach. Der Bahnhof ist darauf bei Kilometer 93.46531 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 825",
+          "value": 93.46531,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:6599598a",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 825 ist Horn eingetragen?",
+          "min": 76,
+          "max": 136,
+          "step": 1,
+          "unit": "km",
+          "correct": 93.46531,
+          "explanation": "Die Kilometrierung von Horn auf der Linie 825 beträgt 93.46531. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 1 Wartehalle. Horn steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 2,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:306a5330",
+          "type": "true_false",
+          "prompt": "Horn steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "id": "services:59a565d6",
+          "type": "cloze",
+          "prompt": "In Horn sind ___ Billettentwerter erfasst.",
+          "options": [
+            "1",
+            "2",
+            "8"
+          ],
+          "correct": 1,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 2 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Horn 3 Sitzbänke sowie 3 Infopunkte erfasst. Zu 2 Perrons liegt der Belag vor, erfasst ist überall: Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 3,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Infopunkte erfasst",
+          "value": 3,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.infopunkte"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "ausstattung:e6085503",
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "3",
+            "7",
+            "9",
+            "12"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        },
+        {
+          "id": "ausstattung:a8529c11",
+          "type": "cloze",
+          "prompt": "In den offenen Daten sind ___ Infopunkte erfasst.",
+          "options": [
+            "3",
+            "7",
+            "9",
+            "12"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Infopunkte. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.infopunkte",
+          "difficulty": 1
+        },
+        {
+          "id": "ausstattung:92d1d5cd",
+          "type": "single_choice",
+          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "options": [
+            "Beton-Belag",
+            "Bituminöses Mischgut",
+            "Gussasphalt",
+            "Verbundstein-Pflästerung"
+          ],
+          "correct": 1,
+          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "factRef": "ausstattung.perronbelag.belagsarten",
+          "optionen_aus_fakten": true,
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "gleise": [
+    {
+      "nr": "1",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Hausperron",
+      "perronkante_m": 133,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    },
+    {
+      "nr": "2",
+      "perronhoehen_cm": [
+        55
+      ],
+      "hilfstritt": false,
+      "perrontyp": "Aussenperron",
+      "perronkante_m": 122,
+      "sektoren": [],
+      "sektoren_anzahl": 0
+    }
+  ]
+}

@@ -37,6 +37,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import baukasten as b  # noqa: E402
 from ausstattung_kapitel import einfuegen  # noqa: E402
 from distraktoren_richten import richten  # noqa: E402
+from sichtbar import ergaenzen  # noqa: E402
 from taktland import PROFILES, fakten_laden  # noqa: E402
 
 BAUPLAN = Path(__file__).resolve().parent.parent / "data" / "bauplan.json"
@@ -63,6 +64,7 @@ def bauen(uic, eintrag=None):
     f = fakten_laden(d["uic"])
     einfuegen(d, f)        # Kapitel Ausstattung hinter services
     richten(d, f)          # keine falsche Antwort, die anderswo richtig ist
+    ergaenzen(d, f)        # was sortiert oder zugeordnet wird, steht in der Faktenliste
     # Die Gleisfrage zum Antippen braucht das Schema im Profil. Fehlte es,
     # zeigte die App bei 49 Bahnhöfen «Zu diesem Bahnhof liegt kein Schema vor».
     if any(q["type"] == "hotspot" for k in d["chapters"] for q in k["questions"]):

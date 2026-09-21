@@ -55,6 +55,27 @@
           "value": "Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.",
           "source": "passagierfrequenz",
           "factRef": "steckbrief.bemerkung"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 90900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2023",
+          "value": 105900,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[2].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 112100,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
         }
       ],
       "questions": [
@@ -286,6 +307,48 @@
           "unit": "m",
           "source": "perron",
           "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Länge Perron 18",
+          "value": 343,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.items[9].laenge_m"
+        },
+        {
+          "label": "Länge Perron 19/20",
+          "value": 460,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.items[4].laenge_m"
+        },
+        {
+          "label": "Länge Perron 33/35",
+          "value": 425,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.items[6].laenge_m"
+        },
+        {
+          "label": "Nettofläche Perron 5/6",
+          "value": 4033.26,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 7/8",
+          "value": 3147.14,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[2].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 30/31",
+          "value": 1888.38,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
         }
       ],
       "questions": [
@@ -378,6 +441,41 @@
           "value": 3,
           "source": "sektortafel",
           "factRef": "gleise.items[0].sektoren_anzahl"
+        },
+        {
+          "label": "Perronkante Gleis 4",
+          "value": 322,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[3].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 5",
+          "value": 377,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[4].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 8",
+          "value": 431,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[7].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 10",
+          "value": 297,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[9].perronkante_m"
+        },
+        {
+          "label": "Perronkante Gleis 12",
+          "value": 341,
+          "unit": "m",
+          "source": "21197_behig-haltekantesegment",
+          "factRef": "gleise.items[11].perronkante_m"
         }
       ],
       "questions": [
@@ -505,6 +603,27 @@
           "unit": "Züge/Jahr",
           "source": "zugzahlen",
           "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Basel Dreispitz – Basel SBB",
+          "value": 49238,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[1].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Basel SBB – Basel SBB GB",
+          "value": 17001,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[3].zuege_pro_jahr"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Basel St. Johann – Basel SBB",
+          "value": 31587,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.abschnitte[2].zuege_pro_jahr"
         }
       ],
       "questions": [
@@ -685,6 +804,34 @@
           "value": 14,
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        },
+        {
+          "label": "Belagsfläche Perron 5/6",
+          "value": 5597,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[11].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 7/8",
+          "value": 3957,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[12].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 14/15",
+          "value": 4199,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[3].flaeche_m2"
+        },
+        {
+          "label": "Belagsfläche Perron 19/20",
+          "value": 4653,
+          "unit": "m²",
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.items[6].flaeche_m2"
         }
       ],
       "questions": [
