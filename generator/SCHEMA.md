@@ -402,7 +402,10 @@ Bahnhofs: Ziegelbrücke liegt in Schänis, Locarno in Muralto.
 
 **Bemerkungen der Quelle gehören ins Profil.** «Ohne TMR», «Ohne asm» oder
 der nur teilweise erfasste Grenzverkehr in Chiasso grenzen die wichtigste
-Zahl des Steckbriefs ein. Sie verdienen eine eigene Frage.
+Zahl des Steckbriefs ein. Sie verdienen eine eigene Frage. Der Baukasten
+setzt jede Bemerkung wörtlich in den Steckbrief-Text («Die Quelle vermerkt zu
+diesen Zahlen: «…»») und baut für «Ohne X.» die Frage selbst. Längere
+Bemerkungen wie in Buchs SG bekommen ihre Frage von Hand über `extra_fragen`.
 
 ## Sprache
 

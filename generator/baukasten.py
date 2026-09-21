@@ -128,6 +128,9 @@ def steckbrief(f, extra_body="", extra_fragen=()):
         liste = aufzaehlung(namen)
         teile.append(f"Die Infrastruktur gehört der {s['isb']}, als Bahnunternehmen "
                      f"{'sind' if len(namen) > 1 else 'ist'} {liste} erfasst.")
+    if s.get("bemerkung"):
+        # wörtlich, damit keine Auslegung entsteht (siehe «Ohne AB.» in SCHEMA.md)
+        teile.append(f"Die Quelle vermerkt zu diesen Zahlen: «{s['bemerkung'].strip()}»")
     if extra_body:
         teile.append(extra_body)
     facts = [
