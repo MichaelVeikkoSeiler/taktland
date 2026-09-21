@@ -312,6 +312,48 @@ statt ihn zu nennen, ist der häufigste Weg, ein Profil wertlos zu machen.
 Wer darüber hinausgeht, fragt dieselben Werte mehrfach ab. Lieber sechs gute
 Fragen als zwanzig, die sich wiederholen.
 
+## Was beim Schreiben von Hand aufgefallen ist
+
+Jeder dieser Punkte ist ein Fehler, der tatsächlich in Profilen stand. Die
+meisten fängt der Prüfer inzwischen, aber nicht alle.
+
+**Eine fehlende Angabe ist keine Tatsache.** Das ist mit Abstand die
+häufigste Fehlerklasse, und sie tarnt sich immer neu:
+
+| Falsch | Was die Daten sagen | Richtig |
+|---|---|---|
+| «Die Linie 100 ist 145 km lang» | Brig liegt bei Kilometer 145 | «Brig ist bei Kilometer 145 eingetragen» |
+| «In Liestal ist eine Gleisquerung nötig» | zu einem Perron fehlt die Zugangsangabe | «Zu einem Perron steht keine Angabe zum Zugang» |
+| «Zu 8 Perrons fehlt die Angabe» | die Angabe lautet «nein» | «8 Perrons sind ausdrücklich nicht niveaufrei» |
+| «An keinem Gleis liegt die Kante auf 55 cm» | es wurde gar keine Höhe gemessen | «Zu den Gleisen ist keine Perronhöhe vermerkt» |
+| «Zu Gleis 1 und 2 liegen keine Daten vor» | die Gleise 1 und 2 kommen nicht vor | den Satz weglassen |
+| «Kein Hilfstritt vorhanden» | 0 Segmente mit Hilfstritt erfasst | «Kein Hilfstritt verzeichnet» |
+
+Die Frage ist jedes Mal: Steht das so in den Daten, oder schliesse ich es
+aus dem, was dort steht oder fehlt?
+
+**Keine gerechneten Grössen, auch nicht in Worten.** Eine Summe wie 244
+fällt dem Prüfer auf. «Die Hälfte», «zwei Drittel», «doppelt so viele»
+sind genauso gerechnet und fallen erst seit einer eigenen Regel auf. Nenne
+beide Werte, den Vergleich zieht der Leser selbst.
+
+**Kein Bezugsrahmen ausserhalb des Bahnhofs.** «Einer der meistbefahrenen
+Abschnitte», «höher als die meisten Bahnhöfe», «schweizweit» - der
+Vergleichswert steht nicht in dieser Faktendatei. Auch wenn es stimmt.
+
+**Keine Frage, die ein Münzwurf ist.** 562 gegen 564 Meter oder zwei
+Abschnitte mit je 292 Zügen taugen nicht für «welches ist grösser». Bei
+Sortierfragen dürfen gleiche Werte vorkommen, die App wertet das richtig.
+
+**Stammdaten wörtlich übernehmen.** Der Kanton heisst in den Daten manchmal
+«Valais», «Vaud» oder «Ticino». Dann steht das so auf der Faktenkarte, mit
+dem Hinweis «laut Stammdaten». Die Gemeinde ist nicht immer der Name des
+Bahnhofs: Ziegelbrücke liegt in Schänis, Locarno in Muralto.
+
+**Bemerkungen der Quelle gehören ins Profil.** «Ohne TMR», «Ohne asm» oder
+der nur teilweise erfasste Grenzverkehr in Chiasso grenzen die wichtigste
+Zahl des Steckbriefs ein. Sie verdienen eine eigene Frage.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph:

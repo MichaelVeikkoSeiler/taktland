@@ -32,6 +32,17 @@ wenn eine Aussage allgemein bekannt oder offensichtlich richtig ist.
 6. **Eine 0 heisst «nicht erfasst», nicht «nicht vorhanden».** Deshalb heissen die
    Felder `wlan_erfasst`, `billettautomaten_erfasst`, `anzahl_mit_daten`.
 
+7. **Eine fehlende Angabe ist keine Tatsache.** Das ist die häufigste Fehlerklasse
+   im ganzen Projekt, und sie steckte mehrfach in den Feldnamen selbst: `km`
+   klang nach Länge, `gleisquerung_noetig` nach einer Tatsache, eine leere
+   Höhenliste las sich wie «keine 55 cm». Ein Feldname muss sagen, was gemessen
+   wurde, nicht was man daraus schliessen könnte. Wo es drei Fälle gibt - ja,
+   nein, keine Angabe -, bekommt jeder sein eigenes Feld.
+
+8. **Keine gerechneten Grössen.** Weder Summen noch Verhältnisse, auch nicht in
+   Worten («die Hälfte»). Steht eine Zahl nicht in den Fakten und wird sie
+   gebraucht, gehört sie in die Pipeline, nicht in den Text.
+
 ### Wie es geprüft wird
 
 ```bash
