@@ -276,6 +276,16 @@
    ]
   }
  },
+ "8500203": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Wasseramt",
+    "Gäu"
+   ]
+  }
+ },
  "8500204": {
   "stammdaten": {
    "frage": "bezirk",
@@ -311,6 +321,16 @@
    "distraktoren": [
     "SW",
     "SOAD"
+   ]
+  }
+ },
+ "8500208": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Lebern",
+    "Gäu"
    ]
   }
  },
@@ -722,6 +742,16 @@
    ]
   }
  },
+ "8501107": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Gros-de-Vaud",
+    "Ouest lausannois"
+   ]
+  }
+ },
  "8501108": {
   "stammdaten": {
    "frage": "bezirk",
@@ -739,6 +769,16 @@
     "Broye-Vully",
     "Gros-de-Vaud",
     "Morges"
+   ]
+  }
+ },
+ "8501114": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura-Nord vaudois",
+    "Gros-de-Vaud",
+    "Ouest lausannois"
    ]
   }
  },
@@ -910,6 +950,16 @@
    "distraktoren": [
     "MON",
     "MY"
+   ]
+  }
+ },
+ "8501424": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Saint-Maurice",
+    "Martigny",
+    "Conthey"
    ]
   }
  },
@@ -1395,6 +1445,16 @@
    ]
   }
  },
+ "8502116": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Holderbank (AG)",
+    "Lupfig",
+    "Möriken-Wildegg"
+   ]
+  }
+ },
  "8502119": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1639,6 +1699,16 @@
    "distraktoren": [
     "STRI",
     "CHAA"
+   ]
+  }
+ },
+ "8502247": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Baden",
+    "Lenzburg",
+    "Bremgarten"
    ]
   }
  },
@@ -1911,6 +1981,16 @@
     "Sarganserland",
     "Toggenburg",
     "Werdenberg"
+   ]
+  }
+ },
+ "8503118": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Toggenburg",
+    "Sarganserland",
+    "Wil"
    ]
   }
  },
@@ -2695,6 +2775,16 @@
    ]
   }
  },
+ "8504011": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lutry",
+    "Puidoux",
+    "Chexbres"
+   ]
+  }
+ },
  "8504012": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2876,6 +2966,16 @@
     "Jura-Nord vaudois",
     "Lavaux-Oron",
     "Morges"
+   ]
+  }
+ },
+ "8504122": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Henniez",
+    "Cugy (FR)",
+    "Villaz"
    ]
   }
  },
@@ -3063,6 +3163,16 @@
    ]
   }
  },
+ "8504232": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Milvignes",
+    "Val-de-Ruz",
+    "Boudry"
+   ]
+  }
+ },
  "8504234": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3188,6 +3298,16 @@
    ]
   }
  },
+ "8504413": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Bern-Mittelland",
+    "Jura bernois"
+   ]
+  }
+ },
  "8504414": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3272,6 +3392,16 @@
     "Schwyz",
     "Goldau",
     "Zug"
+   ]
+  }
+ },
+ "8505005": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Küssnacht (SZ)",
+    "Höfe",
+    "March"
    ]
   }
  },
@@ -3376,6 +3506,16 @@
     "Mezzovico-Vira",
     "Cadenazzo",
     "Gambarogno"
+   ]
+  }
+ },
+ "8505217": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bellinzona",
+    "Locarno",
+    "Mendrisio"
    ]
   }
  },
@@ -3631,6 +3771,16 @@
    ]
   }
  },
+ "8506008": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Winterthur",
+    "Hinwil",
+    "Uster"
+   ]
+  }
+ },
  "8506010": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3843,6 +3993,16 @@
    ]
   }
  },
+ "8506101": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Münchwilen",
+    "Kreuzlingen"
+   ]
+  }
+ },
  "8506105": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3947,6 +4107,16 @@
    "distraktoren": [
     "EZ",
     "EW"
+   ]
+  }
+ },
+ "8506143": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Arbon",
+    "Frauenfeld"
    ]
   }
  },
@@ -4321,6 +4491,16 @@
    ]
   }
  },
+ "8508102": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aarau",
+    "Lenzburg",
+    "Kulm"
+   ]
+  }
+ },
  "8508103": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4338,6 +4518,16 @@
     "Emmental",
     "Oberaargau",
     "Thun"
+   ]
+  }
+ },
+ "8508203": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Thun",
+    "Seeland"
    ]
   }
  },
@@ -4479,6 +4669,16 @@
    "distraktoren": [
     "MELS",
     "BRAG"
+   ]
+  }
+ },
+ "8509413": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Werdenberg",
+    "See-Gaster",
+    "Rheintal"
    ]
   }
  },
