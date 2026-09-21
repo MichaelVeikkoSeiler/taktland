@@ -78,12 +78,17 @@
           "difficulty": 2
         },
         {
-          "type": "true_false",
-          "prompt": "An freien Tagen nutzen etwa halb so viele Personen den Bahnhof wie an Werktagen.",
-          "correct": true,
-          "explanation": "350 an Werktagen, 180 an freien Tagen.",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Müntschemier ___ Personen ein und aus.",
+          "options": [
+            "130",
+            "150",
+            "180"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 180 Personen, an einem Werktag 350. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
-          "difficulty": 3
+          "difficulty": 2
         }
       ]
     },

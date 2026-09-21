@@ -211,7 +211,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreies Reisen",
-      "body": "In Morges sind fünf verschiedene Perronhöhen erfasst: 20, 25, 30, 35 und 55 Zentimeter. Von 23 erfassten Abschnitten liegen 4 auf 55 Zentimetern, und 3 der 5 Gleise haben einen solchen Abschnitt. Von 4 erfassten Perrons sind 2 als niveaufrei erreichbar vermerkt, zu den beiden anderen fehlt die Angabe zum Zugang. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
+      "body": "In Morges sind fünf verschiedene Perronhöhen erfasst: 20, 25, 30, 35 und 55 Zentimeter. Von 23 erfassten Abschnitten liegen 4 auf 55 Zentimetern, und 3 der 5 Gleise haben einen solchen Abschnitt. Von 4 erfassten Perrons sind 2 als niveaufrei erreichbar vermerkt, die beiden anderen ausdrücklich als nicht niveaufrei. Eine visuell-taktile Sicherheitslinie ist vorhanden.",
       "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge. Wo die Kante tiefer liegt, überwindet man beim Einsteigen eine Stufe. Niveaufrei heisst, dass man das Perron ohne Gleisquerung erreicht, etwa über eine Unterführung.",
       "facts": [
         {
@@ -563,11 +563,6 @@
       "quelle": "sektortafel"
     },
     {
-      "thema": "Zugang zum Perron",
-      "grund": "Von 4 erfassten Perrons sind 2 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
-      "quelle": "perron"
-    },
-    {
       "thema": "Stand der BehiG-Daten",
       "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
       "quelle": "21197_behig-haltekantesegment"
@@ -602,7 +597,8 @@
         "F",
         "G",
         "H"
-      ]
+      ],
+      "sektoren_anzahl": 8
     },
     {
       "nr": "2",
@@ -618,7 +614,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "3",
@@ -634,7 +631,8 @@
         "B",
         "C",
         "D"
-      ]
+      ],
+      "sektoren_anzahl": 4
     },
     {
       "nr": "4",
@@ -648,7 +646,8 @@
       "sektoren": [
         "B",
         "C"
-      ]
+      ],
+      "sektoren_anzahl": 2
     },
     {
       "nr": "5",
@@ -659,7 +658,8 @@
       "hilfstritt": false,
       "perrontyp": "Mittelperron",
       "perronkante_m": 242,
-      "sektoren": []
+      "sektoren": [],
+      "sektoren_anzahl": 0
     }
   ]
 }

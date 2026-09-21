@@ -268,6 +268,20 @@ Zwei Quellen: Mobiliar am Bahnhof und Perronbelag.
   nicht als Schalter, Kundendienst oder Anlaufstelle. Nenne nur die Zahl.
 - `perronbelag.items` nennt je Perron den Belag und die erfasste Fläche. Ein
   Perron kann mehrere Beläge tragen, dann stehen mehrere Einträge da.
+### Zugang zum Perron: drei Fälle
+
+`niveaufreier_zugang` kennt drei Werte, und sie bedeuten Verschiedenes:
+
+| Wert | Bedeutung | Feld in `hindernisfreiheit` |
+|---|---|---|
+| `ja` | niveaufrei erreichbar | `perrons_niveaufrei` |
+| `nein` | ausdrücklich **nicht** niveaufrei | `perrons_nicht_niveaufrei` |
+| fehlt | keine Angabe in den Daten | `perrons_ohne_zugangsangabe` |
+
+Schreibe bei `nein` nicht «die Angabe fehlt» und bei einer fehlenden Angabe
+nicht «nicht niveaufrei». Und keines von beiden heisst, dass man die Gleise
+queren muss.
+
 - Die Quelle führt **keine** Lifte, Toiletten, Defibrillatoren, Sammelplätze
   oder Läden, die bei den meisten Bahnhöfen brauchbar wären. Erfinde sie nicht
   und schreibe auch nicht, es gebe sie nicht.

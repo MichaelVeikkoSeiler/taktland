@@ -111,7 +111,7 @@
     "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
     "perrons_niveaufrei": 1,
     "perrons_mit_daten": 2,
-    "perrons_ohne_zugangsangabe": 1,
+    "perrons_nicht_niveaufrei": 1,
     "segmente": 228,
     "segmente_pro_perronhoehe_cm": {
       "20": 228
@@ -272,11 +272,6 @@
       "thema": "Sektoren",
       "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
       "quelle": "sektortafel"
-    },
-    {
-      "thema": "Zugang zum Perron",
-      "grund": "Von 2 erfassten Perrons ist 1 als niveaufrei erreichbar vermerkt. Zu den übrigen 1 steht in den Daten keine Angabe zum Zugang. Wie man dorthin gelangt, sagen die offenen Daten nicht.",
-      "quelle": "perron"
     },
     {
       "thema": "Stufenfreier Einstieg",

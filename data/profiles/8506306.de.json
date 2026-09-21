@@ -380,11 +380,6 @@
       "quelle": "21197_behig-haltekantesegment"
     },
     {
-      "thema": "Zugang zum Perron",
-      "grund": "Von 2 erfassten Perrons sind 0 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
-      "quelle": "perron"
-    },
-    {
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"

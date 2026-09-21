@@ -70,7 +70,7 @@
             "8'200"
           ],
           "correct": 1,
-          "explanation": "An einem freien Tag sind es 6'100 Personen, also gut die Hälfte des Werktagswerts von 11'900.",
+          "explanation": "An einem freien Tag sind es 6'100 Personen, an einem Werktag 11'900.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         },

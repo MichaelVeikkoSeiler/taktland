@@ -73,10 +73,15 @@
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "An freien Tagen wird rund die Hälfte des Werktagsverkehrs erfasst.",
-          "correct": true,
-          "explanation": "31'800 an freien Tagen gegenüber 62'400 an Werktagen.",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Zürich Hardbrücke ___ Personen ein und aus.",
+          "options": [
+            "22'000",
+            "27'000",
+            "31'800"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 31'800 Personen, an einem Werktag 62'400. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }

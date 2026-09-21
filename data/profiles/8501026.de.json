@@ -602,11 +602,6 @@
       "quelle": "21197_behig-haltekantesegment"
     },
     {
-      "thema": "Zugang zum Perron",
-      "grund": "Von 6 erfassten Perrons sind 5 niveaufrei erreichbar. Für die übrigen ist in den Daten kein niveaufreier Zugang vermerkt, es ist also mit einer Gleisquerung zu rechnen.",
-      "quelle": "perron"
-    },
-    {
       "thema": "Stand der BehiG-Daten",
       "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
       "quelle": "21197_behig-haltekantesegment"

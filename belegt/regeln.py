@@ -31,6 +31,16 @@ EINGRENZUNG = [
     r"\bDaten\b", r"laut (den )?Quellen", r"nach den Quellen",
 ]
 
+# Ausgeschriebene Verhaeltnisse. Eine Zahl wie 244 faellt dem Pruefer auf,
+# weil sie nicht in den Fakten steht. «Die Hälfte» oder «zwei Drittel» sind
+# genauso gerechnet, rutschen aber durch, weil keine Ziffer darin steht.
+VERHAELTNIS = (
+    r"\b(die |eine |gut die |knapp die |mehr als die |weniger als die |rund die )?"
+    r"(Hälfte|Drittel|Viertel|Fünftel|Zehntel)\b"
+    r"|\b(doppelt|dreifach|vierfach|zehnfach|halb) so\b"
+    r"|\b(zwei|drei|vier|fünf|zehn)mal so\b"
+)
+
 # Superlative sind erlaubt, wenn sie sich auf die eigenen Daten beziehen
 # ("das längste erfasste Perron"), nicht aber im Vergleich mit anderen.
 VERGLEICH = (
@@ -125,6 +135,10 @@ class Regelwerk:
         if self._vermutung and (m := self._vermutung.search(text)):
             bericht.fehlt(wo, f"«{m.group(0)}» deutet oder vermutet. "
                               "Die Daten geben das nicht her")
+        if m := re.search(VERHAELTNIS, text, re.I):
+            bericht.fehlt(wo, f"«{m.group(0).strip()}» ist ein gerechnetes Verhältnis. "
+                              "Es steht nicht in den Fakten. Nenne die beiden Werte, "
+                              "den Vergleich zieht der Leser selbst")
         if self._vergleich and (m := self._vergleich.search(text)):
             bericht.fehlt(wo, f"«{m.group(0)}» vergleicht mit anderen, "
                               "ohne Vergleichswert in den Fakten")

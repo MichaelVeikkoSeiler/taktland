@@ -70,10 +70,15 @@
           "difficulty": 1
         },
         {
-          "type": "true_false",
-          "prompt": "An freien Tagen nutzen etwa halb so viele Personen den Bahnhof wie an Werktagen.",
-          "correct": true,
-          "explanation": "5500 an freien Tagen gegenüber 10'800 an Werktagen.",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Baar ___ Personen ein und aus.",
+          "options": [
+            "3'800",
+            "4'700",
+            "5'500"
+          ],
+          "correct": 2,
+          "explanation": "An einem freien Tag sind es 5'500 Personen, an einem Werktag 10'800. Gemeint sind Wochenend- und Feiertage zusammen.",
           "factRef": "steckbrief.dnwv",
           "difficulty": 2
         }

@@ -6,6 +6,7 @@ irgendwo richtig. Dieses Skript nennt Zahlen in plausibler Naehe, die frei sind.
 
     python generator/distraktoren.py 8503000 49
 """
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -26,16 +27,36 @@ def vorschlaege(uic, wert, anzahl=3, auffuellen=True):
     """
     fb = Faktenbasis.aus_datei(FACTS / f"{uic}.json")
     belegt = fb.zahlen
-    frei, ersatz = [], []
-    for faktor in (0.4, 0.55, 0.7, 0.85, 1.2, 1.4, 1.7, 2.2, 3.0):
-        kandidat = wert * faktor
-        stelle = 10 ** max(0, len(str(int(abs(kandidat)))) - 2)
-        kandidat = round(kandidat / stelle) * stelle
-        if not kandidat or kandidat == wert:
-            continue
-        ziel = frei if kandidat not in belegt else ersatz
-        if kandidat not in frei and kandidat not in ersatz:
-            ziel.append(kandidat)
+
+    def runden(x):
+        stelle = 10 ** max(0, len(str(int(abs(x)))) - 2)
+        return round(x / stelle) * stelle
+
+    def kandidaten(faktoren):
+        frei_, ersatz_ = [], []
+        for faktor in faktoren:
+            k = runden(wert * faktor)
+            if not k or k == wert or k in frei_ or k in ersatz_:
+                continue
+            (frei_ if k not in belegt else ersatz_).append(k)
+        return frei_, ersatz_
+
+    # Frueher wurden zuerst die kleineren Werte probiert. Fanden sich genug,
+    # war die richtige Antwort immer die groesste, und im Bestand war die
+    # kleinste Option nur in 12 Prozent der Faelle richtig. Jetzt wird fest
+    # je Wert bestimmt, wie viele Vorschlaege unter und wie viele ueber dem
+    # richtigen Wert liegen - damit landet die Antwort auf jeder Position
+    # etwa gleich oft, und ein zweiter Lauf macht dieselben Vorschlaege.
+    unten_frei, unten_ersatz = kandidaten((0.85, 0.7, 0.55, 0.4, 0.3, 0.2))
+    oben_frei, oben_ersatz = kandidaten((1.2, 1.4, 1.7, 2.2, 3.0, 4.0))
+    streu = int(hashlib.md5(f"{uic}:{wert}".encode()).hexdigest(), 16)
+    soll_unten = streu % (anzahl + 1)
+    # reicht eine Seite nicht, gleicht die andere aus
+    soll_unten = min(soll_unten, len(unten_frei))
+    soll_oben = min(anzahl - soll_unten, len(oben_frei))
+    soll_unten = min(anzahl - soll_oben, len(unten_frei))
+    frei = unten_frei[:soll_unten] + oben_frei[:soll_oben]
+    ersatz = [k for k in unten_frei + oben_frei if k not in frei] + unten_ersatz + oben_ersatz
     alle_frei = len(frei) >= anzahl
     liste = frei[:anzahl]
     if auffuellen and not alle_frei:
