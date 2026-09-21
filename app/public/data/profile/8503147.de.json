@@ -250,7 +250,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Von einem erfassten Perron ist eines niveaufrei erreichbar, und es ist eine visuell-taktile Sicherheitslinie vorhanden. Von den zwei Gleisen mit Daten ist bei keinem eine Perronhöhe von 55 cm erfasst.",
+      "body": "Von einem erfassten Perron ist eines niveaufrei erreichbar, und es ist eine visuell-taktile Sicherheitslinie vorhanden. Zu keinem der beiden Gleise mit Daten ist überhaupt eine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
       "facts": [
         {
           "label": "Niveaufrei erreichbare Perrons",
@@ -514,8 +514,8 @@
       "quelle": "21197_behig-haltekantesegment"
     },
     {
-      "thema": "Stufenfreier Einstieg",
-      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "thema": "Perronhöhen",
+      "grund": "Zu den erfassten Gleisen ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {

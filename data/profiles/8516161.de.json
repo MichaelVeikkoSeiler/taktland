@@ -331,7 +331,7 @@
     {
       "id": "hindernisfreiheit",
       "title": "Hindernisfreiheit",
-      "body": "Für Bern Wankdorf ist eine Sicherheitslinie erfasst. Zu 6 Gleisen liegen Daten vor, keines davon ist mit einer Perronhöhe von 55 cm erfasst.",
+      "body": "Für Bern Wankdorf ist eine Sicherheitslinie erfasst. Zu 6 Gleisen liegen Daten vor, zu keinem davon ist eine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
       "facts": [
         {
           "label": "Niveaufreie Perrons",
@@ -715,8 +715,8 @@
       "quelle": "21197_behig-haltekantesegment"
     },
     {
-      "thema": "Stufenfreier Einstieg",
-      "grund": "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der Referenzhöhe für den stufenfreien Einstieg.",
+      "thema": "Perronhöhen",
+      "grund": "Zu den erfassten Gleisen ist keine Perronhöhe vermerkt. Ob der Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
       "quelle": "21197_behig-haltekantesegment"
     },
     {

@@ -542,10 +542,20 @@ def luecken(d, uic, f):
                "gelangt, sagen die offenen Daten nicht.",
                "perron")
     if hf and hf.get("gleise_mit_daten") and hf.get("gleise_mit_55cm") == 0:
-        lueckt("Stufenfreier Einstieg",
-               "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, der "
-               "Referenzhöhe für den stufenfreien Einstieg.",
-               "21197_behig-haltekantesegment")
+        # Zwei sehr verschiedene Faelle, die der Satz frueher gleich behandelte:
+        # entweder wurden Hoehen gemessen und keine ist 55, oder es wurde gar
+        # nichts gemessen. Das zweite als Messergebnis auszugeben, waere bei
+        # einem Thema wie Hindernisfreiheit besonders irrefuehrend.
+        if (f.get("gleise") or {}).get("perronhoehen_cm"):
+            lueckt("Stufenfreier Einstieg",
+                   "An keinem erfassten Gleis liegt die Perronkante auf 55 Zentimetern, "
+                   "der Referenzhöhe für den stufenfreien Einstieg.",
+                   "21197_behig-haltekantesegment")
+        else:
+            lueckt("Perronhöhen",
+                   "Zu den erfassten Gleisen ist keine Perronhöhe vermerkt. Ob der "
+                   "Einstieg stufenfrei ist, sagen die offenen Daten damit nicht.",
+                   "21197_behig-haltekantesegment")
 
     sv = f.get("services") or {}
     if not sv.get("wlan_erfasst"):

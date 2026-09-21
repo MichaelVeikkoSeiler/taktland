@@ -40,6 +40,11 @@ VERGLEICH = (
     r"|\b(mehr|weniger|häufiger|seltener|öfter|besser|schlechter|länger|kürzer|höher|tiefer)"
     r"\s+als\s+(bei\s+)?(anderen?|die\s+meisten|den\s+meisten|üblich|sonst)"
     r"|\bals\s+(bei\s+)?(anderen?|den\s+meisten)\b"
+    # Superlativ mit einem Bezugsrahmen ausserhalb dieses Bahnhofs
+    r"|\b(eine[rs]|einem|zu)\s+der\s+\w*(grösst|längst|meist\w*|stärkst|höchst|"
+    r"kleinst|kürzest)\w*"
+    r"|\b(im Bestand|schweizweit|in der (ganzen )?Schweiz|landesweit|"
+    r"aller (SBB-)?Bahnhöfe|unter allen Bahnhöfen)\b"
 )
 
 
