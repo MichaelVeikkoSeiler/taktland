@@ -104,6 +104,16 @@
    ]
   }
  },
+ "8500031": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Liestal",
+    "Arlesheim",
+    "Laufen"
+   ]
+  }
+ },
  "8500034": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1063,6 +1073,16 @@
    ]
   }
  },
+ "8501123": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lutry",
+    "Pully",
+    "Puidoux"
+   ]
+  }
+ },
  "8501124": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -1258,6 +1278,16 @@
    ]
   }
  },
+ "8501423": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Vouvry",
+    "Aigle",
+    "Roche (VD)"
+   ]
+  }
+ },
  "8501424": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1265,6 +1295,16 @@
     "Saint-Maurice",
     "Martigny",
     "Conthey"
+   ]
+  }
+ },
+ "8501425": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Vouvry",
+    "Roche (VD)",
+    "Villeneuve (VD)"
    ]
   }
  },
@@ -1544,6 +1584,16 @@
     "Nottwil",
     "Rothenburg",
     "Sempach"
+   ]
+  }
+ },
+ "8502010": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Willisau",
+    "Hochdorf",
+    "Entlebuch"
    ]
   }
  },
@@ -3233,6 +3283,16 @@
    ]
   }
  },
+ "8503408": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Mellikon",
+    "Döttingen",
+    "Klingnau"
+   ]
+  }
+ },
  "8503409": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3323,6 +3383,16 @@
   }
  },
  "8503428": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8503429": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -3626,6 +3696,16 @@
    ]
   }
  },
+ "8504029": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "La Broye",
+    "Sense",
+    "La Glâne"
+   ]
+  }
+ },
  "8504030": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3817,6 +3897,16 @@
    "distraktoren": [
     "MO",
     "MUR"
+   ]
+  }
+ },
+ "8504129": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Kerzers",
+    "Müntschemier",
+    "Fräschels"
    ]
   }
  },
@@ -4231,6 +4321,16 @@
    ]
   }
  },
+ "8504301": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Péry-La Heutte",
+    "Biel/Bienne",
+    "Brügg"
+   ]
+  }
+ },
  "8504302": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4358,6 +4458,16 @@
   }
  },
  "8504402": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Jura bernois",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8504403": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -4542,6 +4652,16 @@
    ]
   }
  },
+ "8505011": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Meggen",
+    "Ebikon",
+    "Root"
+   ]
+  }
+ },
  "8505018": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4549,6 +4669,15 @@
     "Luzern-Stadt",
     "Hochdorf",
     "Sursee"
+   ]
+  }
+ },
+ "8505111": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "FL",
+    "BRU"
    ]
   }
  },
@@ -5118,6 +5247,16 @@
    ]
   }
  },
+ "8506025": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Stein am Rhein",
+    "Basadingen-Schlattingen",
+    "Stammheim"
+   ]
+  }
+ },
  "8506035": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -5525,6 +5664,36 @@
     "Weinfelden",
     "Arbon",
     "Frauenfeld"
+   ]
+  }
+ },
+ "8506148": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schlatt (TG)",
+    "Basadingen-Schlattingen",
+    "Feuerthalen"
+   ]
+  }
+ },
+ "8506168": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Frauenfeld",
+    "Kreuzlingen"
+   ]
+  }
+ },
+ "8506181": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bettwiesen",
+    "Sirnach",
+    "Tobel-Tägerschen"
    ]
   }
  },
@@ -6138,6 +6307,16 @@
    ]
   }
  },
+ "8508201": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Konolfingen",
+    "Rubigen",
+    "Worb"
+   ]
+  }
+ },
  "8508202": {
   "stammdaten": {
    "frage": "bezirk",
@@ -6318,6 +6497,16 @@
     "Werdenberg",
     "Rorschach",
     "St. Gallen"
+   ]
+  }
+ },
+ "8509401": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Werdenberg",
+    "St. Gallen",
+    "Rorschach"
    ]
   }
  },
@@ -6602,6 +6791,16 @@
     "Hitzkirch",
     "Ballwil",
     "Ermensee"
+   ]
+  }
+ },
+ "8516444": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sense",
+    "La Broye",
+    "La Sarine"
    ]
   }
  },

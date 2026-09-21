@@ -1,0 +1,497 @@
+{
+  "uic": 8501123,
+  "name": "Villette VD",
+  "tier": "S",
+  "lang": "de",
+  "dataYear": 2025,
+  "generated": "2026-09-21",
+  "sources": [
+    "billetautomat",
+    "billetentwerter",
+    "haltestelle-haltekante",
+    "linie-mit-betriebspunkten",
+    "mobiliar-im-bahnhof",
+    "passagierfrequenz",
+    "perron",
+    "perronoberflache",
+    "wifistation",
+    "zugzahlen"
+  ],
+  "chapters": [
+    {
+      "id": "steckbrief",
+      "title": "Steckbrief",
+      "body": "An einem Werktag steigen in Villette VD 180 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 180, an einem freien Tag 180. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "facts": [
+        {
+          "label": "Ein- und Aussteigende an einem Werktag",
+          "value": 180,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende im Tagesmittel",
+          "value": 180,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dtv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem freien Tag",
+          "value": 180,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.dnwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2022",
+          "value": 120,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[1].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2024",
+          "value": 130,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[3].dwv"
+        },
+        {
+          "label": "Ein- und Aussteigende an einem Werktag 2025",
+          "value": 180,
+          "unit": "Personen",
+          "source": "passagierfrequenz",
+          "factRef": "steckbrief.verlauf[4].dwv"
+        }
+      ],
+      "questions": [
+        {
+          "id": "steckbrief:ae42f7f3",
+          "type": "single_choice",
+          "prompt": "Wie viele Personen steigen an einem Werktag in Villette VD ein und aus?",
+          "options": [
+            "180",
+            "220",
+            "250",
+            "310"
+          ],
+          "correct": 0,
+          "explanation": "An einem Werktag sind es 180 Ein- und Aussteigende, Stand 2025.",
+          "factRef": "steckbrief.dwv",
+          "difficulty": 1
+        },
+        {
+          "id": "steckbrief:0a41c000",
+          "type": "sort",
+          "prompt": "Ordne die Jahre nach dem Werktagsverkehr, tiefster Wert zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "2022",
+              "value": 120,
+              "factRef": "steckbrief.verlauf[1].dwv"
+            },
+            {
+              "label": "2024",
+              "value": 130,
+              "factRef": "steckbrief.verlauf[3].dwv"
+            },
+            {
+              "label": "2025",
+              "value": 180,
+              "factRef": "steckbrief.verlauf[4].dwv"
+            }
+          ],
+          "factRef": "steckbrief.verlauf",
+          "explanation": "Die erfassten Werte, aufsteigend: 120 (2022), 130 (2024), 180 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "difficulty": 3
+        },
+        {
+          "id": "steckbrief:8bbee34b",
+          "type": "cloze",
+          "prompt": "An einem freien Tag steigen in Villette VD ___ Personen ein und aus.",
+          "options": [
+            "180",
+            "220",
+            "250"
+          ],
+          "correct": 0,
+          "explanation": "An einem freien Tag sind es 180 Personen, an einem Werktag 180. Gemeint sind Wochenend- und Feiertage zusammen.",
+          "factRef": "steckbrief.dnwv",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "stammdaten",
+      "title": "Stammdaten",
+      "body": "Villette VD liegt auf 387.487 Metern über Meer in der Gemeinde Bourg-en-Lavaux, Bezirk Lavaux-Oron. Als Kanton ist in den Stammdaten Vaud eingetragen. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet VTE.",
+      "facts": [
+        {
+          "label": "Höhe über Meer",
+          "value": 387.487,
+          "unit": "m",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.hoehe_m_ue_m"
+        },
+        {
+          "label": "Offizielle Abkürzung",
+          "value": "VTE",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.abkuerzung"
+        },
+        {
+          "label": "Gemeinde",
+          "value": "Bourg-en-Lavaux",
+          "source": "haltestelle-haltekante",
+          "factRef": "stammdaten.gemeinde"
+        }
+      ],
+      "questions": [
+        {
+          "id": "stammdaten:2e24c83e",
+          "type": "slider",
+          "prompt": "Auf welcher Höhe über Meer liegt der Bahnhof Villette VD?",
+          "min": 310,
+          "max": 570,
+          "step": 1,
+          "unit": "m ü. M.",
+          "correct": 387.487,
+          "explanation": "Der Bahnhof liegt auf 387.487 Metern über Meer.",
+          "factRef": "stammdaten.hoehe_m_ue_m",
+          "difficulty": 2
+        },
+        {
+          "id": "stammdaten:9274401c",
+          "type": "single_choice",
+          "prompt": "In welcher Gemeinde liegt der Bahnhof Villette VD?",
+          "options": [
+            "Bourg-en-Lavaux",
+            "Lutry",
+            "Puidoux",
+            "Pully"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Als Gemeinde ist Bourg-en-Lavaux eingetragen.",
+          "factRef": "stammdaten.gemeinde",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "perrons",
+      "title": "Perrons",
+      "body": "Zu 2 Perrons in Villette VD liegen offene Daten vor. Perron 2 misst 242 Meter, Perron 1 misst 181 Meter. Beide erfassten Perrons sind niveaufrei erreichbar.",
+      "facts": [
+        {
+          "label": "Perrons mit offenen Daten",
+          "value": 2,
+          "source": "perron",
+          "factRef": "perrons.anzahl_mit_daten"
+        },
+        {
+          "label": "Längstes erfasstes Perron",
+          "value": 242,
+          "unit": "m",
+          "source": "perron",
+          "factRef": "perrons.laengste_m"
+        },
+        {
+          "label": "Nettofläche Perron 1",
+          "value": 357.68,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[1].flaeche_netto_m2"
+        },
+        {
+          "label": "Nettofläche Perron 2",
+          "value": 404.26,
+          "unit": "m²",
+          "source": "perron",
+          "factRef": "perrons.items[0].flaeche_netto_m2"
+        }
+      ],
+      "questions": [
+        {
+          "id": "perrons:d1b3d9ce",
+          "type": "single_choice",
+          "prompt": "Wie lang ist das längste erfasste Perron in Villette VD?",
+          "options": [
+            "97 m",
+            "170 m",
+            "210 m",
+            "242 m"
+          ],
+          "correct": 3,
+          "explanation": "Das längste erfasste Perron misst 242 Meter.",
+          "factRef": "perrons.laengste_m",
+          "difficulty": 1
+        },
+        {
+          "id": "perrons:57221352",
+          "type": "match",
+          "prompt": "Welche erfasste Nettofläche gehört zu welchem Perron?",
+          "pairs": [
+            {
+              "links": "Perron 2",
+              "rechts": "404.26 m²",
+              "factRef": "perrons.items[0].flaeche_netto_m2"
+            },
+            {
+              "links": "Perron 1",
+              "rechts": "357.68 m²",
+              "factRef": "perrons.items[1].flaeche_netto_m2"
+            }
+          ],
+          "factRef": "perrons.items",
+          "explanation": "Perron 2 hat 404.26 Quadratmeter, Perron 1 hat 357.68 Quadratmeter.",
+          "difficulty": 3
+        },
+        {
+          "id": "perrons:6a269e28",
+          "type": "true_false",
+          "prompt": "Beide erfassten Perrons in Villette VD sind niveaufrei erreichbar.",
+          "correct": true,
+          "explanation": "Für beide Perrons mit Daten ist ein niveaufreier Zugang verzeichnet.",
+          "factRef": "perrons.niveaufrei_erreichbar",
+          "difficulty": 1
+        }
+      ]
+    },
+    {
+      "id": "hindernisfreiheit",
+      "title": "Hindernisfreiheit",
+      "body": "Perronsegmente zur Hindernisfreiheit sind für Villette VD keine erhoben. Von den 2 erfassten Perrons sind 2 als niveaufrei erreichbar vermerkt.",
+      "erlaeuterung": "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge.",
+      "facts": [
+        {
+          "label": "Niveaufrei erreichbare Perrons",
+          "value": 2,
+          "source": "perron",
+          "factRef": "hindernisfreiheit.perrons_niveaufrei"
+        }
+      ],
+      "questions": [
+        {
+          "id": "hindernisfreiheit:4677829a",
+          "type": "true_false",
+          "prompt": "Für Villette VD sind Perronsegmente zur Hindernisfreiheit erhoben.",
+          "correct": false,
+          "explanation": "Die BehiG-Erhebung führt für diesen Bahnhof keine Segmente. Erfasst ist nur der Zugang zu den Perrons.",
+          "factRef": "hindernisfreiheit.perrons_mit_daten",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "zuege",
+      "title": "Züge",
+      "body": "Im Personenverkehr zählt die Erhebung auf dem Abschnitt Lutry – Villette VD 304 Züge pro Tag, das sind 110'939 im Jahr. Auf dem Abschnitt Villette VD – Cully sind es ebenfalls 304 Züge pro Tag. Im Güterverkehr zählt die Erhebung bis zu 26 Züge pro Tag auf einem Abschnitt.",
+      "erlaeuterung": "Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. Durchfahrende Züge zählen gleich wie haltende.",
+      "facts": [
+        {
+          "label": "Züge pro Tag, Personenverkehr Lutry – Villette VD",
+          "value": 304,
+          "unit": "Züge/Tag",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag"
+        },
+        {
+          "label": "Züge pro Jahr, Personenverkehr Lutry – Villette VD",
+          "value": 110939,
+          "unit": "Züge/Jahr",
+          "source": "zugzahlen",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr"
+        }
+      ],
+      "questions": [
+        {
+          "id": "zuege:b09251ef",
+          "type": "single_choice",
+          "prompt": "Wie viele Züge pro Tag verkehren im Personenverkehr auf dem Abschnitt Lutry – Villette VD?",
+          "options": [
+            "304",
+            "360",
+            "430",
+            "520"
+          ],
+          "correct": 0,
+          "explanation": "Auf diesem Abschnitt zählt die Erhebung 304 Züge pro Tag, beide Richtungen zusammen.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_tag",
+          "difficulty": 1
+        },
+        {
+          "id": "zuege:07e897f8",
+          "type": "slider",
+          "prompt": "Wie viele Züge verkehren im Personenverkehr pro Jahr auf dem Abschnitt Lutry – Villette VD?",
+          "min": 90500,
+          "max": 161000,
+          "step": 500,
+          "unit": "Züge/Jahr",
+          "correct": 110939,
+          "explanation": "Die Erhebung zählt 110'939 Züge im Jahr, beide Richtungen zusammen, Stand 2025.",
+          "factRef": "zuege.staerkster_personenverkehr.zuege_pro_jahr",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "linien",
+      "title": "Linien",
+      "body": "Für Villette VD ist 1 Linie erfasst: die Linie 100 Lausanne - Simplon Tunnel I - Iselle. Der Bahnhof ist darauf bei Kilometer 6.67962 eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Linien",
+          "value": 1,
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.anzahl"
+        },
+        {
+          "label": "Kilometrierung auf der Linie 100",
+          "value": 6.67962,
+          "unit": "km",
+          "source": "linie-mit-betriebspunkten",
+          "factRef": "linien.items[0].km_am_bahnhof"
+        }
+      ],
+      "questions": [
+        {
+          "id": "linien:e9a78314",
+          "type": "slider",
+          "prompt": "Bei welchem Streckenkilometer der Linie 100 ist Villette VD eingetragen?",
+          "min": 5.0,
+          "max": 10.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 6.67962,
+          "explanation": "Die Kilometrierung von Villette VD auf der Linie 100 beträgt 6.67962. Der Wert nennt den Standort des Bahnhofs auf der Linie.",
+          "factRef": "linien.items[0].km_am_bahnhof",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Erfasst sind 1 Billettautomat vom Typ ePOS, 2 Billettentwerter und 2 Wartehallen. Villette VD steht nicht in der Liste der WLAN-Standorte.",
+      "facts": [
+        {
+          "label": "WLAN erfasst",
+          "value": false,
+          "unit": "",
+          "source": "wifistation",
+          "factRef": "services.wlan_erfasst"
+        },
+        {
+          "label": "Billettautomaten erfasst",
+          "value": 1,
+          "source": "billetautomat",
+          "factRef": "services.billettautomaten_erfasst"
+        },
+        {
+          "label": "Billettentwerter erfasst",
+          "value": 2,
+          "source": "billetentwerter",
+          "factRef": "services.billettentwerter_erfasst"
+        }
+      ],
+      "questions": [
+        {
+          "id": "services:51e39bfb",
+          "type": "true_false",
+          "prompt": "Villette VD steht in der Liste der WLAN-Standorte.",
+          "correct": false,
+          "explanation": "Der Bahnhof ist in den offenen WLAN-Daten nicht aufgeführt. Ob vor Ort WLAN verfügbar ist, sagen die Daten nicht.",
+          "factRef": "services.wlan_erfasst",
+          "difficulty": 2
+        },
+        {
+          "id": "services:c1a7de79",
+          "type": "cloze",
+          "prompt": "In Villette VD sind ___ Billettentwerter erfasst.",
+          "options": [
+            "2",
+            "6",
+            "8"
+          ],
+          "correct": 0,
+          "optionen_aus_fakten": true,
+          "explanation": "Erfasst sind 2 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "factRef": "services.billettentwerter_erfasst",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "ausstattung",
+      "title": "Ausstattung",
+      "body": "In den offenen Daten sind für Villette VD 3 Sitzbänke erfasst. Zu 2 Perrons liegt der Belag vor, erfasst sind Beton-Belag sowie Bituminöses Mischgut. Die Erhebung ist unvollständig: Was nicht aufgeführt ist, fehlt in den Daten und nicht zwingend vor Ort.",
+      "facts": [
+        {
+          "label": "Sitzbänke erfasst",
+          "value": 3,
+          "source": "mobiliar-im-bahnhof",
+          "factRef": "ausstattung.sitzbaenke"
+        },
+        {
+          "label": "Perrons mit erfasstem Belag",
+          "value": 2,
+          "source": "perronoberflache",
+          "factRef": "ausstattung.perronbelag.anzahl_perrons_mit_daten"
+        }
+      ],
+      "questions": [
+        {
+          "id": "ausstattung:e6085503",
+          "type": "single_choice",
+          "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
+          "options": [
+            "3",
+            "5",
+            "7",
+            "9"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst sind 3 Sitzbänke. Die Zahl gibt den erhobenen Bestand wieder, nicht zwingend den Bestand vor Ort.",
+          "factRef": "ausstattung.sitzbaenke",
+          "difficulty": 1
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ]
+}
