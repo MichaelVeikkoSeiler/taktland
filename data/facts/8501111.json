@@ -16,7 +16,8 @@
     "lat": 46.727673,
     "dwv": 90,
     "dtv": 80,
-    "dnwv": 49,
+    "dnwv": null,
+    "dnwv_unter": 50,
     "bemerkung": null,
     "verlauf": [
       {
@@ -220,6 +221,11 @@
   },
   "bahnhofplan": null,
   "luecken": [
+    {
+      "thema": "Genaue Fahrgastzahl",
+      "grund": "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, sondern nur als «weniger als 50».",
+      "quelle": "passagierfrequenz"
+    },
     {
       "thema": "Bahnhofplan",
       "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",

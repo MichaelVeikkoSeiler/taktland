@@ -143,6 +143,23 @@ class Data:
         return uics
 
 
+#: Die Quelle schreibt 49 für «weniger als 50 Ein- und Aussteigende», so ihre
+#: eigene Bemerkung (Courchavon 2023: «49: weniger als 50 Ein- und
+#: Aussteigende»). 49 ist keine Zählung. Das Feld bleibt leer, «_unter» hält
+#: die Grenze fest. Vorher zeigte die App bei 30 Bahnhöfen «49 Personen».
+UNTER_50 = 49
+
+
+def frequenz(ziel, feld, wert):
+    n = num(wert)
+    if n == UNTER_50:
+        ziel[feld] = None
+        ziel[f"{feld}_unter"] = 50
+    else:
+        ziel[feld] = n
+    return ziel
+
+
 def steckbrief(d, uic):
     zeilen = d.pf[d.pf.uic == uic].sort_values("jahr")
     if zeilen.empty:
@@ -155,10 +172,10 @@ def steckbrief(d, uic):
         except ValueError:
             lat = lon = None
     verlauf = [
-        {"jahr": int(z.jahr), "dwv": num(z.dwv_tmjo_tfm)}
+        frequenz({"jahr": int(z.jahr)}, "dwv", z.dwv_tmjo_tfm)
         for _, z in zeilen.iterrows() if pd.notna(z.dwv_tmjo_tfm)
     ]
-    return {
+    sb = {
         "source": "passagierfrequenz",
         "jahr": int(r.jahr),
         "name": txt(r.bahnhof_gare_stazione),
@@ -166,12 +183,13 @@ def steckbrief(d, uic):
         "isb": txt(r.isb_gi),
         "evu": txt(r.evu_ef_itf),
         "lon": lon, "lat": lat,
-        "dwv": num(r.dwv_tmjo_tfm),      # Werktag
-        "dtv": num(r.dtv_tjm_tgm),       # Tagesmittel
-        "dnwv": num(r.dnwv_tmjno_tmgnl), # Nicht-Werktag
-        "bemerkung": txt(r.bemerkungen),
-        "verlauf": verlauf,
     }
+    frequenz(sb, "dwv", r.dwv_tmjo_tfm)       # Werktag
+    frequenz(sb, "dtv", r.dtv_tjm_tgm)        # Tagesmittel
+    frequenz(sb, "dnwv", r.dnwv_tmjno_tmgnl)  # Nicht-Werktag
+    sb["bemerkung"] = txt(r.bemerkungen)
+    sb["verlauf"] = verlauf
+    return sb
 
 
 def perrons(d, uic):
@@ -515,6 +533,12 @@ def luecken(d, uic, f):
                "Höhe über Meer, Gemeinde, Bezirk und Abkürzung sind für diesen Bahnhof nicht "
                "erfasst. Er fehlt im Haltestellenverzeichnis, aus dem diese Angaben stammen.",
                "haltestelle-haltekante")
+    sb = f.get("steckbrief") or {}
+    if any(k.endswith("_unter") for x in [sb, *(sb.get("verlauf") or [])] for k in x):
+        lueckt("Genaue Fahrgastzahl",
+               "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, "
+               "sondern nur als «weniger als 50».",
+               "passagierfrequenz")
     if not f.get("ausstattung"):
         lueckt("Ausstattung",
                "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine "

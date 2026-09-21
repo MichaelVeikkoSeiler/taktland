@@ -23,7 +23,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Reichenburg 220 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 160, an einem freien Tag 49. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
+      "body": "An einem Werktag steigen in Reichenburg 220 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 160, an einem freien Tag weniger als 50. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -41,10 +41,10 @@
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 49,
+          "value": "weniger als 50",
           "unit": "Personen",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.dnwv"
+          "factRef": "steckbrief.dnwv_unter"
         },
         {
           "label": "Ein- und Aussteigende an einem Werktag 2018",
@@ -121,20 +121,6 @@
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 190 (2024), 200 (2022), 220 (2025), 240 (2018). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
-        },
-        {
-          "id": "steckbrief:a69905dd",
-          "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Reichenburg ___ Personen ein und aus.",
-          "options": [
-            "34",
-            "49",
-            "59"
-          ],
-          "correct": 1,
-          "explanation": "An einem freien Tag sind es 49 Personen, an einem Werktag 220. Gemeint sind Wochenend- und Feiertage zusammen.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 2
         }
       ]
     },
@@ -518,6 +504,11 @@
     }
   ],
   "luecken": [
+    {
+      "thema": "Genaue Fahrgastzahl",
+      "grund": "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, sondern nur als «weniger als 50».",
+      "quelle": "passagierfrequenz"
+    },
     {
       "thema": "Bahnhofplan",
       "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",

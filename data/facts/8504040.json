@@ -14,9 +14,12 @@
     "evu": "SBB",
     "lon": 6.824781,
     "lat": 46.470451,
-    "dwv": 49,
-    "dtv": 49,
-    "dnwv": 49,
+    "dwv": null,
+    "dwv_unter": 50,
+    "dtv": null,
+    "dtv_unter": 50,
+    "dnwv": null,
+    "dnwv_unter": 50,
     "bemerkung": "49: weniger als 50 Ein- und Aussteigende.",
     "verlauf": [
       {
@@ -37,7 +40,8 @@
       },
       {
         "jahr": 2025,
-        "dwv": 49
+        "dwv": null,
+        "dwv_unter": 50
       }
     ]
   },
@@ -225,6 +229,11 @@
   },
   "bahnhofplan": null,
   "luecken": [
+    {
+      "thema": "Genaue Fahrgastzahl",
+      "grund": "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, sondern nur als «weniger als 50».",
+      "quelle": "passagierfrequenz"
+    },
     {
       "thema": "Bahnhofplan",
       "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",

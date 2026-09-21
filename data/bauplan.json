@@ -144,6 +144,16 @@
    ]
   }
  },
+ "8500037": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Olten",
+    "Gäu",
+    "Dorneck"
+   ]
+  }
+ },
  "8500100": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -170,6 +180,16 @@
     "Sorvilier",
     "Reconvilier",
     "Court"
+   ]
+  }
+ },
+ "8500103": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Oberaargau"
    ]
   }
  },
@@ -365,12 +385,31 @@
    ]
   }
  },
+ "8500135": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Reconvilier",
+    "Sorvilier",
+    "Tavannes"
+   ]
+  }
+ },
  "8500136": {
   "stammdaten": {
    "frage": "abkuerzung",
    "distraktoren": [
     "BDR",
     "BSD"
+   ]
+  }
+ },
+ "8500141": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "CTM",
+    "POR"
    ]
   }
  },
@@ -974,6 +1013,16 @@
     "Bretonnières",
     "Romainmôtier-Envy",
     "L'Abbaye"
+   ]
+  }
+ },
+ "8501105": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Gros-de-Vaud",
+    "Ouest lausannois"
    ]
   }
  },
@@ -3463,6 +3512,16 @@
    ]
   }
  },
+ "8503414": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Baden",
+    "Brugg",
+    "Lenzburg"
+   ]
+  }
+ },
  "8503415": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -3704,6 +3763,16 @@
     "Bourg-en-Lavaux",
     "Pully",
     "Puidoux"
+   ]
+  }
+ },
+ "8504007": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Chexbres",
+    "Bourg-en-Lavaux",
+    "Rivaz"
    ]
   }
  },
@@ -4357,6 +4426,16 @@
    ]
   }
  },
+ "8504217": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Val-de-Travers",
+    "La Grande Béroche",
+    "Boudry"
+   ]
+  }
+ },
  "8504218": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -4600,6 +4679,16 @@
    ]
   }
  },
+ "8504308": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504309": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4668,6 +4757,15 @@
    ]
   }
  },
+ "8504317": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "LOC",
+    "CRET"
+   ]
+  }
+ },
  "8504321": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -4683,6 +4781,16 @@
    "distraktoren": [
     "KE",
     "KRZ"
+   ]
+  }
+ },
+ "8504401": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sense",
+    "La Broye",
+    "La Sarine"
    ]
   }
  },
@@ -5715,6 +5823,16 @@
     "Frauenfeld",
     "Kreuzlingen",
     "Weinfelden"
+   ]
+  }
+ },
+ "8506118": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Tägerwilen",
+    "Salenstein",
+    "Kreuzlingen"
    ]
   }
  },

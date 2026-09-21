@@ -21,11 +21,13 @@
     "verlauf": [
       {
         "jahr": 2018,
-        "dwv": 49
+        "dwv": null,
+        "dwv_unter": 50
       },
       {
         "jahr": 2022,
-        "dwv": 49
+        "dwv": null,
+        "dwv_unter": 50
       },
       {
         "jahr": 2023,
@@ -261,6 +263,11 @@
   },
   "bahnhofplan": null,
   "luecken": [
+    {
+      "thema": "Genaue Fahrgastzahl",
+      "grund": "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, sondern nur als «weniger als 50».",
+      "quelle": "passagierfrequenz"
+    },
     {
       "thema": "Bahnhofplan",
       "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",

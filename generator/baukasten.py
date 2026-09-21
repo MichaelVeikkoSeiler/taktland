@@ -126,12 +126,35 @@ def sortier(prompt, items, richtung, erkl, ref, diff=3):
 
 # ------------------------------------------------------------------ Kapitel
 
+def personen(s, feld):
+    """Die Zahl, oder «weniger als 50», wo die Quelle nur die Grenze nennt.
+    Sie schreibt dafür 49, was die App als «49 Personen» zeigte (Courchavon)."""
+    if s.get(feld) is None and s.get(f"{feld}_unter"):
+        return f"weniger als {s[f'{feld}_unter']}"
+    return ch(s[feld])
+
+
+def personen_fakt(s, feld, label):
+    genau = s.get(feld) is not None
+    return {"label": label,
+            "value": s[feld] if genau else f"weniger als {s[f'{feld}_unter']}",
+            "unit": "Personen", "source": "passagierfrequenz",
+            "factRef": f"steckbrief.{feld}" if genau else f"steckbrief.{feld}_unter"}
+
+
+#: Bemerkung der Quelle, die nur den Platzhalter 49 erklärt. Der Text sagt
+#: schon «weniger als 50», die Lücke nennt es: kein Zitat mit der 49 darin.
+NUR_PLATZHALTER = "49: weniger als 50 Ein- und Aussteigende."
+
+
 def steckbrief(f, extra_body="", extra_fragen=()):
-    s = f["steckbrief"]; name = f["name"]; uic = f["uic"]
+    s = dict(f["steckbrief"]); name = f["name"]; uic = f["uic"]
+    if (s.get("bemerkung") or "").strip() == NUR_PLATZHALTER:
+        s["bemerkung"] = None
     evu = s.get("evu") or ""
-    teile = [f"An einem Werktag steigen in {name} {ch(s['dwv'])} Personen ein und aus.",
-             f"Im Tagesmittel über das ganze Jahr sind es {ch(s['dtv'])}, an einem "
-             f"freien Tag {ch(s['dnwv'])}."]
+    teile = [f"An einem Werktag steigen in {name} {personen(s, 'dwv')} Personen ein und aus.",
+             f"Im Tagesmittel über das ganze Jahr sind es {personen(s, 'dtv')}, an einem "
+             f"freien Tag {personen(s, 'dnwv')}."]
     if s.get("jahr") and s["jahr"] != DATENJAHR:
         # Die App zeigt «Daten von 2025», die Fahrgastzahlen von Mols sind
         # aus 2018. Ohne diesen Satz läse man sie als Stand 2025.
@@ -148,17 +171,21 @@ def steckbrief(f, extra_body="", extra_fragen=()):
         teile.append(f"Die Quelle vermerkt zu diesen Zahlen: «{s['bemerkung'].strip()}»")
     if extra_body:
         teile.append(extra_body)
-    facts = [
-        {"label": "Ein- und Aussteigende an einem Werktag", "value": s["dwv"],
-         "unit": "Personen", "source": "passagierfrequenz", "factRef": "steckbrief.dwv"},
-        {"label": "Ein- und Aussteigende im Tagesmittel", "value": s["dtv"],
-         "unit": "Personen", "source": "passagierfrequenz", "factRef": "steckbrief.dtv"},
-        {"label": "Ein- und Aussteigende an einem freien Tag", "value": s["dnwv"],
-         "unit": "Personen", "source": "passagierfrequenz", "factRef": "steckbrief.dnwv"}]
-    fr = [sc(uic, f"Wie viele Personen steigen an einem Werktag in {name} ein und aus?",
-             # das Jahr aus den Fakten: Mols und Matran zählen 2018, Bôle 2022
-             s["dwv"], f"An einem Werktag sind es {ch(s['dwv'])} Ein- und Aussteigende, "
-             f"Stand {s['jahr']}.", "steckbrief.dwv")]
+    facts = [personen_fakt(s, "dwv", "Ein- und Aussteigende an einem Werktag"),
+             personen_fakt(s, "dtv", "Ein- und Aussteigende im Tagesmittel"),
+             personen_fakt(s, "dnwv", "Ein- und Aussteigende an einem freien Tag")]
+    fr = []
+    # keine Zahlenfrage zu «weniger als 50»: die richtige Antwort wäre der Platzhalter 49
+    if s["dwv"] is not None:
+        fr.append(sc(uic, f"Wie viele Personen steigen an einem Werktag in {name} ein und aus?",
+                     # das Jahr aus den Fakten: Mols und Matran zählen 2018, Bôle 2022
+                     s["dwv"], f"An einem Werktag sind es {ch(s['dwv'])} Ein- und Aussteigende, "
+                     f"Stand {s['jahr']}.", "steckbrief.dwv"))
+    else:
+        fr.append(tf(f"An einem Werktag steigen in {name} weniger als {s['dwv_unter']} Personen "
+                     "ein und aus.", True,
+                     f"Die Quelle nennt keine genaue Zahl, nur «weniger als {s['dwv_unter']} "
+                     f"Ein- und Aussteigende», Stand {s['jahr']}.", "steckbrief.dwv_unter", diff=1))
     # Verlauf: nur Jahre, deren Werte man auseinanderhalten kann
     # neueste Jahre zuerst: bei gleichem Wert bleibt das neuere Jahr stehen
     alle_v = sorted([(i, x) for i, x in enumerate(s.get("verlauf") or []) if x.get("dwv")],
@@ -175,10 +202,11 @@ def steckbrief(f, extra_body="", extra_fragen=()):
                           f"Die erfassten Werte, aufsteigend: {reihe}."
                           + (" Jahre mit gleichem oder fast gleichem Wert bleiben weg." if doppelte else ""),
                           "steckbrief.verlauf"))
-    fr.append(sc(uic, f"An einem freien Tag steigen in {name} ___ Personen ein und aus.",
-                 s["dnwv"], f"An einem freien Tag sind es {ch(s['dnwv'])} Personen, an "
-                 f"einem Werktag {ch(s['dwv'])}. Gemeint sind Wochenend- und Feiertage "
-                 "zusammen.", "steckbrief.dnwv", n=2, diff=2, typ="cloze"))
+    if s["dnwv"] is not None:
+        fr.append(sc(uic, f"An einem freien Tag steigen in {name} ___ Personen ein und aus.",
+                     s["dnwv"], f"An einem freien Tag sind es {ch(s['dnwv'])} Personen, an "
+                     f"einem Werktag {personen(s, 'dwv')}. Gemeint sind Wochenend- und Feiertage "
+                     "zusammen.", "steckbrief.dnwv", n=2, diff=2, typ="cloze"))
     if s.get("bemerkung"):
         facts.append({"label": "Abgrenzung der Zahl", "value": s["bemerkung"],
                       "source": "passagierfrequenz", "factRef": "steckbrief.bemerkung"})

@@ -559,6 +559,17 @@ Validator vergleicht jedes «Stand JJJJ» in diesen Kapiteln mit dem Jahr der
 Quelle. Weicht es vom Datenjahr ab, das die App oben anzeigt, sagt der
 Steckbrief «Der Datenstand dieser Zahlen ist 2018.»
 
+**49 ist ein Platzhalter, keine Zählung.** Die Quelle der Fahrgastzahlen
+schreibt 49 für «weniger als 50 Ein- und Aussteigende» (ihre eigene Bemerkung,
+Courchavon 2023). Die App zeigte bei 30 Bahnhöfen «49 Personen», und 40, 30
+oder 20 kamen in den Daten nie vor. Jetzt setzt `build_facts.py` das Feld auf
+leer und schreibt die Grenze in `dwv_unter`, `dtv_unter`, `dnwv_unter` (auch im
+Verlauf), dazu die Lücke «Genaue Fahrgastzahl». Der Baukasten schreibt
+«weniger als 50», fragt dazu keine Zahl ab und lässt die Jahre ohne genaue
+Zahl aus der Sortierfrage. Nach einer Änderung an den Fakten auch
+`pipeline/build_vergleich.py` laufen lassen, sonst meldet
+`validate_vergleich.py` veraltete Werte.
+
 **Keine Gerätedaten ist nicht null Geräte.** Für Köniz und Müntschemier
 ordnet die Quelle keine Billettautomaten und Entwerter zu, das Feld
 `billettautomaten_erfasst` fehlt ganz. Da stand «Billettentwerter sind keine

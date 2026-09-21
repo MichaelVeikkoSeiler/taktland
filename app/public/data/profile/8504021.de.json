@@ -47,13 +47,6 @@
           "factRef": "steckbrief.dnwv"
         },
         {
-          "label": "Ein- und Aussteigende an einem Werktag 2022",
-          "value": 49,
-          "unit": "Personen",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.verlauf[1].dwv"
-        },
-        {
           "label": "Ein- und Aussteigende an einem Werktag 2023",
           "value": 80,
           "unit": "Personen",
@@ -98,11 +91,6 @@
           "richtung": "aufsteigend",
           "items": [
             {
-              "label": "2022",
-              "value": 49,
-              "factRef": "steckbrief.verlauf[1].dwv"
-            },
-            {
               "label": "2023",
               "value": 80,
               "factRef": "steckbrief.verlauf[2].dwv"
@@ -119,7 +107,7 @@
             }
           ],
           "factRef": "steckbrief.verlauf",
-          "explanation": "Die erfassten Werte, aufsteigend: 49 (2022), 80 (2023), 90 (2024), 190 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
+          "explanation": "Die erfassten Werte, aufsteigend: 80 (2023), 90 (2024), 190 (2025).",
           "difficulty": 3
         },
         {
@@ -497,6 +485,11 @@
     }
   ],
   "luecken": [
+    {
+      "thema": "Genaue Fahrgastzahl",
+      "grund": "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, sondern nur als «weniger als 50».",
+      "quelle": "passagierfrequenz"
+    },
     {
       "thema": "Bahnhofplan",
       "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",

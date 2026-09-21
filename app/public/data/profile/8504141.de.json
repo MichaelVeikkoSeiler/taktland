@@ -23,7 +23,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Henniez 90 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 80, an einem freien Tag 49. Infrastruktur und Züge sind der SBB zugeordnet.",
+      "body": "An einem Werktag steigen in Henniez 90 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 80, an einem freien Tag weniger als 50. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
@@ -41,10 +41,10 @@
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 49,
+          "value": "weniger als 50",
           "unit": "Personen",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.dnwv"
+          "factRef": "steckbrief.dnwv_unter"
         },
         {
           "label": "Ein- und Aussteigende an einem Werktag 2023",
@@ -109,20 +109,6 @@
           "factRef": "steckbrief.verlauf",
           "explanation": "Die erfassten Werte, aufsteigend: 50 (2024), 60 (2023), 90 (2025). Jahre mit gleichem oder fast gleichem Wert bleiben weg.",
           "difficulty": 3
-        },
-        {
-          "id": "steckbrief:50f49afe",
-          "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Henniez ___ Personen ein und aus.",
-          "options": [
-            "34",
-            "42",
-            "49"
-          ],
-          "correct": 2,
-          "explanation": "An einem freien Tag sind es 49 Personen, an einem Werktag 90. Gemeint sind Wochenend- und Feiertage zusammen.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 2
         }
       ]
     },
@@ -506,6 +492,11 @@
     }
   ],
   "luecken": [
+    {
+      "thema": "Genaue Fahrgastzahl",
+      "grund": "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, sondern nur als «weniger als 50».",
+      "quelle": "passagierfrequenz"
+    },
     {
       "thema": "Bahnhofplan",
       "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Pläne liegen für 60 der 771 SBB-Bahnhöfe vor.",

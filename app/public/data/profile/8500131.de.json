@@ -17,65 +17,39 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Bure-Casernes 49 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 49, an einem freien Tag 49. Infrastruktur und Züge sind der SBB zugeordnet. Die Quelle vermerkt zu diesen Zahlen: «49: weniger als 50 Ein- und Aussteigende.»",
+      "body": "An einem Werktag steigen in Bure-Casernes weniger als 50 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es weniger als 50, an einem freien Tag weniger als 50. Infrastruktur und Züge sind der SBB zugeordnet.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",
-          "value": 49,
+          "value": "weniger als 50",
           "unit": "Personen",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.dwv"
+          "factRef": "steckbrief.dwv_unter"
         },
         {
           "label": "Ein- und Aussteigende im Tagesmittel",
-          "value": 49,
+          "value": "weniger als 50",
           "unit": "Personen",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.dtv"
+          "factRef": "steckbrief.dtv_unter"
         },
         {
           "label": "Ein- und Aussteigende an einem freien Tag",
-          "value": 49,
+          "value": "weniger als 50",
           "unit": "Personen",
           "source": "passagierfrequenz",
-          "factRef": "steckbrief.dnwv"
-        },
-        {
-          "label": "Abgrenzung der Zahl",
-          "value": "49: weniger als 50 Ein- und Aussteigende.",
-          "source": "passagierfrequenz",
-          "factRef": "steckbrief.bemerkung"
+          "factRef": "steckbrief.dnwv_unter"
         }
       ],
       "questions": [
         {
-          "id": "steckbrief:394af587",
-          "type": "single_choice",
-          "prompt": "Wie viele Personen steigen an einem Werktag in Bure-Casernes ein und aus?",
-          "options": [
-            "49",
-            "59",
-            "69",
-            "83"
-          ],
-          "correct": 0,
-          "explanation": "An einem Werktag sind es 49 Ein- und Aussteigende, Stand 2025.",
-          "factRef": "steckbrief.dwv",
+          "id": "steckbrief:067739c8",
+          "type": "true_false",
+          "prompt": "An einem Werktag steigen in Bure-Casernes weniger als 50 Personen ein und aus.",
+          "correct": true,
+          "explanation": "Die Quelle nennt keine genaue Zahl, nur «weniger als 50 Ein- und Aussteigende», Stand 2025.",
+          "factRef": "steckbrief.dwv_unter",
           "difficulty": 1
-        },
-        {
-          "id": "steckbrief:8a9c6f29",
-          "type": "cloze",
-          "prompt": "An einem freien Tag steigen in Bure-Casernes ___ Personen ein und aus.",
-          "options": [
-            "42",
-            "49",
-            "59"
-          ],
-          "correct": 1,
-          "explanation": "An einem freien Tag sind es 49 Personen, an einem Werktag 49. Gemeint sind Wochenend- und Feiertage zusammen.",
-          "factRef": "steckbrief.dnwv",
-          "difficulty": 2
         }
       ]
     },
@@ -203,6 +177,11 @@
     }
   ],
   "luecken": [
+    {
+      "thema": "Genaue Fahrgastzahl",
+      "grund": "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, sondern nur als «weniger als 50».",
+      "quelle": "passagierfrequenz"
+    },
     {
       "thema": "Ausstattung",
       "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",

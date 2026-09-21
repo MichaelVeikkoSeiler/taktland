@@ -118,3 +118,15 @@ def test_jahr_der_fahrgastzahlen_aus_den_fakten():
     st = next(k for k in d["chapters"] if k["id"] == "steckbrief")
     assert "Der Datenstand dieser Zahlen ist 2018." in st["body"]
     assert st["questions"][0]["explanation"].endswith("Stand 2018.")
+
+
+def test_platzhalter_49_ist_keine_zahl():
+    # Courchavon: die Quelle schreibt 49 für «weniger als 50», die App zeigte
+    # «an einem freien Tag 49»
+    f = fakten_laden(8500141)
+    assert f["steckbrief"]["dnwv"] is None and f["steckbrief"]["dnwv_unter"] == 50
+    d = B.bauen("8500141")
+    st = next(k for k in d["chapters"] if k["id"] == "steckbrief")
+    assert "an einem freien Tag weniger als 50" in st["body"]
+    assert "49" not in json.dumps(st, ensure_ascii=False)
+    assert any(l["thema"] == "Genaue Fahrgastzahl" for l in d["luecken"])

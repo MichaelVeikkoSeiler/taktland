@@ -33,6 +33,9 @@ wenn eine Aussage allgemein bekannt oder offensichtlich richtig ist.
    Felder `wlan_erfasst`, `billettautomaten_erfasst`, `anzahl_mit_daten`.
    Auch eine gerundete 0 ist nicht «keiner»: 119 Güterzüge im Jahr sind pro
    Tag 0, aber es sind welche.
+   Und ein Platzhalter der Quelle ist keine Zahl: Die SBB schreibt 49 für
+   «weniger als 50 Ein- und Aussteigende». In den Fakten bleibt das Feld leer,
+   `dwv_unter` hält die Grenze fest, die App sagt «weniger als 50».
 
 7. **Eine fehlende Angabe ist keine Tatsache.** Das ist die häufigste Fehlerklasse
    im ganzen Projekt, und sie steckte mehrfach in den Feldnamen selbst: `km`

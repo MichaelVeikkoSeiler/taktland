@@ -42,7 +42,7 @@ def main():
     for d in liste:
         kap = ", ".join(d["verfuegbare_kapitel"])
         print(f"{d['uic']}  {d['name'][:26]:<27}{d.get('kanton') or '--':<4}"
-              f"Stufe {d['tier']}  {(d.get('steckbrief') or {}).get('dwv', 0):>7} pro Werktag")
+              f"Stufe {d['tier']}  {(d.get('steckbrief') or {}).get('dwv') or '<50':>7} pro Werktag")
         print(f"          Kapitel: {kap}")
     return 0
 
