@@ -2,7 +2,7 @@
   "linie": 710,
   "name": "Zurich HB - Brugg AG",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -232,7 +232,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Kreuzlibergtunnel",
@@ -299,21 +300,32 @@
           "label": "Erfasste Brücken",
           "value": 65,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Zürich",
           "value": 37,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "Aargau",
           "value": 28,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Aargau"
+          }
         },
         {
           "label": "U HVS C",
@@ -461,5 +473,409 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Kreuzlibergtunnel",
+        "laenge_m": 905,
+        "inbetriebnahme_jahr": 1961,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 21.839,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Sihlbrücke Gleis 18",
+        "km": 0.163,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 17",
+        "km": 0.169,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 16",
+        "km": 0.175,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 15",
+        "km": 0.181,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 14",
+        "km": 0.187,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 13",
+        "km": 0.193,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 12",
+        "km": 0.199,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 11",
+        "km": 0.205,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 10",
+        "km": 0.211,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 9",
+        "km": 0.217,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlbrücke Gleis 8",
+        "km": 0.223,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU West Zürich HB",
+        "km": 0.3,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Querkanal K2",
+        "km": 0.387,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Längskanal 2",
+        "km": 0.395,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Querkanal K4",
+        "km": 0.608,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Querkanal K5",
+        "km": 0.737,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Querkanal K6",
+        "km": 0.827,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Querkanal K7",
+        "km": 0.898,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu zw. Lokdepots",
+        "km": 1.308,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Mitte Hardbrücke",
+        "km": 1.908,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Herdern",
+        "km": 2.521,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Überwerfung Herdern",
+        "km": 2.768,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU ZH Altstetten nord",
+        "km": 4.174,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Max Högger-Strasse",
+        "km": 4.276,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Schlieren Ost",
+        "km": 7.467,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Goldschlägi",
+        "km": 7.947,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Goldschlägi",
+        "km": 7.957,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Glanzenberg Ost",
+        "km": 9.243,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Glanzenberg",
+        "km": 9.637,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Schäflibach",
+        "km": 10.163,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Limmatweg",
+        "km": 10.354,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Poststrasse",
+        "km": 10.814,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Dietikon Ost",
+        "km": 10.945,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Dietikon",
+        "km": 11.11,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U HVS C",
+        "km": 11.428,
+        "baueinheiten": 5,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Reppischbrücke Nord",
+        "km": 11.943,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Mutschellenstrasse",
+        "km": 12.918,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 13.02,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Überwerfung Gallenacher",
+        "km": 13.369,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Zufahrt ARA",
+        "km": 15.986,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Killwangen",
+        "km": 16.105,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Lehnenviadukt Killwangen",
+        "km": 16.901,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Dohlenmättli",
+        "km": 18.005,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Mitte Neuenhof",
+        "km": 18.796,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Nord Neuenhof",
+        "km": 18.964,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Schibler",
+        "km": 19.196,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Härdlistrasse",
+        "km": 19.616,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Obere Limmatbrücke",
+        "km": 19.841,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PDu Bahnhofstrasse",
+        "km": 20.188,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Wettingen",
+        "km": 20.376,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K273",
+        "km": 20.927,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Untere Limmatbrücke",
+        "km": 21.025,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU K119",
+        "km": 21.203,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Stadtturmstrasse",
+        "km": 22.349,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Baden Süd",
+        "km": 22.421,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Zentrale PU Baden",
+        "km": 22.595,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Haselstrasse",
+        "km": 22.754,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Römerstrasse",
+        "km": 23.258,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Haldenrain",
+        "km": 24.088,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K439",
+        "km": 27.171,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Reussbrücke Turgi",
+        "km": 28.72,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU. Kirchenfeld",
+        "km": 29.867,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Gaswerkstrasse",
+        "km": 30.819,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Zürcherstrasse",
+        "km": 31.042,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Nord Brugg",
+        "km": 31.158,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 210,
   "name": "Daillens - Biel/Bienne",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -350,7 +350,8 @@
           "label": "Erfasste Tunnel",
           "value": 11,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel Vingelz (092)",
@@ -468,28 +469,44 @@
           "label": "Erfasste Brücken",
           "value": 127,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Neuchâtel",
           "value": 45,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Neuchâtel"
+          }
         },
         {
           "label": "Vaud",
           "value": 44,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Vaud"
+          }
         },
         {
           "label": "Bern",
           "value": 38,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[2].anzahl"
+          "factRef": "bruecken.nach_kanton[2].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Bern"
+          }
         },
         {
           "label": "Twannbach-Brücke",
@@ -584,21 +601,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 4,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 3,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -692,5 +720,887 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel du Mormont sud 1",
+        "laenge_m": 303,
+        "inbetriebnahme_jahr": 1856,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 21.709,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Mormont sud 3",
+        "laenge_m": 328,
+        "inbetriebnahme_jahr": 2010,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 21.738,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Mormont nord 4",
+        "laenge_m": 188,
+        "inbetriebnahme_jahr": 2010,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 22.061,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Mormont nord 2",
+        "laenge_m": 182,
+        "inbetriebnahme_jahr": 1856,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 22.068,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Concise",
+        "laenge_m": 366,
+        "inbetriebnahme_jahr": 2000,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 50.487,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Fin de Lance (099)",
+        "laenge_m": 287,
+        "inbetriebnahme_jahr": 2000,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 51.286,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de la Raisse (098)",
+        "laenge_m": 1256,
+        "inbetriebnahme_jahr": 2000,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 53.401,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel St-Aubin-Sauges (097)",
+        "laenge_m": 2253,
+        "inbetriebnahme_jahr": 1999,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 56.813,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Vauseyon (005)",
+        "laenge_m": 58,
+        "inbetriebnahme_jahr": 1859,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 73.534,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de St-Blaise (004)",
+        "laenge_m": 155,
+        "inbetriebnahme_jahr": 1927,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 80.141,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel Vingelz (092)",
+        "laenge_m": 2432,
+        "inbetriebnahme_jahr": 1968,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 103.11,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PI voy d'Eclépens",
+        "km": 21.358,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI d'Orny",
+        "km": 22.373,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Talent",
+        "km": 26.253,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur le Talent",
+        "km": 26.42,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Chavornay I",
+        "km": 26.715,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Chavornay II",
+        "km": 26.983,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Chavornay",
+        "km": 27.49,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Sadaz",
+        "km": 28.093,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Aq des Combes",
+        "km": 28.79,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy d'Essert-Pittet",
+        "km": 29.688,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI rte d'Essert-Pittet",
+        "km": 29.93,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI d'Ependes",
+        "km": 32.607,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy d'Ependes + AQ",
+        "km": 32.765,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Viad du Buron",
+        "km": 36.588,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Comte",
+        "km": 37.783,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Clendy",
+        "km": 38.09,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de St Roch",
+        "km": 38.653,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PT s/ Canal oriental lac",
+        "km": 38.895,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PT s/Canal oriental",
+        "km": 38.907,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Ateliers",
+        "km": 38.908,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Stade",
+        "km": 38.918,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Est",
+        "km": 39.102,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy central d'Yverdon",
+        "km": 39.157,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PIvoy Ouest",
+        "km": 39.319,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur le Mujon",
+        "km": 39.891,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI W. Barbey",
+        "km": 40.268,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Brinaz",
+        "km": 40.918,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Tuileries",
+        "km": 41.194,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Pecos",
+        "km": 41.797,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Grandson",
+        "km": 42.613,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Voy Grandson",
+        "km": 42.693,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt du Grandsonnet",
+        "km": 42.845,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Rossat",
+        "km": 42.886,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Criblet",
+        "km": 42.928,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Tour de Gex",
+        "km": 42.989,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Berfolliez",
+        "km": 43.033,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Cavaloup",
+        "km": 43.097,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Blonay",
+        "km": 43.402,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Corcelettes",
+        "km": 44.95,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Poissine",
+        "km": 46.278,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur l'Arnon",
+        "km": 46.421,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Voy Onnens",
+        "km": 47.495,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Arablets",
+        "km": 47.734,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Diaz",
+        "km": 52.066,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Vaumarcus",
+        "km": 54.878,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Vers-Rive",
+        "km": 54.902,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pont sur la Vaux",
+        "km": 54.951,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Vaumarcus",
+        "km": 54.976,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy Gorgier",
+        "km": 58.117,
+        "baueinheiten": 4,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Combamare",
+        "km": 58.269,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Chez-le-Bart",
+        "km": 58.497,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt du Château",
+        "km": 58.532,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy Bevaix",
+        "km": 62.292,
+        "baueinheiten": 3,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de la Sagne",
+        "km": 62.519,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Perreux",
+        "km": 64.147,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Viad de Boudry",
+        "km": 65.832,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy Boudry",
+        "km": 66.265,
+        "baueinheiten": 3,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy de Colombier",
+        "km": 67.685,
+        "baueinheiten": 4,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Colombier",
+        "km": 67.783,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Rosy",
+        "km": 68.729,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Villaret",
+        "km": 69.501,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI d'Auvernier",
+        "km": 70.065,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy d'Auvernier",
+        "km": 70.333,
+        "baueinheiten": 3,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI des Battieux",
+        "km": 72.267,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Viad de Serrières",
+        "km": 72.309,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy de Serrières",
+        "km": 72.404,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Maillefer",
+        "km": 72.97,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt sur le Seyon",
+        "km": 73.634,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de l'ancienne Boine",
+        "km": 74.684,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Tertre",
+        "km": 74.821,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI rte des Sablons I",
+        "km": 75.083,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI piét des Sablons II",
+        "km": 75.162,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy de Neûchatel",
+        "km": 75.291,
+        "baueinheiten": 4,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Gibraltar",
+        "km": 76.013,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de la Favarge",
+        "km": 77.369,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Brel",
+        "km": 78.955,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy St-Blaise",
+        "km": 79.34,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI a Egleri",
+        "km": 80.59,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Pré Rond",
+        "km": 81.084,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Souaillon",
+        "km": 81.545,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Cornaux",
+        "km": 82.913,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy Cornaux",
+        "km": 83.627,
+        "baueinheiten": 3,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de la C.I.S.A.C.",
+        "km": 84.524,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voyageurs Cressier",
+        "km": 85.542,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Faubourg",
+        "km": 87.191,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI des Grandvignes",
+        "km": 87.33,
+        "baueinheiten": 3,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Landeron",
+        "km": 87.557,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy du Landeron",
+        "km": 87.739,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt ruisseau de Vaux",
+        "km": 89.378,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Biedermann",
+        "km": 89.446,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Pré de la Tour",
+        "km": 89.586,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI rue du Lac",
+        "km": 89.722,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI la Tour de Rive",
+        "km": 89.865,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI du Lessivier",
+        "km": 89.943,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Voy de Neuveville",
+        "km": 90.044,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI des Epancheurs",
+        "km": 90.263,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de St Joux",
+        "km": 90.821,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Ruveau",
+        "km": 91.057,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Poudeilles",
+        "km": 92.099,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Chavannes",
+        "km": 93.467,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Gleresse 1",
+        "km": 93.893,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Gleresse 2",
+        "km": 93.998,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Gleresse 3",
+        "km": 94.063,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI piétons",
+        "km": 94.099,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU klein-Twann",
+        "km": 95.594,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Twannbach-Brücke",
+        "km": 95.69,
+        "baueinheiten": 6,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Twann",
+        "km": 95.988,
+        "baueinheiten": 4,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Baeren-Lanti",
+        "km": 96.069,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Rathaus-Lanti",
+        "km": 96.178,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Bachtolei-Lanti",
+        "km": 96.281,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Rostelen",
+        "km": 96.521,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Reichenbach 1",
+        "km": 96.987,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Reichenbach 2",
+        "km": 97.231,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Wingreis",
+        "km": 97.666,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Engelberg",
+        "km": 97.818,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Brunnreben",
+        "km": 98.177,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Roggeten",
+        "km": 98.507,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Fluhreben",
+        "km": 98.871,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU zum Bad",
+        "km": 99.329,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Hafenbrücke Tüscherz",
+        "km": 99.568,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Tüscherz",
+        "km": 99.79,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Feldweg",
+        "km": 100.184,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Alfermée-Brücke",
+        "km": 100.651,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Seevorstadtstrasse",
+        "km": 103.796,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Aarbergstrasse",
+        "km": 104.301,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Tunnel à câbles",
+        "km": 104.393,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Gepäcktunnel Biel",
+        "km": 104.393,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": null,
+        "km": 47.269,
+        "sicherungsart": "unbewacht",
+        "gleise": null
+      },
+      {
+        "name": "BUe Ligerz 1",
+        "km": 94.235,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": null
+      },
+      {
+        "name": "BUe Bipschal 1",
+        "km": 94.872,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bipschal 2",
+        "km": 94.961,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

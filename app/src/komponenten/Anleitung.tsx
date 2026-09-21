@@ -122,6 +122,11 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             der Liste führt zu seiner Seite, und die Bahnhofsseite führt zu seinen Linien.
           </li>
           <li>
+            Kacheln mit Pfeil führen zur ganzen Liste: «Erfasste Tunnel», «Erfasste Brücken»
+            und «Erfasste Bahnübergänge» zu allen Einträgen der Linie, eine Kachel wie
+            «Ticino, 325 Brücken» zu genau diesen 325.
+          </li>
+          <li>
             Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Länge, Baujahr und
             Anzahl Gleise einer Linie stehen nicht in den offenen Daten, ebenso wenig Länge und
             Baujahr der Brücken.
@@ -238,6 +243,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             setzt ein Programm aus den offenen Daten zusammen, und vor jeder Veröffentlichung
             gleicht ein Prüfprogramm sie mit den Daten ab.
           </li>
+          <li>Das Auftaktbild ist mit ChatGPT entstanden.</li>
         </Punkte>
       </Abschnitt>
     </div>

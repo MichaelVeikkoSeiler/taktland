@@ -2,7 +2,7 @@
   "linie": 852,
   "name": "Sulgen - Gossau SG",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -200,21 +200,32 @@
           "label": "Erfasste Brücken",
           "value": 19,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "St. Gallen",
           "value": 11,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "St. Gallen"
+          }
         },
         {
           "label": "Thurgau",
           "value": 8,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Thurgau"
+          }
         },
         {
           "label": "PU Kradolf",
@@ -267,14 +278,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 23,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 23,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Neueckstrasse",
@@ -389,5 +406,263 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PDu Bleiken",
+        "km": 0.311,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Kradolf",
+        "km": 2.138,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu nach Kradolf",
+        "km": 3.153,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Rötelbach",
+        "km": 7.917,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Sitter-Br. Sitterdorf",
+        "km": 8.344,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Städeli",
+        "km": 8.881,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Sorental-Brücke",
+        "km": 12.381,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Du Hallertobelbach",
+        "km": 12.932,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "PU Hauptwil",
+        "km": 14.416,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Hauptwil",
+        "km": 14.49,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Laubbach",
+        "km": 15.084,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Du Grimmbach",
+        "km": 16.113,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Du Arneggerbach",
+        "km": 18.697,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "WU Herzenwil",
+        "km": 19.237,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Albertschwilerstr.",
+        "km": 19.978,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Niederbürerstrasse",
+        "km": 20.546,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U+PDu Flawilerstrasse",
+        "km": 22.029,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Br ü. Dorfbach",
+        "km": 22.176,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Bedastrasse",
+        "km": 22.264,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Tonwarenfabrik",
+        "km": 1.657,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Heldswilerstr.",
+        "km": 1.887,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Neueckstrasse",
+        "km": 2.259,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Bischofszeller",
+        "km": 2.709,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Untere Tellen",
+        "km": 3.946,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Gruneck",
+        "km": 5.089,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Obere Tellen",
+        "km": 5.815,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Lettenwald",
+        "km": 6.365,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Ibergstrasse",
+        "km": 7.128,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hohlenstein",
+        "km": 7.809,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Haltestelle",
+        "km": 8.213,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Steigstrasse",
+        "km": 9.887,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Turkeistrasse",
+        "km": 10.352,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Niederburerstr.",
+        "km": 10.837,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kuhweid",
+        "km": 11.591,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Station",
+        "km": 14.156,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Frommhausen",
+        "km": 15.081,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Laubbach",
+        "km": 15.608,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Egg",
+        "km": 15.855,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Loch",
+        "km": 16.527,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Weite",
+        "km": 18.091,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bachigenstrasse",
+        "km": 18.45,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Sommerau",
+        "km": 21.189,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

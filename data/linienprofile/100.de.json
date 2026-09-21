@@ -2,7 +2,7 @@
   "linie": 100,
   "name": "Lausanne - Simplon Tunnel I - Iselle",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -449,7 +449,8 @@
           "label": "Erfasste Tunnel",
           "value": 9,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Simplontunnel",
@@ -567,21 +568,32 @@
           "label": "Erfasste Brücken",
           "value": 201,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Valais",
           "value": 108,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Valais"
+          }
         },
         {
           "label": "Vaud",
           "value": 93,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Vaud"
+          }
         },
         {
           "label": "PI de la Blancherie",
@@ -669,28 +681,44 @@
           "label": "Erfasste Bahnübergänge",
           "value": 6,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«unbewacht»",
           "value": 3,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Bedarfsschrankenanl"
+          }
         },
         {
           "label": "«Schrankenanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "PN du Grand Canal",
@@ -821,5 +849,1327 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de Paudex ( 026 )",
+        "laenge_m": 72,
+        "inbetriebnahme_jahr": 1999,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 3.689,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Bertholod ( 027 )",
+        "laenge_m": 141,
+        "inbetriebnahme_jahr": 2020,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 5.195,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel des Crêtes (025)",
+        "laenge_m": 302,
+        "inbetriebnahme_jahr": 1880,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 22.013,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de St-Maurice (003)",
+        "laenge_m": 490,
+        "inbetriebnahme_jahr": 1859,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 50.999,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Sierre (Gobet)",
+        "laenge_m": 370,
+        "inbetriebnahme_jahr": 2015,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 108.896,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de la Raspille (072)",
+        "laenge_m": 80,
+        "inbetriebnahme_jahr": 2018,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 110.95,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Varen (102)",
+        "laenge_m": 2799,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 115.109,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Leuk (103)",
+        "laenge_m": 1376,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 116.588,
+        "bemerkung": null
+      },
+      {
+        "name": "Simplontunnel",
+        "laenge_m": 19820,
+        "inbetriebnahme_jahr": 1900,
+        "tunnelsystem": "2-Röhren / 2 x 1-Spur",
+        "km": 165.714,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Pt murs voûtés sud/ouest",
+        "km": 0,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Tunnel à bagages est",
+        "km": 0.059,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Lausanne est",
+        "km": 0.079,
+        "baueinheiten": 8,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt murs voûtés sud/est",
+        "km": 0.204,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI av. d'Ouchy",
+        "km": 0.346,
+        "baueinheiten": 7,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Montolivet sud",
+        "km": 0.931,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Aq de la Vuachère",
+        "km": 1.337,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Pierraz-Portay",
+        "km": 1.355,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Combes",
+        "km": 2.09,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Parking de Pully",
+        "km": 2.508,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Gal commune Pully",
+        "km": 2.528,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de la Panchaudaz",
+        "km": 2.936,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Viaduc de la Paudèze",
+        "km": 3.402,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Grangette",
+        "km": 3.524,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Suter",
+        "km": 3.838,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Savuit",
+        "km": 4.908,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Lutry",
+        "km": 5.055,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Châtelard",
+        "km": 5.558,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Villette",
+        "km": 6.588,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Villette",
+        "km": 6.706,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Aq de Villette",
+        "km": 6.813,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI piétons Villette",
+        "km": 6.934,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Cully",
+        "km": 8.544,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Corniche",
+        "km": 8.587,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Aq de Champaflon",
+        "km": 9.147,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Moratel",
+        "km": 9.415,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI d'Epesses",
+        "km": 10.005,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de Chenalette",
+        "km": 10.621,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Treytorrents",
+        "km": 10.806,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Rivaz",
+        "km": 13.542,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy St-Saphorin",
+        "km": 14.527,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de St-Saphorin",
+        "km": 14.63,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Salenche",
+        "km": 14.694,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Bergère",
+        "km": 17.638,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Entrepots",
+        "km": 18.137,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Moulins",
+        "km": 18.224,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Veveyse",
+        "km": 18.301,
+        "baueinheiten": 7,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Guinguette",
+        "km": 18.355,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Vevey",
+        "km": 18.413,
+        "baueinheiten": 5,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI piét Bosquets",
+        "km": 18.483,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI piét Espérance",
+        "km": 18.797,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI piét Beau-Séjour",
+        "km": 18.985,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Blonay",
+        "km": 19.019,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du petit Clos",
+        "km": 19.203,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Ch. E. Javelle",
+        "km": 19.427,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Aq sur l'Ognonnaz",
+        "km": 19.513,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Alpes",
+        "km": 19.582,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Tour-de-Peilz",
+        "km": 19.935,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Sully",
+        "km": 20.809,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI sur Accès privé",
+        "km": 20.952,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Merlet",
+        "km": 21.187,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy. de Burier",
+        "km": 21.547,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Tour Tavel",
+        "km": 21.669,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Maladaire",
+        "km": 21.808,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Grammont",
+        "km": 22.878,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Clarens",
+        "km": 23.083,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Clarens",
+        "km": 23.133,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Vernex",
+        "km": 23.406,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Vernex",
+        "km": 24.341,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI piét de la Gare",
+        "km": 24.405,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Montreux",
+        "km": 24.497,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI bagages Montreux",
+        "km": 24.505,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Baie de Montreux",
+        "km": 25.049,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Territet",
+        "km": 25.381,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy de Territet",
+        "km": 26.045,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de l'Auberge",
+        "km": 26.289,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy de Veytaux",
+        "km": 27.07,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de la Seraille",
+        "km": 27.251,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI piét Chillon",
+        "km": 27.798,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI piét Grandchamp",
+        "km": 27.946,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Monnerat",
+        "km": 28.164,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Villeneuve",
+        "km": 29.364,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt du Pissot",
+        "km": 29.978,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Eau Froide",
+        "km": 30.854,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt des Six Poses",
+        "km": 32.094,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt du Barbottin",
+        "km": 32.898,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Roche",
+        "km": 33.858,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Vert Furet",
+        "km": 36.782,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI d'Yvorne",
+        "km": 37.761,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Stand",
+        "km": 38.136,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Grande Eau",
+        "km": 38.201,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Salière",
+        "km": 38.252,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Planchette",
+        "km": 38.776,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Route d'Illarsaz",
+        "km": 39.128,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy d'Aigle",
+        "km": 39.349,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voyag. St Triphon",
+        "km": 43.614,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Gryonne",
+        "km": 45.239,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Neyers",
+        "km": 45.647,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voyageur de Bex",
+        "km": 47.623,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Route de Massongex",
+        "km": 48.118,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur l'Avançon",
+        "km": 48.145,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de sous-Vent",
+        "km": 48.911,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pont sur le Rhône",
+        "km": 49.428,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Paluds",
+        "km": 49.83,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Caillettes",
+        "km": 49.873,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de St Martin",
+        "km": 50.56,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de l'Abbaye",
+        "km": 51.292,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Chables",
+        "km": 51.337,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI voyageurs St-Maurice",
+        "km": 51.529,
+        "baueinheiten": 5,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur Le Mauvoisin",
+        "km": 52.448,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Verollier",
+        "km": 52.505,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Usine Bois Noir",
+        "km": 53.348,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Source",
+        "km": 54.514,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur St-Barthélémy",
+        "km": 54.753,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI du Camping",
+        "km": 55.058,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Deniaz",
+        "km": 56.529,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Sablons",
+        "km": 57.385,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI voy Evionnaz",
+        "km": 57.863,
+        "baueinheiten": 3,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Balmaz",
+        "km": 59.255,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI et Pt de la Pissevache",
+        "km": 60.305,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI piétons + voy. Vernayaz",
+        "km": 61.551,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI du Clos Neuf",
+        "km": 62.006,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Canal de fuite UE Vernayaz",
+        "km": 62.28,
+        "baueinheiten": 6,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur le Trient",
+        "km": 62.41,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Verrerie",
+        "km": 62.691,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt Canal des Marais",
+        "km": 62.804,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Iles",
+        "km": 63.693,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Glarets",
+        "km": 64.678,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Ottan",
+        "km": 65.039,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI chez les Lugons",
+        "km": 65.24,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Bâtiaz",
+        "km": 65.838,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur la Dranse",
+        "km": 65.962,
+        "baueinheiten": 3,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Digues",
+        "km": 65.984,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PT sur la Meunière",
+        "km": 66.041,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Rte de Fully",
+        "km": 66.233,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI voy Martigny",
+        "km": 66.506,
+        "baueinheiten": 5,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Moyaz",
+        "km": 66.927,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Faraday",
+        "km": 67.213,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt du Tolleron",
+        "km": 68.693,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI voy Charrat-Fully",
+        "km": 70.809,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Voyag. Saxon",
+        "km": 75.3,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Thoulaz",
+        "km": 75.821,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur le Vieux-Cours",
+        "km": 76.632,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI du Brésil",
+        "km": 78.062,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Nazots",
+        "km": 79.235,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Voy Riddes",
+        "km": 79.624,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur Rhône Riddes",
+        "km": 80.421,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt du Grand Canal",
+        "km": 80.563,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Chamoson",
+        "km": 81.992,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Bérade",
+        "km": 84.482,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI d'Ardon",
+        "km": 85.107,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI voy Ardon",
+        "km": 85.326,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur la Lizerne",
+        "km": 85.349,
+        "baueinheiten": 3,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Botza",
+        "km": 85.895,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur Canal Levant",
+        "km": 86.385,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Aq de Vétroz",
+        "km": 86.878,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI du Poujet",
+        "km": 88.012,
+        "baueinheiten": 3,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur la Morge",
+        "km": 88.123,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Châteauneuf I",
+        "km": 88.467,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Châteauneuf II",
+        "km": 88.745,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI voy de l'Aérodrome",
+        "km": 90.719,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Creusets",
+        "km": 91.972,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Blancherie",
+        "km": 92.309,
+        "baueinheiten": 9,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI voy Sion",
+        "km": 92.416,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur la Sionne",
+        "km": 93.14,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Batasse",
+        "km": 95.879,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Zufferey",
+        "km": 97.534,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI d'Uvrier",
+        "km": 97.9,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur La Lienne 1",
+        "km": 98.03,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Voy de St Léonard",
+        "km": 98.174,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Mangold",
+        "km": 100.437,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Voy de Noës",
+        "km": 105.603,
+        "baueinheiten": 3,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Lamberson",
+        "km": 107.279,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI voy Sierre",
+        "km": 108.118,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Hôtel Bellevue",
+        "km": 108.2,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Lacs",
+        "km": 108.511,
+        "baueinheiten": 5,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PT sur La Sinièse",
+        "km": 109.44,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI du Glarey",
+        "km": 109.589,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Mandeline",
+        "km": 109.758,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Bernunes",
+        "km": 110.174,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Moulins",
+        "km": 110.786,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "SU Tscharasina",
+        "km": 111.101,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "SU Salgesch 1",
+        "km": 111.341,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "SUe Salgesch 2",
+        "km": 112.121,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PU Salgesch",
+        "km": 112.219,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "U Abfuer",
+        "km": 112.693,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Br über die Dala",
+        "km": 115.862,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Rottenbrücke",
+        "km": 117.434,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PU Leuk",
+        "km": 117.647,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "U Leuk",
+        "km": 117.946,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Brücke über die Turtmänna",
+        "km": 121.408,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PU Gampel",
+        "km": 125.877,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Br Schnydrigen",
+        "km": 126.99,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "U Raronstrasse",
+        "km": 130.068,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PDu Bahndamm",
+        "km": 133.441,
+        "baueinheiten": 3,
+        "kanton": "Valais"
+      },
+      {
+        "name": "U Baltschieder",
+        "km": 134.61,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Br Baltschieder",
+        "km": 134.773,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "U Bockbart",
+        "km": 135.394,
+        "baueinheiten": 3,
+        "kanton": "Valais"
+      },
+      {
+        "name": "U Vispstrasse",
+        "km": 136.331,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Vispa-Bruecke",
+        "km": 136.362,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PDu Vispa",
+        "km": 136.407,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PU Visp",
+        "km": 136.674,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "WU Lonza",
+        "km": 137.451,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Gamsa-Brücke 1",
+        "km": 141.341,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Gamsa-Brücke 3",
+        "km": 141.4,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Gamsa-Brücke 2",
+        "km": 141.584,
+        "baueinheiten": 5,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Gamsa-Bruecke 4",
+        "km": 141.919,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Saltina-Bruecke",
+        "km": 144.903,
+        "baueinheiten": 3,
+        "kanton": "Valais"
+      },
+      {
+        "name": "SU Furka",
+        "km": 145.251,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "SU Naters",
+        "km": 145.426,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PU Brig",
+        "km": 145.547,
+        "baueinheiten": 9,
+        "kanton": "Valais"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN Butticaz",
+        "km": 10.894,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 2
+      },
+      {
+        "name": "PN Grand",
+        "km": 11.016,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 2
+      },
+      {
+        "name": "PN du Duzillet",
+        "km": 41.073,
+        "sicherungsart": "unbewacht",
+        "gleise": 2
+      },
+      {
+        "name": "PN du Grand Canal",
+        "km": 41.21,
+        "sicherungsart": "unbewacht",
+        "gleise": 5
+      },
+      {
+        "name": "PN route de l'industrie",
+        "km": 41.216,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 5
+      },
+      {
+        "name": "PN de la raffinerie",
+        "km": 41.376,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      }
+    ]
+  }
 }

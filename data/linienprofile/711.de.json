@@ -2,7 +2,7 @@
   "linie": 711,
   "name": "ZH Hardbrucke - Kollermuhle",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -246,7 +246,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Landikontunnel",
@@ -313,21 +314,32 @@
           "label": "Erfasste Brücken",
           "value": 35,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Zürich",
           "value": 32,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "Zug",
           "value": 3,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zug"
+          }
         },
         {
           "label": "PU West Hardbrücke",
@@ -401,14 +413,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 17,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 17,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -497,5 +515,333 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Landikontunnel",
+        "laenge_m": 484,
+        "inbetriebnahme_jahr": 1864,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 15.558,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PU West Hardbrücke",
+        "km": 1.992,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Rahmenbauwerk Hard",
+        "km": 2.092,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Badenerstrasse",
+        "km": 5.037,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Pestalozziweg",
+        "km": 6.101,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Brunnackersteig",
+        "km": 7.203,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Uitikonerstrasse",
+        "km": 7.509,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Urdorf",
+        "km": 8.546,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Bahnhofstrasse",
+        "km": 8.771,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Fadmatt",
+        "km": 9.618,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Weihermatt",
+        "km": 9.935,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U alte Urdorfstrasse",
+        "km": 12.506,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Birmensdorf",
+        "km": 12.702,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu alte Zürcherstr.",
+        "km": 13.221,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Landikon",
+        "km": 14.649,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du für die Reppisch",
+        "km": 15.239,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "BDu Friedgraben",
+        "km": 16.555,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Bonstetten",
+        "km": 18.018,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 18.92,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Breitestrasse",
+        "km": 21.91,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Hedingen",
+        "km": 22.091,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 22.244,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Hausackerstrasse",
+        "km": 22.495,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Blitzgbach",
+        "km": 23.691,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Jonenbach-Brücke",
+        "km": 23.979,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Zwillikerstrasse",
+        "km": 24.279,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Dammgasse",
+        "km": 24.488,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Affoltern am Albis",
+        "km": 24.87,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Schlifistrasse",
+        "km": 26.043,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du 1 Haselbach",
+        "km": 29.309,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du 2 Haselbach",
+        "km": 30.035,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "BDu Wattbach",
+        "km": 31.415,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Knonau",
+        "km": 31.69,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Bibersee",
+        "km": 33.372,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "PU Rigiblick",
+        "km": 35.49,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU Sumpf",
+        "km": 35.694,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Stationsstrasse",
+        "km": 8.225,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Bahnhofstrasse",
+        "km": 8.733,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Im Keimler",
+        "km": 9.258,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Uitikonerstrasse",
+        "km": 10.081,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Kleinhaeuli",
+        "km": 11.062,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Zuercherstrasse",
+        "km": 12.877,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Landikonerstr.",
+        "km": 14.546,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Chriegmatt",
+        "km": 16.596,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Moosstrasse",
+        "km": 17.032,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Masstrasse",
+        "km": 18.583,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Arnistrasse",
+        "km": 22.222,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Zwillikerstrasse",
+        "km": 22.368,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Giessenstrasse",
+        "km": 23.976,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Bergstrasse",
+        "km": 24.68,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Eigi",
+        "km": 27.834,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Riedmatten",
+        "km": 28.483,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Maschwanderstr.",
+        "km": 29.061,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

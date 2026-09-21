@@ -2,7 +2,7 @@
   "linie": 735,
   "name": "Ziegelbrucke West - Rapperswil Ost",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -189,7 +189,8 @@
           "label": "Erfasste Brücken",
           "value": 18,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -220,14 +221,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 18,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 18,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Grynaustrasse",
@@ -364,5 +371,227 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "U Rietstr.",
+        "km": 37.501,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "BDu Wüschlengraben",
+        "km": 38.203,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Br über Rüfibach",
+        "km": 39.354,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "BDu Maseltrangerbach",
+        "km": 39.776,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Br über den Aubach",
+        "km": 40.753,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "WU vor Uznach",
+        "km": 46.113,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Steinenbach-Br.",
+        "km": 46.168,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "PU Uznach",
+        "km": 46.487,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Br Ernetschwilerbach",
+        "km": 47.074,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Aabach-Br.",
+        "km": 48.004,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "PDu Härti",
+        "km": 48.356,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "PU Schmerikon",
+        "km": 49.278,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "BDu bei der Werft",
+        "km": 51.162,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "SU Bollingen",
+        "km": 53.084,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "BDu 55.095",
+        "km": 55.096,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Brücke ü. Wurmsbach",
+        "km": 55.927,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "WU Langrüti",
+        "km": 56.866,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Br über die Jona",
+        "km": 56.982,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Windegg",
+        "km": 35.783,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Eichen",
+        "km": 36.498,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Biltenerstrasse",
+        "km": 37.239,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rufibach",
+        "km": 39.344,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kanal",
+        "km": 39.789,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Maseltrangen",
+        "km": 40.26,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Wyden",
+        "km": 42.445,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kaltbrunnerstr.",
+        "km": 43.289,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Grafenaustrasse",
+        "km": 44.327,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Grynaustrasse",
+        "km": 46.324,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Bleicherweg",
+        "km": 47.235,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Aabach",
+        "km": 47.981,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Allmeindstrasse",
+        "km": 48.945,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bad",
+        "km": 49.476,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Ziegelhof",
+        "km": 50.729,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Campingplatz",
+        "km": 54.192,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Station",
+        "km": 54.425,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Wurmsbach",
+        "km": 55.508,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

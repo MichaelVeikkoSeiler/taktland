@@ -2,7 +2,7 @@
   "linie": 824,
   "name": "Romanshorn - Konstanz",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -237,7 +237,8 @@
           "label": "Erfasste Brücken",
           "value": 13,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "BDu Underbach",
@@ -289,14 +290,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 19,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 19,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Station",
@@ -404,5 +411,203 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "SU Hinterloh",
+        "km": 83.311,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Holzenstein",
+        "km": 83.626,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu Tobelmühle",
+        "km": 84.671,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Zufahrt Strandbad",
+        "km": 86.532,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu Underbach",
+        "km": 86.91,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PDu Seedorf",
+        "km": 87.84,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu Hornbach",
+        "km": 90.117,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Weidhof",
+        "km": 94.871,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Seebach",
+        "km": 95.072,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Töbelibach",
+        "km": 97.018,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Bottighoferbach",
+        "km": 97.787,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Kogenbach",
+        "km": 98.761,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Kreuzlingen Hafen",
+        "km": 100.142,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Bankstrasse",
+        "km": 82.365,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hafenstrasse",
+        "km": 82.42,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tobelmuli",
+        "km": 84.61,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schlatterstr.",
+        "km": 85.35,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Stickelbergerstr",
+        "km": 85.673,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kirchhalde",
+        "km": 85.8,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Seestrasse",
+        "km": 85.89,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Wattlen",
+        "km": 87.687,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Seestrasse",
+        "km": 87.945,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Underi Sagi",
+        "km": 90.237,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Station",
+        "km": 90.519,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Staadweg",
+        "km": 90.784,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Beerliseggstr.",
+        "km": 92.352,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bahnhofstrasse",
+        "km": 92.895,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Seewiesenstrasse",
+        "km": 94.15,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Seedorfstrasse",
+        "km": 94.629,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Muhlegassli",
+        "km": 97.565,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Seestrasse",
+        "km": 97.92,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Promenadenstr.",
+        "km": 99.797,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

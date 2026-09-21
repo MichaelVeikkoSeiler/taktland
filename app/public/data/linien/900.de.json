@@ -2,7 +2,7 @@
   "linie": 900,
   "name": "Sargans Ost - Chur West (Gleisende)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -167,21 +167,32 @@
           "label": "Erfasste Brücken",
           "value": 34,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Graubünden",
           "value": 27,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Graubünden"
+          }
         },
         {
           "label": "St. Gallen",
           "value": 7,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "St. Gallen"
+          }
         },
         {
           "label": "U Elestastrasse",
@@ -326,5 +337,213 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "Vilterserkanalbrücke",
+        "km": 0.239,
+        "baueinheiten": 2,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Saarkanal-Brücke",
+        "km": 1.337,
+        "baueinheiten": 2,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "PDu Unterrain",
+        "km": 5.541,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Elestastrasse",
+        "km": 5.552,
+        "baueinheiten": 3,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "PU Bad Ragaz",
+        "km": 5.713,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Fläscherstrasse",
+        "km": 5.921,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Rheinbrücke Ragaz",
+        "km": 6.083,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Lokalstrasse",
+        "km": 6.229,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "PU Maienfeld",
+        "km": 7.694,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "WU Krachenbrüggli",
+        "km": 8.013,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "U Weierweg",
+        "km": 8.953,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "PDu Römerbrüggli",
+        "km": 9.671,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "SU Neutratt",
+        "km": 10.612,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "Landquart-Brücke",
+        "km": 12.157,
+        "baueinheiten": 2,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "PU Landquart",
+        "km": 12.332,
+        "baueinheiten": 2,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "PU 2 RhB/SBB",
+        "km": 12.489,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "Du Mülbach",
+        "km": 13.028,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "Br üb. Chessirüfi",
+        "km": 16.602,
+        "baueinheiten": 3,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "BDu Hagrüfi",
+        "km": 18.334,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "BDu Chleirüfi",
+        "km": 19.119,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "BDu Dorfrüfi",
+        "km": 19.766,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "Br Maschanser-Rüfi",
+        "km": 21.186,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "WU Meng",
+        "km": 23.497,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "U Rheingässli",
+        "km": 23.659,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "U Reitnauerweg",
+        "km": 23.85,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "U Schellenbergweg",
+        "km": 24.188,
+        "baueinheiten": 2,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "U Gürtelstrasse",
+        "km": 25.266,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "PU Chur Gürtelstr.",
+        "km": 25.65,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "Post-Tunnel",
+        "km": 25.704,
+        "baueinheiten": 2,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "Gepäcktunnel",
+        "km": 25.84,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "U Plessurstrasse",
+        "km": 26.275,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "Plessur-Brücke",
+        "km": 26.283,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "Du Mülibach",
+        "km": 26.543,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      },
+      {
+        "name": "U Sägenstrasse",
+        "km": 26.556,
+        "baueinheiten": 1,
+        "kanton": "Graubünden"
+      }
+    ]
+  }
 }

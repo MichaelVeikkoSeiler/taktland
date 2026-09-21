@@ -2,7 +2,7 @@
   "linie": 201,
   "name": "Le Day - Le Brassus",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -90,7 +90,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel des Epoisats",
@@ -157,7 +158,8 @@
           "label": "Erfasste Brücken",
           "value": 6,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -188,21 +190,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 5,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 4,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "PN de la STEP",
@@ -341,5 +354,87 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel des Epoisats",
+        "laenge_m": 431,
+        "inbetriebnahme_jahr": 1886,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 9.838,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PI des Foulets",
+        "km": 4.677,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Gobet",
+        "km": 4.957,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Combe",
+        "km": 5.609,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Viad de Riere Ban",
+        "km": 7.005,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Chable",
+        "km": 8.126,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Viaduc Crêt Monsieur",
+        "km": 8.516,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN du Day",
+        "km": 3.272,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Granges Neuve",
+        "km": 4.195,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Epoisats",
+        "km": 9.533,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la Torne",
+        "km": 10.472,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la STEP",
+        "km": 11.342,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

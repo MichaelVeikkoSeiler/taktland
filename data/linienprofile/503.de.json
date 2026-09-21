@@ -2,7 +2,7 @@
   "linie": 503,
   "name": "Sissach - Laufelfingen - Olten",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -214,7 +214,8 @@
           "label": "Erfasste Tunnel",
           "value": 3,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Ob. Hauensteintunnel",
@@ -306,21 +307,32 @@
           "label": "Erfasste Brücken",
           "value": 24,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Basel-Landschaft",
           "value": 13,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Basel-Landschaft"
+          }
         },
         {
           "label": "Solothurn",
           "value": 11,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Solothurn"
+          }
         },
         {
           "label": "PU Olten Nord",
@@ -409,21 +421,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 8,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 7,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "BUe Passerelle",
@@ -583,5 +606,229 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Bucktentunnel",
+        "laenge_m": 263,
+        "inbetriebnahme_jahr": 1857,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 29.161,
+        "bemerkung": null
+      },
+      {
+        "name": "Mühlefluhtunnel BL",
+        "laenge_m": 60,
+        "inbetriebnahme_jahr": 1857,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 29.915,
+        "bemerkung": null
+      },
+      {
+        "name": "Ob. Hauensteintunnel",
+        "laenge_m": 2495,
+        "inbetriebnahme_jahr": 1857,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 32.245,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "SU Burgenrain rechts",
+        "km": 21.671,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Du Homburgerbach",
+        "km": 22.301,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "U Böckterstrasse",
+        "km": 22.543,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "U Bahnweg",
+        "km": 23.865,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "U Schübletenweg",
+        "km": 24.178,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "WU Rehag",
+        "km": 24.481,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "SU Sommerau",
+        "km": 25.55,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "U Rünenbergstrasse",
+        "km": 25.628,
+        "baueinheiten": 2,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Viadukt Rümlingen",
+        "km": 27.036,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "WU Talweid",
+        "km": 27.742,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "WU Rebgasse",
+        "km": 28.607,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "WU Chatzbach",
+        "km": 29.389,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "U Eptingerstrasse",
+        "km": 30.407,
+        "baueinheiten": 2,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 33.691,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 34.475,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Eisenbähnli",
+        "km": 34.522,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Feldliweg",
+        "km": 35.1,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Brüelmattstrasse",
+        "km": 35.331,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "WU Milchgasse",
+        "km": 35.508,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Aarebrücke Tannwald",
+        "km": 37.204,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Werkstattgleis",
+        "km": 37.544,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Kabelstollen",
+        "km": 39.084,
+        "baueinheiten": 3,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Gepäcktunnel Nord",
+        "km": 39.218,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Olten Nord",
+        "km": 39.226,
+        "baueinheiten": 5,
+        "kanton": "Solothurn"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Hauptstrasse",
+        "km": 22.119,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rebgasse",
+        "km": 22.997,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Mettenberg",
+        "km": 26.425,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Ischlag",
+        "km": 28.855,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Moosmatt",
+        "km": 30.763,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Miesern",
+        "km": 33.973,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Marenstrasse",
+        "km": 36.287,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Passerelle",
+        "km": 38.611,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 3
+      }
+    ]
+  }
 }

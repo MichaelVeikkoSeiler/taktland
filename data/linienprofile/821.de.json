@@ -2,7 +2,7 @@
   "linie": 821,
   "name": "Oberwinterthur - Etzwilen West (Abzw)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -213,21 +213,32 @@
           "label": "Erfasste Brücken",
           "value": 24,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Zürich",
           "value": 23,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "Thurgau",
           "value": 1,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Thurgau"
+          }
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -273,14 +284,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 10,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 10,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Bachtobelstrasse",
@@ -396,5 +413,215 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "Riedbach-Br.",
+        "km": 4.078,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Wiesendangerstr.",
+        "km": 6.857,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Seuzach",
+        "km": 7.549,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Dinhardstr.",
+        "km": 10.18,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU bei Eschlikon",
+        "km": 11.383,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU bei Thalheim",
+        "km": 12.268,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Bergstr.",
+        "km": 12.924,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Niederwilerstr.",
+        "km": 14.095,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Gütighausen",
+        "km": 14.576,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU bei Dätwil",
+        "km": 16.319,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU im Einbruch",
+        "km": 17.031,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Thurbr. Ossingen",
+        "km": 17.364,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Thurhalden",
+        "km": 17.59,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Husemerstr.",
+        "km": 18.456,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Lattenbach",
+        "km": 18.651,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Andelfingerstr.",
+        "km": 18.747,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Truttikonerstr.",
+        "km": 19.602,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Münchenwiler",
+        "km": 20.644,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Heerenweg",
+        "km": 24.889,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU beim Raffoltersee",
+        "km": 25.11,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Stammheim",
+        "km": 26.904,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Leigraben",
+        "km": 27.917,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Blumenziel",
+        "km": 29.102,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU bei Etzwilen",
+        "km": 31.444,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Wallrutistrasse",
+        "km": 5.103,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Stadlerstrasse",
+        "km": 5.496,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bachtobelstrasse",
+        "km": 7.76,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Leberen",
+        "km": 7.962,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bernacker",
+        "km": 8.554,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Sagiweg",
+        "km": 9.985,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Eschlikonerstr.",
+        "km": 11.661,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Grundwilstrasse",
+        "km": 19.084,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Steinerstrasse",
+        "km": 20.145,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bachwasenstrasse",
+        "km": 26.363,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

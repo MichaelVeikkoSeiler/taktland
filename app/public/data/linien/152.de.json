@@ -2,7 +2,7 @@
   "linie": 152,
   "name": "St-Jean - Geneve-Eaux-Vives - Annemasse",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -183,7 +183,8 @@
           "label": "Erfasste Tunnel",
           "value": 15,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel de Pinchat",
@@ -301,7 +302,8 @@
           "label": "Erfasste Brücken",
           "value": 9,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Pt Halte LPR",
@@ -391,5 +393,185 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de St. Jean (087)",
+        "laenge_m": 221,
+        "inbetriebnahme_jahr": 1941,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 61.859,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel Bois de la Bâtie (088)",
+        "laenge_m": 1078,
+        "inbetriebnahme_jahr": 1949,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 63.516,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Pinchat",
+        "laenge_m": 2026,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 65.868,
+        "bemerkung": null
+      },
+      {
+        "name": "TC Voirie de Carouge",
+        "laenge_m": 99,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 67.853,
+        "bemerkung": null
+      },
+      {
+        "name": "TC Rive gauche",
+        "laenge_m": 411,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 67.965,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Champel 1",
+        "laenge_m": 494,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 68.674,
+        "bemerkung": null
+      },
+      {
+        "name": "Halte Genève-Champel",
+        "laenge_m": 222,
+        "inbetriebnahme_jahr": 2018,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 68.994,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Champel 2",
+        "laenge_m": 928,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 69.44,
+        "bemerkung": null
+      },
+      {
+        "name": "TC Théodore Weber",
+        "laenge_m": 119,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 70.081,
+        "bemerkung": null
+      },
+      {
+        "name": "Halte Genève-Eaux-Vives",
+        "laenge_m": 657,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 70.457,
+        "bemerkung": null
+      },
+      {
+        "name": "TC Franck Thomas Gradelle",
+        "laenge_m": 1460,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 70.8,
+        "bemerkung": null
+      },
+      {
+        "name": "TC Gradelle - Seymaz",
+        "laenge_m": 435,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 72.26,
+        "bemerkung": null
+      },
+      {
+        "name": "TC Seymaz - Halte de CHEB",
+        "laenge_m": 271,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 72.719,
+        "bemerkung": null
+      },
+      {
+        "name": "Halte Chêne-Bourg",
+        "laenge_m": 250,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 73.103,
+        "bemerkung": null
+      },
+      {
+        "name": "TC du Foron",
+        "laenge_m": 1136,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 73.24,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Viad de la Jonction",
+        "km": 62.486,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "Pt Halte LPR",
+        "km": 64.021,
+        "baueinheiten": 2,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI Nord",
+        "km": 64.023,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI Route de Lancy",
+        "km": 64.042,
+        "baueinheiten": 2,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI Central",
+        "km": 64.064,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI Sud",
+        "km": 64.12,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI Piétons Quai Douane",
+        "km": 64.285,
+        "baueinheiten": 2,
+        "kanton": "Genève"
+      },
+      {
+        "name": "Pont sur l'Arve",
+        "km": 68.327,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "Pt de la Seymaz",
+        "km": 72.704,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      }
+    ]
+  }
 }

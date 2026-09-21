@@ -2,7 +2,7 @@
   "linie": 451,
   "name": "Aarburg-Oftringen - Rothrist Gleis 1",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -132,7 +132,8 @@
           "label": "Erfasste Brücken",
           "value": 5,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PU Rothrist",
@@ -213,7 +214,8 @@
           "label": "Erfasste Bahnübergänge",
           "value": 1,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -308,5 +310,47 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "Tychbachbrücke",
+        "km": 43.666,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU und Du Brühlbach",
+        "km": 44.278,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Wiggerbrücke",
+        "km": 44.584,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Aarburgerstrasse",
+        "km": 45.008,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Rothrist",
+        "km": 46.198,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Alte Strasse",
+        "km": 44.014,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

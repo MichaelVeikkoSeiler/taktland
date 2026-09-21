@@ -2,7 +2,7 @@
   "linie": 225,
   "name": "Biel/Bienne West - La Chaux-de-Fonds",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -246,7 +246,8 @@
           "label": "Erfasste Tunnel",
           "value": 9,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel des Crosettes (075)",
@@ -364,21 +365,32 @@
           "label": "Erfasste Brücken",
           "value": 31,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Bern",
           "value": 30,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Bern"
+          }
         },
         {
           "label": "Neuchâtel",
           "value": 1,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Neuchâtel"
+          }
         },
         {
           "label": "Pt Canal de la Suze",
@@ -459,28 +471,44 @@
           "label": "Erfasste Bahnübergänge",
           "value": 24,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 21,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Bedarfsschrankenanl"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "PN Sonceboz",
@@ -590,5 +618,415 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de Pasquart (038)",
+        "laenge_m": 52,
+        "inbetriebnahme_jahr": 1874,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 34.716,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Taubenloch 1 ( 039 )",
+        "laenge_m": 239,
+        "inbetriebnahme_jahr": 1874,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 37.973,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Taubenloch 2 ( 040 )",
+        "laenge_m": 320,
+        "inbetriebnahme_jahr": 1874,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 38.338,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Taubenloch 3 ( 041 )",
+        "laenge_m": 220,
+        "inbetriebnahme_jahr": 1874,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 39.316,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Taubenloch 4 ( 042 )",
+        "laenge_m": 163,
+        "inbetriebnahme_jahr": 1874,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 39.627,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Taubenloch 5 ( 043 )",
+        "laenge_m": 164,
+        "inbetriebnahme_jahr": 1874,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 40.349,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Tournedos (044)",
+        "laenge_m": 104,
+        "inbetriebnahme_jahr": 1874,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 47.287,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel des Crosettes (075)",
+        "laenge_m": 1618,
+        "inbetriebnahme_jahr": 1888,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 75.255,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Combe (Creux, 076)",
+        "laenge_m": 230,
+        "inbetriebnahme_jahr": 1888,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 77.08,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Pt Canal de la Suze",
+        "km": 34.178,
+        "baueinheiten": 9,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Lindenpromenade",
+        "km": 34.288,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI du Pasquart",
+        "km": 34.531,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI chemin d' Evilard",
+        "km": 35.453,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Höhenweg",
+        "km": 35.671,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI du Stand",
+        "km": 36.158,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Falbringen",
+        "km": 36.231,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Mahlenwald",
+        "km": 37.526,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt du Taubenloch",
+        "km": 37.829,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Frinvillier",
+        "km": 39.044,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Aq de Reuchenette II",
+        "km": 42.218,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt Suze le Paradis",
+        "km": 44.666,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt Suze Sessenais",
+        "km": 45.204,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Aq sur la Juste",
+        "km": 47.009,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt du Tournedos",
+        "km": 47.375,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Pourpoint",
+        "km": 47.995,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI voy Sonceboz",
+        "km": 48.291,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI d'Oupelière",
+        "km": 49.572,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Suze Les Rios",
+        "km": 52.484,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Courtelary",
+        "km": 56.485,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Suze Raissette",
+        "km": 57.736,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt et PI sur La Doux",
+        "km": 58.772,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Villeret",
+        "km": 60.657,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI rte de Villeret",
+        "km": 61.182,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI des Longines",
+        "km": 62.396,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de St Imier",
+        "km": 62.537,
+        "baueinheiten": 4,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Viad de Fourchaux",
+        "km": 64.192,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI La Charbonnière",
+        "km": 66.324,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Renan I",
+        "km": 68.787,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Renan II",
+        "km": 70.319,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI des Crosettes",
+        "km": 76.413,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN Jagerstein",
+        "km": 35.156,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Aeschlimann",
+        "km": 42.519,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN La Heutte",
+        "km": 43.675,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la Suze",
+        "km": 44.967,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Corneilles",
+        "km": 47.717,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Sonceboz",
+        "km": 48.59,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN de Corgemont",
+        "km": 50.132,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Rios",
+        "km": 52.335,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue des Cheseaux",
+        "km": 53.181,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN ch. des Isles",
+        "km": 53.452,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de l'Aerodrome",
+        "km": 54.977,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Covets 1",
+        "km": 56.036,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Covets 3",
+        "km": 56.077,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Courtelary",
+        "km": 56.378,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Pagres",
+        "km": 57.239,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Cormoret 1",
+        "km": 57.441,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Cormoret 2",
+        "km": 57.727,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Cormoret 3",
+        "km": 57.918,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN St-Imier-Gare",
+        "km": 62.15,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN de Briquetterie",
+        "km": 62.735,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue du Pont",
+        "km": 62.867,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Sonvilier 1",
+        "km": 65.198,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Renan 1",
+        "km": 68.539,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la Gare",
+        "km": 68.975,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

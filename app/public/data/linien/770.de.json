@@ -2,7 +2,7 @@
   "linie": 770,
   "name": "Bulach - Eglisau - Neuhausen",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -206,7 +206,8 @@
           "label": "Erfasste Tunnel",
           "value": 2,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Neuhausertunnel",
@@ -265,28 +266,44 @@
           "label": "Erfasste Brücken",
           "value": 37,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Zürich",
           "value": 16,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "Deutschland",
           "value": 11,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Deutschland"
+          }
         },
         {
           "label": "Schaffhausen",
           "value": 10,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[2].anzahl"
+          "factRef": "bruecken.nach_kanton[2].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Schaffhausen"
+          }
         },
         {
           "label": "Rheinbrücke Eglisau",
@@ -381,7 +398,8 @@
           "label": "Erfasste Bahnübergänge",
           "value": 1,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -471,5 +489,257 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Fischerhölzlitunnel",
+        "laenge_m": 112,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 38.159,
+        "bemerkung": null
+      },
+      {
+        "name": "Neuhausertunnel",
+        "laenge_m": 143,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 39.222,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PU Glattfelden",
+        "km": 19.453,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Birchstud",
+        "km": 21.132,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Seglingen",
+        "km": 21.899,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Eglisau",
+        "km": 22.27,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Rheinbrücke Eglisau",
+        "km": 23.171,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Hüntwangen-Wil",
+        "km": 23.662,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Eglisauerstrasse",
+        "km": 23.853,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU im Gentner",
+        "km": 24.068,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Obere Bauelhaustr.",
+        "km": 24.313,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU beim Kieswerk",
+        "km": 25.335,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Chüewäg",
+        "km": 26.669,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Rafz",
+        "km": 27.066,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Rüdlingerstrasse",
+        "km": 27.338,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Nackerstrasse",
+        "km": 27.56,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Solgenstrasse",
+        "km": 28.091,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Bürgerasyl",
+        "km": 28.754,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Dietenbergstrasse",
+        "km": 30.267,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "Vi Lottstetten",
+        "km": 30.454,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "SU nach Lottstetten",
+        "km": 30.486,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "WU Bitzibrunnengraben",
+        "km": 32.732,
+        "baueinheiten": 2,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "SU Landstrasse 163",
+        "km": 33.014,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "SU Neunkircherstrasse",
+        "km": 34.174,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "PU Jestetten",
+        "km": 34.368,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "Vi Eulengraben",
+        "km": 36.012,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "WU Weierbuck",
+        "km": 36.203,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "SU K6582",
+        "km": 36.533,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "Viadukt bei Nohl",
+        "km": 37.214,
+        "baueinheiten": 1,
+        "kanton": "Deutschland"
+      },
+      {
+        "name": "Vi Fischerhölzli",
+        "km": 37.982,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "PDu nach Altenburg",
+        "km": 38.249,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "Vi Schlössli",
+        "km": 38.343,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "Vi Schweizerhof 1",
+        "km": 38.528,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "U Schweizerhofweg",
+        "km": 38.573,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "Vi Schweizerhof 2",
+        "km": 38.639,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "U Rheinfallstrasse",
+        "km": 38.776,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "PDu im Lauffe",
+        "km": 38.9,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "U Gaswerkstr. Br 1",
+        "km": 39.759,
+        "baueinheiten": 3,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "PU Neuhausen",
+        "km": 40.115,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Bahnhofstrasse",
+        "km": 23.725,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

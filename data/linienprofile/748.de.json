@@ -2,7 +2,7 @@
   "linie": 748,
   "name": "ZH Altstetten - ZH Oerlikon, DML",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -89,7 +89,8 @@
           "label": "Erfasste Tunnel",
           "value": 3,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Zürich Weinbergtunnel",
@@ -181,7 +182,8 @@
           "label": "Erfasste Brücken",
           "value": 8,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Längskanal 1",
@@ -321,5 +323,83 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel Bahnhof Löwenstrasse",
+        "laenge_m": 584,
+        "inbetriebnahme_jahr": 2012,
+        "tunnelsystem": "Andere",
+        "km": 200.733,
+        "bemerkung": null
+      },
+      {
+        "name": "Zürich Weinbergtunnel",
+        "laenge_m": 4977,
+        "inbetriebnahme_jahr": 2014,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 201.974,
+        "bemerkung": null
+      },
+      {
+        "name": "Oerlikontunnel",
+        "laenge_m": 124,
+        "inbetriebnahme_jahr": 2014,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 206.237,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Letzigrabenbrücke",
+        "km": 197.38,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Güterverwaltung",
+        "km": 198.925,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Kohlendreieckbrücke",
+        "km": 199.112,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Längskanal 1",
+        "km": 200.295,
+        "baueinheiten": 7,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Querkanal K3",
+        "km": 200.433,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Gepäcktunnel 2",
+        "km": 200.555,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Halle Sihlpost",
+        "km": 200.571,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Querkanal K1",
+        "km": 200.639,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      }
+    ]
+  }
 }

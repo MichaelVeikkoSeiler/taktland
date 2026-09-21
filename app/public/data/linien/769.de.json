@@ -2,7 +2,7 @@
   "linie": 769,
   "name": "Winterthur West - Bulach",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -190,7 +190,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Dettenbergtunnel",
@@ -257,7 +258,8 @@
           "label": "Erfasste Brücken",
           "value": 15,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PDu Rheinstrasse",
@@ -302,21 +304,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 5,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 4,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "BUe Reutgasse",
@@ -440,5 +453,141 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Dettenbergtunnel",
+        "laenge_m": 1801,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 13.824,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PDu Winterthur-Töss",
+        "km": 1.688,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Tössbrücke in Töss",
+        "km": 2.258,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Waldi",
+        "km": 6.622,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Riedacker",
+        "km": 7.217,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Pfungen",
+        "km": 7.562,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Mühlebach",
+        "km": 8.31,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "BDu Blanenbächli",
+        "km": 9.368,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Oberwald",
+        "km": 9.624,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Kohlschwärzi",
+        "km": 10.272,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Rheinstrasse",
+        "km": 12.516,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Vi Wildbach",
+        "km": 12.747,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Berglistrasse",
+        "km": 15.379,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Viadukt Ettersbühl",
+        "km": 15.827,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Ettersbühl",
+        "km": 16.007,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Mitte Bülach",
+        "km": 16.217,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Reutgasse",
+        "km": 1.888,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Wieshofstrasse",
+        "km": 4.495,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Niederfeldstrasse",
+        "km": 5.293,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Ziegelhutte",
+        "km": 11.029,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Lochacker",
+        "km": 11.278,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

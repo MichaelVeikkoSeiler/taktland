@@ -2,7 +2,7 @@
   "linie": 840,
   "name": "Winterthur Nord - Romanshorn",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -277,21 +277,32 @@
           "label": "Erfasste Brücken",
           "value": 72,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Thurgau",
           "value": 59,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Thurgau"
+          }
         },
         {
           "label": "Zürich",
           "value": 13,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "Du Riedbach",
@@ -408,21 +419,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 11,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 10,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Bedarfsschrankenanl"
+          }
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -516,5 +538,509 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "Eulach-Brücke Nord",
+        "km": 28.336,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu neben Staatsstr.",
+        "km": 29.095,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Seenerstrasse",
+        "km": 29.376,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Mitte Oberwinterhur",
+        "km": 29.63,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Nord Oberwinterthur",
+        "km": 29.737,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Riedbach",
+        "km": 30.515,
+        "baueinheiten": 4,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Rietstrasse",
+        "km": 31.533,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Wiesendangen",
+        "km": 31.947,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Wiesendangerstr.",
+        "km": 32.066,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Rickenbach-A.",
+        "km": 33.503,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Bahn-Strasse",
+        "km": 34.082,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU im Grüninger",
+        "km": 35.608,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Pünt",
+        "km": 36.01,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Kefikonerstrasse",
+        "km": 37.427,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU & Du Tegelbach",
+        "km": 37.621,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU bei Islikon",
+        "km": 37.995,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Islikon",
+        "km": 38.017,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Kellenbinzbach",
+        "km": 38.382,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Niederwil",
+        "km": 39.237,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Messenriet",
+        "km": 39.779,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Haselweg",
+        "km": 40.32,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Murgbrücke",
+        "km": 41.634,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Frauenfeld",
+        "km": 42.01,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Ost",
+        "km": 42.25,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PDu Erchingerstr.",
+        "km": 42.62,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Goldackerstrasse",
+        "km": 43.086,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Bahnhofstrasse",
+        "km": 46.292,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 46.432,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Bruech",
+        "km": 48.03,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu Mettendorf",
+        "km": 48.286,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Holderacker",
+        "km": 48.455,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Hüttlingen-M.",
+        "km": 48.685,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Schattebomm",
+        "km": 48.873,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Hüttlingerbach",
+        "km": 49.011,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU bei Hüttlingen",
+        "km": 49.234,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Spitzäcker",
+        "km": 50.661,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU bei Eschikofen",
+        "km": 50.845,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Thurbrücke Müllheim",
+        "km": 51.325,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Hasli",
+        "km": 52.192,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Kaltbach",
+        "km": 52.691,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Hausern",
+        "km": 53.091,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Gerau",
+        "km": 53.352,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Oberfeld",
+        "km": 54.046,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Gilhof",
+        "km": 54.595,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Feldhof",
+        "km": 57.116,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU im Neugut",
+        "km": 57.871,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Weststrasse",
+        "km": 58.763,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Giessenbach-Brücke",
+        "km": 58.927,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU West Weinfelden",
+        "km": 59.334,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Weinfelden",
+        "km": 59.461,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Eierlenstrasse",
+        "km": 60.813,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU KVA Weinfelden",
+        "km": 61.531,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Sangenstrasse",
+        "km": 62.837,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Bürglen",
+        "km": 63.255,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PDu Obere Bahnhofstr.",
+        "km": 63.418,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Industriestrasse",
+        "km": 65.765,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Sulgen",
+        "km": 66.116,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Staatsstr. 141",
+        "km": 66.274,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Staatsstr. Riedt",
+        "km": 68.276,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Riedt-Ennetaach",
+        "km": 68.803,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu für die Aach",
+        "km": 68.94,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Tobelbach",
+        "km": 69.518,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu für die Aach",
+        "km": 71.657,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU bei Engishofen",
+        "km": 71.8,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu Neumüli",
+        "km": 74.634,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PDu Amriswil",
+        "km": 75.551,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Romanshornerstr.",
+        "km": 76.188,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Tohueb",
+        "km": 77.071,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Felmoos",
+        "km": 78.331,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Aach-Brücke",
+        "km": 78.807,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Arbonerstrasse",
+        "km": 80.886,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Romanshorn",
+        "km": 82.104,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Talackerstrasse",
+        "km": 28.607,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Kanalstrasse",
+        "km": 63.883,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Kammgarn",
+        "km": 64.66,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Scheidweg",
+        "km": 67.05,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Auwiesen",
+        "km": 69.449,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Lenzenhausstr",
+        "km": 69.744,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Nussbaumacher",
+        "km": 70.009,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Niederaachstr.",
+        "km": 74.489,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Muhlenstrasse",
+        "km": 74.534,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Sommeristrasse",
+        "km": 75.017,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Egnacherweg",
+        "km": 81.432,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

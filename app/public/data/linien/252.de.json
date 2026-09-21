@@ -2,7 +2,7 @@
   "linie": 252,
   "name": "Yverdon Est - Payerne",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -184,21 +184,32 @@
           "label": "Erfasste Brücken",
           "value": 17,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Fribourg",
           "value": 9,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Fribourg"
+          }
         },
         {
           "label": "Vaud",
           "value": 8,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Vaud"
+          }
         },
         {
           "label": "PI de Neyremont",
@@ -251,21 +262,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 18,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 17,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Bedarfsschrankenanl"
+          }
         },
         {
           "label": "PN d'Yvonand",
@@ -409,5 +431,221 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PI de l'Industrie",
+        "km": 0.656,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur le Buron",
+        "km": 0.761,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Champ-Pittet",
+        "km": 2.271,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Aq de l'Epenay",
+        "km": 6.892,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt d' Yvonand",
+        "km": 8.302,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Cheyres",
+        "km": 12.612,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI Chables-Font",
+        "km": 15.48,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Font",
+        "km": 16.043,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Aq de Porchy",
+        "km": 16.539,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI d'Estavayer",
+        "km": 17.49,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de la Molière",
+        "km": 18.783,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Frasses",
+        "km": 21.575,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Aq sur l'Arignon",
+        "km": 21.887,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Pt de Petite Glâne",
+        "km": 22.743,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Neyremont",
+        "km": 25.922,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Broye à Payerne",
+        "km": 27.15,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Boverie",
+        "km": 27.255,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN Clendy",
+        "km": 1.145,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Grand Chenau",
+        "km": 3.856,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 1
+      },
+      {
+        "name": "PN Av. de Mordagne",
+        "km": 7.271,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de l'Ancien Stand",
+        "km": 7.907,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la Plage",
+        "km": 8.163,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN ch. Des Pecheurs",
+        "km": 8.334,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN d'Yvonand",
+        "km": 8.663,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "PN de Cheyres",
+        "km": 12.558,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN ch. du moulin",
+        "km": 13.394,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN d'Estavayer",
+        "km": 18.188,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN de Frasses",
+        "km": 22.098,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Iles",
+        "km": 22.648,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Cugy ouest",
+        "km": 23.632,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN Cugy est",
+        "km": 23.884,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN-CGY-2",
+        "km": 24.648,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Pramey",
+        "km": 26.308,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Route d'Yverdon",
+        "km": 26.617,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rte d'Echallens",
+        "km": 26.849,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

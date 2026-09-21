@@ -2,7 +2,7 @@
   "linie": 230,
   "name": "Delemont Est - Basel SBB Ost",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -208,7 +208,8 @@
           "label": "Erfasste Tunnel",
           "value": 5,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Wolftunnel",
@@ -319,28 +320,44 @@
           "label": "Erfasste Brücken",
           "value": 41,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Basel-Landschaft",
           "value": 27,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Basel-Landschaft"
+          }
         },
         {
           "label": "Jura",
           "value": 10,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Jura"
+          }
         },
         {
           "label": "Solothurn",
           "value": 4,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[2].anzahl"
+          "factRef": "bruecken.nach_kanton[2].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Solothurn"
+          }
         },
         {
           "label": "Lüsselbrücke Zwingen",
@@ -436,21 +453,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 7,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 6,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "BUe Hauptstrasse",
@@ -588,5 +616,341 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de Vorbourg (046)",
+        "laenge_m": 37,
+        "inbetriebnahme_jahr": 1875,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 86.665,
+        "bemerkung": null
+      },
+      {
+        "name": "Liesbergtunnel",
+        "laenge_m": 184,
+        "inbetriebnahme_jahr": 1875,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 94.916,
+        "bemerkung": null
+      },
+      {
+        "name": "Bärschwiltunnel",
+        "laenge_m": 116,
+        "inbetriebnahme_jahr": 1875,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 96.568,
+        "bemerkung": null
+      },
+      {
+        "name": "Angensteintunnel",
+        "laenge_m": 65,
+        "inbetriebnahme_jahr": 1875,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 112.475,
+        "bemerkung": null
+      },
+      {
+        "name": "Wolftunnel",
+        "laenge_m": 212,
+        "inbetriebnahme_jahr": 1913,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 121.339,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Pt sur la Sorne",
+        "km": 86.01,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt sur canal Von Roll",
+        "km": 87.29,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt Canal Rondez",
+        "km": 87.515,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI Piet de Soyhières",
+        "km": 88.191,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI rte de Soyhières",
+        "km": 88.211,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI voy de Soyhières",
+        "km": 88.526,
+        "baueinheiten": 5,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt du Mettember",
+        "km": 88.576,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Birsbrücke Soyhières",
+        "km": 90.671,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "WU Mitlerfeld",
+        "km": 90.773,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "WU Riedes-Dessus",
+        "km": 91.748,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PU Liesberg",
+        "km": 94.187,
+        "baueinheiten": 2,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Birsbrücke Liesberg",
+        "km": 94.776,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Birsbrücke Bärschwil",
+        "km": 96.432,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Du Stürmenbach",
+        "km": 97.56,
+        "baueinheiten": 3,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Wahlenbach",
+        "km": 100.282,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "U Bahnhofstrasse Laufen",
+        "km": 100.447,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PU Bahnhof Laufen",
+        "km": 100.633,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "U Schliffistrasse",
+        "km": 100.918,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Du Diebach",
+        "km": 101.374,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Lüsselbrücke Zwingen",
+        "km": 103.349,
+        "baueinheiten": 9,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PU Bahnhof Zwingen",
+        "km": 103.481,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "WU Steinriesel",
+        "km": 104.907,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Kessilochbrücke West",
+        "km": 106.971,
+        "baueinheiten": 3,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Kessilochbrücke Ost",
+        "km": 107.206,
+        "baueinheiten": 3,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "WU Dägenauer",
+        "km": 107.291,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Du Chastelbach",
+        "km": 108.152,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PU Grellingen",
+        "km": 108.892,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Du Seebach",
+        "km": 109.425,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "SU Lätten",
+        "km": 111.47,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PU Aesch",
+        "km": 112.971,
+        "baueinheiten": 2,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PDu Lolibach",
+        "km": 113.257,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "U Weidenstrasse",
+        "km": 114.431,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PDu Brühlweg",
+        "km": 114.7,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Süd Dornach-Arlesheim",
+        "km": 115.401,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Dornach-Arlesheim",
+        "km": 115.518,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "WU Oberwiden",
+        "km": 116.425,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PU Weidenhofweg",
+        "km": 116.862,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PDu Griebengasse",
+        "km": 117.519,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PU Münchenstein",
+        "km": 118.285,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "PU Elektra",
+        "km": 118.612,
+        "baueinheiten": 1,
+        "kanton": "Basel-Landschaft"
+      },
+      {
+        "name": "Birsbrücke Münchenstein",
+        "km": 118.804,
+        "baueinheiten": 2,
+        "kanton": "Basel-Landschaft"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN de Colliard",
+        "km": 86.079,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Riederwald",
+        "km": 92.625,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hauptstrasse",
+        "km": 97.497,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe 97.569",
+        "km": 97.569,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Bahnhofplatz",
+        "km": 103.284,
+        "sicherungsart": "unbewacht",
+        "gleise": 2
+      },
+      {
+        "name": "BUe 1088 Nunningerstrasse",
+        "km": 108.827,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe 1092 Bahnhofstrasse",
+        "km": 109.263,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

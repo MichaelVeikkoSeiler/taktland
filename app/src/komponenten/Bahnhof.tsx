@@ -128,13 +128,15 @@ function LinienLinks({ linien }: { linien: LinienEintrag[] }) {
   )
 }
 
-export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang }: {
+export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang, verweis }: {
   kapitel: Kapitel
   antworten: Record<string, { richtig: boolean }>
   merken: (id: string, richtig: boolean) => void
   gleise?: Gleis[]
   /** zusätzlicher Inhalt nach den Fakten, etwa Links zu den Linienseiten */
   anhang?: ReactNode
+  /** Linienseite: wohin eine Kachel führt, etwa zu allen Brücken im Kanton Ticino */
+  verweis?: (f: Fakt) => string | undefined
 }) {
   // Zeilen mit Bahnhof werden zur Liste mit Links (Linienseite, Kapitel Bahnhöfe)
   const kaesten = kapitel.facts.filter((f) => f.uic === undefined)
@@ -146,7 +148,7 @@ export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang }: {
 
       {kaesten.length > 0 && (
         <dl className="mt-4 grid gap-2 sm:grid-cols-2">
-          {kaesten.map((f) => <FaktZeile key={f.factRef + f.label} fakt={f} />)}
+          {kaesten.map((f) => <FaktZeile key={f.factRef + f.label} fakt={f} href={verweis?.(f)} />)}
         </dl>
       )}
 
@@ -218,16 +220,27 @@ function genau(wert: Fakt['value']) {
     : String(wert ?? '—')
 }
 
-function FaktZeile({ fakt }: { fakt: Fakt }) {
+function FaktZeile({ fakt, href }: { fakt: Fakt; href?: string }) {
   const wert = typeof fakt.value === 'number'
     ? genau(fakt.value)
     : typeof fakt.value === 'boolean'
       ? (fakt.value ? 'ja' : 'nein')
       : String(fakt.value ?? '—')
   const lang = wert.length > 40
+  // Mit Verweis wird die ganze Kachel zum Link: ein Link über der Fläche, damit
+  // dt und dd direkt im dl bleiben
   return (
-    <div className="border border-sbb-cloud bg-white px-3 py-2
-                    dark:border-sbb-iron dark:bg-sbb-midnight">
+    <div className={`relative border border-sbb-cloud bg-white px-3 py-2
+                     dark:border-sbb-iron dark:bg-sbb-midnight ${
+      href ? 'hover:border-sbb-black dark:hover:border-sbb-white' : ''}`}>
+      {href && (
+        <>
+          <a href={href} className="absolute inset-0"
+             aria-label={`Alle anzeigen: ${fakt.label}, ${wert}${fakt.unit ? ` ${fakt.unit}` : ''}`} />
+          <span aria-hidden="true"
+                className="absolute right-3 top-2 text-sbb-metal dark:text-sbb-storm">→</span>
+        </>
+      )}
       <dt className="text-xs text-sbb-metal dark:text-sbb-storm">{fakt.label}</dt>
       <dd className={`font-semibold text-sbb-black dark:text-sbb-white ${
         lang ? 'truncate text-sm font-normal' : 'text-lg tabular-nums'}`}>

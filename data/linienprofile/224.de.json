@@ -2,7 +2,7 @@
   "linie": 224,
   "name": "Chambrelien Nord - Le Locle (Frontiere)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -206,7 +206,8 @@
           "label": "Erfasste Tunnel",
           "value": 4,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel des Loges (013)",
@@ -310,7 +311,8 @@
           "label": "Erfasste Brücken",
           "value": 14,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PI voy Chaux-de-Fonds",
@@ -384,35 +386,56 @@
           "label": "Erfasste Bahnübergänge",
           "value": 16,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 13,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "«Halbschrankeanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Halbschrankeanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[3].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[3].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "PN rue des Prelets",
@@ -515,5 +538,225 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel des Loges (013)",
+        "laenge_m": 3260,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 22.703,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Mont Sagne(007)",
+        "laenge_m": 1880,
+        "inbetriebnahme_jahr": 1859,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 26.239,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Combe (Convers, 006)",
+        "laenge_m": 254,
+        "inbetriebnahme_jahr": 1858,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 28.752,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du col des Roches (073)",
+        "laenge_m": 433,
+        "inbetriebnahme_jahr": 1884,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 39.507,
+        "bemerkung": "107m gehört Frankreich"
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PI de Rochefort",
+        "km": 11.343,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI Montmollin",
+        "km": 13.972,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Boudevilliers",
+        "km": 20.007,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy H-Geneveys",
+        "km": 21.014,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Malakoff",
+        "km": 27.879,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI rue du Midi",
+        "km": 29.228,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy Chaux-de-Fonds",
+        "km": 29.493,
+        "baueinheiten": 7,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI des Menées",
+        "km": 33.333,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Crêt du Locle",
+        "km": 33.883,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy Le Locle",
+        "km": 37.083,
+        "baueinheiten": 3,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de la Côte",
+        "km": 37.519,
+        "baueinheiten": 3,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI des Eroges",
+        "km": 38.109,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt du Col des Roches",
+        "km": 38.455,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt sur le Bied",
+        "km": 39.077,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "Passage a pietons",
+        "km": 10.652,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Bregot",
+        "km": 12.62,
+        "sicherungsart": "Halbschrankeanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Montezillon 1",
+        "km": 13.356,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Montmollin",
+        "km": 14.579,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue des Prelets",
+        "km": 16.696,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN rue l'Eplattenier",
+        "km": 17.092,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN Le Vanel",
+        "km": 18.035,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Hauts-Geneveys 1",
+        "km": 21.258,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Hauts-Geneveys 2",
+        "km": 21.361,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Loges",
+        "km": 22.077,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Chaux/Fonds Ouest",
+        "km": 30.677,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Bonne Fontaine",
+        "km": 31.192,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Micro Les Monts",
+        "km": 35.82,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN du Raya",
+        "km": 36.225,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Le Locle Mi Mont",
+        "km": 36.861,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Col des Roches",
+        "km": 39.068,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 220,
   "name": "Bern - Neuchatel Est (bif)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "linie-mit-betriebspunkten",
@@ -75,7 +75,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Donnerbühltunnel",
@@ -170,5 +171,17 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Donnerbühltunnel",
+        "laenge_m": 400,
+        "inbetriebnahme_jahr": 1959,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 0.732,
+        "bemerkung": null
+      }
+    ]
+  }
 }

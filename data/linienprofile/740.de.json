@@ -2,7 +2,7 @@
   "linie": 740,
   "name": "Rapperswil - Uster - Wallisellen Ost",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -230,7 +230,8 @@
           "label": "Erfasste Tunnel",
           "value": 2,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Aathaltunnel",
@@ -289,21 +290,32 @@
           "label": "Erfasste Brücken",
           "value": 39,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Zürich",
           "value": 30,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "St. Gallen",
           "value": 9,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "St. Gallen"
+          }
         },
         {
           "label": "PU Rapperswil",
@@ -413,14 +425,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 18,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 18,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Brunnenstrasse",
@@ -523,5 +541,371 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Täusitunnel",
+        "laenge_m": 157,
+        "inbetriebnahme_jahr": 1859,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 64.743,
+        "bemerkung": null
+      },
+      {
+        "name": "Aathaltunnel",
+        "laenge_m": 303,
+        "inbetriebnahme_jahr": 1990,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 77.023,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PU Rapperswil",
+        "km": 59.391,
+        "baueinheiten": 4,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Schönbodenstr.",
+        "km": 60.28,
+        "baueinheiten": 3,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Eichfeldstrasse",
+        "km": 60.618,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Werkstrasse",
+        "km": 61.188,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U + BDu Lattenhofweg",
+        "km": 61.467,
+        "baueinheiten": 2,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "BDu für Fabrikkanal",
+        "km": 61.652,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Jonabrücke",
+        "km": 61.729,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Holzwiesstrasse",
+        "km": 61.771,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "BDu Fabrikkanal",
+        "km": 62.893,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "PU Wiesentalstrasse",
+        "km": 65.793,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU C. Honegger",
+        "km": 65.958,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Jonaviadukt Rüti",
+        "km": 66.135,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du für die Schwarz",
+        "km": 67.954,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Weidlistrasse",
+        "km": 68.051,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Mitte Bubikon",
+        "km": 68.479,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br Wändhüslebach",
+        "km": 68.891,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Wändhüslen",
+        "km": 69.514,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Zentrum Wetzikon",
+        "km": 74.526,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Morgenstrasse",
+        "km": 74.662,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Aathal",
+        "km": 77.334,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br über Fabrikkanal",
+        "km": 78.106,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Unterwasser-Kanal",
+        "km": 79.728,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Aabach-Brücke",
+        "km": 79.823,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Brunnenstrasse",
+        "km": 81.259,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Mitte Uster",
+        "km": 81.443,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU West Uster",
+        "km": 81.593,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Dammstrasse",
+        "km": 81.745,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Dammstrasse",
+        "km": 81.75,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Werrikerbach",
+        "km": 83.953,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Stationsstrasse",
+        "km": 84.562,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Verbindungsstrasse",
+        "km": 84.809,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br über Chimlibach",
+        "km": 86.831,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Schwerzenbach",
+        "km": 87.24,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Schulstrasse",
+        "km": 87.453,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "BDu Klostergraben",
+        "km": 88.377,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Dübendorf",
+        "km": 90.492,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Ueberlandstrasse",
+        "km": 90.688,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Chriesbach-Br.",
+        "km": 91.477,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Winterthurerstr.",
+        "km": 92.377,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Kirchrainstrasse",
+        "km": 66.256,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bannholz",
+        "km": 67.066,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Winterhalden",
+        "km": 67.497,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Gossauerstrasse",
+        "km": 71.543,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Strickenrain",
+        "km": 72.503,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bertschikerstr.",
+        "km": 75.37,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Robankstrasse",
+        "km": 76.619,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Trumpler",
+        "km": 79.558,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Aathalstrasse",
+        "km": 79.841,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Talweg",
+        "km": 80.114,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rosengarten",
+        "km": 80.445,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Wermatswiler",
+        "km": 80.635,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kreuzstrasse",
+        "km": 80.864,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Brunnenstrasse",
+        "km": 81.256,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Winterthurerstr.",
+        "km": 81.94,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Gschwaderstrasse",
+        "km": 82.27,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Zurichstrasse",
+        "km": 82.93,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Boeschstrasse",
+        "km": 83.307,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 450,
   "name": "Olten Sud - Bern",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -254,7 +254,8 @@
           "label": "Erfasste Tunnel",
           "value": 4,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Thunstettentunnel II Süd STL",
@@ -358,35 +359,56 @@
           "label": "Erfasste Brücken",
           "value": 97,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Bern",
           "value": 80,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Bern"
+          }
         },
         {
           "label": "Aargau",
           "value": 11,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Aargau"
+          }
         },
         {
           "label": "Solothurn",
           "value": 5,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[2].anzahl"
+          "factRef": "bruecken.nach_kanton[2].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Solothurn"
+          }
         },
         {
           "label": "Aargau / Bern",
           "value": 1,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[3].anzahl"
+          "factRef": "bruecken.nach_kanton[3].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Aargau / Bern"
+          }
         },
         {
           "label": "SU+Emmenkanalbrücke",
@@ -439,21 +461,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 4,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "«Schrankenanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "Migros (km 95.122)",
@@ -555,5 +588,651 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Borntunnel",
+        "laenge_m": 798,
+        "inbetriebnahme_jahr": 1981,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 42.98,
+        "bemerkung": null
+      },
+      {
+        "name": "Thunstettentunnel II Süd STL",
+        "laenge_m": 891,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 62.3,
+        "bemerkung": null
+      },
+      {
+        "name": "Burgdorfertunnel",
+        "laenge_m": 510,
+        "inbetriebnahme_jahr": 1857,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 82.009,
+        "bemerkung": null
+      },
+      {
+        "name": "Wylerfeldtunnel",
+        "laenge_m": 300,
+        "inbetriebnahme_jahr": 2022,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 103.593,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "U Aarburgerstrasse",
+        "km": 40.324,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Aarebr.Kessiloch",
+        "km": 40.426,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Ruttigerweg",
+        "km": 40.755,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Enge",
+        "km": 40.995,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Aarebr. Ruppoldingen",
+        "km": 43.533,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U A1 und Pfaffnern",
+        "km": 43.951,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Überw. im Grüth",
+        "km": 44.551,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Lehenweg",
+        "km": 46.378,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Industriestrasse",
+        "km": 47.343,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Tech. Gebäude",
+        "km": 48.537,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Ryknerbach",
+        "km": 49.956,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Moosmatt",
+        "km": 50.424,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Schlossackerstr.",
+        "km": 51.793,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Mittibach",
+        "km": 51.816,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstrasse",
+        "km": 52.051,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Murgenthal",
+        "km": 52.184,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Murgbrücke",
+        "km": 52.791,
+        "baueinheiten": 2,
+        "kanton": "Aargau / Bern"
+      },
+      {
+        "name": "WU Weyermatten",
+        "km": 52.994,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Gugenloch",
+        "km": 53.291,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Wynauerbach",
+        "km": 53.766,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Stampfibach 3",
+        "km": 54.407,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Roggwil-Wy. süd",
+        "km": 54.5,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Stampfibach 1",
+        "km": 54.55,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Brunnbach",
+        "km": 57.066,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Güllenbach",
+        "km": 58.097,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U vordere Hardaustr.",
+        "km": 58.566,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Aarwangenstrasse",
+        "km": 58.993,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Langenthal",
+        "km": 59.216,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "BDu Langeten",
+        "km": 59.23,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Langenthal II",
+        "km": 59.349,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Bützbergstrasse",
+        "km": 59.691,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Zelgligasse",
+        "km": 60.126,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Waldgasse",
+        "km": 65.325,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Wangenstrasse",
+        "km": 66.179,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Vogelsangweg",
+        "km": 66.387,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Herzogenbuchsee",
+        "km": 66.703,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Niederönzstrasse",
+        "km": 66.972,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Bernstrasse",
+        "km": 67.35,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Matten",
+        "km": 68.432,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "BDu Oenz",
+        "km": 68.634,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "BDu Hochwasserentlastung",
+        "km": 68.758,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Oenzbach",
+        "km": 69.861,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Mutzbach",
+        "km": 71.943,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Riedtwil",
+        "km": 72.318,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Kasten",
+        "km": 74.531,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "BDu Oenz",
+        "km": 76.394,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Tönihaus",
+        "km": 76.408,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Tönihaus",
+        "km": 76.494,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Wynigen",
+        "km": 76.919,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Alchenstorfstrasse",
+        "km": 77.148,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Chänerechbach",
+        "km": 78.82,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Hulli Bickigen",
+        "km": 79.033,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Stockmatt",
+        "km": 79.858,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Räckholter",
+        "km": 80.33,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Grafeschüre",
+        "km": 81.005,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Bifang",
+        "km": 81.305,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Gyrischachen",
+        "km": 82.571,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Emmenbrücke Burgdorf",
+        "km": 82.691,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Strandweg",
+        "km": 82.741,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU+Emmenkanalbrücke",
+        "km": 82.928,
+        "baueinheiten": 6,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Kirchbergstrasse",
+        "km": 83.078,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Burgdorf Ost",
+        "km": 83.271,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Burgdorf West",
+        "km": 83.413,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Mülibachkanal",
+        "km": 83.422,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Tiergartenstrasse",
+        "km": 83.833,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Buchmatten",
+        "km": 84.335,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Burgdorferstrasse",
+        "km": 86.16,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Rütistrasse",
+        "km": 86.563,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Chräiholz",
+        "km": 89.321,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Hindelbank",
+        "km": 89.719,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Dorfstrasse",
+        "km": 89.971,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Münchringenstrasse",
+        "km": 90.469,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Obere Mettlen",
+        "km": 90.763,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Überwerfung Unterhard",
+        "km": 92.02,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Bäriswilstrasse",
+        "km": 93.211,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Schönbühl",
+        "km": 94.72,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Schönbühl",
+        "km": 94.924,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Moosstrasse",
+        "km": 95.231,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U der A6 Schönbühl",
+        "km": 95.578,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Sandstrasse",
+        "km": 96.358,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Loupenwald",
+        "km": 96.962,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Laupenackerstrasse",
+        "km": 97.156,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Industriestrasse",
+        "km": 98.673,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Zollikofen",
+        "km": 98.691,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Länggasse",
+        "km": 99.429,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Altikofen",
+        "km": 101.202,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Viadukt Worblental",
+        "km": 101.559,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Worblaufenstrasse",
+        "km": 102.464,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Kabelstollen Wyler",
+        "km": 103.371,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Viadukt Talwegmulde",
+        "km": 104.875,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Vi Lorraine-Platte",
+        "km": 105.24,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Viadukt Aareübergang",
+        "km": 105.542,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Viadukt Schützenmatte",
+        "km": 105.761,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Kabelstollen Ost",
+        "km": 105.936,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Gepäcktunnel Ost",
+        "km": 105.997,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Posttunnel Ost",
+        "km": 106.111,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Bern",
+        "km": 106.141,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Luzernerstrasse",
+        "km": 68.109,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Unterwerk",
+        "km": 84.328,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "Migros",
+        "km": 95.071,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "Migros",
+        "km": 95.122,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 3
+      }
+    ]
+  }
 }

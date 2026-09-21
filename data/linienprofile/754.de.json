@@ -2,7 +2,7 @@
   "linie": 754,
   "name": "Winterthur Gruze - Bauma - Ruti ZH West",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -270,7 +270,8 @@
           "label": "Erfasste Tunnel",
           "value": 4,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Kühweidtunnel",
@@ -374,7 +375,8 @@
           "label": "Erfasste Brücken",
           "value": 56,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Chatzenbach-Brücke",
@@ -419,14 +421,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 35,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 35,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Sternenbergstr.",
@@ -579,5 +587,591 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Lipperschwenditunnel",
+        "laenge_m": 54,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 28.428,
+        "bemerkung": null
+      },
+      {
+        "name": "Jonaschluchttunnel",
+        "laenge_m": 31,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 38.256,
+        "bemerkung": null
+      },
+      {
+        "name": "Kühweidtunnel",
+        "laenge_m": 132,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 38.585,
+        "bemerkung": null
+      },
+      {
+        "name": "Platteneinschnitttunnel",
+        "laenge_m": 15,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 39.37,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "U Industriestrasse",
+        "km": 3.061,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Seenerstr",
+        "km": 3.404,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Etzbergstr",
+        "km": 4.048,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Winterthur Seen",
+        "km": 4.443,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Landvogt-Waserstr.",
+        "km": 4.717,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Grünmattstr",
+        "km": 5.367,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU unt. Zelgli",
+        "km": 6.952,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Sennhof",
+        "km": 7.235,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Töbelibach",
+        "km": 8.559,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Bähntalbach-Br",
+        "km": 9.485,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Rutzenbach",
+        "km": 9.818,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Rikon",
+        "km": 11.369,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Güterstrasse",
+        "km": 11.991,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Zellerbach",
+        "km": 13.137,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Rämismühle-Zell",
+        "km": 13.528,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Güterstrasse Asyl",
+        "km": 13.899,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Kanalwisen",
+        "km": 15.359,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Hutzikerbach",
+        "km": 15.493,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu bei Turbenthal",
+        "km": 15.69,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Chämibach",
+        "km": 15.976,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Chatzenbach-Brücke",
+        "km": 16.044,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "BDu nach Turbenthal",
+        "km": 16.822,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Tössbrücke Wila",
+        "km": 17.406,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Wila",
+        "km": 18.136,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Sängi",
+        "km": 19.446,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Viehweg",
+        "km": 20.181,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Sunnehof",
+        "km": 21.003,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Saland",
+        "km": 21.276,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Mülibach",
+        "km": 21.342,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Inselhof",
+        "km": 24.327,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU+BDu Bauma",
+        "km": 25.011,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Wallenbach-Brücke",
+        "km": 26.511,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Wellenau",
+        "km": 27.765,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Tössbr. Lipperschw.",
+        "km": 27.958,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU im Boden",
+        "km": 28.079,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Ebni",
+        "km": 29.35,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU im Lenzen",
+        "km": 29.432,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Tössbrücke Steg",
+        "km": 30.094,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Mühlebachbrücke",
+        "km": 30.871,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Mühlebach Burghalden",
+        "km": 31.162,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Mühlebach Bodmen",
+        "km": 31.477,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Mühlebach Fischental",
+        "km": 32.474,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Mühlebach Hüsli",
+        "km": 32.785,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "BDu Geeren",
+        "km": 32.967,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Lochbach",
+        "km": 35.642,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Grosswies",
+        "km": 36.916,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU zur Grosswis",
+        "km": 37.223,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Brücke Jonaschlucht",
+        "km": 38.168,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Schmittenbach",
+        "km": 38.705,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Laupenstrasse",
+        "km": 39.815,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Felsenkeller",
+        "km": 40.085,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Jonaviadukt",
+        "km": 40.964,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Töbelibach-Brücke",
+        "km": 41.484,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Chäserenbach",
+        "km": 42.512,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U HVS P",
+        "km": 44.491,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Tann-Dürnten",
+        "km": 44.571,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe St Gallerstrasse",
+        "km": 2.635,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Arbergstrasse",
+        "km": 4.297,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Ibergstrasse",
+        "km": 6.492,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bolsternstrasse",
+        "km": 8.72,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Metzgerareal",
+        "km": 9.073,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Nussbergstrasse",
+        "km": 9.468,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Burg",
+        "km": 10.086,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tosstalstrasse",
+        "km": 11.246,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tossweg",
+        "km": 11.298,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Neschwilerstr.",
+        "km": 11.522,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Wildbergstrasse",
+        "km": 15.185,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kappeliweg",
+        "km": 16.368,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schwimmbad",
+        "km": 16.892,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Sommeraustrasse",
+        "km": 17.541,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tablatstrasse",
+        "km": 18.195,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Talau",
+        "km": 20.309,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tosstalstrasse",
+        "km": 21.336,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Zelg",
+        "km": 21.535,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Juckern",
+        "km": 22.207,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rittweg/Sagi",
+        "km": 23.297,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Sternenbergstr.",
+        "km": 25.377,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 4
+      },
+      {
+        "name": "BUe Blackten",
+        "km": 26.177,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tiefenbachstr.",
+        "km": 26.81,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schmittenbach",
+        "km": 31.223,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Oberi Bodmen",
+        "km": 31.927,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Oberhof",
+        "km": 32.491,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Langwiesli",
+        "km": 33.844,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Raadstrasse",
+        "km": 34.89,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Privat",
+        "km": 36.424,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Sagenraintobel",
+        "km": 38.679,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Sanatorium",
+        "km": 38.968,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Friedhofstrasse",
+        "km": 39.045,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Nordholzstrasse",
+        "km": 39.481,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Pilgerstegstr.",
+        "km": 42.461,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Guldistudstrasse",
+        "km": 45.219,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

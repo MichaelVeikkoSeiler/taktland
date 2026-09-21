@@ -258,7 +258,7 @@ def tunnel(f):
         t = items[0]
         body = punkt(f"Für die Linie {nr} ist 1 Tunnel erfasst: {tunnel_satz(t)}") + bemerkungen([t])
         facts = [{"label": "Erfasste Tunnel", "value": 1, "source": "tunnel",
-                  "factRef": "tunnel.anzahl_erfasst"}]
+                  "factRef": "tunnel.anzahl_erfasst", "liste": "tunnel"}]
         if t.get("laenge_m") is not None:
             facts.append({"label": t["name"], "value": t["laenge_m"], "unit": "m",
                           "source": "tunnel", "factRef": "tunnel.items[0].laenge_m"})
@@ -292,7 +292,7 @@ def tunnel(f):
                              key=lambda i: -items[i]["laenge_m"])
         gezeigt = nach_laenge[:TUNNEL_IN_LISTE]
         facts = [{"label": "Erfasste Tunnel", "value": k, "source": "tunnel",
-                  "factRef": "tunnel.anzahl_erfasst"}]
+                  "factRef": "tunnel.anzahl_erfasst", "liste": "tunnel"}]
         facts += [{"label": items[i]["name"], "value": items[i]["laenge_m"], "unit": "m",
                    "source": "tunnel", "factRef": f"tunnel.items[{i}].laenge_m"} for i in gezeigt]
         if k > len(gezeigt):
@@ -412,11 +412,13 @@ def bruecken(f):
         body += (f" Aus den meisten Baueinheiten, {meiste}, bestehen "
                  f"{br['anzahl_mit_meisten']} der erfassten Brücken.")
 
+    # «liste» und «filter»: Die App verlinkt die Kachel auf die ganze Liste
     facts = [{"label": "Erfasste Brücken", "value": n, "source": "brucken",
-              "factRef": "bruecken.anzahl_erfasst"}]
+              "factRef": "bruecken.anzahl_erfasst", "liste": "bruecken"}]
     if len(kantone) > 1:
         facts += [{"label": k["kanton"], "value": k["anzahl"], "unit": "Brücken",
-                   "source": "brucken", "factRef": f"bruecken.nach_kanton[{j}].anzahl"}
+                   "source": "brucken", "factRef": f"bruecken.nach_kanton[{j}].anzahl",
+                   "liste": "bruecken", "filter": {"feld": "kanton", "wert": k["kanton"]}}
                   for j, k in enumerate(kantone)]
     gezeigt = gruppen_bis(items, BRUECKEN_IN_LISTE) if n > 1 and meiste and meiste > 1 else []
     facts += [{"label": nenne(i), "value": items[i]["baueinheiten"], "unit": "Baueinheiten",
@@ -519,14 +521,18 @@ def bahnuebergaenge(f):
                      f"{ue['anzahl_mit_meisten_gleisen']} der erfassten Bahnübergänge.")
 
     facts = [{"label": "Erfasste Bahnübergänge", "value": n, "source": "bahnubergang",
-              "factRef": "bahnuebergaenge.anzahl_erfasst"}]
+              "factRef": "bahnuebergaenge.anzahl_erfasst", "liste": "bahnuebergaenge"}]
     if n > 1:
         facts += [{"label": f"«{a['wert']}»", "value": a["anzahl"], "unit": uebergaenge_wort(a["anzahl"]),
-                   "source": "bahnubergang", "factRef": f"bahnuebergaenge.nach_sicherungsart[{j}].anzahl"}
+                   "source": "bahnubergang", "factRef": f"bahnuebergaenge.nach_sicherungsart[{j}].anzahl",
+                   "liste": "bahnuebergaenge",
+                   "filter": {"feld": "sicherungsart", "wert": a["wert"]}}
                   for j, a in enumerate(arten)]
         if ue["ohne_sicherungsart"]:
             facts.append({"label": "Ohne eingetragene Sicherungsart", "value": ue["ohne_sicherungsart"],
-                          "source": "bahnubergang", "factRef": "bahnuebergaenge.ohne_sicherungsart"})
+                          "source": "bahnubergang", "factRef": "bahnuebergaenge.ohne_sicherungsart",
+                          "liste": "bahnuebergaenge",
+                          "filter": {"feld": "sicherungsart", "wert": None}})
     mg, mit = ue["meiste_gleise"], ue["mit_meisten_gleisen"]
     gezeigt = []
     if n > 1 and mg and mg > 1:

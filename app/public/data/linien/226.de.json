@@ -2,7 +2,7 @@
   "linie": 226,
   "name": "Sonceboz-Sombeval - Moutier - Delemont",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -214,7 +214,8 @@
           "label": "Erfasste Tunnel",
           "value": 18,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel de Pierre-Pertuis (045)",
@@ -332,21 +333,32 @@
           "label": "Erfasste Brücken",
           "value": 34,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Bern",
           "value": 18,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Bern"
+          }
         },
         {
           "label": "Jura",
           "value": 16,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Jura"
+          }
         },
         {
           "label": "PI voy Delémont",
@@ -449,28 +461,44 @@
           "label": "Erfasste Bahnübergänge",
           "value": 19,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 15,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "PN Fonderie Boillat",
@@ -580,5 +608,475 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de Pierre-Pertuis (045)",
+        "laenge_m": 1294,
+        "inbetriebnahme_jahr": 1874,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 54.085,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Court 1 (066)",
+        "laenge_m": 12,
+        "inbetriebnahme_jahr": 1877,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 67.838,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Court 2 (067)",
+        "laenge_m": 184,
+        "inbetriebnahme_jahr": 1900,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 68.061,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de la Verrerie (068)",
+        "laenge_m": 604,
+        "inbetriebnahme_jahr": 1877,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 70.564,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 1 (048)",
+        "laenge_m": 31,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 73.806,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 2 (049)",
+        "laenge_m": 14,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 73.94,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 3 (050)",
+        "laenge_m": 7,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 73.962,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 4 (051)",
+        "laenge_m": 8,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 74.073,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 5 (052)",
+        "laenge_m": 60,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 74.576,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 6 (053)",
+        "laenge_m": 23,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 74.721,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 7 (054)",
+        "laenge_m": 54,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 74.786,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 8 (055)",
+        "laenge_m": 19,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 74.98,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Moutier 9 (056)",
+        "laenge_m": 13,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 75.133,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel Verrerie de Roches",
+        "laenge_m": 108,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 77.585,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel Verrerie de Moutier",
+        "laenge_m": 32,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 77.896,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Choindez 1 (059)",
+        "laenge_m": 29,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 79.343,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Choindez 3 (086)",
+        "laenge_m": 254,
+        "inbetriebnahme_jahr": 1932,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 79.825,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Choindez 2 (060)",
+        "laenge_m": 165,
+        "inbetriebnahme_jahr": 1876,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 79.826,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Pt sur la Suze Bottière",
+        "km": 49.558,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Corgémont",
+        "km": 49.87,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Pierre-Pertuis",
+        "km": 51.945,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de la Doux",
+        "km": 54.333,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Tavannes",
+        "km": 55.381,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Birse TA",
+        "km": 55.997,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt s/Birse \"La Vauche\"",
+        "km": 56.597,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Birse REC-1",
+        "km": 57.051,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Birse Boillat 1",
+        "km": 57.486,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Birse REC-2",
+        "km": 57.974,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI de Loveresse",
+        "km": 58.782,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt s/Birse Beau Site",
+        "km": 59.11,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Birse Sapin",
+        "km": 59.645,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt du Pontenet",
+        "km": 60.04,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Birse à Court",
+        "km": 67.417,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "AQ de la Queue",
+        "km": 67.666,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI piét du Chaluet",
+        "km": 67.74,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Pt sur Le Chaluet",
+        "km": 67.795,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI des Neuf Prés",
+        "km": 69.061,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI Roches de Court",
+        "km": 69.234,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI des Evalins",
+        "km": 71.187,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de la Creuse",
+        "km": 72.271,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI du Pont",
+        "km": 72.562,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de Sur Chaux",
+        "km": 72.788,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI voy Moutier",
+        "km": 73.401,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pont sur la Rauss",
+        "km": 73.558,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de la Charrue",
+        "km": 73.588,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt de Penne",
+        "km": 74.51,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Aq de Roches BE",
+        "km": 75.898,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Aq de Combe-Pierre",
+        "km": 78.216,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI Pertuisat",
+        "km": 80.422,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de Courrendlin",
+        "km": 80.978,
+        "baueinheiten": 3,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de la Ballastière",
+        "km": 81.65,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI voy Delémont",
+        "km": 84.564,
+        "baueinheiten": 5,
+        "kanton": "Jura"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN de Sombeval 1",
+        "km": 50.497,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Sainte Agathe",
+        "km": 50.812,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Tavannes",
+        "km": 54.817,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Fonderie Boillat",
+        "km": 57.688,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN Route de Saule",
+        "km": 57.894,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN de Pontenet",
+        "km": 60.086,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Chemin de Pontenet",
+        "km": 60.967,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rte de Moron",
+        "km": 61.445,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue Ch. Schaublin",
+        "km": 61.684,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN rue des Cotes",
+        "km": 62.007,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue E. Tieche",
+        "km": 62.442,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue A. Charpilloz",
+        "km": 62.745,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Sorvilier",
+        "km": 64.12,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Sorvilier Halte",
+        "km": 64.235,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Court 1",
+        "km": 66.269,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rue de la Valle",
+        "km": 66.617,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN ch. de la Scierie",
+        "km": 66.874,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Roches de Court",
+        "km": 69.274,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN Sous le Rochet",
+        "km": 78.342,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      }
+    ]
+  }
 }

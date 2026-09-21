@@ -743,3 +743,10 @@ Inbetriebnahme (`richtung: tiefster`, vorn das frühere Jahr; `format: jahr`, da
 1882 nicht als 1'882 erscheint). Nach der Antwort steht die Bemerkung der Quelle im
 Wortlaut, weil sie sagt, was eine Länge umfasst («Länge der Oströhre», «4947m gehört
 Frankreich»). Das Tunnel-Duell zeigt den Datenstand der Tunnel, nicht den der Bahnhöfe.
+
+**Listen hinter den Kacheln.** Linienprofile tragen unter `listen` alle Tunnel,
+Brücken und Bahnübergänge der Linie, unverändert aus den Fakten. Kacheln mit `liste`
+(und optional `filter`, etwa Kanton «Ticino» oder Sicherungsart ohne Eintrag = null)
+führen in der App zu diesen Listen. Die Prüfung verlangt: Die Liste ist gleich den
+Fakten, und die Zahl auf der Kachel ist die Zahl der Einträge nach dem Filter.
+Fehlende Werte zeigt die Liste als «keine Angabe».

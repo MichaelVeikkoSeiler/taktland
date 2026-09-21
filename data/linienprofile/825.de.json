@@ -2,7 +2,7 @@
   "linie": 825,
   "name": "Romanshorn Feld H - Rorschach",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -199,21 +199,32 @@
           "label": "Erfasste Brücken",
           "value": 13,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Thurgau",
           "value": 7,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Thurgau"
+          }
         },
         {
           "label": "St. Gallen",
           "value": 6,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "St. Gallen"
+          }
         },
         {
           "label": "Du Schulbach",
@@ -266,14 +277,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 28,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 28,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Eisenbahnstrasse",
@@ -438,5 +455,257 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "Wilerbach-Br",
+        "km": 84.417,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Arbon",
+        "km": 90.249,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Anschl.gl.-Br. Saurer",
+        "km": 90.773,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Arboner-Aach-Brücke",
+        "km": 90.792,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Steinach-Brücke",
+        "km": 91.745,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Du Schwärzibach",
+        "km": 92.616,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Hornbach",
+        "km": 92.788,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "PU Horn",
+        "km": 93.485,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu Mühlekanal",
+        "km": 94.125,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Goldachbrücke",
+        "km": 94.402,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Rietlibach-Brücke",
+        "km": 95.029,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "BDu Feldmühlebach-Kanal",
+        "km": 96.209,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Du Schulbach",
+        "km": 96.51,
+        "baueinheiten": 2,
+        "kanton": "St. Gallen"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Luxburgstrasse",
+        "km": 84.533,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tannholz",
+        "km": 85.167,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Weiherwiese",
+        "km": 85.441,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bucherried",
+        "km": 85.672,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Wiedehorn",
+        "km": 86.281,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kratzern",
+        "km": 87.13,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Strandbad",
+        "km": 88.09,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Seemoosried",
+        "km": 88.705,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Zelgstrasse",
+        "km": 89.419,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe St.Gallerstrasse",
+        "km": 90.091,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schoentalstrasse",
+        "km": 91.163,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kirchweg",
+        "km": 91.391,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schulstrasse",
+        "km": 91.557,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rietmuhleweg",
+        "km": 91.754,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Wiesengrundstr",
+        "km": 92.197,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Eisenbahnstrasse",
+        "km": 92.632,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Feldstrasse",
+        "km": 93.033,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tuebacherstrasse",
+        "km": 93.289,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Aach/Kirchstr",
+        "km": 93.593,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Farbstrasse",
+        "km": 93.942,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Chogenaustrasse",
+        "km": 94.427,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Holzlager Sturm",
+        "km": 94.803,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Seestrasse",
+        "km": 94.853,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kornstrasse",
+        "km": 96,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kornhaus",
+        "km": 96.207,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Hafen",
+        "km": 96.3,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Seestrasse",
+        "km": 96.474,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Bell.Seestrasse",
+        "km": 96.73,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

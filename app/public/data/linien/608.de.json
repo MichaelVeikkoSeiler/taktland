@@ -2,7 +2,7 @@
   "linie": 608,
   "name": "Massagno - Lugano (binario destro)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "tunnel"
@@ -79,7 +79,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Galleria Massagno II destra",
@@ -174,5 +175,17 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Galleria Massagno II destra",
+        "laenge_m": 943,
+        "inbetriebnahme_jahr": 1933,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 179.322,
+        "bemerkung": null
+      }
+    ]
+  }
 }

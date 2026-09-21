@@ -2,7 +2,7 @@
   "linie": 760,
   "name": "Zurich Hardbrucke - Bulach",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -192,7 +192,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Käferbergtunnel",
@@ -259,7 +260,8 @@
           "label": "Erfasste Brücken",
           "value": 19,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "U Schaffhauserstr.",
@@ -385,5 +387,133 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Käferbergtunnel",
+        "laenge_m": 2118,
+        "inbetriebnahme_jahr": 1969,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 2.76,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Vi Hardturm Teil F - H",
+        "km": 0.909,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Vi Hardturm Teil D - E",
+        "km": 1.343,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Oerlikon Ost",
+        "km": 4.869,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Schaffhauserstr.",
+        "km": 4.949,
+        "baueinheiten": 4,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Eisfeldstrasse",
+        "km": 5.265,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br 3 Glattalstrasse",
+        "km": 5.987,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Unterwerkstrasse",
+        "km": 6.224,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Glattbrugg",
+        "km": 7.241,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Feldeggstrasse",
+        "km": 7.306,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Rümelbachstr.",
+        "km": 9.868,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Rümlang",
+        "km": 10.465,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Oberglatt",
+        "km": 13.127,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Niederglatt",
+        "km": 15.273,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Glattbrücke Niederglatt",
+        "km": 15.525,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Grossgasse",
+        "km": 15.837,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Neukirchhofweg",
+        "km": 18.548,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U und BDu Fabrikstr.",
+        "km": 19.254,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WDu Adamengässli",
+        "km": 19.481,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Spitalstrasse",
+        "km": 19.925,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      }
+    ]
+  }
 }

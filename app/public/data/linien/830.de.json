@@ -2,7 +2,7 @@
   "linie": 830,
   "name": "Wil - Weinfelden",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -216,21 +216,32 @@
           "label": "Erfasste Brücken",
           "value": 21,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Thurgau",
           "value": 17,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Thurgau"
+          }
         },
         {
           "label": "St. Gallen",
           "value": 4,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "St. Gallen"
+          }
         },
         {
           "label": "SU Bettwiesen",
@@ -290,14 +301,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 13,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 13,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Thurnstrasse",
@@ -412,5 +429,215 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "Bahnunterführung der MthB",
+        "km": 0.824,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Industriestrasse",
+        "km": 2.639,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "Du Trungerbach",
+        "km": 3.045,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U AMP Bronschhofen",
+        "km": 3.156,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "U Winkelstrasse",
+        "km": 4.917,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Bettwiesen",
+        "km": 5.196,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 5.336,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Tägerschen",
+        "km": 6.83,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Hartenauerbach",
+        "km": 8.526,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Flurstrasse",
+        "km": 8.92,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Rütibach",
+        "km": 9.696,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Br.ü.d. Lauchenbach",
+        "km": 11.62,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu Heldtobel",
+        "km": 13.118,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Oppikon",
+        "km": 13.957,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Gaistobelbach",
+        "km": 14.473,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "BDu 15.825",
+        "km": 15.825,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Vi Bussnang",
+        "km": 16.11,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Waldweg",
+        "km": 17.076,
+        "baueinheiten": 2,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Thurbrücke",
+        "km": 17.262,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Br.ü. Mühlekanal",
+        "km": 17.754,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Walkestrasse",
+        "km": 18.793,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Weiherhofstrasse",
+        "km": 2.988,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Thurnstrasse",
+        "km": 5.482,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Munchwilerstr.",
+        "km": 6.346,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tobel-Affelt.",
+        "km": 8.14,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Erikon",
+        "km": 9.293,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rutiholz",
+        "km": 9.73,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Unterlangnau",
+        "km": 10.807,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Station",
+        "km": 11.311,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Marwil-Bol",
+        "km": 11.626,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Fritschen-Bol",
+        "km": 12.305,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bussnang-Buch",
+        "km": 12.555,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Steig",
+        "km": 15.382,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Zelglistrasse",
+        "km": 17.777,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

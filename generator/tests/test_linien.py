@@ -113,3 +113,14 @@ def test_bahnuebergang_null_gleise_ist_keine_angabe():
         ue = json.loads(p.read_text(encoding="utf-8")).get("bahnuebergaenge")
         if ue:
             assert all(it["gleise"] != 0 for it in ue["items"])
+
+
+def test_kachel_fuehrt_zu_genau_so_vielen_eintraegen():
+    # «Ticino, 325 Brücken» führt zur Liste der Brücken mit Kanton Ticino
+    d = L.bauen("600")
+    br = next(k for k in d["chapters"] if k["id"] == "bruecken")
+    ticino = next(x for x in br["facts"] if x.get("filter", {}).get("wert") == "Ticino")
+    treffer = [e for e in d["listen"]["bruecken"] if e["kanton"] == "Ticino"]
+    assert ticino["value"] == len(treffer) == 325
+    # die Listen sind die Einträge der Fakten, unverändert
+    assert d["listen"]["tunnel"] == lb.fakten("600")["tunnel"]["items"]

@@ -2,7 +2,7 @@
   "linie": 604,
   "name": "Brunnen - Sisikon (Gleis links)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -80,7 +80,8 @@
           "label": "Erfasste Tunnel",
           "value": 2,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Fronalptunnel",
@@ -139,7 +140,8 @@
           "label": "Erfasste Brücken",
           "value": 2,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Du Franziskusbach",
@@ -235,5 +237,39 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Morschachtunnel",
+        "laenge_m": 1371,
+        "inbetriebnahme_jahr": 1947,
+        "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
+        "km": 21.511,
+        "bemerkung": "Inkl: Morschachtunnel2 Gl.100 (DfA 604) und Morschachtunnel3 Gl.200 (DfA 604)"
+      },
+      {
+        "name": "Fronalptunnel",
+        "laenge_m": 2793,
+        "inbetriebnahme_jahr": 1946,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 24.36,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Du Franziskusbach",
+        "km": 22.87,
+        "baueinheiten": 2,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "Dornibach-Brücke 2",
+        "km": 25.656,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 203,
   "name": "Frasne - Vallorbe",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -89,7 +89,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel du Mont d'Or (083)",
@@ -156,7 +157,8 @@
           "label": "Erfasste Brücken",
           "value": 3,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PI voy de Vallorbe",
@@ -260,5 +262,37 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel du Mont d'Or (083)",
+        "laenge_m": 5936,
+        "inbetriebnahme_jahr": 1915,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 455.32,
+        "bemerkung": "4947m gehört Frankreich"
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PI du Tunnel",
+        "km": 460.758,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Pralioux",
+        "km": 461.394,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy de Vallorbe",
+        "km": 461.617,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      }
+    ]
+  }
 }

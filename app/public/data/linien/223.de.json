@@ -2,7 +2,7 @@
   "linie": 223,
   "name": "Neuchatel-Vauseyon - Chambrelien",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -168,7 +168,8 @@
           "label": "Erfasste Tunnel",
           "value": 3,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel du Gibet(010)",
@@ -234,7 +235,8 @@
           "label": "Erfasste Brücken",
           "value": 6,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PI Corcelles",
@@ -322,21 +324,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 5,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 4,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -425,5 +438,103 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel du Gibet(010)",
+        "laenge_m": 678,
+        "inbetriebnahme_jahr": 1859,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 2.654,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de la Luche (008)",
+        "laenge_m": 116,
+        "inbetriebnahme_jahr": 1859,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 9.353,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de la Sauge (009)",
+        "laenge_m": 118,
+        "inbetriebnahme_jahr": 1859,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 9.85,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Pt sur le Seyon",
+        "km": 2.22,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI voy Les Deurres",
+        "km": 3.109,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI Corcelles",
+        "km": 4.221,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de la Nicole",
+        "km": 4.818,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI Les Couards",
+        "km": 4.988,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Collège",
+        "km": 5.098,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN ch. des Ravines",
+        "km": 3.608,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Nods",
+        "km": 5.754,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Le Villaret",
+        "km": 6.764,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Crostand",
+        "km": 7.94,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "Passage a pietons",
+        "km": 10.149,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 649,
   "name": "Aarau - Woschnau Tunnel alt",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "linie-mit-betriebspunkten",
@@ -88,7 +88,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Aarauer Stadttunnel I Nord",
@@ -183,5 +184,17 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Aarauer Stadttunnel I Nord",
+        "laenge_m": 578,
+        "inbetriebnahme_jahr": 1996,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 42.013,
+        "bemerkung": null
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 410,
   "name": "Olten - Solothurn - Biel/Bienne",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -333,21 +333,32 @@
           "label": "Erfasste Brücken",
           "value": 106,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Solothurn",
           "value": 74,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Solothurn"
+          }
         },
         {
           "label": "Bern",
           "value": 32,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Bern"
+          }
         },
         {
           "label": "PI voy Bienne",
@@ -457,34 +468,55 @@
           "label": "Erfasste Bahnübergänge",
           "value": 8,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«unbewacht»",
           "value": 4,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "«Schrankenanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "Ohne eingetragene Sicherungsart",
           "value": 1,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.ohne_sicherungsart"
+          "factRef": "bahnuebergaenge.ohne_sicherungsart",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": null
+          }
         },
         {
           "label": "BUe Bahnhofallee",
@@ -654,5 +686,695 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PU Olten Süd",
+        "km": 39.334,
+        "baueinheiten": 5,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Aarburgerstrasse",
+        "km": 39.861,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Aarebrücke Olten",
+        "km": 39.914,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Rötzmattweg",
+        "km": 40.454,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "BDu Gheidgraben",
+        "km": 40.554,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Olten-Hammer",
+        "km": 40.643,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Dünnernbrücke",
+        "km": 41.115,
+        "baueinheiten": 6,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Kleinwangen",
+        "km": 42.899,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Wangen b. Olten",
+        "km": 43.029,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 43.806,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Mühlegasse Rickenbach",
+        "km": 43.816,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Chollersbach",
+        "km": 45.1,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Hägendorf",
+        "km": 45.291,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "WDu Rusenmatt",
+        "km": 45.677,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Dünnernbrücke",
+        "km": 45.971,
+        "baueinheiten": 4,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Werkstätte SBB",
+        "km": 46.644,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Egerkingen",
+        "km": 49.088,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Unterführungsstrasse",
+        "km": 49.216,
+        "baueinheiten": 4,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Neustrasse Z 56",
+        "km": 50.1,
+        "baueinheiten": 3,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Dünnernbrücke",
+        "km": 50.867,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Oberbuchsiten",
+        "km": 51.41,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "BDu Steingraben",
+        "km": 51.61,
+        "baueinheiten": 3,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "WU Bifang",
+        "km": 54.793,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Bifangweg",
+        "km": 55.071,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Kestenholzstrasse",
+        "km": 55.322,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Sternenweg",
+        "km": 55.867,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "BDu Dünnern",
+        "km": 56.212,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Dünnernstrasse",
+        "km": 56.233,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Oensingen",
+        "km": 56.599,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Studweg",
+        "km": 57.959,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Niederbipp",
+        "km": 58.599,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Dorfstrasse",
+        "km": 58.805,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 58.815,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Käsereiweg",
+        "km": 58.897,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Aare Seeland Mobil",
+        "km": 58.929,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Oberer Sängelenweg",
+        "km": 59.524,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "LDu 59.730",
+        "km": 59.733,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "BDu Pfaffenthal",
+        "km": 61.549,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WDu Gürburain",
+        "km": 62.04,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Holzgasse",
+        "km": 62.229,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Wiedlisbach",
+        "km": 62.747,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Kanalbrücke",
+        "km": 63.181,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Aarebrücke",
+        "km": 63.789,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Friedbergstrasse",
+        "km": 63.997,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Wangen a/A",
+        "km": 64.316,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Buchsistrasse",
+        "km": 64.564,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Oeschbachstrasse",
+        "km": 67.335,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Oeschbach",
+        "km": 67.347,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Deitingen",
+        "km": 67.604,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Luterbachstrasse",
+        "km": 67.781,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Munibach",
+        "km": 68.034,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Rusbach",
+        "km": 68.039,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Rütibach",
+        "km": 69.598,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Wylihofstrasse",
+        "km": 69.848,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 70.021,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Jurastrasse",
+        "km": 70.178,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Luterbach",
+        "km": 70.367,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Solothurnstrasse",
+        "km": 70.968,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Fabrikkanal Emme",
+        "km": 71.087,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Emmenbr. Luterbach",
+        "km": 71.212,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Nord-Südstrasse",
+        "km": 72.52,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Aarmatt",
+        "km": 72.853,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Solothurn",
+        "km": 73.762,
+        "baueinheiten": 4,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Stellwerk",
+        "km": 74.048,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "WU Oberer Winkel",
+        "km": 74.427,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Aarebrücke",
+        "km": 74.505,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Römerstrasse",
+        "km": 74.557,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Solothurn-West",
+        "km": 74.76,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Segetzstrasse",
+        "km": 74.965,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Gibelinstrasse",
+        "km": 75.363,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "WU Brüelgraben",
+        "km": 75.64,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Wildbachstrasse",
+        "km": 76.057,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Wildbach",
+        "km": 76.571,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Burgweg",
+        "km": 76.678,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Unterführungsstrasse",
+        "km": 77.418,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Bellach",
+        "km": 77.62,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Haltenbach",
+        "km": 77.757,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "WDu Winkelmatte",
+        "km": 78.624,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "WDu Krüzligraben",
+        "km": 78.947,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Industriesrasse",
+        "km": 80.341,
+        "baueinheiten": 3,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Selzach",
+        "km": 80.673,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Lochbach",
+        "km": 81.324,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Altreustrasse",
+        "km": 81.397,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Haagbach",
+        "km": 81.709,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Bettlach",
+        "km": 82.951,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Giglerbach",
+        "km": 83.023,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Leimenstrasse",
+        "km": 84.816,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 85.129,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Grenchen Süd",
+        "km": 85.292,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Unterführungsstr.",
+        "km": 85.408,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Unterführungstr.",
+        "km": 85.415,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Lengnau",
+        "km": 87.975,
+        "baueinheiten": 4,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Moosstrasse",
+        "km": 88.258,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Leugenenbach",
+        "km": 88.938,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Pieterlen",
+        "km": 90.182,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Freidorfweg",
+        "km": 90.645,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Bözingenfeld",
+        "km": 93.97,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Boezingerfeld",
+        "km": 94.779,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Staatstrasse",
+        "km": 96.129,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Biel-Mett",
+        "km": 96.199,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Muehlestrasse L",
+        "km": 96.344,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Brüggstrasse",
+        "km": 98.497,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Aebistrasse",
+        "km": 98.875,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PT Canal Madretsch",
+        "km": 98.975,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI Murtenstrasse",
+        "km": 99.082,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PI voy Bienne",
+        "km": 99.361,
+        "baueinheiten": 8,
+        "kanton": "Bern"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "Zugang Stationsstr.",
+        "km": 40.437,
+        "sicherungsart": null,
+        "gleise": 1
+      },
+      {
+        "name": "BUe Solothurnerstr.",
+        "km": 56.471,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bahnhofallee",
+        "km": 56.63,
+        "sicherungsart": "unbewacht",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Zuchwilstrasse",
+        "km": 70.242,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Luterbachstrasse",
+        "km": 71.453,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "Industrie Bellach",
+        "km": 77.83,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Aareweg",
+        "km": 83.02,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN 981",
+        "km": 98.173,
+        "sicherungsart": "unbewacht",
+        "gleise": 2
+      }
+    ]
+  }
 }

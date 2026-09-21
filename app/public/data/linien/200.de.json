@@ -2,7 +2,7 @@
   "linie": 200,
   "name": "Renens VD Ouest - Vallorbe",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -222,7 +222,8 @@
           "label": "Erfasste Tunnel",
           "value": 4,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel de la Sarraz (033)",
@@ -326,7 +327,8 @@
           "label": "Erfasste Brücken",
           "value": 43,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PI voy Bussigny",
@@ -414,21 +416,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 2,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Andere»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Andere"
+          }
         },
         {
           "label": "«Schrankenanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "PN Vufflens ZI",
@@ -517,5 +530,315 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de la Sarraz (033)",
+        "laenge_m": 148,
+        "inbetriebnahme_jahr": 1870,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 22.972,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Moulin Bornu (034)",
+        "laenge_m": 72,
+        "inbetriebnahme_jahr": 1870,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 23.359,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Combes (035)",
+        "laenge_m": 100,
+        "inbetriebnahme_jahr": 1870,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 38.43,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Nanchau (036)",
+        "laenge_m": 132,
+        "inbetriebnahme_jahr": 1870,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 39.131,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PI voy Bussigny",
+        "km": 6.886,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI rte de St Germain",
+        "km": 7.635,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Ch St Germain",
+        "km": 7.827,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Faillens",
+        "km": 8.569,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "AQ de Falien",
+        "km": 9.44,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Canal de décharge",
+        "km": 9.513,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Venoge au Chot",
+        "km": 9.73,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt du Moulin au Chot",
+        "km": 10.285,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Venoge à Palaz",
+        "km": 11.289,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Moulin à La Palaz",
+        "km": 11.544,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur Venoge Moulinet",
+        "km": 12.596,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Bief du Moulinet",
+        "km": 13.241,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Aq d'Ouffemas",
+        "km": 13.744,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Bief de Cossonay",
+        "km": 14.216,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy de Cossonay 2",
+        "km": 14.408,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy de Cossonay",
+        "km": 14.513,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Venoge à Islettaz",
+        "km": 14.769,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de l'Islettaz 1",
+        "km": 15.336,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de l'Islettaz 2",
+        "km": 15.649,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Molombaz",
+        "km": 17.209,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Cinq-Sous",
+        "km": 20.892,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Coulon",
+        "km": 21.145,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Gondoux",
+        "km": 21.814,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy La Sarraz",
+        "km": 22.724,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Ferreyres",
+        "km": 23.26,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Pompaples",
+        "km": 23.511,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pont sur le Nozon",
+        "km": 23.707,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Champ Courbe",
+        "km": 23.864,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Sangolin",
+        "km": 27.17,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy d'Arnex",
+        "km": 27.585,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Bofflens",
+        "km": 30.235,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Terde",
+        "km": 31.852,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy de Croy",
+        "km": 33.686,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Tilenet",
+        "km": 35.06,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Bretonnières 2",
+        "km": 35.319,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Bretonnières 3",
+        "km": 35.596,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Bretonnières 4",
+        "km": 35.657,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI rte du Day",
+        "km": 43.08,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy du Day",
+        "km": 43.168,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy du Day",
+        "km": 43.46,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Viad du Day",
+        "km": 43.853,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Jurats",
+        "km": 44.094,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Jumelles",
+        "km": 44.621,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN Vufflens ZI",
+        "km": 10.64,
+        "sicherungsart": "Andere",
+        "gleise": 2
+      },
+      {
+        "name": "PN du Grand Bois",
+        "km": 40.946,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

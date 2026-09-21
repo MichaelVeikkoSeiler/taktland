@@ -6,6 +6,9 @@ import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
 import { Linie } from './komponenten/Linie'
 import { Linien } from './komponenten/Linien'
+import { Objekte } from './komponenten/Objekte'
+import { type Filter, filterAusAdresse } from './listen'
+import type { ListenArt } from './typen'
 import { Suche, type ListenStand } from './komponenten/Suche'
 import { indexLaden } from './daten'
 import { HERAUSGEBER, KONTAKT } from './kontakt'
@@ -16,11 +19,18 @@ import type { BahnhofIndex } from './typen'
 type Seite =
   | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
+  | { art: 'objekte'; nr: number; liste: ListenArt; filter: Filter | null }
 
 function seiteAusAdresse(): Seite {
   const h = window.location.hash
   const bahnhof = /^#\/bahnhof\/(\d+)$/.exec(h)
   if (bahnhof) return { art: 'bahnhof', uic: Number(bahnhof[1]) }
+  // #/linie/600/bruecken?kanton=Ticino: die Liste hinter einer Kachel
+  const objekte = /^#\/linie\/(\d+)\/(tunnel|bruecken|bahnuebergaenge)(?:\?(.*))?$/.exec(h)
+  if (objekte) {
+    return { art: 'objekte', nr: Number(objekte[1]), liste: objekte[2] as ListenArt,
+             filter: filterAusAdresse(objekte[3]) }
+  }
   const linie = /^#\/linie\/(\d+)$/.exec(h)
   if (linie) return { art: 'linie', nr: Number(linie[1]) }
   if (h === '#/duell') return { art: 'duell' }
@@ -47,7 +57,8 @@ export default function App() {
 
   // nach der Adresse, nicht nach dem Objekt: sonst sprang die Seite bei
   // jedem Neuzeichnen nach oben
-  const adresse = seite.art === 'bahnhof' ? `b${seite.uic}` : seite.art === 'linie' ? `l${seite.nr}` : seite.art
+  const adresse = seite.art === 'bahnhof' ? `b${seite.uic}` : seite.art === 'linie' ? `l${seite.nr}`
+    : seite.art === 'objekte' ? window.location.hash : seite.art
   useEffect(() => { window.scrollTo(0, 0) }, [adresse])
 
   function oeffnen(neu: number) { window.location.hash = `#/bahnhof/${neu}` }
@@ -82,6 +93,10 @@ export default function App() {
         {seite.art === 'duell' && <Duell zurueck={zurueck} />}
         {seite.art === 'linien' && <Linien zurueck={zurueck} />}
         {seite.art === 'linie' && <Linie key={seite.nr} nr={seite.nr} zurueck={zuDenLinien} />}
+        {seite.art === 'objekte' && (
+          <Objekte nr={seite.nr} art={seite.liste} filter={seite.filter}
+                   zurueck={() => { window.location.hash = `#/linie/${seite.nr}` }} />
+        )}
         {seite.art === 'liste' && index
           && <Suche index={index} oeffnen={oeffnen} stand={liste} aendern={setListe} />}
         {seite.art === 'bahnhof' && index && (
@@ -98,7 +113,7 @@ export default function App() {
             <a href={`mailto:${KONTAKT}`} className="underline underline-offset-2
                                                   hover:text-sbb-black dark:hover:text-sbb-white">
               {KONTAKT}
-            </a>. Entstanden mit Unterstützung von KI (Claude Code).
+            </a>. Entstanden mit Unterstützung von KI (Claude Code; Auftaktbild: ChatGPT).
           </p>
           <p className="mt-2 font-medium text-sbb-black dark:text-sbb-white">
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet

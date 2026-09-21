@@ -2,7 +2,7 @@
   "linie": 540,
   "name": "Olten - Woschnau",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -181,7 +181,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel Wöschnau",
@@ -248,7 +249,8 @@
           "label": "Erfasste Brücken",
           "value": 19,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "U Tannwaldstrasse",
@@ -352,5 +354,133 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel Wöschnau",
+        "laenge_m": 488,
+        "inbetriebnahme_jahr": 2019,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 50.279,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "U Tannwaldstrasse",
+        "km": 40.798,
+        "baueinheiten": 3,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Hasliweg",
+        "km": 41.663,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Grundstrasse",
+        "km": 42.042,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Härdli",
+        "km": 42.64,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Dulliken",
+        "km": 42.93,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Gösgerstrasse",
+        "km": 43.33,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU+PU Postzentrum",
+        "km": 44.717,
+        "baueinheiten": 3,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Zentralstrasse",
+        "km": 45.603,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Dorfbach",
+        "km": 45.99,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Gretzenbach",
+        "km": 46.634,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "BDu Gretzenbach",
+        "km": 46.811,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Parkweg",
+        "km": 47.018,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Bally AG",
+        "km": 48.051,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Schönenwerd",
+        "km": 48.143,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Bahnhofstrasse",
+        "km": 48.201,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Gösgerstrasse",
+        "km": 48.464,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Villenstrasse",
+        "km": 48.636,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Weiermattstrasse",
+        "km": 48.946,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Stauwehrstrasse",
+        "km": 49.368,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      }
+    ]
+  }
 }

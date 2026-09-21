@@ -2,7 +2,7 @@
   "linie": 111,
   "name": "Vevey Ouest - Puidoux-Chexbres",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -169,7 +169,8 @@
           "label": "Erfasste Tunnel",
           "value": 3,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel du Crêt (078)",
@@ -261,7 +262,8 @@
           "label": "Erfasste Brücken",
           "value": 8,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Pt de Chexbres",
@@ -363,28 +365,44 @@
           "label": "Erfasste Bahnübergänge",
           "value": 9,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«unbewacht»",
           "value": 5,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "«Schrankenanlage»",
           "value": 3,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -473,5 +491,139 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de Salanche (077)",
+        "laenge_m": 20,
+        "inbetriebnahme_jahr": 1904,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 3.803,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Crêt (078)",
+        "laenge_m": 118,
+        "inbetriebnahme_jahr": 1904,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 5.336,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Carroz (079)",
+        "laenge_m": 83,
+        "inbetriebnahme_jahr": 1904,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 5.782,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PI de la Bergère",
+        "km": 0.778,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Burignon",
+        "km": 3.432,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de la Salance",
+        "km": 3.83,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de Chardonne",
+        "km": 4.614,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt de Chexbres",
+        "km": 5.481,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt du Forestay 1",
+        "km": 5.87,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt du Forestay 2",
+        "km": 6.083,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt du Forestay 3",
+        "km": 6.645,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN de Corseaux",
+        "km": 1.311,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Cornalles",
+        "km": 1.746,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte de Chatacombe",
+        "km": 2.192,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN En Chatacombaz",
+        "km": 2.41,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN Micro Faverges",
+        "km": 4.187,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la Boureche",
+        "km": 4.439,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Riettes",
+        "km": 4.536,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN Les Corbes",
+        "km": 4.791,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN En Curtille",
+        "km": 5.117,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      }
+    ]
+  }
 }

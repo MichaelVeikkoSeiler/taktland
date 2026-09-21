@@ -2,7 +2,7 @@
   "linie": 714,
   "name": "Zurich - Altstetten (Sudeinfahrt)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -67,7 +67,8 @@
           "label": "Erfasste Tunnel",
           "value": 2,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "UQB-Altstettertunnel",
@@ -126,7 +127,8 @@
           "label": "Erfasste Brücken",
           "value": 1,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -196,5 +198,33 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Kohlendreiecktunnel",
+        "laenge_m": 185,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 1.466,
+        "bemerkung": null
+      },
+      {
+        "name": "UQB-Altstettertunnel",
+        "laenge_m": 291,
+        "inbetriebnahme_jahr": 2002,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 3.511,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PU Duttweiler SBB",
+        "km": 2.542,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      }
+    ]
+  }
 }

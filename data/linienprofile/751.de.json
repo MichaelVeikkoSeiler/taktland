@@ -2,7 +2,7 @@
   "linie": 751,
   "name": "ZH Langstr. - Wallisellen - Winterthur",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -193,7 +193,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Wipkingertunnel",
@@ -260,7 +261,8 @@
           "label": "Erfasste Brücken",
           "value": 51,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PU Süd Winterthur",
@@ -318,7 +320,8 @@
           "label": "Erfasste Bahnübergänge",
           "value": 1,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -408,5 +411,333 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Wipkingertunnel",
+        "laenge_m": 1222,
+        "inbetriebnahme_jahr": 1856,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 3.128,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Zufahrt UA F",
+        "km": 0.708,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Viadukt Sektor 1",
+        "km": 1.117,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br Geroldstrasse",
+        "km": 1.175,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Viadukt Sektor 2",
+        "km": 1.228,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br Neugasse",
+        "km": 1.281,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Viadukt Sektor 3",
+        "km": 1.335,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br Josefstrasse",
+        "km": 1.405,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Viadukt Sektor 4",
+        "km": 1.53,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br Heinrichstrasse",
+        "km": 1.6,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Viadukt Sektor 5",
+        "km": 1.666,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br Limmatstr.",
+        "km": 1.723,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Viadukt Sektor 6",
+        "km": 1.75,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Sihlquai-Brücke",
+        "km": 1.847,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Limmatbr. Wipkingen",
+        "km": 1.917,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Wasserwerkstrasse",
+        "km": 1.997,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Süd Wipkingen",
+        "km": 2.102,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Oerlikon Mitte",
+        "km": 4.666,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Schaffhauserstrasse",
+        "km": 4.918,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Leutschenbach",
+        "km": 5.533,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Glattbrücke",
+        "km": 6.486,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Winterthurerstrasse",
+        "km": 7.631,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Hertistrasse",
+        "km": 7.776,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Oberwiesenstrasse",
+        "km": 8.124,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Wallisellen",
+        "km": 8.394,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Wallisellen Ost",
+        "km": 8.547,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Neugutstrasse",
+        "km": 9.039,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Spitzacker",
+        "km": 9.385,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Schwerzelbodenstr.",
+        "km": 10.534,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Dietlikon Mitte",
+        "km": 11.047,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Dietlikon Nord",
+        "km": 11.173,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Altbach",
+        "km": 11.526,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Riedmühlestr.",
+        "km": 11.686,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Eichstrasse",
+        "km": 12.315,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Brüttisellen",
+        "km": 12.683,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Baltenswilerstr.",
+        "km": 13.177,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Wangenerstr.",
+        "km": 15.185,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Effretikon",
+        "km": 16.812,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Grendelbach",
+        "km": 18.385,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Mannenberg-Brücke",
+        "km": 18.636,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Ottikonerstrasse",
+        "km": 19.322,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du für die Kempt",
+        "km": 20.37,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Kemptthal",
+        "km": 20.52,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Kempt-Durchlass",
+        "km": 22.143,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Alter Kemptdurchlass",
+        "km": 22.185,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br über die Kempt",
+        "km": 22.724,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Steigbach",
+        "km": 23.261,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Tössbrücke",
+        "km": 23.742,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Försterhaus",
+        "km": 24.137,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Zürcherstr.",
+        "km": 25.909,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Süd Winterthur",
+        "km": 26.069,
+        "baueinheiten": 5,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Wülflingerstr.",
+        "km": 26.397,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Bruttisellerstr.",
+        "km": 11.202,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      }
+    ]
+  }
 }

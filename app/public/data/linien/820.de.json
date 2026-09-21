@@ -2,7 +2,7 @@
   "linie": 820,
   "name": "Etzwilen - Schaffhausen",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -214,7 +214,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Emmersbergtunnel",
@@ -281,28 +282,44 @@
           "label": "Erfasste Brücken",
           "value": 22,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Thurgau",
           "value": 11,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Thurgau"
+          }
         },
         {
           "label": "Zürich",
           "value": 6,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "Schaffhausen",
           "value": 5,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[2].anzahl"
+          "factRef": "bruecken.nach_kanton[2].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Schaffhausen"
+          }
         },
         {
           "label": "Rheinbrücke Feuerthalen",
@@ -375,14 +392,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 2,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Ziegelei",
@@ -499,5 +522,165 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Emmersbergtunnel",
+        "laenge_m": 760,
+        "inbetriebnahme_jahr": 1895,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 47.987,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "WU Aepelhuserhof",
+        "km": 33.544,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Butzgass",
+        "km": 35.791,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Sand",
+        "km": 36.549,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Weier",
+        "km": 36.941,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Basadingerstrasse",
+        "km": 38.378,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Alte Basadingerstr",
+        "km": 38.501,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Vi Diessenhofen",
+        "km": 38.729,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Schlatterstrasse",
+        "km": 38.83,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Schaarenwald",
+        "km": 42.206,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "SU Schlatt",
+        "km": 43.545,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "Du Mühlibach",
+        "km": 43.724,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "WU Halden",
+        "km": 44.546,
+        "baueinheiten": 1,
+        "kanton": "Thurgau"
+      },
+      {
+        "name": "U Altsbühlstrasse",
+        "km": 45.169,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Bühlweg",
+        "km": 45.26,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Vogelsangstrasse",
+        "km": 45.644,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Konstanzerstrasse",
+        "km": 47.077,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Rheinbrücke Feuerthalen",
+        "km": 47.274,
+        "baueinheiten": 3,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Krebsbach",
+        "km": 48.288,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "U Etzwilerstrasse",
+        "km": 48.318,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "Du Durbach",
+        "km": 48.52,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "SU beim Adler",
+        "km": 48.534,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "PDu Löwengässchen",
+        "km": 48.695,
+        "baueinheiten": 2,
+        "kanton": "Schaffhausen"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Schlattingerstr.",
+        "km": 37.722,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Ziegelei",
+        "km": 43.455,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

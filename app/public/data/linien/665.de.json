@@ -2,7 +2,7 @@
   "linie": 665,
   "name": "Zug Sud - Arth-Goldau",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -185,7 +185,8 @@
           "label": "Erfasste Tunnel",
           "value": 8,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Zuger Stadttunnel",
@@ -303,21 +304,32 @@
           "label": "Erfasste Brücken",
           "value": 61,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Zug",
           "value": 43,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zug"
+          }
         },
         {
           "label": "Schwyz",
           "value": 18,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Schwyz"
+          }
         },
         {
           "label": "Du Brunnenbach",
@@ -384,7 +396,8 @@
           "label": "Erfasste Bahnübergänge",
           "value": 1,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -474,5 +487,449 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Zuger Stadttunnel",
+        "laenge_m": 585,
+        "inbetriebnahme_jahr": 1896,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 0.98,
+        "bemerkung": null
+      },
+      {
+        "name": "Lothenbachtunnel",
+        "laenge_m": 36,
+        "inbetriebnahme_jahr": 1898,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 7.045,
+        "bemerkung": null
+      },
+      {
+        "name": "Bühltunnel ZG",
+        "laenge_m": 94,
+        "inbetriebnahme_jahr": 2021,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 8.523,
+        "bemerkung": null
+      },
+      {
+        "name": "Rossplattentunnel",
+        "laenge_m": 48,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 10.049,
+        "bemerkung": null
+      },
+      {
+        "name": "St. Adriantunnel",
+        "laenge_m": 65,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 10.405,
+        "bemerkung": null
+      },
+      {
+        "name": "Rufibachtunnel",
+        "laenge_m": 39,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 10.661,
+        "bemerkung": null
+      },
+      {
+        "name": "Kalkofentunnel",
+        "laenge_m": 69,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 12.266,
+        "bemerkung": null
+      },
+      {
+        "name": "Mühlefluhtunnel SZ",
+        "laenge_m": 191,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 14.416,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PU Zug Ost",
+        "km": 0.023,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "U Gotthardstrasse",
+        "km": 0.155,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Viadukt Zug Nord",
+        "km": 0.228,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "U Baarerstrasse",
+        "km": 0.298,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Viadukt Zug Süd",
+        "km": 0.351,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "U Poststrasse",
+        "km": 0.404,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Du Sommerau",
+        "km": 1.513,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU Kantonsschule",
+        "km": 1.571,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU+Du Mennebach",
+        "km": 1.644,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU im Rost",
+        "km": 1.971,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "U Friedbachstrasse",
+        "km": 2.145,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU beim Salesianum",
+        "km": 2.438,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Du Brunnenbach",
+        "km": 3.073,
+        "baueinheiten": 3,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Gimmenenweg",
+        "km": 3.176,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "U+BDu Wydenstrasse",
+        "km": 3.366,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU Trubikon",
+        "km": 3.89,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU+BDu Trubikon",
+        "km": 4.135,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Räbmattstrasse",
+        "km": 4.234,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Räbmatte",
+        "km": 4.327,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU Steinibach",
+        "km": 4.595,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Du Steinibach",
+        "km": 4.642,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Du Steinbruch Wald",
+        "km": 5.044,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Murpfli",
+        "km": 5.292,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Otterswil",
+        "km": 5.472,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Hauenstein",
+        "km": 5.769,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Unterhasel",
+        "km": 6.374,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Reistzug",
+        "km": 6.823,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU+Du Dillibächli",
+        "km": 6.965,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Vi Lotenbach",
+        "km": 7.171,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Lotenbach",
+        "km": 7.309,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Du Grindwäschebach",
+        "km": 7.385,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Rebmattli",
+        "km": 7.466,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Grafstatt",
+        "km": 7.742,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Vi Grauenstatt",
+        "km": 7.82,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Viadukt Sagenbach",
+        "km": 8.673,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Br Sagenbach",
+        "km": 8.676,
+        "baueinheiten": 3,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 9.164,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU Tonishof",
+        "km": 9.273,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "PU Walchwil",
+        "km": 9.44,
+        "baueinheiten": 3,
+        "kanton": "Zug"
+      },
+      {
+        "name": "BDu Walchwil",
+        "km": 9.51,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Du Seckibach",
+        "km": 9.642,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Viadukt St. Adrian",
+        "km": 10.281,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Rufibach-Brücke",
+        "km": 10.542,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Vi St. Adrian-Bannli",
+        "km": 10.768,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU St. Adrian",
+        "km": 11.154,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "Vi Alenbach",
+        "km": 11.291,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Vordermatt",
+        "km": 11.71,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Unteregg",
+        "km": 12.014,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Chalchofen",
+        "km": 12.457,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "Du Sägebach",
+        "km": 12.662,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU+BDu Rufibergstr.",
+        "km": 12.858,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Baltisberg",
+        "km": 13.184,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "BDu Sepä Domintschä",
+        "km": 13.324,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Gantli",
+        "km": 13.431,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Färnisbüel",
+        "km": 13.616,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "Vi Badli",
+        "km": 14.232,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "Du Kienbach",
+        "km": 14.732,
+        "baueinheiten": 2,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU beim Kienbach",
+        "km": 14.761,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "SU Chriesiwasserrank",
+        "km": 15.234,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "BDu Vogelsang",
+        "km": 15.562,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "U Parkstrasse",
+        "km": 15.646,
+        "baueinheiten": 2,
+        "kanton": "Schwyz"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Eielen",
+        "km": 6.029,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

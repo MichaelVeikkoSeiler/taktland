@@ -2,7 +2,7 @@
   "linie": 253,
   "name": "Payerne Est - Fribourg Nord",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -197,21 +197,32 @@
           "label": "Erfasste Brücken",
           "value": 11,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Fribourg",
           "value": 8,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Fribourg"
+          }
         },
         {
           "label": "Vaud",
           "value": 3,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Vaud"
+          }
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -257,21 +268,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 17,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 16,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "PN Cousset ouest",
@@ -379,5 +401,179 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "Pt Planchettaz sud",
+        "km": 29.263,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt Corcelles sud",
+        "km": 29.891,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur le Motelon",
+        "km": 29.982,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur l'Arbogne",
+        "km": 32.363,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI Montagny-la-Ville",
+        "km": 33.853,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Léchelles",
+        "km": 35.728,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Poteret",
+        "km": 36.984,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy de Grolley",
+        "km": 40.091,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Pt sur la Sonnaz",
+        "km": 43.227,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Belfaux",
+        "km": 43.606,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Aq Bois d'En La",
+        "km": 45.169,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN rte de Maladaire",
+        "km": 29.655,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Corcelles Sud",
+        "km": 29.874,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Clos a Pugin",
+        "km": 30.165,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN du moulin Bossy",
+        "km": 31.018,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Cousset ouest",
+        "km": 31.627,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN Cousset est",
+        "km": 31.893,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Rochettes",
+        "km": 32.873,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Lechelles",
+        "km": 35.266,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN du Mont Petit",
+        "km": 35.513,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN route de Ponthaux",
+        "km": 39.765,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Grolley",
+        "km": 40.169,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN rte de la Cherna",
+        "km": 40.502,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Devins",
+        "km": 42.166,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte d'Autafond",
+        "km": 42.883,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Belfaux",
+        "km": 44.387,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Mettetlet",
+        "km": 48.288,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de St-Leonard",
+        "km": 48.463,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

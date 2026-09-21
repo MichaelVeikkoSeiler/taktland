@@ -2,7 +2,7 @@
   "linie": 400,
   "name": "Lochligut - Wanzwil - Rothrist West",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -80,7 +80,8 @@
           "label": "Erfasste Tunnel",
           "value": 11,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Grauholztunnel",
@@ -198,28 +199,44 @@
           "label": "Erfasste Brücken",
           "value": 15,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Bern",
           "value": 11,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Bern"
+          }
         },
         {
           "label": "Aargau",
           "value": 2,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Aargau"
+          }
         },
         {
           "label": "Solothurn",
           "value": 2,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[2].anzahl"
+          "factRef": "bruecken.nach_kanton[2].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Solothurn"
+          }
         },
         {
           "label": "Murgbrücke Süd",
@@ -338,5 +355,189 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Grauholztunnel",
+        "laenge_m": 6286,
+        "inbetriebnahme_jahr": 1993,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 11.731,
+        "bemerkung": null
+      },
+      {
+        "name": "Birchiwaldtunnel",
+        "laenge_m": 39,
+        "inbetriebnahme_jahr": 2003,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 17.147,
+        "bemerkung": null
+      },
+      {
+        "name": "Rüdtligentunnel",
+        "laenge_m": 400,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 18.769,
+        "bemerkung": null
+      },
+      {
+        "name": "Emmetunnel",
+        "laenge_m": 1633,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 20.054,
+        "bemerkung": null
+      },
+      {
+        "name": "Hersiwiltunnel",
+        "laenge_m": 1000,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 30.55,
+        "bemerkung": null
+      },
+      {
+        "name": "Oenzbergtunnel",
+        "laenge_m": 3155,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 34.549,
+        "bemerkung": null
+      },
+      {
+        "name": "Gishübeltunnel",
+        "laenge_m": 845,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 37.149,
+        "bemerkung": null
+      },
+      {
+        "name": "Thunstettentunnel I Nord NBS",
+        "laenge_m": 889,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 40.749,
+        "bemerkung": null
+      },
+      {
+        "name": "Langenthaltunnel",
+        "laenge_m": 1105,
+        "inbetriebnahme_jahr": 2003,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 43.352,
+        "bemerkung": null
+      },
+      {
+        "name": "Aegertentunnel",
+        "laenge_m": 632,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 48.45,
+        "bemerkung": null
+      },
+      {
+        "name": "Murgenthaltunnel",
+        "laenge_m": 4744,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 51.29,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "U Münchringenstrasse",
+        "km": 14.362,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Eichmatte",
+        "km": 14.896,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Hindelbankstrasse",
+        "km": 16.522,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Kernenriedstrasse",
+        "km": 18.185,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Lutermoos",
+        "km": 27.5,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Luterbrunnen Oesch",
+        "km": 28.189,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Chrümelbach",
+        "km": 28.941,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "BDu Oenz",
+        "km": 36.548,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Mattenbach",
+        "km": 46.312,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Brunnbach",
+        "km": 46.882,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "BDu Guggelmann",
+        "km": 47.173,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Roggwil-Wy. nord",
+        "km": 47.91,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Murgbrücke Süd",
+        "km": 49.058,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Werkkanal",
+        "km": 54.255,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Hungerzelg",
+        "km": 54.448,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      }
+    ]
+  }
 }

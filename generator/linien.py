@@ -28,7 +28,11 @@ from taktland import FACTS, LAENGE_STATT_STANDORT, pruefe_kapitel, pruefe_rahmen
 ROOT = Path(__file__).resolve().parent.parent
 PROFILE = ROOT / "data" / "linienprofile"
 
-FELDER = ("linie", "name", "lang", "generated", "sources", "chapters", "luecken")
+FELDER = ("linie", "name", "lang", "generated", "sources", "chapters", "luecken", "listen")
+
+#: Ganze Listen für die Seiten hinter den Kacheln «Erfasste Tunnel» usw.
+#: Unverändert aus den Fakten übernommen und so geprüft.
+LISTEN = ("tunnel", "bruecken", "bahnuebergaenge")
 
 #: Höchstens so viele Fragen je Kapitel. Mehr hiesse, dieselben Werte
 #: mehrfach abzufragen.
@@ -42,6 +46,9 @@ def bauen(nr):
          "generated": str(date.today()), "chapters": kap, "luecken": f["luecken"]}
     kennungen(d)
     d["sources"] = sorted({x["source"] for k in kap for x in k.get("facts", [])})
+    listen = {art: f[art]["items"] for art in LISTEN if f.get(art)}
+    if listen:
+        d["listen"] = listen
     return {k: d[k] for k in FELDER if k in d}
 
 
@@ -75,6 +82,36 @@ def pruefe_linie(profil, fakten):
         b.fehlt("Profil", "Nummer oder Name passt nicht zu den Fakten")
     pruefe_rahmen(profil, fakten, b)
     pruefe_kapitel(profil, fakten, fb, b)
+
+    # Die Listen hinter den Kacheln: genau die Einträge der Fakten, nicht mehr
+    # und nicht weniger
+    listen = profil.get("listen") or {}
+    for art in LISTEN:
+        soll = (fakten.get(art) or {}).get("items")
+        if soll and listen.get(art) != soll:
+            b.fehlt(f"Profil/listen/{art}", "weicht von den Fakten ab oder fehlt. Neu bauen")
+        if not soll and art in listen:
+            b.fehlt(f"Profil/listen/{art}", "steht nicht in den Fakten")
+    for art in set(listen) - set(LISTEN):
+        b.fehlt(f"Profil/listen/{art}", "unbekannte Liste")
+
+    # Eine Kachel mit Verweis verspricht so viele Einträge, wie sie zeigt: «Ticino
+    # 325 Brücken» führt zu genau 325 Brücken mit Kanton Ticino
+    for kap in profil["chapters"]:
+        for j, x in enumerate(kap.get("facts", [])):
+            if "liste" not in x:
+                continue
+            wo = f"Kapitel {kap.get('id')}/facts[{j}]"
+            eintraege = listen.get(x["liste"])
+            if eintraege is None:
+                b.fehlt(wo, f"verweist auf die Liste {x['liste']}, die fehlt")
+                continue
+            if x.get("filter"):
+                feld, wert = x["filter"]["feld"], x["filter"]["wert"]
+                eintraege = [e for e in eintraege if e.get(feld) == wert]
+            if len(eintraege) != x.get("value"):
+                b.fehlt(wo, f"die Kachel zeigt {x.get('value')}, die Liste dahinter hat "
+                            f"{len(eintraege)} Einträge")
 
     for kap in profil["chapters"]:
         wo = f"Kapitel {kap.get('id')}"

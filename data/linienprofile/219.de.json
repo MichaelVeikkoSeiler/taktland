@@ -2,7 +2,7 @@
   "linie": 219,
   "name": "Auvernier - Les Verrieres frontiere",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -190,7 +190,8 @@
           "label": "Erfasste Tunnel",
           "value": 11,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel de Fleurier (022)",
@@ -308,7 +309,8 @@
           "label": "Erfasste Brücken",
           "value": 19,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PI de Travers",
@@ -366,35 +368,56 @@
           "label": "Erfasste Bahnübergänge",
           "value": 18,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 13,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 3,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "«Halbschrankeanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Halbschrankeanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[3].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[3].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "PN Travers",
@@ -497,5 +520,323 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de la Loge (014)",
+        "laenge_m": 54,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 11.503,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Rochefort (015)",
+        "laenge_m": 72,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 11.708,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Champ Rouge (016)",
+        "laenge_m": 85,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 12.95,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de la Verrière (017)",
+        "laenge_m": 156,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 13.269,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Bois-de-Ban (018)",
+        "laenge_m": 161,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 14.688,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel des Moyats (019)",
+        "laenge_m": 338,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 15.085,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel Places-Bourgeoises",
+        "laenge_m": 70,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 15.478,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Brot (021)",
+        "laenge_m": 455,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 15.832,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Fleurier (022)",
+        "laenge_m": 546,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 31.294,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de St-Sulpice (023)",
+        "laenge_m": 277,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 33.753,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Haut de la Tour (24)",
+        "laenge_m": 334,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 34.21,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PI du Ceylard",
+        "km": 6.554,
+        "baueinheiten": 2,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Cottendard",
+        "km": 6.979,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de la Mairesse",
+        "km": 7.689,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI des Trois Rods",
+        "km": 9.36,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI François",
+        "km": 10.374,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt de la Baleine",
+        "km": 16.882,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt du Furcil",
+        "km": 17.273,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt sur Canal du Furcil",
+        "km": 17.326,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Pt sur La Noiraigue",
+        "km": 17.766,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Travers",
+        "km": 22.576,
+        "baueinheiten": 3,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de la Combe-Bayon",
+        "km": 23.961,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Bois de Croix",
+        "km": 24.707,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Viaduc de Couvet",
+        "km": 26.333,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Boveresse",
+        "km": 29.146,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Viaduc de l'Huguenaz",
+        "km": 32.078,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "Viaduc de la Prise Milord",
+        "km": 32.789,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI des Parcs",
+        "km": 34.48,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI du Haut de la Tour",
+        "km": 36.842,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      },
+      {
+        "name": "PI de Meudon",
+        "km": 40.519,
+        "baueinheiten": 1,
+        "kanton": "Neuchâtel"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN de Cottendart",
+        "km": 7.606,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Bole",
+        "km": 8.389,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Buges",
+        "km": 10.321,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN Champ-du-Moulin",
+        "km": 13.66,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Furcil",
+        "km": 17.384,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Noiraigue",
+        "km": 17.873,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Noiraigue 2",
+        "km": 19.564,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN224",
+        "km": 22.464,
+        "sicherungsart": "Halbschrankeanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Travers",
+        "km": 22.847,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN ch. de Boveresse",
+        "km": 27.802,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Boveresse 1",
+        "km": 29.271,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Haut de la Tour",
+        "km": 35.032,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Champs Berthoud",
+        "km": 35.519,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Les Bayards",
+        "km": 35.866,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Haut du Cret",
+        "km": 38.03,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN La Vy Rainaud",
+        "km": 38.492,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN La Vy Perroud",
+        "km": 39.036,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Les Cernets",
+        "km": 39.696,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

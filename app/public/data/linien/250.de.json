@@ -2,7 +2,7 @@
   "linie": 250,
   "name": "Lausanne Est - Bern",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -377,7 +377,8 @@
           "label": "Erfasste Tunnel",
           "value": 5,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel de Vauderens (101)",
@@ -488,28 +489,44 @@
           "label": "Erfasste Brücken",
           "value": 116,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Fribourg",
           "value": 56,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Fribourg"
+          }
         },
         {
           "label": "Vaud",
           "value": 41,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Vaud"
+          }
         },
         {
           "label": "Bern",
           "value": 19,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[2].anzahl"
+          "factRef": "bruecken.nach_kanton[2].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Bern"
+          }
         },
         {
           "label": "PI Gare de Fribourg",
@@ -605,21 +622,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 2,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "PN Villaz-St-Pierre",
@@ -721,5 +749,761 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de Grandvaux (030)",
+        "laenge_m": 392,
+        "inbetriebnahme_jahr": 1862,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 8.858,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de la Cornallaz(031)",
+        "laenge_m": 494,
+        "inbetriebnahme_jahr": 1862,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 11.238,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Vauderens (101)",
+        "laenge_m": 1980,
+        "inbetriebnahme_jahr": 2001,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 32.56,
+        "bemerkung": null
+      },
+      {
+        "name": "Mühletaltunnel (012)",
+        "laenge_m": 400,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 78.827,
+        "bemerkung": null
+      },
+      {
+        "name": "Flamattertunnel (011)",
+        "laenge_m": 189,
+        "inbetriebnahme_jahr": 1860,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 83.507,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PI Montolivet milieu",
+        "km": 0.899,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI Montolivet nord",
+        "km": 0.912,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Trabandan",
+        "km": 1.311,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Levant",
+        "km": 2.014,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Vuachère",
+        "km": 2.081,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Vuachère",
+        "km": 2.09,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy du Liaudoz",
+        "km": 2.274,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy du Montillier",
+        "km": 2.424,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Rennier",
+        "km": 2.802,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Viad de Rochettaz",
+        "km": 3.537,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Flonzel",
+        "km": 3.793,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Conversion",
+        "km": 3.997,
+        "baueinheiten": 6,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI piétons de Mourat",
+        "km": 4.728,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Brûlées",
+        "km": 5.002,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Brelaz",
+        "km": 5.188,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Lutrive",
+        "km": 5.316,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Bossière",
+        "km": 5.766,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI des Chênes",
+        "km": 6.095,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Viad du Chatelard",
+        "km": 6.408,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI d'Aran",
+        "km": 7.197,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Lalex",
+        "km": 7.541,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI rte de Grandvaux",
+        "km": 8.157,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Grandvaux",
+        "km": 8.305,
+        "baueinheiten": 4,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt des Chambettaz",
+        "km": 9.307,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Rosset",
+        "km": 9.481,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Lanchaux",
+        "km": 9.774,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt du Crêt d'Epesses",
+        "km": 10.212,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Cornallaz",
+        "km": 10.853,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Puidoux",
+        "km": 12.136,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de la Vulpillière",
+        "km": 12.231,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Toloveau",
+        "km": 12.804,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Moreillon sud",
+        "km": 14.224,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy Moreillon",
+        "km": 14.667,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Moreillon nord",
+        "km": 14.826,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI du Bottonet",
+        "km": 15.142,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Pra Chesau",
+        "km": 16.999,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Bordia",
+        "km": 19.716,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy Palézieux",
+        "km": 20.58,
+        "baueinheiten": 3,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur la Broye",
+        "km": 21.213,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI de Teisigue",
+        "km": 22.061,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Viad de Mionnaz",
+        "km": 22.777,
+        "baueinheiten": 2,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "PI voy d'Oron",
+        "km": 24.341,
+        "baueinheiten": 1,
+        "kanton": "Vaud"
+      },
+      {
+        "name": "Pt sur le Flon",
+        "km": 25.081,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Gillarens",
+        "km": 26.13,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI des Planches",
+        "km": 29.492,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Vauderens",
+        "km": 30.615,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy Siviriez",
+        "km": 35.737,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI Siviriez",
+        "km": 35.77,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI Maison Neuve",
+        "km": 36.255,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy Romont",
+        "km": 40.238,
+        "baueinheiten": 4,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI du Glaney",
+        "km": 41.438,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Lussy",
+        "km": 43.842,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI en Baudiaz",
+        "km": 44.356,
+        "baueinheiten": 2,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Gillaz",
+        "km": 44.896,
+        "baueinheiten": 2,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy Villaz-St Pierre",
+        "km": 45.059,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Viad de Macconnens",
+        "km": 46.887,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Macconnens",
+        "km": 47.403,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI du Prallet",
+        "km": 47.611,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI du Pontet",
+        "km": 48.803,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy Chénens",
+        "km": 49.632,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Saugy",
+        "km": 50.331,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Genevrex",
+        "km": 51.006,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy Cottens",
+        "km": 52.414,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI des Rialles",
+        "km": 53.328,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI du Nierlet",
+        "km": 54.079,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI du Cledard",
+        "km": 55.324,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy de Neyruz",
+        "km": 55.375,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Neyruz 2",
+        "km": 56.166,
+        "baueinheiten": 2,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy de Rosé",
+        "km": 57.527,
+        "baueinheiten": 6,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy Matran",
+        "km": 60.364,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy de Villars-sur-Gl",
+        "km": 62.121,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Villars-sur-Gl",
+        "km": 62.257,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI les Daillettes",
+        "km": 64.153,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI des Ateliers",
+        "km": 65.43,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI Gare de Fribourg",
+        "km": 65.838,
+        "baueinheiten": 8,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Beauregard",
+        "km": 65.952,
+        "baueinheiten": 7,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI voy Fribourg",
+        "km": 66.008,
+        "baueinheiten": 5,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Locaux Bagages",
+        "km": 66.024,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de Tivoli",
+        "km": 66.128,
+        "baueinheiten": 2,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI de St Léonard",
+        "km": 67.416,
+        "baueinheiten": 4,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PI des Alouettes",
+        "km": 68.351,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Viad de Grandfey",
+        "km": 68.959,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "WU Unterzelg",
+        "km": 71.604,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Viadukt Düdingen",
+        "km": 71.824,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PU Düdingen",
+        "km": 72.203,
+        "baueinheiten": 2,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "WU Haslera",
+        "km": 73.226,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "WU Warpel",
+        "km": 74.018,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "WU Galmis",
+        "km": 74.727,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "SU Friesenheid",
+        "km": 76.787,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PU Schmitten",
+        "km": 77.785,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "SU Wünnewil",
+        "km": 80.419,
+        "baueinheiten": 3,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "SU Blumisberg",
+        "km": 80.976,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "SU Balsingen",
+        "km": 81.661,
+        "baueinheiten": 2,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "SU Chrummatt",
+        "km": 83.076,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "PU Flamatt",
+        "km": 84.123,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "WU Grossenried",
+        "km": 84.649,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "Senseviadukt",
+        "km": 86.287,
+        "baueinheiten": 1,
+        "kanton": "Fribourg"
+      },
+      {
+        "name": "U Sensemattstrasse",
+        "km": 86.714,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Thörishaus Dorf",
+        "km": 86.89,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Thörishaus",
+        "km": 88.225,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "BDu 89.315",
+        "km": 89.313,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Oberwangen",
+        "km": 89.38,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Bahngässli",
+        "km": 90.685,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Niederwangen",
+        "km": 91.08,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Hallmattstrasse",
+        "km": 92.08,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Bümpliz Süd",
+        "km": 93.017,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Bernstrasse",
+        "km": 93.724,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Ausserholligen",
+        "km": 94.1,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U der BLS Gürbetal",
+        "km": 94.212,
+        "baueinheiten": 4,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Steigerhubelstrasse",
+        "km": 94.581,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Kabelkanal Villette",
+        "km": 96.65,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Gepäcktunnel West",
+        "km": 96.861,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Posttunnel West",
+        "km": 96.95,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Posttunnel West - Ost",
+        "km": 97.018,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Kabelkanal West-Ost",
+        "km": 97.023,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Gepäcktunnel West-Ost",
+        "km": 97.049,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN Villaz-St-Pierre",
+        "km": 45.104,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "Bahnhofplatz",
+        "km": 72.208,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      }
+    ]
+  }
 }

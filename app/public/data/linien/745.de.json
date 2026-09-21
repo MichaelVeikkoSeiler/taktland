@@ -2,7 +2,7 @@
   "linie": 745,
   "name": "ZH Langstrasse - Dietlikon Sud (S-Bahn)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -132,7 +132,8 @@
           "label": "Erfasste Tunnel",
           "value": 4,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Zürichbergtunnel",
@@ -236,7 +237,8 @@
           "label": "Erfasste Brücken",
           "value": 4,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Vi Neugut,Stettbach",
@@ -348,5 +350,67 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel Bahnhof Museumstrasse",
+        "laenge_m": 772,
+        "inbetriebnahme_jahr": 1990,
+        "tunnelsystem": "Andere",
+        "km": 99.86,
+        "bemerkung": null
+      },
+      {
+        "name": "Hirschengrabentunnel",
+        "laenge_m": 1334,
+        "inbetriebnahme_jahr": 1894,
+        "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
+        "km": 100.772,
+        "bemerkung": "Inkl: Tunnel Hischengraben Axe 161 und Tunnel Hischengraben Axe 261"
+      },
+      {
+        "name": "Zürichbergtunnel",
+        "laenge_m": 5295,
+        "inbetriebnahme_jahr": 1990,
+        "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
+        "km": 106.255,
+        "bemerkung": "Inkl: Tunnel Zürichbergtunnel Axe 33 (DfA 745) und Tunnel Zürichbergtunnel Axe 42 (DfA 730)"
+      },
+      {
+        "name": "Föhrlibucktunnel",
+        "laenge_m": 193,
+        "inbetriebnahme_jahr": 1990,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 108.601,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Ladengeschoss ZSTH",
+        "km": 101.554,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Vi Neugut,Stettbach",
+        "km": 107.904,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Kriesbachstrasse",
+        "km": 108.799,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Vi Weidenholz",
+        "km": 109.065,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      }
+    ]
+  }
 }

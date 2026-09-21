@@ -2,7 +2,7 @@
   "linie": 607,
   "name": "Mt. Ceneri - Rivera (binario destro)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -80,7 +80,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Galleria Monte Ceneri II destra",
@@ -147,7 +148,8 @@
           "label": "Erfasste Brücken",
           "value": 1,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -217,5 +219,25 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Galleria Monte Ceneri II destra",
+        "laenge_m": 1693,
+        "inbetriebnahme_jahr": 1941,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 163.794,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Sot.Riale Calzascia",
+        "km": 162.894,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      }
+    ]
+  }
 }

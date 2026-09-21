@@ -2,7 +2,7 @@
   "linie": 504,
   "name": "Zofingen - Suhr",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -192,7 +192,8 @@
           "label": "Erfasste Brücken",
           "value": 11,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Uerke-Brücke",
@@ -230,21 +231,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 24,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 23,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Bedarfsschrankenanl"
+          }
         },
         {
           "label": "BUe Industriestrasse",
@@ -365,5 +377,221 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PU Peyerland",
+        "km": 1.737,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Safenwil",
+        "km": 6.544,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Mülibach Gärbi",
+        "km": 8.503,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Metzgergasse",
+        "km": 10.203,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Dorfbach",
+        "km": 10.28,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Kölliken",
+        "km": 10.884,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Uerke-Brücke",
+        "km": 12.294,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Suhre",
+        "km": 13.408,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Oberentfelden",
+        "km": 13.609,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Suhrentalstrasse",
+        "km": 14.345,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Suhr",
+        "km": 16.667,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Aarburgerstrasse",
+        "km": 0.74,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Buendtenstrasse",
+        "km": 0.991,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Peierhauser",
+        "km": 1.396,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Gilamstrasse",
+        "km": 1.99,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Birchenfeld",
+        "km": 2.301,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Munzebuel",
+        "km": 3.319,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rieden",
+        "km": 3.748,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Striegel",
+        "km": 4.054,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Winterhalde",
+        "km": 4.592,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Walterswil",
+        "km": 4.973,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Safenwilerstr.",
+        "km": 8.612,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Gerbe",
+        "km": 8.635,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe K-Oberdorf",
+        "km": 9.292,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Eichweg",
+        "km": 9.699,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hausmatten",
+        "km": 10.293,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kirchgasse",
+        "km": 10.696,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Risigasse",
+        "km": 11.122,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Schurlifeld",
+        "km": 12.316,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Holzikergasse",
+        "km": 13.099,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Haerdi",
+        "km": 13.327,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kantonsstrasse",
+        "km": 13.441,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Industriestrasse",
+        "km": 13.809,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 5
+      },
+      {
+        "name": "BUe 163 Helgenfeld",
+        "km": 16.356,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Granicherstrasse",
+        "km": 16.467,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

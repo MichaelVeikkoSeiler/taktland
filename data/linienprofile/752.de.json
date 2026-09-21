@@ -2,7 +2,7 @@
   "linie": 752,
   "name": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -182,7 +182,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Opfikontunnel I",
@@ -249,7 +250,8 @@
           "label": "Erfasste Brücken",
           "value": 17,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PU 2 Kloten",
@@ -301,7 +303,8 @@
           "label": "Erfasste Bahnübergänge",
           "value": 1,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -391,5 +394,129 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Opfikontunnel I",
+        "laenge_m": 263,
+        "inbetriebnahme_jahr": 1978,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 7.259,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Überw. Grubenacker 1",
+        "km": 5.738,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Br 2 Glattalstrasse",
+        "km": 5.977,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Rampenbauwerk OHR",
+        "km": 6.126,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Vi über die Glatt",
+        "km": 7.796,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Riethofstrasse",
+        "km": 8.213,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Platten",
+        "km": 8.563,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Balsberg",
+        "km": 8.886,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU 1 Kloten",
+        "km": 9.794,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU 2 Kloten",
+        "km": 9.999,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Flughafen",
+        "km": 12.799,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Bassersdorf",
+        "km": 14.74,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Baltenswilerstr.",
+        "km": 15.634,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Baltenswilerstr.",
+        "km": 15.66,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Schienenwiesenweg",
+        "km": 16.077,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Steinackerweg",
+        "km": 16.456,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Winterthurerstr.",
+        "km": 16.814,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Götschenrain",
+        "km": 17.091,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Hinterwidenweg",
+        "km": 9.072,
+        "sicherungsart": "unbewacht",
+        "gleise": 2
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 701,
   "name": "Eglisau - Koblenz - Stein Sackingen Ost",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -237,21 +237,32 @@
           "label": "Erfasste Brücken",
           "value": 52,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Aargau",
           "value": 46,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Aargau"
+          }
         },
         {
           "label": "Zürich",
           "value": 6,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "Du Steingraben K701",
@@ -346,21 +357,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 11,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 10,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Bedarfsschrankenanl"
+          }
         },
         {
           "label": "BUe Kaisterstrasse",
@@ -475,5 +497,389 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "U Dachsbergstrasse",
+        "km": 22.627,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Wissengraben",
+        "km": 24.922,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Glattbrücke Zweidlen",
+        "km": 25.49,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Rheinsfelderstr.",
+        "km": 25.869,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Rheinsfelderstr.",
+        "km": 25.879,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Kieswerk",
+        "km": 27.548,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Fisibach",
+        "km": 31.392,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K131",
+        "km": 31.485,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Studen",
+        "km": 33.212,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Bergstrasse",
+        "km": 34.418,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Steinbruch",
+        "km": 35.113,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U OV-Strasse 163",
+        "km": 35.644,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Tägerbach",
+        "km": 35.657,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "BDu in Mellikon",
+        "km": 36.222,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Rekingen",
+        "km": 38.11,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Chrüzlibach",
+        "km": 38.371,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PDu Längg",
+        "km": 38.583,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Landstrasse R Burg",
+        "km": 40.897,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Zurzach",
+        "km": 41.014,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Bad Zurzach",
+        "km": 41.425,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Landstrasse R",
+        "km": 42.042,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Im Dorf Rietheim",
+        "km": 43.316,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Landstr.R Rietheim",
+        "km": 43.936,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstrasse K131",
+        "km": 45.45,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Im Dorf Koblenz",
+        "km": 47.048,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Sägerei",
+        "km": 47.227,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Sägerei",
+        "km": 47.281,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Gütschhalde",
+        "km": 47.965,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Steingraben K701",
+        "km": 47.976,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Koblenz",
+        "km": 48.358,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K113",
+        "km": 48.629,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du für Binnenkanal",
+        "km": 48.697,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Aarebrücke Koblenz",
+        "km": 49.055,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K448",
+        "km": 49.269,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Landstrasse E1",
+        "km": 50.281,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Grossacker",
+        "km": 52.817,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU im Seel",
+        "km": 53.351,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Burgäuli",
+        "km": 54.48,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU bei Leibstadt",
+        "km": 54.958,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Weihermatten",
+        "km": 58.576,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Mettauerbach",
+        "km": 61.029,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Rheintalstrasse",
+        "km": 61.17,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K456",
+        "km": 63.227,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Sulzerbach",
+        "km": 63.25,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Landstrasse E3",
+        "km": 64.727,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K463",
+        "km": 67.558,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Kaisterbach",
+        "km": 67.837,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Im Bord",
+        "km": 71.219,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Sisselnbachbrücke",
+        "km": 71.28,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Zubringer N3",
+        "km": 71.401,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Rohrmattweg",
+        "km": 73.127,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "BDu Münchwilen",
+        "km": 73.258,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Rheinsfelden",
+        "km": 25.372,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bahnhofplatz",
+        "km": 30.273,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Priv. Ubergang",
+        "km": 37.369,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Barzstrasse",
+        "km": 41.609,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rheinacker",
+        "km": 55.549,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Station",
+        "km": 56.817,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Wegacher",
+        "km": 57.487,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe H.Bahnhofstr.",
+        "km": 65.36,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kaisterstrasse",
+        "km": 65.808,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Eikerwald",
+        "km": 70.683,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Rutti",
+        "km": 71.107,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      }
+    ]
+  }
 }

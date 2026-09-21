@@ -2,7 +2,7 @@
   "linie": 595,
   "name": "GBT Ost",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -95,7 +95,8 @@
           "label": "Erfasste Tunnel",
           "value": 2,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Galleria Svincolo A2 Biasca",
@@ -154,7 +155,8 @@
           "label": "Erfasste Brücken",
           "value": 10,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Ponte sul Fiume Brenno",
@@ -230,5 +232,87 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Galleria Svincolo A2 Biasca",
+        "laenge_m": 260,
+        "inbetriebnahme_jahr": 2016,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 159.916,
+        "bemerkung": null
+      },
+      {
+        "name": "Galleria artificiale Giustizia",
+        "laenge_m": 106,
+        "inbetriebnahme_jahr": 2016,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 163.608,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Sot. str. delle Bolle",
+        "km": 159.073,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. faun. Rüten",
+        "km": 159.392,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte sul Fiume Brenno",
+        "km": 159.636,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Via Iragna",
+        "km": 160.289,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Ai Pascoli",
+        "km": 161.053,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Fieu",
+        "km": 161.187,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte sul Riale Dragone",
+        "km": 161.386,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Mondascia",
+        "km": 162.081,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Boscone",
+        "km": 163.049,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte sul Riale Froda",
+        "km": 163.485,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      }
+    ]
+  }
 }

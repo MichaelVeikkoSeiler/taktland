@@ -2,7 +2,7 @@
   "linie": 151,
   "name": "Geneve St-Jean - La Plaine-Frontiere",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -192,7 +192,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel du Saut-de-Mouton (093)",
@@ -259,7 +260,8 @@
           "label": "Erfasste Brücken",
           "value": 18,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PI de Satigny",
@@ -325,21 +327,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 3,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "PN Russin",
@@ -463,5 +476,147 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel du Saut-de-Mouton (093)",
+        "laenge_m": 425,
+        "inbetriebnahme_jahr": 1993,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 62.234,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "SM St.- Jean",
+        "km": 61.997,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "Pt sur l'Avanchet",
+        "km": 64.203,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI de la Croisette",
+        "km": 64.77,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI de Meyrin",
+        "km": 66.228,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI de Montfleury",
+        "km": 66.68,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI piét F.I.P.A.",
+        "km": 66.994,
+        "baueinheiten": 2,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI rte Sablières",
+        "km": 68.043,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI Cycl Sablières",
+        "km": 68.063,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI de Satigny",
+        "km": 69.123,
+        "baueinheiten": 3,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI voy de Satigny",
+        "km": 69.399,
+        "baueinheiten": 2,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI piét Pré-Gentil",
+        "km": 69.624,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI rte de Satigny",
+        "km": 69.815,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI de Peney",
+        "km": 70.446,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI voy de Russin",
+        "km": 72.808,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI de Russin",
+        "km": 73.179,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "Viad de l'Allondon",
+        "km": 74.063,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI de Challex",
+        "km": 74.271,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      },
+      {
+        "name": "PI de la Donzelle",
+        "km": 74.508,
+        "baueinheiten": 1,
+        "kanton": "Genève"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "Passage evacuation",
+        "km": 62.487,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN 685 (Bourdigny)",
+        "km": 68.594,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Russin",
+        "km": 72.85,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

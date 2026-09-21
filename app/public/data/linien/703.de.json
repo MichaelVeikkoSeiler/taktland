@@ -2,7 +2,7 @@
   "linie": 703,
   "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -213,21 +213,32 @@
           "label": "Erfasste Brücken",
           "value": 20,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Aargau",
           "value": 10,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Aargau"
+          }
         },
         {
           "label": "Zürich",
           "value": 10,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "U Schaffhauserstrasse",
@@ -293,21 +304,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 18,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 17,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "BUe Felsenrain",
@@ -458,5 +480,239 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "U Schaffhauserstrasse",
+        "km": 23.123,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Seebach",
+        "km": 23.275,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Seebacherstrasse",
+        "km": 24.955,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Seebacherstrasse",
+        "km": 24.982,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Wehntalerstrasse",
+        "km": 27.014,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Wehntalerstrasse",
+        "km": 27.134,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Oststrasse",
+        "km": 29.473,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Furtbach",
+        "km": 32.121,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Brühlbach",
+        "km": 36.381,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Ottelfingen",
+        "km": 36.4,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Aspäcker",
+        "km": 37.243,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Zelgli",
+        "km": 38.667,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Würenlos",
+        "km": 39.036,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Ausfallstr. Baden",
+        "km": 43.892,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Mellingerstrasse",
+        "km": 44.357,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Segelhof",
+        "km": 46.624,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Breitler",
+        "km": 48.503,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Zwischenweg",
+        "km": 48.758,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Mellingen",
+        "km": 50.311,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU OV5 zum Tanklager",
+        "km": 50.405,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Felsenrain",
+        "km": 23.502,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 5
+      },
+      {
+        "name": "BUe Fronwaldstrasse",
+        "km": 25.573,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Zehntenhausstr.",
+        "km": 26.227,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Blumenfeldstr",
+        "km": 26.58,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Seeackerholzstr.",
+        "km": 28.408,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Altburgstrasse",
+        "km": 28.627,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Huttikerstrasse",
+        "km": 36.742,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Boden",
+        "km": 37.598,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kempfhofstrasse",
+        "km": 37.964,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Gmeumerigasse",
+        "km": 38.071,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Landstrasse",
+        "km": 38.84,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tagerhard",
+        "km": 39.747,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Fohrholzli",
+        "km": 41.584,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Meierhofstrasse",
+        "km": 44.924,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Sommerhalderstr.",
+        "km": 47.07,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Stationsweg",
+        "km": 47.276,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Huttenacker",
+        "km": 49.096,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Langacker",
+        "km": 49.283,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

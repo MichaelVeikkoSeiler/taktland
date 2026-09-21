@@ -2,7 +2,7 @@
   "linie": 722,
   "name": "ZH Langstrasse - Nidelbad - Litti",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "linie",
     "tunnel"
@@ -79,7 +79,8 @@
           "label": "Erfasste Tunnel",
           "value": 2,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Zimmerberg Basistunnel",
@@ -166,5 +167,25 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Seebahntunnel",
+        "laenge_m": 97,
+        "inbetriebnahme_jahr": 2001,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 1.523,
+        "bemerkung": null
+      },
+      {
+        "name": "Zimmerberg Basistunnel",
+        "laenge_m": 9421,
+        "inbetriebnahme_jahr": 2003,
+        "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
+        "km": 2.471,
+        "bemerkung": "Inkl: ZBT Einspur Berg (DfA 725) und ZBT Einspur See (DfA 723)"
+      }
+    ]
+  }
 }

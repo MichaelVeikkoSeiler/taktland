@@ -2,7 +2,7 @@
   "linie": 260,
   "name": "Zollikofen Nord - Biel/Bienne Aebistr.",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -205,7 +205,8 @@
           "label": "Erfasste Brücken",
           "value": 29,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PU Brügg",
@@ -300,21 +301,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 9,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 6,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 3,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "BUe Suberg",
@@ -472,5 +484,239 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "U Zürichstrasse",
+        "km": 8.246,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Münchenbuchsee",
+        "km": 10.157,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Bielstrasse",
+        "km": 10.611,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Holen",
+        "km": 11.091,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Schwanden",
+        "km": 14.399,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Schüpfen",
+        "km": 15.711,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Dorfstrasse",
+        "km": 16.098,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PDu Horbengasse",
+        "km": 16.455,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Chüelibach",
+        "km": 16.801,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Lyssbach",
+        "km": 18.236,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Suberg",
+        "km": 19.929,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Flühmatten",
+        "km": 21.042,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "KDu Löribach",
+        "km": 21.049,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Murgeli",
+        "km": 22.472,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Leueren Blaumatt",
+        "km": 22.585,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Mühleplatz",
+        "km": 22.818,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Oberfeldweg",
+        "km": 22.95,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Rosengasse",
+        "km": 23.137,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Lyss",
+        "km": 23.347,
+        "baueinheiten": 3,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Busswil",
+        "km": 26.132,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Aareviadukt Busswil",
+        "km": 26.922,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Jenskanal-Brücke",
+        "km": 27.631,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "SU Studen",
+        "km": 28.124,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Studen Station",
+        "km": 28.288,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Friedhof",
+        "km": 29.69,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Aarebrücke Brügg",
+        "km": 30.208,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Neubrückstrasse",
+        "km": 30.312,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "PU Brügg",
+        "km": 30.512,
+        "baueinheiten": 5,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Brüggstrasse",
+        "km": 32.671,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Moosgasse",
+        "km": 10.264,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Moosrain",
+        "km": 11.845,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Gsteig",
+        "km": 12.601,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Kosthofen",
+        "km": 19.173,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Suberg",
+        "km": 19.974,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe 250 Fulenmatt",
+        "km": 25.083,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN 9821",
+        "km": 32.429,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN 9825",
+        "km": 32.471,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PN 9826",
+        "km": 32.489,
+        "sicherungsart": "unbewacht",
+        "gleise": 2
+      }
+    ]
+  }
 }

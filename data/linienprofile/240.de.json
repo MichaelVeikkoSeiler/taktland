@@ -2,7 +2,7 @@
   "linie": 240,
   "name": "Delemont - Delle",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -254,7 +254,8 @@
           "label": "Erfasste Tunnel",
           "value": 6,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Tunnel de la Croix (062)",
@@ -372,7 +373,8 @@
           "label": "Erfasste Brücken",
           "value": 27,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Aq Le Noir Bois",
@@ -453,14 +455,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 28,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 28,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "PN de Courfaivre",
@@ -551,5 +559,391 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Tunnel de Glovelier (063)",
+        "laenge_m": 2012,
+        "inbetriebnahme_jahr": 1877,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 97.7,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Montmelon (064)",
+        "laenge_m": 223,
+        "inbetriebnahme_jahr": 1877,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 100.209,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Malvie ( 065 )",
+        "laenge_m": 213,
+        "inbetriebnahme_jahr": 1877,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 100.582,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel du Château (061)",
+        "laenge_m": 230,
+        "inbetriebnahme_jahr": 1877,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 102.299,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de la Croix (062)",
+        "laenge_m": 2966,
+        "inbetriebnahme_jahr": 1877,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 103.722,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel de Courchavon (037)",
+        "laenge_m": 194,
+        "inbetriebnahme_jahr": 1877,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 115.403,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Pt sur le Chatillon dr",
+        "km": 87.657,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Aq Le Noir Bois",
+        "km": 89.342,
+        "baueinheiten": 3,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI Bassecourt",
+        "km": 93.523,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt de La Sorne",
+        "km": 93.994,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Aq sur le Tabeillon",
+        "km": 95.119,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI des Croisées",
+        "km": 95.395,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de Montmelon",
+        "km": 99.59,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Viad de Malvie",
+        "km": 100.389,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Viaduc de Combe Maran",
+        "km": 101.346,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI St Ursanne",
+        "km": 101.744,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI du Château",
+        "km": 102.445,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI du Borbet",
+        "km": 107.534,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de Courgenay",
+        "km": 108.572,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Aq de Voyeboeuf",
+        "km": 111.75,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Viad de Porrentruy",
+        "km": 112.536,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de St Germain",
+        "km": 112.637,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI voy Porrentruy",
+        "km": 112.892,
+        "baueinheiten": 2,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI de la Rochette",
+        "km": 113.309,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt de Bellevue",
+        "km": 113.444,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt Sous le Fahy",
+        "km": 115.117,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt de la Colombière",
+        "km": 119.272,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Aq sur Canal",
+        "km": 120.43,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Aq du Buix",
+        "km": 121.516,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI Prairie-Dessous",
+        "km": 121.962,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt Sous les Cantons",
+        "km": 122.536,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "PI voy Boncourt",
+        "km": 123.374,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      },
+      {
+        "name": "Pt Burrus",
+        "km": 124.136,
+        "baueinheiten": 1,
+        "kanton": "Jura"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN Regie des Alcools",
+        "km": 86.107,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN CTT c/DMT",
+        "km": 86.622,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la Gare",
+        "km": 87.931,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN du Village",
+        "km": 88.145,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN du Vieux Moulin Ouest",
+        "km": 89.149,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Courfaivre",
+        "km": 90.215,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN route de Develier",
+        "km": 90.758,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Neufs Champs",
+        "km": 91.073,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Sur Vilere",
+        "km": 91.679,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue Abbe-Monnin",
+        "km": 92.799,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue de l'Eglise",
+        "km": 93.69,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Merovingiens",
+        "km": 94.293,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Mamie",
+        "km": 94.521,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN pietons",
+        "km": 96.42,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Glovelier",
+        "km": 96.681,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Courgenay",
+        "km": 107.704,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN d'acces aux quais",
+        "km": 107.792,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN rue A. Gandon",
+        "km": 108.035,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rue Maltiere",
+        "km": 112.258,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Pont d'Able",
+        "km": 114.814,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Courchavon",
+        "km": 116.158,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN ligne de Boncourt",
+        "km": 118.154,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Grandgourt sud",
+        "km": 119.465,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Grandgourt",
+        "km": 119.671,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Buix",
+        "km": 121.501,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Prairie Dessous",
+        "km": 121.733,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de Boncourt",
+        "km": 123.741,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la Frontiere",
+        "km": 124.414,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

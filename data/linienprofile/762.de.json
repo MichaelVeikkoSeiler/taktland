@@ -2,7 +2,7 @@
   "linie": 762,
   "name": "Winterthur Nord - Schaffhausen RB Ost",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -214,7 +214,8 @@
           "label": "Erfasste Tunnel",
           "value": 2,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Rötitunnel",
@@ -273,21 +274,32 @@
           "label": "Erfasste Brücken",
           "value": 29,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Zürich",
           "value": 22,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zürich"
+          }
         },
         {
           "label": "Schaffhausen",
           "value": 7,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Schaffhausen"
+          }
         },
         {
           "label": "Du Wiesenbach",
@@ -354,21 +366,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 25,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 24,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "BUe Hilti",
@@ -478,5 +501,353 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Schloss Laufentunnel",
+        "laenge_m": 66,
+        "inbetriebnahme_jahr": 1857,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 52.545,
+        "bemerkung": null
+      },
+      {
+        "name": "Rötitunnel",
+        "laenge_m": 153,
+        "inbetriebnahme_jahr": 1964,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 52.949,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PDu Weststrasse",
+        "km": 28.558,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Chrebsbach-Brücke",
+        "km": 31.314,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Wiesenbach",
+        "km": 32.419,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Hettlingen",
+        "km": 32.646,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Henggart",
+        "km": 35.033,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Bruggi",
+        "km": 37.402,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PDu Post",
+        "km": 39.228,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Mühlebach",
+        "km": 39.343,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Thurbr. Andelfingen",
+        "km": 40.665,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Klein-Andelfingen",
+        "km": 40.788,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "U Ossingerstrasse",
+        "km": 41.315,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Steinigrund",
+        "km": 41.863,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Stigli",
+        "km": 42.177,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU Schiterberg",
+        "km": 43.43,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "BDu mit Gehsteg",
+        "km": 45.02,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "WU zum Talacker",
+        "km": 45.69,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "PU Marthalen",
+        "km": 45.994,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Fleudenbühl",
+        "km": 46.075,
+        "baueinheiten": 2,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Abistbach",
+        "km": 47.157,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Abistbach",
+        "km": 47.178,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "SU Oberboden",
+        "km": 48.238,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Du Mülibach",
+        "km": 50.682,
+        "baueinheiten": 1,
+        "kanton": "Zürich"
+      },
+      {
+        "name": "Rheinbrücke b.Laufen",
+        "km": 52.718,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "PDu nach Rheinbrücke",
+        "km": 52.793,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "U Gaswerkstr.",
+        "km": 53.459,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "WU Charlottenfels",
+        "km": 54.755,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "Kreuz-Unterführung",
+        "km": 54.918,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "PU Schaffhausen Süd",
+        "km": 55.986,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      },
+      {
+        "name": "PU Zollrampe",
+        "km": 57.133,
+        "baueinheiten": 1,
+        "kanton": "Schaffhausen"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Brunngasse",
+        "km": 26.836,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schaffhauserstr.",
+        "km": 27.037,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Feldstrasse",
+        "km": 27.436,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kirchenweg",
+        "km": 27.529,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bachtelstrasse",
+        "km": 27.775,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Knorrenweg",
+        "km": 28.208,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Thalhofweg",
+        "km": 28.742,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schmalzgrueb",
+        "km": 28.964,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Landw Schule",
+        "km": 29.156,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Weinbergstrasse",
+        "km": 29.332,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Oberradstrasse",
+        "km": 30.43,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Stationsstrasse",
+        "km": 32.745,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Hilti",
+        "km": 34.684,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 4
+      },
+      {
+        "name": "BUe Oberwilerstrasse",
+        "km": 34.992,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Schiebler",
+        "km": 35.271,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Bodenackerstr.",
+        "km": 36.182,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Landstrasse",
+        "km": 39.247,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Marthalerstrasse",
+        "km": 44.754,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Motscheweg",
+        "km": 45.292,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Talackerweg",
+        "km": 45.489,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Stationsstrass",
+        "km": 46.257,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 4
+      },
+      {
+        "name": "BUe Stationsstrass",
+        "km": 46.267,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Sackstrass",
+        "km": 46.603,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Lindenstrasse",
+        "km": 50.648,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Ebnatstrasse",
+        "km": 58.834,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

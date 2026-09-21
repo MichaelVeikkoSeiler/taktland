@@ -2,7 +2,7 @@
   "linie": 630,
   "name": "Giubiasco - Locarno",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -173,7 +173,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Galleria Roca Bella",
@@ -240,7 +241,8 @@
           "label": "Erfasste Brücken",
           "value": 42,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Sot. rus. 160.091",
@@ -298,21 +300,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 5,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«unbewacht»",
           "value": 3,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "«Schrankenanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "PL 1706",
@@ -449,5 +462,303 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Galleria Roca Bella",
+        "laenge_m": 754,
+        "inbetriebnahme_jahr": 1980,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 168.868,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Pte. ferrov. sulla Morobbia",
+        "km": 154.624,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Monde delle Bolle",
+        "km": 155.047,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Cavalcavia A2",
+        "km": 155.337,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Bosco d'albero",
+        "km": 156.048,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte Colombera",
+        "km": 156.587,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot.pers. San. Antonino",
+        "km": 156.84,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. Via al Ticino",
+        "km": 156.885,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot P S. Antonino",
+        "km": 157.145,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Canale bolla Grande",
+        "km": 158.675,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte rus. Cadenazzo",
+        "km": 158.949,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. pers. Cadenazzo",
+        "km": 159.461,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. alla Capelina",
+        "km": 159.585,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Attr 159.699",
+        "km": 159.698,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. rus. 160.091",
+        "km": 160.089,
+        "baueinheiten": 4,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Attr C",
+        "km": 161.169,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. rus. Roggia alla Monda",
+        "km": 162.175,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte di Ticino Riazzino",
+        "km": 162.528,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. Canale della Bonifica",
+        "km": 162.887,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. via alle Gerre",
+        "km": 163.215,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Attr C Riazzino",
+        "km": 163.749,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot Str Via Pizzante",
+        "km": 164.069,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Attr. 164.461",
+        "km": 164.463,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Stradonino",
+        "km": 164.96,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. rus. Bolla di Montedato",
+        "km": 165.021,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. Riale Bollone",
+        "km": 165.512,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "BU Riale Carcale",
+        "km": 166.258,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot P Stazione Gordola",
+        "km": 166.562,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte Verzasca",
+        "km": 167.082,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. Riale Cartiera",
+        "km": 167.427,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. pers. Tenero",
+        "km": 167.678,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte sent. Mappo",
+        "km": 168.262,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. Riale Mappo",
+        "km": 168.278,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Mappo",
+        "km": 168.43,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. Riale delle Frace",
+        "km": 169.312,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. pers. Brighirolo",
+        "km": 169.484,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Ponte Navegna",
+        "km": 169.938,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. rus. Rivo Fontile",
+        "km": 170.266,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str. Ramorino",
+        "km": 170.363,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. pers. Fornace Nessi",
+        "km": 171.085,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. Torrente Remardone",
+        "km": 171.255,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. Pers Rabissale",
+        "km": 171.451,
+        "baueinheiten": 2,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Attr. Riale Guta",
+        "km": 171.973,
+        "baueinheiten": 3,
+        "kanton": "Ticino"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PL Via Industrie",
+        "km": 160.062,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PL Via Industrie",
+        "km": 160.098,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PL Via Industrie",
+        "km": 160.188,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "PL 1706",
+        "km": 170.634,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PL 1714",
+        "km": 171.459,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 131,
   "name": "Les Paluds - St-Gingolph (Frontiere)",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -213,7 +213,8 @@
           "label": "Erfasste Brücken",
           "value": 20,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PI Rte de Monthéolo",
@@ -251,21 +252,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 28,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 27,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Halbschrankeanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Halbschrankeanlage"
+          }
         },
         {
           "label": "PN de la Gare / Vouvry",
@@ -391,5 +403,299 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PI Vers-chez-Delherse",
+        "km": 2.721,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI rte des Tardys",
+        "km": 4.411,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI du Pont Rouge",
+        "km": 4.467,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur la Vièze",
+        "km": 4.983,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Bans",
+        "km": 5.012,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur canal",
+        "km": 5.066,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Rte de Monthéolo",
+        "km": 6.394,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Collombey Muraz",
+        "km": 7.35,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Piet de Collombey",
+        "km": 7.89,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Gorres",
+        "km": 12.943,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "AQ de la Vellette",
+        "km": 16.076,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de Vouvry",
+        "km": 16.228,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt des Varzis",
+        "km": 16.592,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt sur le Fosseau",
+        "km": 16.687,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "Pt Sur le canal Stockalper",
+        "km": 18.59,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI de la Tuilerie",
+        "km": 18.822,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI du Fenalet",
+        "km": 25.544,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI Carrière Bussien",
+        "km": 26.021,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI des Vignoles",
+        "km": 26.444,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      },
+      {
+        "name": "PI du Cheney",
+        "km": 26.478,
+        "baueinheiten": 1,
+        "kanton": "Valais"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "PN Chambovey",
+        "km": 2.127,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Massongex",
+        "km": 3.192,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Av. Industrie",
+        "km": 5.721,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Av. de la Gare",
+        "km": 6.018,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": null
+      },
+      {
+        "name": "PN Av. du Crochetan",
+        "km": 6.823,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Collombey",
+        "km": 7.589,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Les Iles",
+        "km": 8.776,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Raffineries",
+        "km": 9.645,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Pre-Geroux",
+        "km": 10.197,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Illarsaz",
+        "km": 12.016,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de la Gare / Vouvry",
+        "km": 16.233,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "PN du Fosseau",
+        "km": 16.696,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Porte du Scex",
+        "km": 17.749,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN des Evouettes",
+        "km": 19.509,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte des Iles",
+        "km": 20.181,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Belles Truches",
+        "km": 21.317,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN La Lanche",
+        "km": 22.301,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN en gare",
+        "km": 22.833,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Debarcadere",
+        "km": 23.059,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "PN Rte St-Gingolph 1",
+        "km": 23.909,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte St-Gingolph 2",
+        "km": 24.275,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte St-Gingolph 3",
+        "km": 24.513,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte St-Gingolph 4",
+        "km": 24.678,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte St-Gingolph 5",
+        "km": 24.974,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte St-Gingolph 6",
+        "km": 25.13,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Fenalet",
+        "km": 25.395,
+        "sicherungsart": "Halbschrankeanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN Rte St-Gingolph 7",
+        "km": 25.904,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "PN de St-Gingolph",
+        "km": 26.746,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

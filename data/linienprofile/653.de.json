@@ -2,7 +2,7 @@
   "linie": 653,
   "name": "Gexi Ost - Rotkreuz - Immensee West",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -229,28 +229,44 @@
           "label": "Erfasste Brücken",
           "value": 61,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Aargau",
           "value": 52,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Aargau"
+          }
         },
         {
           "label": "Zug",
           "value": 7,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Zug"
+          }
         },
         {
           "label": "Schwyz",
           "value": 2,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[2].anzahl"
+          "factRef": "bruecken.nach_kanton[2].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Schwyz"
+          }
         },
         {
           "label": "WU und Du Scheckenbach",
@@ -346,21 +362,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 7,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 6,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Halbschrankeanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Halbschrankeanlage"
+          }
         },
         {
           "label": "BUe Hauptstrasse",
@@ -503,5 +530,419 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PU Hendschiken",
+        "km": 65.19,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Dottikon",
+        "km": 67.769,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Dottikon-Dintikon",
+        "km": 67.93,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Holzbach",
+        "km": 69.307,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Schachenstrasse",
+        "km": 69.69,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kiesentladetrichter",
+        "km": 69.945,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Nutzenbachstrasse",
+        "km": 70.64,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Villmergerstr. K127",
+        "km": 71.453,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU 1 Wohlen",
+        "km": 71.578,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Bhf Wohlen Nord",
+        "km": 71.666,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Bhf Wohlen",
+        "km": 71.812,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PDu Wohlen Süd",
+        "km": 72.204,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU im Boll",
+        "km": 72.287,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU im Boll",
+        "km": 72.508,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Waltenschwil",
+        "km": 74.343,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Wissenbächli",
+        "km": 74.658,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Sackmatt",
+        "km": 76.029,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Boswil-Bünzen",
+        "km": 77.742,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Weissenbach",
+        "km": 78.111,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Amtshauptstrasse",
+        "km": 78.253,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Kiesel",
+        "km": 78.772,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Wili",
+        "km": 80.572,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Katzbach",
+        "km": 81.296,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Bhf Muri",
+        "km": 81.472,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Eggstrasse",
+        "km": 81.7,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Zürcherstrasse",
+        "km": 81.847,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Mürlifeld",
+        "km": 82.131,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Bünzbach-Brücke",
+        "km": 82.314,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Grindelstrasse",
+        "km": 82.394,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Merenschwand",
+        "km": 84.207,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Weissenbach",
+        "km": 85.287,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Benzenschwil",
+        "km": 85.396,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Mühlau",
+        "km": 86.871,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Mühlau",
+        "km": 87.6,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 88.18,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Melklihof",
+        "km": 90.229,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Rieselistrasse",
+        "km": 90.564,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Radweg B 9319",
+        "km": 91.525,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Reussegg",
+        "km": 91.545,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Unterdorfstrasse",
+        "km": 92.246,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Sinserbach",
+        "km": 92.334,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Sins",
+        "km": 92.653,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Löwenhofweg",
+        "km": 92.843,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU K 126",
+        "km": 92.965,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU und Du Scheckenbach",
+        "km": 93.165,
+        "baueinheiten": 4,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Beuggerbrücke",
+        "km": 94.51,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Holzrüti",
+        "km": 95.082,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Schoren",
+        "km": 95.438,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU+Hochwasserentlastung",
+        "km": 95.782,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Binnenkanalbrücke",
+        "km": 96.164,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU bei der Reuss",
+        "km": 96.378,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Reussbrücke Oberrüti",
+        "km": 96.436,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Berchtwil",
+        "km": 97.43,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Rotkreuz 1",
+        "km": 98.132,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Rotkreuz 2",
+        "km": 98.416,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Du Mühlebach",
+        "km": 98.488,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "Überwerfung Rotkreuz",
+        "km": 100.627,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "WU Weidhof",
+        "km": 103.936,
+        "baueinheiten": 2,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU im Fänn",
+        "km": 104.45,
+        "baueinheiten": 1,
+        "kanton": "Zug"
+      },
+      {
+        "name": "SU Lehenmatt",
+        "km": 105.894,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "SU Sagi",
+        "km": 106.838,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Hauptstrasse",
+        "km": 65.365,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Ammerswilerstr.",
+        "km": 65.958,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Dintikerstrasse",
+        "km": 66.386,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Kirchweg",
+        "km": 67.077,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Hemmbrunnstrasse",
+        "km": 68.275,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Gaswerkstr.(BD)",
+        "km": 71.272,
+        "sicherungsart": "Halbschrankeanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Mitteldorf",
+        "km": 85.229,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      }
+    ]
+  }
 }

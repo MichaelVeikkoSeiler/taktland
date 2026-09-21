@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { linienProfilLaden } from '../daten'
 import { linienAntwortSpeichern, linienAntwortenLesen, linieZuruecksetzen } from '../fortschritt'
+import { listenAdresse } from '../listen'
 import type { LinienProfil } from '../typen'
 import { KapitelBlock, Quellen, Rahmen } from './Bahnhof'
 import { Luecken } from './Luecken'
@@ -70,7 +71,9 @@ export function Linie({ nr, zurueck }: { nr: number; zurueck: () => void }) {
 
       <div className="px-4">
         {profil.chapters.map((k) => (
-          <KapitelBlock key={k.id} kapitel={k} antworten={antworten} merken={merken} />
+          <KapitelBlock key={k.id} kapitel={k} antworten={antworten} merken={merken}
+                        verweis={(f) => (f.liste && profil.listen?.[f.liste]
+                          ? listenAdresse(nr, f.liste, f.filter) : undefined)} />
         ))}
         <Luecken luecken={profil.luecken} />
         <Quellen profil={profil} />

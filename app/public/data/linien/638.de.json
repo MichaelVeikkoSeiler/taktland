@@ -2,7 +2,7 @@
   "linie": 638,
   "name": "Balerna SM - Chiasso Smistamento",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -80,7 +80,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Galleria Balerna",
@@ -147,7 +148,8 @@
           "label": "Erfasste Brücken",
           "value": 3,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -216,5 +218,37 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Galleria Balerna",
+        "laenge_m": 616,
+        "inbetriebnahme_jahr": 1964,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 203.686,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Sot. rus. Raggio nord 1",
+        "km": 203.242,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. str.Sotto Bisio",
+        "km": 204.127,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      },
+      {
+        "name": "Sot. rus. Raggio sud",
+        "km": 204.471,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      }
+    ]
+  }
 }

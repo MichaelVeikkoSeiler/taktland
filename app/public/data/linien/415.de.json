@@ -2,7 +2,7 @@
   "linie": 415,
   "name": "Wanzwil (Abzw) - Solothurn - Busswil",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -176,7 +176,8 @@
           "label": "Erfasste Tunnel",
           "value": 2,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Wolfachertunnel Nord",
@@ -235,21 +236,32 @@
           "label": "Erfasste Brücken",
           "value": 23,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Solothurn",
           "value": 17,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Solothurn"
+          }
         },
         {
           "label": "Bern",
           "value": 6,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Bern"
+          }
         },
         {
           "label": "PU alte Bernstrasse",
@@ -309,28 +321,44 @@
           "label": "Erfasste Bahnübergänge",
           "value": 19,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 9,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«unbewacht»",
           "value": 8,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "unbewacht"
+          }
         },
         {
           "label": "«Halbschrankeanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Halbschrankeanlage"
+          }
         },
         {
           "label": "BUe Bahnhofstrasse",
@@ -454,5 +482,281 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Wolfachertunnel Nord",
+        "laenge_m": 577,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 68.966,
+        "bemerkung": null
+      },
+      {
+        "name": "Wolfachertunnel Süd",
+        "laenge_m": 418,
+        "inbetriebnahme_jahr": 2004,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 68.97,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Du Verenamöslibach",
+        "km": 74.02,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Sportplatzweg",
+        "km": 74.369,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Oeschbach",
+        "km": 74.412,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Maccaronibach",
+        "km": 74.714,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Industriegebiet",
+        "km": 76.192,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Luzernstrasse",
+        "km": 76.322,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "BDu kleine Oesch",
+        "km": 76.399,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Grüttbach",
+        "km": 76.614,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Spiegelbergstrasse",
+        "km": 76.65,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PDu Bodmattstrasse",
+        "km": 76.921,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU Bahnhofstrasse",
+        "km": 77.292,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Gewerbekanal",
+        "km": 77.55,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Emmenbrücke Derendingen",
+        "km": 77.611,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Kornfeldweg",
+        "km": 78.707,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "U Nord-Südstrasse",
+        "km": 78.974,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "PU alte Bernstrasse",
+        "km": 80.925,
+        "baueinheiten": 2,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "SU Hunnenweg",
+        "km": 81.383,
+        "baueinheiten": 1,
+        "kanton": "Solothurn"
+      },
+      {
+        "name": "Du Luchlibach",
+        "km": 86.685,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "Du Dorfbach",
+        "km": 92.603,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Solothurnstrasse",
+        "km": 94.154,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Bürenstrasse",
+        "km": 97.739,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "WU Entengässli",
+        "km": 98.883,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      },
+      {
+        "name": "U Worbenstrasse",
+        "km": 101.663,
+        "baueinheiten": 2,
+        "kanton": "Bern"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Kriegstettenstr.",
+        "km": 74.721,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Fabrikstrasse",
+        "km": 75.924,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Luterbacherstr.",
+        "km": 77.279,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe 829 Hoberg",
+        "km": 82.972,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe 830 Burenstrasse",
+        "km": 83.084,
+        "sicherungsart": "Halbschrankeanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe 837 Neumatt",
+        "km": 83.724,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bahnhofstrasse",
+        "km": 84.062,
+        "sicherungsart": "unbewacht",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Mosli",
+        "km": 91.171,
+        "sicherungsart": "unbewacht",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Erlenhof",
+        "km": 91.726,
+        "sicherungsart": "unbewacht",
+        "gleise": 2
+      },
+      {
+        "name": "BUe 926 Bahnhofstr.",
+        "km": 92.62,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Mosacher",
+        "km": 92.946,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Ischlag",
+        "km": 93.464,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Trappeten 2",
+        "km": 95.418,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUeTrappeten",
+        "km": 95.442,
+        "sicherungsart": "unbewacht",
+        "gleise": 1
+      },
+      {
+        "name": "BUe 960 Scheurenrain",
+        "km": 96.027,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe 968 Sandreisi",
+        "km": 96.887,
+        "sicherungsart": "Halbschrankeanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe 991 Bahnhofstr.",
+        "km": 99.173,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe 1001 Bielstrasse",
+        "km": 100.11,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe 101 Bielstrasse",
+        "km": 101.154,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

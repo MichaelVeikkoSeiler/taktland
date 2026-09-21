@@ -2,7 +2,7 @@
   "linie": 640,
   "name": "Brugg - Rupperswil",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -189,7 +189,8 @@
           "label": "Erfasste Brücken",
           "value": 10,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "SU Bünz Wildegg",
@@ -227,14 +228,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 3,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 3,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "BUe Unterwerkstrasse",
@@ -363,5 +370,89 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "Du Süssbach",
+        "km": 31.541,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstrasse",
+        "km": 33.35,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Bru KDu Schinznach Bad",
+        "km": 34.685,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PDu Widacker",
+        "km": 37.986,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Holderbank",
+        "km": 39.415,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "KDu Mühlematt",
+        "km": 39.976,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Bünz Wildegg",
+        "km": 40.17,
+        "baueinheiten": 5,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Hard",
+        "km": 41.184,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstrasse",
+        "km": 41.996,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Braechli",
+        "km": 42.759,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Unterwerkstrasse",
+        "km": 32.022,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 3
+      },
+      {
+        "name": "BUe Hunziker 1",
+        "km": 32.297,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Scheueracker",
+        "km": 36.083,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

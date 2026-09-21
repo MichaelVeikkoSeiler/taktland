@@ -2,7 +2,7 @@
   "linie": 647,
   "name": "Brugg - Hendschiken Nord",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -167,7 +167,8 @@
           "label": "Erfasste Brücken",
           "value": 8,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PU Brugg",
@@ -312,5 +313,57 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PU Brugg",
+        "km": 0.044,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Scherzbach",
+        "km": 3.431,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Lupfig Süd",
+        "km": 4.256,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Birrfeld",
+        "km": 4.305,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Brunegg",
+        "km": 7.121,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U OV-Strasse 100",
+        "km": 9.007,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Bünz",
+        "km": 9.153,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Erlimoos",
+        "km": 10.279,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      }
+    ]
+  }
 }

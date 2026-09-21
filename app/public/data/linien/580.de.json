@@ -2,7 +2,7 @@
   "linie": 580,
   "name": "CBT Est",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "brucken",
     "linie",
@@ -95,7 +95,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Galleria di base del Ceneri",
@@ -162,7 +163,8 @@
           "label": "Erfasste Brücken",
           "value": 1,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -231,5 +233,25 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Galleria di base del Ceneri",
+        "laenge_m": 15196,
+        "inbetriebnahme_jahr": 2020,
+        "tunnelsystem": "2-Röhren / 2 x 1-Spur",
+        "km": 228.14,
+        "bemerkung": "CBT Ovest, da länger als CBT Est (ohne Sarè, da Saré eine Abzweigung ist und den Tunnel nicht verlängert)"
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Sot. Ai Lischée",
+        "km": 227.366,
+        "baueinheiten": 1,
+        "kanton": "Ticino"
+      }
+    ]
+  }
 }

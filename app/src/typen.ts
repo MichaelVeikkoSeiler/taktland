@@ -15,6 +15,34 @@ export interface Fakt {
   factRef: string
   /** Linienseite: der Bahnhof zu dieser Zeile, die App verlinkt ihn */
   uic?: number
+  /** Linienseite: Die Kachel führt zur ganzen Liste, auf Wunsch gefiltert */
+  liste?: ListenArt
+  filter?: { feld: string; wert: string | null }
+}
+
+export type ListenArt = 'tunnel' | 'bruecken' | 'bahnuebergaenge'
+
+export interface TunnelEintrag {
+  name: string
+  laenge_m: number | null
+  inbetriebnahme_jahr: number | null
+  tunnelsystem: string | null
+  km: number | null
+  bemerkung: string | null
+}
+
+export interface BrueckenEintrag {
+  name: string
+  km: number | null
+  baueinheiten: number | null
+  kanton: string | null
+}
+
+export interface UebergangEintrag {
+  name: string | null
+  km: number | null
+  sicherungsart: string | null
+  gleise: number | null
 }
 
 export interface SortItem {
@@ -101,6 +129,12 @@ export interface LinienProfil {
   sources: string[]
   chapters: Kapitel[]
   luecken: Luecke[]
+  /** alle Objekte der Linie, unverändert aus den Fakten */
+  listen?: {
+    tunnel?: TunnelEintrag[]
+    bruecken?: BrueckenEintrag[]
+    bahnuebergaenge?: UebergangEintrag[]
+  }
 }
 
 export interface LinienEintrag {

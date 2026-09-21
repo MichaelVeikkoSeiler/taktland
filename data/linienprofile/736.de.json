@@ -2,7 +2,7 @@
   "linie": 736,
   "name": "Ziegelbrucke Ost - Linthal Gleisende",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -262,7 +262,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Erlenrunstunnel",
@@ -329,21 +330,32 @@
           "label": "Erfasste Brücken",
           "value": 38,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Glarus",
           "value": 37,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Glarus"
+          }
         },
         {
           "label": "St. Gallen",
           "value": 1,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "St. Gallen"
+          }
         },
         {
           "label": "Linthbr Schwanden",
@@ -424,28 +436,44 @@
           "label": "Erfasste Bahnübergänge",
           "value": 34,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 32,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Bedarfsschrankenanl"
+          }
         },
         {
           "label": "«Blinklichtanlage»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Blinklichtanlage"
+          }
         },
         {
           "label": "BUe Molliserstrasse (km 65.455)",
@@ -576,5 +604,453 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Erlenrunstunnel",
+        "laenge_m": 45,
+        "inbetriebnahme_jahr": 1879,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 82.094,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Obere Linthbrücke",
+        "km": 57.866,
+        "baueinheiten": 1,
+        "kanton": "St. Gallen"
+      },
+      {
+        "name": "BDu bei Linthbrücke",
+        "km": 57.94,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Du Erlen-Kanal",
+        "km": 64.044,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Du Fabrik-K",
+        "km": 64.97,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Löntsch-Br",
+        "km": 65.92,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Du Glarnergiessen",
+        "km": 67.552,
+        "baueinheiten": 2,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "PU Glarus",
+        "km": 68.584,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "PDu Wuhrweg",
+        "km": 69.036,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Linthbr Ennenda",
+        "km": 69.081,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "KDu Fabrikkanal Ennenda",
+        "km": 69.981,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Du Geissbach",
+        "km": 70.217,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Linthbr Mühlefuhr",
+        "km": 70.712,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "BDu beim Hinterhof",
+        "km": 71.078,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Br über Hanslirus",
+        "km": 71.129,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "BDu bei Guppenrus",
+        "km": 72.881,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Guppenrus-Brücke",
+        "km": 72.919,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "WU Stäg",
+        "km": 72.961,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Linthbrücke Däniberg",
+        "km": 73.319,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "PU Schwanden",
+        "km": 73.807,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Linthbr Schwanden",
+        "km": 73.949,
+        "baueinheiten": 5,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Leuggelbach-Brücke",
+        "km": 76.787,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "WU & BDu Leuggelbach",
+        "km": 77.533,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "WU Stadel",
+        "km": 78.56,
+        "baueinheiten": 2,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Du Luchsingerbach",
+        "km": 78.663,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Linthbr Diesbach",
+        "km": 79.928,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Br über Fabrik-Kanal",
+        "km": 80.012,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "WU 1 im Tschachen",
+        "km": 80.314,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "WU 2 im Tschachen",
+        "km": 80.468,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "SU Dornhaus",
+        "km": 80.617,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "WU Allmeind",
+        "km": 80.817,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Diesbach-Br",
+        "km": 80.888,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "WU untere Allmeind",
+        "km": 81.094,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Linthbr bei Rüti",
+        "km": 82.951,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "U Badrunsweg",
+        "km": 83.152,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Br über die Badruns",
+        "km": 83.186,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "BDu Bodenrus",
+        "km": 83.403,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Br über Kieligenrus",
+        "km": 83.728,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      },
+      {
+        "name": "Du Brummbach",
+        "km": 84.197,
+        "baueinheiten": 1,
+        "kanton": "Glarus"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Staatstrasse",
+        "km": 57.668,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Im Amerika",
+        "km": 58.682,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Unt. Tschachen",
+        "km": 59.906,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schwarzistrasse",
+        "km": 61.206,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Linthbrucke",
+        "km": 61.315,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Molliserstrasse",
+        "km": 61.815,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Tschachen",
+        "km": 63.562,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Querspange",
+        "km": 64.835,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Molliserstrasse",
+        "km": 65.455,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 4
+      },
+      {
+        "name": "BUe Rollengut",
+        "km": 66.159,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Ygrubenstrasse",
+        "km": 67.572,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Gaswerkstrasse",
+        "km": 68.107,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Ennetbuhlerstr",
+        "km": 68.355,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Kirchweg",
+        "km": 69.153,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Holenstein",
+        "km": 69.721,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Bleiche",
+        "km": 70.116,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Muhlefuhr",
+        "km": 70.529,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hofli",
+        "km": 71.543,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Fuhr",
+        "km": 72.15,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Ennetlinth",
+        "km": 72.401,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Kreuzgasse",
+        "km": 74.178,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Schonengrund",
+        "km": 74.409,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Wyden",
+        "km": 74.991,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Station",
+        "km": 75.758,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Im Fang",
+        "km": 76.753,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Haltestelle",
+        "km": 77.372,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Allmeind",
+        "km": 77.917,
+        "sicherungsart": "Blinklichtanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Tschachtli",
+        "km": 78.297,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Adlenbach",
+        "km": 79.119,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hellruns",
+        "km": 79.482,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Linthbrucke",
+        "km": 79.862,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hauptstrasse",
+        "km": 81.422,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hauptstrasse",
+        "km": 82.78,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Braunwaldstrasse",
+        "km": 84.224,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }

@@ -2,7 +2,7 @@
   "linie": 650,
   "name": "Killwangen West - Lenzburg - Daniken Ost",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -198,7 +198,8 @@
           "label": "Erfasste Tunnel",
           "value": 3,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Heitersbergtunnel",
@@ -290,7 +291,8 @@
           "label": "Erfasste Brücken",
           "value": 42,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "SU K469 Objekt 195",
@@ -364,14 +366,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 2,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«VRA»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "VRA"
+          }
         },
         {
           "label": "BUe Aarau GB 2",
@@ -488,5 +496,301 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Heitersbergtunnel",
+        "laenge_m": 4930,
+        "inbetriebnahme_jahr": 1972,
+        "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
+        "km": 19.554,
+        "bemerkung": "Inkl: Heitersberg2 (DfA 698) und Heitersberg3 (DfA 650)"
+      },
+      {
+        "name": "Aarauer Stadttunnel II Süd",
+        "laenge_m": 615,
+        "inbetriebnahme_jahr": 1993,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 42.018,
+        "bemerkung": null
+      },
+      {
+        "name": "Tunnel Eppenberg",
+        "laenge_m": 3113,
+        "inbetriebnahme_jahr": 2020,
+        "tunnelsystem": "1-Röhre / 2-Spuren",
+        "km": 45.767,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PU Hst. Mellingen",
+        "km": 22.274,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Vi Fislisbach",
+        "km": 22.556,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Reussbr. Mellingen",
+        "km": 23.349,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Landstrasse OIC",
+        "km": 23.996,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Hünerwadel",
+        "km": 24.482,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Wiege",
+        "km": 25.079,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Mägenwil",
+        "km": 25.93,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Cholacher",
+        "km": 26.09,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Lindfeld",
+        "km": 26.437,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Büntli",
+        "km": 26.638,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Othmarsingen",
+        "km": 27.702,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Überwerfung Erlimoos",
+        "km": 29.251,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Ueberwerfung Gexi",
+        "km": 29.728,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Niederlenzerstrasse",
+        "km": 31.14,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Lenzburg",
+        "km": 31.26,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Aabach",
+        "km": 31.456,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU HERO",
+        "km": 31.79,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Lenzburg",
+        "km": 31.932,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Ringstrasse",
+        "km": 32.342,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Rupperswilerweg",
+        "km": 32.876,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU K112 Obj. 4 T5",
+        "km": 34.356,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU Stockhard",
+        "km": 34.739,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Schweizi",
+        "km": 35.007,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Überwerf. Bannhalde",
+        "km": 35.148,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Rupperswil",
+        "km": 35.626,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Kätherli",
+        "km": 36.181,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Surhard I",
+        "km": 36.459,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Surhard II",
+        "km": 37.287,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Surhard 3",
+        "km": 38.067,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU K469 Objekt 195",
+        "km": 39.055,
+        "baueinheiten": 4,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Pilatusstrasse",
+        "km": 39.45,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Obermatt",
+        "km": 39.55,
+        "baueinheiten": 3,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Suhrebrücke",
+        "km": 39.703,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PDu im Grien",
+        "km": 39.783,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Neubuchsstrasse",
+        "km": 39.929,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Gais",
+        "km": 41.143,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Gais",
+        "km": 41.157,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Gepäcktunnel",
+        "km": 41.398,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Aarau Ost",
+        "km": 41.448,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Aarau West",
+        "km": 41.553,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Dammweg",
+        "km": 42.463,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Wöschnauring",
+        "km": 42.984,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Aarau GB 1",
+        "km": 40.295,
+        "sicherungsart": "VRA",
+        "gleise": 2
+      },
+      {
+        "name": "BUe Aarau GB 2",
+        "km": 40.3,
+        "sicherungsart": "VRA",
+        "gleise": 3
+      }
+    ]
+  }
 }

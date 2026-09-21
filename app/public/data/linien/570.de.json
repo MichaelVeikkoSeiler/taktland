@@ -2,7 +2,7 @@
   "linie": 570,
   "name": "Gutsch - Kussnacht - Immensee",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -190,7 +190,8 @@
           "label": "Erfasste Tunnel",
           "value": 6,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Luzerner Stadttunnel",
@@ -308,21 +309,32 @@
           "label": "Erfasste Brücken",
           "value": 30,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "Luzern",
           "value": 17,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[0].anzahl"
+          "factRef": "bruecken.nach_kanton[0].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Luzern"
+          }
         },
         {
           "label": "Schwyz",
           "value": 13,
           "unit": "Brücken",
           "source": "brucken",
-          "factRef": "bruecken.nach_kanton[1].anzahl"
+          "factRef": "bruecken.nach_kanton[1].anzahl",
+          "liste": "bruecken",
+          "filter": {
+            "feld": "kanton",
+            "wert": "Schwyz"
+          }
         },
         {
           "label": "Reussbrücke Geissmatt",
@@ -395,21 +407,32 @@
           "label": "Erfasste Bahnübergänge",
           "value": 3,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 1,
           "unit": "Bahnübergang",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Bedarfsschrankenanl"
+          }
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -499,5 +522,259 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Luzerner Stadttunnel",
+        "laenge_m": 2092,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 4.354,
+        "bemerkung": null
+      },
+      {
+        "name": "Schiltenneunetunnel",
+        "laenge_m": 166,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 6.544,
+        "bemerkung": null
+      },
+      {
+        "name": "Seeburgtunnel",
+        "laenge_m": 113,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 7.043,
+        "bemerkung": null
+      },
+      {
+        "name": "Lerchenbühltunnel",
+        "laenge_m": 560,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 8.698,
+        "bemerkung": null
+      },
+      {
+        "name": "Lettentunnel LU",
+        "laenge_m": 37,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 11.956,
+        "bemerkung": null
+      },
+      {
+        "name": "Schwarzenbachtunnel",
+        "laenge_m": 124,
+        "inbetriebnahme_jahr": 1897,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 18.041,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "Reussbrücke Geissmatt",
+        "km": 2.517,
+        "baueinheiten": 4,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "SU Halde",
+        "km": 6.059,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "WU+Du Würzenbach",
+        "km": 6.337,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "Du Ober-Seeburg",
+        "km": 6.721,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "Du Seeburg",
+        "km": 6.89,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "Du Salzfass",
+        "km": 7.151,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "SU Hermitage",
+        "km": 7.699,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "PU Hermitage",
+        "km": 7.709,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "SU Stampfibach",
+        "km": 9.36,
+        "baueinheiten": 2,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "U Habsburgerstrasse",
+        "km": 9.623,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "PU Benzeholzstrasse",
+        "km": 9.94,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "Vi Mühletobel",
+        "km": 10.074,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "U Eiholzweg",
+        "km": 10.177,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "Du Rainhof",
+        "km": 11.101,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "WU Herrenfahrstrasse",
+        "km": 11.531,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "WDu Gottlieben",
+        "km": 11.588,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "WDu Grosshusmatt",
+        "km": 11.692,
+        "baueinheiten": 1,
+        "kanton": "Luzern"
+      },
+      {
+        "name": "WU nach Bärgiswil",
+        "km": 12.451,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "Vi Eichbach",
+        "km": 12.645,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Rebmatt",
+        "km": 13.066,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "U Bahnhofstrasse",
+        "km": 13.497,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Grossmatt",
+        "km": 13.9,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Bischofswil",
+        "km": 14.808,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Rainhof",
+        "km": 15.124,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Langweid",
+        "km": 15.389,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Winkel",
+        "km": 15.855,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "PU Küssnacht am Rigi",
+        "km": 16.143,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "U Haltikonerstrasse",
+        "km": 16.358,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "U Talstrasse",
+        "km": 16.735,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      },
+      {
+        "name": "WU Bürgenstock",
+        "km": 17.328,
+        "baueinheiten": 1,
+        "kanton": "Schwyz"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Kreuzbuchstrasse",
+        "km": 5.142,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Huobstrasse",
+        "km": 10.445,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Raben",
+        "km": 12.818,
+        "sicherungsart": "Bedarfsschrankenanl",
+        "gleise": 1
+      }
+    ]
+  }
 }

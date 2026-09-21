@@ -2,7 +2,7 @@
   "linie": 702,
   "name": "Turgi - Koblenz - Waldshut",
   "lang": "de",
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -190,7 +190,8 @@
           "label": "Erfasste Tunnel",
           "value": 1,
           "source": "tunnel",
-          "factRef": "tunnel.anzahl_erfasst"
+          "factRef": "tunnel.anzahl_erfasst",
+          "liste": "tunnel"
         },
         {
           "label": "Koblenztunnel",
@@ -257,7 +258,8 @@
           "label": "Erfasste Brücken",
           "value": 24,
           "source": "brucken",
-          "factRef": "bruecken.anzahl_erfasst"
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
         },
         {
           "label": "PU Turgi",
@@ -316,14 +318,20 @@
           "label": "Erfasste Bahnübergänge",
           "value": 5,
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.anzahl_erfasst"
+          "factRef": "bahnuebergaenge.anzahl_erfasst",
+          "liste": "bahnuebergaenge"
         },
         {
           "label": "«Schrankenanlage»",
           "value": 5,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl"
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
+          "liste": "bahnuebergaenge",
+          "filter": {
+            "feld": "sicherungsart",
+            "wert": "Schrankenanlage"
+          }
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -412,5 +420,195 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "tunnel": [
+      {
+        "name": "Koblenztunnel",
+        "laenge_m": 181,
+        "inbetriebnahme_jahr": 1854,
+        "tunnelsystem": "1-Röhre / 1-Spur",
+        "km": 42.191,
+        "bemerkung": null
+      }
+    ],
+    "bruecken": [
+      {
+        "name": "PU Turgi",
+        "km": 27.476,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Vogelsangstrasse",
+        "km": 27.734,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Limmatuferweg",
+        "km": 27.873,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Limmatbrücke Turgi",
+        "km": 27.926,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "WU in der Au",
+        "km": 28.208,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU vorder Rost",
+        "km": 29.166,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K112",
+        "km": 30.516,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "BDu Lüömbach",
+        "km": 33.414,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Beznaustrasse",
+        "km": 35.073,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PDu Risi",
+        "km": 36.281,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "BDu Surb",
+        "km": 36.51,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Du Mülibach",
+        "km": 36.584,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Kantonsstr. K113",
+        "km": 36.662,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Bahnhof Döttingen",
+        "km": 37.388,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Nägeliweg",
+        "km": 37.686,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PU Achenbergstrasse",
+        "km": 37.776,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PDu Sionerweg",
+        "km": 38.242,
+        "baueinheiten": 2,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "SU Nordzufahrt K113",
+        "km": 38.521,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "U Landstrasse Q",
+        "km": 40.734,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "PDu Steingraben",
+        "km": 41.476,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "BDu Steingraben",
+        "km": 41.626,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Bahnunterf. Lin 303",
+        "km": 42.442,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Vi zur Rheinbrücke",
+        "km": 42.604,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      },
+      {
+        "name": "Rheinbr. bei Koblenz",
+        "km": 42.69,
+        "baueinheiten": 1,
+        "kanton": "Aargau"
+      }
+    ],
+    "bahnuebergaenge": [
+      {
+        "name": "BUe Chamihutte",
+        "km": 29.329,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Rooststrasse",
+        "km": 29.987,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Hengelweg",
+        "km": 32.732,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Con-Zschokkestr.",
+        "km": 37.105,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      },
+      {
+        "name": "BUe Gutsch",
+        "km": 39.589,
+        "sicherungsart": "Schrankenanlage",
+        "gleise": 1
+      }
+    ]
+  }
 }
