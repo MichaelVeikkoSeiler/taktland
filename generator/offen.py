@@ -14,10 +14,10 @@ ROOT = Path(__file__).resolve().parent.parent
 FACTS = ROOT / "data" / "facts"
 PROFILES = ROOT / "data" / "profiles"
 
-#: Zurückgestellt. Vaumarcus kommt auf Michaels Wunsch vom 2026-09-21 als
-#: letzter Bahnhof dran, wenn er es sagt. Jestetten und Lottstetten waren hier,
-#: bis ihr Betriebspunkt-Kürzel aus der Passagierfrequenz kam.
-ZURUECKGESTELLT = {"8504204"}
+#: Zurückgestellt, falls ein Bahnhof bewusst warten soll. Zuletzt Vaumarcus
+#: (auf Michaels Wunsch als 771. Bahnhof) und Jestetten und Lottstetten
+#: (bis ihr Betriebspunkt-Kürzel aus der Passagierfrequenz kam).
+ZURUECKGESTELLT: set[str] = set()
 
 
 def offene(n=10):

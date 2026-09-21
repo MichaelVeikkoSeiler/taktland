@@ -4410,6 +4410,16 @@
    ]
   }
  },
+ "8504204": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Concise",
+    "Cheyres-Châbles",
+    "Estavayer"
+   ]
+  }
+ },
  "8504205": {
   "stammdaten": {
    "frage": "gemeinde",
