@@ -494,7 +494,8 @@ Erhebung bis zu 119 Züge im Jahr auf einem Abschnitt». Der Validator meldet
 vermerkt, 1 ausdrücklich als nicht niveaufrei» (Beinwil am See) und «auf
 diesen Abschnitten» bei einem Abschnitt (Niederweningen) sind jetzt Einzahl.
 Fehlt beim einzigen Perron die Zugangsangabe ganz, entfällt die Frage «ist
-niveaufrei erreichbar»: «falsch» wäre dort eine erfundene Tatsache.
+niveaufrei erreichbar»: «falsch» wäre dort eine erfundene Tatsache. Auch die
+Belagsfrage spricht dann vom «erfassten Perron», nicht von «den Perrons» (Knonau).
 
 **«Niveaufrei» heisst nicht «kein Gleis queren».** Cortébert und Pfäffikon SZ
 schrieben «niveaufrei erreichbar, man muss also kein Gleis überqueren», und

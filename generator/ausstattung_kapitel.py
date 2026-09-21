@@ -144,10 +144,14 @@ def frage_belag(a):
     optionen.sort()
     return {
         "type": "single_choice",
-        "prompt": "Welcher Belag ist für die Perrons erfasst?",
+        # Knonau: ein Perron mit Belag, die Frage sprach von «den Perrons»
+        "prompt": ("Welcher Belag ist für das erfasste Perron verzeichnet?"
+                   if pb["anzahl_perrons_mit_daten"] == 1 else "Welcher Belag ist für die Perrons erfasst?"),
         "options": optionen,
         "correct": optionen.index(richtig),
-        "explanation": f"Für alle Perrons mit Daten ist {richtig} erfasst.",
+        "explanation": (f"Für das Perron mit Daten ist {richtig} erfasst."
+                        if pb["anzahl_perrons_mit_daten"] == 1 else
+                        f"Für alle Perrons mit Daten ist {richtig} erfasst."),
         "factRef": "ausstattung.perronbelag.belagsarten",
         "optionen_aus_fakten": True,
         "difficulty": 2,

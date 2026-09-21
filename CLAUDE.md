@@ -84,6 +84,7 @@ data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand ge�
 python pipeline/fetch.py                    # Datasets laden
 .venv/bin/python pipeline/build_facts.py --all   # Fakten für alle Bahnhöfe
 .venv/bin/python generator/validate.py --alle    # Profile prüfen
+.venv/bin/python generator/bauplan.py 8502226 8506300  # neue Bahnhöfe in den Bauplan
 .venv/bin/python generator/bauen.py 8502218 --zeigen   # Profil bauen und lesen
 .venv/bin/python generator/bauen.py --alle --pruefen   # was würde ein Neubau ändern?
 .venv/bin/python generator/bauen.py --alle             # alle Profile neu bauen
@@ -97,8 +98,9 @@ und wird nie von Hand geändert. Wer etwas ändern will, ändert den Baukasten,
 die Pipeline oder den Bauplan und baut neu. So wirkt jede neue Regel mit einem
 Befehl auf alle Bahnhöfe.
 
-Neue Profile entstehen in Schüben von 20, gelesen in Gruppen von fünf: Eintrag
-in den Bauplan, mit `bauen.py … --zeigen` lesen, dann bauen. Was dabei
+Neue Profile entstehen in Schüben von 20, gelesen in Gruppen von fünf: mit
+`bauplan.py` in den Bauplan eintragen (der Vorschlag für die Stammdaten-Frage
+wird beim Lesen geprüft), mit `bauen.py … --zeigen` lesen, dann bauen. Was dabei
 auffällt, wird zur Regel im Baukasten, zur Prüfregel oder zum Abschnitt in
 `generator/SCHEMA.md`, danach wird alles neu gebaut.
 

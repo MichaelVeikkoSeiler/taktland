@@ -141,6 +141,16 @@
    ]
   }
  },
+ "8500122": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Courtételle",
+    "Clos du Doubs",
+    "Delémont"
+   ]
+  }
+ },
  "8500126": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -202,6 +212,26 @@
    "distraktoren": [
     "Thal",
     "Thierstein",
+    "Wasseramt"
+   ]
+  }
+ },
+ "8500214": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Olten",
+    "Gösgen",
+    "Wasseramt"
+   ]
+  }
+ },
+ "8500215": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gäu",
+    "Gösgen",
     "Wasseramt"
    ]
   }
@@ -733,6 +763,26 @@
    ]
   }
  },
+ "8502012": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Luzern-Stadt",
+    "Luzern-Land",
+    "Sursee"
+   ]
+  }
+ },
+ "8502020": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Luzern-Stadt",
+    "Sursee",
+    "Luzern-Land"
+   ]
+  }
+ },
  "8502021": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -1007,6 +1057,16 @@
    ]
   }
  },
+ "8502226": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Horgen",
+    "Meilen",
+    "Zürich"
+   ]
+  }
+ },
  "8502229": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1220,6 +1280,16 @@
    ]
   }
  },
+ "8503111": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Meilen",
+    "Oberrieden",
+    "Thalwil"
+   ]
+  }
+ },
  "8503116": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1322,6 +1392,16 @@
    "distraktoren": [
     "HIN",
     "HW"
+   ]
+  }
+ },
+ "8503138": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Meilen",
+    "Pfäffikon",
+    "Uster"
    ]
   }
  },
@@ -1557,6 +1637,16 @@
    ]
   }
  },
+ "8503309": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Dielsdorf",
+    "Zürich",
+    "Uster"
+   ]
+  }
+ },
  "8503310": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -1619,6 +1709,16 @@
    "distraktoren": [
     "SMR",
     "STM"
+   ]
+  }
+ },
+ "8503317": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bülach",
+    "Dietikon",
+    "Zürich"
    ]
   }
  },
@@ -1975,6 +2075,15 @@
    ]
   }
  },
+ "8504215": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NOI",
+    "CDM"
+   ]
+  }
+ },
  "8504221": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2308,6 +2417,16 @@
    ]
   }
  },
+ "8505415": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lugano",
+    "Locarno",
+    "Riviera"
+   ]
+  }
+ },
  "8506000": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2394,12 +2513,31 @@
    ]
   }
  },
+ "8506018": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Andelfingen",
+    "Pfäffikon",
+    "Bülach"
+   ]
+  }
+ },
  "8506020": {
   "stammdaten": {
    "frage": "abkuerzung",
    "distraktoren": [
     "SE",
     "SZH"
+   ]
+  }
+ },
+ "8506038": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OWT",
+    "WD"
    ]
   }
  },
@@ -2551,6 +2689,25 @@
     "Rorschach",
     "Toggenburg",
     "Wil"
+   ]
+  }
+ },
+ "8506217": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Arbon",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8506300": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SGBR",
+    "GSS"
    ]
   }
  },
@@ -2730,6 +2887,16 @@
    ]
   }
  },
+ "8508003": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Seeland",
+    "Oberaargau"
+   ]
+  }
+ },
  "8508005": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2844,6 +3011,15 @@
    ]
   }
  },
+ "8509003": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BRAG",
+    "LQ"
+   ]
+  }
+ },
  "8509004": {
   "stammdaten": {
    "frage": "bezirk",
@@ -2881,6 +3057,15 @@
    ]
   }
  },
+ "8515992": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BAAL",
+    "BAA"
+   ]
+  }
+ },
  "8515993": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -2895,6 +3080,15 @@
    "frage": "abkuerzung",
    "distraktoren": [
     "CHA",
+    "CHAM"
+   ]
+  }
+ },
+ "8515996": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HUCH",
     "CHAM"
    ]
   }

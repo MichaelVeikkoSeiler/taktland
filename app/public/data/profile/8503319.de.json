@@ -491,9 +491,9 @@
           "difficulty": 1
         },
         {
-          "id": "ausstattung:92d1d5cd",
+          "id": "ausstattung:f5b7373c",
           "type": "single_choice",
-          "prompt": "Welcher Belag ist für die Perrons erfasst?",
+          "prompt": "Welcher Belag ist für das erfasste Perron verzeichnet?",
           "options": [
             "Beton-Belag",
             "Bituminöses Mischgut",
@@ -501,7 +501,7 @@
             "Verbundstein-Pflästerung"
           ],
           "correct": 1,
-          "explanation": "Für alle Perrons mit Daten ist Bituminöses Mischgut erfasst.",
+          "explanation": "Für das Perron mit Daten ist Bituminöses Mischgut erfasst.",
           "factRef": "ausstattung.perronbelag.belagsarten",
           "optionen_aus_fakten": true,
           "difficulty": 2
