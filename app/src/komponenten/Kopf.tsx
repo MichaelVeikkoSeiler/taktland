@@ -47,7 +47,7 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
   },
   linien: {
     hell: linienHell, dunkel: linienDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration: Ein Gleis mit Fahrleitung, dahinter eine Stadt, eine Brücke über einen Fluss und Berge.',
+    alt: 'Illustration: Zwei Gleise mit Fahrleitung auf einem Damm, dahinter Bäume, eine Stadt, eine Brücke über einen Fluss und Berge.',
   },
   tunnel: {
     hell: tunnelHell, dunkel: tunnelDunkel, breite: 1344, hoehe: 664,
