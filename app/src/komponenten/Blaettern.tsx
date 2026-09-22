@@ -84,7 +84,8 @@ export function Blaettern({ seite, seiten, bereiche, blaettern, name }: {
         type="button" className={pfeil} disabled={seite === 0}
         onClick={() => blaettern(seite - 1)} aria-label="Vorherige Seite"
       >
-        ←
+        {/* auf der ersten Seite ohne Rot und ohne Bewegung: dort führt er nirgends hin */}
+        <span className={seite === 0 ? undefined : 'pfeil pfeil-links'} aria-hidden="true">←</span>
       </button>
       <div className="relative flex min-w-0 flex-1 flex-col items-center justify-center border
                       border-sbb-cloud bg-white px-2 py-1 focus-within:border-sbb-black
@@ -113,7 +114,7 @@ export function Blaettern({ seite, seiten, bereiche, blaettern, name }: {
         type="button" className={pfeil} disabled={seite === seiten - 1}
         onClick={() => blaettern(seite + 1)} aria-label="Nächste Seite"
       >
-        →
+        <span className={seite === seiten - 1 ? undefined : 'pfeil'} aria-hidden="true">→</span>
       </button>
     </nav>
   )

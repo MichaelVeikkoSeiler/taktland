@@ -67,7 +67,7 @@ body {
 .pfeil {
   display: inline-block;
   color: var(--color-sbb-red);
-  animation: pfeil-rechts 2.6s ease-in-out infinite;
+  animation: pfeil-rechts 1.8s ease-in-out infinite;
 }
 .pfeil-links { animation-name: pfeil-links; }
 .pfeil-unten { animation-name: pfeil-unten; }
