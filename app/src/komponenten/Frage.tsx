@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { Frage as FrageTyp, Gleis, MatchPaar, SortItem } from '../typen'
 import { Gleisschema } from './Gleisschema'
 
@@ -236,12 +236,38 @@ function Sortieren({ items, gezeigt, abschliessen }: {
     return gleich && items.length > 1 ? [...gemischt].reverse() : gemischt
   })
 
+  // Für die Bewegung: wo die Kästen vor dem Tausch standen. Danach setzt
+  // useLayoutEffect sie dorthin zurück und lässt sie an ihren neuen Platz
+  // gleiten (Michael, 2026-09-22). Bei «Bewegung reduzieren» springen sie.
+  const kaesten = useRef(new Map<string, HTMLLIElement>())
+  const vorher = useRef(new Map<string, number>())
+
   function schieben(von: number, nach: number) {
     if (nach < 0 || nach >= reihe.length || gezeigt) return
+    vorher.current = new Map([...kaesten.current]
+      .map(([k, el]) => [k, el.getBoundingClientRect().top]))
     const neu = [...reihe]
     ;[neu[von], neu[nach]] = [neu[nach], neu[von]]
     setReihe(neu)
   }
+
+  useLayoutEffect(() => {
+    const alte = vorher.current
+    vorher.current = new Map()
+    if (!alte.size || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    for (const [schluessel, el] of kaesten.current) {
+      const alt = alte.get(schluessel)
+      if (alt === undefined) continue
+      const weg = alt - el.getBoundingClientRect().top
+      if (!weg) continue
+      el.style.transition = 'none'
+      el.style.transform = `translateY(${weg}px)`
+      requestAnimationFrame(() => {
+        el.style.transition = 'transform 220ms ease-out'
+        el.style.transform = ''
+      })
+    }
+  }, [reihe])
 
   return (
     <>
@@ -254,6 +280,10 @@ function Sortieren({ items, gezeigt, abschliessen }: {
           return (
             <li
               key={it.label}
+              ref={(el) => {
+                if (el) kaesten.current.set(it.label, el)
+                else kaesten.current.delete(it.label)
+              }}
               className={`flex items-center justify-between gap-2 border px-3 py-2.5 ${
                 !gezeigt
                   ? 'border-sbb-cloud bg-sbb-white dark:border-sbb-iron dark:bg-sbb-midnight'
