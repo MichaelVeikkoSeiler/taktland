@@ -322,10 +322,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
 
 function zustand(meldung: Meldung | null, stand: Stand | null, ohneGps: boolean, imTunnel: boolean,
                  probefahrt: boolean) {
-  if (meldung?.art === 'verweigert') {
-    return 'Der Standort ist nicht freigegeben. Ohne ihn geht der Fahrtmodus nicht; die Freigabe '
-      + 'lässt sich in den Einstellungen des Browsers erteilen.'
-  }
+  if (meldung?.art === 'verweigert') return freigabeHilfe()
   if (meldung?.art === 'fehler') return meldung.text
   if (!stand) return probefahrt ? 'Probefahrt beginnt …' : 'Standort wird gesucht …'
   if (stand.abseits !== null) {
@@ -334,6 +331,33 @@ function zustand(meldung: Meldung | null, stand: Stand | null, ohneGps: boolean,
   }
   if (ohneGps) return imTunnel ? 'Im Tunnel ohne GPS, geschätzt mit dem letzten Tempo' : 'Kein GPS, geschätzt mit dem letzten Tempo'
   return probefahrt ? 'Gespielter Standort' : `GPS auf etwa ${Math.round(stand.genau ?? 0)} m genau`
+}
+
+/**
+ * Was tun, wenn der Standort gesperrt ist. Auch als installierte App läuft
+ * Taktland im Browser, mit dem es installiert wurde; dort liegt die Freigabe.
+ * Auf dem Galaxy war das nicht zu erraten («ich habe keinen Browser offen»).
+ */
+function freigabeHilfe() {
+  const ua = navigator.userAgent
+  const beginn = 'Der Standort ist nicht freigegeben, ohne ihn geht der Fahrtmodus nicht. '
+  if (/Android/i.test(ua)) {
+    const samsung = /SamsungBrowser/i.test(ua)
+    return beginn + 'Auch als installierte App läuft Taktland im Browser '
+      + (samsung ? '«Samsung Internet»: dort unter ☰ → Einstellungen → Website-Berechtigungen → '
+                 + 'Standort die Seite zulassen. '
+                 : '«Chrome»: Symbol von Taktland gedrückt halten → App-Info → Berechtigungen oder '
+                 + 'weitere Einstellungen → Standort → zulassen. Oder in Chrome unter ⋮ → '
+                 + 'Einstellungen → Website-Einstellungen → Standort die Seite zulassen. ')
+      + 'In den Android-Einstellungen unter Apps muss der Browser zudem den genauen Standort '
+      + 'nutzen dürfen. Danach Taktland ganz schliessen und neu öffnen.'
+  }
+  if (/iPhone|iPad/i.test(ua)) {
+    return beginn + 'Auf dem iPhone: Einstellungen → Datenschutz & Sicherheit → Ortungsdienste → '
+      + 'Safari-Websites → «Beim Verwenden der App» und «Genauer Standort». Danach Taktland ganz '
+      + 'schliessen und neu öffnen.'
+  }
+  return beginn + 'Die Freigabe lässt sich in den Website-Einstellungen des Browsers erteilen.'
 }
 
 /** «in etwa 25 s», «in etwa 3 min» */
