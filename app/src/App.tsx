@@ -119,7 +119,7 @@ export default function App() {
       <div className="mx-auto max-w-2xl">
         {/* während der Entwicklung: Version und Knopf zum Aktualisieren */}
         <Aktualisieren />
-        <Kopf aktiv={bereich} startseite={seite.art === 'liste'} />
+        <Kopf aktiv={bereich} startseite={seite.art === 'liste'} anleitung={seite.art === 'anleitung'} />
 
         {fehler && (
           <Ladefehler className="px-4 py-8" was="Die Bahnhofsliste konnte nicht geladen werden." fehler={fehler} />

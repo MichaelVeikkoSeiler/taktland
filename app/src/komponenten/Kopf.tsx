@@ -1,3 +1,5 @@
+import anleitungDunkel from '../assets/auftakt-anleitung-dunkel.webp'
+import anleitungHell from '../assets/auftakt-anleitung-hell.webp'
 import auftaktDunkel from '../assets/auftakt-dunkel.webp'
 import auftaktHell from '../assets/auftakt-hell.webp'
 import brueckenDunkel from '../assets/auftakt-bruecken-dunkel.webp'
@@ -22,8 +24,13 @@ const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   { bereich: 'standort', text: 'Standort', adresse: '#/standort' },
 ]
 
-/** Auftaktbilder je Bereich. Ein Bereich ohne Eintrag erscheint ohne Bild. */
-const BILDER: Partial<Record<Bereich, AuftaktBild>> = {
+/** Auftaktbilder je Bereich, dazu eines für die Anleitung. Ein Bereich ohne
+ *  Eintrag erscheint ohne Bild. */
+const BILDER: Partial<Record<Bereich | 'anleitung', AuftaktBild>> = {
+  anleitung: {
+    hell: anleitungHell, dunkel: anleitungDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Ein Mann mit Rucksack schaut am Perron auf sein Handy, dahinter wartende und gehende Menschen.',
+  },
   bahnhoefe: {
     hell: auftaktHell, dunkel: auftaktDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Am Perron steigen Menschen aus einem Zug aus, andere warten aufs Einsteigen.',
@@ -51,17 +58,19 @@ const BILDER: Partial<Record<Bereich, AuftaktBild>> = {
  * Auftaktbild des Bereichs. Es steht auch auf den Seiten darunter, etwa auf
  * einer Bahnhofs- oder Linienseite (Michael, 2026-09-22: «Ich finde es
  * schöner, wenn die Auftaktbilder bleiben»). Die Anleitung gehört zu keinem
- * Bereich und zeigt das Bahnhofbild.
+ * Bereich und hat ein eigenes Bild.
  */
-export function Kopf({ aktiv, startseite }: {
+export function Kopf({ aktiv, startseite, anleitung = false }: {
   aktiv: Bereich | null
   startseite: boolean
+  anleitung?: boolean
 }) {
-  const bild = BILDER[aktiv ?? 'bahnhoefe']
+  const schluessel = anleitung ? 'anleitung' : aktiv ?? 'bahnhoefe'
+  const bild = BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   return (
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
-      {bild && <Auftakt key={aktiv ?? 'bahnhoefe'} bild={bild} />}
+      {bild && <Auftakt key={schluessel} bild={bild} />}
       <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />
       <div className="mt-3 flex items-baseline justify-between gap-4">
         {startseite
