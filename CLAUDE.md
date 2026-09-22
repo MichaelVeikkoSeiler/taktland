@@ -87,6 +87,8 @@ data/linienprofile/ Linienseiten, gebaut mit generator/linien.py, nie von Hand g
 data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brücken darauf
 data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzügen, je
              Abschnitt die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py)
+data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierung,
+             platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen
 ```
 
 ## Befehle

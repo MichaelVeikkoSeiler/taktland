@@ -165,6 +165,16 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Tunnel und Brücken sind nur für die SBB erfasst. Führt der Weg über Strecken
             anderer Bahnen, etwa den Lötschberg der BLS, fehlen sie dort. Die Seite sagt das.
           </li>
+          <li>
+            Im Zug zeigt der «Fahrtmodus» den nächsten Tunnel und die nächste Brücke mit
+            mindestens 3 Baueinheiten und meldet sie etwa 30 Sekunden vorher mit einem Ton. Er
+            braucht den Standort und läuft nur, solange die Seite offen und der Bildschirm an ist.
+            Die Zeiten sind Schätzungen aus Standort und Tempo. Im Tunnel gibt es kein GPS, dort
+            rechnet er mit dem letzten Tempo weiter.
+          </li>
+          <li>
+            Die «Probefahrt» spielt den Weg zwanzigmal schneller ab, zum Ausprobieren zu Hause.
+          </li>
         </Punkte>
       </Abschnitt>
 
@@ -282,6 +292,11 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
           <li>
             Der Lernfortschritt bleibt im Browser dieses Geräts. Die App lädt keine Schriften
             oder Programme von fremden Diensten.
+          </li>
+          <li>
+            Den Standort fragt Taktland nur im Fahrtmodus ab, und nur nach deiner Freigabe. Er
+            wird auf dem Gerät verrechnet, weder gespeichert noch gesendet, und nach «Beenden»
+            nicht mehr abgefragt.
           </li>
           <li>
             Ausgeliefert wird die Seite von GitHub Pages. GitHub speichert dabei laut eigenen

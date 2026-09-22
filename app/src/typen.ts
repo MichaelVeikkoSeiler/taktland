@@ -289,4 +289,17 @@ export interface StreckenNetz {
   bahnhoefe: Record<string, string>
   nicht_im_netz: number[]
   abschnitte: StreckenAbschnitt[]
+  /** Kürzel → [Breite, Länge] */
+  lagen: Record<string, [number, number]>
+  /** Tunnel «Linie:Stelle» → [km von, km bis]; gleich, wenn die Richtung
+   *  der Länge unbekannt ist */
+  tunnel_bereiche: Record<string, [number, number]>
+}
+
+/** Lage der Linien für den Fahrtmodus: je Linie der erste Punkt [Meter,
+ *  Breite, Länge] als ganze Zahlen (Grad mal 100000), dann Differenzen */
+export interface StreckenGeometrie {
+  datenstand: string
+  quelle: string
+  linien: Record<string, { start: [number, number, number]; d: number[] }>
 }

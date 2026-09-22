@@ -71,10 +71,11 @@ def main():
     linien()
     uebersichten()
     # das Streckennetz unverändert, geprüft mit generator/strecken.py
-    quelle = ROOT / "data" / "strecken.json"
-    if quelle.exists():
-        shutil.copy(quelle, ZIEL / "strecken.json")
-        print(f"strecken.json: {(ZIEL / 'strecken.json').stat().st_size/1024:.0f} KB")
+    for name in ("strecken.json", "strecken_geometrie.json"):
+        quelle = ROOT / "data" / name
+        if quelle.exists():
+            shutil.copy(quelle, ZIEL / name)
+            print(f"{name}: {(ZIEL / name).stat().st_size/1024:.0f} KB")
 
 
 def linien():

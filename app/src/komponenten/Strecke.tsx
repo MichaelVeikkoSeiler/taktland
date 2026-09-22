@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { streckenLaden, uebersichtLaden } from '../daten'
+import { geometrieLaden, streckenLaden, uebersichtLaden } from '../daten'
+import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, tonVorbereiten } from '../fahrt'
 import { kantonText } from '../kanton'
 import type {
   BahnhofIndex, BrueckenEintrag, IndexEintrag, Luecke, StreckenAbschnitt, StreckenNetz,
   TunnelEintrag, Uebersicht,
 } from '../typen'
 import { vereinfachen } from './Blaettern'
+import { Fahrtmodus, type ObjektText } from './Fahrtmodus'
 import { Luecken } from './Luecken'
 import { genau } from './Objekte'
 
@@ -275,6 +277,40 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
 }) {
   const tunnelNach = useMemo(() => nachKennung(tunnel), [tunnel])
   const brueckenNach = useMemo(() => nachKennung(bruecken), [bruecken])
+  const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: () => void } | null>(null)
+  const [laedt, setLaedt] = useState(false)
+  const [fahrtFehler, setFahrtFehler] = useState<string | null>(null)
+
+  const objektText = useCallback(({ kennung, art }: FahrObjekt): ObjektText | undefined => {
+    const x = art === 'tunnel' ? tunnelNach.get(kennung) : undefined
+    if (x) {
+      return { name: x.name, baueinheiten: null,
+               zeile: `${x.laenge_m === null ? 'Länge: keine Angabe' : `${genau(x.laenge_m)} m`} · Linie ${x.linie}` }
+    }
+    const y = art === 'bruecke' ? brueckenNach.get(kennung) : undefined
+    if (!y) return undefined
+    return { name: y.name, baueinheiten: y.baueinheiten,
+             zeile: `Linie ${y.linie}${y.baueinheiten === null ? ''
+               : ` · ${y.baueinheiten} ${y.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}` }
+  }, [tunnelNach, brueckenNach])
+
+  async function fahrtStarten(probe: boolean) {
+    // der Ton muss im Tipp selbst vorbereitet werden, sonst bleibt er stumm
+    const piepen = tonVorbereiten()
+    setLaedt(true)
+    setFahrtFehler(null)
+    try {
+      const linien = geometrieLesen(await geometrieLaden())
+      const fahrweg = fahrwegBauen(netz, linien, weg.punkte, weg.abschnitte,
+                                   (id) => brueckenNach.get(id)?.km ?? undefined,
+                                   (id) => tunnelNach.get(id)?.laenge_m ?? null)
+      setFahrt({ fahrweg, probe, piepen })
+    } catch (e) {
+      setFahrtFehler((e as Error).message)
+    } finally {
+      setLaedt(false)
+    }
+  }
   const t = tunnelIds.map((i) => tunnelNach.get(i)).filter((x) => x !== undefined)
   const b = brueckenIds.map((i) => brueckenNach.get(i)).filter((x) => x !== undefined)
 
@@ -349,7 +385,42 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
           Erfasst entlang dieses Wegs, jede nur einmal gezählt.
           {andere.length > 0 && ' Auf Strecken anderer Bahnen fehlen sie, siehe unten.'}
         </p>
+
+        {weg.abschnitte.length > 0 && (
+          <>
+            <div className="mt-5 grid grid-cols-2 gap-2">
+              <button
+                type="button" disabled={laedt} onClick={() => void fahrtStarten(false)}
+                className="bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125
+                           disabled:opacity-60"
+              >
+                Fahrtmodus starten
+              </button>
+              <button
+                type="button" disabled={laedt} onClick={() => void fahrtStarten(true)}
+                className="border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
+                           disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight
+                           dark:hover:border-sbb-white"
+              >
+                Probefahrt
+              </button>
+            </div>
+            <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+              Im Zug zeigt der Fahrtmodus den nächsten Tunnel und die nächste grössere Brücke und
+              meldet sie etwa 30 Sekunden vorher mit einem Ton. Er braucht den Standort; dieser
+              bleibt auf dem Gerät. Die Probefahrt spielt den Weg zum Ausprobieren ab.
+            </p>
+            {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}
+            {fahrtFehler && <p className="mt-2 text-sm">Der Fahrtmodus konnte nicht starten. {fahrtFehler}</p>}
+          </>
+        )}
       </section>
+
+      {fahrt && (
+        <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
+                    piepen={fahrt.piepen} beenden={() => setFahrt(null)}
+                    titel={`${bahnhoefe[0]?.name} → ${bahnhoefe[bahnhoefe.length - 1]?.name}`} />
+      )}
 
       <aside className="mt-6 border-l-4 border-sbb-red bg-sbb-milk px-4 py-3 dark:bg-sbb-charcoal">
         <p className="text-xs font-semibold uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">

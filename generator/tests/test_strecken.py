@@ -70,3 +70,17 @@ def test_pruefer_findet_eine_falsche_zuordnung(tmp_path):
         assert S.validieren() == 1
     finally:
         S.DATEI = alt
+
+
+def test_gotthard_basistunnel_mit_bekannter_ausfahrt():
+    # Der Fahrtmodus kennt die Ausfahrt nur, wo die Länge in eine Richtung auf
+    # die Linie passt: beim Gotthard-Basistunnel 57.104 km nach Norden
+    obj = S.fakten_objekte()
+    i = next(i for i, x in enumerate(obj[("tunnel", 594)]) if x["name"] == "Gotthard-Basistunnel")
+    von, bis = NETZ["tunnel_bereiche"][f"594:{i}"]
+    assert round(bis - von, 3) == 57.104 and bis == obj[("tunnel", 594)][i]["km"]
+
+
+def test_geometrie_deckt_jede_linie_des_netzes():
+    geo = S.geometrie_bereiche()
+    assert {t["linie"] for e in NETZ["abschnitte"] for t in e.get("teile", [])} <= set(geo)

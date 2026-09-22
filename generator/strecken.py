@@ -19,6 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATEI = ROOT / "data" / "strecken.json"
+GEOMETRIE = ROOT / "data" / "strecken_geometrie.json"
 LINIEN = ROOT / "data" / "linien"
 FACTS = ROOT / "data" / "facts"
 
@@ -53,12 +54,29 @@ def tunnel_bereich(km, laenge_m, lo, hi):
     return km, km
 
 
+def geometrie_bereiche():
+    """Je Linie der kleinste und grösste km der Geometrie für den Fahrtmodus"""
+    g = json.loads(GEOMETRIE.read_text(encoding="utf-8"))
+    raus = {}
+    for nr, x in g["linien"].items():
+        m = [x["start"][0]]
+        for i in range(0, len(x["d"]), 3):
+            m.append(m[-1] + x["d"][i])
+        raus[int(nr)] = (min(m) / 1000, max(m) / 1000)
+    return raus
+
+
 def validieren():
     n = laden()
     obj = fakten_objekte()
     fehler = []
     punkte = n["punkte"]
     geprueft = 0
+    geo = geometrie_bereiche()
+    for abk in punkte:
+        lage = n["lagen"].get(abk)
+        if not lage or not (45.5 < lage[0] < 48.2 and 5.5 < lage[1] < 11):
+            fehler.append(f"{punkte[abk]}: Lage {lage} fehlt oder liegt nicht in der Schweiz und Umgebung")
     for e in n["abschnitte"]:
         wo = f"{punkte.get(e['von'], e['von'])} – {punkte.get(e['nach'], e['nach'])}"
         if e["von"] not in punkte or e["nach"] not in punkte:
@@ -82,6 +100,15 @@ def validieren():
             geprueft += len(soll_t) + len(soll_b)
             if t["tunnel"] != soll_t:
                 fehler.append(f"{wo}, Linie {nr}: Tunnel {t['tunnel']} statt {soll_t}")
+            for i in t["tunnel"]:
+                x = obj[("tunnel", nr)][int(i.split(":")[1])]
+                soll = [round(v, 3) for v in tunnel_bereich(x["km"], x["laenge_m"], *bereich)]
+                if n["tunnel_bereiche"].get(i) != soll:
+                    fehler.append(f"{wo}: Bereich von Tunnel {i} {n['tunnel_bereiche'].get(i)} statt {soll}")
+            # der Fahrtmodus braucht die Lage der Linie über das ganze Stück
+            g = geo.get(nr)
+            if not g or lo < g[0] - 0.2 or hi > g[1] + 0.2:
+                fehler.append(f"{wo}: Geometrie der Linie {nr} {g} deckt km {lo}–{hi} nicht ab")
             if t["bruecken"] != soll_b:
                 fehler.append(f"{wo}, Linie {nr}: Brücken weichen von den Fakten ab "
                               f"({len(t['bruecken'])} statt {len(soll_b)})")

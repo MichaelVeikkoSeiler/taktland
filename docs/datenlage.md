@@ -148,3 +148,10 @@ Die Seite «Strecke» zählt Tunnel und Brücken entlang eines Wegs
   wenig Personenzügen teurer). 261 Abschnitte gehören anderen Bahnen (BLS, SOB, TPF …),
   dort gibt es keine Tunnel- und Brückendaten (Lötschberg). Fünf Bahnhöfe liegen nicht im
   Netz: Bure-Casernes, Grandgourt, Jestetten, Lottstetten, Mols.
+
+**Fahrtmodus:** Auf der Seite «Strecke» legt `app/src/fahrt.ts` den Weg als Linienzug an
+(Kilometrierung der Linien, auf Abschnitten anderer Bahnen gerade von Ende zu Ende) und
+den GPS-Standort darauf. Tunnel werden an ihrem Kilometer gemeldet; die Ausfahrt kennt er
+nur, wo die Richtung der Länge eindeutig ist (`tunnel_bereiche`). Die Zeit bis zum Objekt
+ist Weg durch Tempo, eine Schätzung. Getestet mit vorgespieltem Standort (Einfahrt
+Gotthard-Basistunnel, Standort 80 km neben der Strecke, Tunnel ohne GPS), nicht im Zug.

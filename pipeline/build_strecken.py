@@ -43,6 +43,8 @@ RAW = ROOT / "data" / "raw"
 LINIEN = ROOT / "data" / "linien"
 FACTS = ROOT / "data" / "facts"
 ZIEL = ROOT / "data" / "strecken.json"
+#: Lage der Linien für den Fahrtmodus, erst beim Start geladen
+GEOMETRIE = ROOT / "data" / "strecken_geometrie.json"
 
 QUELLEN = ["zugzahlen", "linienkilometrierung", "linie-mit-betriebspunkten", "linie", "tunnel",
            "brucken"]
@@ -87,7 +89,7 @@ def abschnitte():
         for abk, name, uic, p in ((a, r.bp_von_abschnitt_bezeichnung, r.von_bpuic, pts[0]),
                                   (b, r.bp_bis_abschnitt_bezeichnung, r.bis_bpuic, pts[-1])):
             punkte[abk] = {"name": name, "uic": int(uic) if pd.notna(uic) else None,
-                           "lage": ebene(*p)}
+                           "lage": ebene(*p), "wgs": (round(p[1], 5), round(p[0], 5))}
         km = sum(math.dist(ebene(*p), ebene(*q)) for p, q in zip(pts, pts[1:]))
         schluessel = tuple(sorted((a, b)))
         alt = kanten.get(schluessel)
@@ -99,15 +101,37 @@ def abschnitte():
 
 
 def linienzuege():
-    """Je Linie die Kilometerpunkte als Linienzug, nach km geordnet."""
+    """Je Linie die Kilometerpunkte als Linienzug, nach km geordnet, dazu
+    Breite und Länge für die Geometrie des Fahrtmodus."""
     lk = load("linienkilometrierung")
     lat, lon = zip(*(map(float, s.split(",")) for s in lk.geo_point_2d))
+    lk["lat"], lk["lon"] = lat, lon
     lk["x"], lk["y"] = np.array(lon) * KM_LON, np.array(lat) * KM_LAT
-    zuege = {}
+    zuege, wgs = {}, {}
     for nr, g in lk.groupby("linienr"):
         g = g.sort_values("km")
         zuege[int(nr)] = (g.x.values, g.y.values, g.km.values)
-    return zuege
+        wgs[int(nr)] = (g.km.values, g.lat.values, g.lon.values)
+    return zuege, wgs
+
+
+def geometrie_schreiben(wgs, linien, stand):
+    """Je Linie die Punkte als Differenzen in ganzen Zahlen: Meter der
+    Kilometrierung, Breite und Länge in Hunderttausendstel Grad (etwa 1 m).
+    So wird die Datei ein Drittel so gross wie mit ausgeschriebenen Zahlen."""
+    raus = {}
+    for nr in sorted(linien):
+        km, lat, lon = wgs[nr]
+        m = np.round(km * 1000).astype(int)
+        la = np.round(lat * 1e5).astype(int)
+        lo = np.round(lon * 1e5).astype(int)
+        raus[str(nr)] = {"start": [int(m[0]), int(la[0]), int(lo[0])],
+                         "d": [int(v) for trio in zip(np.diff(m), np.diff(la), np.diff(lo)) for v in trio]}
+    GEOMETRIE.write_text(json.dumps({"datenstand": stand, "quelle": "linienkilometrierung",
+                                     "hinweis": "Je Linie start = [Meter, Breite, Länge] als ganze "
+                                                "Zahlen (Breite und Länge mal 100000), d = Differenzen "
+                                                "zum Vorgänger in derselben Reihenfolge.",
+                                     "linien": raus}, separators=(",", ":")) + "\n", encoding="utf-8")
 
 
 def projektion(p, zug):
@@ -258,14 +282,14 @@ def main():
     abruf = json.loads((RAW / "_abruf.json").read_text(encoding="utf-8"))
     stand = max(abruf[q] for q in QUELLEN)
     jahr, kanten, punkte = abschnitte()
-    zuege = linienzuege()
+    zuege, wgs = linienzuege()
     lage = lagen(punkte, zuege)
     auf_linie = punkte_je_linie(lage)
     sbb_linien = set(load("linie").linie.astype(int))
     tunnel, bruecken = objekte()
     bereich = {nr: (float(z[2].min()), float(z[2].max())) for nr, z in zuege.items()}
 
-    liste, ohne_zuordnung = [], []
+    liste, ohne_zuordnung, bereiche = [], [], {}
     for (a, b), k in sorted(kanten.items()):
         eintrag = {"von": a, "nach": b,
                    "gewicht": round(k["km"] * (1 + STRAFE / max(k["zuege"], 1)), 3),
@@ -282,10 +306,16 @@ def main():
                 ka, kb = round(ka, 3), round(kb, 3)
                 lo, hi = min(ka, kb), max(ka, kb)
                 ll, lh = bereich[nr]
+                auf_teil = []
+                for i, km, lm in tunnel.get(nr, []):
+                    v, w = tunnel_bereich(km, lm, ll, lh)
+                    if w >= lo and v <= hi:
+                        auf_teil.append(i)
+                        # Anfang und Ende, damit der Fahrtmodus die Einfahrt kennt
+                        bereiche[i] = [round(v, 3), round(w, 3)]
                 eintrag["teile"].append({
                     "linie": nr, "km_von": ka, "km_bis": kb,
-                    "tunnel": [i for i, km, lm in tunnel.get(nr, [])
-                               if (lambda v, w: w >= lo and v <= hi)(*tunnel_bereich(km, lm, ll, lh))],
+                    "tunnel": auf_teil,
                     "bruecken": [i for i, km in bruecken.get(nr, []) if lo <= km <= hi],
                 })
         elif k["isb"] == "SBB":
@@ -307,11 +337,17 @@ def main():
         "linien_bereich": {str(nr): [round(lo, 3), round(hi, 3)] for nr, (lo, hi) in sorted(bereich.items())
                            if any(t["linie"] == nr for e in liste for t in e.get("teile", []))},
         "punkte": {abk: p["name"] for abk, p in sorted(punkte.items())},
+        # Breite, Länge: für Abschnitte ohne Linie verbindet der Fahrtmodus die Enden gerade
+        "lagen": {abk: list(p["wgs"]) for abk, p in sorted(punkte.items())},
+        # Tunnel: km von, km bis (bei unbekannter Richtung beide gleich, siehe tunnel_bereich)
+        "tunnel_bereiche": dict(sorted(bereiche.items())),
         "bahnhoefe": {str(u): abk for u, abk in sorted(im_netz.items())},
         "nicht_im_netz": sorted(u for u in namen if u not in im_netz),
         "abschnitte": liste,
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    genutzt = {t["linie"] for e in liste for t in e.get("teile", [])}
+    geometrie_schreiben(wgs, genutzt, stand)
 
     sbb = [e for e in liste if e["isb"] == "SBB"]
     zugeordnet = [e for e in sbb if "teile" in e]
@@ -323,6 +359,7 @@ def main():
     print(f"  SBB-Abschnitte: {len(zugeordnet)} von {len(sbb)} einer Linie zugeordnet, "
           f"davon {geteilt} auf zwei Linien, ohne Zuordnung ~{km_ohne:.0f} von ~{km_sbb:.0f} km Luftlinie")
     print(f"  andere Bahnen (keine Tunnel- und Brückendaten): {len(liste) - len(sbb)} Abschnitte")
+    print(f"strecken_geometrie.json: {len(genutzt)} Linien ({GEOMETRIE.stat().st_size/1024:.0f} KB)")
     for a, b, km in sorted(ohne_zuordnung, key=lambda x: -x[2])[:12]:
         print(f"    ohne Zuordnung: {punkte[a]['name']} – {punkte[b]['name']} ({km:.1f} km)")
 
