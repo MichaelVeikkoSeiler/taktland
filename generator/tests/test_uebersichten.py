@@ -46,3 +46,19 @@ def test_bruecken_wie_in_den_fakten_samt_linien_ohne_seite():
         assert d["linien"][str(x["linie"])] == {"name": x["name"], "seite": False}
     mit_seite = sum((f.get("bruecken") or {}).get("anzahl_erfasst", 0) for f in alle)
     assert len(d["eintraege"]) == mit_seite + u["bruecken_ohne_seite"]
+
+
+def test_linien_je_bahnhof_wie_in_den_fakten():
+    """Die Seite «Strecke» nennt unter dem Bahnhof alle Linien aus seinen
+    Fakten; fehlen sie dort, fehlt auch das Feld im Index."""
+    index = json.loads((ROOT / "app" / "public" / "data" / "index.json").read_text(encoding="utf-8"))
+    for e in index["bahnhoefe"]:
+        f = json.loads((ROOT / "data" / "facts" / f"{e['uic']}.json").read_text(encoding="utf-8"))
+        soll = [it["nummer"] for it in ((f.get("linien") or {}).get("items") or [])]
+        assert e.get("linien", []) == soll, e["name"]
+
+
+def test_liniennamen_wie_auf_den_linienseiten():
+    verzeichnis = json.loads((ROOT / "app" / "public" / "data" / "linien.json").read_text(encoding="utf-8"))
+    for f in fakten():
+        assert verzeichnis["namen"][str(f["linie"])] == f["name"], f["linie"]

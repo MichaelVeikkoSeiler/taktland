@@ -60,6 +60,10 @@ def main():
             # die App kennzeichnet diese Bahnhöfe
             **({"isb": sb["isb"]} if sb.get("isb") and sb["isb"] != "SBB" else {}),
             "im_netz": str(d["uic"]) in im_netz,
+            # alle Linien, auf denen der Bahnhof erfasst ist, mit oder ohne eigene
+            # Seite; fehlt das Feld, führen die Daten zu den Linien ihn nicht
+            **({"linien": [it["nummer"] for it in d["linien"]["items"]]}
+               if d.get("linien") and d["linien"].get("items") else {}),
         })
     eintraege.sort(key=lambda e: (e["dwv"] or 0), reverse=True)
 
@@ -118,6 +122,8 @@ def linien():
             "bahnuebergaenge": u["bahnuebergaenge_ohne_seite"],
             "linien": u["linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen"],
         }
+        # der Name jeder Linie aus «linie», auch ohne eigene Seite
+        verzeichnis["namen"] = u["linien_namen"]
     (ZIEL / "linien.json").write_text(json.dumps(verzeichnis, ensure_ascii=False), encoding="utf-8")
     print(f"linien.json: {len(eintraege)} Linien, {len(nach_bahnhof)} Bahnhöfe verknüpft")
 

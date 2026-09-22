@@ -469,6 +469,9 @@ def main():
             int(len(set(ohne.linie) | set(ohne_ue.linie))),
         "bruecken_ohne_seite_liste": bruecken_ohne_seite,
         "bahnuebergaenge_ohne_seite_liste": uebergaenge_ohne_seite,
+        # Name jeder Linie aus «linie», für Linien ohne eigene Seite (Seite «Strecke»)
+        "linien_namen": {str(int(nr)): txt(r.linienname)
+                         for nr, r in sorted(linie.iterrows(), key=lambda x: int(x[0]))},
     }
     UEBERSICHT.write_text(json.dumps(uebersicht, ensure_ascii=False, indent=1) + "\n",
                           encoding="utf-8")

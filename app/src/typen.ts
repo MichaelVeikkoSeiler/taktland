@@ -163,6 +163,8 @@ export interface LinienVerzeichnis {
   nach_bahnhof: Record<string, number[]>
   /** Brücken auf Linien ohne eigene Seite, gezählt in pipeline/build_linien.py */
   nicht_aufgefuehrt?: { bruecken: number; bahnuebergaenge: number; linien: number }
+  /** Nummer → Name aus «linie», auch für Linien ohne eigene Seite */
+  namen?: Record<string, string | null>
 }
 
 export interface IndexEintrag {
@@ -178,6 +180,9 @@ export interface IndexEintrag {
   isb?: string
   /** Die Seite «Strecke» kennt Wege ab diesem Bahnhof */
   im_netz: boolean
+  /** Alle Linien, auf denen der Bahnhof erfasst ist; fehlt, wenn die Daten zu
+   *  den Linien ihn nicht führen */
+  linien?: number[]
 }
 
 export interface BahnhofIndex {

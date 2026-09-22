@@ -173,6 +173,17 @@ nur, wo die Richtung der Länge eindeutig ist (`tunnel_bereiche`). Die Zeit bis 
 ist Weg durch Tempo, eine Schätzung. Getestet mit vorgespieltem Standort (Einfahrt
 Gotthard-Basistunnel, Standort 80 km neben der Strecke, Tunnel ohne GPS), nicht im Zug.
 
+### Linien auf der Seite «Strecke»
+
+Unter jedem gewählten Bahnhof stehen alle Linien aus seinen Fakten (`linien.items`, Quelle
+`linie-mit-betriebspunkten`), im Index als `linien`. 408 der 1175 Bahnhöfe führt diese
+Quelle auf keiner Linie, fast alle anderer Bahnen (BLS 116, RhB 100, MGB 39 …), dazu zwei
+der SBB; die App sagt «in den Daten zu den Linien nicht erfasst», nicht «keine Linie».
+Das Ergebnis nennt die Linien des Wegs aus den `teile` der Abschnitte. Bei 11 Abschnitten,
+die auf zwei Linien liegen (Rothrist – Olten: 450, dann 500), nennen die Daten den Punkt
+des Wechsels nicht; die App schreibt «Wechsel zwischen Rothrist und Olten». Die Namen
+aller 433 Linien aus `linie` stehen in `linien.json` (`namen`).
+
 ## Kleine Karte bei Tunneln, Brücken und Linien
 
 `pipeline/build_karte.py` vereinfacht die Kilometrierung aller 338 Linien auf 30 m

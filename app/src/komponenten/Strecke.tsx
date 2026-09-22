@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { geometrieLaden, streckenLaden, uebersichtLaden } from '../daten'
+import { geometrieLaden, linienLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, tonVorbereiten } from '../fahrt'
 import { kantonText } from '../kanton'
 import type {
-  BahnhofIndex, BrueckenEintrag, IndexEintrag, Luecke, StreckenAbschnitt, StreckenNetz,
-  TunnelEintrag, Uebersicht,
+  BahnhofIndex, BrueckenEintrag, IndexEintrag, LinienVerzeichnis, Luecke, StreckenAbschnitt,
+  StreckenNetz, TunnelEintrag, Uebersicht,
 } from '../typen'
 import { vereinfachen } from './Blaettern'
 import { Fahrtmodus, type ObjektText } from './Fahrtmodus'
@@ -114,6 +114,35 @@ function entlang(weg: Weg) {
   return { tunnel, bruecken }
 }
 
+/** Ein Betriebspunkt, oder ein Wechsel der Linie irgendwo zwischen zweien */
+type Ort = { punkt: string } | { zwischen: [string, string] }
+
+/** Ein Stück des Wegs auf derselben Linie; linie null: Abschnitte ohne Linie */
+interface Lauf { linie: number | null; isb: string; von: Ort; bis: Ort }
+
+/**
+ * Die Linien des Wegs in Wegrichtung, aufeinanderfolgende Abschnitte derselben
+ * Linie zusammengefasst. Liegt ein Abschnitt auf zwei Linien (Rothrist –
+ * Olten: 450, dann 500), nennen die Daten den Punkt des Wechsels nicht; er
+ * steht dann als «Wechsel zwischen» den beiden Betriebspunkten.
+ */
+function laeufe(weg: Weg): Lauf[] {
+  const raus: Lauf[] = []
+  weg.abschnitte.forEach((e, i) => {
+    const [a, b] = [weg.punkte[i], weg.punkte[i + 1]]
+    const linien = (e.teile ?? []).map((t) => t.linie)
+    const folge = linien.length ? (e.von === a ? linien : [...linien].reverse()) : [null]
+    folge.forEach((nr, k) => {
+      const von: Ort = k === 0 ? { punkt: a } : { zwischen: [a, b] }
+      const bis: Ort = k === folge.length - 1 ? { punkt: b } : { zwischen: [a, b] }
+      const letzter = raus[raus.length - 1]
+      if (letzter && letzter.linie === nr && (nr !== null || letzter.isb === e.isb)) letzter.bis = bis
+      else raus.push({ linie: nr, isb: e.isb, von, bis })
+    })
+  })
+  return raus
+}
+
 /** «Linie:Stelle» → Eintrag. Die Übersicht führt die Einträge je Linie in der
  *  Reihenfolge der Linienfakten, also zählt die Stelle innerhalb der Linie. */
 function nachKennung<T>(u: Uebersicht<T>) {
@@ -140,6 +169,14 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
   const [bruecken, setBruecken] = useState<Uebersicht<BrueckenEintrag> | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [alleBruecken, setAlleBruecken] = useState(false)
+  // Linien mit Seite und die Namen aller Linien; ohne sie fehlen nur die Links
+  const [verzeichnis, setVerzeichnis] = useState<LinienVerzeichnis | null>(null)
+
+  useEffect(() => {
+    let abgebrochen = false
+    linienLaden().then((v) => { if (!abgebrochen) setVerzeichnis(v) }).catch(() => {})
+    return () => { abgebrochen = true }
+  }, [])
 
   useEffect(() => {
     let abgebrochen = false
@@ -204,10 +241,13 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
       <div className="mt-6 space-y-3">
         <BahnhofFeld bezeichnung="Von" wert={wahl.von} bahnhoefe={alle} name={name}
                      aendern={(u) => waehlen({ von: u })} />
+        <BahnhofLinien b={wahl.von ? bahnhof.get(wahl.von) : undefined} verzeichnis={verzeichnis} />
         <BahnhofFeld bezeichnung="Nach" wert={wahl.nach} bahnhoefe={alle} name={name}
                      aendern={(u) => waehlen({ nach: u })} />
+        <BahnhofLinien b={wahl.nach ? bahnhof.get(wahl.nach) : undefined} verzeichnis={verzeichnis} />
         <BahnhofFeld bezeichnung="Über (freiwillig)" wert={wahl.ueber} bahnhoefe={alle} name={name}
                      aendern={(u) => waehlen({ ueber: u })} />
+        <BahnhofLinien b={wahl.ueber ? bahnhof.get(wahl.ueber) : undefined} verzeichnis={verzeichnis} />
         {(wahl.von || wahl.nach) && (
           <button
             type="button" onClick={() => waehlen({ von: wahl.nach, nach: wahl.von })}
@@ -258,14 +298,16 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
       {netz && tunnel && bruecken && ergebnis?.art === 'weg' && (
         <Ergebnis netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
                   brueckenIds={ergebnis.bruecken} tunnel={tunnel} bruecken={bruecken}
-                  bahnhof={bahnhof} alleBruecken={alleBruecken}
+                  bahnhof={bahnhof} alleBruecken={alleBruecken} verzeichnis={verzeichnis}
                   zeigeAlle={() => setAlleBruecken(true)} />
       )}
     </div>
   )
 }
 
-function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, zeigeAlle }: {
+function Ergebnis({
+  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle,
+}: {
   netz: StreckenNetz
   weg: Weg
   tunnelIds: string[]
@@ -274,6 +316,7 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
   bruecken: Uebersicht<BrueckenEintrag>
   bahnhof: Map<number, IndexEintrag>
   alleBruecken: boolean
+  verzeichnis: LinienVerzeichnis | null
   zeigeAlle: () => void
 }) {
   const tunnelNach = useMemo(() => nachKennung(tunnel), [tunnel])
@@ -439,6 +482,8 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
         </p>
       </aside>
 
+      <WegLinien laeufe={laeufe(weg)} netz={netz} verzeichnis={verzeichnis} />
+
       {t.length > 0 && (
         <section className="mt-8">
           <h2 className="text-lg font-bold">Tunnel in Wegrichtung</h2>
@@ -490,6 +535,110 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
         wie in den offenen Daten, auch mit Abkürzungen.
       </p>
     </>
+  )
+}
+
+/** Die Linien des Wegs, verlinkt, wo die Linie in Taktland eine Seite hat */
+function WegLinien({ laeufe, netz, verzeichnis }: {
+  laeufe: Lauf[]
+  netz: StreckenNetz
+  verzeichnis: LinienVerzeichnis | null
+}) {
+  const seiten = new Set(verzeichnis?.linien.map((l) => l.linie) ?? [])
+  const punkt = (p: string) => netz.punkte[p] ?? p
+  const ort = (o: Ort) => ('punkt' in o ? punkt(o.punkt)
+    : `Wechsel zwischen ${punkt(o.zwischen[0])} und ${punkt(o.zwischen[1])}`)
+  return (
+    <section className="mt-8">
+      <h2 className="text-lg font-bold">Linien in Wegrichtung</h2>
+      <ol className="mt-3 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
+                     dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
+        {laeufe.map((l, i) => {
+          const strecke = `${ort(l.von)} → ${ort(l.bis)}`
+          if (l.linie === null) {
+            return (
+              <li key={i} className="px-3 py-2">
+                <p className="font-medium text-sbb-metal dark:text-sbb-storm">Ohne Linie in den Daten</p>
+                <p className="text-sm text-sbb-metal dark:text-sbb-storm">
+                  {strecke}{l.isb !== 'SBB' && ` · Infrastruktur: ${l.isb}`}
+                </p>
+              </li>
+            )
+          }
+          const name = verzeichnis?.namen?.[String(l.linie)]
+          const titel = <>Linie {l.linie}{name && <span className="font-normal"> · {name}</span>}</>
+          return (
+            <li key={i} className="px-3 py-2">
+              <p className="font-medium text-sbb-black dark:text-sbb-white">
+                {seiten.has(l.linie)
+                  ? <a href={`#/linie/${l.linie}`} className="underline-offset-2 hover:underline">{titel} →</a>
+                  : titel}
+              </p>
+              <p className="text-sm text-sbb-metal dark:text-sbb-storm">
+                {strecke}{!seiten.has(l.linie) && ' · ohne eigene Seite in Taktland'}
+              </p>
+            </li>
+          )
+        })}
+      </ol>
+      <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+        Eine Linie ist eine Strecke der Infrastruktur, keine Zuglinie. Die Linien stammen aus den
+        Daten der SBB; Abschnitte, die dort auf keiner Linie liegen, stehen als «Ohne Linie in den
+        Daten».
+      </p>
+    </section>
+  )
+}
+
+/**
+ * Unter dem Eingabefeld: alle Linien, auf denen der gewählte Bahnhof erfasst
+ * ist, verlinkt die mit eigener Seite. Führen ihn die Daten zu den Linien
+ * nicht, steht das da, nicht «keine Linie».
+ */
+function BahnhofLinien({ b, verzeichnis }: {
+  b: IndexEintrag | undefined
+  verzeichnis: LinienVerzeichnis | null
+}) {
+  if (!b || !verzeichnis) return null
+  const klein = 'text-sm text-sbb-metal dark:text-sbb-storm'
+  if (!b.linien?.length) {
+    return (
+      <p className={`-mt-2 ${klein}`}>
+        {b.name} ist in den Daten zu den Linien nicht erfasst{b.isb && ` (Infrastruktur: ${b.isb})`}.
+      </p>
+    )
+  }
+  const seiten = new Set(verzeichnis.linien.map((l) => l.linie))
+  const nummern = [...b.linien].sort((x, y) => x - y)
+  const ohneSeite = nummern.some((nr) => !seiten.has(nr))
+  return (
+    <div className="-mt-2">
+      <p className={klein}>{nummern.length === 1 ? 'Linie' : 'Linien'} durch {b.name}:</p>
+      <ul className="mt-1 flex flex-wrap gap-1.5">
+        {nummern.map((nr) => {
+          const name = verzeichnis.namen?.[String(nr)] ?? undefined
+          return (
+            <li key={nr}>
+              {seiten.has(nr) ? (
+                <a href={`#/linie/${nr}`} title={name}
+                   className="block border border-sbb-cloud bg-white px-2 py-0.5 text-sm font-medium
+                              text-sbb-black hover:border-sbb-black dark:border-sbb-iron
+                              dark:bg-sbb-midnight dark:text-sbb-white dark:hover:border-sbb-white">
+                  Linie {nr} →
+                </a>
+              ) : (
+                <span title={name}
+                      className="block border border-dashed border-sbb-cloud px-2 py-0.5 text-sm
+                                 text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
+                  Linie {nr}
+                </span>
+              )}
+            </li>
+          )
+        })}
+      </ul>
+      {ohneSeite && <p className={`mt-1 ${klein}`}>Gestrichelt: ohne eigene Seite in Taktland.</p>}
+    </div>
   )
 }
 

@@ -170,6 +170,12 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Zug ihn fährt, sagen die Daten nicht. Mit «Über» lässt sich ein Bahnhof festlegen.
           </li>
           <li>
+            Unter jedem gewählten Bahnhof stehen die Linien, auf denen er erfasst ist; ein Tipp
+            öffnet die Linie, gestrichelte haben keine eigene Seite. Das Ergebnis nennt die
+            Linien in Wegrichtung. Die Linien stammen aus den Daten der SBB: Bahnhöfe und
+            Abschnitte anderer Bahnen, etwa Ins oder Spiez der BLS, liegen dort auf keiner Linie.
+          </li>
+          <li>
             Tunnel und Brücken sind nur für die SBB erfasst. Führt der Weg über Strecken
             anderer Bahnen, etwa den Lötschberg der BLS, fehlen sie dort. Die Seite sagt das.
           </li>
