@@ -14,7 +14,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
   const stand = index ? datum(index.stand) : null
   return (
     <div className="px-4 pb-16">
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
         Hier steht, wie Taktland zu bedienen ist, woher die Daten stammen und was sie nicht
         hergeben. Was Taktland ist, steht auf der Startseite.

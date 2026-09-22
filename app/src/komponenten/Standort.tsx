@@ -108,7 +108,7 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
 
   return (
     <main className="px-4 py-6">
-      <h2 className="text-2xl font-bold">Standort</h2>
+      <h2 className="text-2xl font-bold tracking-tight">Standort</h2>
       <p className="mt-2 text-sbb-metal dark:text-sbb-storm">
         Welche Bahnhöfe, Strecken, Brücken, Tunnel und Bahnübergänge liegen in deiner Nähe? Der
         Standort bleibt auf diesem Gerät; Taktland schickt ihn nirgends hin.

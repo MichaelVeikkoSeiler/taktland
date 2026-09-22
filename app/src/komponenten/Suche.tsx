@@ -40,7 +40,9 @@ export function Suche({ index, oeffnen, stand, aendern }: {
     treffer, stand.seite, (seite) => aendern({ ...stand, seite }), (e) => e.name)
 
   return (
-    <div className="px-4 pb-16 pt-5">
+    <div className="px-4 pb-16 pt-6">
+      {/* Titel wie in jedem Bereich (Michael, 2026-09-22) */}
+      <h1 className="mb-4 text-2xl font-bold tracking-tight">Bahnhöfe</h1>
       <label className="block">
         <span className="sr-only">Bahnhof suchen</span>
         <input
