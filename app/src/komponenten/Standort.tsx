@@ -210,7 +210,7 @@ function Eintrag({ t }: { t: Treffer }) {
         )}
       </span>
       <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">
-        {abstandText(t.m)}{t.adresse && ' →'}
+        {abstandText(t.m)}{t.adresse && <span className="pfeil" aria-hidden="true"> →</span>}
       </span>
     </>
   )

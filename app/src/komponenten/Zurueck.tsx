@@ -9,7 +9,7 @@ export function Zurueck({ onClick, text }: { onClick: () => void; text: string }
         className="text-sm text-sbb-metal underline underline-offset-2 hover:text-sbb-black
                    dark:text-sbb-storm dark:hover:text-sbb-white"
       >
-        ← {text}
+        <span className="pfeil pfeil-links" aria-hidden="true">←</span> {text}
       </button>
     </div>
   )

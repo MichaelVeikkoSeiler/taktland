@@ -412,17 +412,31 @@ function Ergebnis({
     <>
       <section className="mt-8">
         <h2 className="text-xl font-bold tracking-tight">
-          {bahnhoefe[0]?.name} → {bahnhoefe[bahnhoefe.length - 1]?.name}
+          <BahnhofLink b={bahnhoefe[0]} /> → <BahnhofLink b={bahnhoefe[bahnhoefe.length - 1]} />
         </h2>
         {grosse.length > 0 && (
-          <p className="mt-1 leading-relaxed">über {grosse.map((x) => x.name).join(', ')}</p>
+          <p className="mt-1 leading-relaxed">
+            über {grosse.map((x, i) => (
+              <span key={x.uic}>{i > 0 && ', '}<BahnhofLink b={x} /></span>
+            ))}
+          </p>
         )}
         <details className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
           <summary className="cursor-pointer underline underline-offset-2">
             Alle {weg.punkte.length} Betriebspunkte des Wegs
           </summary>
+          {/* Betriebspunkte, die ein Bahnhof in Taktland sind, führen zu ihrer
+              Seite; die übrigen haben keine und bleiben Text */}
           <p className="mt-2 leading-relaxed text-sbb-black dark:text-sbb-white">
-            {weg.punkte.map((p) => netz.punkte[p] ?? p).join(' · ')}
+            {weg.punkte.map((p, i) => {
+              const b = bahnhof.get(uicVon.get(p) ?? 0)
+              return (
+                <span key={`${p}-${i}`}>
+                  {i > 0 && ' · '}
+                  {b ? <BahnhofLink b={b} /> : (netz.punkte[p] ?? p)}
+                </span>
+              )
+            })}
           </p>
         </details>
 
@@ -575,7 +589,11 @@ function WegLinien({ laeufe, netz, verzeichnis }: {
             <li key={i} className="px-3 py-2">
               <p className="font-medium text-sbb-black dark:text-sbb-white">
                 {seiten.has(l.linie)
-                  ? <a href={`#/linie/${l.linie}`} className="underline-offset-2 hover:underline">{titel} →</a>
+                  ? (
+                    <a href={`#/linie/${l.linie}`} className="underline-offset-2 hover:underline">
+                      {titel} <span className="pfeil" aria-hidden="true">→</span>
+                    </a>
+                  )
                   : titel}
               </p>
               <p className="text-sm text-sbb-metal dark:text-sbb-storm">
@@ -634,7 +652,7 @@ function BahnhofLinien({ b, verzeichnis }: {
                    className="block border border-sbb-cloud bg-white px-2 py-0.5 text-sm font-medium
                               text-sbb-black hover:border-sbb-black dark:border-sbb-iron
                               dark:bg-sbb-midnight dark:text-sbb-white dark:hover:border-sbb-white">
-                  Linie {nr} →
+                  Linie {nr} <span className="pfeil" aria-hidden="true">→</span>
                 </a>
               ) : (
                 <span title={name}
@@ -656,6 +674,14 @@ function BahnhofLinien({ b, verzeichnis }: {
  * Zahl der Tunnel oder Brücken des Wegs. Mit ziel führt ein Tipp zur Liste
  * weiter unten auf der Seite; die Seite rollt nur auf diesen Tipp hin.
  */
+/** Ein Bahnhof aus Taktland, verlinkt auf seine Seite */
+function BahnhofLink({ b }: { b: IndexEintrag | undefined }) {
+  if (!b) return null
+  return (
+    <a href={`#/bahnhof/${b.uic}`} className="underline-offset-2 hover:underline">{b.name}</a>
+  )
+}
+
 function Kachel({ zahl, text, ziel }: { zahl: number; text: string; ziel?: string }) {
   const inhalt = (
     <>
@@ -663,7 +689,7 @@ function Kachel({ zahl, text, ziel }: { zahl: number; text: string; ziel?: strin
         {zahl.toLocaleString('de-CH')}
       </p>
       <p className="text-sm text-sbb-metal dark:text-sbb-storm">
-        {text}{ziel && zahl > 0 && <span aria-hidden="true"> ↓</span>}
+        {text}{ziel && zahl > 0 && <span className="pfeil pfeil-unten" aria-hidden="true"> ↓</span>}
       </p>
     </>
   )

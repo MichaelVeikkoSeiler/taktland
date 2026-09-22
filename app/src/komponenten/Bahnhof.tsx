@@ -154,7 +154,7 @@ function LinienLinks({ linien }: { linien: LinienEintrag[] }) {
               {l.bahn && <span className="ml-2"><BahnKuerzel isb={l.bahn} titel={`Datenherr laut BAV: ${l.bahn}`} /></span>}
               <span className="ml-2 text-sm text-sbb-metal dark:text-sbb-storm">{l.name}</span>
             </span>
-            <span className="shrink-0 text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>
+            <span className="pfeil shrink-0" aria-hidden="true">→</span>
           </a>
         </li>
       ))}
@@ -271,25 +271,36 @@ function FaktZeile({ fakt, href, zielText = 'Alle anzeigen' }: {
     : typeof fakt.value === 'boolean'
       ? (fakt.value ? 'ja' : 'nein')
       : String(fakt.value ?? '—')
-  const lang = wert.length > 40
+  // Ist der Wert eine Adresse im Netz (Bahnhofplan der SBB als PDF), führt die
+  // Kachel dorthin. Angezeigt wird nicht die lange Adresse, sondern wohin es
+  // geht; die Adresse selbst steht im Titel und für Screenreader.
+  const extern = typeof fakt.value === 'string' && /^https?:\/\//.test(fakt.value)
+  const ziel = extern ? fakt.value as string : href
+  const anzeige = extern ? `öffnen auf ${new URL(fakt.value as string).hostname.replace(/^www\./, '')}` : wert
+  const lang = anzeige.length > 40
   // Mit Verweis wird die ganze Kachel zum Link: ein Link über der Fläche, damit
   // dt und dd direkt im dl bleiben
   return (
     <div className={`relative border border-sbb-cloud bg-white px-3 py-2
                      dark:border-sbb-iron dark:bg-sbb-midnight ${
-      href ? 'hover:border-sbb-black dark:hover:border-sbb-white' : ''}`}>
-      {href && (
+      ziel ? 'hover:border-sbb-black dark:hover:border-sbb-white' : ''}`}>
+      {ziel && (
         <>
-          <a href={href} className="absolute inset-0"
-             aria-label={`${zielText}: ${fakt.label}, ${wert}${fakt.unit ? ` ${fakt.unit}` : ''}`} />
+          <a href={ziel} className="absolute inset-0"
+             {...(extern ? { target: '_blank', rel: 'noopener noreferrer', title: wert } : {})}
+             aria-label={extern
+               ? `${fakt.label}: ${wert} (öffnet in einem neuen Fenster)`
+               : `${zielText}: ${fakt.label}, ${wert}${fakt.unit ? ` ${fakt.unit}` : ''}`} />
           <span aria-hidden="true"
-                className="absolute right-3 top-2 text-sbb-metal dark:text-sbb-storm">→</span>
+                className={`pfeil absolute right-3 top-2 ${extern ? 'pfeil-schraeg' : ''}`}>
+            {extern ? '↗' : '→'}
+          </span>
         </>
       )}
       <dt className="text-xs text-sbb-metal dark:text-sbb-storm">{fakt.label}</dt>
       <dd className={`font-semibold text-sbb-black dark:text-sbb-white ${
         lang ? 'truncate text-sm font-normal' : 'text-lg tabular-nums'}`}>
-        {wert}{fakt.unit ? ` ${fakt.unit}` : ''}
+        {anzeige}{fakt.unit ? ` ${fakt.unit}` : ''}
       </dd>
       <dd className="mt-0.5 text-xs text-sbb-metal dark:text-sbb-storm">Quelle: {fakt.source}</dd>
     </div>

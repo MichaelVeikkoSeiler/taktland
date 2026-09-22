@@ -275,7 +275,7 @@ function Zeile({ e, linie, art, stelle }: {
         <a href={`#/linie/${e.linie}/${art}?eintrag=${stelle}`}
            className={`${rahmen} hover:border-sbb-black dark:hover:border-sbb-white`}>
           {inhalt}
-          <span className="shrink-0 text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>
+          <span className="pfeil shrink-0" aria-hidden="true">→</span>
         </a>
       ) : (
         <div className={rahmen}>{inhalt}</div>

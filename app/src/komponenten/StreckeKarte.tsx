@@ -14,7 +14,7 @@ export function StreckeKarte() {
           Welche Tunnel und Brücken liegen zwischen zwei Bahnhöfen?
         </span>
       </span>
-      <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>
+      <span className="pfeil shrink-0 text-sm" aria-hidden="true">→</span>
     </a>
   )
 }

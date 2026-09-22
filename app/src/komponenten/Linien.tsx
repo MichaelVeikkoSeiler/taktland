@@ -134,7 +134,7 @@ function Eintrag({ l, durch }: { l: LinienEintrag; durch: string[] }) {
             </span>
           )}
         </span>
-        <span className="shrink-0 text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>
+        <span className="pfeil shrink-0" aria-hidden="true">→</span>
       </a>
     </li>
   )

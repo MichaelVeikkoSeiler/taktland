@@ -124,7 +124,7 @@ function Eintrag({ e, oeffnen }: { e: IndexEintrag; oeffnen: (uic: number) => vo
           </span>
         </span>
         <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">
-          {hatProfil ? '→' : 'noch keine Inhalte'}
+          {hatProfil ? <span className="pfeil" aria-hidden="true">→</span> : 'noch keine Inhalte'}
         </span>
       </button>
     </li>
