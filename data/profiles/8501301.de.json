@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -22,7 +22,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Territet 760 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 750, an einem freien Tag 730. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind MOB und SBB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne MVR.»",
+      "body": "An einem Werktag steigen in Territet 760 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 750, an einem freien Tag 730. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind MOB und SBB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne MVR.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

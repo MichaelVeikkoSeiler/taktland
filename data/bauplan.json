@@ -4964,6 +4964,16 @@
    ]
   }
  },
+ "8504483": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura bernois",
+    "Biel/Bienne",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504484": {
   "stammdaten": {
    "frage": "bezirk",
@@ -6674,6 +6684,25 @@
     "Seeland",
     "Emmental",
     "Thun"
+   ]
+  }
+ },
+ "8507100": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "UTI",
+    "KI"
+   ]
+  }
+ },
+ "8507483": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Bern-Mittelland",
+    "Emmental"
    ]
   }
  },

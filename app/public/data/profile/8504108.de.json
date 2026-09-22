@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "billetautomat",
     "billetentwerter",
@@ -23,7 +23,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Bern Europaplatz 8'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 7'000, an einem freien Tag 3'800. Die Infrastruktur gehört der SBB, als Bahnunternehmen ist BLS erfasst.",
+      "body": "An einem Werktag steigen in Bern Europaplatz 8'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 7'000, an einem freien Tag 3'800. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen ist BLS erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

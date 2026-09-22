@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -25,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Arth-Goldau 19'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 20'100, an einem freien Tag 21'000. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne RB.»",
+      "body": "An einem Werktag steigen in Arth-Goldau 19'700 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 20'100, an einem freien Tag 21'000. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind SBB und SOB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne RB.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

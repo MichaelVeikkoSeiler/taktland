@@ -4,7 +4,7 @@
   "tier": "M",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -24,7 +24,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Romanshorn 12'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 11'800, an einem freien Tag 9'600. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
+      "body": "An einem Werktag steigen in Romanshorn 12'900 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 11'800, an einem freien Tag 9'600. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind SBB und Thurbo erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

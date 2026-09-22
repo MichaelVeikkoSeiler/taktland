@@ -18,10 +18,11 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
 
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
-        Taktland ist ein Lernspiel zu den
+        Taktland ist ein Lernspiel zu
         {index ? ` ${index.bahnhoefe_gesamt} ` : ' '}
-        Bahnhöfen der SBB. Alles, was hier über einen Bahnhof steht, stammt aus den offenen
-        Daten der SBB.
+        Bahnhöfen: allen, deren Infrastruktur die SBB betreibt, dazu Köniz, Müntschemier, Ins,
+        Spiez und Thun, deren Infrastruktur die BLS betreibt. Alles, was hier über einen
+        Bahnhof steht, stammt aus den offenen Daten der SBB.
       </p>
       <p className="mt-2 leading-relaxed">
         Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnhöfe, Linien, Tunnel,

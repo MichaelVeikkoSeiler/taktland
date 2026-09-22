@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "billetautomat",
     "billetentwerter",
@@ -22,7 +22,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in St-Léonard 980 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 830, an einem freien Tag 510. Die Infrastruktur gehört der SBB, als Bahnunternehmen ist RegionAlps erfasst.",
+      "body": "An einem Werktag steigen in St-Léonard 980 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 830, an einem freien Tag 510. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen ist RegionAlps erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

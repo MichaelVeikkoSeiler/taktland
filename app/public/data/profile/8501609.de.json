@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -25,7 +25,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Brig 21'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 21'200, an einem freien Tag 20'900. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS, MGB, RegionAlps und SBB erfasst.",
+      "body": "An einem Werktag steigen in Brig 21'400 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 21'200, an einem freien Tag 20'900. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind BLS, MGB, RegionAlps und SBB erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

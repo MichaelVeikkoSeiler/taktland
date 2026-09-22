@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -136,7 +136,7 @@
     {
       "id": "stammdaten",
       "title": "Stammdaten",
-      "body": "Müntschemier liegt auf 435.6 Metern über Meer in der Gemeinde Müntschemier, Bezirk Seeland, Kanton Bern. Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. Die offizielle Abkürzung lautet MM.",
+      "body": "Müntschemier liegt auf 435.6 Metern über Meer in der Gemeinde Müntschemier, Bezirk Seeland, Kanton Bern. Als Betreiberin ist in den Stammdaten BLS AG (bn) eingetragen. Die offizielle Abkürzung lautet MM.",
       "facts": [
         {
           "label": "Höhe über Meer",

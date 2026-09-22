@@ -154,3 +154,27 @@ def test_jahr_im_kopf_ist_das_jahr_der_fahrgastzahlen():
     # Im Kopf stand bei allen «Daten von 2025», Vaumarcus hat Zahlen von 2024
     assert B.bauen("8504204")["dataYear"] == 2024
     assert B.bauen("8509415")["dataYear"] == 2018  # Mols
+
+
+def test_betreiberin_steht_wie_in_den_stammdaten():
+    # Köniz gehört laut Stammdaten zur BLS. Der Baukasten schrieb fest «Betrieben
+    # wird die Anlage von den Schweizerischen Bundesbahnen SBB».
+    d = B.bauen("8507083")
+    f = fakten_laden("8507083")
+    text = next(k["body"] for k in d["chapters"] if k["id"] == "stammdaten")
+    assert f["stammdaten"]["betreiber"] in text and "Bundesbahnen" not in text
+    assert pruefe(d, f)[0].ok
+    falsch = json.loads(json.dumps(d))
+    for k in falsch["chapters"]:
+        if k["id"] == "stammdaten":
+            k["body"] = k["body"].replace(f["stammdaten"]["betreiber"],
+                                          "den Schweizerischen Bundesbahnen SBB")
+    assert not pruefe(falsch, f)[0].ok
+
+
+def test_ein_einzelner_zug_wird_gebeugt():
+    # Thun GB – Thun: 1 Zug pro Tag, nicht «1 Züge»
+    d = B.bauen("8507100")
+    text = next(k["body"] for k in d["chapters"] if k["id"] == "zuege")
+    assert "1 Züge" not in text and "ist es 1 Zug pro Tag" in text
+

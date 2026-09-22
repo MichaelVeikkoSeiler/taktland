@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer-wochentag",
@@ -26,7 +26,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in St. Gallen 51'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 46'900, an einem freien Tag 37'100. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB, SOB und Thurbo erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne AB.»",
+      "body": "An einem Werktag steigen in St. Gallen 51'300 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 46'900, an einem freien Tag 37'100. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind SBB, SOB und Thurbo erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne AB.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

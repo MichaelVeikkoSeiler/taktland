@@ -1,0 +1,579 @@
+{
+  "uic": 8507100,
+  "name": "Thun",
+  "kanton": "BE",
+  "bps": "TH",
+  "tier": "L",
+  "datenstand": "2026-09-20",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Thun",
+    "kanton": "BE",
+    "isb": "BLS",
+    "evu": "BLS, SBB",
+    "lon": 7.629606,
+    "lat": 46.754853,
+    "dwv": 35500,
+    "dtv": 32800,
+    "dnwv": 26900,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 36000
+      },
+      {
+        "jahr": 2022,
+        "dwv": 30000
+      },
+      {
+        "jahr": 2023,
+        "dwv": 34000
+      },
+      {
+        "jahr": 2024,
+        "dwv": 35200
+      },
+      {
+        "jahr": 2025,
+        "dwv": 35500
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Thun",
+    "abkuerzung": "TH",
+    "hoehe_m_ue_m": 559.75,
+    "gemeinde": "Thun",
+    "ortschaft": "Thun",
+    "bezirk": "Thun",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "BLS AG (bls)"
+  },
+  "bahnhofbenutzer": {
+    "source": "anzahl-sbb-bahnhofbenutzer",
+    "jahr": 2025,
+    "anzahl_pro_tag": 39200,
+    "einheit": "DP/jour",
+    "verlauf": [
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2013,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 39800
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 43200
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 42800
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 39400
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 42400
+      },
+      {
+        "jahr": 2017,
+        "anzahl": 38900
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 45000
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 48700
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 45200
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 41700
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 27600
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 30500
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 28000
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 30700
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 35900
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 33400
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 40500
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 37500
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 40400
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 37500
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 42400
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 39200
+      }
+    ]
+  },
+  "tagesrhythmus": {
+    "source": "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
+    "jahr": 2025,
+    "stunden": [
+      {
+        "stunde": 0,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 1,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 2,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 3,
+        "prozent": 0.0
+      },
+      {
+        "stunde": 4,
+        "prozent": 0.1
+      },
+      {
+        "stunde": 5,
+        "prozent": 1.4
+      },
+      {
+        "stunde": 6,
+        "prozent": 6.5
+      },
+      {
+        "stunde": 7,
+        "prozent": 9.7
+      },
+      {
+        "stunde": 8,
+        "prozent": 5.9
+      },
+      {
+        "stunde": 9,
+        "prozent": 4.8
+      },
+      {
+        "stunde": 10,
+        "prozent": 4.6
+      },
+      {
+        "stunde": 11,
+        "prozent": 5.0
+      },
+      {
+        "stunde": 12,
+        "prozent": 6.3
+      },
+      {
+        "stunde": 13,
+        "prozent": 5.1
+      },
+      {
+        "stunde": 14,
+        "prozent": 5.5
+      },
+      {
+        "stunde": 15,
+        "prozent": 6.4
+      },
+      {
+        "stunde": 16,
+        "prozent": 9.5
+      },
+      {
+        "stunde": 17,
+        "prozent": 10.3
+      },
+      {
+        "stunde": 18,
+        "prozent": 6.8
+      },
+      {
+        "stunde": 19,
+        "prozent": 4.1
+      },
+      {
+        "stunde": 20,
+        "prozent": 3.0
+      },
+      {
+        "stunde": 21,
+        "prozent": 2.3
+      },
+      {
+        "stunde": 22,
+        "prozent": 1.7
+      },
+      {
+        "stunde": 23,
+        "prozent": 0.8
+      }
+    ],
+    "spitzenstunde": 17,
+    "spitzenanteil": 10.3,
+    "wochentage": [
+      {
+        "tag": "Montag",
+        "code": "1_Mo_Lun_Lun_Mo",
+        "prozent": 14.3
+      },
+      {
+        "tag": "Dienstag",
+        "code": "2_Di_Mar_Mar_Tu",
+        "prozent": 15.2
+      },
+      {
+        "tag": "Mittwoch",
+        "code": "3_Mi_Mer_Mer_We",
+        "prozent": 15.2
+      },
+      {
+        "tag": "Donnerstag",
+        "code": "4_Do_Jeu_Gio_Th",
+        "prozent": 15.7
+      },
+      {
+        "tag": "Freitag",
+        "code": "5_Fr_Ven_Ven_Fr",
+        "prozent": 16.2
+      },
+      {
+        "tag": "Samstag",
+        "code": "6_Sa_Sam_Sab_Sa",
+        "prozent": 13.3
+      },
+      {
+        "tag": "Sonntag",
+        "code": "7_So_Dim_Dom_Su",
+        "prozent": 10.1
+      }
+    ],
+    "staerkster_wochentag": "Freitag",
+    "staerkster_wochentag_prozent": 16.2
+  },
+  "perrons": null,
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 6,
+    "nummern": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "16"
+    ],
+    "perronhoehen_cm": [
+      35,
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 110,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 235,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          35,
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 114,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      },
+      {
+        "nr": "4",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 222,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      },
+      {
+        "nr": "5",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 222,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      },
+      {
+        "nr": "16",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 117,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "segmente": 21,
+    "segmente_pro_perronhoehe_cm": {
+      "35": 10,
+      "55": 11
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 6,
+    "gleise_mit_daten": 6
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Thun (Abzw)",
+      "bis": "Thun",
+      "strecke_nr": 310,
+      "strecke": "Uttigen - Thun (PB/GB) - Spiez Abzweigung",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 145166,
+      "zuege_pro_tag": 398
+    },
+    "staerkster_personenverkehr": {
+      "von": "Thun (Abzw)",
+      "bis": "Thun",
+      "strecke_nr": 310,
+      "strecke": "Uttigen - Thun (PB/GB) - Spiez Abzweigung",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 145166,
+      "zuege_pro_tag": 398
+    },
+    "abschnitte": [
+      {
+        "von": "Thun (Abzw)",
+        "bis": "Thun",
+        "strecke_nr": 310,
+        "strecke": "Uttigen - Thun (PB/GB) - Spiez Abzweigung",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 145166,
+        "zuege_pro_tag": 398
+      },
+      {
+        "von": "Thun",
+        "bis": "Thun Schadau",
+        "strecke_nr": 310,
+        "strecke": "Uttigen - Thun (PB/GB) - Spiez Abzweigung",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57850,
+        "zuege_pro_tag": 158
+      },
+      {
+        "von": "Thun",
+        "bis": "Thun Schadau",
+        "strecke_nr": 310,
+        "strecke": "Uttigen - Thun (PB/GB) - Spiez Abzweigung",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 17708,
+        "zuege_pro_tag": 49
+      },
+      {
+        "von": "Thun (Abzw)",
+        "bis": "Thun",
+        "strecke_nr": 310,
+        "strecke": "Uttigen - Thun (PB/GB) - Spiez Abzweigung",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 15278,
+        "zuege_pro_tag": 42
+      },
+      {
+        "von": "Thun GB",
+        "bis": "Thun",
+        "strecke_nr": 310,
+        "strecke": "Uttigen - Thun (PB/GB) - Spiez Abzweigung",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 2078,
+        "zuege_pro_tag": 6
+      },
+      {
+        "von": "Thun GB",
+        "bis": "Thun",
+        "strecke_nr": 310,
+        "strecke": "Uttigen - Thun (PB/GB) - Spiez Abzweigung",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 342,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": true,
+    "billettautomaten_erfasst": 7,
+    "automat_typen": [
+      "Andere",
+      "STI",
+      "ePOS"
+    ],
+    "billettentwerter_erfasst": 5,
+    "wartehallen_erfasst": 0,
+    "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/170ae999af79d2929f00cd02bb1eea2d"
+  },
+  "ausstattung": {
+    "source": "mobiliar-im-bahnhof, perronoberflache",
+    "hinweis": "Das Mobiliar ist nur teilweise erhoben. Ein fehlender Eintrag heisst nicht, dass es den Gegenstand vor Ort nicht gibt. Die Stueckzahl steht in einem Feld, das die Quelle selbst nicht beschreibt; die Einheit ist dort als Stueck gefuehrt.",
+    "sitzbaenke": 61,
+    "infopunkte": 13,
+    "schliessfaecher": 96,
+    "infopunkte_hinweis": "Was die Quelle unter einem Infopunkt versteht, sagt sie nicht. Die Zahl ist darum nur als erfasster Bestand zu lesen."
+  },
+  "bahnhofplan": {
+    "source": "haltestelle-karte-trafimage",
+    "a4_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-thun-a4.pdf",
+    "plakat_pdf": "https://www.sbb.ch/content/dam/infrastruktur/trafimage/bahnhofplaene/plan-thun-plakat.pdf",
+    "shopping_pdf": null,
+    "eigentuemer": "SBB"
+  },
+  "luecken": [
+    {
+      "thema": "Perronbelag",
+      "grund": "Womit die Perrons belegt sind, ist für diesen Bahnhof nicht erfasst.",
+      "quelle": "perronoberflache"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 6 Gleise (1, 2, 3, 4, 5, 16). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2, 3, 4, 5, 16 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "tagesrhythmus",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "services",
+    "ausstattung",
+    "bahnhofplan"
+  ]
+}

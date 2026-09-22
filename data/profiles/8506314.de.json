@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -24,7 +24,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in St. Margrethen SG 4'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 4'200, an einem freien Tag 3'500. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB, SOB und Thurbo erfasst. Die Quelle vermerkt zu diesen Zahlen: «Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.»",
+      "body": "An einem Werktag steigen in St. Margrethen SG 4'500 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 4'200, an einem freien Tag 3'500. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind SBB, SOB und Thurbo erfasst. Die Quelle vermerkt zu diesen Zahlen: «Einsteigende in Richtung Ausland und Aussteigende aus dem Ausland sind nur zum Teil erfasst.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

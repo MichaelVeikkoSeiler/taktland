@@ -6199,6 +6199,17 @@
    }
   },
   {
+   "uic": 8504483,
+   "name": "Ins",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 2700,
+    "dnwv": 1800,
+    "hoehe": 436.95,
+    "zuege": 154
+   }
+  },
+  {
    "uic": 8504484,
    "name": "Müntschemier",
    "kanton": "BE",
@@ -8294,6 +8305,28 @@
     "dnwv": 990,
     "hoehe": 571.786,
     "zuege": 74
+   }
+  },
+  {
+   "uic": 8507100,
+   "name": "Thun",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 35500,
+    "dnwv": 26900,
+    "hoehe": 559.75,
+    "zuege": 398
+   }
+  },
+  {
+   "uic": 8507483,
+   "name": "Spiez",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 18600,
+    "dnwv": 18600,
+    "hoehe": 627.82,
+    "zuege": 214
    }
   },
   {

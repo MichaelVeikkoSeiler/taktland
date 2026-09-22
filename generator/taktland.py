@@ -434,6 +434,27 @@ def pruefe(profil, fakten, fix=False, entfernen=False):
     jahr = (fakten.get("steckbrief") or {}).get("jahr")
     if jahr and profil.get("dataYear") != jahr:
         b.fehlt("Profil", f"dataYear {profil.get('dataYear')}, die Fahrgastzahlen stammen aus {jahr}")
+    # Wer die Anlage betreibt, steht in den Fakten. Der Satz stand einmal fest
+    # im Baukasten und nannte bei Köniz und Müntschemier die SBB statt der BLS.
+    for k in profil["chapters"]:
+        text = k.get("body", "")
+        if k.get("id") == "stammdaten":
+            betreiber = (fakten.get("stammdaten") or {}).get("betreiber")
+            if "Bundesbahnen SBB" in text and betreiber != "Schweizerische Bundesbahnen SBB":
+                b.fehlt("Kapitel stammdaten", f"nennt die SBB als Betreiberin, in den Fakten "
+                                              f"steht {betreiber!r}")
+            elif betreiber and betreiber not in text and "Bundesbahnen SBB" not in text:
+                b.fehlt("Kapitel stammdaten", f"nennt die Betreiberin {betreiber!r} nicht")
+        if k.get("id") == "steckbrief":
+            isb = (fakten.get("steckbrief") or {}).get("isb")
+            for m in re.finditer(r"Infrastrukturbetreiberin ist die ([^,.]+)", text):
+                if m.group(1) != isb:
+                    b.fehlt("Kapitel steckbrief", f"nennt {m.group(1)!r} als "
+                                                  f"Infrastrukturbetreiberin, in den Fakten "
+                                                  f"steht {isb!r}")
+            if "Infrastruktur gehört" in text:
+                b.fehlt("Kapitel steckbrief", "«Infrastruktur gehört»: Das Feld nennt die "
+                                              "Infrastrukturbetreiberin, nicht die Eigentümerin")
     if fix:
         profil["luecken"] = fakten.get("luecken", [])
         if any(f.get("type") == "hotspot"

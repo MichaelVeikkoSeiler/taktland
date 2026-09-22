@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
@@ -27,7 +27,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Fribourg/Freiburg 34'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 30'800, an einem freien Tag 22'100. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS, SBB und TPF erfasst.",
+      "body": "An einem Werktag steigen in Fribourg/Freiburg 34'600 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 30'800, an einem freien Tag 22'100. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind BLS, SBB und TPF erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -23,7 +23,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Läufelfingen 560 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 490, an einem freien Tag 350. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
+      "body": "An einem Werktag steigen in Läufelfingen 560 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 490, an einem freien Tag 350. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind SBB und SOB erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "billetautomat",
     "billetentwerter",
@@ -22,7 +22,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Muntelier-Löwenberg 540 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 470, an einem freien Tag 320. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS und TPF erfasst.",
+      "body": "An einem Werktag steigen in Muntelier-Löwenberg 540 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 470, an einem freien Tag 320. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind BLS und TPF erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

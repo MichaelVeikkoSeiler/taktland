@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
@@ -27,7 +27,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Biel/Bienne 53'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 48'400, an einem freien Tag 37'700. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind BLS und SBB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne ASM.»",
+      "body": "An einem Werktag steigen in Biel/Bienne 53'200 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 48'400, an einem freien Tag 37'700. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind BLS und SBB erfasst. Die Quelle vermerkt zu diesen Zahlen: «Ohne ASM.»",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

@@ -112,6 +112,9 @@ MVP_STATIONS = {
 ZUSAETZLICH = {
     8507083: "Köniz",          # BLS
     8504484: "Müntschemier",   # BLS
+    8504483: "Ins",            # BLS
+    8507483: "Spiez",          # BLS
+    8507100: "Thun",           # in passagierfrequenz bis 2024 SBB, ab 2025 BLS
 }
 
 ATTRIBUTION = "Daten: SBB Open Data (data.sbb.ch), Lizenz mit Quellenangabe"

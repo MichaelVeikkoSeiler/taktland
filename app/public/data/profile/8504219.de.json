@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -22,7 +22,7 @@
     {
       "id": "steckbrief",
       "title": "Steckbrief",
-      "body": "An einem Werktag steigen in Auvernier 580 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 530, an einem freien Tag 410. Die Infrastruktur gehört der SBB, als Bahnunternehmen sind SBB und transN erfasst.",
+      "body": "An einem Werktag steigen in Auvernier 580 Personen ein und aus. Im Tagesmittel über das ganze Jahr sind es 530, an einem freien Tag 410. Infrastrukturbetreiberin ist die SBB, als Bahnunternehmen sind SBB und transN erfasst.",
       "facts": [
         {
           "label": "Ein- und Aussteigende an einem Werktag",

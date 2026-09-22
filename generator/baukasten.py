@@ -41,6 +41,9 @@ ZUG = ("Zugzahlen werden pro Streckenabschnitt erhoben, nicht pro Bahnhof. "
        "Durchfahrende Züge zählen gleich wie haltende.")
 #: Jahr, das die App als «Daten von …» zeigt
 DATENJAHR = 2025
+
+#: So steht die SBB in den Stammdaten als Betreiberin
+SBB_BETREIBER = "Schweizerische Bundesbahnen SBB"
 H55 = "Eine Perronkante von 55 Zentimetern entspricht der Einstiegshöhe vieler Züge."
 
 
@@ -164,7 +167,9 @@ def steckbrief(f, extra_body="", extra_fragen=()):
     elif evu:
         namen = evu.split(", ")
         liste = aufzaehlung(namen)
-        teile.append(f"Die Infrastruktur gehört der {s['isb']}, als Bahnunternehmen "
+        # isb_gi heisst Infrastrukturbetreiberin. «Die Infrastruktur gehört
+        # der SBB» sagte mehr, als das Feld hergibt.
+        teile.append(f"Infrastrukturbetreiberin ist die {s['isb']}, als Bahnunternehmen "
                      f"{'sind' if len(namen) > 1 else 'ist'} {liste} erfasst.")
     if s.get("bemerkung"):
         # wörtlich, damit keine Auslegung entsteht (siehe «Ohne AB.» in SCHEMA.md)
@@ -253,8 +258,16 @@ def stammdaten(f, frage="abkuerzung", distraktoren=()):
         body += f". Als Kanton ist in den Stammdaten {st['kanton']} eingetragen."
     if not st.get("bezirk"):
         body += " Ein Bezirk ist in den Stammdaten nicht eingetragen."
-    body += (" Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB. "
-             f"Die offizielle Abkürzung lautet {st['abkuerzung']}.")
+    # Die Betreiberin steht in den Stammdaten. Der Satz stand früher fest hier
+    # und nannte auch bei Köniz und Müntschemier die SBB, laut Stammdaten BLS.
+    betreiber = st.get("betreiber")
+    if betreiber == SBB_BETREIBER:
+        body += " Betrieben wird die Anlage von den Schweizerischen Bundesbahnen SBB."
+    elif betreiber:
+        body += f" Als Betreiberin ist in den Stammdaten {betreiber} eingetragen."
+    else:
+        body += " Eine Betreiberin ist in den Stammdaten nicht eingetragen."
+    body += f" Die offizielle Abkürzung lautet {st['abkuerzung']}."
     facts = [{"label": "Höhe über Meer", "value": st["hoehe_m_ue_m"], "unit": "m",
               "source": "haltestelle-haltekante", "factRef": "stammdaten.hoehe_m_ue_m"},
              {"label": "Offizielle Abkürzung", "value": st["abkuerzung"],
@@ -762,10 +775,17 @@ def zuege(f):
                 f"verkehren dort {st['zuege_pro_tag']} Züge pro Tag, das sind "
                 f"{ch(st['zuege_pro_jahr'])} im Jahr."]
     if weitere:
+        # «sind es 158 und … sind es 1 Züge» war falsch gebeugt (Thun GB). Steht
+        # irgendwo ein einzelner Zug, bekommt jeder Abschnitt seine Einheit.
+        einzeln = any(a["zuege_pro_tag"] == 1 for a in weitere)
+
+        def teil(a, letzter):
+            n = a["zuege_pro_tag"]
+            t = (f"dem Abschnitt {abschn(a)} {'ist' if n == 1 else 'sind'} es "
+                 f"{'ebenfalls ' if n == st['zuege_pro_tag'] else ''}{n}")
+            return t + (f" {'Zug' if n == 1 else 'Züge'} pro Tag" if einzeln or letzter else "")
         satz.append("Auf " + " und auf ".join(
-            f"dem Abschnitt {abschn(a)} sind es "
-            f"{'ebenfalls ' if a['zuege_pro_tag'] == st['zuege_pro_tag'] else ''}{a['zuege_pro_tag']}"
-            for a in weitere) + " Züge pro Tag.")
+            teil(a, i == len(weitere) - 1) for i, a in enumerate(weitere)) + ".")
     if gv and (m := max(a['zuege_pro_tag'] for _, a in gv)):
         satz.append(f"Im Güterverkehr zählt die Erhebung bis zu {m} {'Zug' if m == 1 else 'Züge'} "
                     "pro Tag auf einem Abschnitt.")
