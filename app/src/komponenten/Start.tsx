@@ -1,4 +1,3 @@
-import { HERAUSGEBER } from '../kontakt'
 import type { BahnhofIndex } from '../typen'
 
 /** Zahlen über 9999 mit Apostroph, darunter ohne (CLAUDE.md) */
@@ -34,9 +33,9 @@ export function Start({ index }: { index: BahnhofIndex }) {
         «Standort» zeigt dir, was in deiner Nähe liegt.
       </p>
       <p className={absatz}>
-        Taktland ist {HERAUSGEBER}s erstes grösseres Projekt, umgesetzt mit einer Rundum-KI-Lösung
-        und viel Entwicklungsarbeit. Es ist kostenlos, braucht kein Konto, und dein Fortschritt
-        bleibt auf deinem Gerät; Taktland ist ein privates Lernprojekt und kein Angebot der SBB.
+        Entstanden ist Taktland mit einer Rundum-KI-Lösung und eigener Entwicklungsarbeit. Es ist
+        kostenlos, braucht kein Konto, und dein Fortschritt bleibt auf deinem Gerät; Taktland ist
+        ein privates Lernprojekt und kein Angebot der SBB.
       </p>
       <p className={`${absatz} text-sbb-metal dark:text-sbb-storm`}>
         Oben wählst du einen Bereich. Das «i» erklärt, wie Taktland funktioniert.
