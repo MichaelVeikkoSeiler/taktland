@@ -156,7 +156,7 @@ export function Uebersicht({ art, stand, aendern }: {
         </p>
       )}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        Ein Tipp auf einen Eintrag zeigt ihn in der Liste seiner Linie.
+        Ein Tipp auf einen Eintrag öffnet die Liste seiner Linie und zeigt ihn oben.
         {daten?.ohne_seite ? <> {daten.ohne_seite} Brücken liegen auf Linien ohne eigene
           Seite in Taktland: Sie haben weniger als zwei Bahnhöfe in Taktland und keinen
           Tunnel. Diese Brücken stehen trotzdem hier, nur ohne Verweis.</> : null}

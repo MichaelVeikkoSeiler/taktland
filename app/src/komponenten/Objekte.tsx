@@ -48,15 +48,17 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
   const alle = (profil?.listen?.[art] ?? []) as unknown as Array<Record<string, unknown>>
   const eintraege = filter ? alle.filter((e) => (e[filter.feld] ?? null) === filter.wert) : alle
 
-  // zum hervorgehobenen Eintrag rollen, sobald die Liste dasteht (nach dem
-  // Sprung an den Seitenanfang beim Seitenwechsel)
-  useEffect(() => {
-    if (!profil || markiert === null) return
-    const uhr = window.setTimeout(() => {
-      document.getElementById(`eintrag-${markiert}`)?.scrollIntoView({ block: 'center' })
-    }, 50)
-    return () => window.clearTimeout(uhr)
-  }, [profil, markiert])
+  // Der gewählte Eintrag steht oben in einem eigenen Kasten. Vorher rollte die
+  // Seite zu ihm in die Liste, und Bild und Titel waren weg (Simplontunnel:
+  // 1000 Pixel nach unten); das wirkte wie ein Sprung.
+  const gewaehlt = markiert !== null && !filter ? alle[markiert] : undefined
+  const zeile = (e: Record<string, unknown>) => (
+    <>
+      {art === 'tunnel' && <Tunnel t={e as unknown as TunnelEintrag} />}
+      {art === 'bruecken' && <Bruecke b={e as unknown as BrueckenEintrag} />}
+      {art === 'bahnuebergaenge' && <Uebergang u={e as unknown as UebergangEintrag} />}
+    </>
+  )
 
   return (
     <div className="px-4 pb-16">
@@ -67,6 +69,23 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
 
       {fehler && <p className="mt-6">Die Liste konnte nicht geladen werden. {fehler}</p>}
       {!profil && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}
+
+      {profil && gewaehlt && (
+        <div className="mt-4 border border-l-4 border-sbb-cloud border-l-sbb-red bg-sbb-milk px-3 py-2
+                        dark:border-sbb-iron dark:border-l-sbb-red dark:bg-sbb-charcoal">
+          <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">Ausgewählt</p>
+          {zeile(gewaehlt)}
+          <button
+            type="button"
+            onClick={() => document.getElementById(`eintrag-${markiert}`)
+              ?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+            className="mt-1 text-sm text-sbb-metal underline underline-offset-2 hover:text-sbb-black
+                       dark:text-sbb-storm dark:hover:text-sbb-white"
+          >
+            In der Liste zeigen
+          </button>
+        </div>
+      )}
 
       {profil && (
         <>
@@ -94,9 +113,7 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
                   aria-current={!filter && i === markiert ? 'true' : undefined}
                   className={`px-3 py-2 ${!filter && i === markiert
                     ? 'border-l-4 border-l-sbb-red bg-sbb-milk dark:bg-sbb-charcoal' : ''}`}>
-                {art === 'tunnel' && <Tunnel t={e as unknown as TunnelEintrag} />}
-                {art === 'bruecken' && <Bruecke b={e as unknown as BrueckenEintrag} />}
-                {art === 'bahnuebergaenge' && <Uebergang u={e as unknown as UebergangEintrag} />}
+                {zeile(e)}
               </li>
             ))}
           </ol>
