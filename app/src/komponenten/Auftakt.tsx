@@ -54,20 +54,32 @@ export interface AuftaktBild {
 
 /**
  * Auftaktbild eines Bereichs, am Tag und in der Nacht. Von 7 bis 21 Uhr
- * Schweizer Zeit erscheint das Tagbild, sonst folgt es der Geräteeinstellung. Ein kleiner Knopf zeigt für fünf Sekunden das andere
- * Bild, dann blendet es zurück. Das andere Bild wird erst geladen, wenn jemand
- * den Knopf berührt: Wer ihn nie nutzt, lädt es nicht. Ohne Nachtbild gibt es
- * nur das eine Bild und keinen Knopf.
+ * Schweizer Zeit erscheint das Tagbild, sonst folgt es der Geräteeinstellung.
+ * Ein kleiner Knopf zeigt für fünf Sekunden das andere Bild, dann blendet es
+ * zurück. Die Vorschau bleibt beim Wechsel des Bereichs bestehen: Wer weiter
+ * klickt, sieht auch dort das andere Bild, und erst fünf Sekunden nach dem
+ * letzten Wechsel kommt das übliche zurück (Michael, 2026-09-22). Das andere
+ * Bild wird erst geladen, wenn jemand den Knopf berührt: Wer ihn nie nutzt,
+ * lädt es nicht. Ohne Nachtbild gibt es nur das eine Bild und keinen Knopf.
  */
+
+/** Die Vorschau überlebt den Wechsel des Bereichs, weil sie ausserhalb der
+ *  Komponente steht; sie endet mit dem Zeitablauf oder mit dem Knopf. */
+let vorschau = false
 export function Auftakt({ bild }: { bild: AuftaktBild }) {
   // beide Hooks immer aufrufen, auch am Tag (Reihenfolge der Hooks)
   const tag = useTag()
   const geraetDunkel = useDunkel()
   const dunkel = !tag && geraetDunkel && bild.dunkel !== undefined
-  const [angefragt, setAngefragt] = useState(false)
+  const [angefragt, setAngefragt] = useState(vorschau)
   const [geladen, setGeladen] = useState(false)
-  const [zeigen, setZeigen] = useState(false)
+  const [zeigen, setZeigenRoh] = useState(vorschau)
   const sichtbar = zeigen && geladen
+
+  function setZeigen(an: boolean) {
+    vorschau = an
+    setZeigenRoh(an)
+  }
 
   // die fünf Sekunden zählen ab dem Moment, in dem das Bild wirklich dasteht
   useEffect(() => {
@@ -100,7 +112,7 @@ export function Auftakt({ bild }: { bild: AuftaktBild }) {
         type="button"
         onPointerEnter={() => setAngefragt(true)}
         onFocus={() => setAngefragt(true)}
-        onClick={() => { setAngefragt(true); setZeigen((z) => !z) }}
+        onClick={() => { setAngefragt(true); setZeigen(!zeigen) }}
         aria-label={beschriftung} title={beschriftung} aria-pressed={zeigen}
         className="absolute bottom-2 right-2 flex size-7 items-center justify-center
                    bg-black/30 text-white opacity-60 transition-opacity hover:opacity-100
