@@ -1,7 +1,7 @@
 import anleitungDunkel from '../assets/auftakt-anleitung-dunkel.webp'
 import anleitungHell from '../assets/auftakt-anleitung-hell.webp'
-import auftaktDunkel from '../assets/auftakt-dunkel.webp'
-import auftaktHell from '../assets/auftakt-hell.webp'
+import bahnhoefeDunkel from '../assets/auftakt-bahnhoefe-dunkel.webp'
+import bahnhoefeHell from '../assets/auftakt-bahnhoefe-hell.webp'
 import brueckenDunkel from '../assets/auftakt-bruecken-dunkel.webp'
 import brueckenHell from '../assets/auftakt-bruecken-hell.webp'
 import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
@@ -10,6 +10,8 @@ import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
 import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
 import standortHell from '../assets/auftakt-standort-hell.webp'
+import startDunkel from '../assets/auftakt-start-dunkel.webp'
+import startHell from '../assets/auftakt-start-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { Auftakt, type AuftaktBild } from './Auftakt'
@@ -30,14 +32,19 @@ const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
 
 /** Auftaktbilder je Bereich, dazu eines für die Anleitung. Ein Bereich ohne
  *  Eintrag erscheint ohne Bild. */
-const BILDER: Partial<Record<Bereich | 'anleitung', AuftaktBild>> = {
+const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
+  // das erste Auftaktbild von Taktland, seit dem eigenen Bild der Bahnhöfe auf der Startseite
+  start: {
+    hell: startHell, dunkel: startDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Am Perron steigen Menschen aus einem Zug aus, andere warten aufs Einsteigen.',
+  },
   anleitung: {
     hell: anleitungHell, dunkel: anleitungDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Mann mit Rucksack schaut am Perron auf sein Handy, dahinter wartende und gehende Menschen.',
   },
   bahnhoefe: {
-    hell: auftaktHell, dunkel: auftaktDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration: Am Perron steigen Menschen aus einem Zug aus, andere warten aufs Einsteigen.',
+    hell: bahnhoefeHell, dunkel: bahnhoefeDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Schräg von vorne an einem Perron: Menschen steigen aus einem Zug, andere warten in einer Reihe.',
   },
   linien: {
     hell: linienHell, dunkel: linienDunkel, breite: 1344, hoehe: 664,
@@ -73,7 +80,7 @@ export function Kopf({ aktiv, startseite, anleitung = false }: {
   startseite: boolean
   anleitung?: boolean
 }) {
-  const schluessel = anleitung ? 'anleitung' : aktiv ?? 'bahnhoefe'
+  const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
   const bild = BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   return (
