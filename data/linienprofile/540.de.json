@@ -364,7 +364,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 50.279,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Solothurn"
       }
     ],
     "bruecken": [

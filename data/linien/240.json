@@ -87,7 +87,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 6,
   "laengste": [
    4
@@ -109,7 +109,8 @@
     "inbetriebnahme_jahr": 1877,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 97.7,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Jura"
    },
    {
     "name": "Tunnel de Montmelon (064)",
@@ -117,7 +118,8 @@
     "inbetriebnahme_jahr": 1877,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 100.209,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Jura"
    },
    {
     "name": "Tunnel de Malvie ( 065 )",
@@ -125,7 +127,8 @@
     "inbetriebnahme_jahr": 1877,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 100.582,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Jura"
    },
    {
     "name": "Tunnel du Château (061)",
@@ -133,7 +136,8 @@
     "inbetriebnahme_jahr": 1877,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 102.299,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Jura"
    },
    {
     "name": "Tunnel de la Croix (062)",
@@ -141,7 +145,8 @@
     "inbetriebnahme_jahr": 1877,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 103.722,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Jura"
    },
    {
     "name": "Tunnel de Courchavon (037)",
@@ -149,7 +154,8 @@
     "inbetriebnahme_jahr": 1877,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 115.403,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Jura"
    }
   ]
  },

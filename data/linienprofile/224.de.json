@@ -547,7 +547,8 @@
         "inbetriebnahme_jahr": 1860,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 22.703,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Neuchâtel"
       },
       {
         "name": "Tunnel du Mont Sagne(007)",
@@ -555,7 +556,8 @@
         "inbetriebnahme_jahr": 1859,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 26.239,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Neuchâtel"
       },
       {
         "name": "Tunnel de Combe (Convers, 006)",
@@ -563,7 +565,8 @@
         "inbetriebnahme_jahr": 1858,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 28.752,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Neuchâtel"
       },
       {
         "name": "Tunnel du col des Roches (073)",
@@ -571,7 +574,8 @@
         "inbetriebnahme_jahr": 1884,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 39.507,
-        "bemerkung": "107m gehört Frankreich"
+        "bemerkung": "107m gehört Frankreich",
+        "kanton": "Neuchâtel"
       }
     ],
     "bruecken": [

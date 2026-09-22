@@ -501,7 +501,8 @@
         "inbetriebnahme_jahr": 1904,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 3.803,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel du Crêt (078)",
@@ -509,7 +510,8 @@
         "inbetriebnahme_jahr": 1904,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 5.336,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel du Carroz (079)",
@@ -517,7 +519,8 @@
         "inbetriebnahme_jahr": 1904,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 5.782,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       }
     ],
     "bruecken": [

@@ -597,7 +597,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 28.428,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Jonaschluchttunnel",
@@ -605,7 +606,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 38.256,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Kühweidtunnel",
@@ -613,7 +615,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 38.585,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Platteneinschnitttunnel",
@@ -621,7 +624,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 39.37,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       }
     ],
     "bruecken": [

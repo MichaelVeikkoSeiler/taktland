@@ -364,7 +364,8 @@
         "inbetriebnahme_jahr": 1993,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 11.731,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Birchiwaldtunnel",
@@ -372,7 +373,8 @@
         "inbetriebnahme_jahr": 2003,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 17.147,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Rüdtligentunnel",
@@ -380,7 +382,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 18.769,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Emmetunnel",
@@ -388,7 +391,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 20.054,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Hersiwiltunnel",
@@ -396,7 +400,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 30.55,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Solothurn"
       },
       {
         "name": "Oenzbergtunnel",
@@ -404,7 +409,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 34.549,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Solothurn"
       },
       {
         "name": "Gishübeltunnel",
@@ -412,7 +418,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 37.149,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Thunstettentunnel I Nord NBS",
@@ -420,7 +427,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 40.749,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Langenthaltunnel",
@@ -428,7 +436,8 @@
         "inbetriebnahme_jahr": 2003,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 43.352,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Aegertentunnel",
@@ -436,7 +445,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 48.45,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Murgenthaltunnel",
@@ -444,7 +454,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 51.29,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Aargau"
       }
     ],
     "bruecken": [

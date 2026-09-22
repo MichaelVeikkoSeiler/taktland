@@ -7,8 +7,8 @@ import type { Kategorie, Vergleichsdaten } from '../typen'
 import { kantonText } from '../kanton'
 
 /**
- * Bahnhöfe gegeneinander. Die Fragen entstehen hier aus den Werten in
- * vergleich.json, es wird nichts geschrieben und nichts geschätzt.
+ * Bahnhöfe, Linien oder Tunnel gegeneinander. Die Fragen entstehen hier aus
+ * den Werten in vergleich.json, es wird nichts geschrieben und nichts geschätzt.
  *
  * Warum das geht, ohne gegen die Belegpflicht zu verstossen: Beide Werte
  * stammen unverändert aus den Faktendateien, und pipeline/build_vergleich.py
@@ -17,9 +17,37 @@ import { kantonText } from '../kanton'
  * die Frage das ausdrücklich.
  */
 
-/** Ein Kanton braucht genug Bahnhöfe, sonst findet sich kein faires Paar.
+/** Ein Kanton braucht genug Einträge, sonst findet sich kein faires Paar.
  *  Die Grenze ist dieselbe, die versuchen() ohnehin verlangt. */
 const MINDESTENS = 8
+
+/** Was gegeneinander antritt. Brücken nicht: Von ihnen ist nur die Zahl der
+ *  Baueinheiten erfasst, und drei von vier haben genau eine. */
+type Bereich = 'bahnhoefe' | 'linien' | 'tunnel'
+
+const BEREICHE: Record<Bereich, { name: string; mehrzahlDativ: string }> = {
+  bahnhoefe: { name: 'Bahnhöfe', mehrzahlDativ: 'Bahnhöfen' },
+  linien: { name: 'Linien', mehrzahlDativ: 'Linien' },
+  tunnel: { name: 'Tunnel', mehrzahlDativ: 'Tunneln' },
+}
+
+/**
+ * Die Auswahl steht als ein Wort im Speicher, auch der Bestwert hängt daran:
+ * «CH» und «ZH» für die Bahnhöfe (so hiess es schon vor den Bereichen, damit
+ * bleiben alte Bestwerte gültig), «TUNNEL» und «TUNNEL:UR», «LINIEN».
+ */
+function zerlegen(auswahl: string): { bereich: Bereich; gebiet: string } {
+  if (auswahl === 'LINIEN') return { bereich: 'linien', gebiet: 'CH' }
+  if (auswahl === 'TUNNEL') return { bereich: 'tunnel', gebiet: 'CH' }
+  if (auswahl.startsWith('TUNNEL:')) return { bereich: 'tunnel', gebiet: auswahl.slice(7) }
+  return { bereich: 'bahnhoefe', gebiet: /^[A-Z]{2}$/.test(auswahl) ? auswahl : 'CH' }
+}
+
+function zusammensetzen(bereich: Bereich, gebiet: string) {
+  if (bereich === 'linien') return 'LINIEN'
+  if (bereich === 'tunnel') return gebiet === 'CH' ? 'TUNNEL' : `TUNNEL:${gebiet}`
+  return gebiet
+}
 
 const KANTONSNAME: Record<string, string> = {
   AG: 'Aargau', AI: 'Appenzell Innerrhoden', AR: 'Appenzell Ausserrhoden',
@@ -30,12 +58,15 @@ const KANTONSNAME: Record<string, string> = {
   TI: 'Tessin', UR: 'Uri', VD: 'Waadt', VS: 'Wallis', ZG: 'Zug', ZH: 'Zürich',
 }
 
-/** Was gegeneinander antritt: ein Bahnhof oder ein Tunnel */
+/** Was gegeneinander antritt: ein Bahnhof, eine Linie oder ein Tunnel */
 interface Gegenstand {
   schluessel: string
   name: string
-  /** unter dem Namen: der Kanton beim Bahnhof, die Linie beim Tunnel */
+  /** unter dem Namen: der Kanton beim Bahnhof, die Linie beim Tunnel, der
+   *  Name bei der Linie */
   unterzeile: string | null
+  /** Kantonskürzel für die Auswahl nach Kanton; leer bei den Linien */
+  kantone: string[]
   /** Bemerkung der Quelle, etwa was eine Tunnellänge umfasst */
   bemerkung?: string | null
   werte: Record<string, number>
@@ -43,9 +74,6 @@ interface Gegenstand {
   link: string
   linkText: string
 }
-
-/** Auswahl «alle Tunnel» im Feld oben, neben Schweiz und Kantonen */
-const TUNNEL = 'TUNNEL'
 
 interface Runde {
   kategorie: Kategorie
@@ -73,6 +101,17 @@ function weitGenug(a: number, b: number, k: Kategorie) {
   return abstand >= k.min_abstand && anteil >= k.min_anteil
 }
 
+/** Gibt es in diesem Feld überhaupt ein faires Paar? Wenn der kleinste und
+ *  der grösste Wert einer Kategorie nicht weit genug auseinanderliegen, dann
+ *  keine zwei Werte dazwischen. */
+function hatFairesPaar(feld: Gegenstand[], kategorien: Kategorie[]) {
+  return kategorien.some((k) => {
+    const werte = feld.map((g) => wertVon(g, k)).filter((v) => v != null)
+    return werte.length >= MINDESTENS
+      && weitGenug(Math.min(...werte), Math.max(...werte), k)
+  })
+}
+
 /**
  * Sucht ein Feld für eine Kategorie. Mit wachsender Serie rücken die Werte
  * näher zusammen - aber nie näher als der Mindestabstand der Kategorie.
@@ -84,11 +123,10 @@ function weitGenug(a: number, b: number, k: Kategorie) {
  * Serie von 8 schaffte, wurde also dafür bestraft.
  */
 function versuchen(feldAlle: Gegenstand[], kategorie: Kategorie,
-                   serie: number, engziehen: boolean): Runde | null {
+                   serie: number, engziehen: boolean, anzahl: number): Runde | null {
   const feld = feldAlle.filter((b) => wertVon(b, kategorie) != null)
-  if (feld.length < 8) return null
+  if (feld.length < MINDESTENS) return null
 
-  const anzahl = serie >= 4 && Math.random() < 0.4 ? 4 : 2
   const locker = 1 / (1 + Math.min(serie, 8) * 0.6)
   const enge = engziehen ? Math.max(kategorie.min_anteil * 1.6, locker) : 1
 
@@ -125,16 +163,20 @@ function versuchen(feldAlle: Gegenstand[], kategorie: Kategorie,
 }
 
 /**
- * Baut eine Runde. Geht eine Kategorie nicht auf, kommt die nächste dran, und
- * zuletzt wird ohne Verengung gesucht. So bleibt das Spiel nie stehen.
+ * Baut eine Runde. Ab einer Serie von 4 stehen manchmal vier zur Wahl. Geht
+ * eine Kategorie nicht auf, kommt die nächste dran, dann wird ohne Verengung
+ * gesucht und zuletzt mit zweien statt vieren. So bleibt das Spiel nie stehen.
  */
 function rundeBauen(kategorien: Kategorie[], feld: Gegenstand[],
                     serie: number): Runde | null {
   const reihenfolge = [...kategorien].sort(() => Math.random() - 0.5)
-  for (const eng of [true, false]) {
-    for (const kategorie of reihenfolge) {
-      const runde = versuchen(feld, kategorie, serie, eng)
-      if (runde) return runde
+  const anzahlen = serie >= 4 && Math.random() < 0.4 ? [4, 2] : [2]
+  for (const anzahl of anzahlen) {
+    for (const eng of [true, false]) {
+      for (const kategorie of reihenfolge) {
+        const runde = versuchen(feld, kategorie, serie, eng, anzahl)
+        if (runde) return runde
+      }
     }
   }
   return null
@@ -144,7 +186,8 @@ function zahl(n: number, k: Kategorie) {
   const text = k.format === 'jahr'
     ? String(n)
     : n.toLocaleString('de-CH', { maximumFractionDigits: 20 })
-  return k.einheit ? `${text} ${k.einheit}` : text
+  const einheit = n === 1 && k.einheit_einzahl ? k.einheit_einzahl : k.einheit
+  return einheit ? `${text} ${einheit}` : text
 }
 
 /** Setzt den Punkt nur, wenn nicht schon einer dasteht: «m ü. M.» endet selbst
@@ -165,43 +208,68 @@ export function Duell() {
 
   useEffect(() => { zwischenstand = { auswahl, serie, runde, gewaehlt } },
             [auswahl, serie, runde, gewaehlt])
-  const tunnelFeld = auswahl === TUNNEL
+  const { bereich, gebiet } = zerlegen(auswahl)
 
-  /** Die Kantone, die genug Bahnhöfe für faire Paare haben. */
-  const kantone = useMemo(() => {
+  const kategorien = useMemo((): Kategorie[] => {
     if (!daten) return []
-    const zaehler = new Map<string, number>()
-    for (const b of daten.bahnhoefe) {
-      if (b.kanton) zaehler.set(b.kanton, (zaehler.get(b.kanton) ?? 0) + 1)
-    }
-    return [...zaehler.entries()]
-      .filter(([, n]) => n >= MINDESTENS)
-      .map(([k, n]) => ({ kuerzel: k, name: KANTONSNAME[k] ?? k, anzahl: n }))
-      .sort((a, b) => a.name.localeCompare(b.name, 'de-CH'))
-  }, [daten])
+    if (bereich === 'tunnel') return daten.tunnel_kategorien ?? []
+    if (bereich === 'linien') return daten.linien_kategorien ?? []
+    return daten.kategorien
+  }, [daten, bereich])
 
-  const feld = useMemo((): Gegenstand[] => {
+  /** Alle Einträge des Bereichs, noch ohne Auswahl nach Kanton */
+  const alle = useMemo((): Gegenstand[] => {
     if (!daten) return []
-    if (auswahl === TUNNEL) {
+    if (bereich === 'tunnel') {
       return (daten.tunnel ?? []).map((t) => ({
         schluessel: t.id, name: t.name, unterzeile: `Linie ${t.linie}`,
-        bemerkung: t.bemerkung, werte: t.werte,
+        kantone: t.kantone ?? [], bemerkung: t.bemerkung, werte: t.werte,
         link: `#/linie/${t.linie}`, linkText: `${t.name} (Linie ${t.linie})`,
       }))
     }
-    return daten.bahnhoefe
-      .filter((b) => auswahl === 'CH' || b.kanton === auswahl)
-      .map((b) => ({
-        schluessel: String(b.uic), name: b.name,
-        unterzeile: b.kanton ? kantonText(b.kanton) : null, werte: b.werte,
-        link: `#/bahnhof/${b.uic}`, linkText: b.name,
+    if (bereich === 'linien') {
+      return (daten.linien ?? []).map((l) => ({
+        schluessel: `L${l.linie}`, name: `Linie ${l.linie}`, unterzeile: l.name,
+        kantone: [], werte: l.werte, link: `#/linie/${l.linie}`, linkText: `Linie ${l.linie}`,
       }))
-  }, [daten, auswahl])
+    }
+    return daten.bahnhoefe.map((b) => ({
+      schluessel: String(b.uic), name: b.name,
+      unterzeile: b.kanton ? kantonText(b.kanton) : null,
+      kantone: b.kanton ? [b.kanton] : [], werte: b.werte,
+      link: `#/bahnhof/${b.uic}`, linkText: b.name,
+    }))
+  }, [daten, bereich])
 
-  const kategorien = useMemo(
-    () => (daten ? (tunnelFeld ? daten.tunnel_kategorien ?? [] : daten.kategorien) : []),
-    [daten, tunnelFeld],
+  /** Die Kantone, in denen der Bereich genug Einträge für faire Paare hat.
+   *  Eine Linie hat in den Daten keinen Kanton. */
+  const kantone = useMemo(() => {
+    if (bereich === 'linien') return []
+    const je = new Map<string, Gegenstand[]>()
+    for (const g of alle) {
+      for (const k of g.kantone) {
+        const liste = je.get(k) ?? []
+        liste.push(g)
+        je.set(k, liste)
+      }
+    }
+    return [...je.entries()]
+      .filter(([, liste]) => hatFairesPaar(liste, kategorien))
+      .map(([k, liste]) => ({ kuerzel: k, name: KANTONSNAME[k] ?? k, anzahl: liste.length }))
+      .sort((a, b) => a.name.localeCompare(b.name, 'de-CH'))
+  }, [alle, bereich, kategorien])
+
+  const feld = useMemo(
+    () => (gebiet === 'CH' ? alle : alle.filter((g) => g.kantone.includes(gebiet))),
+    [alle, gebiet],
   )
+
+  // Eine gemerkte Kantonsauswahl, die es nicht mehr gibt, wird zur ganzen Schweiz
+  useEffect(() => {
+    if (daten && gebiet !== 'CH' && !kantone.some((k) => k.kuerzel === gebiet)) {
+      auswahlWechseln(zusammensetzen(bereich, 'CH'))
+    }
+  }, [daten, bereich, gebiet, kantone])
 
   useEffect(() => {
     vergleichLaden().then(setDaten).catch((e: Error) => setFehler(e.message))
@@ -261,26 +329,43 @@ export function Duell() {
       {/* Die Auswahl steht ausserhalb des Frageteils: Beim Wechsel wird die
           Runde kurz verworfen, und ein Feld, das dabei verschwindet, lässt
           sich nicht bedienen. */}
-      <label className="mt-4 block">
-        <span className="sr-only">Auswahl</span>
-        <select
-          value={auswahl}
-          onChange={(e) => auswahlWechseln(e.target.value)}
-          className="w-full appearance-none border border-sbb-cloud bg-white px-3 py-2.5
-                     text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
-                     dark:text-sbb-white"
-        >
-          <option value="CH">Ganze Schweiz ({daten.bahnhoefe.length} Bahnhöfe)</option>
-          {daten.tunnel && daten.tunnel.length > 0 && (
-            <option value={TUNNEL}>Tunnel ({daten.tunnel.length} Tunnel)</option>
-          )}
-          {kantone.map((kt) => (
-            <option key={kt.kuerzel} value={kt.kuerzel}>
-              {kt.name} ({kt.anzahl} Bahnhöfe)
-            </option>
-          ))}
-        </select>
-      </label>
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        <label className="block">
+          <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Bereich</span>
+          <select
+            value={bereich}
+            onChange={(e) => auswahlWechseln(zusammensetzen(e.target.value as Bereich, 'CH'))}
+            className="mt-1 w-full appearance-none border border-sbb-cloud bg-white px-3 py-2.5
+                       text-sbb-black disabled:opacity-60 dark:border-sbb-iron
+                       dark:bg-sbb-midnight dark:text-sbb-white"
+          >
+            <option value="bahnhoefe">Bahnhöfe ({daten.bahnhoefe.length})</option>
+            {(daten.linien?.length ?? 0) > 0 && (
+              <option value="linien">Linien ({daten.linien?.length})</option>
+            )}
+            {(daten.tunnel?.length ?? 0) > 0 && (
+              <option value="tunnel">Tunnel ({daten.tunnel?.length})</option>
+            )}
+          </select>
+        </label>
+        <label className="block">
+          <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Gebiet</span>
+          <select
+            value={gebiet} disabled={bereich === 'linien'}
+            onChange={(e) => auswahlWechseln(zusammensetzen(bereich, e.target.value))}
+            className="mt-1 w-full appearance-none border border-sbb-cloud bg-white px-3 py-2.5
+                       text-sbb-black disabled:opacity-60 dark:border-sbb-iron
+                       dark:bg-sbb-midnight dark:text-sbb-white"
+          >
+            <option value="CH">Ganze Schweiz</option>
+            {kantone.map((kt) => (
+              <option key={kt.kuerzel} value={kt.kuerzel}>
+                {kt.name} ({kt.anzahl})
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
 
       {runde && k ? (
         <>
@@ -382,30 +467,44 @@ export function Duell() {
       ) : (
         <div className="mt-6">
           <p>
-            {auswahl === 'CH' || tunnelFeld
+            {gebiet === 'CH'
               ? 'Zu dieser Runde liess sich kein faires Paar finden.'
-              : `Im Kanton ${KANTONSNAME[auswahl] ?? auswahl} liessen sich keine `
-                + 'Bahnhöfe finden, die weit genug auseinanderliegen.'}
+              : `Im Kanton ${KANTONSNAME[gebiet] ?? gebiet} liessen sich keine `
+                + `${BEREICHE[bereich].name} finden, die weit genug auseinanderliegen.`}
           </p>
           <button
             type="button"
-            onClick={() => (auswahl === 'CH' || tunnelFeld ? naechste(0) : auswahlWechseln('CH'))}
+            onClick={() => (gebiet === 'CH'
+              ? naechste(0) : auswahlWechseln(zusammensetzen(bereich, 'CH')))}
             className="mt-4 bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125"
-          >{auswahl === 'CH' || tunnelFeld ? 'Nochmals versuchen' : 'Ganze Schweiz spielen'}</button>
+          >{gebiet === 'CH' ? 'Nochmals versuchen' : 'Ganze Schweiz spielen'}</button>
         </div>
       )}
 
       <p className="mt-8 text-xs text-sbb-metal dark:text-sbb-storm">
-        {tunnelFeld
-          ? `Alle ${feld.length} Tunnel aus den offenen Daten sind dabei.`
-          : auswahl === 'CH'
-            ? `Alle ${daten.bahnhoefe.length} Bahnhöfe sind dabei.`
-            : `${feld.length} Bahnhöfe im Kanton ${KANTONSNAME[auswahl] ?? auswahl}.`}{' '}
-        Jeder Wert stammt unverändert aus den offenen Daten. Datenstand:{' '}
-        {tunnelFeld ? daten.tunnel_datenstand ?? daten.datenstand : daten.datenstand}.
-        {!tunnelFeld && kantone.length < 26
-          && ' Kantone mit zu wenigen Bahnhöfen für faire Paare fehlen in der Auswahl.'}
+        {fussnote(bereich, gebiet, feld.length)}{' '}
+        Datenstand: {bereich === 'bahnhoefe'
+          ? daten.datenstand : daten.tunnel_datenstand ?? daten.datenstand}.
+        {bereich !== 'linien' && kantone.length < 26
+          && ` Kantone mit zu wenigen ${BEREICHE[bereich].mehrzahlDativ} für faire Paare fehlen `
+             + 'in der Auswahl.'}
       </p>
     </div>
   )
+}
+
+/** Wer mitspielt und woher die Werte stammen, unter dem Duell */
+function fussnote(bereich: Bereich, gebiet: string, anzahl: number) {
+  const kanton = KANTONSNAME[gebiet] ?? gebiet
+  if (bereich === 'linien') {
+    return `Alle ${anzahl} Linien mit eigener Seite in Taktland sind dabei. Die Werte sind in `
+      + 'den offenen Daten gezählt. Eine Linie hat in den Daten keinen Kanton, darum gibt es '
+      + 'sie nur für die ganze Schweiz.'
+  }
+  const wer = bereich === 'tunnel'
+    ? (gebiet === 'CH' ? `Alle ${anzahl} Tunnel aus den offenen Daten sind dabei.`
+      : `${anzahl} Tunnel im Kanton ${kanton}, nach der Kantonsangabe der Quelle.`)
+    : (gebiet === 'CH' ? `Alle ${anzahl} Bahnhöfe sind dabei.`
+      : `${anzahl} Bahnhöfe im Kanton ${kanton}.`)
+  return `${wer} Jeder Wert stammt unverändert aus den offenen Daten.`
 }

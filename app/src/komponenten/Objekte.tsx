@@ -126,6 +126,7 @@ function Tunnel({ t }: { t: TunnelEintrag }) {
       t.inbetriebnahme_jahr === null
         ? 'Jahr: keine Angabe' : `erstmals in Betrieb ${t.inbetriebnahme_jahr}`,
       t.tunnelsystem ? `Tunnelsystem «${t.tunnelsystem}»` : 'Tunnelsystem: keine Angabe',
+      t.kanton ? `Kanton «${t.kanton}»` : 'Kanton: keine Angabe',
     ]} />
   )
 }

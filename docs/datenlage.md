@@ -81,7 +81,12 @@ Im Katalog von data.sbb.ch (60 Datensätze, geprüft 2026-09-21) steht zu Streck
 - `tunnel` – 289 Tunnel, vollständig mit Länge, Jahr der ersten Inbetriebnahme,
   Tunnelsystem (Röhren und Spuren), Linie und Kilometer. Neun haben eine Bemerkung zur
   Länge oder zum Umfang («Länge der Oströhre», «4947m gehört Frankreich»). Das Feld
-  Kanton ist nicht verlässlich («St.AuslandGallen») und wird nicht verwendet.
+  Kanton steht wie in der Quelle in den Fakten und dient im Duell der Auswahl nach
+  Kanton. Sechs Einträge sind kein Kanton (5× «St.AuslandGallen», 1× «Bourgogne-Franche-
+  Comté»); diese Tunnel spielen nur in der ganzen Schweiz mit. Stichprobe 2026-09-22: Bei
+  238 von 256 Tunneln auf Linien mit Bahnhof nennt die Quelle denselben Kanton wie beim
+  nächstgelegenen Bahnhof der Linie, die 18 übrigen liegen nahe einer Kantonsgrenze
+  (Oelbergtunnel SZ bei Sisikon UR, Kalkofentunnel SZ bei Walchwil ZG).
 - `brucken` – 4057 Brücken mit Name, Linie, Kilometer, Kanton und Zahl der Baueinheiten,
   ohne Länge und Baujahr. 3898 davon liegen auf den 111 Linien mit Seite, 159 auf 57
   Linien ohne eigene Seite (weniger als zwei Bahnhöfe in Taktland, kein Tunnel). Diese

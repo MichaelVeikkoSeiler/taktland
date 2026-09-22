@@ -184,7 +184,8 @@
         "inbetriebnahme_jahr": 1933,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 179.322,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Ticino"
       }
     ]
   }

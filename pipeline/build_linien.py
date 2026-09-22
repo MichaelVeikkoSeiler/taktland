@@ -110,6 +110,9 @@ def tunnel_items(df):
             "tunnelsystem": txt(r.tunnelsystem),
             "km": num(r.km_go),
             "bemerkung": txt(r.bemerkung),
+            # wie in der Quelle, auch die sechs Einträge, die kein Kanton sind
+            # («St.AuslandGallen», «Bourgogne-Franche-Comté»)
+            "kanton": txt(r.kanton),
         })
     return items
 
@@ -316,8 +319,8 @@ def main():
             aelteste = einzige_oder_alle(items, "inbetriebnahme_jahr", min)
             f["tunnel"] = {
                 "source": "tunnel",
-                "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der "
-                           "Quelle. km ist der Kilometer auf der Linie.",
+                "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie "
+                           "in der Quelle. km ist der Kilometer auf der Linie.",
                 "anzahl_erfasst": len(items),
                 # Gleichstand: alle mit dem besten Wert, und wie viele es sind,
                 # damit der Text die Zahl nicht selbst zählen muss

@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "pipeline"))
 
-from build_vergleich import KATEGORIEN, TUNNEL_KATEGORIEN, holen  # noqa: E402
+from build_vergleich import KATEGORIEN, LINIEN_KATEGORIEN, TUNNEL_KATEGORIEN, holen  # noqa: E402
 
 FACTS = ROOT / "data" / "facts"
 LINIEN = ROOT / "data" / "linien"
@@ -42,6 +42,25 @@ MESSWERTE = {
     "tunnel.inbetriebnahme_jahr",
 }
 
+#: Die zweite Meinung zu den Kantonen der Tunnel: Kürzel und die Schreibweisen,
+#: unter denen die Quelle den Kanton führen darf. Unabhängig von der Tabelle
+#: in pipeline/build_vergleich.py geschrieben.
+KANTONSNAMEN = {
+    "AG": {"Aargau"}, "AI": {"Appenzell Innerrhoden"}, "AR": {"Appenzell Ausserrhoden"},
+    "BE": {"Bern", "Berne"}, "BL": {"Basel-Landschaft"}, "BS": {"Basel-Stadt"},
+    "FR": {"Fribourg", "Freiburg"}, "GE": {"Genève", "Genf"}, "GL": {"Glarus"},
+    "GR": {"Graubünden", "Grischun", "Grigioni"}, "JU": {"Jura"}, "LU": {"Luzern"},
+    "NE": {"Neuchâtel", "Neuenburg"}, "NW": {"Nidwalden"}, "OW": {"Obwalden"},
+    "SG": {"St. Gallen"}, "SH": {"Schaffhausen"}, "SO": {"Solothurn"}, "SZ": {"Schwyz"},
+    "TG": {"Thurgau"}, "TI": {"Ticino", "Tessin"}, "UR": {"Uri"},
+    "VD": {"Vaud", "Waadt"}, "VS": {"Valais", "Wallis"}, "ZG": {"Zug"}, "ZH": {"Zürich"},
+}
+
+
+def kantone_soll(wert):
+    teile = [t.strip() for t in (wert or "").split("/")]
+    return sorted({k for t in teile for k, namen in KANTONSNAMEN.items() if t in namen})
+
 
 def main():
     if not DATEI.exists():
@@ -50,9 +69,10 @@ def main():
     v = json.loads(DATEI.read_text(encoding="utf-8"))
     pfade = {k["id"]: k["pfad"] for k in KATEGORIEN}
     pfade.update({k["id"]: ["tunnel", *k["pfad"]] for k in TUNNEL_KATEGORIEN})
+    pfade.update({k["id"]: k["pfad"] for k in LINIEN_KATEGORIEN})
     fehler = []
 
-    for kat in v["kategorien"] + v.get("tunnel_kategorien", []):
+    for kat in v["kategorien"] + v.get("tunnel_kategorien", []) + v.get("linien_kategorien", []):
         pfad = pfade[kat["id"]]
         if kat["art"] == "messwert" and ".".join(pfad) not in MESSWERTE:
             fehler.append(f"Kategorie «{kat['id']}»: {'.'.join(pfad)} gilt als "
@@ -97,14 +117,34 @@ def main():
         soll = items[int(i)] if int(i) < len(items) else {}
         if soll.get("name") != t["name"] or soll.get("bemerkung") != t.get("bemerkung"):
             fehler.append(f"Tunnel {t['id']}: Name oder Bemerkung weicht von der Linie {nr} ab")
+        # Der Kanton entscheidet, in welcher Kantonsauswahl der Tunnel antritt
+        if t.get("kantone") != kantone_soll(soll.get("kanton")):
+            fehler.append(f"Tunnel {t['name']}: Kantone {t.get('kantone')} passen nicht zum "
+                          f"Eintrag «{soll.get('kanton')}» der Quelle")
         for kid, wert in t["werte"].items():
             geprueft += 1
             if soll.get(pfade[kid][-1]) != wert:
                 fehler.append(f"Tunnel {t['name']}, {kid}: {wert!r} statt "
                               f"{soll.get(pfade[kid][-1])!r} aus den Fakten")
 
-    print(f"{len(v['bahnhoefe'])} Bahnhöfe und {len(v.get('tunnel', []))} Tunnel, "
-          f"{geprueft} Werte geprüft")
+    # Linien: jeder Wert gegen ihre Faktendatei; ein erfasster Bestand unter 1
+    # tritt nicht an
+    for li in v.get("linien", []):
+        p = LINIEN / f"{li['linie']}.json"
+        if not p.exists():
+            fehler.append(f"Linie {li['linie']}: keine Faktendatei")
+            continue
+        f = json.loads(p.read_text(encoding="utf-8"))
+        if f["name"] != li["name"]:
+            fehler.append(f"Linie {li['linie']}: Name «{li['name']}» statt «{f['name']}»")
+        for kid, wert in li["werte"].items():
+            geprueft += 1
+            soll = holen(f, pfade[kid])
+            if soll != wert or wert < 1:
+                fehler.append(f"Linie {li['linie']}, {kid}: {wert!r} statt {soll!r} aus den Fakten")
+
+    print(f"{len(v['bahnhoefe'])} Bahnhöfe, {len(v.get('tunnel', []))} Tunnel und "
+          f"{len(v.get('linien', []))} Linien, {geprueft} Werte geprüft")
     for f in fehler[:20]:
         print(f"    FEHLER   {f}")
     if fehler:

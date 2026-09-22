@@ -402,7 +402,8 @@
         "inbetriebnahme_jahr": 1941,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 61.859,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "Tunnel Bois de la Bâtie (088)",
@@ -410,7 +411,8 @@
         "inbetriebnahme_jahr": 1949,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 63.516,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "Tunnel de Pinchat",
@@ -418,7 +420,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 65.868,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "TC Voirie de Carouge",
@@ -426,7 +429,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 67.853,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "TC Rive gauche",
@@ -434,7 +438,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 67.965,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "Tunnel de Champel 1",
@@ -442,7 +447,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 68.674,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "Halte Genève-Champel",
@@ -450,7 +456,8 @@
         "inbetriebnahme_jahr": 2018,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 68.994,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "Tunnel de Champel 2",
@@ -458,7 +465,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 69.44,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "TC Théodore Weber",
@@ -466,7 +474,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 70.081,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "Halte Genève-Eaux-Vives",
@@ -474,7 +483,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 70.457,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "TC Franck Thomas Gradelle",
@@ -482,7 +492,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 70.8,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "TC Gradelle - Seymaz",
@@ -490,7 +501,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 72.26,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "TC Seymaz - Halte de CHEB",
@@ -498,7 +510,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 72.719,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "Halte Chêne-Bourg",
@@ -506,7 +519,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 73.103,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "TC du Foron",
@@ -514,7 +528,8 @@
         "inbetriebnahme_jahr": 2019,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 73.24,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       }
     ],
     "bruecken": [

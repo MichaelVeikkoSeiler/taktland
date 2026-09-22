@@ -62,7 +62,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 1,
   "laengste": [
    0
@@ -79,7 +79,8 @@
     "inbetriebnahme_jahr": 1895,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 47.987,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Schaffhausen"
    }
   ]
  },

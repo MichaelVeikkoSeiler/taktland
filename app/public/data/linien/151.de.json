@@ -485,7 +485,8 @@
         "inbetriebnahme_jahr": 1993,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 62.234,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       }
     ],
     "bruecken": [

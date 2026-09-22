@@ -134,8 +134,128 @@ TUNNEL_KATEGORIEN = [
 ]
 
 
+#: Linien gegeneinander. Verglichen wird, wie viel auf einer Linie erfasst ist,
+#: nicht die Linie selbst: Länge, Baujahr und Spurzahl stehen nicht in den
+#: Daten. Darum sind alle Kategorien «erfasst». Werte unter 1 fehlen: Eine
+#: Linie ohne erfassten Tunnel tritt in der Tunnelfrage nicht an.
+#: einheit_einzahl: «1 Brücke», nicht «1 Brücken».
+LINIEN_KATEGORIEN = [
+    {
+        "id": "linie_bahnhoefe",
+        "pfad": ["bahnhoefe", "anzahl_in_taktland"],
+        "titel": "Bahnhöfe",
+        "frage": "Auf welcher Linie sind mehr Bahnhöfe erfasst?",
+        "frage_mehrere": "Auf welcher dieser Linien sind am meisten Bahnhöfe erfasst?",
+        "einheit": "Bahnhöfe",
+        "einheit_einzahl": "Bahnhof",
+        "art": "erfasst",
+        "quelle": "linie-mit-betriebspunkten",
+        "hinweis": "Gezählt sind die Bahnhöfe aus Taktland, die in den offenen Daten auf "
+                   "der Linie liegen.",
+        "min_abstand": 2,
+        "min_anteil": 0.25,
+    },
+    {
+        "id": "linie_betriebspunkte",
+        "pfad": ["bahnhoefe", "betriebspunkte_erfasst"],
+        "titel": "Betriebspunkte",
+        "frage": "Auf welcher Linie sind mehr Betriebspunkte erfasst?",
+        "frage_mehrere": "Auf welcher dieser Linien sind am meisten Betriebspunkte erfasst?",
+        "einheit": "Betriebspunkte",
+        "einheit_einzahl": "Betriebspunkt",
+        "art": "erfasst",
+        "quelle": "linie-mit-betriebspunkten",
+        "hinweis": "Betriebspunkte sind Stellen, die der Bahnbetrieb unterscheidet, etwa "
+                   "Bahnhöfe, Haltestellen und Abzweigungen. Verglichen wird, was in den "
+                   "offenen Daten steht.",
+        "min_abstand": 3,
+        "min_anteil": 0.2,
+    },
+    {
+        "id": "linie_tunnel",
+        "pfad": ["tunnel", "anzahl_erfasst"],
+        "titel": "Tunnel",
+        "frage": "Auf welcher Linie sind mehr Tunnel erfasst?",
+        "frage_mehrere": "Auf welcher dieser Linien sind am meisten Tunnel erfasst?",
+        "einheit": "Tunnel",
+        "einheit_einzahl": "Tunnel",
+        "art": "erfasst",
+        "quelle": "tunnel",
+        "hinweis": "Verglichen wird, was in den offenen Daten steht. Linien ohne "
+                   "erfassten Tunnel treten bei dieser Frage nicht an.",
+        "min_abstand": 1,
+        "min_anteil": 0.25,
+    },
+    {
+        "id": "linie_bruecken",
+        "pfad": ["bruecken", "anzahl_erfasst"],
+        "titel": "Brücken",
+        "frage": "Auf welcher Linie sind mehr Brücken erfasst?",
+        "frage_mehrere": "Auf welcher dieser Linien sind am meisten Brücken erfasst?",
+        "einheit": "Brücken",
+        "einheit_einzahl": "Brücke",
+        "art": "erfasst",
+        "quelle": "brucken",
+        "hinweis": "Verglichen wird, was in den offenen Daten steht. Linien ohne "
+                   "erfasste Brücke treten bei dieser Frage nicht an.",
+        "min_abstand": 3,
+        "min_anteil": 0.2,
+    },
+    {
+        "id": "linie_bahnuebergaenge",
+        "pfad": ["bahnuebergaenge", "anzahl_erfasst"],
+        "titel": "Bahnübergänge",
+        "frage": "Auf welcher Linie sind mehr Bahnübergänge erfasst?",
+        "frage_mehrere": "Auf welcher dieser Linien sind am meisten Bahnübergänge erfasst?",
+        "einheit": "Bahnübergänge",
+        "einheit_einzahl": "Bahnübergang",
+        "art": "erfasst",
+        "quelle": "bahnubergang",
+        "hinweis": "Verglichen wird, was in den offenen Daten steht. Linien ohne "
+                   "erfassten Bahnübergang treten bei dieser Frage nicht an.",
+        "min_abstand": 2,
+        "min_anteil": 0.25,
+    },
+]
+
+#: Kanton, wie ihn die Tunnelquelle schreibt, zum Kürzel. Was hier fehlt, ist
+#: kein Kanton («St.AuslandGallen», «Bourgogne-Franche-Comté»): Diese Tunnel
+#: spielen nur in der ganzen Schweiz mit. «Aargau / Bern» gehört zu beiden.
+#: generator/validate_vergleich.py prüft die Zuordnung mit einer eigenen Liste.
+KANTON_AUS_QUELLE = {
+    "Aargau": "AG", "Appenzell Ausserrhoden": "AR", "Appenzell Innerrhoden": "AI",
+    "Basel-Landschaft": "BL", "Basel-Stadt": "BS", "Bern": "BE", "Fribourg": "FR",
+    "Genève": "GE", "Glarus": "GL", "Graubünden": "GR", "Jura": "JU", "Luzern": "LU",
+    "Neuchâtel": "NE", "Nidwalden": "NW", "Obwalden": "OW", "St. Gallen": "SG",
+    "Schaffhausen": "SH", "Schwyz": "SZ", "Solothurn": "SO", "Thurgau": "TG",
+    "Ticino": "TI", "Uri": "UR", "Valais": "VS", "Vaud": "VD", "Zug": "ZG", "Zürich": "ZH",
+}
+
+
+def kantone(wert):
+    """«Aargau / Bern» wird ["AG", "BE"], «St.AuslandGallen» wird []."""
+    teile = [t.strip() for t in (wert or "").split("/")]
+    return sorted({KANTON_AUS_QUELLE[t] for t in teile if t in KANTON_AUS_QUELLE})
+
+
+def linien_eintraege():
+    """Jede Linie mit Seite und ihren erfassten Beständen."""
+    raus = []
+    for p in sorted(LINIEN.glob("*.json"), key=lambda x: int(x.stem)):
+        f = json.loads(p.read_text(encoding="utf-8"))
+        werte = {}
+        for k in LINIEN_KATEGORIEN:
+            v = holen(f, k["pfad"])
+            if v is not None and v >= 1:
+                werte[k["id"]] = v
+        if werte:
+            raus.append({"linie": f["linie"], "name": f["name"], "werte": werte})
+    return raus
+
+
 def tunnel_eintraege():
-    """Jeder Tunnel mit Linie, Stelle in der Faktendatei und Bemerkung."""
+    """Jeder Tunnel mit Linie, Stelle in der Faktendatei, Bemerkung und den
+    Kantonen, die sein Eintrag nennt."""
     raus = []
     for p in sorted(LINIEN.glob("*.json"), key=lambda x: int(x.stem)):
         f = json.loads(p.read_text(encoding="utf-8"))
@@ -144,7 +264,8 @@ def tunnel_eintraege():
                      if isinstance(t.get(k["pfad"][0]), (int, float))}
             if werte:
                 raus.append({"id": f"{f['linie']}:{i}", "name": t["name"], "linie": f["linie"],
-                             "bemerkung": t.get("bemerkung"), "werte": werte})
+                             "bemerkung": t.get("bemerkung"), "kantone": kantone(t.get("kanton")),
+                             "werte": werte})
     return raus
 
 
@@ -183,9 +304,13 @@ def main():
         "tunnel_kategorien": [{k: v for k, v in kat.items() if k != "pfad"}
                               for kat in TUNNEL_KATEGORIEN],
         "tunnel": tunnel_eintraege(),
-        # die Tunnel kommen aus einem eigenen Abruf, mit eigenem Stand
+        # die Tunnel kommen aus einem eigenen Abruf, mit eigenem Stand;
+        # derselbe gilt für die Linien
         "tunnel_datenstand": max((json.loads(p.read_text(encoding="utf-8"))["datenstand"]
                                   for p in LINIEN.glob("*.json")), default=None),
+        "linien_kategorien": [{k: v for k, v in kat.items() if k != "pfad"}
+                              for kat in LINIEN_KATEGORIEN],
+        "linien": linien_eintraege(),
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, indent=1), encoding="utf-8")
     groesse = ZIEL.stat().st_size / 1024
@@ -197,6 +322,11 @@ def main():
     for kat in TUNNEL_KATEGORIEN:
         n = sum(1 for t in raus["tunnel"] if kat["id"] in t["werte"])
         print(f"  {kat['id']:<14}{n:>4} Tunnel  ({kat['art']})")
+    ohne = sum(1 for t in raus["tunnel"] if not t["kantone"])
+    print(f"  {ohne} Tunnel ohne Kanton, spielen nur in der ganzen Schweiz")
+    for kat in LINIEN_KATEGORIEN:
+        n = sum(1 for li in raus["linien"] if kat["id"] in li["werte"])
+        print(f"  {kat['id']:<22}{n:>4} Linien  ({kat['art']})")
     return 0
 
 

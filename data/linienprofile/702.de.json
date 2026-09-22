@@ -430,7 +430,8 @@
         "inbetriebnahme_jahr": 1854,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 42.191,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Aargau"
       }
     ],
     "bruecken": [

@@ -101,13 +101,23 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             4 stehen manchmal vier Bahnhöfe zur Wahl.
           </li>
           <li>
-            Gespielt wird über die ganze Schweiz oder innerhalb eines Kantons, sofern er genug
-            Bahnhöfe für faire Paare hat.
+            Zuerst den Bereich wählen: Bahnhöfe, Linien oder Tunnel. Dann das Gebiet: die
+            ganze Schweiz oder einen Kanton, sofern er genug Einträge für faire Paare hat.
           </li>
           <li>
-            In der Auswahl «Tunnel» treten Tunnel gegeneinander an: Welcher ist länger,
-            welcher ging früher erstmals in Betrieb? Nach der Antwort steht, falls vorhanden,
-            die Bemerkung der Quelle, etwa was eine Länge umfasst.
+            Bei den Tunneln lautet die Frage etwa: Welcher ist länger, welcher ging früher
+            erstmals in Betrieb? Nach der Antwort steht, falls vorhanden, die Bemerkung der
+            Quelle, etwa was eine Länge umfasst. Den Kanton eines Tunnels nennt die Quelle;
+            wo sie keinen Kanton angibt, spielt der Tunnel nur in der ganzen Schweiz mit.
+          </li>
+          <li>
+            Bei den Linien geht es darum, auf welcher Linie mehr Bahnhöfe, Betriebspunkte,
+            Tunnel, Brücken oder Bahnübergänge erfasst sind. Eine Linie hat in den Daten keinen
+            Kanton, darum gibt es sie nur für die ganze Schweiz.
+          </li>
+          <li>
+            Brücken treten nicht gegeneinander an: Von ihnen ist nur die Zahl der Baueinheiten
+            erfasst, und die meisten haben genau eine.
           </li>
         </Punkte>
       </Abschnitt>
@@ -182,6 +192,10 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
           </li>
           <li>
             Unten auf der Startseite lässt sich der ganze Fortschritt löschen.
+          </li>
+          <li>
+            Ganz oben steht, von wann die geladene Version ist. «Aktualisieren» holt den
+            neuesten Stand, etwa nach einer Korrektur. Der Fortschritt bleibt dabei erhalten.
           </li>
           <li>
             Taktland lässt sich auf den Startbildschirm legen: auf dem iPhone in Safari über

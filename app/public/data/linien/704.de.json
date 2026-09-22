@@ -237,7 +237,8 @@
         "inbetriebnahme_jahr": 1981,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 39.932,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Aargau"
       }
     ],
     "bruecken": [

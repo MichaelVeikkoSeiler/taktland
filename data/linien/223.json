@@ -37,7 +37,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 3,
   "laengste": [
    0
@@ -56,7 +56,8 @@
     "inbetriebnahme_jahr": 1859,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 2.654,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Neuchâtel"
    },
    {
     "name": "Tunnel de la Luche (008)",
@@ -64,7 +65,8 @@
     "inbetriebnahme_jahr": 1859,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 9.353,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Neuchâtel"
    },
    {
     "name": "Tunnel de la Sauge (009)",
@@ -72,7 +74,8 @@
     "inbetriebnahme_jahr": 1859,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 9.85,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Neuchâtel"
    }
   ]
  },

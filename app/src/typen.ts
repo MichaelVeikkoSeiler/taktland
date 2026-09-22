@@ -31,6 +31,8 @@ export interface TunnelEintrag {
   tunnelsystem: string | null
   km: number | null
   bemerkung: string | null
+  /** wie in der Quelle, auch wenn es kein Kanton ist («St.AuslandGallen») */
+  kanton: string | null
 }
 
 export interface BrueckenEintrag {
@@ -192,6 +194,8 @@ export interface Kategorie {
   frage: string
   frage_mehrere: string
   einheit: string
+  /** bei einem Wert von 1: «1 Brücke», nicht «1 Brücken» */
+  einheit_einzahl?: string
   art: Vergleichsart
   quelle: string
   hinweis?: string
@@ -216,6 +220,15 @@ export interface VergleichsTunnel {
   name: string
   linie: number
   bemerkung?: string | null
+  /** Kantonskürzel laut Quelle; leer, wenn der Eintrag kein Kanton ist */
+  kantone?: string[]
+  werte: Record<string, number>
+}
+
+/** Eine Linie mit eigener Seite und ihren erfassten Beständen */
+export interface VergleichsLinie {
+  linie: number
+  name: string
   werte: Record<string, number>
 }
 
@@ -227,6 +240,8 @@ export interface Vergleichsdaten {
   tunnel_kategorien?: Kategorie[]
   tunnel?: VergleichsTunnel[]
   tunnel_datenstand?: string | null
+  linien_kategorien?: Kategorie[]
+  linien?: VergleichsLinie[]
 }
 
 /** Die Übersichten «Tunnel» und «Brücken» (pipeline/export_app.py): jeder

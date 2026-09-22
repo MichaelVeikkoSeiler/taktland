@@ -172,7 +172,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 5,
   "laengste": [
    2
@@ -190,7 +190,8 @@
     "inbetriebnahme_jahr": 1862,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 8.858,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Vaud"
    },
    {
     "name": "Tunnel de la Cornallaz(031)",
@@ -198,7 +199,8 @@
     "inbetriebnahme_jahr": 1862,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 11.238,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Vaud"
    },
    {
     "name": "Tunnel de Vauderens (101)",
@@ -206,7 +208,8 @@
     "inbetriebnahme_jahr": 2001,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 32.56,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Fribourg"
    },
    {
     "name": "Mühletaltunnel (012)",
@@ -214,7 +217,8 @@
     "inbetriebnahme_jahr": 1860,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 78.827,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Fribourg"
    },
    {
     "name": "Flamattertunnel (011)",
@@ -222,7 +226,8 @@
     "inbetriebnahme_jahr": 1860,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 83.507,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Fribourg"
    }
   ]
  },

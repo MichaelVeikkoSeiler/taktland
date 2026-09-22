@@ -637,7 +637,8 @@
         "inbetriebnahme_jahr": 1998,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 3.933,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Luzern"
       }
     ],
     "bruecken": [

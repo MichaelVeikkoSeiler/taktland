@@ -32,7 +32,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 4,
   "laengste": [
    2
@@ -49,7 +49,8 @@
     "inbetriebnahme_jahr": 1990,
     "tunnelsystem": "Andere",
     "km": 99.86,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Zürich"
    },
    {
     "name": "Hirschengrabentunnel",
@@ -57,7 +58,8 @@
     "inbetriebnahme_jahr": 1894,
     "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
     "km": 100.772,
-    "bemerkung": "Inkl: Tunnel Hischengraben Axe 161 und Tunnel Hischengraben Axe 261"
+    "bemerkung": "Inkl: Tunnel Hischengraben Axe 161 und Tunnel Hischengraben Axe 261",
+    "kanton": "Zürich"
    },
    {
     "name": "Zürichbergtunnel",
@@ -65,7 +67,8 @@
     "inbetriebnahme_jahr": 1990,
     "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
     "km": 106.255,
-    "bemerkung": "Inkl: Tunnel Zürichbergtunnel Axe 33 (DfA 745) und Tunnel Zürichbergtunnel Axe 42 (DfA 730)"
+    "bemerkung": "Inkl: Tunnel Zürichbergtunnel Axe 33 (DfA 745) und Tunnel Zürichbergtunnel Axe 42 (DfA 730)",
+    "kanton": "Zürich"
    },
    {
     "name": "Föhrlibucktunnel",
@@ -73,7 +76,8 @@
     "inbetriebnahme_jahr": 1990,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 108.601,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Zürich"
    }
   ]
  },

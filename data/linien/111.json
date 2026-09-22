@@ -42,7 +42,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 3,
   "laengste": [
    1
@@ -61,7 +61,8 @@
     "inbetriebnahme_jahr": 1904,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 3.803,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Vaud"
    },
    {
     "name": "Tunnel du Crêt (078)",
@@ -69,7 +70,8 @@
     "inbetriebnahme_jahr": 1904,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 5.336,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Vaud"
    },
    {
     "name": "Tunnel du Carroz (079)",
@@ -77,7 +79,8 @@
     "inbetriebnahme_jahr": 1904,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 5.782,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Vaud"
    }
   ]
  },

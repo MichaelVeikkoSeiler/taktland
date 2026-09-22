@@ -180,7 +180,8 @@
         "inbetriebnahme_jahr": 1959,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 0.732,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       }
     ]
   }

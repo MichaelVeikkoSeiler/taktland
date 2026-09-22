@@ -9301,6 +9301,9 @@
    "name": "Tunnel de Paudex ( 026 )",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 72,
     "tunnel_jahr": 1999
@@ -9311,6 +9314,9 @@
    "name": "Tunnel de Bertholod ( 027 )",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 141,
     "tunnel_jahr": 2020
@@ -9321,6 +9327,9 @@
    "name": "Tunnel des Crêtes (025)",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 302,
     "tunnel_jahr": 1880
@@ -9331,6 +9340,9 @@
    "name": "Tunnel de St-Maurice (003)",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VS"
+   ],
    "werte": {
     "tunnel_laenge": 490,
     "tunnel_jahr": 1859
@@ -9341,6 +9353,9 @@
    "name": "Tunnel de Sierre (Gobet)",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VS"
+   ],
    "werte": {
     "tunnel_laenge": 370,
     "tunnel_jahr": 2015
@@ -9351,6 +9366,9 @@
    "name": "Tunnel de la Raspille (072)",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VS"
+   ],
    "werte": {
     "tunnel_laenge": 80,
     "tunnel_jahr": 2018
@@ -9361,6 +9379,9 @@
    "name": "Tunnel de Varen (102)",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VS"
+   ],
    "werte": {
     "tunnel_laenge": 2799,
     "tunnel_jahr": 2004
@@ -9371,6 +9392,9 @@
    "name": "Tunnel de Leuk (103)",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VS"
+   ],
    "werte": {
     "tunnel_laenge": 1376,
     "tunnel_jahr": 2004
@@ -9381,6 +9405,9 @@
    "name": "Simplontunnel",
    "linie": 100,
    "bemerkung": null,
+   "kantone": [
+    "VS"
+   ],
    "werte": {
     "tunnel_laenge": 19820,
     "tunnel_jahr": 1900
@@ -9391,6 +9418,9 @@
    "name": "Tunnel de Salanche (077)",
    "linie": 111,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 20,
     "tunnel_jahr": 1904
@@ -9401,6 +9431,9 @@
    "name": "Tunnel du Crêt (078)",
    "linie": 111,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 118,
     "tunnel_jahr": 1904
@@ -9411,6 +9444,9 @@
    "name": "Tunnel du Carroz (079)",
    "linie": 111,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 83,
     "tunnel_jahr": 1904
@@ -9421,6 +9457,9 @@
    "name": "Couverture St-Jean",
    "linie": 150,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 821,
     "tunnel_jahr": 1995
@@ -9431,6 +9470,9 @@
    "name": "Galerie ICC",
    "linie": 150,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 327,
     "tunnel_jahr": 1985
@@ -9441,6 +9483,9 @@
    "name": "Tunnel du Saut-de-Mouton (093)",
    "linie": 151,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 425,
     "tunnel_jahr": 1993
@@ -9451,6 +9496,9 @@
    "name": "Tunnel de St. Jean (087)",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 221,
     "tunnel_jahr": 1941
@@ -9461,6 +9509,9 @@
    "name": "Tunnel Bois de la Bâtie (088)",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 1078,
     "tunnel_jahr": 1949
@@ -9471,6 +9522,9 @@
    "name": "Tunnel de Pinchat",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 2026,
     "tunnel_jahr": 2019
@@ -9481,6 +9535,9 @@
    "name": "TC Voirie de Carouge",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 99,
     "tunnel_jahr": 2019
@@ -9491,6 +9548,9 @@
    "name": "TC Rive gauche",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 411,
     "tunnel_jahr": 2019
@@ -9501,6 +9561,9 @@
    "name": "Tunnel de Champel 1",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 494,
     "tunnel_jahr": 2019
@@ -9511,6 +9574,9 @@
    "name": "Halte Genève-Champel",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 222,
     "tunnel_jahr": 2018
@@ -9521,6 +9587,9 @@
    "name": "Tunnel de Champel 2",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 928,
     "tunnel_jahr": 2019
@@ -9531,6 +9600,9 @@
    "name": "TC Théodore Weber",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 119,
     "tunnel_jahr": 2019
@@ -9541,6 +9613,9 @@
    "name": "Halte Genève-Eaux-Vives",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 657,
     "tunnel_jahr": 2019
@@ -9551,6 +9626,9 @@
    "name": "TC Franck Thomas Gradelle",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 1460,
     "tunnel_jahr": 2019
@@ -9561,6 +9639,9 @@
    "name": "TC Gradelle - Seymaz",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 435,
     "tunnel_jahr": 2019
@@ -9571,6 +9652,9 @@
    "name": "TC Seymaz - Halte de CHEB",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 271,
     "tunnel_jahr": 2019
@@ -9581,6 +9665,9 @@
    "name": "Halte Chêne-Bourg",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 250,
     "tunnel_jahr": 2019
@@ -9591,6 +9678,9 @@
    "name": "TC du Foron",
    "linie": 152,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 1136,
     "tunnel_jahr": 2019
@@ -9601,6 +9691,9 @@
    "name": "Tunnel de Châtelaine (089)",
    "linie": 154,
    "bemerkung": null,
+   "kantone": [
+    "GE"
+   ],
    "werte": {
     "tunnel_laenge": 1090,
     "tunnel_jahr": 1959
@@ -9611,6 +9704,9 @@
    "name": "Tunnel de la Sarraz (033)",
    "linie": 200,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 148,
     "tunnel_jahr": 1870
@@ -9621,6 +9717,9 @@
    "name": "Tunnel du Moulin Bornu (034)",
    "linie": 200,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 72,
     "tunnel_jahr": 1870
@@ -9631,6 +9730,9 @@
    "name": "Tunnel de Combes (035)",
    "linie": 200,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 100,
     "tunnel_jahr": 1870
@@ -9641,6 +9743,9 @@
    "name": "Tunnel de Nanchau (036)",
    "linie": 200,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 132,
     "tunnel_jahr": 1870
@@ -9651,6 +9756,9 @@
    "name": "Tunnel des Epoisats",
    "linie": 201,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 431,
     "tunnel_jahr": 1886
@@ -9661,6 +9769,7 @@
    "name": "Tunnel du Mont d'Or (083)",
    "linie": 203,
    "bemerkung": "4947m gehört Frankreich",
+   "kantone": [],
    "werte": {
     "tunnel_laenge": 5936,
     "tunnel_jahr": 1915
@@ -9671,6 +9780,9 @@
    "name": "Tunnel du Mormont sud 1",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 303,
     "tunnel_jahr": 1856
@@ -9681,6 +9793,9 @@
    "name": "Tunnel du Mormont sud 3",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 328,
     "tunnel_jahr": 2010
@@ -9691,6 +9806,9 @@
    "name": "Tunnel du Mormont nord 4",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 188,
     "tunnel_jahr": 2010
@@ -9701,6 +9819,9 @@
    "name": "Tunnel du Mormont nord 2",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 182,
     "tunnel_jahr": 1856
@@ -9711,6 +9832,9 @@
    "name": "Tunnel de Concise",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 366,
     "tunnel_jahr": 2000
@@ -9721,6 +9845,9 @@
    "name": "Tunnel de Fin de Lance (099)",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 287,
     "tunnel_jahr": 2000
@@ -9731,6 +9858,9 @@
    "name": "Tunnel de la Raisse (098)",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 1256,
     "tunnel_jahr": 2000
@@ -9741,6 +9871,9 @@
    "name": "Tunnel St-Aubin-Sauges (097)",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 2253,
     "tunnel_jahr": 1999
@@ -9751,6 +9884,9 @@
    "name": "Tunnel de Vauseyon (005)",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 58,
     "tunnel_jahr": 1859
@@ -9761,6 +9897,9 @@
    "name": "Tunnel de St-Blaise (004)",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 155,
     "tunnel_jahr": 1927
@@ -9771,6 +9910,9 @@
    "name": "Tunnel Vingelz (092)",
    "linie": 210,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 2432,
     "tunnel_jahr": 1968
@@ -9781,6 +9923,9 @@
    "name": "Tunnel de la Loge (014)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 54,
     "tunnel_jahr": 1860
@@ -9791,6 +9936,9 @@
    "name": "Tunnel de Rochefort (015)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 72,
     "tunnel_jahr": 1860
@@ -9801,6 +9949,9 @@
    "name": "Tunnel de Champ Rouge (016)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 85,
     "tunnel_jahr": 1860
@@ -9811,6 +9962,9 @@
    "name": "Tunnel de la Verrière (017)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 156,
     "tunnel_jahr": 1860
@@ -9821,6 +9975,9 @@
    "name": "Tunnel du Bois-de-Ban (018)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 161,
     "tunnel_jahr": 1860
@@ -9831,6 +9988,9 @@
    "name": "Tunnel des Moyats (019)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 338,
     "tunnel_jahr": 1860
@@ -9841,6 +10001,9 @@
    "name": "Tunnel Places-Bourgeoises",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 70,
     "tunnel_jahr": 1860
@@ -9851,6 +10014,9 @@
    "name": "Tunnel de Brot (021)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 455,
     "tunnel_jahr": 1860
@@ -9861,6 +10027,9 @@
    "name": "Tunnel de Fleurier (022)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 546,
     "tunnel_jahr": 1860
@@ -9871,6 +10040,9 @@
    "name": "Tunnel de St-Sulpice (023)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 277,
     "tunnel_jahr": 1860
@@ -9881,6 +10053,9 @@
    "name": "Tunnel du Haut de la Tour (24)",
    "linie": 219,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 334,
     "tunnel_jahr": 1860
@@ -9891,6 +10066,9 @@
    "name": "Donnerbühltunnel",
    "linie": 220,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 400,
     "tunnel_jahr": 1959
@@ -9901,6 +10079,9 @@
    "name": "Tunnel du Gibet(010)",
    "linie": 223,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 678,
     "tunnel_jahr": 1859
@@ -9911,6 +10092,9 @@
    "name": "Tunnel de la Luche (008)",
    "linie": 223,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 116,
     "tunnel_jahr": 1859
@@ -9921,6 +10105,9 @@
    "name": "Tunnel de la Sauge (009)",
    "linie": 223,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 118,
     "tunnel_jahr": 1859
@@ -9931,6 +10118,9 @@
    "name": "Tunnel des Loges (013)",
    "linie": 224,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 3260,
     "tunnel_jahr": 1860
@@ -9941,6 +10131,9 @@
    "name": "Tunnel du Mont Sagne(007)",
    "linie": 224,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 1880,
     "tunnel_jahr": 1859
@@ -9951,6 +10144,9 @@
    "name": "Tunnel de Combe (Convers, 006)",
    "linie": 224,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 254,
     "tunnel_jahr": 1858
@@ -9961,6 +10157,9 @@
    "name": "Tunnel du col des Roches (073)",
    "linie": 224,
    "bemerkung": "107m gehört Frankreich",
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 433,
     "tunnel_jahr": 1884
@@ -9971,6 +10170,9 @@
    "name": "Tunnel de Pasquart (038)",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 52,
     "tunnel_jahr": 1874
@@ -9981,6 +10183,9 @@
    "name": "Tunnel de Taubenloch 1 ( 039 )",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 239,
     "tunnel_jahr": 1874
@@ -9991,6 +10196,9 @@
    "name": "Tunnel de Taubenloch 2 ( 040 )",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 320,
     "tunnel_jahr": 1874
@@ -10001,6 +10209,9 @@
    "name": "Tunnel de Taubenloch 3 ( 041 )",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 220,
     "tunnel_jahr": 1874
@@ -10011,6 +10222,9 @@
    "name": "Tunnel de Taubenloch 4 ( 042 )",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 163,
     "tunnel_jahr": 1874
@@ -10021,6 +10235,9 @@
    "name": "Tunnel de Taubenloch 5 ( 043 )",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 164,
     "tunnel_jahr": 1874
@@ -10031,6 +10248,9 @@
    "name": "Tunnel de Tournedos (044)",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 104,
     "tunnel_jahr": 1874
@@ -10041,6 +10261,9 @@
    "name": "Tunnel des Crosettes (075)",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 1618,
     "tunnel_jahr": 1888
@@ -10051,6 +10274,9 @@
    "name": "Tunnel de Combe (Creux, 076)",
    "linie": 225,
    "bemerkung": null,
+   "kantone": [
+    "NE"
+   ],
    "werte": {
     "tunnel_laenge": 230,
     "tunnel_jahr": 1888
@@ -10061,6 +10287,9 @@
    "name": "Tunnel de Pierre-Pertuis (045)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 1294,
     "tunnel_jahr": 1874
@@ -10071,6 +10300,9 @@
    "name": "Tunnel de Court 1 (066)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 12,
     "tunnel_jahr": 1877
@@ -10081,6 +10313,9 @@
    "name": "Tunnel de Court 2 (067)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 184,
     "tunnel_jahr": 1900
@@ -10091,6 +10326,9 @@
    "name": "Tunnel de la Verrerie (068)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 604,
     "tunnel_jahr": 1877
@@ -10101,6 +10339,9 @@
    "name": "Tunnel de Moutier 1 (048)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 31,
     "tunnel_jahr": 1876
@@ -10111,6 +10352,9 @@
    "name": "Tunnel de Moutier 2 (049)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 14,
     "tunnel_jahr": 1876
@@ -10121,6 +10365,9 @@
    "name": "Tunnel de Moutier 3 (050)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 7,
     "tunnel_jahr": 1876
@@ -10131,6 +10378,9 @@
    "name": "Tunnel de Moutier 4 (051)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 8,
     "tunnel_jahr": 1876
@@ -10141,6 +10391,9 @@
    "name": "Tunnel de Moutier 5 (052)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 60,
     "tunnel_jahr": 1876
@@ -10151,6 +10404,9 @@
    "name": "Tunnel de Moutier 6 (053)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 23,
     "tunnel_jahr": 1876
@@ -10161,6 +10417,9 @@
    "name": "Tunnel de Moutier 7 (054)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 54,
     "tunnel_jahr": 1876
@@ -10171,6 +10430,9 @@
    "name": "Tunnel de Moutier 8 (055)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 19,
     "tunnel_jahr": 1876
@@ -10181,6 +10443,9 @@
    "name": "Tunnel de Moutier 9 (056)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 13,
     "tunnel_jahr": 1876
@@ -10191,6 +10456,9 @@
    "name": "Tunnel Verrerie de Roches",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 108,
     "tunnel_jahr": 1876
@@ -10201,6 +10469,9 @@
    "name": "Tunnel Verrerie de Moutier",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 32,
     "tunnel_jahr": 1876
@@ -10211,6 +10482,9 @@
    "name": "Tunnel de Choindez 1 (059)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 29,
     "tunnel_jahr": 1876
@@ -10221,6 +10495,9 @@
    "name": "Tunnel de Choindez 3 (086)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 254,
     "tunnel_jahr": 1932
@@ -10231,6 +10508,9 @@
    "name": "Tunnel de Choindez 2 (060)",
    "linie": 226,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 165,
     "tunnel_jahr": 1876
@@ -10241,6 +10521,9 @@
    "name": "Tunnel de Vorbourg (046)",
    "linie": 230,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 37,
     "tunnel_jahr": 1875
@@ -10251,6 +10534,9 @@
    "name": "Liesbergtunnel",
    "linie": 230,
    "bemerkung": null,
+   "kantone": [
+    "BL"
+   ],
    "werte": {
     "tunnel_laenge": 184,
     "tunnel_jahr": 1875
@@ -10261,6 +10547,9 @@
    "name": "Bärschwiltunnel",
    "linie": 230,
    "bemerkung": null,
+   "kantone": [
+    "SO"
+   ],
    "werte": {
     "tunnel_laenge": 116,
     "tunnel_jahr": 1875
@@ -10271,6 +10560,9 @@
    "name": "Angensteintunnel",
    "linie": 230,
    "bemerkung": null,
+   "kantone": [
+    "BL"
+   ],
    "werte": {
     "tunnel_laenge": 65,
     "tunnel_jahr": 1875
@@ -10281,6 +10573,9 @@
    "name": "Wolftunnel",
    "linie": 230,
    "bemerkung": null,
+   "kantone": [
+    "BS"
+   ],
    "werte": {
     "tunnel_laenge": 212,
     "tunnel_jahr": 1913
@@ -10291,6 +10586,9 @@
    "name": "Tunnel de Glovelier (063)",
    "linie": 240,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 2012,
     "tunnel_jahr": 1877
@@ -10301,6 +10599,9 @@
    "name": "Tunnel de Montmelon (064)",
    "linie": 240,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 223,
     "tunnel_jahr": 1877
@@ -10311,6 +10612,9 @@
    "name": "Tunnel de Malvie ( 065 )",
    "linie": 240,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 213,
     "tunnel_jahr": 1877
@@ -10321,6 +10625,9 @@
    "name": "Tunnel du Château (061)",
    "linie": 240,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 230,
     "tunnel_jahr": 1877
@@ -10331,6 +10638,9 @@
    "name": "Tunnel de la Croix (062)",
    "linie": 240,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 2966,
     "tunnel_jahr": 1877
@@ -10341,6 +10651,9 @@
    "name": "Tunnel de Courchavon (037)",
    "linie": 240,
    "bemerkung": null,
+   "kantone": [
+    "JU"
+   ],
    "werte": {
     "tunnel_laenge": 194,
     "tunnel_jahr": 1877
@@ -10351,6 +10664,9 @@
    "name": "Tunnel de Grandvaux (030)",
    "linie": 250,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 392,
     "tunnel_jahr": 1862
@@ -10361,6 +10677,9 @@
    "name": "Tunnel de la Cornallaz(031)",
    "linie": 250,
    "bemerkung": null,
+   "kantone": [
+    "VD"
+   ],
    "werte": {
     "tunnel_laenge": 494,
     "tunnel_jahr": 1862
@@ -10371,6 +10690,9 @@
    "name": "Tunnel de Vauderens (101)",
    "linie": 250,
    "bemerkung": null,
+   "kantone": [
+    "FR"
+   ],
    "werte": {
     "tunnel_laenge": 1980,
     "tunnel_jahr": 2001
@@ -10381,6 +10703,9 @@
    "name": "Mühletaltunnel (012)",
    "linie": 250,
    "bemerkung": null,
+   "kantone": [
+    "FR"
+   ],
    "werte": {
     "tunnel_laenge": 400,
     "tunnel_jahr": 1860
@@ -10391,6 +10716,9 @@
    "name": "Flamattertunnel (011)",
    "linie": 250,
    "bemerkung": null,
+   "kantone": [
+    "FR"
+   ],
    "werte": {
     "tunnel_laenge": 189,
     "tunnel_jahr": 1860
@@ -10401,6 +10729,9 @@
    "name": "Tunnel de Villangeaux (047)",
    "linie": 251,
    "bemerkung": null,
+   "kantone": [
+    "FR"
+   ],
    "werte": {
     "tunnel_laenge": 424,
     "tunnel_jahr": 1876
@@ -10411,6 +10742,9 @@
    "name": "Grauholztunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 6286,
     "tunnel_jahr": 1993
@@ -10421,6 +10755,9 @@
    "name": "Birchiwaldtunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 39,
     "tunnel_jahr": 2003
@@ -10431,6 +10768,9 @@
    "name": "Rüdtligentunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 400,
     "tunnel_jahr": 2004
@@ -10441,6 +10781,9 @@
    "name": "Emmetunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 1633,
     "tunnel_jahr": 2004
@@ -10451,6 +10794,9 @@
    "name": "Hersiwiltunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "SO"
+   ],
    "werte": {
     "tunnel_laenge": 1000,
     "tunnel_jahr": 2004
@@ -10461,6 +10807,9 @@
    "name": "Oenzbergtunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "SO"
+   ],
    "werte": {
     "tunnel_laenge": 3155,
     "tunnel_jahr": 2004
@@ -10471,6 +10820,9 @@
    "name": "Gishübeltunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 845,
     "tunnel_jahr": 2004
@@ -10481,6 +10833,9 @@
    "name": "Thunstettentunnel I Nord NBS",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 889,
     "tunnel_jahr": 2004
@@ -10491,6 +10846,9 @@
    "name": "Langenthaltunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 1105,
     "tunnel_jahr": 2003
@@ -10501,6 +10859,9 @@
    "name": "Aegertentunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 632,
     "tunnel_jahr": 2004
@@ -10511,6 +10872,9 @@
    "name": "Murgenthaltunnel",
    "linie": 400,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 4744,
     "tunnel_jahr": 2004
@@ -10521,6 +10885,9 @@
    "name": "Wolfachertunnel Nord",
    "linie": 415,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 577,
     "tunnel_jahr": 2004
@@ -10531,6 +10898,9 @@
    "name": "Wolfachertunnel Süd",
    "linie": 415,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 418,
     "tunnel_jahr": 2004
@@ -10541,6 +10911,9 @@
    "name": "Borntunnel",
    "linie": 450,
    "bemerkung": null,
+   "kantone": [
+    "SO"
+   ],
    "werte": {
     "tunnel_laenge": 798,
     "tunnel_jahr": 1981
@@ -10551,6 +10924,9 @@
    "name": "Thunstettentunnel II Süd STL",
    "linie": 450,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 891,
     "tunnel_jahr": 2004
@@ -10561,6 +10937,9 @@
    "name": "Burgdorfertunnel",
    "linie": 450,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 510,
     "tunnel_jahr": 1857
@@ -10571,6 +10950,9 @@
    "name": "Wylerfeldtunnel",
    "linie": 450,
    "bemerkung": null,
+   "kantone": [
+    "BE"
+   ],
    "werte": {
     "tunnel_laenge": 300,
     "tunnel_jahr": 2022
@@ -10581,6 +10963,9 @@
    "name": "Wiggentunnel",
    "linie": 460,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 40,
     "tunnel_jahr": 1875
@@ -10591,6 +10976,9 @@
    "name": "Wilzigentunnel",
    "linie": 460,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 250,
     "tunnel_jahr": 1875
@@ -10601,6 +10989,9 @@
    "name": "Entlenstaldentunnel",
    "linie": 460,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 58,
     "tunnel_jahr": 1875
@@ -10611,6 +11002,9 @@
    "name": "Oberer Schächlitunnel",
    "linie": 460,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 45,
     "tunnel_jahr": 1875
@@ -10621,6 +11015,9 @@
    "name": "Unterer Schächlitunnel",
    "linie": 460,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 95,
     "tunnel_jahr": 1875
@@ -10631,6 +11028,9 @@
    "name": "Wolhusentunnel",
    "linie": 460,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 150,
     "tunnel_jahr": 1875
@@ -10641,6 +11041,9 @@
    "name": "Werthensteintunnel",
    "linie": 460,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 30,
     "tunnel_jahr": 1875
@@ -10651,6 +11054,9 @@
    "name": "Zimmereggtunnel",
    "linie": 460,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 1134,
     "tunnel_jahr": 1875
@@ -10661,6 +11067,9 @@
    "name": "Hauenstein Basistunnel HBT",
    "linie": 500,
    "bemerkung": null,
+   "kantone": [
+    "BL"
+   ],
    "werte": {
     "tunnel_laenge": 8135,
     "tunnel_jahr": 1916
@@ -10671,6 +11080,9 @@
    "name": "Aarburgertunnel",
    "linie": 500,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 87,
     "tunnel_jahr": 1856
@@ -10681,6 +11093,9 @@
    "name": "Gütschtunnel Luzern",
    "linie": 500,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 326,
     "tunnel_jahr": 1897
@@ -10691,6 +11106,9 @@
    "name": "Schönheimtunnel",
    "linie": 500,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 199,
     "tunnel_jahr": 1896
@@ -10701,6 +11119,9 @@
    "name": "Adlertunnel",
    "linie": 501,
    "bemerkung": null,
+   "kantone": [
+    "BL"
+   ],
    "werte": {
     "tunnel_laenge": 5303,
     "tunnel_jahr": 2000
@@ -10711,6 +11132,9 @@
    "name": "Bucktentunnel",
    "linie": 503,
    "bemerkung": null,
+   "kantone": [
+    "BL"
+   ],
    "werte": {
     "tunnel_laenge": 263,
     "tunnel_jahr": 1857
@@ -10721,6 +11145,9 @@
    "name": "Mühlefluhtunnel BL",
    "linie": 503,
    "bemerkung": null,
+   "kantone": [
+    "BL"
+   ],
    "werte": {
     "tunnel_laenge": 60,
     "tunnel_jahr": 1857
@@ -10731,6 +11158,9 @@
    "name": "Ob. Hauensteintunnel",
    "linie": 503,
    "bemerkung": null,
+   "kantone": [
+    "SO"
+   ],
    "werte": {
     "tunnel_laenge": 2495,
     "tunnel_jahr": 1857
@@ -10741,6 +11171,9 @@
    "name": "Kannenfeldtunnel",
    "linie": 510,
    "bemerkung": null,
+   "kantone": [
+    "BS"
+   ],
    "werte": {
     "tunnel_laenge": 800,
     "tunnel_jahr": 1901
@@ -10751,6 +11184,9 @@
    "name": "Schützenmatttunnel",
    "linie": 510,
    "bemerkung": null,
+   "kantone": [
+    "BS"
+   ],
    "werte": {
     "tunnel_laenge": 286,
     "tunnel_jahr": 1901
@@ -10761,6 +11197,9 @@
    "name": "Tunnel Wöschnau",
    "linie": 540,
    "bemerkung": null,
+   "kantone": [
+    "SO"
+   ],
    "werte": {
     "tunnel_laenge": 488,
     "tunnel_jahr": 2019
@@ -10771,6 +11210,9 @@
    "name": "Luzerner Stadttunnel",
    "linie": 570,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 2092,
     "tunnel_jahr": 1897
@@ -10781,6 +11223,9 @@
    "name": "Schiltenneunetunnel",
    "linie": 570,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 166,
     "tunnel_jahr": 1897
@@ -10791,6 +11236,9 @@
    "name": "Seeburgtunnel",
    "linie": 570,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 113,
     "tunnel_jahr": 1897
@@ -10801,6 +11249,9 @@
    "name": "Lerchenbühltunnel",
    "linie": 570,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 560,
     "tunnel_jahr": 1897
@@ -10811,6 +11262,9 @@
    "name": "Lettentunnel LU",
    "linie": 570,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 37,
     "tunnel_jahr": 1897
@@ -10821,6 +11275,9 @@
    "name": "Schwarzenbachtunnel",
    "linie": 570,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 124,
     "tunnel_jahr": 1897
@@ -10831,6 +11288,9 @@
    "name": "Galleria di base del Ceneri",
    "linie": 580,
    "bemerkung": "CBT Ovest, da länger als CBT Est (ohne Sarè, da Saré eine Abzweigung ist und den Tunnel nicht verlängert)",
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 15196,
     "tunnel_jahr": 2020
@@ -10841,6 +11301,9 @@
    "name": "Gotthard-Basistunnel",
    "linie": 594,
    "bemerkung": "Länge der Oströhre, da länger als Weströhre",
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 57104,
     "tunnel_jahr": 2016
@@ -10851,6 +11314,9 @@
    "name": "Galleria Svincolo A2 Biasca",
    "linie": 595,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 260,
     "tunnel_jahr": 2016
@@ -10861,6 +11327,9 @@
    "name": "Galleria artificiale Giustizia",
    "linie": 595,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 106,
     "tunnel_jahr": 2016
@@ -10871,6 +11340,9 @@
    "name": "Rindelfluhtunnel re. Berg G200",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 201,
     "tunnel_jahr": 1882
@@ -10881,6 +11353,9 @@
    "name": "Rindelfluhtunnel li. See G100",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 200,
     "tunnel_jahr": 1904
@@ -10891,6 +11366,9 @@
    "name": "Hochfluhtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 584,
     "tunnel_jahr": 1882
@@ -10901,6 +11379,9 @@
    "name": "Franziskustunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 193,
     "tunnel_jahr": 1882
@@ -10911,6 +11392,9 @@
    "name": "Oelbergtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 1987,
     "tunnel_jahr": 1882
@@ -10921,6 +11405,9 @@
    "name": "Stutzecktunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 988,
     "tunnel_jahr": 1882
@@ -10931,6 +11418,9 @@
    "name": "Tellsplattentunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 172,
     "tunnel_jahr": 1882
@@ -10941,6 +11431,9 @@
    "name": "Axenbergtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 1128,
     "tunnel_jahr": 1882
@@ -10951,6 +11444,9 @@
    "name": "Sulzeggtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 128,
     "tunnel_jahr": 1882
@@ -10961,6 +11457,9 @@
    "name": "Neue Gruonbachgalerie re. G200",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 98,
     "tunnel_jahr": 1943
@@ -10971,6 +11470,9 @@
    "name": "Windgällentunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 182,
     "tunnel_jahr": 1882
@@ -10981,6 +11483,9 @@
    "name": "Bristentunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 710,
     "tunnel_jahr": 1882
@@ -10991,6 +11496,9 @@
    "name": "Intschitunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 88,
     "tunnel_jahr": 1882
@@ -11001,6 +11509,9 @@
    "name": "Zgraggentaltunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 70,
     "tunnel_jahr": 1882
@@ -11011,6 +11522,9 @@
    "name": "Breitentunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 54,
     "tunnel_jahr": 1882
@@ -11021,6 +11535,9 @@
    "name": "Meitschlingertunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 87,
     "tunnel_jahr": 1882
@@ -11031,6 +11548,9 @@
    "name": "Märchlisbachgalerie Mitte",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 25,
     "tunnel_jahr": 1882
@@ -11041,6 +11561,9 @@
    "name": "Häggrigerbachgalerie",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 32,
     "tunnel_jahr": 1882
@@ -11051,6 +11574,9 @@
    "name": "Muhrentunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 53,
     "tunnel_jahr": 1882
@@ -11061,6 +11587,9 @@
    "name": "Pfaffensprungtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 1475,
     "tunnel_jahr": 1882
@@ -11071,6 +11600,9 @@
    "name": "Mühletunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 88,
     "tunnel_jahr": 1882
@@ -11081,6 +11613,9 @@
    "name": "Kirchbergtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 304,
     "tunnel_jahr": 1882
@@ -11091,6 +11626,9 @@
    "name": "Wattingentunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 1084,
     "tunnel_jahr": 1882
@@ -11101,6 +11639,9 @@
    "name": "Rorbachtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 230,
     "tunnel_jahr": 1882
@@ -11111,6 +11652,9 @@
    "name": "Untere Entschigtalgalerie",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 185,
     "tunnel_jahr": 1882
@@ -11121,6 +11665,9 @@
    "name": "Strahllochtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 39,
     "tunnel_jahr": 1882
@@ -11131,6 +11678,9 @@
    "name": "Leggisteintunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 1092,
     "tunnel_jahr": 1882
@@ -11141,6 +11691,9 @@
    "name": "Maienkreuztunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 78,
     "tunnel_jahr": 1882
@@ -11151,6 +11704,9 @@
    "name": "Obere Entschigtalgalerie",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 103,
     "tunnel_jahr": 1882
@@ -11161,6 +11717,9 @@
    "name": "Naxbergtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 1570,
     "tunnel_jahr": 1882
@@ -11171,6 +11730,9 @@
    "name": "Gotthardtunnel",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 15000,
     "tunnel_jahr": 1882
@@ -11181,6 +11743,9 @@
    "name": "Galleria Stalvedro",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 194,
     "tunnel_jahr": 1882
@@ -11191,6 +11756,9 @@
    "name": "Galleria Dazio",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 354,
     "tunnel_jahr": 1882
@@ -11201,6 +11769,9 @@
    "name": "Galleria Artoito",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 74,
     "tunnel_jahr": 1882
@@ -11211,6 +11782,9 @@
    "name": "Galleria Freggio",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 1568,
     "tunnel_jahr": 1882
@@ -11221,6 +11795,9 @@
    "name": "Galleria Monte Piottino",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 147,
     "tunnel_jahr": 1882
@@ -11231,6 +11808,9 @@
    "name": "Galleria Pardorea",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 286,
     "tunnel_jahr": 1882
@@ -11241,6 +11821,9 @@
    "name": "Galleria Prato",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 1567,
     "tunnel_jahr": 1882
@@ -11251,6 +11834,9 @@
    "name": "Galleria Boscerina",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 43,
     "tunnel_jahr": 1882
@@ -11261,6 +11847,9 @@
    "name": "Galleria Polmengo",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 304,
     "tunnel_jahr": 1882
@@ -11271,6 +11860,9 @@
    "name": "Galleria la Lume",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 466,
     "tunnel_jahr": 1882
@@ -11281,6 +11873,9 @@
    "name": "Galleria Pianotondo",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 1509,
     "tunnel_jahr": 1882
@@ -11291,6 +11886,9 @@
    "name": "Galleria Tourniquet",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 72,
     "tunnel_jahr": 1882
@@ -11301,6 +11899,9 @@
    "name": "Galleria Travi",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 1547,
     "tunnel_jahr": 1882
@@ -11311,6 +11912,9 @@
    "name": "Galleria Crocetto",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 275,
     "tunnel_jahr": 1874
@@ -11321,6 +11925,9 @@
    "name": "Galleria Giustizia",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 64,
     "tunnel_jahr": 1874
@@ -11331,6 +11938,9 @@
    "name": "Galleria Svitto",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 291,
     "tunnel_jahr": 1874
@@ -11341,6 +11951,9 @@
    "name": "Galleria Dragonato",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 33,
     "tunnel_jahr": 2018
@@ -11351,6 +11964,9 @@
    "name": "Galleria Costa",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 68,
     "tunnel_jahr": 1874
@@ -11361,6 +11977,9 @@
    "name": "Galleria Precassino Gl. 200",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 402,
     "tunnel_jahr": 1874
@@ -11371,6 +11990,9 @@
    "name": "Galleria Meggiagra Gl. 200",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 102,
     "tunnel_jahr": 1882
@@ -11381,6 +12003,9 @@
    "name": "Galleria Monte Ceneri I sinistra",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 1675,
     "tunnel_jahr": 1882
@@ -11391,6 +12016,9 @@
    "name": "Galleria Molincero",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 75,
     "tunnel_jahr": 1882
@@ -11401,6 +12029,9 @@
    "name": "Galleria Massagno I sinistra",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 924,
     "tunnel_jahr": 1882
@@ -11411,6 +12042,9 @@
    "name": "Galeria Paradiso",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 758,
     "tunnel_jahr": 1897
@@ -11421,6 +12055,9 @@
    "name": "Galleria San Martino",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 53,
     "tunnel_jahr": 1874
@@ -11431,6 +12068,9 @@
    "name": "Galleria Maroggia",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 570,
     "tunnel_jahr": 1874
@@ -11441,6 +12081,9 @@
    "name": "Galleria Coldrerio",
    "linie": 600,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 92,
     "tunnel_jahr": 1874
@@ -11451,6 +12094,9 @@
    "name": "Morschachtunnel",
    "linie": 604,
    "bemerkung": "Inkl: Morschachtunnel2 Gl.100 (DfA 604) und Morschachtunnel3 Gl.200 (DfA 604)",
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 1371,
     "tunnel_jahr": 1947
@@ -11461,6 +12107,9 @@
    "name": "Fronalptunnel",
    "linie": 604,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 2793,
     "tunnel_jahr": 1946
@@ -11471,6 +12120,9 @@
    "name": "Stutzeck-Axenbergtunnel",
    "linie": 605,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 3375,
     "tunnel_jahr": 1941
@@ -11481,6 +12133,9 @@
    "name": "Alte Gruonbachgalerie li. G100",
    "linie": 605,
    "bemerkung": null,
+   "kantone": [
+    "UR"
+   ],
    "werte": {
     "tunnel_laenge": 100,
     "tunnel_jahr": 1882
@@ -11491,6 +12146,9 @@
    "name": "Galleria Precassino-Meggiagra",
    "linie": 606,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 713,
     "tunnel_jahr": 1934
@@ -11501,6 +12159,9 @@
    "name": "Galleria Monte Ceneri II destra",
    "linie": 607,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 1693,
     "tunnel_jahr": 1941
@@ -11511,6 +12172,9 @@
    "name": "Galleria Massagno II destra",
    "linie": 608,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 943,
     "tunnel_jahr": 1933
@@ -11521,6 +12185,9 @@
    "name": "Galleria Roca Bella",
    "linie": 630,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 754,
     "tunnel_jahr": 1980
@@ -11531,6 +12198,9 @@
    "name": "Galleria Balerna",
    "linie": 638,
    "bemerkung": null,
+   "kantone": [
+    "TI"
+   ],
    "werte": {
     "tunnel_laenge": 616,
     "tunnel_jahr": 1964
@@ -11541,6 +12211,9 @@
    "name": "Aarauer Stadttunnel I Nord",
    "linie": 649,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 578,
     "tunnel_jahr": 1996
@@ -11551,6 +12224,9 @@
    "name": "Heitersbergtunnel",
    "linie": 650,
    "bemerkung": "Inkl: Heitersberg2 (DfA 698) und Heitersberg3 (DfA 650)",
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 4930,
     "tunnel_jahr": 1972
@@ -11561,6 +12237,9 @@
    "name": "Aarauer Stadttunnel II Süd",
    "linie": 650,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 615,
     "tunnel_jahr": 1993
@@ -11571,6 +12250,9 @@
    "name": "Tunnel Eppenberg",
    "linie": 650,
    "bemerkung": null,
+   "kantone": [
+    "SO"
+   ],
    "werte": {
     "tunnel_laenge": 3113,
     "tunnel_jahr": 2020
@@ -11581,6 +12263,9 @@
    "name": "Hüslentunnel",
    "linie": 651,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 606,
     "tunnel_jahr": 1998
@@ -11591,6 +12276,9 @@
    "name": "Zimmerbergtunnel",
    "linie": 660,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 1984,
     "tunnel_jahr": 1897
@@ -11601,6 +12289,9 @@
    "name": "Albistunnel",
    "linie": 660,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 3360,
     "tunnel_jahr": 1897
@@ -11611,6 +12302,9 @@
    "name": "Friedentaltunnel",
    "linie": 660,
    "bemerkung": null,
+   "kantone": [
+    "LU"
+   ],
    "werte": {
     "tunnel_laenge": 120,
     "tunnel_jahr": 1864
@@ -11621,6 +12315,9 @@
    "name": "Zuger Stadttunnel",
    "linie": 665,
    "bemerkung": null,
+   "kantone": [
+    "ZG"
+   ],
    "werte": {
     "tunnel_laenge": 585,
     "tunnel_jahr": 1896
@@ -11631,6 +12328,9 @@
    "name": "Lothenbachtunnel",
    "linie": 665,
    "bemerkung": null,
+   "kantone": [
+    "ZG"
+   ],
    "werte": {
     "tunnel_laenge": 36,
     "tunnel_jahr": 1898
@@ -11641,6 +12341,9 @@
    "name": "Bühltunnel ZG",
    "linie": 665,
    "bemerkung": null,
+   "kantone": [
+    "ZG"
+   ],
    "werte": {
     "tunnel_laenge": 94,
     "tunnel_jahr": 2021
@@ -11651,6 +12354,9 @@
    "name": "Rossplattentunnel",
    "linie": 665,
    "bemerkung": null,
+   "kantone": [
+    "ZG"
+   ],
    "werte": {
     "tunnel_laenge": 48,
     "tunnel_jahr": 1897
@@ -11661,6 +12367,9 @@
    "name": "St. Adriantunnel",
    "linie": 665,
    "bemerkung": null,
+   "kantone": [
+    "ZG"
+   ],
    "werte": {
     "tunnel_laenge": 65,
     "tunnel_jahr": 1897
@@ -11671,6 +12380,9 @@
    "name": "Rufibachtunnel",
    "linie": 665,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 39,
     "tunnel_jahr": 1897
@@ -11681,6 +12393,9 @@
    "name": "Kalkofentunnel",
    "linie": 665,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 69,
     "tunnel_jahr": 1897
@@ -11691,6 +12406,9 @@
    "name": "Mühlefluhtunnel SZ",
    "linie": 665,
    "bemerkung": null,
+   "kantone": [
+    "SZ"
+   ],
    "werte": {
     "tunnel_laenge": 191,
     "tunnel_jahr": 1897
@@ -11701,6 +12419,9 @@
    "name": "Villnacherntunnel",
    "linie": 700,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 185,
     "tunnel_jahr": 1875
@@ -11711,6 +12432,9 @@
    "name": "Doppelspurtunnel Bözberg",
    "linie": 700,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 2692,
     "tunnel_jahr": 2020
@@ -11721,6 +12445,9 @@
    "name": "Koblenztunnel",
    "linie": 702,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 181,
     "tunnel_jahr": 1854
@@ -11731,6 +12458,9 @@
    "name": "Tägerhardtunnel",
    "linie": 704,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 400,
     "tunnel_jahr": 1981
@@ -11741,6 +12471,9 @@
    "name": "Kreuzlibergtunnel",
    "linie": 710,
    "bemerkung": null,
+   "kantone": [
+    "AG"
+   ],
    "werte": {
     "tunnel_laenge": 905,
     "tunnel_jahr": 1961
@@ -11751,6 +12484,9 @@
    "name": "Landikontunnel",
    "linie": 711,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 484,
     "tunnel_jahr": 1864
@@ -11761,6 +12497,9 @@
    "name": "Kohlendreiecktunnel",
    "linie": 714,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 185,
     "tunnel_jahr": 2004
@@ -11771,6 +12510,9 @@
    "name": "UQB-Altstettertunnel",
    "linie": 714,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 291,
     "tunnel_jahr": 2002
@@ -11781,6 +12523,9 @@
    "name": "Ulmbergtunnel",
    "linie": 720,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 848,
     "tunnel_jahr": 1927
@@ -11791,6 +12536,9 @@
    "name": "Engetunnel",
    "linie": 720,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 903,
     "tunnel_jahr": 1927
@@ -11801,6 +12549,9 @@
    "name": "Seebahntunnel",
    "linie": 722,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 97,
     "tunnel_jahr": 2001
@@ -11811,6 +12562,9 @@
    "name": "Zimmerberg Basistunnel",
    "linie": 722,
    "bemerkung": "Inkl: ZBT Einspur Berg (DfA 725) und ZBT Einspur See (DfA 723)",
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 9421,
     "tunnel_jahr": 2003
@@ -11821,6 +12575,9 @@
    "name": "Riesbachtunnel",
    "linie": 730,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 1355,
     "tunnel_jahr": 1894
@@ -11831,6 +12588,9 @@
    "name": "Erlenbachtunnel",
    "linie": 730,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 72,
     "tunnel_jahr": 1894
@@ -11841,6 +12601,9 @@
    "name": "Hitzbergtunnel",
    "linie": 730,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 71,
     "tunnel_jahr": 1967
@@ -11851,6 +12614,9 @@
    "name": "Lattenbergtunnel",
    "linie": 730,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 93,
     "tunnel_jahr": 1894
@@ -11861,6 +12627,9 @@
    "name": "Erlenrunstunnel",
    "linie": 736,
    "bemerkung": null,
+   "kantone": [
+    "GL"
+   ],
    "werte": {
     "tunnel_laenge": 45,
     "tunnel_jahr": 1879
@@ -11871,6 +12640,9 @@
    "name": "Täusitunnel",
    "linie": 740,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 157,
     "tunnel_jahr": 1859
@@ -11881,6 +12653,9 @@
    "name": "Aathaltunnel",
    "linie": 740,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 303,
     "tunnel_jahr": 1990
@@ -11891,6 +12666,9 @@
    "name": "Tunnel Bahnhof Museumstrasse",
    "linie": 745,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 772,
     "tunnel_jahr": 1990
@@ -11901,6 +12679,9 @@
    "name": "Hirschengrabentunnel",
    "linie": 745,
    "bemerkung": "Inkl: Tunnel Hischengraben Axe 161 und Tunnel Hischengraben Axe 261",
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 1334,
     "tunnel_jahr": 1894
@@ -11911,6 +12692,9 @@
    "name": "Zürichbergtunnel",
    "linie": 745,
    "bemerkung": "Inkl: Tunnel Zürichbergtunnel Axe 33 (DfA 745) und Tunnel Zürichbergtunnel Axe 42 (DfA 730)",
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 5295,
     "tunnel_jahr": 1990
@@ -11921,6 +12705,9 @@
    "name": "Föhrlibucktunnel",
    "linie": 745,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 193,
     "tunnel_jahr": 1990
@@ -11931,6 +12718,9 @@
    "name": "Tunnel Bahnhof Löwenstrasse",
    "linie": 748,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 584,
     "tunnel_jahr": 2012
@@ -11941,6 +12731,9 @@
    "name": "Zürich Weinbergtunnel",
    "linie": 748,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 4977,
     "tunnel_jahr": 2014
@@ -11951,6 +12744,9 @@
    "name": "Oerlikontunnel",
    "linie": 748,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 124,
     "tunnel_jahr": 2014
@@ -11961,6 +12757,9 @@
    "name": "Opfikontunnel II",
    "linie": 750,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 302,
     "tunnel_jahr": 1980
@@ -11971,6 +12770,9 @@
    "name": "Flughafentunnel",
    "linie": 750,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 1510,
     "tunnel_jahr": 1980
@@ -11981,6 +12783,9 @@
    "name": "Hagenholztunnel",
    "linie": 750,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 3241,
     "tunnel_jahr": 1980
@@ -11991,6 +12796,9 @@
    "name": "Wipkingertunnel",
    "linie": 751,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 1222,
     "tunnel_jahr": 1856
@@ -12001,6 +12809,9 @@
    "name": "Opfikontunnel I",
    "linie": 752,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 263,
     "tunnel_jahr": 1978
@@ -12011,6 +12822,9 @@
    "name": "Lipperschwenditunnel",
    "linie": 754,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 54,
     "tunnel_jahr": 1876
@@ -12021,6 +12835,9 @@
    "name": "Jonaschluchttunnel",
    "linie": 754,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 31,
     "tunnel_jahr": 1876
@@ -12031,6 +12848,9 @@
    "name": "Kühweidtunnel",
    "linie": 754,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 132,
     "tunnel_jahr": 1876
@@ -12041,6 +12861,9 @@
    "name": "Platteneinschnitttunnel",
    "linie": 754,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 15,
     "tunnel_jahr": 1876
@@ -12051,6 +12874,9 @@
    "name": "Käferbergtunnel",
    "linie": 760,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 2118,
     "tunnel_jahr": 1969
@@ -12061,6 +12887,9 @@
    "name": "Schloss Laufentunnel",
    "linie": 762,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 66,
     "tunnel_jahr": 1857
@@ -12071,6 +12900,9 @@
    "name": "Rötitunnel",
    "linie": 762,
    "bemerkung": null,
+   "kantone": [
+    "SH"
+   ],
    "werte": {
     "tunnel_laenge": 153,
     "tunnel_jahr": 1964
@@ -12081,6 +12913,9 @@
    "name": "Dettenbergtunnel",
    "linie": 769,
    "bemerkung": null,
+   "kantone": [
+    "ZH"
+   ],
    "werte": {
     "tunnel_laenge": 1801,
     "tunnel_jahr": 1876
@@ -12091,6 +12926,9 @@
    "name": "Fischerhölzlitunnel",
    "linie": 770,
    "bemerkung": null,
+   "kantone": [
+    "SH"
+   ],
    "werte": {
     "tunnel_laenge": 112,
     "tunnel_jahr": 1897
@@ -12101,6 +12939,9 @@
    "name": "Neuhausertunnel",
    "linie": 770,
    "bemerkung": null,
+   "kantone": [
+    "SH"
+   ],
    "werte": {
     "tunnel_laenge": 143,
     "tunnel_jahr": 1897
@@ -12111,6 +12952,9 @@
    "name": "Emmersbergtunnel",
    "linie": 820,
    "bemerkung": null,
+   "kantone": [
+    "SH"
+   ],
    "werte": {
     "tunnel_laenge": 760,
     "tunnel_jahr": 1895
@@ -12121,6 +12965,7 @@
    "name": "Rickentunnel",
    "linie": 853,
    "bemerkung": null,
+   "kantone": [],
    "werte": {
     "tunnel_laenge": 8604,
     "tunnel_jahr": 1910
@@ -12131,6 +12976,7 @@
    "name": "Rosenbergtunnel",
    "linie": 880,
    "bemerkung": null,
+   "kantone": [],
    "werte": {
     "tunnel_laenge": 1466,
     "tunnel_jahr": 1912
@@ -12141,6 +12987,7 @@
    "name": "Bommersteintunnel",
    "linie": 890,
    "bemerkung": null,
+   "kantone": [],
    "werte": {
     "tunnel_laenge": 453,
     "tunnel_jahr": 1941
@@ -12151,6 +12998,7 @@
    "name": "Bühltunnel SG",
    "linie": 890,
    "bemerkung": null,
+   "kantone": [],
    "werte": {
     "tunnel_laenge": 114,
     "tunnel_jahr": 1859
@@ -12161,6 +13009,9 @@
    "name": "Stutztunnel",
    "linie": 890,
    "bemerkung": null,
+   "kantone": [
+    "GL"
+   ],
    "werte": {
     "tunnel_laenge": 133,
     "tunnel_jahr": 1859
@@ -12171,6 +13022,9 @@
    "name": "Kerenzerbergtunnel",
    "linie": 890,
    "bemerkung": null,
+   "kantone": [
+    "GL"
+   ],
    "werte": {
     "tunnel_laenge": 3955,
     "tunnel_jahr": 1961
@@ -12181,11 +13035,1195 @@
    "name": "Biberlikopftunnel",
    "linie": 890,
    "bemerkung": null,
+   "kantone": [],
    "werte": {
     "tunnel_laenge": 289,
     "tunnel_jahr": 1966
    }
   }
  ],
- "tunnel_datenstand": "2026-09-21"
+ "tunnel_datenstand": "2026-09-21",
+ "linien_kategorien": [
+  {
+   "id": "linie_bahnhoefe",
+   "titel": "Bahnhöfe",
+   "frage": "Auf welcher Linie sind mehr Bahnhöfe erfasst?",
+   "frage_mehrere": "Auf welcher dieser Linien sind am meisten Bahnhöfe erfasst?",
+   "einheit": "Bahnhöfe",
+   "einheit_einzahl": "Bahnhof",
+   "art": "erfasst",
+   "quelle": "linie-mit-betriebspunkten",
+   "hinweis": "Gezählt sind die Bahnhöfe aus Taktland, die in den offenen Daten auf der Linie liegen.",
+   "min_abstand": 2,
+   "min_anteil": 0.25
+  },
+  {
+   "id": "linie_betriebspunkte",
+   "titel": "Betriebspunkte",
+   "frage": "Auf welcher Linie sind mehr Betriebspunkte erfasst?",
+   "frage_mehrere": "Auf welcher dieser Linien sind am meisten Betriebspunkte erfasst?",
+   "einheit": "Betriebspunkte",
+   "einheit_einzahl": "Betriebspunkt",
+   "art": "erfasst",
+   "quelle": "linie-mit-betriebspunkten",
+   "hinweis": "Betriebspunkte sind Stellen, die der Bahnbetrieb unterscheidet, etwa Bahnhöfe, Haltestellen und Abzweigungen. Verglichen wird, was in den offenen Daten steht.",
+   "min_abstand": 3,
+   "min_anteil": 0.2
+  },
+  {
+   "id": "linie_tunnel",
+   "titel": "Tunnel",
+   "frage": "Auf welcher Linie sind mehr Tunnel erfasst?",
+   "frage_mehrere": "Auf welcher dieser Linien sind am meisten Tunnel erfasst?",
+   "einheit": "Tunnel",
+   "einheit_einzahl": "Tunnel",
+   "art": "erfasst",
+   "quelle": "tunnel",
+   "hinweis": "Verglichen wird, was in den offenen Daten steht. Linien ohne erfassten Tunnel treten bei dieser Frage nicht an.",
+   "min_abstand": 1,
+   "min_anteil": 0.25
+  },
+  {
+   "id": "linie_bruecken",
+   "titel": "Brücken",
+   "frage": "Auf welcher Linie sind mehr Brücken erfasst?",
+   "frage_mehrere": "Auf welcher dieser Linien sind am meisten Brücken erfasst?",
+   "einheit": "Brücken",
+   "einheit_einzahl": "Brücke",
+   "art": "erfasst",
+   "quelle": "brucken",
+   "hinweis": "Verglichen wird, was in den offenen Daten steht. Linien ohne erfasste Brücke treten bei dieser Frage nicht an.",
+   "min_abstand": 3,
+   "min_anteil": 0.2
+  },
+  {
+   "id": "linie_bahnuebergaenge",
+   "titel": "Bahnübergänge",
+   "frage": "Auf welcher Linie sind mehr Bahnübergänge erfasst?",
+   "frage_mehrere": "Auf welcher dieser Linien sind am meisten Bahnübergänge erfasst?",
+   "einheit": "Bahnübergänge",
+   "einheit_einzahl": "Bahnübergang",
+   "art": "erfasst",
+   "quelle": "bahnubergang",
+   "hinweis": "Verglichen wird, was in den offenen Daten steht. Linien ohne erfassten Bahnübergang treten bei dieser Frage nicht an.",
+   "min_abstand": 2,
+   "min_anteil": 0.25
+  }
+ ],
+ "linien": [
+  {
+   "linie": 100,
+   "name": "Lausanne - Simplon Tunnel I - Iselle",
+   "werte": {
+    "linie_bahnhoefe": 39,
+    "linie_betriebspunkte": 59,
+    "linie_tunnel": 9,
+    "linie_bruecken": 201,
+    "linie_bahnuebergaenge": 6
+   }
+  },
+  {
+   "linie": 111,
+   "name": "Vevey Ouest - Puidoux-Chexbres",
+   "werte": {
+    "linie_bahnhoefe": 4,
+    "linie_betriebspunkte": 6,
+    "linie_tunnel": 3,
+    "linie_bruecken": 8,
+    "linie_bahnuebergaenge": 9
+   }
+  },
+  {
+   "linie": 131,
+   "name": "Les Paluds - St-Gingolph (Frontiere)",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 15,
+    "linie_bruecken": 20,
+    "linie_bahnuebergaenge": 28
+   }
+  },
+  {
+   "linie": 150,
+   "name": "Lausanne - Geneve-Aeroport",
+   "werte": {
+    "linie_bahnhoefe": 25,
+    "linie_betriebspunkte": 53,
+    "linie_tunnel": 2,
+    "linie_bruecken": 130,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 151,
+   "name": "Geneve St-Jean - La Plaine-Frontiere",
+   "werte": {
+    "linie_bahnhoefe": 6,
+    "linie_betriebspunkte": 11,
+    "linie_tunnel": 1,
+    "linie_bruecken": 18,
+    "linie_bahnuebergaenge": 3
+   }
+  },
+  {
+   "linie": 152,
+   "name": "St-Jean - Geneve-Eaux-Vives - Annemasse",
+   "werte": {
+    "linie_bahnhoefe": 5,
+    "linie_betriebspunkte": 12,
+    "linie_tunnel": 15,
+    "linie_bruecken": 9
+   }
+  },
+  {
+   "linie": 154,
+   "name": "Furet - Jonction",
+   "werte": {
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1
+   }
+  },
+  {
+   "linie": 200,
+   "name": "Renens VD Ouest - Vallorbe",
+   "werte": {
+    "linie_bahnhoefe": 9,
+    "linie_betriebspunkte": 14,
+    "linie_tunnel": 4,
+    "linie_bruecken": 43,
+    "linie_bahnuebergaenge": 2
+   }
+  },
+  {
+   "linie": 201,
+   "name": "Le Day - Le Brassus",
+   "werte": {
+    "linie_bahnhoefe": 1,
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1,
+    "linie_bruecken": 6,
+    "linie_bahnuebergaenge": 5
+   }
+  },
+  {
+   "linie": 203,
+   "name": "Frasne - Vallorbe",
+   "werte": {
+    "linie_bahnhoefe": 1,
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1,
+    "linie_bruecken": 3
+   }
+  },
+  {
+   "linie": 210,
+   "name": "Daillens - Biel/Bienne",
+   "werte": {
+    "linie_bahnhoefe": 25,
+    "linie_betriebspunkte": 36,
+    "linie_tunnel": 11,
+    "linie_bruecken": 127,
+    "linie_bahnuebergaenge": 4
+   }
+  },
+  {
+   "linie": 219,
+   "name": "Auvernier - Les Verrieres frontiere",
+   "werte": {
+    "linie_bahnhoefe": 5,
+    "linie_betriebspunkte": 12,
+    "linie_tunnel": 11,
+    "linie_bruecken": 19,
+    "linie_bahnuebergaenge": 18
+   }
+  },
+  {
+   "linie": 220,
+   "name": "Bern - Neuchatel Est (bif)",
+   "werte": {
+    "linie_bahnhoefe": 1,
+    "linie_betriebspunkte": 5,
+    "linie_tunnel": 1
+   }
+  },
+  {
+   "linie": 223,
+   "name": "Neuchatel-Vauseyon - Chambrelien",
+   "werte": {
+    "linie_bahnhoefe": 3,
+    "linie_betriebspunkte": 7,
+    "linie_tunnel": 3,
+    "linie_bruecken": 6,
+    "linie_bahnuebergaenge": 5
+   }
+  },
+  {
+   "linie": 224,
+   "name": "Chambrelien Nord - Le Locle (Frontiere)",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 12,
+    "linie_tunnel": 4,
+    "linie_bruecken": 14,
+    "linie_bahnuebergaenge": 16
+   }
+  },
+  {
+   "linie": 225,
+   "name": "Biel/Bienne West - La Chaux-de-Fonds",
+   "werte": {
+    "linie_bahnhoefe": 12,
+    "linie_betriebspunkte": 18,
+    "linie_tunnel": 9,
+    "linie_bruecken": 31,
+    "linie_bahnuebergaenge": 24
+   }
+  },
+  {
+   "linie": 226,
+   "name": "Sonceboz-Sombeval - Moutier - Delemont",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 11,
+    "linie_tunnel": 18,
+    "linie_bruecken": 34,
+    "linie_bahnuebergaenge": 19
+   }
+  },
+  {
+   "linie": 230,
+   "name": "Delemont Est - Basel SBB Ost",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 18,
+    "linie_tunnel": 5,
+    "linie_bruecken": 41,
+    "linie_bahnuebergaenge": 7
+   }
+  },
+  {
+   "linie": 235,
+   "name": "Tavannes - Le Noirmont",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 2
+   }
+  },
+  {
+   "linie": 240,
+   "name": "Delemont - Delle",
+   "werte": {
+    "linie_bahnhoefe": 13,
+    "linie_betriebspunkte": 13,
+    "linie_tunnel": 6,
+    "linie_bruecken": 27,
+    "linie_bahnuebergaenge": 28
+   }
+  },
+  {
+   "linie": 241,
+   "name": "Courtemaiche - Bure-Casernes",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 2,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 250,
+   "name": "Lausanne Est - Bern",
+   "werte": {
+    "linie_bahnhoefe": 30,
+    "linie_betriebspunkte": 42,
+    "linie_tunnel": 5,
+    "linie_bruecken": 116,
+    "linie_bahnuebergaenge": 2
+   }
+  },
+  {
+   "linie": 251,
+   "name": "Palezieux Est - Lyss Nord",
+   "werte": {
+    "linie_bahnhoefe": 23,
+    "linie_betriebspunkte": 31,
+    "linie_tunnel": 1,
+    "linie_bruecken": 52,
+    "linie_bahnuebergaenge": 65
+   }
+  },
+  {
+   "linie": 252,
+   "name": "Yverdon Est - Payerne",
+   "werte": {
+    "linie_bahnhoefe": 6,
+    "linie_betriebspunkte": 9,
+    "linie_bruecken": 17,
+    "linie_bahnuebergaenge": 18
+   }
+  },
+  {
+   "linie": 253,
+   "name": "Payerne Est - Fribourg Nord",
+   "werte": {
+    "linie_bahnhoefe": 6,
+    "linie_betriebspunkte": 12,
+    "linie_bruecken": 11,
+    "linie_bahnuebergaenge": 17
+   }
+  },
+  {
+   "linie": 257,
+   "name": "Flamatt - Laupen - Gummenen",
+   "werte": {
+    "linie_bahnhoefe": 4,
+    "linie_betriebspunkte": 5,
+    "linie_bahnuebergaenge": 6
+   }
+  },
+  {
+   "linie": 260,
+   "name": "Zollikofen Nord - Biel/Bienne Aebistr.",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 11,
+    "linie_bruecken": 29,
+    "linie_bahnuebergaenge": 9
+   }
+  },
+  {
+   "linie": 290,
+   "name": "Bern Wylerfeld - Thun",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 15,
+    "linie_bruecken": 40
+   }
+  },
+  {
+   "linie": 292,
+   "name": "Solothurn - Bern RBS",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 2
+   }
+  },
+  {
+   "linie": 400,
+   "name": "Lochligut - Wanzwil - Rothrist West",
+   "werte": {
+    "linie_betriebspunkte": 4,
+    "linie_tunnel": 11,
+    "linie_bruecken": 15
+   }
+  },
+  {
+   "linie": 410,
+   "name": "Olten - Solothurn - Biel/Bienne",
+   "werte": {
+    "linie_bahnhoefe": 23,
+    "linie_betriebspunkte": 30,
+    "linie_bruecken": 106,
+    "linie_bahnuebergaenge": 8
+   }
+  },
+  {
+   "linie": 411,
+   "name": "Solothurn - Niederbipp",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 2
+   }
+  },
+  {
+   "linie": 413,
+   "name": "Langenthal - Niederbipp",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 2
+   }
+  },
+  {
+   "linie": 415,
+   "name": "Wanzwil (Abzw) - Solothurn - Busswil",
+   "werte": {
+    "linie_bahnhoefe": 4,
+    "linie_betriebspunkte": 13,
+    "linie_tunnel": 2,
+    "linie_bruecken": 23,
+    "linie_bahnuebergaenge": 19
+   }
+  },
+  {
+   "linie": 450,
+   "name": "Olten Sud - Bern",
+   "werte": {
+    "linie_bahnhoefe": 13,
+    "linie_betriebspunkte": 29,
+    "linie_tunnel": 4,
+    "linie_bruecken": 97,
+    "linie_bahnuebergaenge": 4
+   }
+  },
+  {
+   "linie": 451,
+   "name": "Aarburg-Oftringen - Rothrist Gleis 1",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 4,
+    "linie_bruecken": 5,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 460,
+   "name": "Gumligen Sud - Fluhmuhle",
+   "werte": {
+    "linie_bahnhoefe": 18,
+    "linie_betriebspunkte": 27,
+    "linie_tunnel": 8,
+    "linie_bruecken": 134,
+    "linie_bahnuebergaenge": 56
+   }
+  },
+  {
+   "linie": 500,
+   "name": "Basel SBB - Olten - Luzern",
+   "werte": {
+    "linie_bahnhoefe": 28,
+    "linie_betriebspunkte": 48,
+    "linie_tunnel": 4,
+    "linie_bruecken": 147,
+    "linie_bahnuebergaenge": 7
+   }
+  },
+  {
+   "linie": 501,
+   "name": "Muttenz - Adlertunnel - Liestal",
+   "werte": {
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1,
+    "linie_bruecken": 5
+   }
+  },
+  {
+   "linie": 503,
+   "name": "Sissach - Laufelfingen - Olten",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 9,
+    "linie_tunnel": 3,
+    "linie_bruecken": 24,
+    "linie_bahnuebergaenge": 8
+   }
+  },
+  {
+   "linie": 504,
+   "name": "Zofingen - Suhr",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 8,
+    "linie_bruecken": 11,
+    "linie_bahnuebergaenge": 24
+   }
+  },
+  {
+   "linie": 510,
+   "name": "Mulhouse-Ville - Basel SBB",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 4,
+    "linie_tunnel": 2,
+    "linie_bruecken": 2
+   }
+  },
+  {
+   "linie": 540,
+   "name": "Olten - Woschnau",
+   "werte": {
+    "linie_bahnhoefe": 4,
+    "linie_betriebspunkte": 8,
+    "linie_tunnel": 1,
+    "linie_bruecken": 19
+   }
+  },
+  {
+   "linie": 570,
+   "name": "Gutsch - Kussnacht - Immensee",
+   "werte": {
+    "linie_bahnhoefe": 5,
+    "linie_betriebspunkte": 7,
+    "linie_tunnel": 6,
+    "linie_bruecken": 30,
+    "linie_bahnuebergaenge": 3
+   }
+  },
+  {
+   "linie": 580,
+   "name": "CBT Est",
+   "werte": {
+    "linie_betriebspunkte": 5,
+    "linie_tunnel": 1,
+    "linie_bruecken": 1
+   }
+  },
+  {
+   "linie": 594,
+   "name": "GBT West",
+   "werte": {
+    "linie_betriebspunkte": 6,
+    "linie_tunnel": 1
+   }
+  },
+  {
+   "linie": 595,
+   "name": "GBT Ost",
+   "werte": {
+    "linie_betriebspunkte": 7,
+    "linie_tunnel": 2,
+    "linie_bruecken": 10
+   }
+  },
+  {
+   "linie": 600,
+   "name": "Immensee - Bellinzona - Chiasso",
+   "werte": {
+    "linie_bahnhoefe": 32,
+    "linie_betriebspunkte": 82,
+    "linie_tunnel": 58,
+    "linie_bruecken": 511,
+    "linie_bahnuebergaenge": 7
+   }
+  },
+  {
+   "linie": 604,
+   "name": "Brunnen - Sisikon (Gleis links)",
+   "werte": {
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 2,
+    "linie_bruecken": 2
+   }
+  },
+  {
+   "linie": 605,
+   "name": "Sisikon - Gruonbach (Gleis links)",
+   "werte": {
+    "linie_bahnhoefe": 1,
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 2,
+    "linie_bruecken": 1
+   }
+  },
+  {
+   "linie": 606,
+   "name": "Al Sasso - Al Motto (binario sinistro)",
+   "werte": {
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1,
+    "linie_bruecken": 1
+   }
+  },
+  {
+   "linie": 607,
+   "name": "Mt. Ceneri - Rivera (binario destro)",
+   "werte": {
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1,
+    "linie_bruecken": 1
+   }
+  },
+  {
+   "linie": 608,
+   "name": "Massagno - Lugano (binario destro)",
+   "werte": {
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1
+   }
+  },
+  {
+   "linie": 630,
+   "name": "Giubiasco - Locarno",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 12,
+    "linie_tunnel": 1,
+    "linie_bruecken": 42,
+    "linie_bahnuebergaenge": 5
+   }
+  },
+  {
+   "linie": 631,
+   "name": "Cadenazzo - Pino confine",
+   "werte": {
+    "linie_bahnhoefe": 5,
+    "linie_betriebspunkte": 6,
+    "linie_bruecken": 85,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 638,
+   "name": "Balerna SM - Chiasso Smistamento",
+   "werte": {
+    "linie_betriebspunkte": 3,
+    "linie_tunnel": 1,
+    "linie_bruecken": 3
+   }
+  },
+  {
+   "linie": 640,
+   "name": "Brugg - Rupperswil",
+   "werte": {
+    "linie_bahnhoefe": 5,
+    "linie_betriebspunkte": 6,
+    "linie_bruecken": 10,
+    "linie_bahnuebergaenge": 3
+   }
+  },
+  {
+   "linie": 645,
+   "name": "Lenzburg West - Suhr",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 3,
+    "linie_bruecken": 6,
+    "linie_bahnuebergaenge": 3
+   }
+  },
+  {
+   "linie": 647,
+   "name": "Brugg - Hendschiken Nord",
+   "werte": {
+    "linie_bahnhoefe": 4,
+    "linie_betriebspunkte": 8,
+    "linie_bruecken": 8
+   }
+  },
+  {
+   "linie": 649,
+   "name": "Aarau - Woschnau Tunnel alt",
+   "werte": {
+    "linie_bahnhoefe": 1,
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1
+   }
+  },
+  {
+   "linie": 650,
+   "name": "Killwangen West - Lenzburg - Daniken Ost",
+   "werte": {
+    "linie_bahnhoefe": 6,
+    "linie_betriebspunkte": 18,
+    "linie_tunnel": 3,
+    "linie_bruecken": 42,
+    "linie_bahnuebergaenge": 2
+   }
+  },
+  {
+   "linie": 651,
+   "name": "Hubeli - Beinwil - Lenzburg",
+   "werte": {
+    "linie_bahnhoefe": 17,
+    "linie_betriebspunkte": 21,
+    "linie_tunnel": 1,
+    "linie_bruecken": 27,
+    "linie_bahnuebergaenge": 88
+   }
+  },
+  {
+   "linie": 653,
+   "name": "Gexi Ost - Rotkreuz - Immensee West",
+   "werte": {
+    "linie_bahnhoefe": 10,
+    "linie_betriebspunkte": 18,
+    "linie_bruecken": 61,
+    "linie_bahnuebergaenge": 7
+   }
+  },
+  {
+   "linie": 660,
+   "name": "Thalwil - Zug - Fluhmuhle",
+   "werte": {
+    "linie_bahnhoefe": 18,
+    "linie_betriebspunkte": 25,
+    "linie_tunnel": 3,
+    "linie_bruecken": 84,
+    "linie_bahnuebergaenge": 2
+   }
+  },
+  {
+   "linie": 665,
+   "name": "Zug Sud - Arth-Goldau",
+   "werte": {
+    "linie_bahnhoefe": 6,
+    "linie_betriebspunkte": 10,
+    "linie_tunnel": 8,
+    "linie_bruecken": 61,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 700,
+   "name": "Brugg - Pratteln Ost",
+   "werte": {
+    "linie_bahnhoefe": 10,
+    "linie_betriebspunkte": 21,
+    "linie_tunnel": 2,
+    "linie_bruecken": 79,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 701,
+   "name": "Eglisau - Koblenz - Stein Sackingen Ost",
+   "werte": {
+    "linie_bahnhoefe": 11,
+    "linie_betriebspunkte": 22,
+    "linie_bruecken": 52,
+    "linie_bahnuebergaenge": 11
+   }
+  },
+  {
+   "linie": 702,
+   "name": "Turgi - Koblenz - Waldshut",
+   "werte": {
+    "linie_bahnhoefe": 5,
+    "linie_betriebspunkte": 8,
+    "linie_tunnel": 1,
+    "linie_bruecken": 24,
+    "linie_bahnuebergaenge": 5
+   }
+  },
+  {
+   "linie": 703,
+   "name": "ZH Oerlikon Nord - Wettingen - Gruemet",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 15,
+    "linie_bruecken": 20,
+    "linie_bahnuebergaenge": 18
+   }
+  },
+  {
+   "linie": 704,
+   "name": "Wurenlos - Killwangen West (RBL)",
+   "werte": {
+    "linie_bahnhoefe": 1,
+    "linie_betriebspunkte": 2,
+    "linie_tunnel": 1,
+    "linie_bruecken": 3
+   }
+  },
+  {
+   "linie": 710,
+   "name": "Zurich HB - Brugg AG",
+   "werte": {
+    "linie_bahnhoefe": 12,
+    "linie_betriebspunkte": 21,
+    "linie_tunnel": 1,
+    "linie_bruecken": 65
+   }
+  },
+  {
+   "linie": 711,
+   "name": "ZH Hardbrucke - Kollermuhle",
+   "werte": {
+    "linie_bahnhoefe": 12,
+    "linie_betriebspunkte": 17,
+    "linie_tunnel": 1,
+    "linie_bruecken": 35,
+    "linie_bahnuebergaenge": 17
+   }
+  },
+  {
+   "linie": 714,
+   "name": "Zurich - Altstetten (Sudeinfahrt)",
+   "werte": {
+    "linie_betriebspunkte": 4,
+    "linie_tunnel": 2,
+    "linie_bruecken": 1
+   }
+  },
+  {
+   "linie": 720,
+   "name": "ZH Langstrasse - Thalwil - Ziegelbrucke",
+   "werte": {
+    "linie_bahnhoefe": 21,
+    "linie_betriebspunkte": 30,
+    "linie_tunnel": 2,
+    "linie_bruecken": 104,
+    "linie_bahnuebergaenge": 15
+   }
+  },
+  {
+   "linie": 722,
+   "name": "ZH Langstrasse - Nidelbad - Litti",
+   "werte": {
+    "linie_betriebspunkte": 6,
+    "linie_tunnel": 2
+   }
+  },
+  {
+   "linie": 730,
+   "name": "Zurich Stadelhofen - Rapperswil",
+   "werte": {
+    "linie_bahnhoefe": 16,
+    "linie_betriebspunkte": 18,
+    "linie_tunnel": 4,
+    "linie_bruecken": 91,
+    "linie_bahnuebergaenge": 3
+   }
+  },
+  {
+   "linie": 735,
+   "name": "Ziegelbrucke West - Rapperswil Ost",
+   "werte": {
+    "linie_bahnhoefe": 5,
+    "linie_betriebspunkte": 8,
+    "linie_bruecken": 18,
+    "linie_bahnuebergaenge": 18
+   }
+  },
+  {
+   "linie": 736,
+   "name": "Ziegelbrucke Ost - Linthal Gleisende",
+   "werte": {
+    "linie_bahnhoefe": 14,
+    "linie_betriebspunkte": 16,
+    "linie_tunnel": 1,
+    "linie_bruecken": 38,
+    "linie_bahnuebergaenge": 34
+   }
+  },
+  {
+   "linie": 740,
+   "name": "Rapperswil - Uster - Wallisellen Ost",
+   "werte": {
+    "linie_bahnhoefe": 10,
+    "linie_betriebspunkte": 14,
+    "linie_tunnel": 2,
+    "linie_bruecken": 39,
+    "linie_bahnuebergaenge": 18
+   }
+  },
+  {
+   "linie": 742,
+   "name": "Hinwil - Baretswil - Bauma",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 2,
+    "linie_bruecken": 1,
+    "linie_bahnuebergaenge": 2
+   }
+  },
+  {
+   "linie": 745,
+   "name": "ZH Langstrasse - Dietlikon Sud (S-Bahn)",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 10,
+    "linie_tunnel": 4,
+    "linie_bruecken": 4
+   }
+  },
+  {
+   "linie": 748,
+   "name": "ZH Altstetten - ZH Oerlikon, DML",
+   "werte": {
+    "linie_bahnhoefe": 1,
+    "linie_betriebspunkte": 6,
+    "linie_tunnel": 3,
+    "linie_bruecken": 8
+   }
+  },
+  {
+   "linie": 750,
+   "name": "ZH Oerlikon Nord - Dorfnest",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 4,
+    "linie_tunnel": 3,
+    "linie_bruecken": 3
+   }
+  },
+  {
+   "linie": 751,
+   "name": "ZH Langstr. - Wallisellen - Winterthur",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 27,
+    "linie_tunnel": 1,
+    "linie_bruecken": 51,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 752,
+   "name": "Zurich Oerlikon Nord - Hurlistein (Abzw)",
+   "werte": {
+    "linie_bahnhoefe": 4,
+    "linie_betriebspunkte": 11,
+    "linie_tunnel": 1,
+    "linie_bruecken": 17,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 753,
+   "name": "Effretikon - Wetzikon - Hinwil",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 8,
+    "linie_bruecken": 17,
+    "linie_bahnuebergaenge": 19
+   }
+  },
+  {
+   "linie": 754,
+   "name": "Winterthur Gruze - Bauma - Ruti ZH West",
+   "werte": {
+    "linie_bahnhoefe": 15,
+    "linie_betriebspunkte": 16,
+    "linie_tunnel": 4,
+    "linie_bruecken": 56,
+    "linie_bahnuebergaenge": 35
+   }
+  },
+  {
+   "linie": 760,
+   "name": "Zurich Hardbrucke - Bulach",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 11,
+    "linie_tunnel": 1,
+    "linie_bruecken": 19
+   }
+  },
+  {
+   "linie": 761,
+   "name": "Oberglatt - Niederweningen Gleisende",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 8,
+    "linie_bruecken": 10,
+    "linie_bahnuebergaenge": 3
+   }
+  },
+  {
+   "linie": 762,
+   "name": "Winterthur Nord - Schaffhausen RB Ost",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 13,
+    "linie_tunnel": 2,
+    "linie_bruecken": 29,
+    "linie_bahnuebergaenge": 25
+   }
+  },
+  {
+   "linie": 769,
+   "name": "Winterthur West - Bulach",
+   "werte": {
+    "linie_bahnhoefe": 5,
+    "linie_betriebspunkte": 6,
+    "linie_tunnel": 1,
+    "linie_bruecken": 15,
+    "linie_bahnuebergaenge": 5
+   }
+  },
+  {
+   "linie": 770,
+   "name": "Bulach - Eglisau - Neuhausen",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 9,
+    "linie_tunnel": 2,
+    "linie_bruecken": 37,
+    "linie_bahnuebergaenge": 1
+   }
+  },
+  {
+   "linie": 820,
+   "name": "Etzwilen - Schaffhausen",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 10,
+    "linie_tunnel": 1,
+    "linie_bruecken": 22,
+    "linie_bahnuebergaenge": 2
+   }
+  },
+  {
+   "linie": 821,
+   "name": "Oberwinterthur - Etzwilen West (Abzw)",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 9,
+    "linie_bruecken": 24,
+    "linie_bahnuebergaenge": 10
+   }
+  },
+  {
+   "linie": 822,
+   "name": "Etzwilen - Konstanz",
+   "werte": {
+    "linie_bahnhoefe": 11,
+    "linie_betriebspunkte": 12,
+    "linie_bruecken": 27,
+    "linie_bahnuebergaenge": 46
+   }
+  },
+  {
+   "linie": 823,
+   "name": "Kreuzlingen - Kreuzlingen Hafen",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 2
+   }
+  },
+  {
+   "linie": 824,
+   "name": "Romanshorn - Konstanz",
+   "werte": {
+    "linie_bahnhoefe": 11,
+    "linie_betriebspunkte": 12,
+    "linie_bruecken": 13,
+    "linie_bahnuebergaenge": 19
+   }
+  },
+  {
+   "linie": 825,
+   "name": "Romanshorn Feld H - Rorschach",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 9,
+    "linie_bruecken": 13,
+    "linie_bahnuebergaenge": 28
+   }
+  },
+  {
+   "linie": 830,
+   "name": "Wil - Weinfelden",
+   "werte": {
+    "linie_bahnhoefe": 10,
+    "linie_betriebspunkte": 11,
+    "linie_bruecken": 21,
+    "linie_bahnuebergaenge": 13
+   }
+  },
+  {
+   "linie": 831,
+   "name": "Weinfelden - Tagermoos",
+   "werte": {
+    "linie_bahnhoefe": 7,
+    "linie_betriebspunkte": 9,
+    "linie_bruecken": 20,
+    "linie_bahnuebergaenge": 17
+   }
+  },
+  {
+   "linie": 840,
+   "name": "Winterthur Nord - Romanshorn",
+   "werte": {
+    "linie_bahnhoefe": 16,
+    "linie_betriebspunkte": 22,
+    "linie_bruecken": 72,
+    "linie_bahnuebergaenge": 11
+   }
+  },
+  {
+   "linie": 850,
+   "name": "St.Gallen - Winterthur Nord",
+   "werte": {
+    "linie_bahnhoefe": 16,
+    "linie_betriebspunkte": 24,
+    "linie_bruecken": 72,
+    "linie_bahnuebergaenge": 4
+   }
+  },
+  {
+   "linie": 852,
+   "name": "Sulgen - Gossau SG",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 9,
+    "linie_bruecken": 19,
+    "linie_bahnuebergaenge": 23
+   }
+  },
+  {
+   "linie": 853,
+   "name": "Wil Sud - Wattwil - Uznach",
+   "werte": {
+    "linie_bahnhoefe": 6,
+    "linie_betriebspunkte": 9,
+    "linie_tunnel": 1,
+    "linie_bruecken": 18,
+    "linie_bahnuebergaenge": 18
+   }
+  },
+  {
+   "linie": 880,
+   "name": "Sargans Ost - St.Gallen",
+   "werte": {
+    "linie_bahnhoefe": 18,
+    "linie_betriebspunkte": 28,
+    "linie_tunnel": 1,
+    "linie_bruecken": 77,
+    "linie_bahnuebergaenge": 44
+   }
+  },
+  {
+   "linie": 890,
+   "name": "Sargans Ost - Ziegelbrucke",
+   "werte": {
+    "linie_bahnhoefe": 9,
+    "linie_betriebspunkte": 13,
+    "linie_tunnel": 5,
+    "linie_bruecken": 53,
+    "linie_bahnuebergaenge": 2
+   }
+  },
+  {
+   "linie": 900,
+   "name": "Sargans Ost - Chur West (Gleisende)",
+   "werte": {
+    "linie_bahnhoefe": 4,
+    "linie_betriebspunkte": 10,
+    "linie_bruecken": 34
+   }
+  },
+  {
+   "linie": 920,
+   "name": "Landquart RhB - Chur - Disentis",
+   "werte": {
+    "linie_bahnhoefe": 2,
+    "linie_betriebspunkte": 2,
+    "linie_bruecken": 1
+   }
+  },
+  {
+   "linie": 9210,
+   "name": "La Neuveville - Tuscherz",
+   "werte": {
+    "linie_bahnhoefe": 3,
+    "linie_betriebspunkte": 4
+   }
+  },
+  {
+   "linie": 9250,
+   "name": "Bern Bumpliz Sud - Bern",
+   "werte": {
+    "linie_bahnhoefe": 3,
+    "linie_betriebspunkte": 5
+   }
+  },
+  {
+   "linie": 9660,
+   "name": "Sihlbrugg - Baar Projekt ZBT2",
+   "werte": {
+    "linie_bahnhoefe": 8,
+    "linie_betriebspunkte": 12
+   }
+  }
+ ]
 }

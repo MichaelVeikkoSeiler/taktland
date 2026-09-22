@@ -53,7 +53,7 @@ const TEXTE = {
   tunnel: {
     titel: 'Tunnel',
     mehrzahl: 'Tunnel',
-    suche: 'Tunnel oder Liniennummer',
+    suche: 'Tunnel, Kanton oder Liniennummer',
     sortierungen: [
       { wert: 'laenge', text: 'Längste zuerst',
         vergleich: nachZahl((e) => (e as Tunnel).laenge_m, true),
@@ -120,7 +120,7 @@ export function Uebersicht({ art, stand, aendern }: {
     const b = vereinfachen(stand.begriff.trim())
     const liste = b
       ? alle.filter((e) => vereinfachen(e.name).includes(b) || String(e.linie).startsWith(b)
-                          || ('kanton' in e && vereinfachen(e.kanton ?? '').includes(b)))
+                          || vereinfachen(e.kanton ?? '').includes(b))
       : alle
     return [...liste].sort(sortierung.vergleich)
   }, [alle, stand.begriff, sortierung])
@@ -227,7 +227,8 @@ function Zeile({ e, linie, art }: {
   const teile = art === 'tunnel'
     ? [laenge(t.laenge_m),
        t.inbetriebnahme_jahr === null ? 'Jahr: keine Angabe' : `erstmals in Betrieb ${t.inbetriebnahme_jahr}`,
-       t.tunnelsystem ? `Tunnelsystem «${t.tunnelsystem}»` : 'Tunnelsystem: keine Angabe']
+       t.tunnelsystem ? `Tunnelsystem «${t.tunnelsystem}»` : 'Tunnelsystem: keine Angabe',
+       t.kanton ? `Kanton «${t.kanton}»` : 'Kanton: keine Angabe']
     : [b.kanton ? `Kanton «${b.kanton}»` : 'Kanton: keine Angabe', baueinheiten(b.baueinheiten)]
   const wo = [
     `Linie ${e.linie}`,

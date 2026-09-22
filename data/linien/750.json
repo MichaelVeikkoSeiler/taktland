@@ -32,7 +32,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 3,
   "laengste": [
    2
@@ -51,7 +51,8 @@
     "inbetriebnahme_jahr": 1980,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 7.247,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Zürich"
    },
    {
     "name": "Flughafentunnel",
@@ -59,7 +60,8 @@
     "inbetriebnahme_jahr": 1980,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 8.997,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Zürich"
    },
    {
     "name": "Hagenholztunnel",
@@ -67,7 +69,8 @@
     "inbetriebnahme_jahr": 1980,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 12.279,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Zürich"
    }
   ]
  },

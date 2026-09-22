@@ -182,7 +182,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 58,
   "laengste": [
    30
@@ -206,7 +206,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 6.796,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Schwyz"
    },
    {
     "name": "Rindelfluhtunnel li. See G100",
@@ -214,7 +215,8 @@
     "inbetriebnahme_jahr": 1904,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 6.842,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Schwyz"
    },
    {
     "name": "Hochfluhtunnel",
@@ -222,7 +224,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 22.146,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Schwyz"
    },
    {
     "name": "Franziskustunnel",
@@ -230,7 +233,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 22.943,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Schwyz"
    },
    {
     "name": "Oelbergtunnel",
@@ -238,7 +242,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 24.755,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Schwyz"
    },
    {
     "name": "Stutzecktunnel",
@@ -246,7 +251,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 27.33,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Tellsplattentunnel",
@@ -254,7 +260,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 28.453,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Axenbergtunnel",
@@ -262,7 +269,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 29.255,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Sulzeggtunnel",
@@ -270,7 +278,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 30.255,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Neue Gruonbachgalerie re. G200",
@@ -278,7 +287,8 @@
     "inbetriebnahme_jahr": 1943,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 30.679,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Windgällentunnel",
@@ -286,7 +296,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 47.763,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Bristentunnel",
@@ -294,7 +305,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 48.847,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Intschitunnel",
@@ -302,7 +314,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 49.724,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Zgraggentaltunnel",
@@ -310,7 +323,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 50.943,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Breitentunnel",
@@ -318,7 +332,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 51.383,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Meitschlingertunnel",
@@ -326,7 +341,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 51.951,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Märchlisbachgalerie Mitte",
@@ -334,7 +350,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 54.061,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Häggrigerbachgalerie",
@@ -342,7 +359,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 55.64,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Muhrentunnel",
@@ -350,7 +368,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 57.487,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Pfaffensprungtunnel",
@@ -358,7 +377,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 57.665,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Mühletunnel",
@@ -366,7 +386,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 59.226,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Kirchbergtunnel",
@@ -374,7 +395,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 59.489,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Wattingentunnel",
@@ -382,7 +404,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 61.39,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Rorbachtunnel",
@@ -390,7 +413,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 62.097,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Untere Entschigtalgalerie",
@@ -398,7 +422,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 62.982,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Strahllochtunnel",
@@ -406,7 +431,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 64.123,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Leggisteintunnel",
@@ -414,7 +440,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 64.96,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Maienkreuztunnel",
@@ -422,7 +449,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 65.503,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Obere Entschigtalgalerie",
@@ -430,7 +458,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 66.117,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Naxbergtunnel",
@@ -438,7 +467,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 67.699,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Gotthardtunnel",
@@ -446,7 +476,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 77.397,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Uri"
    },
    {
     "name": "Galleria Stalvedro",
@@ -454,7 +485,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 87.685,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Dazio",
@@ -462,7 +494,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 98.829,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Artoito",
@@ -470,7 +503,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 99.226,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Freggio",
@@ -478,7 +512,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 99.841,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Monte Piottino",
@@ -486,7 +521,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 101.41,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Pardorea",
@@ -494,7 +530,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 102.23,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Prato",
@@ -502,7 +539,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 102.438,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Boscerina",
@@ -510,7 +548,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 104.53,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Polmengo",
@@ -518,7 +557,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 105.012,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria la Lume",
@@ -526,7 +566,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 114.555,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Pianotondo",
@@ -534,7 +575,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 115.815,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Tourniquet",
@@ -542,7 +584,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 117.011,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Travi",
@@ -550,7 +593,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 118.661,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Crocetto",
@@ -558,7 +602,8 @@
     "inbetriebnahme_jahr": 1874,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 134.095,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Giustizia",
@@ -566,7 +611,8 @@
     "inbetriebnahme_jahr": 1874,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 134.59,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Svitto",
@@ -574,7 +620,8 @@
     "inbetriebnahme_jahr": 1874,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 151.463,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Dragonato",
@@ -582,7 +629,8 @@
     "inbetriebnahme_jahr": 2018,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 151.886,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Costa",
@@ -590,7 +638,8 @@
     "inbetriebnahme_jahr": 1874,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 160.008,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Precassino Gl. 200",
@@ -598,7 +647,8 @@
     "inbetriebnahme_jahr": 1874,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 160.451,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Meggiagra Gl. 200",
@@ -606,7 +656,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 160.718,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Monte Ceneri I sinistra",
@@ -614,7 +665,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 163.76,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Molincero",
@@ -622,7 +674,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 170.793,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Massagno I sinistra",
@@ -630,7 +683,8 @@
     "inbetriebnahme_jahr": 1882,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 179.327,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galeria Paradiso",
@@ -638,7 +692,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 183.771,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria San Martino",
@@ -646,7 +701,8 @@
     "inbetriebnahme_jahr": 1874,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 184.336,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Maroggia",
@@ -654,7 +710,8 @@
     "inbetriebnahme_jahr": 1874,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 189.829,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    },
    {
     "name": "Galleria Coldrerio",
@@ -662,7 +719,8 @@
     "inbetriebnahme_jahr": 1874,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 200.313,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Ticino"
    }
   ]
  },

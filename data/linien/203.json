@@ -27,7 +27,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 1,
   "laengste": [
    0
@@ -44,7 +44,8 @@
     "inbetriebnahme_jahr": 1915,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 455.32,
-    "bemerkung": "4947m gehört Frankreich"
+    "bemerkung": "4947m gehört Frankreich",
+    "kanton": "Bourgogne-Franche-Comté"
    }
   ]
  },

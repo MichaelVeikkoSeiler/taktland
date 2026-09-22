@@ -463,7 +463,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 13.824,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       }
     ],
     "bruecken": [

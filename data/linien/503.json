@@ -62,7 +62,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 3,
   "laengste": [
    2
@@ -81,7 +81,8 @@
     "inbetriebnahme_jahr": 1857,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 29.161,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Basel-Landschaft"
    },
    {
     "name": "Mühlefluhtunnel BL",
@@ -89,7 +90,8 @@
     "inbetriebnahme_jahr": 1857,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 29.915,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Basel-Landschaft"
    },
    {
     "name": "Ob. Hauensteintunnel",
@@ -97,7 +99,8 @@
     "inbetriebnahme_jahr": 1857,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 32.245,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Solothurn"
    }
   ]
  },

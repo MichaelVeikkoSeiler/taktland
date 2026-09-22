@@ -199,7 +199,8 @@
         "inbetriebnahme_jahr": 2016,
         "tunnelsystem": "2-Röhren / 2 x 1-Spur",
         "km": 256.455,
-        "bemerkung": "Länge der Oströhre, da länger als Weströhre"
+        "bemerkung": "Länge der Oströhre, da länger als Weströhre",
+        "kanton": "Ticino"
       }
     ]
   }

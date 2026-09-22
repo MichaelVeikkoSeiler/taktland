@@ -595,7 +595,8 @@
         "inbetriebnahme_jahr": 1894,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 6.544,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Erlenbachtunnel",
@@ -603,7 +604,8 @@
         "inbetriebnahme_jahr": 1894,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 13.927,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Hitzbergtunnel",
@@ -611,7 +613,8 @@
         "inbetriebnahme_jahr": 1967,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 13.933,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Lattenbergtunnel",
@@ -619,7 +622,8 @@
         "inbetriebnahme_jahr": 1894,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 25.999,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       }
     ],
     "bruecken": [

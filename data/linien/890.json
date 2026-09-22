@@ -67,7 +67,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 5,
   "laengste": [
    3
@@ -85,7 +85,8 @@
     "inbetriebnahme_jahr": 1941,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 15.24,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "St.AuslandGallen"
    },
    {
     "name": "Bühltunnel SG",
@@ -93,7 +94,8 @@
     "inbetriebnahme_jahr": 1859,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 20.843,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "St.AuslandGallen"
    },
    {
     "name": "Stutztunnel",
@@ -101,7 +103,8 @@
     "inbetriebnahme_jahr": 1859,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 23.758,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Glarus"
    },
    {
     "name": "Kerenzerbergtunnel",
@@ -109,7 +112,8 @@
     "inbetriebnahme_jahr": 1961,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 28.6,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Glarus"
    },
    {
     "name": "Biberlikopftunnel",
@@ -117,7 +121,8 @@
     "inbetriebnahme_jahr": 1966,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 32.858,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "St.AuslandGallen"
    }
   ]
  },

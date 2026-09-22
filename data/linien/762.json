@@ -62,7 +62,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 2,
   "laengste": [
    1
@@ -79,7 +79,8 @@
     "inbetriebnahme_jahr": 1857,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 52.545,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Zürich"
    },
    {
     "name": "Rötitunnel",
@@ -87,7 +88,8 @@
     "inbetriebnahme_jahr": 1964,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 52.949,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Schaffhausen"
    }
   ]
  },

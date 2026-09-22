@@ -176,7 +176,8 @@
         "inbetriebnahme_jahr": 2001,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 1.523,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Zimmerberg Basistunnel",
@@ -184,7 +185,8 @@
         "inbetriebnahme_jahr": 2003,
         "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
         "km": 2.471,
-        "bemerkung": "Inkl: ZBT Einspur Berg (DfA 725) und ZBT Einspur See (DfA 723)"
+        "bemerkung": "Inkl: ZBT Einspur Berg (DfA 725) und ZBT Einspur See (DfA 723)",
+        "kanton": "Zürich"
       }
     ]
   }

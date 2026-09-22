@@ -540,7 +540,8 @@
         "inbetriebnahme_jahr": 1870,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 22.972,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel du Moulin Bornu (034)",
@@ -548,7 +549,8 @@
         "inbetriebnahme_jahr": 1870,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 23.359,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel de Combes (035)",
@@ -556,7 +558,8 @@
         "inbetriebnahme_jahr": 1870,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 38.43,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel de Nanchau (036)",
@@ -564,7 +567,8 @@
         "inbetriebnahme_jahr": 1870,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 39.131,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       }
     ],
     "bruecken": [

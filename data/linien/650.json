@@ -52,7 +52,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 3,
   "laengste": [
    0
@@ -69,7 +69,8 @@
     "inbetriebnahme_jahr": 1972,
     "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
     "km": 19.554,
-    "bemerkung": "Inkl: Heitersberg2 (DfA 698) und Heitersberg3 (DfA 650)"
+    "bemerkung": "Inkl: Heitersberg2 (DfA 698) und Heitersberg3 (DfA 650)",
+    "kanton": "Aargau"
    },
    {
     "name": "Aarauer Stadttunnel II Süd",
@@ -77,7 +78,8 @@
     "inbetriebnahme_jahr": 1993,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 42.018,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Aargau"
    },
    {
     "name": "Tunnel Eppenberg",
@@ -85,7 +87,8 @@
     "inbetriebnahme_jahr": 2020,
     "tunnelsystem": "1-Röhre / 2-Spuren",
     "km": 45.767,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Solothurn"
    }
   ]
  },

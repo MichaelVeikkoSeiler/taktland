@@ -623,7 +623,8 @@
         "inbetriebnahme_jahr": 1897,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 19.115,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Albistunnel",
@@ -631,7 +632,8 @@
         "inbetriebnahme_jahr": 1897,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 22.003,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Friedentaltunnel",
@@ -639,7 +641,8 @@
         "inbetriebnahme_jahr": 1864,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 63.454,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Luzern"
       }
     ],
     "bruecken": [

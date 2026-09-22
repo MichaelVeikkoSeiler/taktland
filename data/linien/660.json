@@ -112,7 +112,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 3,
   "laengste": [
    1
@@ -129,7 +129,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 19.115,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Zürich"
    },
    {
     "name": "Albistunnel",
@@ -137,7 +138,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 22.003,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Zürich"
    },
    {
     "name": "Friedentaltunnel",
@@ -145,7 +147,8 @@
     "inbetriebnahme_jahr": 1864,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 63.454,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    }
   ]
  },

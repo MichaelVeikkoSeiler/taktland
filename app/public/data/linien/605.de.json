@@ -230,7 +230,8 @@
         "inbetriebnahme_jahr": 1941,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 28.238,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Uri"
       },
       {
         "name": "Alte Gruonbachgalerie li. G100",
@@ -238,7 +239,8 @@
         "inbetriebnahme_jahr": 1882,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 30.173,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Uri"
       }
     ],
     "bruecken": [

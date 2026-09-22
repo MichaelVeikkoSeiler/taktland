@@ -757,7 +757,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 33.809,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Fribourg"
       }
     ],
     "bruecken": [

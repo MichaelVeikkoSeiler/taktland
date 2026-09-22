@@ -613,7 +613,8 @@
         "inbetriebnahme_jahr": 1879,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 82.094,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Glarus"
       }
     ],
     "bruecken": [

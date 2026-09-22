@@ -47,7 +47,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 6,
   "laengste": [
    0
@@ -69,7 +69,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 4.354,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Schiltenneunetunnel",
@@ -77,7 +78,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 6.544,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Seeburgtunnel",
@@ -85,7 +87,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 7.043,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Lerchenbühltunnel",
@@ -93,7 +96,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 8.698,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Lettentunnel LU",
@@ -101,7 +105,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 11.956,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Schwarzenbachtunnel",
@@ -109,7 +114,8 @@
     "inbetriebnahme_jahr": 1897,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 18.041,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Schwyz"
    }
   ]
  },

@@ -21,7 +21,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 1,
   "laengste": [
    0
@@ -38,7 +38,8 @@
     "inbetriebnahme_jahr": 2020,
     "tunnelsystem": "2-Röhren / 2 x 1-Spur",
     "km": 228.14,
-    "bemerkung": "CBT Ovest, da länger als CBT Est (ohne Sarè, da Saré eine Abzweigung ist und den Tunnel nicht verlängert)"
+    "bemerkung": "CBT Ovest, da länger als CBT Est (ohne Sarè, da Saré eine Abzweigung ist und den Tunnel nicht verlängert)",
+    "kanton": "Ticino"
    }
   ]
  },

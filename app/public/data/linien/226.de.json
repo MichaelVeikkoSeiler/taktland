@@ -618,7 +618,8 @@
         "inbetriebnahme_jahr": 1874,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 54.085,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Court 1 (066)",
@@ -626,7 +627,8 @@
         "inbetriebnahme_jahr": 1877,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 67.838,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Court 2 (067)",
@@ -634,7 +636,8 @@
         "inbetriebnahme_jahr": 1900,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 68.061,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de la Verrerie (068)",
@@ -642,7 +645,8 @@
         "inbetriebnahme_jahr": 1877,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 70.564,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 1 (048)",
@@ -650,7 +654,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 73.806,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 2 (049)",
@@ -658,7 +663,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 73.94,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 3 (050)",
@@ -666,7 +672,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 73.962,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 4 (051)",
@@ -674,7 +681,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 74.073,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 5 (052)",
@@ -682,7 +690,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 74.576,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 6 (053)",
@@ -690,7 +699,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 74.721,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 7 (054)",
@@ -698,7 +708,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 74.786,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 8 (055)",
@@ -706,7 +717,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 74.98,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel de Moutier 9 (056)",
@@ -714,7 +726,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 75.133,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Tunnel Verrerie de Roches",
@@ -722,7 +735,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 77.585,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Jura"
       },
       {
         "name": "Tunnel Verrerie de Moutier",
@@ -730,7 +744,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 77.896,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Jura"
       },
       {
         "name": "Tunnel de Choindez 1 (059)",
@@ -738,7 +753,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 79.343,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Jura"
       },
       {
         "name": "Tunnel de Choindez 3 (086)",
@@ -746,7 +762,8 @@
         "inbetriebnahme_jahr": 1932,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 79.825,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Jura"
       },
       {
         "name": "Tunnel de Choindez 2 (060)",
@@ -754,7 +771,8 @@
         "inbetriebnahme_jahr": 1876,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 79.826,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Jura"
       }
     ],
     "bruecken": [

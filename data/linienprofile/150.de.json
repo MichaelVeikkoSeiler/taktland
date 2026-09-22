@@ -626,7 +626,8 @@
         "inbetriebnahme_jahr": 1995,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 61.236,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       },
       {
         "name": "Galerie ICC",
@@ -634,7 +635,8 @@
         "inbetriebnahme_jahr": 1985,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 64.832,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Genève"
       }
     ],
     "bruecken": [

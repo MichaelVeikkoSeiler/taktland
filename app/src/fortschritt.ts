@@ -87,8 +87,8 @@ export function bearbeiteBahnhoefe(): number[] {
 /* ---------- Bestleistung im Duell ---------- */
 
 export interface Duellstand {
-  /** Bestwert je Auswahl: 'CH' für die ganze Schweiz, 'TUNNEL' für die Tunnel,
-   *  sonst das Kantonskürzel.
+  /** Bestwert je Auswahl: bei den Bahnhöfen 'CH' für die ganze Schweiz, sonst
+   *  das Kantonskürzel; 'TUNNEL' und 'TUNNEL:UR' bei den Tunneln, 'LINIEN'.
    *  Getrennt, weil ein Duell innerhalb eines kleinen Kantons nicht dieselbe
    *  Aufgabe ist wie eines über alle 771 Bahnhöfe. */
   rekorde: Record<string, number>

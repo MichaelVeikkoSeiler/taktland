@@ -510,7 +510,8 @@
         "inbetriebnahme_jahr": 1857,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 52.545,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Zürich"
       },
       {
         "name": "Rötitunnel",
@@ -518,7 +519,8 @@
         "inbetriebnahme_jahr": 1964,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 52.949,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Schaffhausen"
       }
     ],
     "bruecken": [

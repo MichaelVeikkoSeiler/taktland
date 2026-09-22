@@ -246,7 +246,8 @@
         "inbetriebnahme_jahr": 1947,
         "tunnelsystem": "Y / 2-Spur + 2x 1-Spur",
         "km": 21.511,
-        "bemerkung": "Inkl: Morschachtunnel2 Gl.100 (DfA 604) und Morschachtunnel3 Gl.200 (DfA 604)"
+        "bemerkung": "Inkl: Morschachtunnel2 Gl.100 (DfA 604) und Morschachtunnel3 Gl.200 (DfA 604)",
+        "kanton": "Schwyz"
       },
       {
         "name": "Fronalptunnel",
@@ -254,7 +255,8 @@
         "inbetriebnahme_jahr": 1946,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 24.36,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Schwyz"
       }
     ],
     "bruecken": [

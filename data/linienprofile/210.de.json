@@ -730,7 +730,8 @@
         "inbetriebnahme_jahr": 1856,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 21.709,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel du Mormont sud 3",
@@ -738,7 +739,8 @@
         "inbetriebnahme_jahr": 2010,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 21.738,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel du Mormont nord 4",
@@ -746,7 +748,8 @@
         "inbetriebnahme_jahr": 2010,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 22.061,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel du Mormont nord 2",
@@ -754,7 +757,8 @@
         "inbetriebnahme_jahr": 1856,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 22.068,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel de Concise",
@@ -762,7 +766,8 @@
         "inbetriebnahme_jahr": 2000,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 50.487,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel de Fin de Lance (099)",
@@ -770,7 +775,8 @@
         "inbetriebnahme_jahr": 2000,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 51.286,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel de la Raisse (098)",
@@ -778,7 +784,8 @@
         "inbetriebnahme_jahr": 2000,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 53.401,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Vaud"
       },
       {
         "name": "Tunnel St-Aubin-Sauges (097)",
@@ -786,7 +793,8 @@
         "inbetriebnahme_jahr": 1999,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 56.813,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Neuchâtel"
       },
       {
         "name": "Tunnel de Vauseyon (005)",
@@ -794,7 +802,8 @@
         "inbetriebnahme_jahr": 1859,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 73.534,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Neuchâtel"
       },
       {
         "name": "Tunnel de St-Blaise (004)",
@@ -802,7 +811,8 @@
         "inbetriebnahme_jahr": 1927,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 80.141,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Neuchâtel"
       },
       {
         "name": "Tunnel Vingelz (092)",
@@ -810,7 +820,8 @@
         "inbetriebnahme_jahr": 1968,
         "tunnelsystem": "1-Röhre / 2-Spuren",
         "km": 103.11,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       }
     ],
     "bruecken": [

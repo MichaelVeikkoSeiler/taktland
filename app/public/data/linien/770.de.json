@@ -500,7 +500,8 @@
         "inbetriebnahme_jahr": 1897,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 38.159,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Schaffhausen"
       },
       {
         "name": "Neuhausertunnel",
@@ -508,7 +509,8 @@
         "inbetriebnahme_jahr": 1897,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 39.222,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Schaffhausen"
       }
     ],
     "bruecken": [

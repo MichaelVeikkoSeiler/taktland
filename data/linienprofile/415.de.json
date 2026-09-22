@@ -492,7 +492,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 68.966,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       },
       {
         "name": "Wolfachertunnel Süd",
@@ -500,7 +501,8 @@
         "inbetriebnahme_jahr": 2004,
         "tunnelsystem": "1-Röhre / 1-Spur",
         "km": 68.97,
-        "bemerkung": null
+        "bemerkung": null,
+        "kanton": "Bern"
       }
     ],
     "bruecken": [

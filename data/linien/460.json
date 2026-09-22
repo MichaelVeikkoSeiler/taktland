@@ -112,7 +112,7 @@
  },
  "tunnel": {
   "source": "tunnel",
-  "hinweis": "Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem wie in der Quelle. km ist der Kilometer auf der Linie.",
+  "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
   "anzahl_erfasst": 8,
   "laengste": [
    7
@@ -136,7 +136,8 @@
     "inbetriebnahme_jahr": 1875,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 48.727,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Wilzigentunnel",
@@ -144,7 +145,8 @@
     "inbetriebnahme_jahr": 1875,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 67.466,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Entlenstaldentunnel",
@@ -152,7 +154,8 @@
     "inbetriebnahme_jahr": 1875,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 68.599,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Oberer Schächlitunnel",
@@ -160,7 +163,8 @@
     "inbetriebnahme_jahr": 1875,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 69.429,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Unterer Schächlitunnel",
@@ -168,7 +172,8 @@
     "inbetriebnahme_jahr": 1875,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 69.551,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Wolhusentunnel",
@@ -176,7 +181,8 @@
     "inbetriebnahme_jahr": 1875,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 73.699,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Werthensteintunnel",
@@ -184,7 +190,8 @@
     "inbetriebnahme_jahr": 1875,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 75.916,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    },
    {
     "name": "Zimmereggtunnel",
@@ -192,7 +199,8 @@
     "inbetriebnahme_jahr": 1875,
     "tunnelsystem": "1-Röhre / 1-Spur",
     "km": 90.855,
-    "bemerkung": null
+    "bemerkung": null,
+    "kanton": "Luzern"
    }
   ]
  },
