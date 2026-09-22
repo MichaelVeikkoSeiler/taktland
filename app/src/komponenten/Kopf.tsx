@@ -1,5 +1,7 @@
 import auftaktDunkel from '../assets/auftakt-dunkel.webp'
 import auftaktHell from '../assets/auftakt-hell.webp'
+import brueckenDunkel from '../assets/auftakt-bruecken-dunkel.webp'
+import brueckenHell from '../assets/auftakt-bruecken-hell.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
@@ -30,6 +32,10 @@ const BILDER: Partial<Record<Bereich, AuftaktBild>> = {
   tunnel: {
     hell: tunnelHell, dunkel: tunnelDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Gleis führt in ein Tunnelportal im Fels, links Wasser mit einer Brücke, eine Stadt und Berge.',
+  },
+  bruecken: {
+    hell: brueckenHell, dunkel: brueckenDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Eine Bahnbrücke mit Fahrleitung führt über einen Fluss, dahinter eine Stadt und Berge.',
   },
 }
 
