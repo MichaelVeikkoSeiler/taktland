@@ -1,0 +1,201 @@
+{
+  "uic": 8504495,
+  "name": "Bern Stöckacker",
+  "kanton": "BE",
+  "bps": "BNST",
+  "tier": "S",
+  "datenstand": "2026-09-20",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Bern Stöckacker",
+    "kanton": "BE",
+    "isb": "BLS",
+    "evu": "BLS",
+    "lon": 7.401179,
+    "lat": 46.94636,
+    "dwv": 670,
+    "dtv": 600,
+    "dnwv": 440,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 830
+      },
+      {
+        "jahr": 2022,
+        "dwv": 860
+      },
+      {
+        "jahr": 2023,
+        "dwv": 970
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1000
+      },
+      {
+        "jahr": 2025,
+        "dwv": 670
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Bern Stöckacker",
+    "abkuerzung": "BNST",
+    "hoehe_m_ue_m": 551,
+    "gemeinde": "Bern",
+    "ortschaft": "Bern",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [],
+    "betreiber": "BLS AG (bn)"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Bern Bümpliz Nord",
+      "bis": "Bern Stöckacker",
+      "strecke_nr": 304,
+      "strecke": "Kerzers - Bern Holligen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50411,
+      "zuege_pro_tag": 138
+    },
+    "staerkster_personenverkehr": {
+      "von": "Bern Bümpliz Nord",
+      "bis": "Bern Stöckacker",
+      "strecke_nr": 304,
+      "strecke": "Kerzers - Bern Holligen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 50411,
+      "zuege_pro_tag": 138
+    },
+    "abschnitte": [
+      {
+        "von": "Bern Bümpliz Nord",
+        "bis": "Bern Stöckacker",
+        "strecke_nr": 304,
+        "strecke": "Kerzers - Bern Holligen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50411,
+        "zuege_pro_tag": 138
+      },
+      {
+        "von": "Bern Stöckacker",
+        "bis": "Bern Holligen",
+        "strecke_nr": 304,
+        "strecke": "Kerzers - Bern Holligen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50411,
+        "zuege_pro_tag": 138
+      },
+      {
+        "von": "Bern Bümpliz Nord",
+        "bis": "Bern Stöckacker",
+        "strecke_nr": 304,
+        "strecke": "Kerzers - Bern Holligen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4110,
+        "zuege_pro_tag": 11
+      },
+      {
+        "von": "Bern Stöckacker",
+        "bis": "Bern Holligen",
+        "strecke_nr": 304,
+        "strecke": "Kerzers - Bern Holligen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 4110,
+        "zuege_pro_tag": 11
+      }
+    ]
+  },
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": false,
+    "billettautomaten_erfasst": 2,
+    "automat_typen": [
+      "AFA 470",
+      "altri"
+    ],
+    "billettentwerter_erfasst": 0,
+    "wartehallen_erfasst": 0
+  },
+  "ausstattung": null,
+  "bahnhofplan": null,
+  "luecken": [
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
+      "quelle": "mobiliar-im-bahnhof, perronoberflache"
+    },
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Hindernisfreiheit",
+      "grund": "Zur Hindernisfreiheit liegen für diesen Bahnhof keine Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "zuege",
+    "services"
+  ]
+}

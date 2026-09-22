@@ -1,0 +1,202 @@
+{
+  "uic": 8508256,
+  "name": "Stalden i.E.",
+  "kanton": "BE",
+  "bps": "STAL",
+  "tier": "S",
+  "datenstand": "2026-09-20",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Stalden i.E.",
+    "kanton": "BE",
+    "isb": "BLS",
+    "evu": "BLS",
+    "lon": 7.622869,
+    "lat": 46.870893,
+    "dwv": 220,
+    "dtv": 190,
+    "dnwv": 130,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 200
+      },
+      {
+        "jahr": 2022,
+        "dwv": 160
+      },
+      {
+        "jahr": 2023,
+        "dwv": 180
+      },
+      {
+        "jahr": 2024,
+        "dwv": 160
+      },
+      {
+        "jahr": 2025,
+        "dwv": 220
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Stalden i.E.",
+    "abkuerzung": "STAL",
+    "hoehe_m_ue_m": 654.15,
+    "gemeinde": "Konolfingen",
+    "ortschaft": "Konolfingen",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "BLS AG (ebt)"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Konolfingen",
+      "bis": "Stalden i.E.",
+      "strecke_nr": 405,
+      "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 37111,
+      "zuege_pro_tag": 102
+    },
+    "staerkster_personenverkehr": {
+      "von": "Konolfingen",
+      "bis": "Stalden i.E.",
+      "strecke_nr": 405,
+      "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 37111,
+      "zuege_pro_tag": 102
+    },
+    "abschnitte": [
+      {
+        "von": "Konolfingen",
+        "bis": "Stalden i.E.",
+        "strecke_nr": 405,
+        "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 37111,
+        "zuege_pro_tag": 102
+      },
+      {
+        "von": "Stalden i.E.",
+        "bis": "Oberdiessbach",
+        "strecke_nr": 405,
+        "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 37110,
+        "zuege_pro_tag": 102
+      },
+      {
+        "von": "Konolfingen",
+        "bis": "Stalden i.E.",
+        "strecke_nr": 405,
+        "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Stalden i.E.",
+        "bis": "Oberdiessbach",
+        "strecke_nr": 405,
+        "strecke": "Hasle-Rüegsau - Thun Abzweigung",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 50,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": false,
+    "billettautomaten_erfasst": 1,
+    "automat_typen": [
+      "AFA 460"
+    ],
+    "billettentwerter_erfasst": 0,
+    "wartehallen_erfasst": 0
+  },
+  "ausstattung": null,
+  "bahnhofplan": null,
+  "luecken": [
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
+      "quelle": "mobiliar-im-bahnhof, perronoberflache"
+    },
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Hindernisfreiheit",
+      "grund": "Zur Hindernisfreiheit liegen für diesen Bahnhof keine Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "zuege",
+    "services"
+  ]
+}

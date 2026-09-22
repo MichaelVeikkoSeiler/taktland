@@ -221,7 +221,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
       {fehler && <p className="mt-6">Das Netz konnte nicht geladen werden. {fehler}</p>}
       {!netz && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}
 
-      {netz && !ergebnis && (
+      {netz && !ergebnis && !wahl.von && !wahl.nach && (
         <div className="mt-6 text-sm text-sbb-metal dark:text-sbb-storm">
           <p>Zum Beispiel:</p>
           <ul className="mt-1 space-y-1">

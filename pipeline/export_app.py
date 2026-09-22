@@ -39,6 +39,9 @@ def main():
         mit_profil.setdefault(str(d["uic"]), []).append(d["lang"])
         shutil.copy(p, ZIEL / "profile" / p.name)
 
+    # Bahnhöfe, von denen die Seite «Strecke» einen Weg kennt
+    netz = ROOT / "data" / "strecken.json"
+    im_netz = set(json.loads(netz.read_text(encoding="utf-8"))["bahnhoefe"]) if netz.exists() else set()
     eintraege = []
     for f in sorted(FACTS.glob("*.json")):
         d = json.loads(f.read_text(encoding="utf-8"))
@@ -52,6 +55,10 @@ def main():
             "lat": sb.get("lat"),
             "lon": sb.get("lon"),
             "sprachen": sorted(mit_profil.get(str(d["uic"]), [])),
+            # die Bahn, die die Infrastruktur betreibt, wenn es nicht die SBB ist:
+            # die App kennzeichnet diese Bahnhöfe
+            **({"isb": sb["isb"]} if sb.get("isb") and sb["isb"] != "SBB" else {}),
+            "im_netz": str(d["uic"]) in im_netz,
         })
     eintraege.sort(key=lambda e: (e["dwv"] or 0), reverse=True)
 

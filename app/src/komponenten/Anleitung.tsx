@@ -36,6 +36,11 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             der erste und der letzte Bahnhof der Seite. Ein Tipp darauf zeigt alle Seiten.
           </li>
           <li>
+            Bahnhöfe, deren Infrastruktur nicht die SBB betreibt, tragen in der Liste und auf
+            ihrer Seite das Kürzel der Bahn, etwa BLS. Zu ihnen enthalten die offenen Daten der
+            SBB weniger, darum haben ihre Seiten weniger Kapitel.
+          </li>
+          <li>
             Jede Bahnhofsseite hat Kapitel, etwa Steckbrief, Perrons oder Züge. Zuerst kommt
             ein kurzer Text, darunter die Zahlen mit ihrem Datensatz, dann die Fragen.
           </li>

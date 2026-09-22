@@ -172,6 +172,10 @@ export interface IndexEintrag {
   lat: number | null
   lon: number | null
   sprachen: string[]
+  /** Bahn, die die Infrastruktur betreibt, wenn nicht die SBB (BLS, SOB, BOB) */
+  isb?: string
+  /** Die Seite «Strecke» kennt Wege ab diesem Bahnhof */
+  im_netz: boolean
 }
 
 export interface BahnhofIndex {

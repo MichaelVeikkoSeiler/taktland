@@ -112,8 +112,9 @@ function Eintrag({ e, oeffnen }: { e: IndexEintrag; oeffnen: (uic: number) => vo
         }`}
       >
         <span className="min-w-0">
-          <span className="block truncate font-medium text-sbb-black dark:text-sbb-white">
-            {e.name}
+          <span className="flex min-w-0 items-center gap-2">
+            <span className="truncate font-medium text-sbb-black dark:text-sbb-white">{e.name}</span>
+            {e.isb && <BahnKuerzel isb={e.isb} />}
           </span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
             {e.kanton ? `${kantonText(e.kanton)} · ` : ''}{STUFE_TEXT[e.tier]}
@@ -125,5 +126,16 @@ function Eintrag({ e, oeffnen }: { e: IndexEintrag; oeffnen: (uic: number) => vo
         </span>
       </button>
     </li>
+  )
+}
+
+/** Kennzeichen für Bahnhöfe, deren Infrastruktur nicht die SBB betreibt */
+export function BahnKuerzel({ isb }: { isb: string }) {
+  return (
+    <span title={`Infrastruktur: ${isb}`} aria-label={`Infrastruktur ${isb}`}
+          className="shrink-0 border border-sbb-metal px-1 text-xs font-medium leading-4
+                     text-sbb-metal dark:border-sbb-storm dark:text-sbb-storm">
+      {isb}
+    </span>
   )
 }

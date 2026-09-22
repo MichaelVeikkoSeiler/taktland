@@ -864,6 +864,14 @@
    }
   },
   {
+   "uic": 8500260,
+   "name": "Crémines-Zoo",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 699
+   }
+  },
+  {
    "uic": 8500261,
    "name": "Langendorf",
    "kanton": "SO",
@@ -886,6 +894,17 @@
    }
   },
   {
+   "uic": 8500263,
+   "name": "Im Holz",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 90,
+    "dnwv": 70,
+    "hoehe": 617.95,
+    "zuege": 33
+   }
+  },
+  {
    "uic": 8500264,
    "name": "Oberdorf SO",
    "kanton": "SO",
@@ -894,6 +913,42 @@
     "dnwv": 360,
     "hoehe": 655.3,
     "zuege": 33
+   }
+  },
+  {
+   "uic": 8500265,
+   "name": "Gänsbrunnen",
+   "kanton": "BE",
+   "werte": {
+    "dnwv": 60,
+    "hoehe": 719.05
+   }
+  },
+  {
+   "uic": 8500266,
+   "name": "Corcelles BE",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 649.85
+   }
+  },
+  {
+   "uic": 8500267,
+   "name": "Crémines",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 120,
+    "dnwv": 80,
+    "hoehe": 624
+   }
+  },
+  {
+   "uic": 8500268,
+   "name": "Grandval",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 60,
+    "hoehe": 601.5
    }
   },
   {
@@ -6287,6 +6342,17 @@
    }
   },
   {
+   "uic": 8504482,
+   "name": "Gampelen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 160,
+    "dnwv": 120,
+    "hoehe": 432.6,
+    "zuege": 154
+   }
+  },
+  {
    "uic": 8504483,
    "name": "Ins",
    "kanton": "BE",
@@ -6306,6 +6372,16 @@
     "dnwv": 180,
     "hoehe": 435.6,
     "zuege": 94
+   }
+  },
+  {
+   "uic": 8504485,
+   "name": "Ferenbalm-Gurbrü",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 50,
+    "hoehe": 493.6
    }
   },
   {
@@ -6350,6 +6426,28 @@
     "dnwv": 1500,
     "hoehe": 555.35,
     "zuege": 139
+   }
+  },
+  {
+   "uic": 8504490,
+   "name": "Zihlbrücke",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 70,
+    "dnwv": 90,
+    "hoehe": 435.9,
+    "zuege": 154
+   }
+  },
+  {
+   "uic": 8504495,
+   "name": "Bern Stöckacker",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 670,
+    "dnwv": 440,
+    "hoehe": 551,
+    "zuege": 138
    }
   },
   {
@@ -8440,6 +8538,17 @@
    }
   },
   {
+   "uic": 8507071,
+   "name": "Seftigen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1300,
+    "dnwv": 800,
+    "hoehe": 578.1,
+    "zuege": 82
+   }
+  },
+  {
    "uic": 8507072,
    "name": "Burgistein",
    "kanton": "BE",
@@ -8448,6 +8557,17 @@
     "dnwv": 360,
     "hoehe": 566.7,
     "zuege": 82
+   }
+  },
+  {
+   "uic": 8507073,
+   "name": "Thurnen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1200,
+    "dnwv": 780,
+    "hoehe": 549,
+    "zuege": 80
    }
   },
   {
@@ -8462,6 +8582,17 @@
    }
   },
   {
+   "uic": 8507075,
+   "name": "Toffen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1400,
+    "dnwv": 840,
+    "hoehe": 527.3,
+    "zuege": 80
+   }
+  },
+  {
    "uic": 8507076,
    "name": "Belp",
    "kanton": "BE",
@@ -8469,6 +8600,28 @@
     "dwv": 5900,
     "dnwv": 3700,
     "hoehe": 522.6,
+    "zuege": 199
+   }
+  },
+  {
+   "uic": 8507077,
+   "name": "Kehrsatz",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1700,
+    "dnwv": 1000,
+    "hoehe": 570,
+    "zuege": 199
+   }
+  },
+  {
+   "uic": 8507078,
+   "name": "Wabern bei Bern",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1800,
+    "dnwv": 1200,
+    "hoehe": 559.7,
     "zuege": 199
    }
   },
@@ -8491,6 +8644,17 @@
     "dwv": 1900,
     "dnwv": 990,
     "hoehe": 571.786,
+    "zuege": 74
+   }
+  },
+  {
+   "uic": 8507084,
+   "name": "Moos",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 290,
+    "dnwv": 180,
+    "hoehe": 627.793,
     "zuege": 74
    }
   },
@@ -8528,6 +8692,17 @@
    }
   },
   {
+   "uic": 8507088,
+   "name": "Lanzenhäusern",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 330,
+    "dnwv": 190,
+    "hoehe": 741.037,
+    "zuege": 74
+   }
+  },
+  {
    "uic": 8507089,
    "name": "Schwarzenburg",
    "kanton": "BE",
@@ -8536,6 +8711,39 @@
     "dnwv": 1300,
     "hoehe": 791.799,
     "zuege": 74
+   }
+  },
+  {
+   "uic": 8507091,
+   "name": "Liebefeld",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1300,
+    "dnwv": 470,
+    "hoehe": 562.782,
+    "zuege": 74
+   }
+  },
+  {
+   "uic": 8507092,
+   "name": "Belp Steinbach",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1500,
+    "dnwv": 760,
+    "hoehe": 525.3,
+    "zuege": 199
+   }
+  },
+  {
+   "uic": 8507093,
+   "name": "Kehrsatz Nord",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1400,
+    "dnwv": 780,
+    "hoehe": 566.8,
+    "zuege": 199
    }
   },
   {
@@ -8569,6 +8777,43 @@
     "dnwv": 26900,
     "hoehe": 559.75,
     "zuege": 398
+   }
+  },
+  {
+   "uic": 8507281,
+   "name": "Grubenwald",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 910.1,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507284,
+   "name": "Enge im Simmental",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 814.5,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507286,
+   "name": "Ringoldingen",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 712.1,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507287,
+   "name": "Burgholz",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 80,
+    "hoehe": 645.3,
+    "zuege": 55
    }
   },
   {
@@ -8621,6 +8866,17 @@
     "dwv": 170,
     "dnwv": 140,
     "hoehe": 781.8,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507294,
+   "name": "Weissenburg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 60,
+    "dnwv": 60,
+    "hoehe": 781.9,
     "zuege": 55
    }
   },
@@ -8685,6 +8941,17 @@
    "kanton": "VS",
    "werte": {
     "hoehe": 852.7,
+    "zuege": 39
+   }
+  },
+  {
+   "uic": 8507471,
+   "name": "Eggerberg",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 80,
+    "hoehe": 850.9,
     "zuege": 39
    }
   },
@@ -8755,6 +9022,17 @@
    }
   },
   {
+   "uic": 8507481,
+   "name": "Mülenen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 270,
+    "dnwv": 300,
+    "hoehe": 692.3,
+    "zuege": 107
+   }
+  },
+  {
    "uic": 8507483,
    "name": "Spiez",
    "kanton": "BE",
@@ -8784,6 +9062,17 @@
     "dwv": 6900,
     "dnwv": 6400,
     "hoehe": 563.35,
+    "zuege": 84
+   }
+  },
+  {
+   "uic": 8507494,
+   "name": "Därligen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 150,
+    "dnwv": 100,
+    "hoehe": 561.4,
     "zuege": 84
    }
   },
@@ -8878,6 +9167,17 @@
     "dwv": 1400,
     "dnwv": 710,
     "hoehe": 546.85,
+    "zuege": 137
+   }
+  },
+  {
+   "uic": 8508081,
+   "name": "Burgdorf Steinhof",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1900,
+    "dnwv": 920,
+    "hoehe": 544.4,
     "zuege": 137
    }
   },
@@ -9007,6 +9307,26 @@
    }
   },
   {
+   "uic": 8508174,
+   "name": "Gutenburg",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 511.61,
+    "zuege": 64
+   }
+  },
+  {
+   "uic": 8508181,
+   "name": "Langenthal Süd",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 310,
+    "dnwv": 220,
+    "hoehe": 483.22,
+    "zuege": 64
+   }
+  },
+  {
    "uic": 8508182,
    "name": "Lotzwil",
    "kanton": "BE",
@@ -9025,6 +9345,26 @@
     "dwv": 580,
     "dnwv": 320,
     "hoehe": 533.96,
+    "zuege": 64
+   }
+  },
+  {
+   "uic": 8508184,
+   "name": "Lindenholz",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 545.24,
+    "zuege": 64
+   }
+  },
+  {
+   "uic": 8508185,
+   "name": "Kleindietwil",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 200,
+    "dnwv": 120,
+    "hoehe": 558.14,
     "zuege": 64
    }
   },
@@ -9267,6 +9607,17 @@
    }
   },
   {
+   "uic": 8508250,
+   "name": "Schwäbis",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 100,
+    "dnwv": 100,
+    "hoehe": 556.7,
+    "zuege": 102
+   }
+  },
+  {
    "uic": 8508251,
    "name": "Steffisburg",
    "kanton": "BE",
@@ -9274,6 +9625,17 @@
     "dwv": 540,
     "dnwv": 320,
     "hoehe": 563.25,
+    "zuege": 102
+   }
+  },
+  {
+   "uic": 8508252,
+   "name": "Lädeli",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 980,
+    "dnwv": 590,
+    "hoehe": 553.05,
     "zuege": 102
    }
   },
@@ -9311,6 +9673,17 @@
    }
   },
   {
+   "uic": 8508256,
+   "name": "Stalden i.E.",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 220,
+    "dnwv": 130,
+    "hoehe": 654.15,
+    "zuege": 102
+   }
+  },
+  {
    "uic": 8508260,
    "name": "Grosshöchstetten",
    "kanton": "BE",
@@ -9340,6 +9713,16 @@
     "dwv": 370,
     "dnwv": 230,
     "hoehe": 690.8,
+    "zuege": 75
+   }
+  },
+  {
+   "uic": 8508263,
+   "name": "Bigenthal",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 60,
+    "hoehe": 675.35,
     "zuege": 75
    }
   },
@@ -9385,6 +9768,28 @@
     "dnwv": 1200,
     "hoehe": 600.1,
     "zuege": 83
+   }
+  },
+  {
+   "uic": 8508268,
+   "name": "Zollbrück",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 270,
+    "dnwv": 190,
+    "hoehe": 624.85,
+    "zuege": 40
+   }
+  },
+  {
+   "uic": 8508269,
+   "name": "Neumühle",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 90,
+    "dnwv": 60,
+    "hoehe": 633.7,
+    "zuege": 40
    }
   },
   {
@@ -9740,6 +10145,17 @@
    }
   },
   {
+   "uic": 8516154,
+   "name": "Bern Brünnen Westside",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 3000,
+    "dnwv": 2500,
+    "hoehe": 558.5,
+    "zuege": 139
+   }
+  },
+  {
    "uic": 8516155,
    "name": "Lancy-Pont-Rouge",
    "kanton": "GE",
@@ -9905,6 +10321,17 @@
     "hoehe": 480,
     "zuege": 69,
     "perron": 110
+   }
+  },
+  {
+   "uic": 8516354,
+   "name": "Wolhusen Weid",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 330,
+    "dnwv": 210,
+    "hoehe": 601.03,
+    "zuege": 81
    }
   },
   {

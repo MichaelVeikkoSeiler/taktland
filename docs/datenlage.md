@@ -20,10 +20,12 @@ Alle Zahlen stammen aus `pipeline/explore.py` und `pipeline/coverage.py`.
 Die übrigen gehören BLS (113), RhB (102), MGB (39), ZB (36), SOB (33) und weiteren.
 Entscheidend ist die ISB im neuesten Jahr.
 
-Dazu kommen Bahnhöfe anderer Bahnen, wenn die Daten für mindestens sechs Kapitel
-reichen (`ANDERE_AB_KAPITEL` in `pipeline/sources.py`, angewandt in `build_facts.py
---all`): Stand 2026-09-22 sind es 78, nämlich 75 der BLS, 2 der SOB (Schindellegi-
-Feusisberg, Hurden) und Interlaken Ost (BOB), zusammen **847**. Fünf davon (Köniz,
+Dazu kommen alle Bahnhöfe der BLS (`ALLE_BAHNHOEFE_VON`) und Bahnhöfe anderer Bahnen,
+wenn die Daten für mindestens sechs Kapitel reichen (`ANDERE_AB_KAPITEL` in
+`pipeline/sources.py`, angewandt in `build_facts.py --all`): Stand 2026-09-22 sind es 119,
+nämlich 116 der BLS (41 davon mit nur 3 bis 5 Kapiteln), 2 der SOB (Schindellegi-
+Feusisberg, Hurden) und Interlaken Ost (BOB), zusammen **888**. Die App kennzeichnet sie
+mit dem Kürzel der Bahn (`isb` im Index). Fünf davon (Köniz,
 Müntschemier, Ins, Spiez, Thun) kamen vorher auf ausdrücklichen Wunsch und stehen weiter
 unter `ZUSAETZLICH`. Thun führt `passagierfrequenz` von 2018 bis 2024 mit ISB SBB, 2025
 mit BLS; es ist der einzige Bahnhof mit einem solchen Wechsel. Den Bahnhöfen anderer

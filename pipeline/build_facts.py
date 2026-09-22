@@ -17,7 +17,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sources import ANDERE_AB_KAPITEL, DATASETS, ZUSAETZLICH  # noqa: E402
+from sources import ALLE_BAHNHOEFE_VON, ANDERE_AB_KAPITEL, DATASETS, ZUSAETZLICH  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
@@ -831,14 +831,17 @@ def main():
         return 1
     OUT.mkdir(parents=True, exist_ok=True)
     if "--all" in args:
-        # Bahnhoefe anderer Bahnen, wenn die Daten fuer genug Kapitel reichen
+        # Bahnhoefe anderer Bahnen: von ALLE_BAHNHOEFE_VON alle, sonst wenn die
+        # Daten fuer genug Kapitel reichen
         dazu = 0
         for uic in d.andere():
             f = build(d, uic)
-            if f and len(f["verfuegbare_kapitel"]) >= ANDERE_AB_KAPITEL:
+            if f and (f["steckbrief"].get("isb") in ALLE_BAHNHOEFE_VON
+                      or len(f["verfuegbare_kapitel"]) >= ANDERE_AB_KAPITEL):
                 uics.append(uic)
                 dazu += 1
-        print(f"andere Bahnen: {dazu} Bahnhöfe mit mindestens {ANDERE_AB_KAPITEL} Kapiteln")
+        print(f"andere Bahnen: {dazu} Bahnhöfe (alle der {', '.join(sorted(ALLE_BAHNHOEFE_VON))}, "
+              f"sonst ab {ANDERE_AB_KAPITEL} Kapiteln)")
     for uic in uics:
         f = build(d, uic)
         if not f:

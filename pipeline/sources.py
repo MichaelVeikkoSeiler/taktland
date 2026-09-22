@@ -117,6 +117,11 @@ MVP_STATIONS = {
 # Gleise, Hindernisfreiheit, Zuege und Services, bei Thun mehr.
 ANDERE_AB_KAPITEL = 6
 
+# Von diesen Bahnen kommen alle Bahnhoefe dazu, auch mit weniger Kapiteln
+# (Michael, 2026-09-22: «Du kannst auch weitere BLS-Bahnhöfe aufnehmen»). Die
+# App kennzeichnet jeden Bahnhof, dessen Infrastruktur nicht die SBB betreibt.
+ALLE_BAHNHOEFE_VON = {"BLS"}
+
 # Diese fuenf kamen auf ausdruecklichen Wunsch, bevor es die Regel gab. Sie
 # erfuellen sie auch; die Liste bleibt, damit sie nicht an der Regel haengen.
 ZUSAETZLICH = {

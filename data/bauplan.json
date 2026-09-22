@@ -658,6 +658,16 @@
    ]
   }
  },
+ "8500260": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Emmental",
+    "Oberaargau"
+   ]
+  }
+ },
  "8500261": {
   "stammdaten": {
    "frage": "bezirk",
@@ -678,6 +688,16 @@
    ]
   }
  },
+ "8500263": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Oberdorf (SO)",
+    "Langendorf",
+    "Bellach"
+   ]
+  }
+ },
  "8500264": {
   "stammdaten": {
    "frage": "bezirk",
@@ -685,6 +705,46 @@
     "Solothurn",
     "Wasseramt",
     "Gäu"
+   ]
+  }
+ },
+ "8500265": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Grandval",
+    "Lommiswil",
+    "Oberdorf (SO)"
+   ]
+  }
+ },
+ "8500266": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Grandval",
+    "Moutier",
+    "Lommiswil"
+   ]
+  }
+ },
+ "8500267": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Emmental"
+   ]
+  }
+ },
+ "8500268": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Biel/Bienne",
+    "Seeland",
+    "Emmental"
    ]
   }
  },
@@ -5044,6 +5104,16 @@
    ]
   }
  },
+ "8504482": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Jura bernois",
+    "Biel/Bienne",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8504483": {
   "stammdaten": {
    "frage": "bezirk",
@@ -5061,6 +5131,16 @@
     "Jura bernois",
     "Biel/Bienne",
     "Bern-Mittelland"
+   ]
+  }
+ },
+ "8504485": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Seeland",
+    "Jura bernois",
+    "Biel/Bienne"
    ]
   }
  },
@@ -5099,6 +5179,25 @@
    "distraktoren": [
     "BNBS",
     "BNAS"
+   ]
+  }
+ },
+ "8504490": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Laténa",
+    "Cornaux",
+    "Cressier (NE)"
+   ]
+  }
+ },
+ "8504495": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BNAS",
+    "BNBZ"
    ]
   }
  },
@@ -6805,6 +6904,16 @@
    ]
   }
  },
+ "8507071": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Frutigen-Niedersimmental",
+    "Emmental"
+   ]
+  }
+ },
  "8507072": {
   "stammdaten": {
    "frage": "bezirk",
@@ -6815,7 +6924,27 @@
    ]
   }
  },
+ "8507073": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Frutigen-Niedersimmental",
+    "Emmental"
+   ]
+  }
+ },
  "8507074": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Emmental",
+    "Frutigen-Niedersimmental"
+   ]
+  }
+ },
+ "8507075": {
   "stammdaten": {
    "frage": "bezirk",
    "distraktoren": [
@@ -6835,6 +6964,26 @@
    ]
   }
  },
+ "8507077": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Seeland",
+    "Emmental"
+   ]
+  }
+ },
+ "8507078": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Kehrsatz",
+    "Ostermundigen"
+   ]
+  }
+ },
  "8507079": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -6851,6 +7000,16 @@
     "Seeland",
     "Emmental",
     "Thun"
+   ]
+  }
+ },
+ "8507084": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Kehrsatz",
+    "Schwarzenburg"
    ]
   }
  },
@@ -6884,6 +7043,16 @@
    ]
   }
  },
+ "8507088": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Köniz",
+    "Wünnewil-Flamatt",
+    "Neuenegg"
+   ]
+  }
+ },
  "8507089": {
   "stammdaten": {
    "frage": "bezirk",
@@ -6891,6 +7060,36 @@
     "Thun",
     "Frutigen-Niedersimmental",
     "Obersimmental-Saanen"
+   ]
+  }
+ },
+ "8507091": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Kehrsatz",
+    "Ostermundigen"
+   ]
+  }
+ },
+ "8507092": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Emmental",
+    "Seeland"
+   ]
+  }
+ },
+ "8507093": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Seeland",
+    "Emmental"
    ]
   }
  },
@@ -6920,6 +7119,45 @@
    "distraktoren": [
     "UTI",
     "KI"
+   ]
+  }
+ },
+ "8507281": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Boltigen",
+    "Oberwil im Simmental",
+    "Därstetten"
+   ]
+  }
+ },
+ "8507284": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OIS",
+    "BOLT"
+   ]
+  }
+ },
+ "8507286": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Därstetten",
+    "Diemtigen",
+    "Oberwil im Simmental"
+   ]
+  }
+ },
+ "8507287": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wimmis",
+    "Erlenbach im Simmental",
+    "Spiez"
    ]
   }
  },
@@ -6969,6 +7207,16 @@
    "distraktoren": [
     "DR",
     "BOLT"
+   ]
+  }
+ },
+ "8507294": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Oberwil im Simmental",
+    "Erlenbach im Simmental",
+    "Boltigen"
    ]
   }
  },
@@ -7027,6 +7275,16 @@
    "distraktoren": [
     "Raron",
     "Brig",
+    "Leuk"
+   ]
+  }
+ },
+ "8507471": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Visp",
+    "Raron",
     "Leuk"
    ]
   }
@@ -7090,6 +7348,16 @@
    ]
   }
  },
+ "8507481": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Spiez",
+    "Wimmis",
+    "Frutigen"
+   ]
+  }
+ },
  "8507483": {
   "stammdaten": {
    "frage": "bezirk",
@@ -7115,6 +7383,16 @@
    "distraktoren": [
     "IO",
     "LSS"
+   ]
+  }
+ },
+ "8507494": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Thun",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -7194,6 +7472,16 @@
     "Hasle bei Burgdorf",
     "Lyssach",
     "Lützelflüh"
+   ]
+  }
+ },
+ "8508081": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Oberaargau",
+    "Seeland"
    ]
   }
  },
@@ -7307,6 +7595,26 @@
    ]
   }
  },
+ "8508174": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Madiswil",
+    "Langenthal",
+    "Rohrbach"
+   ]
+  }
+ },
+ "8508181": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Jura bernois",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8508182": {
   "stammdaten": {
    "frage": "bezirk",
@@ -7324,6 +7632,26 @@
     "Emmental",
     "Bern-Mittelland",
     "Seeland"
+   ]
+  }
+ },
+ "8508184": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rohrbach",
+    "Lotzwil",
+    "Langenthal"
+   ]
+  }
+ },
+ "8508185": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rohrbach",
+    "Lotzwil",
+    "Huttwil"
    ]
   }
  },
@@ -7523,6 +7851,16 @@
    ]
   }
  },
+ "8508250": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Thun",
+    "Uetendorf",
+    "Heimberg"
+   ]
+  }
+ },
  "8508251": {
   "stammdaten": {
    "frage": "bezirk",
@@ -7530,6 +7868,16 @@
     "Bern-Mittelland",
     "Frutigen-Niedersimmental",
     "Interlaken-Oberhasli"
+   ]
+  }
+ },
+ "8508252": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Steffisburg",
+    "Uetendorf",
+    "Uttigen"
    ]
   }
  },
@@ -7563,6 +7911,16 @@
    ]
   }
  },
+ "8508256": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Münsingen",
+    "Oberdiessbach",
+    "Grosshöchstetten"
+   ]
+  }
+ },
  "8508260": {
   "stammdaten": {
    "frage": "bezirk",
@@ -7590,6 +7948,16 @@
     "Emmental",
     "Thun",
     "Seeland"
+   ]
+  }
+ },
+ "8508263": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hasle bei Burgdorf",
+    "Biglen",
+    "Lützelflüh"
    ]
   }
  },
@@ -7630,6 +7998,26 @@
     "Sumiswald",
     "Hasle bei Burgdorf",
     "Lauperswil"
+   ]
+  }
+ },
+ "8508268": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lauperswil",
+    "Lützelflüh",
+    "Langnau im Emmental"
+   ]
+  }
+ },
+ "8508269": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rüderswil",
+    "Langnau im Emmental",
+    "Lützelflüh"
    ]
   }
  },
@@ -7921,6 +8309,15 @@
    ]
   }
  },
+ "8516154": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BNBZ",
+    "BNBS"
+   ]
+  }
+ },
  "8516155": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -8050,6 +8447,16 @@
     "Hitzkirch",
     "Ballwil",
     "Ermensee"
+   ]
+  }
+ },
+ "8516354": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sursee",
+    "Willisau",
+    "Luzern-Land"
    ]
   }
  },

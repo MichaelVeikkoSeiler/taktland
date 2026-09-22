@@ -1,9 +1,11 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { linienLaden, profilLaden } from '../daten'
 import { antwortSpeichern, antwortenLesen, bahnhofZuruecksetzen } from '../fortschritt'
-import type { Fakt, Gleis, Kapitel, LinienEintrag, Profil } from '../typen'
+import type { Fakt, Gleis, IndexEintrag, Kapitel, LinienEintrag, Profil } from '../typen'
 import { Frage } from './Frage'
 import { Luecken } from './Luecken'
+import { streckenAdresse } from './Strecke'
+import { BahnKuerzel } from './Suche'
 import { Zurueck } from './Zurueck'
 import { kantonText } from '../kanton'
 
@@ -12,11 +14,13 @@ const STUFE_TEXT: Record<string, string> = {
 }
 
 /** kanton aus dem Index, wie in der Liste: «Kanton TG», bei Jestetten «Ausland» */
-export function Bahnhof({ uic, zurueck, kanton }: {
+export function Bahnhof({ uic, zurueck, eintrag }: {
   uic: number
   zurueck: () => void
-  kanton: string | null
+  /** der Eintrag im Index: Kanton, Bahn der Infrastruktur, im Streckennetz */
+  eintrag: IndexEintrag | undefined
 }) {
+  const kanton = eintrag?.kanton ?? null
   const [profil, setProfil] = useState<Profil | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [antworten, setAntworten] = useState<Record<string, { richtig: boolean }>>({})
@@ -78,6 +82,25 @@ export function Bahnhof({ uic, zurueck, kanton }: {
           {kanton ? `${kantonText(kanton)} · ` : ''}{STUFE_TEXT[profil.tier]} · Fahrgastzahlen{' '}
           {profil.dataYear} · {fragenGesamt} Fragen
         </p>
+        {eintrag?.isb && (
+          <p className="mt-2 flex items-start gap-2 text-sm text-sbb-black dark:text-sbb-white">
+            <BahnKuerzel isb={eintrag.isb} />
+            <span>
+              Die Infrastruktur dieses Bahnhofs betreibt die {eintrag.isb}, nicht die SBB. Die
+              offenen Daten der SBB enthalten dazu weniger, etwa keine Perrons; darum hat diese
+              Seite weniger Kapitel.
+            </span>
+          </p>
+        )}
+        {eintrag?.im_netz && (
+          <p className="mt-2 text-sm">
+            <a href={streckenAdresse({ von: uic, nach: null, ueber: null })}
+               className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
+                          dark:text-sbb-storm dark:hover:text-sbb-white">
+              Strecke ab hier: Tunnel und Brücken bis zu einem anderen Bahnhof
+            </a>
+          </p>
+        )}
         {beantwortet > 0 && (
           <p className="mt-2 flex items-center gap-3 text-sm text-sbb-metal dark:text-sbb-storm">
             <span>{richtig} von {beantwortet} richtig</span>

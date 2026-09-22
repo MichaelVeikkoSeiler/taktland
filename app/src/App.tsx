@@ -144,7 +144,7 @@ export default function App() {
           && <Suche index={index} oeffnen={oeffnen} stand={liste} aendern={setListe} />}
         {seite.art === 'bahnhof' && index && (
           <Bahnhof uic={seite.uic} zurueck={zurueck}
-                   kanton={index.bahnhoefe.find((b) => b.uic === seite.uic)?.kanton ?? null} />
+                   eintrag={index.bahnhoefe.find((b) => b.uic === seite.uic)} />
         )}
 
         <footer className="mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
