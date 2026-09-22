@@ -33,10 +33,9 @@ const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
 /** Auftaktbilder je Bereich, dazu eines für die Anleitung. Ein Bereich ohne
  *  Eintrag erscheint ohne Bild. */
 const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
-  // das erste Auftaktbild von Taktland, seit dem eigenen Bild der Bahnhöfe auf der Startseite
   start: {
     hell: startHell, dunkel: startDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration: Am Perron steigen Menschen aus einem Zug aus, andere warten aufs Einsteigen.',
+    alt: 'Illustration: Ein Mann wartet am Perron, davor ein Bahnübergang und ein Tunnel, dahinter ein Zug auf einem Viadukt über einem See.',
   },
   anleitung: {
     hell: anleitungHell, dunkel: anleitungDunkel, breite: 1344, hoehe: 664,
