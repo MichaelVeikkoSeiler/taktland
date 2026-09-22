@@ -110,6 +110,347 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 30,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 30
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 18
+   },
+   {
+    "wert": 2,
+    "abschnitte": 11
+   },
+   {
+    "wert": 3,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 30
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 30
+   }
+  ],
+  "items": [
+   {
+    "von": "Sargans Ost",
+    "bis": "Sargans Nord",
+    "km_von": -0.105,
+    "km_bis": 0.166,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sargans Nord",
+    "bis": "Trübbach",
+    "km_von": 0.166,
+    "km_bis": 4.302,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Trübbach",
+    "bis": "Neugrüt (Verzw)",
+    "km_von": 4.302,
+    "km_bis": 6.586,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Neugrüt (Verzw)",
+    "bis": "Weite",
+    "km_von": 6.586,
+    "km_bis": 7.048,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Weite",
+    "bis": "Sevelen",
+    "km_von": 7.048,
+    "km_bis": 10.947,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sevelen",
+    "bis": "Räfis-Burgerau",
+    "km_von": 10.947,
+    "km_bis": 13.757,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Räfis-Burgerau",
+    "bis": "Buchs SG",
+    "km_von": 13.757,
+    "km_bis": 15.869,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Buchs SG",
+    "bis": "Haag-Gams",
+    "km_von": 15.869,
+    "km_bis": 20.387,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Haag-Gams",
+    "bis": "Salez-Sennwald",
+    "km_von": 20.387,
+    "km_bis": 24.574,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Salez-Sennwald",
+    "bis": "Rüthi SG",
+    "km_von": 24.574,
+    "km_bis": 30.223,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rüthi SG",
+    "bis": "Oberriet SG",
+    "km_von": 30.223,
+    "km_bis": 35.321,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberriet SG",
+    "bis": "Altstätten SG",
+    "km_von": 35.321,
+    "km_bis": 41.178,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Altstätten SG",
+    "bis": "Rebstein-Marbach",
+    "km_von": 41.178,
+    "km_bis": 44.286,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rebstein-Marbach",
+    "bis": "Heerbrugg",
+    "km_von": 44.286,
+    "km_bis": 47.929,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Heerbrugg",
+    "bis": "Au SG",
+    "km_von": 47.929,
+    "km_bis": 51.047,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Au SG",
+    "bis": "St. Margrethen Ost (Abzw)",
+    "km_von": 51.047,
+    "km_bis": 53.265,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Margrethen Ost (Abzw)",
+    "bis": "St. Margrethen SG",
+    "km_von": 53.265,
+    "km_bis": 53.82,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Margrethen SG",
+    "bis": "Rheineck",
+    "km_von": 53.82,
+    "km_bis": 57.833,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rheineck",
+    "bis": "Altenrhein",
+    "km_von": 57.833,
+    "km_bis": 61.779,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Altenrhein",
+    "bis": "Staad SG",
+    "km_von": 61.779,
+    "km_bis": 62.797,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Staad SG",
+    "bis": "Rorschach Ost (Abzw)",
+    "km_von": 62.797,
+    "km_bis": 64.415,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rorschach Ost (Abzw)",
+    "bis": "Rorschach",
+    "km_von": 64.415,
+    "km_bis": 65.05,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rorschach",
+    "bis": "Rorschach Stadt",
+    "km_von": 65.05,
+    "km_bis": 66.272,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rorschach Stadt",
+    "bis": "Goldach Ost",
+    "km_von": 66.272,
+    "km_bis": 67.015,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Goldach Ost",
+    "bis": "Goldach",
+    "km_von": 67.015,
+    "km_bis": 67.996,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Goldach",
+    "bis": "Horchental",
+    "km_von": 67.996,
+    "km_bis": 70.2,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Horchental",
+    "bis": "Mörschwil",
+    "km_von": 70.2,
+    "km_bis": 72.82,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mörschwil",
+    "bis": "St. Gallen St. Fiden Nord",
+    "km_von": 72.82,
+    "km_bis": 76.97,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Gallen St. Fiden Nord",
+    "bis": "St. Gallen St. Fiden",
+    "km_von": 76.97,
+    "km_bis": 78.156,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Gallen St. Fiden",
+    "bis": "St. Gallen",
+    "km_von": 78.156,
+    "km_bis": 80.492,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -912,9 +1253,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -955,6 +1296,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

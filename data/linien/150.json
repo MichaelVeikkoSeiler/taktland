@@ -145,6 +145,535 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 48,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 48
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 27
+   },
+   {
+    "wert": 3,
+    "abschnitte": 18
+   },
+   {
+    "wert": 4,
+    "abschnitte": 2
+   },
+   {
+    "wert": 1,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 48
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 47
+   },
+   {
+    "wert": "Wechselstrom 16,7 Hz und 50 Hz",
+    "abschnitte": 1
+   }
+  ],
+  "items": [
+   {
+    "von": "Lausanne",
+    "bis": "Lausanne (bif)",
+    "km_von": 0,
+    "km_bis": 1.126,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lausanne (bif)",
+    "bis": "Malley (B)",
+    "km_von": 1.126,
+    "km_bis": 1.913,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Malley (B)",
+    "bis": "Prilly-Malley",
+    "km_von": 1.913,
+    "km_bis": 2.354,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Prilly-Malley",
+    "bis": "Renens VD Est (bif)",
+    "km_von": 2.354,
+    "km_bis": 3.757,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Renens VD Est (bif)",
+    "bis": "Renens VD",
+    "km_von": 3.757,
+    "km_bis": 4.51,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Renens VD",
+    "bis": "Renens VD Ouest (bif)",
+    "km_von": 4.51,
+    "km_bis": 5.18,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Renens VD Ouest (bif)",
+    "bis": "Archy (bif)",
+    "km_von": 5.18,
+    "km_bis": 6.307,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Archy (bif)",
+    "bis": "Denges B (bif)",
+    "km_von": 6.307,
+    "km_bis": 8.03,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Denges B (bif)",
+    "bis": "Denges A (bif)",
+    "km_von": 8.03,
+    "km_bis": 8.267,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Denges A (bif)",
+    "bis": "Denges-Echandens",
+    "km_von": 8.267,
+    "km_bis": 8.378,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Denges-Echandens",
+    "bis": "Lonay B (bif)",
+    "km_von": 8.378,
+    "km_bis": 9.711,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lonay B (bif)",
+    "bis": "Lonay A (bif)",
+    "km_von": 9.711,
+    "km_bis": 9.999,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lonay A (bif)",
+    "bis": "Lonay-Préverenges",
+    "km_von": 9.999,
+    "km_bis": 10.123,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lonay-Préverenges",
+    "bis": "Morges-St-Jean",
+    "km_von": 10.123,
+    "km_bis": 11.162,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Morges-St-Jean",
+    "bis": "Morges",
+    "km_von": 11.162,
+    "km_bis": 12.504,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Morges",
+    "bis": "Tolochenaz",
+    "km_von": 12.504,
+    "km_bis": 14.724,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Tolochenaz",
+    "bis": "St-Prex",
+    "km_von": 14.724,
+    "km_bis": 16.914,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St-Prex",
+    "bis": "Etoy",
+    "km_von": 16.914,
+    "km_bis": 19.349,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Etoy",
+    "bis": "Allaman",
+    "km_von": 19.349,
+    "km_bis": 21.48,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Allaman",
+    "bis": "Perroy",
+    "km_von": 21.48,
+    "km_bis": 24.393,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Perroy",
+    "bis": "Rolle",
+    "km_von": 24.393,
+    "km_bis": 26.663,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rolle",
+    "bis": "Gilly-Bursinel",
+    "km_von": 26.663,
+    "km_bis": 29.703,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gilly-Bursinel",
+    "bis": "Gland",
+    "km_von": 29.703,
+    "km_bis": 33.789,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gland",
+    "bis": "Prangins",
+    "km_von": 33.789,
+    "km_bis": 37.043,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Prangins",
+    "bis": "Nyon",
+    "km_von": 37.043,
+    "km_bis": 38.527,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Nyon",
+    "bis": "Nyon (bif)",
+    "km_von": 38.527,
+    "km_bis": 38.8,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Nyon (bif)",
+    "bis": "Crans VD",
+    "km_von": 38.8,
+    "km_bis": 41.92,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Crans VD",
+    "bis": "Murat (diag)",
+    "km_von": 41.92,
+    "km_bis": 42.663,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Murat (diag)",
+    "bis": "Céligny",
+    "km_von": 42.663,
+    "km_bis": 43.451,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Céligny",
+    "bis": "Founex",
+    "km_von": 43.451,
+    "km_bis": 45.636,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Founex",
+    "bis": "Coppet",
+    "km_von": 45.636,
+    "km_bis": 47.003,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Coppet",
+    "bis": "Tannay",
+    "km_von": 47.003,
+    "km_bis": 48.225,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Tannay",
+    "bis": "Mies",
+    "km_von": 48.225,
+    "km_bis": 49.678,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mies",
+    "bis": "Pont-Céard",
+    "km_von": 49.678,
+    "km_bis": 51.061,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pont-Céard",
+    "bis": "Versoix",
+    "km_von": 51.061,
+    "km_bis": 51.954,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Versoix",
+    "bis": "Creux-de-Genthod",
+    "km_von": 51.954,
+    "km_bis": 53.8,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Creux-de-Genthod",
+    "bis": "Genthod-Bellevue",
+    "km_von": 53.8,
+    "km_bis": 54.773,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Genthod-Bellevue",
+    "bis": "Les Tuileries (saut km)",
+    "km_von": 54.773,
+    "km_bis": 55.7,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Les Tuileries (saut km)",
+    "bis": "Les Tuileries",
+    "km_von": 55.7,
+    "km_bis": 55.78,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Les Tuileries",
+    "bis": "Vengeron (diag)",
+    "km_von": 55.78,
+    "km_bis": 56.207,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vengeron (diag)",
+    "bis": "Chambésy",
+    "km_von": 56.207,
+    "km_bis": 56.781,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chambésy",
+    "bis": "Genève-Sécheron",
+    "km_von": 56.781,
+    "km_bis": 58.86,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Genève-Sécheron",
+    "bis": "Genève Poste 1",
+    "km_von": 58.86,
+    "km_bis": 59.4,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Genève Poste 1",
+    "bis": "Genève",
+    "km_von": 59.4,
+    "km_bis": 60.261,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Genève",
+    "bis": "St-Jean (bif)",
+    "km_von": 60.261,
+    "km_bis": 61.59,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz und 50 Hz"
+   },
+   {
+    "von": "St-Jean (bif)",
+    "bis": "Châtelaine (bif)",
+    "km_von": 61.59,
+    "km_bis": 63.981,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Châtelaine (bif)",
+    "bis": "Genève-Aéroport",
+    "km_von": 63.981,
+    "km_bis": 66.179,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Genève-Aéroport",
+    "bis": "Genève-Aéroport (cul-de-sac)",
+    "km_von": 66.179,
+    "km_bis": 66.6,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -1018,9 +1547,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -1061,6 +1590,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

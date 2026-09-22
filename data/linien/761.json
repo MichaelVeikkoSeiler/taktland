@@ -55,6 +55,109 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 7,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 7
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 7
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 7
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 7
+   }
+  ],
+  "items": [
+   {
+    "von": "Oberglatt ZH",
+    "bis": "Niederhasli",
+    "km_von": 13.122,
+    "km_bis": 15.067,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Niederhasli",
+    "bis": "Dielsdorf",
+    "km_von": 15.067,
+    "km_bis": 17.463,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dielsdorf",
+    "bis": "Steinmaur",
+    "km_von": 17.463,
+    "km_bis": 18.793,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Steinmaur",
+    "bis": "Schöfflisdorf-Oberweningen",
+    "km_von": 18.793,
+    "km_bis": 21.655,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schöfflisdorf-Oberweningen",
+    "bis": "Niederweningen Dorf",
+    "km_von": 21.655,
+    "km_bis": 24.134,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Niederweningen Dorf",
+    "bis": "Niederweningen",
+    "km_von": 24.134,
+    "km_bis": 25.186,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Niederweningen",
+    "bis": "Niederweningen (Gleisende)",
+    "km_von": 25.186,
+    "km_bis": 25.389,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "bruecken": {
   "source": "brucken",
   "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
@@ -185,9 +288,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -233,6 +336,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "bruecken",
   "bahnuebergaenge"
  ]

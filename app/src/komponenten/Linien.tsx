@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { linienLaden } from '../daten'
 import type { LinienEintrag, LinienVerzeichnis } from '../typen'
+import { BahnKuerzel } from './Suche'
 import { StreckeKarte } from './StreckeKarte'
 import { Ladefehler } from './Ladefehler'
 
@@ -31,7 +32,9 @@ export function Linien() {
       </p>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Aufgenommen sind Linien mit mindestens zwei Bahnhöfen in Taktland oder mit einem
-        erfassten Tunnel.
+        erfassten Tunnel. Linien anderer Bahnen stammen aus dem Schienennetz des Bundesamts für
+        Verkehr (BAV, Stand 2021) und tragen das Kürzel ihrer Bahn, wie es dort steht; Tramlinien
+        sind nicht dabei.
         {daten?.nicht_aufgefuehrt && <NichtAufgefuehrt n={daten.nicht_aufgefuehrt} />}
       </p>
       <StreckeKarte />
@@ -88,6 +91,7 @@ function Eintrag({ l }: { l: LinienEintrag }) {
   const teile = [
     l.bahnhoefe === 0 ? 'kein Bahnhof in Taktland'
       : l.bahnhoefe === 1 ? '1 Bahnhof' : `${l.bahnhoefe} Bahnhöfe`,
+    ...(l.weitere_bahnhoefe ? [`${l.weitere_bahnhoefe} weitere laut BAV`] : []),
     ...(l.tunnel > 0 ? [`${l.tunnel} Tunnel`] : []),
     ...(l.bruecken > 0 ? [`${l.bruecken} ${l.bruecken === 1 ? 'Brücke' : 'Brücken'}`] : []),
     ...(l.bahnuebergaenge > 0
@@ -100,8 +104,9 @@ function Eintrag({ l }: { l: LinienEintrag }) {
                     px-4 py-3 hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
                     dark:hover:border-sbb-white">
         <span className="min-w-0">
-          <span className="block font-medium text-sbb-black dark:text-sbb-white">
+          <span className="flex items-center gap-2 font-medium text-sbb-black dark:text-sbb-white">
             Linie {l.linie}
+            {l.bahn && <BahnKuerzel isb={l.bahn} />}
           </span>
           <span className="block truncate text-sm text-sbb-black dark:text-sbb-white">{l.name}</span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{teile.join(' · ')}</span>

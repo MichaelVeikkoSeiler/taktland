@@ -1,0 +1,238 @@
+{
+ "linie": 870,
+ "name": "St.Gallen West - Lichtensteig",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "St. Gallen West (Abzw)",
+  "kleinster_km": 22.52,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Wattwil",
+  "groesster_km": 53.163,
+  "groesster_km_bei_uic": 8506200
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 11,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8506392,
+    "name": "St. Gallen Haggen",
+    "km": 24.408
+   },
+   {
+    "uic": 8506290,
+    "name": "Herisau",
+    "km": 29.71
+   },
+   {
+    "uic": 8506291,
+    "name": "Schachen (Herisau)",
+    "km": 33.391
+   },
+   {
+    "uic": 8506292,
+    "name": "Degersheim",
+    "km": 37.096
+   },
+   {
+    "uic": 8506293,
+    "name": "Mogelsberg",
+    "km": 42.413
+   },
+   {
+    "uic": 8506294,
+    "name": "Brunnadern-Neckertal",
+    "km": 46.4
+   },
+   {
+    "uic": 8506200,
+    "name": "Wattwil",
+    "km": 53.163
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SOB",
+  "abschnitte_erfasst": 10,
+  "nach_isb": [
+   {
+    "wert": "SOB",
+    "abschnitte": 10
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 9
+   },
+   {
+    "wert": 2,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 10
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 10
+   }
+  ],
+  "items": [
+   {
+    "von": "St. Gallen West (Abzw)",
+    "bis": "St. Gallen Haggen",
+    "km_von": 22.52,
+    "km_bis": 24.408,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Gallen Haggen",
+    "bis": "Herisau",
+    "km_von": 24.408,
+    "km_bis": 29.71,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Herisau",
+    "bis": "Schachen (Herisau)",
+    "km_von": 29.71,
+    "km_bis": 33.391,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schachen (Herisau)",
+    "bis": "Degersheim",
+    "km_von": 33.391,
+    "km_bis": 37.096,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Degersheim",
+    "bis": "Degersheim West (Abzw)",
+    "km_von": 37.102,
+    "km_bis": 39.496,
+    "isb": "SOB",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Degersheim West (Abzw)",
+    "bis": "Mogelsberg",
+    "km_von": 39.496,
+    "km_bis": 42.413,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mogelsberg",
+    "bis": "Brunnadern-Neckertal",
+    "km_von": 42.413,
+    "km_bis": 46.4,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brunnadern-Neckertal",
+    "bis": "Lichtensteig SOB",
+    "km_von": 46.4,
+    "km_bis": 50.668,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lichtensteig SOB",
+    "bis": "Lichtensteig Süd (Abzw)",
+    "km_von": 50.668,
+    "km_bis": 51.052,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lichtensteig Süd (Abzw)",
+    "bis": "Wattwil",
+    "km_von": 51.052,
+    "km_bis": 53.163,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 11 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

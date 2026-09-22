@@ -40,6 +40,159 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 12,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 12
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 12
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 12
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 12
+   }
+  ],
+  "items": [
+   {
+    "von": "Wanzwil (Abzw)",
+    "bis": "Inkwil (Verzw)",
+    "km_von": 67.957,
+    "km_bis": 70.599,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Inkwil (Verzw)",
+    "bis": "Subingen",
+    "km_von": 70.599,
+    "km_bis": 74.808,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Subingen",
+    "bis": "Derendingen",
+    "km_von": 74.808,
+    "km_bis": 77.255,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Derendingen",
+    "bis": "Solothurn",
+    "km_von": 77.255,
+    "km_bis": 80.293,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Solothurn",
+    "bis": "Solothurn RM (Abzw)",
+    "km_von": 80.293,
+    "km_bis": 80.452,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Solothurn RM (Abzw)",
+    "bis": "Lüsslingen",
+    "km_von": 80.452,
+    "km_bis": 84.196,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lüsslingen",
+    "bis": "Leuzigen",
+    "km_von": 84.196,
+    "km_bis": 88.204,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Leuzigen",
+    "bis": "Arch",
+    "km_von": 88.204,
+    "km_bis": 90.98,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Arch",
+    "bis": "Rüti bei Büren",
+    "km_von": 90.98,
+    "km_bis": 92.638,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rüti bei Büren",
+    "bis": "Büren an der Aare",
+    "km_von": 92.638,
+    "km_bis": 95.71,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Büren an der Aare",
+    "bis": "Dotzigen",
+    "km_von": 95.71,
+    "km_bis": 99.188,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dotzigen",
+    "bis": "Busswil BE",
+    "km_von": 99.188,
+    "km_bis": 101.864,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -389,9 +542,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -432,6 +585,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

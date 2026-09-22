@@ -1,0 +1,331 @@
+{
+  "linie": 300,
+  "name": "Spiez - Kandersteg - Brig",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 300 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Spiez - Kandersteg - Brig». Den kleinsten Kilometer hat dort der Betriebspunkt Spiez Niesenbrücke (Abzw) mit km 0.347, den grössten Brig-Lötschberg (Abzw) mit km 73.516.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Spiez Niesenbrücke (Abzw)",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0.347,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Brig-Lötschberg (Abzw)",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei"
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 73.516,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:1579345a",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Brig-Lötschberg (Abzw), der grösste auf der Linie 300?",
+          "min": 60,
+          "max": 107,
+          "step": 1,
+          "unit": "km",
+          "correct": 73.516,
+          "explanation": "Brig-Lötschberg (Abzw) liegt auf der Linie 300 bei km 73.516. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 300 32 Betriebspunkte. Davon sind 9 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 32,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 9,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Mülenen",
+          "value": 6.846,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8507481
+        },
+        {
+          "label": "Reichenbach im Kandertal",
+          "value": 8.3,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8507480
+        },
+        {
+          "label": "Frutigen",
+          "value": 13.541,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8507478
+        },
+        {
+          "label": "Kandersteg",
+          "value": 31.583,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8507475
+        },
+        {
+          "label": "Goppenstein",
+          "value": 48.443,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8507474
+        },
+        {
+          "label": "Hohtenn",
+          "value": 54.192,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8507473
+        },
+        {
+          "label": "Ausserberg",
+          "value": 61.277,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8507472
+        },
+        {
+          "label": "Eggerberg",
+          "value": 64.951,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8507471
+        },
+        {
+          "label": "Lalden",
+          "value": 67.307,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8507470
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:0edcf088",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 300, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Mülenen",
+              "value": 6.846,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Frutigen",
+              "value": 13.541,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Hohtenn",
+              "value": 54.192,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Lalden",
+              "value": 67.307,
+              "factRef": "bahnhoefe.items[8].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Mülenen bei km 6.846, Frutigen bei km 13.541, Hohtenn bei km 54.192 und Lalden bei km 67.307.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:ed7e29e2",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 300 liegt Goppenstein?",
+          "options": [
+            "6.846 km",
+            "31.583 km",
+            "48.443 km",
+            "67.307 km"
+          ],
+          "correct": 2,
+          "explanation": "Goppenstein liegt auf der Linie 300 bei km 48.443.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 300 aus 31 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «BLSN». Infrastruktur: «BLSN» bei allen 31 erfassten Abschnitten. Streckengleise: 2 (26 Abschnitte), 1 (4 Abschnitte), 4 (ein Abschnitt). Spurweite: 1435 mm bei allen 31 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 31 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "BLSN",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 31,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: BLSN",
+          "value": 31,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 26,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 4,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 4",
+          "value": 1,
+          "unit": "Abschnitt",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[2].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 31,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 31,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:58234645",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 300 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 31 erfassten Abschnitte der Linie 300 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:ffd6f195",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 300 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 300: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 9 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 32 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

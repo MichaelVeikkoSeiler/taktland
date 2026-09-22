@@ -109,9 +109,19 @@ def linien():
             "tunnel": (f.get("tunnel") or {}).get("anzahl_erfasst", 0),
             "bruecken": (f.get("bruecken") or {}).get("anzahl_erfasst", 0),
             "bahnuebergaenge": (f.get("bahnuebergaenge") or {}).get("anzahl_erfasst", 0),
+            # die Bahn laut Schienennetz des BAV, wenn nicht die SBB; «schienennetz»:
+            # die Linie fehlt in den Daten der SBB
+            **({"bahn": f["netz"]["bahn"]}
+               if f.get("netz") and f["netz"]["bahn"] != "SBB CFF FFS" else {}),
+            **({"quelle": "schienennetz"} if f.get("quelle") == "schienennetz" else {}),
+            # Bahnhöfe, die nur das Schienennetz des BAV auf dieser Linie führt
+            **({"weitere_bahnhoefe": f["weitere_bahnhoefe"]["anzahl"]}
+               if f.get("weitere_bahnhoefe") else {}),
         })
-        for it in f["bahnhoefe"]["items"]:
-            nach_bahnhof.setdefault(str(it["uic"]), []).append(d["linie"])
+        for teil in ("bahnhoefe", "weitere_bahnhoefe"):
+            for it in (f.get(teil) or {}).get("items", []):
+                if d["linie"] not in nach_bahnhof.setdefault(str(it["uic"]), []):
+                    nach_bahnhof[str(it["uic"])].append(d["linie"])
     verzeichnis = {"stand": max(staende) if staende else None, "linien": eintraege,
                    "nach_bahnhof": nach_bahnhof}
     uebersicht = ROOT / "data" / "linien_uebersicht.json"

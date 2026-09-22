@@ -75,6 +75,149 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 11,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 11
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 11
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 11
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 11
+   }
+  ],
+  "items": [
+   {
+    "von": "Romanshorn",
+    "bis": "Uttwil",
+    "km_von": 82.152,
+    "km_bis": 86.115,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Uttwil",
+    "bis": "Kesswil",
+    "km_von": 86.115,
+    "km_bis": 88.09,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kesswil",
+    "bis": "Güttingen",
+    "km_von": 88.09,
+    "km_bis": 90.49,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Güttingen",
+    "bis": "Altnau",
+    "km_von": 90.49,
+    "km_bis": 92.919,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Altnau",
+    "bis": "Landschlacht",
+    "km_von": 92.919,
+    "km_bis": 94.575,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Landschlacht",
+    "bis": "Münsterlingen Spital",
+    "km_von": 94.575,
+    "km_bis": 95.464,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Münsterlingen Spital",
+    "bis": "Münsterlingen-Scherzingen",
+    "km_von": 95.464,
+    "km_bis": 96.166,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Münsterlingen-Scherzingen",
+    "bis": "Bottighofen",
+    "km_von": 96.166,
+    "km_bis": 97.517,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bottighofen",
+    "bis": "Kurzrickenbach Seepark",
+    "km_von": 97.517,
+    "km_bis": 98.85,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kurzrickenbach Seepark",
+    "bis": "Kreuzlingen Hafen",
+    "km_von": 98.85,
+    "km_bis": 100.172,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kreuzlingen Hafen",
+    "bis": "Kreuzlingen Hafen Grenze",
+    "km_von": 100.172,
+    "km_bis": 100.881,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "bruecken": {
   "source": "brucken",
   "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
@@ -320,9 +463,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -368,6 +511,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "bruecken",
   "bahnuebergaenge"
  ]

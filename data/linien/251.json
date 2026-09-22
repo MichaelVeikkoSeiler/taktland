@@ -135,6 +135,343 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 30,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 30
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 29
+   },
+   {
+    "wert": 2,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 30
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 30
+   }
+  ],
+  "items": [
+   {
+    "von": "Palézieux Est (bif)",
+    "bis": "Palézieux-Village",
+    "km_von": 21.203,
+    "km_bis": 23.412,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Palézieux-Village",
+    "bis": "Châtillens",
+    "km_von": 23.412,
+    "km_bis": 25.894,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Châtillens",
+    "bis": "Ecublens-Rue",
+    "km_von": 25.894,
+    "km_bis": 30.613,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ecublens-Rue",
+    "bis": "Bressonnaz",
+    "km_von": 30.613,
+    "km_bis": 36.065,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bressonnaz",
+    "bis": "Moudon",
+    "km_von": 36.065,
+    "km_bis": 37.976,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Moudon",
+    "bis": "Lucens",
+    "km_von": 37.976,
+    "km_bis": 43.382,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lucens",
+    "bis": "Henniez",
+    "km_von": 43.382,
+    "km_bis": 47.181,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Henniez",
+    "bis": "Granges-Marnand",
+    "km_von": 47.181,
+    "km_bis": 50.442,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Granges-Marnand",
+    "bis": "Trey",
+    "km_von": 50.442,
+    "km_bis": 53.406,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Trey",
+    "bis": "Payerne",
+    "km_von": 53.406,
+    "km_bis": 58.469,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Payerne",
+    "bis": "Payerne Est (bif)",
+    "km_von": 58.469,
+    "km_bis": 59.445,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Payerne Est (bif)",
+    "bis": "Corcelles-Nord",
+    "km_von": 59.445,
+    "km_bis": 60.757,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Corcelles-Nord",
+    "bis": "Dompierre FR",
+    "km_von": 60.757,
+    "km_bis": 63.658,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dompierre FR",
+    "bis": "Domdidier",
+    "km_von": 63.658,
+    "km_bis": 66.189,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Domdidier",
+    "bis": "Avenches",
+    "km_von": 66.189,
+    "km_bis": 69.118,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Avenches",
+    "bis": "Faoug",
+    "km_von": 69.118,
+    "km_bis": 72.805,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Faoug",
+    "bis": "Murten/Morat",
+    "km_von": 72.805,
+    "km_bis": 76.521,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Murten/Morat",
+    "bis": "Muntelier-Löwenberg",
+    "km_von": 76.521,
+    "km_bis": 78.573,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Muntelier-Löwenberg",
+    "bis": "Muntelier",
+    "km_von": 78.573,
+    "km_bis": 79.094,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Muntelier",
+    "bis": "Galmiz",
+    "km_von": 79.094,
+    "km_bis": 80.674,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Galmiz",
+    "bis": "Kerzers West (Abzw)",
+    "km_von": 80.674,
+    "km_bis": 84.644,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kerzers West (Abzw)",
+    "bis": "Kerzers",
+    "km_von": 84.644,
+    "km_bis": 84.811,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kerzers",
+    "bis": "Kerzers Papiliorama",
+    "km_von": 84.811,
+    "km_bis": 86.517,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kerzers Papiliorama",
+    "bis": "Fräschels",
+    "km_von": 86.517,
+    "km_bis": 87.673,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fräschels",
+    "bis": "Kallnach",
+    "km_von": 87.673,
+    "km_bis": 91.37,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kallnach",
+    "bis": "Bargen BE",
+    "km_von": 91.37,
+    "km_bis": 93.936,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bargen BE",
+    "bis": "Aarberg",
+    "km_von": 93.936,
+    "km_bis": 95.493,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Aarberg",
+    "bis": "Lyss Grien",
+    "km_von": 95.493,
+    "km_bis": 99.03,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lyss Grien",
+    "bis": "Lyss West (Agl)",
+    "km_von": 99.03,
+    "km_bis": 99.791,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lyss West (Agl)",
+    "bis": "Lyss Nord",
+    "km_von": 99.791,
+    "km_bis": 100.421,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -937,9 +1274,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -980,6 +1317,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

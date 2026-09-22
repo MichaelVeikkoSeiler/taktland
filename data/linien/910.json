@@ -1,0 +1,373 @@
+{
+ "linie": 910,
+ "name": "Landquart - Klosters - Sagliains",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Landquart [Gleis 5-8]",
+  "kleinster_km": 0,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Sagliains",
+  "groesster_km": 54.53,
+  "groesster_km_bei_uic": 8509269
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 22,
+  "anzahl_in_taktland": 12,
+  "items": [
+   {
+    "uic": 8509057,
+    "name": "Malans GR",
+    "km": 2.072
+   },
+   {
+    "uic": 8509058,
+    "name": "Seewis-Pardisla",
+    "km": 6.732
+   },
+   {
+    "uic": 8509059,
+    "name": "Grüsch",
+    "km": 7.905
+   },
+   {
+    "uic": 8509060,
+    "name": "Schiers",
+    "km": 11.457
+   },
+   {
+    "uic": 8509061,
+    "name": "Furna",
+    "km": 15.393
+   },
+   {
+    "uic": 8509062,
+    "name": "Jenaz",
+    "km": 16.761
+   },
+   {
+    "uic": 8509063,
+    "name": "Fideris",
+    "km": 18.202
+   },
+   {
+    "uic": 8509064,
+    "name": "Küblis",
+    "km": 21.443
+   },
+   {
+    "uic": 8509065,
+    "name": "Saas im Prättigau",
+    "km": 24.595
+   },
+   {
+    "uic": 8509067,
+    "name": "Klosters Dorf",
+    "km": 30.653
+   },
+   {
+    "uic": 8509068,
+    "name": "Klosters Platz",
+    "km": 32.442
+   },
+   {
+    "uic": 8509269,
+    "name": "Sagliains",
+    "km": 54.53
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "RhB FR VR",
+  "abschnitte_erfasst": 21,
+  "nach_isb": [
+   {
+    "wert": "RhB FR VR",
+    "abschnitte": 21
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 15
+   },
+   {
+    "wert": 2,
+    "abschnitte": 6
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 21
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 21
+   }
+  ],
+  "items": [
+   {
+    "von": "Landquart [Gleis 5-8]",
+    "bis": "Malans GR",
+    "km_von": 0,
+    "km_bis": 2.072,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Malans GR",
+    "bis": "Seewis-Pardisla",
+    "km_von": 2.072,
+    "km_bis": 6.732,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Seewis-Pardisla",
+    "bis": "Grüsch",
+    "km_von": 6.732,
+    "km_bis": 7.905,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Grüsch",
+    "bis": "Mundaditsch (Verzw)",
+    "km_von": 7.905,
+    "km_bis": 8.91,
+    "isb": "RhB FR VR",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mundaditsch (Verzw)",
+    "bis": "Schiers",
+    "km_von": 8.91,
+    "km_bis": 11.457,
+    "isb": "RhB FR VR",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schiers",
+    "bis": "Fuchsenwinkel",
+    "km_von": 11.457,
+    "km_bis": 14.854,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fuchsenwinkel",
+    "bis": "Furna",
+    "km_von": 14.854,
+    "km_bis": 15.393,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Furna",
+    "bis": "Jenaz",
+    "km_von": 15.393,
+    "km_bis": 16.761,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Jenaz",
+    "bis": "Fideris",
+    "km_von": 16.761,
+    "km_bis": 18.202,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fideris",
+    "bis": "Küblis",
+    "km_von": 18.202,
+    "km_bis": 21.443,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Küblis",
+    "bis": "Saas im Prättigau",
+    "km_von": 21.443,
+    "km_bis": 24.595,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Saas im Prättigau",
+    "bis": "Serneus",
+    "km_von": 24.595,
+    "km_bis": 27.695,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Serneus",
+    "bis": "Klosters Dorf",
+    "km_von": 27.695,
+    "km_bis": 30.653,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Klosters Dorf",
+    "bis": "Klosters Platz",
+    "km_von": 30.653,
+    "km_bis": 32.442,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Klosters Platz",
+    "bis": "Klosters Selfranga",
+    "km_von": 32.442,
+    "km_bis": 34.95,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Klosters Selfranga",
+    "bis": "Selfranga Süd",
+    "km_von": 34.95,
+    "km_bis": 37.2,
+    "isb": "RhB FR VR",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Selfranga Süd",
+    "bis": "Vereina Nord",
+    "km_von": 37.2,
+    "km_bis": 43.55,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vereina Nord",
+    "bis": "Vereina Süd",
+    "km_von": 43.55,
+    "km_bis": 45.65,
+    "isb": "RhB FR VR",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vereina Süd",
+    "bis": "Sagliains Nord",
+    "km_von": 45.65,
+    "km_bis": 52.17,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sagliains Nord",
+    "bis": "Sagliains Abzw Sasslatschtunne",
+    "km_von": 52.17,
+    "km_bis": 53.72,
+    "isb": "RhB FR VR",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sagliains Abzw Sasslatschtunne",
+    "bis": "Sagliains",
+    "km_von": 53.72,
+    "km_bis": 54.53,
+    "isb": "RhB FR VR",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 12 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 22 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

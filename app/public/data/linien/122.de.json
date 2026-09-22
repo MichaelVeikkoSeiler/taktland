@@ -1,0 +1,338 @@
+{
+  "linie": 122,
+  "name": "Glion - Rochers-de-Naye",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 122 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Glion - Rochers-de-Naye». Den kleinsten Kilometer hat dort der Betriebspunkt Glion mit km 0, den grössten Rochers-de-Naye mit km 7.63.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Glion",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei",
+          "bahnhof": 8501370
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Rochers-de-Naye",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8501369
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 7.63,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:9fc979d8",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Rochers-de-Naye, der grösste auf der Linie 122?",
+          "min": 6.0,
+          "max": 11.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 7.63,
+          "explanation": "Rochers-de-Naye liegt auf der Linie 122 bei km 7.63. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 122 12 Betriebspunkte. Davon sind 12 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 12,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 12,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Glion",
+          "value": 0,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501370
+        },
+        {
+          "label": "Glion-Alpes",
+          "value": 0.25,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8501230
+        },
+        {
+          "label": "Glion-Collège",
+          "value": 0.53,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501308
+        },
+        {
+          "label": "Le Tremblex",
+          "value": 0.9,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501363
+        },
+        {
+          "label": "Caux",
+          "value": 2.17,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501371
+        },
+        {
+          "label": "Les Echets",
+          "value": 2.72,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8501364
+        },
+        {
+          "label": "Haut-de-Caux",
+          "value": 3.06,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8501357
+        },
+        {
+          "label": "Crêt-d'y-Bau",
+          "value": 3.62,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8501365
+        },
+        {
+          "label": "Paccot",
+          "value": 4.32,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8501366
+        },
+        {
+          "label": "Jaman",
+          "value": 5.91,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8501367
+        },
+        {
+          "label": "La Perche",
+          "value": 6.46,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8501368
+        },
+        {
+          "label": "Rochers-de-Naye",
+          "value": 7.63,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8501369
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:9ee6b238",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 122, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Glion",
+              "value": 0,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Caux",
+              "value": 2.17,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Crêt-d'y-Bau",
+              "value": 3.62,
+              "factRef": "bahnhoefe.items[7].km"
+            },
+            {
+              "label": "Rochers-de-Naye",
+              "value": 7.63,
+              "factRef": "bahnhoefe.items[11].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Glion bei km 0, Caux bei km 2.17, Crêt-d'y-Bau bei km 3.62 und Rochers-de-Naye bei km 7.63.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:6cc26289",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 122 liegt Haut-de-Caux?",
+          "options": [
+            "0 km",
+            "2.72 km",
+            "3.06 km",
+            "7.63 km"
+          ],
+          "correct": 2,
+          "explanation": "Haut-de-Caux liegt auf der Linie 122 bei km 3.06.",
+          "factRef": "bahnhoefe.items[6].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 122 aus 11 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «MVR». Infrastruktur: «MVR» bei allen 11 erfassten Abschnitten. Streckengleise: 1 bei allen 11 erfassten Abschnitten. Spurweite: 800 mm bei allen 11 erfassten Abschnitten. Strom: Gleichstrom bei allen 11 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "MVR",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 11,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: MVR",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 800 mm",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Gleichstrom",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:59820287",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 122 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 1,
+          "explanation": "Alle 11 erfassten Abschnitte der Linie 122 haben die Spurweite 800 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:7dcaea47",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 122 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 0,
+          "explanation": "Im Schienennetz steht für die Linie 122: Gleichstrom.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

@@ -239,10 +239,14 @@ def kantone(wert):
 
 
 def linien_eintraege():
-    """Jede Linie mit Seite und ihren erfassten Beständen."""
+    """Jede Linie mit Seite und ihren erfassten Beständen. Linien anderer Bahnen
+    aus dem Schienennetz des BAV treten nicht an: Ihre Bahnhöfe und
+    Betriebspunkte zählt eine andere Quelle, Tunnel und Brücken fehlen."""
     raus = []
     for p in sorted(LINIEN.glob("*.json"), key=lambda x: int(x.stem)):
         f = json.loads(p.read_text(encoding="utf-8"))
+        if f.get("quelle") == "schienennetz":
+            continue
         werte = {}
         for k in LINIEN_KATEGORIEN:
             v = holen(f, k["pfad"])

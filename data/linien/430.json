@@ -1,0 +1,309 @@
+{
+ "linie": 430,
+ "name": "Hasle Rüegsau - Thun",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Hasle-Rüegsau",
+  "kleinster_km": -0.019,
+  "kleinster_km_bei_uic": 8508265,
+  "groesster_km_bei": "Thun (Abzw)",
+  "groesster_km": 33.04,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 15,
+  "anzahl_in_taktland": 14,
+  "items": [
+   {
+    "uic": 8508265,
+    "name": "Hasle-Rüegsau",
+    "km": -0.019
+   },
+   {
+    "uic": 8508264,
+    "name": "Schafhausen i.E.",
+    "km": 2.562
+   },
+   {
+    "uic": 8508263,
+    "name": "Bigenthal",
+    "km": 6.832
+   },
+   {
+    "uic": 8508262,
+    "name": "Walkringen",
+    "km": 8.888
+   },
+   {
+    "uic": 8508261,
+    "name": "Biglen",
+    "km": 12.085
+   },
+   {
+    "uic": 8508260,
+    "name": "Grosshöchstetten",
+    "km": 14.667
+   },
+   {
+    "uic": 8508202,
+    "name": "Konolfingen",
+    "km": 18.741
+   },
+   {
+    "uic": 8508256,
+    "name": "Stalden i.E.",
+    "km": 19.961
+   },
+   {
+    "uic": 8508255,
+    "name": "Oberdiessbach",
+    "km": 23.654
+   },
+   {
+    "uic": 8508254,
+    "name": "Brenzikofen",
+    "km": 26.09
+   },
+   {
+    "uic": 8508253,
+    "name": "Heimberg",
+    "km": 29.391
+   },
+   {
+    "uic": 8508252,
+    "name": "Lädeli",
+    "km": 30.451
+   },
+   {
+    "uic": 8508251,
+    "name": "Steffisburg",
+    "km": 31.522
+   },
+   {
+    "uic": 8508250,
+    "name": "Schwäbis",
+    "km": 32.713
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "BLSN",
+  "abschnitte_erfasst": 14,
+  "nach_isb": [
+   {
+    "wert": "BLSN",
+    "abschnitte": 14
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 14
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 14
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 14
+   }
+  ],
+  "items": [
+   {
+    "von": "Hasle-Rüegsau",
+    "bis": "Schafhausen i.E.",
+    "km_von": -0.019,
+    "km_bis": 2.562,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schafhausen i.E.",
+    "bis": "Bigenthal",
+    "km_von": 2.562,
+    "km_bis": 6.832,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bigenthal",
+    "bis": "Walkringen",
+    "km_von": 6.832,
+    "km_bis": 8.888,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Walkringen",
+    "bis": "Biglen",
+    "km_von": 8.888,
+    "km_bis": 12.085,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Biglen",
+    "bis": "Grosshöchstetten",
+    "km_von": 12.085,
+    "km_bis": 14.667,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Grosshöchstetten",
+    "bis": "Konolfingen",
+    "km_von": 14.667,
+    "km_bis": 18.741,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Konolfingen",
+    "bis": "Stalden i.E.",
+    "km_von": 18.741,
+    "km_bis": 19.961,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Stalden i.E.",
+    "bis": "Oberdiessbach",
+    "km_von": 19.961,
+    "km_bis": 23.654,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberdiessbach",
+    "bis": "Brenzikofen",
+    "km_von": 23.654,
+    "km_bis": 26.09,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brenzikofen",
+    "bis": "Heimberg",
+    "km_von": 26.09,
+    "km_bis": 29.391,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Heimberg",
+    "bis": "Lädeli",
+    "km_von": 29.391,
+    "km_bis": 30.451,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lädeli",
+    "bis": "Steffisburg",
+    "km_von": 30.451,
+    "km_bis": 31.522,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Steffisburg",
+    "bis": "Schwäbis",
+    "km_von": 31.522,
+    "km_bis": 32.713,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schwäbis",
+    "bis": "Thun (Abzw)",
+    "km_von": 32.713,
+    "km_bis": 33.04,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 14 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 15 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

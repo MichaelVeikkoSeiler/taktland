@@ -1,0 +1,382 @@
+{
+  "linie": 940,
+  "name": "Reichenau-Tamins - St. Moritz",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 940 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Reichenau-Tamins - St. Moritz». Den kleinsten Kilometer hat dort der Betriebspunkt Reichenau Farsch (Abzw) mit km 24.163, den grössten St. Moritz mit km 102.936.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Reichenau Farsch (Abzw)",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 24.163,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "St. Moritz",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8509253
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 102.936,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:8db464a2",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat St. Moritz, der grösste auf der Linie 940?",
+          "min": 84,
+          "max": 150,
+          "step": 1,
+          "unit": "km",
+          "correct": 102.936,
+          "explanation": "St. Moritz liegt auf der Linie 940 bei km 102.936. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 940 22 Betriebspunkte. Davon sind 17 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 22,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 17,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Bonaduz",
+          "value": 27.447,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8509184
+        },
+        {
+          "label": "Rhäzüns",
+          "value": 28.691,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8509185
+        },
+        {
+          "label": "Rothenbrunnen",
+          "value": 32.815,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8509186
+        },
+        {
+          "label": "Rodels-Realta",
+          "value": 36.596,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8509187
+        },
+        {
+          "label": "Cazis",
+          "value": 38.494,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8509188
+        },
+        {
+          "label": "Thusis",
+          "value": 41.262,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8509189
+        },
+        {
+          "label": "Tiefencastel",
+          "value": 53.952,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8509192
+        },
+        {
+          "label": "Surava",
+          "value": 58.131,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8509193
+        },
+        {
+          "label": "Alvaneu",
+          "value": 60.787,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8509194
+        },
+        {
+          "label": "Filisur",
+          "value": 64.359,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8509195
+        },
+        {
+          "label": "Bergün/Bravuogn",
+          "value": 73.138,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8509197
+        },
+        {
+          "label": "Preda",
+          "value": 85.717,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8509198
+        },
+        {
+          "label": "Spinas",
+          "value": 91.804,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8509199
+        },
+        {
+          "label": "Bever",
+          "value": 95.599,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8509250
+        },
+        {
+          "label": "Samedan",
+          "value": 97.71,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8509251
+        },
+        {
+          "label": "Celerina",
+          "value": 100.321,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8509252
+        },
+        {
+          "label": "St. Moritz",
+          "value": 102.936,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8509253
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:102def60",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 940, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Rhäzüns",
+              "value": 28.691,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Tiefencastel",
+              "value": 53.952,
+              "factRef": "bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Bergün/Bravuogn",
+              "value": 73.138,
+              "factRef": "bahnhoefe.items[10].km"
+            },
+            {
+              "label": "St. Moritz",
+              "value": 102.936,
+              "factRef": "bahnhoefe.items[16].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Rhäzüns bei km 28.691, Tiefencastel bei km 53.952, Bergün/Bravuogn bei km 73.138 und St. Moritz bei km 102.936.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:15f977db",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 940 liegt Filisur?",
+          "options": [
+            "28.691 km",
+            "60.787 km",
+            "64.359 km",
+            "102.936 km"
+          ],
+          "correct": 2,
+          "explanation": "Filisur liegt auf der Linie 940 bei km 64.359.",
+          "factRef": "bahnhoefe.items[9].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 940 aus 21 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «RhB FR VR». Infrastruktur: «RhB FR VR» bei allen 21 erfassten Abschnitten. Streckengleise: 1 bei allen 21 erfassten Abschnitten. Spurweite: 1000 mm bei allen 21 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 21 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "RhB FR VR",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 21,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: RhB FR VR",
+          "value": 21,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 21,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 21,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 21,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:7a7538a5",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 940 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 2,
+          "explanation": "Alle 21 erfassten Abschnitte der Linie 940 haben die Spurweite 1000 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:ec38719c",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 940 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 940: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 17 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 22 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

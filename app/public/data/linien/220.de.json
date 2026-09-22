@@ -6,6 +6,7 @@
   "sources": [
     "linie",
     "linie-mit-betriebspunkten",
+    "schienennetz",
     "tunnel"
   ],
   "chapters": [
@@ -62,6 +63,251 @@
           "correct": 42.087,
           "explanation": "Die Kilometrierung der Linie 220 reicht bis km 42.087. Der Wert ist ein Standort auf der Linie.",
           "factRef": "strecke.km_ende",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "weitere_bahnhoefe",
+      "title": "Weitere Bahnhöfe laut BAV",
+      "body": "Auf der Linie 220 führt das Schienennetz des BAV 13 Bahnhöfe aus Taktland, die in der Liste der Betriebspunkte der SBB fehlen. Die Kilometer sind die des Schienennetzes.",
+      "facts": [
+        {
+          "label": "Weitere Bahnhöfe",
+          "value": 13,
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.anzahl"
+        },
+        {
+          "label": "Bern Stöckacker",
+          "value": 3.308,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[0].km",
+          "uic": 8504495
+        },
+        {
+          "label": "Bern Bümpliz Nord",
+          "value": 4.186,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[1].km",
+          "uic": 8504489
+        },
+        {
+          "label": "Bern Brünnen Westside",
+          "value": 5.307,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[2].km",
+          "uic": 8516154
+        },
+        {
+          "label": "Bern Riedbach",
+          "value": 8.494,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[3].km",
+          "uic": 8504488
+        },
+        {
+          "label": "Rosshäusern",
+          "value": 11.445,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[4].km",
+          "uic": 8504487
+        },
+        {
+          "label": "Gümmenen",
+          "value": 17.001,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[5].km",
+          "uic": 8504486
+        },
+        {
+          "label": "Ferenbalm-Gurbrü",
+          "value": 18.853,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[6].km",
+          "uic": 8504485
+        },
+        {
+          "label": "Müntschemier",
+          "value": 26.436,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[7].km",
+          "uic": 8504484
+        },
+        {
+          "label": "Ins",
+          "value": 29.782,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[8].km",
+          "uic": 8504483
+        },
+        {
+          "label": "Gampelen",
+          "value": 33.241,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[9].km",
+          "uic": 8504482
+        },
+        {
+          "label": "Zihlbrücke",
+          "value": 35.208,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[10].km",
+          "uic": 8504490
+        },
+        {
+          "label": "Marin-Epagnier",
+          "value": 36.726,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[11].km",
+          "uic": 8504481
+        },
+        {
+          "label": "St-Blaise-Lac",
+          "value": 38.742,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[12].km",
+          "uic": 8504480
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "weitere_bahnhoefe:6244fbdd",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 220, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Bern Stöckacker",
+              "value": 3.308,
+              "factRef": "weitere_bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Rosshäusern",
+              "value": 11.445,
+              "factRef": "weitere_bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Müntschemier",
+              "value": 26.436,
+              "factRef": "weitere_bahnhoefe.items[7].km"
+            },
+            {
+              "label": "St-Blaise-Lac",
+              "value": 38.742,
+              "factRef": "weitere_bahnhoefe.items[12].km"
+            }
+          ],
+          "factRef": "weitere_bahnhoefe.items",
+          "explanation": "Bern Stöckacker bei km 3.308, Rosshäusern bei km 11.445, Müntschemier bei km 26.436 und St-Blaise-Lac bei km 38.742.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 220 aus 22 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «BLSN». Infrastruktur: «BLSN» (21 Abschnitte), «SBB CFF FFS» (ein Abschnitt). Streckengleise: 1 (13 Abschnitte), 2 (9 Abschnitte). Spurweite: 1435 mm bei allen 22 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 22 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "BLSN",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 22,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: BLSN",
+          "value": 21,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Infrastruktur: SBB CFF FFS",
+          "value": 1,
+          "unit": "Abschnitt",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[1].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 13,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 9,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 22,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 22,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:c839e77d",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 220 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 22 erfassten Abschnitte der Linie 220 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:7884caf0",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 220 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 220: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
           "difficulty": 2
         }
       ]
@@ -149,9 +395,9 @@
       "quelle": "linie, tunnel"
     },
     {
-      "thema": "Ein- oder mehrspurig",
-      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-      "quelle": "linie, tunnel"
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
     },
     {
       "thema": "Weitere Betriebspunkte",

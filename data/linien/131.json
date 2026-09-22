@@ -60,6 +60,169 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 13,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 13
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 13
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 13
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 13
+   }
+  ],
+  "items": [
+   {
+    "von": "Les Paluds",
+    "bis": "Massongex",
+    "km_von": 1.472,
+    "km_bis": 3.199,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Massongex",
+    "bis": "Losinger (embr)",
+    "km_von": 3.199,
+    "km_bis": 3.528,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Losinger (embr)",
+    "bis": "Monthey",
+    "km_von": 3.528,
+    "km_bis": 6.055,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Monthey",
+    "bis": "Monthey Giovanola (embr)",
+    "km_von": 6.055,
+    "km_bis": 7.21,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Monthey Giovanola (embr)",
+    "bis": "Collombey",
+    "km_von": 7.21,
+    "km_bis": 7.906,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Collombey",
+    "bis": "Monthey Centre agr Bas-V (embr",
+    "km_von": 7.906,
+    "km_bis": 9.087,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Monthey Centre agr Bas-V (embr",
+    "bis": "Monthey Agip (embr)",
+    "km_von": 9.087,
+    "km_bis": 10.087,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Monthey Agip (embr)",
+    "bis": "Vionnaz",
+    "km_von": 10.087,
+    "km_bis": 13.386,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vionnaz",
+    "bis": "Vouvry",
+    "km_von": 13.386,
+    "km_bis": 16.252,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vouvry",
+    "bis": "Les Evouettes",
+    "km_von": 16.252,
+    "km_bis": 19.526,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Les Evouettes",
+    "bis": "Bouveret",
+    "km_von": 19.526,
+    "km_bis": 22.911,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bouveret",
+    "bis": "St-Gingolph (Suisse)",
+    "km_von": 22.911,
+    "km_bis": 26.805,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St-Gingolph (Suisse)",
+    "bis": "St-Gingolph (Frontière)",
+    "km_von": 26.805,
+    "km_bis": 26.988,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "bruecken": {
   "source": "brucken",
   "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
@@ -402,9 +565,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -455,6 +618,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "bruecken",
   "bahnuebergaenge"
  ]

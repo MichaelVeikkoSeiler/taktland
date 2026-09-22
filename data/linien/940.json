@@ -1,0 +1,394 @@
+{
+ "linie": 940,
+ "name": "Reichenau-Tamins - St. Moritz",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Reichenau Farsch (Abzw)",
+  "kleinster_km": 24.163,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "St. Moritz",
+  "groesster_km": 102.936,
+  "groesster_km_bei_uic": 8509253
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 22,
+  "anzahl_in_taktland": 17,
+  "items": [
+   {
+    "uic": 8509184,
+    "name": "Bonaduz",
+    "km": 27.447
+   },
+   {
+    "uic": 8509185,
+    "name": "Rhäzüns",
+    "km": 28.691
+   },
+   {
+    "uic": 8509186,
+    "name": "Rothenbrunnen",
+    "km": 32.815
+   },
+   {
+    "uic": 8509187,
+    "name": "Rodels-Realta",
+    "km": 36.596
+   },
+   {
+    "uic": 8509188,
+    "name": "Cazis",
+    "km": 38.494
+   },
+   {
+    "uic": 8509189,
+    "name": "Thusis",
+    "km": 41.262
+   },
+   {
+    "uic": 8509192,
+    "name": "Tiefencastel",
+    "km": 53.952
+   },
+   {
+    "uic": 8509193,
+    "name": "Surava",
+    "km": 58.131
+   },
+   {
+    "uic": 8509194,
+    "name": "Alvaneu",
+    "km": 60.787
+   },
+   {
+    "uic": 8509195,
+    "name": "Filisur",
+    "km": 64.359
+   },
+   {
+    "uic": 8509197,
+    "name": "Bergün/Bravuogn",
+    "km": 73.138
+   },
+   {
+    "uic": 8509198,
+    "name": "Preda",
+    "km": 85.717
+   },
+   {
+    "uic": 8509199,
+    "name": "Spinas",
+    "km": 91.804
+   },
+   {
+    "uic": 8509250,
+    "name": "Bever",
+    "km": 95.599
+   },
+   {
+    "uic": 8509251,
+    "name": "Samedan",
+    "km": 97.71
+   },
+   {
+    "uic": 8509252,
+    "name": "Celerina",
+    "km": 100.321
+   },
+   {
+    "uic": 8509253,
+    "name": "St. Moritz",
+    "km": 102.936
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "RhB FR VR",
+  "abschnitte_erfasst": 21,
+  "nach_isb": [
+   {
+    "wert": "RhB FR VR",
+    "abschnitte": 21
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 21
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 21
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 21
+   }
+  ],
+  "items": [
+   {
+    "von": "Reichenau Farsch (Abzw)",
+    "bis": "Bonaduz",
+    "km_von": 24.163,
+    "km_bis": 27.447,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bonaduz",
+    "bis": "Rhäzüns",
+    "km_von": 27.447,
+    "km_bis": 28.691,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rhäzüns",
+    "bis": "Rothenbrunnen",
+    "km_von": 28.691,
+    "km_bis": 32.815,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rothenbrunnen",
+    "bis": "Rodels-Realta",
+    "km_von": 32.815,
+    "km_bis": 36.596,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rodels-Realta",
+    "bis": "Cazis",
+    "km_von": 36.596,
+    "km_bis": 38.494,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Cazis",
+    "bis": "Thusis",
+    "km_von": 38.494,
+    "km_bis": 41.262,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Thusis",
+    "bis": "Sils im Domleschg",
+    "km_von": 41.262,
+    "km_bis": 43.084,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sils im Domleschg",
+    "bis": "Solis",
+    "km_von": 43.084,
+    "km_bis": 49.336,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Solis",
+    "bis": "Tiefencastel",
+    "km_von": 49.336,
+    "km_bis": 53.952,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Tiefencastel",
+    "bis": "Surava",
+    "km_von": 53.952,
+    "km_bis": 58.131,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Surava",
+    "bis": "Alvaneu",
+    "km_von": 58.131,
+    "km_bis": 60.787,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Alvaneu",
+    "bis": "Filisur",
+    "km_von": 60.787,
+    "km_bis": 64.359,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Filisur",
+    "bis": "Stugl/Stuls",
+    "km_von": 64.359,
+    "km_bis": 70.193,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Stugl/Stuls",
+    "bis": "Bergün/Bravuogn",
+    "km_von": 70.193,
+    "km_bis": 73.138,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bergün/Bravuogn",
+    "bis": "Muot",
+    "km_von": 73.138,
+    "km_bis": 79.199,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Muot",
+    "bis": "Preda",
+    "km_von": 79.199,
+    "km_bis": 85.717,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Preda",
+    "bis": "Spinas",
+    "km_von": 85.717,
+    "km_bis": 91.804,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Spinas",
+    "bis": "Bever",
+    "km_von": 91.804,
+    "km_bis": 95.599,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bever",
+    "bis": "Samedan",
+    "km_von": 95.599,
+    "km_bis": 97.71,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Samedan",
+    "bis": "Celerina",
+    "km_von": 97.71,
+    "km_bis": 100.321,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Celerina",
+    "bis": "St. Moritz",
+    "km_von": 100.321,
+    "km_bis": 102.936,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 17 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 22 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

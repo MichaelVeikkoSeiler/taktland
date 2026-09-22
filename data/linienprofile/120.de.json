@@ -1,0 +1,500 @@
+{
+  "linie": 120,
+  "name": "Montreux - Zweisimmen",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 120 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Montreux - Zweisimmen». Den kleinsten Kilometer hat dort der Betriebspunkt Montreux MOB mit km 0.07, den grössten Zweisimmen [Gleis 3-6] mit km 62.43.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Montreux MOB",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0.07,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Zweisimmen [Gleis 3-6]",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei"
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 62.43,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:cafd625c",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Zweisimmen [Gleis 3-6], der grösste auf der Linie 120?",
+          "min": 51,
+          "max": 91,
+          "step": 1,
+          "unit": "km",
+          "correct": 62.43,
+          "explanation": "Zweisimmen [Gleis 3-6] liegt auf der Linie 120 bei km 62.43. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 120 34 Betriebspunkte. Davon sind 31 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 34,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 31,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Montreux-Collège",
+          "value": 0.65,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501380
+        },
+        {
+          "label": "Vuarennes",
+          "value": 1,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8501381
+        },
+        {
+          "label": "Belmont-sur-Montreux",
+          "value": 1.51,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501390
+        },
+        {
+          "label": "Châtelard VD",
+          "value": 2.15,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501382
+        },
+        {
+          "label": "Planchamp",
+          "value": 2.66,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501383
+        },
+        {
+          "label": "Fontanivent",
+          "value": 3.28,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8501374
+        },
+        {
+          "label": "Chernex",
+          "value": 4.29,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8501375
+        },
+        {
+          "label": "Sonzier",
+          "value": 5.47,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8501384
+        },
+        {
+          "label": "Chamby",
+          "value": 7.15,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8501376
+        },
+        {
+          "label": "Sendy-Sollard",
+          "value": 9.2,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8501385
+        },
+        {
+          "label": "Les Avants",
+          "value": 10.85,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8501377
+        },
+        {
+          "label": "Jor",
+          "value": 12.63,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8501386
+        },
+        {
+          "label": "Les Cases",
+          "value": 15.19,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8501387
+        },
+        {
+          "label": "Allières",
+          "value": 16.97,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8501378
+        },
+        {
+          "label": "Les Sciernes",
+          "value": 20.43,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8501379
+        },
+        {
+          "label": "Montbovon",
+          "value": 22.14,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8504070
+        },
+        {
+          "label": "La Tine",
+          "value": 24.99,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8501391
+        },
+        {
+          "label": "Rossinière",
+          "value": 28.23,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8501392
+        },
+        {
+          "label": "La Chaudanne-Les Moulins",
+          "value": 29.38,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[18].km",
+          "uic": 8501393
+        },
+        {
+          "label": "Château-d'Oex",
+          "value": 32.67,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[19].km",
+          "uic": 8501394
+        },
+        {
+          "label": "Château-d'Oex La Palaz",
+          "value": 33.48,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[20].km",
+          "uic": 8501198
+        },
+        {
+          "label": "Les Granges-Gérignoz",
+          "value": 34.61,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[21].km",
+          "uic": 8501395
+        },
+        {
+          "label": "Les Combes",
+          "value": 36.13,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[22].km",
+          "uic": 8501388
+        },
+        {
+          "label": "Flendruz",
+          "value": 37.41,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[23].km",
+          "uic": 8501396
+        },
+        {
+          "label": "Rougemont",
+          "value": 39.32,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[24].km",
+          "uic": 8501397
+        },
+        {
+          "label": "Saanen",
+          "value": 43.36,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[25].km",
+          "uic": 8501398
+        },
+        {
+          "label": "Gstaad",
+          "value": 45.76,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[26].km",
+          "uic": 8501399
+        },
+        {
+          "label": "Gruben",
+          "value": 48.27,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[27].km",
+          "uic": 8507270
+        },
+        {
+          "label": "Schönried",
+          "value": 50.85,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[28].km",
+          "uic": 8507271
+        },
+        {
+          "label": "Saanenmöser",
+          "value": 53.06,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[29].km",
+          "uic": 8507272
+        },
+        {
+          "label": "Oeschseite",
+          "value": 56.89,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[30].km",
+          "uic": 8507273
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:9838be5f",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 120, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Montreux-Collège",
+              "value": 0.65,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Chamby",
+              "value": 7.15,
+              "factRef": "bahnhoefe.items[8].km"
+            },
+            {
+              "label": "La Chaudanne-Les Moulins",
+              "value": 29.38,
+              "factRef": "bahnhoefe.items[18].km"
+            },
+            {
+              "label": "Oeschseite",
+              "value": 56.89,
+              "factRef": "bahnhoefe.items[30].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Montreux-Collège bei km 0.65, Chamby bei km 7.15, La Chaudanne-Les Moulins bei km 29.38 und Oeschseite bei km 56.89.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:622bc738",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 120 liegt Allières?",
+          "options": [
+            "0.65 km",
+            "15.19 km",
+            "16.97 km",
+            "56.89 km"
+          ],
+          "correct": 2,
+          "explanation": "Allières liegt auf der Linie 120 bei km 16.97.",
+          "factRef": "bahnhoefe.items[13].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 120 aus 33 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «MOB». Infrastruktur: «MOB» bei allen 33 erfassten Abschnitten. Streckengleise: 1 (30 Abschnitte), 2 (3 Abschnitte). Spurweite: 1000 mm bei allen 33 erfassten Abschnitten. Strom: Gleichstrom bei allen 33 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "MOB",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 33,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: MOB",
+          "value": 33,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 30,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 33,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Gleichstrom",
+          "value": 33,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:4bcf2478",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 120 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 2,
+          "explanation": "Alle 33 erfassten Abschnitte der Linie 120 haben die Spurweite 1000 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:e72db44c",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 120 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 0,
+          "explanation": "Im Schienennetz steht für die Linie 120: Gleichstrom.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 31 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 34 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

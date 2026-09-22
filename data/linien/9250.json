@@ -48,7 +48,7 @@
   },
   {
    "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
+   "grund": "Wie viele Gleise die Linie hat, steht in den Daten der SBB nicht, und im Schienennetz des BAV fehlt diese Linie. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
    "quelle": "linie, tunnel"
   },
   {

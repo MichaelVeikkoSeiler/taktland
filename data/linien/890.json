@@ -65,6 +65,167 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 12,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 12
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 10
+   },
+   {
+    "wert": 1,
+    "abschnitte": 1
+   },
+   {
+    "wert": 3,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 12
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 12
+   }
+  ],
+  "items": [
+   {
+    "von": "Sargans Ost",
+    "bis": "Sargans",
+    "km_von": -0.098,
+    "km_bis": 0.168,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sargans",
+    "bis": "Mels",
+    "km_von": 0.168,
+    "km_bis": 2.549,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mels",
+    "bis": "Flums",
+    "km_von": 2.549,
+    "km_bis": 9.73,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Flums",
+    "bis": "Walenstadt",
+    "km_von": 9.73,
+    "km_bis": 13.475,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Walenstadt",
+    "bis": "Mols",
+    "km_von": 13.475,
+    "km_bis": 16.374,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mols",
+    "bis": "Unterterzen",
+    "km_von": 16.374,
+    "km_bis": 18.107,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Unterterzen",
+    "bis": "Murg",
+    "km_von": 18.107,
+    "km_bis": 21.219,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Murg",
+    "bis": "Tiefenwinkel (Verzw)",
+    "km_von": 21.219,
+    "km_bis": 23.247,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Tiefenwinkel (Verzw)",
+    "bis": "Mühlehorn",
+    "km_von": 23.247,
+    "km_bis": 24.6,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mühlehorn",
+    "bis": "Weesen",
+    "km_von": 24.6,
+    "km_bis": 30.714,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Weesen",
+    "bis": "Ziegelbrücke Ost (Abzw)",
+    "km_von": 30.714,
+    "km_bis": 33.205,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ziegelbrücke Ost (Abzw)",
+    "bis": "Ziegelbrücke",
+    "km_von": 33.205,
+    "km_bis": 33.605,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -511,9 +672,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -554,6 +715,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

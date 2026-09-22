@@ -77,6 +77,8 @@ def auswahl_frage(prompt, optionen, richtig, erkl, ref, aus_fakten=False, diff=1
 # ------------------------------------------------------------------ Strecke
 
 def strecke(f):
+    if f.get("quelle") == "schienennetz":
+        return strecke_bav(f)
     s = f["strecke"]; nr = f["linie"]
     body = (f"Die Linie {nr} heisst in den offenen Daten «{f['name']}». Als Anfang ist der "
             f"Betriebspunkt {s['anfang']} erfasst, als Ende {punkt(s['ende'])} Die "
@@ -140,6 +142,36 @@ def strecke(f):
             "erlaeuterung": KILOMETRIERUNG, "questions": fr}
 
 
+def strecke_bav(f):
+    """Eine Linie aus dem Schienennetz des BAV. Anfang und Ende nennt die
+    Quelle nicht, nur den Kilometer jedes Betriebspunkts: Genannt sind der
+    kleinste und der grösste."""
+    s = f["strecke"]; nr = f["linie"]
+    body = (f"Die Linie {nr} fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für "
+            f"Verkehr heisst sie «{f['name']}». Den kleinsten Kilometer hat dort der "
+            f"Betriebspunkt {s['kleinster_km_bei']} mit km {km(s['kleinster_km'])}, den grössten "
+            f"{s['groesster_km_bei']} mit km {km(s['groesster_km'])}.")
+    facts = [
+        {"label": "Kleinster Kilometer bei", "value": s["kleinster_km_bei"],
+         "source": "schienennetz", "factRef": "strecke.kleinster_km_bei"},
+        {"label": "Kleinster Kilometer", "value": s["kleinster_km"], "unit": "km",
+         "source": "schienennetz", "factRef": "strecke.kleinster_km"},
+        {"label": "Grösster Kilometer bei", "value": s["groesster_km_bei"],
+         "source": "schienennetz", "factRef": "strecke.groesster_km_bei"},
+        {"label": "Grösster Kilometer", "value": s["groesster_km"], "unit": "km",
+         "source": "schienennetz", "factRef": "strecke.groesster_km"},
+    ]
+    for x, feld in ((facts[0], "kleinster_km_bei_uic"), (facts[2], "groesster_km_bei_uic")):
+        if s.get(feld):
+            x["bahnhof"] = s[feld]
+    fr = [schieber(f"Welchen Kilometer hat {s['groesster_km_bei']}, der grösste auf der Linie {nr}?",
+                   s["groesster_km"], f"{s['groesster_km_bei']} liegt auf der Linie {nr} bei km "
+                   f"{km(s['groesster_km'])}. Der Wert ist ein Standort auf der Linie.",
+                   "strecke.groesster_km", "km", diff=2)]
+    return {"id": "strecke", "title": "Strecke", "body": body, "facts": facts,
+            "erlaeuterung": KILOMETRIERUNG, "questions": fr}
+
+
 def _grund(text):
     """«Zürich» und «Zurich» sind für den Vergleich dasselbe Wort."""
     return unicodedata.normalize("NFKD", str(text)).encode("ascii", "ignore").decode().lower()
@@ -165,8 +197,9 @@ def alle_strecken():
     """Anfangs- und Endpunkte aller Linien, als falsche Antworten."""
     global _STRECKEN
     if _STRECKEN is None:
-        _STRECKEN = [json.loads(p.read_text(encoding="utf-8"))["strecke"]
-                     for p in sorted(LINIEN.glob("*.json"))]
+        # nur Linien der SBB: Im Schienennetz des BAV gibt es kein Anfang und Ende
+        _STRECKEN = [s for p in sorted(LINIEN.glob("*.json"))
+                     if "anfang" in (s := json.loads(p.read_text(encoding="utf-8"))["strecke"])]
     return _STRECKEN
 
 
@@ -175,16 +208,22 @@ def alle_strecken():
 def bahnhoefe(f):
     bh = f["bahnhoefe"]; nr = f["linie"]; items = bh["items"]
     n, m = bh["anzahl_in_taktland"], bh["betriebspunkte_erfasst"]
-    body = (f"Für die Linie {nr} führt die Liste der Betriebspunkte {m} Einträge. "
-            f"Davon sind {n} Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer "
-            "auf der Linie geordnet, der kleinste zuerst.")
+    quelle = bh["source"]
+    if quelle == "schienennetz":
+        body = (f"Im Schienennetz des BAV liegen auf der Linie {nr} {m} Betriebspunkte. "
+                f"Davon sind {n} Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer "
+                "auf der Linie geordnet, der kleinste zuerst.")
+    else:
+        body = (f"Für die Linie {nr} führt die Liste der Betriebspunkte {m} Einträge. "
+                f"Davon sind {n} Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer "
+                "auf der Linie geordnet, der kleinste zuerst.")
     facts = [
-        {"label": "Erfasste Betriebspunkte", "value": m, "source": "linie-mit-betriebspunkten",
+        {"label": "Erfasste Betriebspunkte", "value": m, "source": quelle,
          "factRef": "bahnhoefe.betriebspunkte_erfasst"},
-        {"label": "Bahnhöfe in Taktland", "value": n, "source": "linie-mit-betriebspunkten",
+        {"label": "Bahnhöfe in Taktland", "value": n, "source": quelle,
          "factRef": "bahnhoefe.anzahl_in_taktland"},
     ] + [{"label": it["name"], "value": it["km"], "unit": "km",
-          "source": "linie-mit-betriebspunkten", "factRef": f"bahnhoefe.items[{i}].km",
+          "source": quelle, "factRef": f"bahnhoefe.items[{i}].km",
           "uic": it["uic"]} for i, it in enumerate(items)]
 
     fr = []
@@ -599,5 +638,143 @@ def bahnuebergaenge(f):
             "erlaeuterung": BAHNUEBERGANG, "questions": fr[:3]}
 
 
-BAUER = {"strecke": strecke, "bahnhoefe": bahnhoefe, "tunnel": tunnel, "bruecken": bruecken,
-         "bahnuebergaenge": bahnuebergaenge}
+# ------------------------------------------------------------------ Schienennetz des BAV
+
+SCHIENENNETZ = ("Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller "
+                "Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. "
+                "Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.")
+
+
+def weitere_bahnhoefe(f):
+    """Bahnhöfe, die nur das Schienennetz des BAV auf dieser Linie führt,
+    etwa die der BLS auf Linie 220."""
+    w = f["weitere_bahnhoefe"]; nr = f["linie"]; items = w["items"]
+    n = w["anzahl"]
+    body = (f"Auf der Linie {nr} führt das Schienennetz des BAV "
+            f"{'einen Bahnhof aus Taktland' if n == 1 else f'{n} Bahnhöfe aus Taktland'}, "
+            f"{'der' if n == 1 else 'die'} in der Liste der Betriebspunkte der SBB "
+            f"{'fehlt' if n == 1 else 'fehlen'}"
+            + (f": {aufzaehlung([it['name'] for it in items])}." if n <= 3 else ".")
+            + " Die Kilometer sind die des Schienennetzes.")
+    facts = [{"label": "Weitere Bahnhöfe", "value": n, "source": "schienennetz",
+              "factRef": "weitere_bahnhoefe.anzahl"}] + [
+        {"label": it["name"], "value": it["km"], "unit": "km", "source": "schienennetz",
+         "factRef": f"weitere_bahnhoefe.items[{i}].km", "uic": it["uic"]}
+        for i, it in enumerate(items)]
+    fr = []
+    mit_index = [{"i": i, **it} for i, it in enumerate(items)]
+    getrennt = sorted(klar_getrennt(mit_index, wert=lambda x: x["km"]), key=lambda x: x["km"])
+    if len(getrennt) >= 3:
+        k = min(4, len(getrennt))
+        schritt = (len(getrennt) - 1) / (k - 1)
+        wahl = [getrennt[round(j * schritt)] for j in range(k)]
+        fr.append(sortier(
+            f"Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie {nr}, kleinster zuerst.",
+            [{"label": x["name"], "value": x["km"], "factRef": f"weitere_bahnhoefe.items[{x['i']}].km"}
+             for x in wahl],
+            "aufsteigend",
+            punkt(aufzaehlung([f"{x['name']} bei km {km(x['km'])}" for x in wahl])),
+            "weitere_bahnhoefe.items"))
+    else:
+        # Zu wenige zum Ordnen: Welcher liegt auf der Linie? Die falschen
+        # Antworten sind Bahnhöfe, die weder die SBB noch das BAV auf dieser
+        # Linie führen, aber auf einer anderen Linie mit Seite
+        hier = {it["uic"] for it in items} | {it["uic"] for it in f["bahnhoefe"]["items"]}
+        falsch = sorted(n for n in andere_bahnhoefe() if n not in hier_namen(hier))
+        if len(falsch) >= 3:
+            start = streuung(f"{nr}:weitere", len(falsch))
+            drei = sorted({falsch[(start + i * 11) % len(falsch)] for i in range(3)})
+            if len(drei) == 3:
+                richtig = items[0]["name"]
+                fr.append(auswahl_frage(
+                    f"Welcher dieser Bahnhöfe liegt laut Schienennetz des BAV auf der Linie {nr}?",
+                    [richtig, *drei], richtig,
+                    f"{richtig} liegt laut Schienennetz auf der Linie {nr}, bei km {km(items[0]['km'])}.",
+                    "weitere_bahnhoefe.items[0].name", diff=2))
+    return {"id": "weitere_bahnhoefe", "title": "Weitere Bahnhöfe laut BAV", "body": body,
+            "facts": facts, "erlaeuterung": SCHIENENNETZ, "questions": fr}
+
+
+_BAHNHOEFE = None
+
+
+def andere_bahnhoefe():
+    """Namen aller Bahnhöfe, die auf irgendeiner Linie mit Seite stehen"""
+    global _BAHNHOEFE
+    if _BAHNHOEFE is None:
+        _BAHNHOEFE = {}
+        for p in LINIEN.glob("*.json"):
+            f = json.loads(p.read_text(encoding="utf-8"))
+            for teil in ("bahnhoefe", "weitere_bahnhoefe"):
+                for it in (f.get(teil) or {}).get("items", []):
+                    _BAHNHOEFE[it["name"]] = it["uic"]
+    return _BAHNHOEFE
+
+
+def hier_namen(uics):
+    return {n for n, u in andere_bahnhoefe().items() if u in uics}
+
+
+def abschnitte(n, dativ=False):
+    if n == 1:
+        return "einem Abschnitt" if dativ else "ein Abschnitt"
+    return f"{n} Abschnitten" if dativ else f"{n} Abschnitte"
+
+
+def netz(f):
+    """Je Abschnitt Infrastrukturbetreiberin, Streckengleise, Spurweite und
+    Elektrifizierung, gezählt in der Pipeline. Die Abkürzungen stehen wie in
+    der Quelle, in Guillemets: «zb» läse sich sonst wie «z. B.»."""
+    x = f["netz"]; nr = f["linie"]; n = x["abschnitte_erfasst"]
+    spur, strom, gleise = x["nach_spurweite"], x["nach_strom"], x["nach_gleisen"]
+
+    def verteilung(wort, liste, zeigen=lambda w: w):
+        if len(liste) == 1:
+            return f"{wort}: {zeigen(liste[0]['wert'])} bei " + (
+                "dem einen erfassten Abschnitt." if n == 1 else f"allen {n} erfassten Abschnitten.")
+        return f"{wort}: " + ", ".join(
+            f"{zeigen(g['wert'])} ({abschnitte(g['abschnitte'])})" for g in liste) + "."
+
+    body = " ".join([
+        f"Im Schienennetz des BAV besteht die Linie {nr} aus {abschnitte(n, dativ=True)} zwischen "
+        f"Betriebspunkten. Datenherr der Linie ist «{x['bahn']}».",
+        verteilung("Infrastruktur", x["nach_isb"], lambda w: f"«{w}»"),
+        verteilung("Streckengleise", gleise),
+        verteilung("Spurweite", spur),
+        verteilung("Strom", strom),
+    ])
+    facts = [
+        {"label": "Datenherr der Linie", "value": x["bahn"], "source": "schienennetz",
+         "factRef": "netz.bahn"},
+        {"label": "Abschnitte", "value": n, "source": "schienennetz", "factRef": "netz.abschnitte_erfasst"},
+    ]
+    for liste, feld, wort in ((x["nach_isb"], "nach_isb", "Infrastruktur"),
+                              (gleise, "nach_gleisen", "Streckengleise"),
+                              (spur, "nach_spurweite", "Spurweite"),
+                              (strom, "nach_strom", "Strom")):
+        for j, g in enumerate(liste):
+            facts.append({"label": f"{wort}: {g['wert']}", "value": g["abschnitte"],
+                          "unit": "Abschnitte" if g["abschnitte"] != 1 else "Abschnitt",
+                          "source": "schienennetz", "factRef": f"netz.{feld}[{j}].abschnitte"})
+    fr = []
+    # Spurweite nur, wenn sie auf der ganzen Linie dieselbe ist
+    if len(spur) == 1 and spur[0]["wert"] in ("1435 mm", "1000 mm", "800 mm"):
+        opts = ["1435 mm", "1000 mm", "800 mm", "750 mm"]
+        fr.append(auswahl_frage(f"Welche Spurweite hat die Linie {nr} laut Schienennetz?",
+                                opts, spur[0]["wert"],
+                                f"Alle {n} erfassten Abschnitte der Linie {nr} haben die Spurweite "
+                                f"{spur[0]['wert']}." if n > 1 else
+                                f"Der Abschnitt der Linie {nr} hat die Spurweite {spur[0]['wert']}.",
+                                "netz.nach_spurweite[0].wert", diff=1))
+    if len(strom) == 1 and strom[0]["wert"] in ("Wechselstrom 16,7 Hz", "Gleichstrom"):
+        fr.append(auswahl_frage(f"Mit welchem Strom ist die Linie {nr} laut Schienennetz elektrifiziert?",
+                                ["Wechselstrom 16,7 Hz", "Gleichstrom", "Wechselstrom 50 Hz",
+                                 "nicht elektrifiziert"], strom[0]["wert"],
+                                f"Im Schienennetz steht für die Linie {nr}: {strom[0]['wert']}.",
+                                "netz.nach_strom[0].wert", diff=2))
+    return {"id": "netz", "title": "Netz", "body": body, "facts": facts,
+            "erlaeuterung": SCHIENENNETZ, "questions": fr}
+
+
+BAUER = {"strecke": strecke, "bahnhoefe": bahnhoefe, "weitere_bahnhoefe": weitere_bahnhoefe,
+         "netz": netz, "tunnel": tunnel, "bruecken": bruecken, "bahnuebergaenge": bahnuebergaenge}

@@ -1,0 +1,311 @@
+{
+  "linie": 480,
+  "name": "Hergiswil - Engelberg",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 480 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Hergiswil - Engelberg». Den kleinsten Kilometer hat dort der Betriebspunkt Hergiswil NW mit km 0, den grössten Engelberg mit km 24.74.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Hergiswil NW",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei",
+          "bahnhof": 8508318
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Engelberg",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8508399
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 24.74,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:ee8301ab",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Engelberg, der grösste auf der Linie 480?",
+          "min": 20,
+          "max": 36,
+          "step": 1,
+          "unit": "km",
+          "correct": 24.74,
+          "explanation": "Engelberg liegt auf der Linie 480 bei km 24.74. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 480 13 Betriebspunkte. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 13,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Hergiswil NW",
+          "value": 0,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8508318
+        },
+        {
+          "label": "Stansstad",
+          "value": 2.699,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8508390
+        },
+        {
+          "label": "Stans",
+          "value": 5.828,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8508391
+        },
+        {
+          "label": "Dallenwil",
+          "value": 9.5,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8508392
+        },
+        {
+          "label": "Niederrickenbach Station",
+          "value": 10.215,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8508384
+        },
+        {
+          "label": "Wolfenschiessen",
+          "value": 12.524,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8508394
+        },
+        {
+          "label": "Grafenort",
+          "value": 17.036,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8508396
+        },
+        {
+          "label": "Engelberg",
+          "value": 24.74,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8508399
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:fe033125",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 480, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Hergiswil NW",
+              "value": 0,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Stans",
+              "value": 5.828,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Wolfenschiessen",
+              "value": 12.524,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Engelberg",
+              "value": 24.74,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Hergiswil NW bei km 0, Stans bei km 5.828, Wolfenschiessen bei km 12.524 und Engelberg bei km 24.74.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:19dcc1f0",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 480 liegt Niederrickenbach Station?",
+          "options": [
+            "0 km",
+            "9.5 km",
+            "10.215 km",
+            "24.74 km"
+          ],
+          "correct": 2,
+          "explanation": "Niederrickenbach Station liegt auf der Linie 480 bei km 10.215.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 480 aus 12 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «zb». Infrastruktur: «zb» bei allen 12 erfassten Abschnitten. Streckengleise: 1 bei allen 12 erfassten Abschnitten. Spurweite: 1000 mm bei allen 12 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 12 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "zb",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 12,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: zb",
+          "value": 12,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 12,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 12,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 12,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:a39cff41",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 480 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 2,
+          "explanation": "Alle 12 erfassten Abschnitte der Linie 480 haben die Spurweite 1000 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:4c2cdbcf",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 480 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 480: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 13 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

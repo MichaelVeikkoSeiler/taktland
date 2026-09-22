@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
-import { linienProfilLaden } from '../daten'
+import { linienLaden, linienProfilLaden } from '../daten'
 import { linienAntwortSpeichern, linienAntwortenLesen, linieZuruecksetzen } from '../fortschritt'
 import { listenAdresse } from '../listen'
-import type { LinienProfil } from '../typen'
+import type { LinienEintrag, LinienProfil } from '../typen'
 import { KapitelBlock, Quellen, Rahmen } from './Bahnhof'
 import { ObjektKarte } from './Karte'
 import { Luecken } from './Luecken'
 import { Ladefehler } from './Ladefehler'
+import { BahnKuerzel } from './Suche'
 
 /** Eine Linienseite. Aufbau wie beim Bahnhof: Kapitel, Fragen, Lücken, Quellen. */
 export function Linie({ nr, zurueck, zurueckText }: {
@@ -19,6 +20,16 @@ export function Linie({ nr, zurueck, zurueckText }: {
   const [fehler, setFehler] = useState<string | null>(null)
   const [antworten, setAntworten] = useState<Record<string, { richtig: boolean }>>(
     () => linienAntwortenLesen(nr))
+  // Bahn und Herkunft aus dem Verzeichnis; fehlt es, fehlt nur das Kürzel
+  const [eintrag, setEintrag] = useState<LinienEintrag | null>(null)
+
+  useEffect(() => {
+    let abgebrochen = false
+    linienLaden()
+      .then((v) => { if (!abgebrochen) setEintrag(v.linien.find((l) => l.linie === nr) ?? null) })
+      .catch(() => {})
+    return () => { abgebrochen = true }
+  }, [nr])
 
   useEffect(() => {
     let abgebrochen = false
@@ -58,8 +69,17 @@ export function Linie({ nr, zurueck, zurueckText }: {
   return (
     <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
       <header className="px-4">
-        <h1 className="text-2xl font-bold text-sbb-black dark:text-sbb-white">Linie {profil.linie}</h1>
+        <h1 className="flex items-center gap-2 text-2xl font-bold text-sbb-black dark:text-sbb-white">
+          Linie {profil.linie}
+          {eintrag?.bahn && <BahnKuerzel isb={eintrag.bahn} titel={`Datenherr laut BAV: ${eintrag.bahn}`} />}
+        </h1>
         <p className="mt-1 text-sbb-black dark:text-sbb-white">{profil.name}</p>
+        {eintrag?.quelle === 'schienennetz' && (
+          <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
+            Linie einer anderen Bahn, aus dem Schienennetz des BAV (Stand 2021). Tunnel, Brücken
+            und Bahnübergänge sind dafür nicht erfasst.
+          </p>
+        )}
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">{fragenGesamt} Fragen</p>
         {beantwortet > 0 && (
           <p className="mt-2 flex items-center gap-3 text-sm text-sbb-metal dark:text-sbb-storm">

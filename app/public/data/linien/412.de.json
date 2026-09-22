@@ -1,0 +1,274 @@
+{
+  "linie": 412,
+  "name": "Oensingen - Balsthal",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 412 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Oensingen - Balsthal». Den kleinsten Kilometer hat dort der Betriebspunkt Oensingen mit km 0, den grössten Balsthal mit km 4.01.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Oensingen",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei",
+          "bahnhof": 8500212
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Balsthal",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8500294
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 4.01,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:1e04dc71",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Balsthal, der grösste auf der Linie 412?",
+          "min": 3.0,
+          "max": 6.0,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 4.01,
+          "explanation": "Balsthal liegt auf der Linie 412 bei km 4.01. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 412 4 Betriebspunkte. Davon sind 4 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 4,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 4,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Oensingen",
+          "value": 0,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500212
+        },
+        {
+          "label": "Klus",
+          "value": 2.62,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8500292
+        },
+        {
+          "label": "Thalbrücke",
+          "value": 3.32,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8500293
+        },
+        {
+          "label": "Balsthal",
+          "value": 4.01,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8500294
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:66704749",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 412, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Oensingen",
+              "value": 0,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Klus",
+              "value": 2.62,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Thalbrücke",
+              "value": 3.32,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Balsthal",
+              "value": 4.01,
+              "factRef": "bahnhoefe.items[3].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Oensingen bei km 0, Klus bei km 2.62, Thalbrücke bei km 3.32 und Balsthal bei km 4.01.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:ee914c8f",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 412 liegt Thalbrücke?",
+          "options": [
+            "0 km",
+            "2.62 km",
+            "3.32 km",
+            "4.01 km"
+          ],
+          "correct": 2,
+          "explanation": "Thalbrücke liegt auf der Linie 412 bei km 3.32.",
+          "factRef": "bahnhoefe.items[2].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 412 aus 3 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «OeBB». Infrastruktur: «OeBB» bei allen 3 erfassten Abschnitten. Streckengleise: 1 bei allen 3 erfassten Abschnitten. Spurweite: 1435 mm bei allen 3 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 3 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "OeBB",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 3,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: OeBB",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:9e97a7c9",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 412 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 3 erfassten Abschnitte der Linie 412 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:de546556",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 412 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 412: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

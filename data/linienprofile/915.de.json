@@ -1,0 +1,330 @@
+{
+  "linie": 915,
+  "name": "Klosters - Davos - Filisur",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 915 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Klosters - Davos - Filisur». Den kleinsten Kilometer hat dort der Betriebspunkt Klosters Platz mit km 32.693, den grössten Filisur mit km 69.277.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Klosters Platz",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei",
+          "bahnhof": 8509068
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 32.693,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Filisur",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8509195
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 69.277,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:ca0a9a64",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Filisur, der grösste auf der Linie 915?",
+          "min": 56,
+          "max": 101,
+          "step": 1,
+          "unit": "km",
+          "correct": 69.277,
+          "explanation": "Filisur liegt auf der Linie 915 bei km 69.277. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 915 11 Betriebspunkte. Davon sind 11 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 11,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 11,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Klosters Platz",
+          "value": 32.693,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8509068
+        },
+        {
+          "label": "Cavadürli",
+          "value": 36.623,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8509069
+        },
+        {
+          "label": "Davos Laret",
+          "value": 40.823,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8509070
+        },
+        {
+          "label": "Davos Wolfgang",
+          "value": 43.685,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8509071
+        },
+        {
+          "label": "Davos Dorf",
+          "value": 47.331,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8509072
+        },
+        {
+          "label": "Davos Platz",
+          "value": 49.978,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8509073
+        },
+        {
+          "label": "Davos Frauenkirch",
+          "value": 53.291,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8509075
+        },
+        {
+          "label": "Davos Glaris",
+          "value": 56.318,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8509076
+        },
+        {
+          "label": "Davos Monstein",
+          "value": 60.14,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8509077
+        },
+        {
+          "label": "Davos Wiesen",
+          "value": 64.638,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8509078
+        },
+        {
+          "label": "Filisur",
+          "value": 69.277,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8509195
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:1d280cb7",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 915, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Klosters Platz",
+              "value": 32.693,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Davos Wolfgang",
+              "value": 43.685,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Davos Glaris",
+              "value": 56.318,
+              "factRef": "bahnhoefe.items[7].km"
+            },
+            {
+              "label": "Filisur",
+              "value": 69.277,
+              "factRef": "bahnhoefe.items[10].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Klosters Platz bei km 32.693, Davos Wolfgang bei km 43.685, Davos Glaris bei km 56.318 und Filisur bei km 69.277.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:62300532",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 915 liegt Davos Platz?",
+          "options": [
+            "32.693 km",
+            "47.331 km",
+            "49.978 km",
+            "69.277 km"
+          ],
+          "correct": 2,
+          "explanation": "Davos Platz liegt auf der Linie 915 bei km 49.978.",
+          "factRef": "bahnhoefe.items[5].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 915 aus 10 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «RhB FR VR». Infrastruktur: «RhB FR VR» bei allen 10 erfassten Abschnitten. Streckengleise: 1 bei allen 10 erfassten Abschnitten. Spurweite: 1000 mm bei allen 10 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 10 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "RhB FR VR",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 10,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: RhB FR VR",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:9758cfd7",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 915 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 2,
+          "explanation": "Alle 10 erfassten Abschnitte der Linie 915 haben die Spurweite 1000 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:0c2b53f6",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 915 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 915: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

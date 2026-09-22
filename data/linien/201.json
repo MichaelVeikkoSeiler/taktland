@@ -25,6 +25,210 @@
    }
   ]
  },
+ "weitere_bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Bahnhöfe aus Taktland, die das Schienennetz des BAV auf dieser Linie führt, die Liste der Betriebspunkte der SBB aber nicht. Kilometer laut Schienennetz.",
+  "anzahl": 10,
+  "items": [
+   {
+    "uic": 8501104,
+    "name": "Le Day",
+    "km": 3.026
+   },
+   {
+    "uic": 8501151,
+    "name": "Les Charbonnières",
+    "km": 12.194
+   },
+   {
+    "uic": 8501152,
+    "name": "Le Séchey",
+    "km": 13.264
+   },
+   {
+    "uic": 8501153,
+    "name": "Le Lieu",
+    "km": 15.454
+   },
+   {
+    "uic": 8501154,
+    "name": "Les Esserts-de-Rive",
+    "km": 17.9
+   },
+   {
+    "uic": 8501155,
+    "name": "Le Rocheray",
+    "km": 19.053
+   },
+   {
+    "uic": 8501156,
+    "name": "Le Solliat-La Golisse",
+    "km": 20.497
+   },
+   {
+    "uic": 8501157,
+    "name": "Le Sentier-L'Orient",
+    "km": 21.646
+   },
+   {
+    "uic": 8530783,
+    "name": "Chez-le-Maître-Ecoles",
+    "km": 22.796
+   },
+   {
+    "uic": 8501159,
+    "name": "Le Brassus",
+    "km": 24.55
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 11,
+  "nach_isb": [
+   {
+    "wert": "TRAVYS",
+    "abschnitte": 10
+   },
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 1
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 11
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 11
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 11
+   }
+  ],
+  "items": [
+   {
+    "von": "Le Day",
+    "bis": "Le Pont",
+    "km_von": 3.026,
+    "km_bis": 11.628,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Le Pont",
+    "bis": "Les Charbonnières",
+    "km_von": 11.292,
+    "km_bis": 12.194,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Les Charbonnières",
+    "bis": "Le Séchey",
+    "km_von": 12.194,
+    "km_bis": 13.264,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Le Séchey",
+    "bis": "Le Lieu",
+    "km_von": 13.264,
+    "km_bis": 15.454,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Le Lieu",
+    "bis": "Les Esserts-de-Rive",
+    "km_von": 15.454,
+    "km_bis": 17.9,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Les Esserts-de-Rive",
+    "bis": "Le Rocheray",
+    "km_von": 17.9,
+    "km_bis": 19.053,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Le Rocheray",
+    "bis": "Le Solliat-La Golisse",
+    "km_von": 19.053,
+    "km_bis": 20.497,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Le Solliat-La Golisse",
+    "bis": "Le Sentier-L'Orient",
+    "km_von": 20.497,
+    "km_bis": 21.646,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Le Sentier-L'Orient",
+    "bis": "Chez-le-Maître-Ecoles",
+    "km_von": 21.646,
+    "km_bis": 22.796,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chez-le-Maître-Ecoles",
+    "bis": "Chez-le-Maître",
+    "km_von": 22.796,
+    "km_bis": 23.004,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chez-le-Maître",
+    "bis": "Le Brassus",
+    "km_von": 23.004,
+    "km_bis": 24.55,
+    "isb": "TRAVYS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -174,9 +378,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -216,6 +420,8 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
+  "weitere_bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

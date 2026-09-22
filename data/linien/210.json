@@ -145,6 +145,387 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 34,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 34
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 29
+   },
+   {
+    "wert": 3,
+    "abschnitte": 3
+   },
+   {
+    "wert": 1,
+    "abschnitte": 2
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 34
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 34
+   }
+  ],
+  "items": [
+   {
+    "von": "Daillens (bif)",
+    "bis": "Eclépens",
+    "km_von": 19.115,
+    "km_bis": 21.379,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eclépens",
+    "bis": "Eclépens Nord (bif)",
+    "km_von": 21.379,
+    "km_bis": 21.56,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eclépens Nord (bif)",
+    "bis": "Bavois",
+    "km_von": 21.56,
+    "km_bis": 24.878,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bavois",
+    "bis": "Chavornay Sud (bif)",
+    "km_von": 24.878,
+    "km_bis": 27.32,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chavornay Sud (bif)",
+    "bis": "Chavornay",
+    "km_von": 27.32,
+    "km_bis": 27.459,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chavornay",
+    "bis": "Essert-Pittet",
+    "km_von": 27.459,
+    "km_bis": 29.674,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Essert-Pittet",
+    "bis": "Ependes VD",
+    "km_von": 29.674,
+    "km_bis": 32.7,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ependes VD",
+    "bis": "Yverdon Est (bif)",
+    "km_von": 32.7,
+    "km_bis": 38.65,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Yverdon Est (bif)",
+    "bis": "Yverdon-les-Bains",
+    "km_von": 38.65,
+    "km_bis": 39.134,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Yverdon-les-Bains",
+    "bis": "Grandson",
+    "km_von": 39.134,
+    "km_bis": 42.711,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Grandson",
+    "bis": "Onnens-Bonvillars",
+    "km_von": 42.711,
+    "km_bis": 47.482,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Onnens-Bonvillars",
+    "bis": "Concise",
+    "km_von": 47.482,
+    "km_bis": 50.752,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Concise",
+    "bis": "La Lance (diag)",
+    "km_von": 50.752,
+    "km_bis": 52.445,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "La Lance (diag)",
+    "bis": "Vaumarcus",
+    "km_von": 52.445,
+    "km_bis": 54.854,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vaumarcus",
+    "bis": "Gorgier-St-Aubin",
+    "km_von": 54.854,
+    "km_bis": 58.097,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gorgier-St-Aubin",
+    "bis": "Bevaix",
+    "km_von": 58.097,
+    "km_bis": 62.279,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bevaix",
+    "bis": "Boudry",
+    "km_von": 62.279,
+    "km_bis": 66.253,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Boudry",
+    "bis": "Colombier NE",
+    "km_von": 66.253,
+    "km_bis": 67.67,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Colombier NE",
+    "bis": "Auvernier",
+    "km_von": 67.67,
+    "km_bis": 70.344,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Auvernier",
+    "bis": "Neuchâtel-Serrières",
+    "km_von": 70.344,
+    "km_bis": 72.39,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Neuchâtel-Serrières",
+    "bis": "Neuchâtel-Vauseyon (bif)",
+    "km_von": 72.39,
+    "km_bis": 73.958,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Neuchâtel-Vauseyon (bif)",
+    "bis": "Neuchâtel",
+    "km_von": 73.958,
+    "km_bis": 75.295,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Neuchâtel",
+    "bis": "Neuchâtel Est (bif)",
+    "km_von": 75.295,
+    "km_bis": 76.14,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Neuchâtel Est (bif)",
+    "bis": "St-Blaise CFF",
+    "km_von": 76.14,
+    "km_bis": 79.368,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St-Blaise CFF",
+    "bis": "Cornaux NE",
+    "km_von": 79.368,
+    "km_bis": 83.601,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Cornaux NE",
+    "bis": "Cressier NE",
+    "km_von": 83.601,
+    "km_bis": 85.55,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Cressier NE",
+    "bis": "Le Landeron",
+    "km_von": 85.55,
+    "km_bis": 87.717,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Le Landeron",
+    "bis": "La Neuveville",
+    "km_von": 87.717,
+    "km_bis": 90.049,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "La Neuveville",
+    "bis": "Chavannes",
+    "km_von": 90.049,
+    "km_bis": 93.733,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chavannes",
+    "bis": "Ligerz",
+    "km_von": 93.733,
+    "km_bis": 94.003,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ligerz",
+    "bis": "Twann",
+    "km_von": 94.003,
+    "km_bis": 95.976,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Twann",
+    "bis": "Tüscherz",
+    "km_von": 95.976,
+    "km_bis": 99.953,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Tüscherz",
+    "bis": "Biel/Bienne West",
+    "km_von": 99.953,
+    "km_bis": 104.215,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Biel/Bienne West",
+    "bis": "Biel/Bienne",
+    "km_von": 104.215,
+    "km_bis": 104.5,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -1109,9 +1490,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -1157,6 +1538,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

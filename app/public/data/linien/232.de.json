@@ -1,0 +1,288 @@
+{
+  "linie": 232,
+  "name": "Moutier - Lengnau Ost",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "brucken",
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 232 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Moutier - Lengnau Ost». Den kleinsten Kilometer hat dort der Betriebspunkt Moutier mit km 0.005, den grössten Lengnau Ost (Abzw) mit km 12.642.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Moutier",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei",
+          "bahnhof": 8500105
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0.005,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Lengnau Ost (Abzw)",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei"
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 12.642,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:5e04d199",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Lengnau Ost (Abzw), der grösste auf der Linie 232?",
+          "min": 10.0,
+          "max": 18.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 12.642,
+          "explanation": "Lengnau Ost (Abzw) liegt auf der Linie 232 bei km 12.642. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 232 4 Betriebspunkte. Davon sind 2 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 4,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 2,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Moutier",
+          "value": 0.005,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500105
+        },
+        {
+          "label": "Grenchen Nord",
+          "value": 10.677,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8500159
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:16a636dc",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 232 liegt Grenchen Nord?",
+          "options": [
+            "0.005 km",
+            "10.677 km"
+          ],
+          "correct": 1,
+          "explanation": "Grenchen Nord liegt auf der Linie 232 bei km 10.677.",
+          "factRef": "bahnhoefe.items[1].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 232 aus 3 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «BLSN». Infrastruktur: «BLSN» bei allen 3 erfassten Abschnitten. Streckengleise: 1 bei allen 3 erfassten Abschnitten. Spurweite: 1435 mm bei allen 3 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 3 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "BLSN",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 3,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: BLSN",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:d247c970",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 232 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 3 erfassten Abschnitte der Linie 232 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:a1e798e0",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 232 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 232: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 232 ist 1 Brücke erfasst: PI de Moutier, 1 Baueinheit, bei km 0.323. Als Kanton ist «Bern» eingetragen.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 1,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:6dcbc0e1",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 232 erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correct": 0,
+          "explanation": "Erfasst ist 1 Brücke.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 2 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 4 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PI de Moutier",
+        "km": 0.323,
+        "baueinheiten": 1,
+        "kanton": "Bern"
+      }
+    ]
+  }
+}

@@ -154,7 +154,8 @@ export default function App() {
         <footer className="mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
           <p>
-            Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss.
+            Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
+            Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz.
             Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
             Hinweise und Fehler gern an{' '}
             <a href={`mailto:${KONTAKT}`} className="underline underline-offset-2

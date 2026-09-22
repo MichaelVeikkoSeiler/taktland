@@ -6,7 +6,8 @@
   "sources": [
     "brucken",
     "linie",
-    "linie-mit-betriebspunkten"
+    "linie-mit-betriebspunkten",
+    "schienennetz"
   ],
   "chapters": [
     {
@@ -111,6 +112,308 @@
       ]
     },
     {
+      "id": "weitere_bahnhoefe",
+      "title": "Weitere Bahnhöfe laut BAV",
+      "body": "Auf der Linie 920 führt das Schienennetz des BAV 22 Bahnhöfe aus Taktland, die in der Liste der Betriebspunkte der SBB fehlen. Die Kilometer sind die des Schienennetzes.",
+      "facts": [
+        {
+          "label": "Weitere Bahnhöfe",
+          "value": 22,
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.anzahl"
+        },
+        {
+          "label": "Landquart Ried",
+          "value": 1.289,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[0].km",
+          "uic": 8509056
+        },
+        {
+          "label": "Igis",
+          "value": 2.219,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[1].km",
+          "uic": 8509055
+        },
+        {
+          "label": "Zizers",
+          "value": 3.99,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[2].km",
+          "uic": 8509054
+        },
+        {
+          "label": "Untervaz-Trimmis",
+          "value": 5.818,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[3].km",
+          "uic": 8509053
+        },
+        {
+          "label": "Haldenstein",
+          "value": 10.961,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[4].km",
+          "uic": 8509051
+        },
+        {
+          "label": "Chur Wiesental",
+          "value": 12.8,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[5].km",
+          "uic": 8509006
+        },
+        {
+          "label": "Felsberg",
+          "value": 17.723,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[6].km",
+          "uic": 8509180
+        },
+        {
+          "label": "Domat/Ems",
+          "value": 20.155,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[7].km",
+          "uic": 8509181
+        },
+        {
+          "label": "Domat/Ems Werk",
+          "value": 22.019,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[8].km",
+          "uic": 8509182
+        },
+        {
+          "label": "Reichenau-Tamins",
+          "value": 23.571,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[9].km",
+          "uic": 8509183
+        },
+        {
+          "label": "Trin",
+          "value": 28.262,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[10].km",
+          "uic": 8509167
+        },
+        {
+          "label": "Versam-Safien",
+          "value": 32.734,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[11].km",
+          "uic": 8509168
+        },
+        {
+          "label": "Valendas-Sagogn",
+          "value": 36.859,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[12].km",
+          "uic": 8509169
+        },
+        {
+          "label": "Castrisch",
+          "value": 40.741,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[13].km",
+          "uic": 8509170
+        },
+        {
+          "label": "Ilanz",
+          "value": 42.91,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[14].km",
+          "uic": 8509171
+        },
+        {
+          "label": "Rueun",
+          "value": 47.958,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[15].km",
+          "uic": 8509173
+        },
+        {
+          "label": "Waltensburg/Vuorz",
+          "value": 50.073,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[16].km",
+          "uic": 8509174
+        },
+        {
+          "label": "Tavanasa-Breil/Brigels",
+          "value": 54.868,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[17].km",
+          "uic": 8509175
+        },
+        {
+          "label": "Trun",
+          "value": 60.821,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[18].km",
+          "uic": 8509176
+        },
+        {
+          "label": "Rabius-Surrein",
+          "value": 64.003,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[19].km",
+          "uic": 8509177
+        },
+        {
+          "label": "Sumvitg-Cumpadials",
+          "value": 66.255,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[20].km",
+          "uic": 8509178
+        },
+        {
+          "label": "Disentis/Mustér",
+          "value": 72.878,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[21].km",
+          "uic": 8509179
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "weitere_bahnhoefe:298d3414",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 920, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Landquart Ried",
+              "value": 1.289,
+              "factRef": "weitere_bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Felsberg",
+              "value": 17.723,
+              "factRef": "weitere_bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Castrisch",
+              "value": 40.741,
+              "factRef": "weitere_bahnhoefe.items[13].km"
+            },
+            {
+              "label": "Disentis/Mustér",
+              "value": 72.878,
+              "factRef": "weitere_bahnhoefe.items[21].km"
+            }
+          ],
+          "factRef": "weitere_bahnhoefe.items",
+          "explanation": "Landquart Ried bei km 1.289, Felsberg bei km 17.723, Castrisch bei km 40.741 und Disentis/Mustér bei km 72.878.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 920 aus 26 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «RhB FR VR». Infrastruktur: «RhB FR VR» bei allen 26 erfassten Abschnitten. Streckengleise: 1 (20 Abschnitte), 2 (6 Abschnitte). Spurweite: 1000 mm (23 Abschnitte), 1000 mm und 1435 mm (3 Abschnitte). Strom: Wechselstrom 16,7 Hz bei allen 26 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "RhB FR VR",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 26,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: RhB FR VR",
+          "value": 26,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 20,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 6,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 23,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm und 1435 mm",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[1].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 26,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:096c4023",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 920 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 920: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
       "id": "bruecken",
       "title": "Brücken",
       "body": "Für die Linie 920 ist 1 Brücke erfasst: U Haldensteinstr., 1 Baueinheit, bei km 11.293. Als Kanton ist «Graubünden» eingetragen.",
@@ -156,9 +459,9 @@
       "quelle": "linie, tunnel"
     },
     {
-      "thema": "Ein- oder mehrspurig",
-      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-      "quelle": "linie, tunnel"
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
     },
     {
       "thema": "Länge und Baujahr der Brücken",

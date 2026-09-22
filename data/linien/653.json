@@ -70,6 +70,213 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 17,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 17
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 16
+   },
+   {
+    "wert": 1,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 17
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 17
+   }
+  ],
+  "items": [
+   {
+    "von": "Gexi Ost (Abzw)",
+    "bis": "Hendschiken Nord (Abzw)",
+    "km_von": 64.083,
+    "km_bis": 64.934,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hendschiken Nord (Abzw)",
+    "bis": "Hendschiken",
+    "km_von": 64.934,
+    "km_bis": 65.173,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hendschiken",
+    "bis": "Dottikon-Dintikon",
+    "km_von": 65.173,
+    "km_bis": 67.893,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dottikon-Dintikon",
+    "bis": "Dottikon Umspannanlage",
+    "km_von": 67.893,
+    "km_bis": 69.535,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dottikon Umspannanlage",
+    "bis": "Wohlen Nord (Abzw)",
+    "km_von": 69.535,
+    "km_bis": 71.316,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wohlen Nord (Abzw)",
+    "bis": "Wohlen AG",
+    "km_von": 71.316,
+    "km_bis": 71.772,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wohlen AG",
+    "bis": "Wohlen Süd (Abzw)",
+    "km_von": 71.772,
+    "km_bis": 72.284,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wohlen Süd (Abzw)",
+    "bis": "Waltenschwil",
+    "km_von": 72.284,
+    "km_bis": 74.931,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Waltenschwil",
+    "bis": "Boswil-Bünzen",
+    "km_von": 74.931,
+    "km_bis": 77.755,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Boswil-Bünzen",
+    "bis": "Muri AG",
+    "km_von": 77.755,
+    "km_bis": 81.491,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Muri AG",
+    "bis": "Benzenschwil",
+    "km_von": 81.491,
+    "km_bis": 85.406,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Benzenschwil",
+    "bis": "Mühlau",
+    "km_von": 85.406,
+    "km_bis": 88.469,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mühlau",
+    "bis": "Sins",
+    "km_von": 88.469,
+    "km_bis": 92.668,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sins",
+    "bis": "Oberrüti",
+    "km_von": 92.668,
+    "km_bis": 95.216,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberrüti",
+    "bis": "Rotkreuz",
+    "km_von": 95.216,
+    "km_bis": 99.36,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rotkreuz",
+    "bis": "Brüglen (Spw)",
+    "km_von": 99.36,
+    "km_bis": 102.267,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brüglen (Spw)",
+    "bis": "Immensee West (Abzw)",
+    "km_von": 102.267,
+    "km_bis": 106.935,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "bruecken": {
   "source": "brucken",
   "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
@@ -541,9 +748,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -589,6 +796,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "bruecken",
   "bahnuebergaenge"
  ]

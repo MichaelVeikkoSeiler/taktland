@@ -1,0 +1,409 @@
+{
+ "linie": 950,
+ "name": "St. Moritz - Tirano",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "St. Moritz",
+  "kleinster_km": 0,
+  "kleinster_km_bei_uic": 8509253,
+  "groesster_km_bei": "Tirano",
+  "groesster_km": 60.688,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 22,
+  "anzahl_in_taktland": 20,
+  "items": [
+   {
+    "uic": 8509253,
+    "name": "St. Moritz",
+    "km": 0
+   },
+   {
+    "uic": 8509350,
+    "name": "Celerina Staz",
+    "km": 2.028
+   },
+   {
+    "uic": 8509351,
+    "name": "Punt Muragl Staz",
+    "km": 3.509
+   },
+   {
+    "uic": 8509255,
+    "name": "Pontresina",
+    "km": 5.788
+   },
+   {
+    "uic": 8509352,
+    "name": "Surovas",
+    "km": 7.257
+   },
+   {
+    "uic": 8509353,
+    "name": "Morteratsch",
+    "km": 12.165
+   },
+   {
+    "uic": 8509354,
+    "name": "Bernina Suot",
+    "km": 15.716
+   },
+   {
+    "uic": 8519370,
+    "name": "Bernina Diavolezza",
+    "km": 16.8
+   },
+   {
+    "uic": 8509373,
+    "name": "Bernina Lagalb",
+    "km": 17.866
+   },
+   {
+    "uic": 8509356,
+    "name": "Ospizio Bernina",
+    "km": 22.324
+   },
+   {
+    "uic": 8509357,
+    "name": "Alp Grüm",
+    "km": 27.086
+   },
+   {
+    "uic": 8509358,
+    "name": "Cavaglia",
+    "km": 33.074
+   },
+   {
+    "uic": 8509359,
+    "name": "Cadera",
+    "km": 38.179
+   },
+   {
+    "uic": 8509361,
+    "name": "Poschiavo",
+    "km": 43.618
+   },
+   {
+    "uic": 8509363,
+    "name": "Li Curt",
+    "km": 45.3
+   },
+   {
+    "uic": 8509364,
+    "name": "Le Prese",
+    "km": 47.957
+   },
+   {
+    "uic": 8509365,
+    "name": "Miralago",
+    "km": 50.786
+   },
+   {
+    "uic": 8509366,
+    "name": "Brusio",
+    "km": 53.875
+   },
+   {
+    "uic": 8509367,
+    "name": "Campascio",
+    "km": 56.162
+   },
+   {
+    "uic": 8509368,
+    "name": "Campocologno",
+    "km": 57.649
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "RhB FR VR",
+  "abschnitte_erfasst": 21,
+  "nach_isb": [
+   {
+    "wert": "RhB FR VR",
+    "abschnitte": 21
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 21
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 21
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Gleichstrom",
+    "abschnitte": 21
+   }
+  ],
+  "items": [
+   {
+    "von": "St. Moritz",
+    "bis": "Celerina Staz",
+    "km_von": 0,
+    "km_bis": 2.028,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Celerina Staz",
+    "bis": "Punt Muragl Staz",
+    "km_von": 2.028,
+    "km_bis": 3.509,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Punt Muragl Staz",
+    "bis": "Pontresina",
+    "km_von": 3.509,
+    "km_bis": 5.788,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Pontresina",
+    "bis": "Surovas",
+    "km_von": 5.788,
+    "km_bis": 7.257,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Surovas",
+    "bis": "Morteratsch",
+    "km_von": 7.257,
+    "km_bis": 12.165,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Morteratsch",
+    "bis": "Bernina Suot",
+    "km_von": 12.165,
+    "km_bis": 15.716,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Bernina Suot",
+    "bis": "Bernina Diavolezza",
+    "km_von": 15.716,
+    "km_bis": 16.8,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Bernina Diavolezza",
+    "bis": "Bernina Lagalb",
+    "km_von": 16.8,
+    "km_bis": 17.866,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Bernina Lagalb",
+    "bis": "Ospizio Bernina",
+    "km_von": 17.866,
+    "km_bis": 22.324,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Ospizio Bernina",
+    "bis": "Alp Grüm",
+    "km_von": 22.324,
+    "km_bis": 27.086,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Alp Grüm",
+    "bis": "Stablini",
+    "km_von": 27.086,
+    "km_bis": 29.505,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Stablini",
+    "bis": "Cavaglia",
+    "km_von": 29.505,
+    "km_bis": 33.074,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Cavaglia",
+    "bis": "Cadera",
+    "km_von": 33.074,
+    "km_bis": 38.179,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Cadera",
+    "bis": "Poschiavo",
+    "km_von": 38.179,
+    "km_bis": 43.618,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Poschiavo",
+    "bis": "Li Curt",
+    "km_von": 43.618,
+    "km_bis": 45.3,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Li Curt",
+    "bis": "Le Prese",
+    "km_von": 45.3,
+    "km_bis": 47.957,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Le Prese",
+    "bis": "Miralago",
+    "km_von": 47.957,
+    "km_bis": 50.786,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Miralago",
+    "bis": "Brusio",
+    "km_von": 50.786,
+    "km_bis": 53.875,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Brusio",
+    "bis": "Campascio",
+    "km_von": 53.875,
+    "km_bis": 56.162,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Campascio",
+    "bis": "Campocologno",
+    "km_von": 56.162,
+    "km_bis": 57.649,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Campocologno",
+    "bis": "Tirano",
+    "km_von": 57.649,
+    "km_bis": 60.688,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 20 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 22 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

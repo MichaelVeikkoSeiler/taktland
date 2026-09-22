@@ -170,6 +170,437 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 39,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 39
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 35
+   },
+   {
+    "wert": 1,
+    "abschnitte": 2
+   },
+   {
+    "wert": 3,
+    "abschnitte": 2
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 39
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 39
+   }
+  ],
+  "items": [
+   {
+    "von": "Lausanne Est",
+    "bis": "Pully-Nord",
+    "km_von": 0.522,
+    "km_bis": 2.367,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pully-Nord",
+    "bis": "La Conversion",
+    "km_von": 2.367,
+    "km_bis": 4.004,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "La Conversion",
+    "bis": "Bossière",
+    "km_von": 4.004,
+    "km_bis": 5.776,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bossière",
+    "bis": "Grandvaux",
+    "km_von": 5.776,
+    "km_bis": 8.31,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Grandvaux",
+    "bis": "Puidoux",
+    "km_von": 8.31,
+    "km_bis": 12.158,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Puidoux",
+    "bis": "Moreillon",
+    "km_von": 12.158,
+    "km_bis": 14.62,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Moreillon",
+    "bis": "Palézieux",
+    "km_von": 14.62,
+    "km_bis": 20.598,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Palézieux",
+    "bis": "Palézieux Est (bif)",
+    "km_von": 20.598,
+    "km_bis": 21.2,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Palézieux Est (bif)",
+    "bis": "Oron",
+    "km_von": 21.2,
+    "km_bis": 24.371,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oron",
+    "bis": "Vauderens",
+    "km_von": 24.371,
+    "km_bis": 30.499,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vauderens",
+    "bis": "Siviriez (saut km)",
+    "km_von": 30.499,
+    "km_bis": 33.711,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Siviriez (saut km)",
+    "bis": "Siviriez",
+    "km_von": 33.711,
+    "km_bis": 35.725,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Siviriez",
+    "bis": "Romont FR",
+    "km_von": 35.725,
+    "km_bis": 40.198,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Romont FR",
+    "bis": "Romont Est (racc)",
+    "km_von": 40.198,
+    "km_bis": 41.56,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Romont Est (racc)",
+    "bis": "Lussy FR",
+    "km_von": 41.56,
+    "km_bis": 42.93,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lussy FR",
+    "bis": "Villaz-St-Pierre",
+    "km_von": 42.93,
+    "km_bis": 45.042,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Villaz-St-Pierre",
+    "bis": "Chénens",
+    "km_von": 45.042,
+    "km_bis": 49.622,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chénens",
+    "bis": "Cottens FR",
+    "km_von": 49.622,
+    "km_bis": 52.42,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Cottens FR",
+    "bis": "Neyruz FR",
+    "km_von": 52.42,
+    "km_bis": 55.38,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Neyruz FR",
+    "bis": "Rosé",
+    "km_von": 55.38,
+    "km_bis": 57.535,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rosé",
+    "bis": "Matran",
+    "km_von": 57.535,
+    "km_bis": 60.377,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Matran",
+    "bis": "Villars-sur-Glâne",
+    "km_von": 60.377,
+    "km_bis": 62.119,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Villars-sur-Glâne",
+    "bis": "Fribourg/Freiburg",
+    "km_von": 62.119,
+    "km_bis": 65.993,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fribourg/Freiburg",
+    "bis": "Fribourg Nord",
+    "km_von": 65.993,
+    "km_bis": 66.99,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fribourg Nord",
+    "bis": "Fribourg/Freiburg Poya",
+    "km_von": 66.99,
+    "km_bis": 67.477,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fribourg/Freiburg Poya",
+    "bis": "Düdingen",
+    "km_von": 67.477,
+    "km_bis": 72.215,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Düdingen",
+    "bis": "Schmitten FR",
+    "km_von": 72.215,
+    "km_bis": 77.86,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schmitten FR",
+    "bis": "Wünnewil",
+    "km_von": 77.86,
+    "km_bis": 80.343,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wünnewil",
+    "bis": "Flamatt",
+    "km_von": 80.343,
+    "km_bis": 84.073,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Flamatt",
+    "bis": "Thörishaus Dorf",
+    "km_von": 84.073,
+    "km_bis": 86.881,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Thörishaus Dorf",
+    "bis": "Thörishaus Station",
+    "km_von": 86.881,
+    "km_bis": 88.198,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Thörishaus Station",
+    "bis": "Oberwangen",
+    "km_von": 88.198,
+    "km_bis": 89.371,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberwangen",
+    "bis": "Niederwangen",
+    "km_von": 89.371,
+    "km_bis": 91.042,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Niederwangen",
+    "bis": "Bern Bümpliz Süd",
+    "km_von": 91.042,
+    "km_bis": 92.995,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Bümpliz Süd",
+    "bis": "Bern Europaplatz",
+    "km_von": 92.995,
+    "km_bis": 94.111,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Europaplatz",
+    "bis": "Bern Steigerhubel (Abzw)",
+    "km_von": 94.111,
+    "km_bis": 94.578,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Steigerhubel (Abzw)",
+    "bis": "Bern Weyermannshaus (Spw)",
+    "km_von": 94.578,
+    "km_bis": 94.915,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Weyermannshaus (Spw)",
+    "bis": "Bern JKLM",
+    "km_von": 94.915,
+    "km_bis": 96.321,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern JKLM",
+    "bis": "Bern",
+    "km_von": 96.321,
+    "km_bis": 97.103,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -1001,9 +1432,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -1044,6 +1475,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

@@ -117,8 +117,9 @@ function entlang(weg: Weg) {
 /** Ein Betriebspunkt, oder ein Wechsel der Linie irgendwo zwischen zweien */
 type Ort = { punkt: string } | { zwischen: [string, string] }
 
-/** Ein Stück des Wegs auf derselben Linie; linie null: Abschnitte ohne Linie */
-interface Lauf { linie: number | null; isb: string; von: Ort; bis: Ort }
+/** Ein Stück des Wegs auf derselben Linie; linie null: Abschnitte ohne Linie;
+ *  bav: die Linie stammt aus dem Schienennetz des BAV, nicht aus den Daten der SBB */
+interface Lauf { linie: number | null; isb: string; bav: boolean; von: Ort; bis: Ort }
 
 /**
  * Die Linien des Wegs in Wegrichtung, aufeinanderfolgende Abschnitte derselben
@@ -131,13 +132,16 @@ function laeufe(weg: Weg): Lauf[] {
   weg.abschnitte.forEach((e, i) => {
     const [a, b] = [weg.punkte[i], weg.punkte[i + 1]]
     const linien = (e.teile ?? []).map((t) => t.linie)
-    const folge = linien.length ? (e.von === a ? linien : [...linien].reverse()) : [null]
+    const bav = !linien.length && e.linie_bav !== undefined
+    const folge = linien.length ? (e.von === a ? linien : [...linien].reverse())
+      : [e.linie_bav ?? null]
     folge.forEach((nr, k) => {
       const von: Ort = k === 0 ? { punkt: a } : { zwischen: [a, b] }
       const bis: Ort = k === folge.length - 1 ? { punkt: b } : { zwischen: [a, b] }
       const letzter = raus[raus.length - 1]
-      if (letzter && letzter.linie === nr && (nr !== null || letzter.isb === e.isb)) letzter.bis = bis
-      else raus.push({ linie: nr, isb: e.isb, von, bis })
+      if (letzter && letzter.linie === nr && letzter.bav === bav
+          && (nr !== null || letzter.isb === e.isb)) letzter.bis = bis
+      else raus.push({ linie: nr, isb: e.isb, bav, von, bis })
     })
   })
   return raus
@@ -575,7 +579,9 @@ function WegLinien({ laeufe, netz, verzeichnis }: {
                   : titel}
               </p>
               <p className="text-sm text-sbb-metal dark:text-sbb-storm">
-                {strecke}{!seiten.has(l.linie) && ' · ohne eigene Seite in Taktland'}
+                {strecke}
+                {l.bav && ` · laut Schienennetz des BAV${l.isb !== 'SBB' ? `, Infrastruktur: ${l.isb}` : ''}`}
+                {!seiten.has(l.linie) && ' · ohne eigene Seite in Taktland'}
               </p>
             </li>
           )
@@ -583,8 +589,9 @@ function WegLinien({ laeufe, netz, verzeichnis }: {
       </ol>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Eine Linie ist eine Strecke der Infrastruktur, keine Zuglinie. Die Linien stammen aus den
-        Daten der SBB; Abschnitte, die dort auf keiner Linie liegen, stehen als «Ohne Linie in den
-        Daten».
+        Daten der SBB. Auf Abschnitten anderer Bahnen steht die Linie aus dem Schienennetz des BAV
+        (Stand 2021), wenn dort genau eine Linie beide Enden des Abschnitts führt; sonst «Ohne Linie
+        in den Daten».
       </p>
     </section>
   )
@@ -601,7 +608,11 @@ function BahnhofLinien({ b, verzeichnis }: {
 }) {
   if (!b || !verzeichnis) return null
   const klein = 'text-sm text-sbb-metal dark:text-sbb-storm'
-  if (!b.linien?.length) {
+  // die Linien aus den Fakten des Bahnhofs (Daten der SBB) und die Linien mit
+  // Seite, auf denen er steht, auch laut Schienennetz des BAV (Ins: Linie 220)
+  const nummern = [...new Set([...(b.linien ?? []), ...(verzeichnis.nach_bahnhof[String(b.uic)] ?? [])])]
+    .sort((x, y) => x - y)
+  if (!nummern.length) {
     return (
       <p className={`-mt-2 ${klein}`}>
         {b.name} ist in den Daten zu den Linien nicht erfasst{b.isb && ` (Infrastruktur: ${b.isb})`}.
@@ -609,7 +620,6 @@ function BahnhofLinien({ b, verzeichnis }: {
     )
   }
   const seiten = new Set(verzeichnis.linien.map((l) => l.linie))
-  const nummern = [...b.linien].sort((x, y) => x - y)
   const ohneSeite = nummern.some((nr) => !seiten.has(nr))
   return (
     <div className="-mt-2">

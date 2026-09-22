@@ -1,0 +1,588 @@
+{
+ "linie": 120,
+ "name": "Montreux - Zweisimmen",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Montreux MOB",
+  "kleinster_km": 0.07,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Zweisimmen [Gleis 3-6]",
+  "groesster_km": 62.43,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 34,
+  "anzahl_in_taktland": 31,
+  "items": [
+   {
+    "uic": 8501380,
+    "name": "Montreux-Collège",
+    "km": 0.65
+   },
+   {
+    "uic": 8501381,
+    "name": "Vuarennes",
+    "km": 1
+   },
+   {
+    "uic": 8501390,
+    "name": "Belmont-sur-Montreux",
+    "km": 1.51
+   },
+   {
+    "uic": 8501382,
+    "name": "Châtelard VD",
+    "km": 2.15
+   },
+   {
+    "uic": 8501383,
+    "name": "Planchamp",
+    "km": 2.66
+   },
+   {
+    "uic": 8501374,
+    "name": "Fontanivent",
+    "km": 3.28
+   },
+   {
+    "uic": 8501375,
+    "name": "Chernex",
+    "km": 4.29
+   },
+   {
+    "uic": 8501384,
+    "name": "Sonzier",
+    "km": 5.47
+   },
+   {
+    "uic": 8501376,
+    "name": "Chamby",
+    "km": 7.15
+   },
+   {
+    "uic": 8501385,
+    "name": "Sendy-Sollard",
+    "km": 9.2
+   },
+   {
+    "uic": 8501377,
+    "name": "Les Avants",
+    "km": 10.85
+   },
+   {
+    "uic": 8501386,
+    "name": "Jor",
+    "km": 12.63
+   },
+   {
+    "uic": 8501387,
+    "name": "Les Cases",
+    "km": 15.19
+   },
+   {
+    "uic": 8501378,
+    "name": "Allières",
+    "km": 16.97
+   },
+   {
+    "uic": 8501379,
+    "name": "Les Sciernes",
+    "km": 20.43
+   },
+   {
+    "uic": 8504070,
+    "name": "Montbovon",
+    "km": 22.14
+   },
+   {
+    "uic": 8501391,
+    "name": "La Tine",
+    "km": 24.99
+   },
+   {
+    "uic": 8501392,
+    "name": "Rossinière",
+    "km": 28.23
+   },
+   {
+    "uic": 8501393,
+    "name": "La Chaudanne-Les Moulins",
+    "km": 29.38
+   },
+   {
+    "uic": 8501394,
+    "name": "Château-d'Oex",
+    "km": 32.67
+   },
+   {
+    "uic": 8501198,
+    "name": "Château-d'Oex La Palaz",
+    "km": 33.48
+   },
+   {
+    "uic": 8501395,
+    "name": "Les Granges-Gérignoz",
+    "km": 34.61
+   },
+   {
+    "uic": 8501388,
+    "name": "Les Combes",
+    "km": 36.13
+   },
+   {
+    "uic": 8501396,
+    "name": "Flendruz",
+    "km": 37.41
+   },
+   {
+    "uic": 8501397,
+    "name": "Rougemont",
+    "km": 39.32
+   },
+   {
+    "uic": 8501398,
+    "name": "Saanen",
+    "km": 43.36
+   },
+   {
+    "uic": 8501399,
+    "name": "Gstaad",
+    "km": 45.76
+   },
+   {
+    "uic": 8507270,
+    "name": "Gruben",
+    "km": 48.27
+   },
+   {
+    "uic": 8507271,
+    "name": "Schönried",
+    "km": 50.85
+   },
+   {
+    "uic": 8507272,
+    "name": "Saanenmöser",
+    "km": 53.06
+   },
+   {
+    "uic": 8507273,
+    "name": "Oeschseite",
+    "km": 56.89
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "MOB",
+  "abschnitte_erfasst": 33,
+  "nach_isb": [
+   {
+    "wert": "MOB",
+    "abschnitte": 33
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 30
+   },
+   {
+    "wert": 2,
+    "abschnitte": 3
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 33
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Gleichstrom",
+    "abschnitte": 33
+   }
+  ],
+  "items": [
+   {
+    "von": "Montreux MOB",
+    "bis": "Montreux-Collège",
+    "km_von": 0.07,
+    "km_bis": 0.65,
+    "isb": "MOB",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Montreux-Collège",
+    "bis": "Vuarennes",
+    "km_von": 0.65,
+    "km_bis": 1,
+    "isb": "MOB",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Vuarennes",
+    "bis": "Belmont-sur-Montreux",
+    "km_von": 1,
+    "km_bis": 1.51,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Belmont-sur-Montreux",
+    "bis": "Châtelard VD",
+    "km_von": 1.51,
+    "km_bis": 2.15,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Châtelard VD",
+    "bis": "Planchamp",
+    "km_von": 2.15,
+    "km_bis": 2.66,
+    "isb": "MOB",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Planchamp",
+    "bis": "Fontanivent",
+    "km_von": 2.66,
+    "km_bis": 3.28,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Fontanivent",
+    "bis": "Chernex",
+    "km_von": 3.28,
+    "km_bis": 4.29,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Chernex",
+    "bis": "Sonzier",
+    "km_von": 4.29,
+    "km_bis": 5.47,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Sonzier",
+    "bis": "Chamby",
+    "km_von": 5.47,
+    "km_bis": 7.15,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Chamby",
+    "bis": "Sendy-Sollard",
+    "km_von": 7.15,
+    "km_bis": 9.2,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Sendy-Sollard",
+    "bis": "Les Avants",
+    "km_von": 9.2,
+    "km_bis": 10.85,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Les Avants",
+    "bis": "Jor",
+    "km_von": 10.85,
+    "km_bis": 12.63,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Jor",
+    "bis": "Les Cases",
+    "km_von": 12.63,
+    "km_bis": 15.19,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Les Cases",
+    "bis": "Allières",
+    "km_von": 15.19,
+    "km_bis": 16.97,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Allières",
+    "bis": "Les Sciernes",
+    "km_von": 16.97,
+    "km_bis": 20.43,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Les Sciernes",
+    "bis": "Montbovon",
+    "km_von": 20.43,
+    "km_bis": 22.14,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Montbovon",
+    "bis": "La Tine",
+    "km_von": 22.14,
+    "km_bis": 24.99,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "La Tine",
+    "bis": "Rossinière",
+    "km_von": 24.99,
+    "km_bis": 28.23,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Rossinière",
+    "bis": "La Chaudanne-Les Moulins",
+    "km_von": 28.23,
+    "km_bis": 29.38,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "La Chaudanne-Les Moulins",
+    "bis": "Château-d'Oex",
+    "km_von": 29.38,
+    "km_bis": 32.67,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Château-d'Oex",
+    "bis": "Château-d'Oex La Palaz",
+    "km_von": 32.67,
+    "km_bis": 33.48,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Château-d'Oex La Palaz",
+    "bis": "Les Granges-Gérignoz",
+    "km_von": 33.48,
+    "km_bis": 34.61,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Les Granges-Gérignoz",
+    "bis": "Les Combes",
+    "km_von": 34.61,
+    "km_bis": 36.13,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Les Combes",
+    "bis": "Flendruz",
+    "km_von": 36.13,
+    "km_bis": 37.41,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Flendruz",
+    "bis": "Rougemont",
+    "km_von": 37.41,
+    "km_bis": 39.32,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Rougemont",
+    "bis": "Saanen",
+    "km_von": 39.32,
+    "km_bis": 43.36,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Saanen",
+    "bis": "Gstaad",
+    "km_von": 43.36,
+    "km_bis": 45.76,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Gstaad",
+    "bis": "Gruben",
+    "km_von": 45.76,
+    "km_bis": 48.27,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Gruben",
+    "bis": "Schönried",
+    "km_von": 48.27,
+    "km_bis": 50.85,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Schönried",
+    "bis": "Saanenmöser",
+    "km_von": 50.85,
+    "km_bis": 53.06,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Saanenmöser",
+    "bis": "Oeschseite",
+    "km_von": 53.06,
+    "km_bis": 56.89,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Oeschseite",
+    "bis": "Halten",
+    "km_von": 56.89,
+    "km_bis": 59.53,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Halten",
+    "bis": "Zweisimmen [Gleis 3-6]",
+    "km_von": 59.53,
+    "km_bis": 62.43,
+    "isb": "MOB",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 31 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 34 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

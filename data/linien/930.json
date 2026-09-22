@@ -1,0 +1,224 @@
+{
+ "linie": 930,
+ "name": "Chur - Arosa",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Chur Arosabahn",
+  "kleinster_km": 0,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Arosa",
+  "groesster_km": 25.681,
+  "groesster_km_bei_uic": 8509157
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 10,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8509150,
+    "name": "Chur Altstadt",
+    "km": 0.762
+   },
+   {
+    "uic": 8509152,
+    "name": "Lüen-Castiel",
+    "km": 8.727
+   },
+   {
+    "uic": 8509153,
+    "name": "St. Peter-Molinis",
+    "km": 12.722
+   },
+   {
+    "uic": 8509154,
+    "name": "Peist",
+    "km": 14.353
+   },
+   {
+    "uic": 8509155,
+    "name": "Langwies GR",
+    "km": 17.9
+   },
+   {
+    "uic": 8509156,
+    "name": "Litzirüti",
+    "km": 20.685
+   },
+   {
+    "uic": 8509157,
+    "name": "Arosa",
+    "km": 25.681
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "RhB FR VR",
+  "abschnitte_erfasst": 9,
+  "nach_isb": [
+   {
+    "wert": "RhB FR VR",
+    "abschnitte": 9
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 9
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 9
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 9
+   }
+  ],
+  "items": [
+   {
+    "von": "Chur Arosabahn",
+    "bis": "Chur Altstadt",
+    "km_von": 0,
+    "km_bis": 0.762,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chur Altstadt",
+    "bis": "Untersax",
+    "km_von": 0.762,
+    "km_bis": 5.826,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Untersax",
+    "bis": "Lüen-Castiel",
+    "km_von": 5.826,
+    "km_bis": 8.727,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lüen-Castiel",
+    "bis": "St. Peter-Molinis",
+    "km_von": 8.727,
+    "km_bis": 12.722,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Peter-Molinis",
+    "bis": "Peist",
+    "km_von": 12.722,
+    "km_bis": 14.353,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Peist",
+    "bis": "Langwies GR",
+    "km_von": 14.353,
+    "km_bis": 17.9,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Langwies GR",
+    "bis": "Litzirüti",
+    "km_von": 17.9,
+    "km_bis": 20.685,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Litzirüti",
+    "bis": "Haspelgrube",
+    "km_von": 20.685,
+    "km_bis": 22.923,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Haspelgrube",
+    "bis": "Arosa",
+    "km_von": 22.923,
+    "km_bis": 25.681,
+    "isb": "RhB FR VR",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 10 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

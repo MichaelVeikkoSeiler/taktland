@@ -1,0 +1,189 @@
+{
+ "linie": 474,
+ "name": "Meiringen - Innertkirchen",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Meiringen",
+  "kleinster_km": 0,
+  "kleinster_km_bei_uic": 8508308,
+  "groesster_km_bei": "Innertkirchen MIB",
+  "groesster_km": 4.99,
+  "groesster_km_bei_uic": 8508359
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 7,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8508308,
+    "name": "Meiringen",
+    "km": 0
+   },
+   {
+    "uic": 8530799,
+    "name": "Meiringen Alpbach",
+    "km": 0.661
+   },
+   {
+    "uic": 8530760,
+    "name": "Aareschlucht West",
+    "km": 1.37
+   },
+   {
+    "uic": 8530801,
+    "name": "Aareschlucht Ost (Bahn)",
+    "km": 3.38
+   },
+   {
+    "uic": 8530800,
+    "name": "Innertkirchen Unterwasser",
+    "km": 4.082
+   },
+   {
+    "uic": 8508395,
+    "name": "Innertkirchen Grimseltor",
+    "km": 4.44
+   },
+   {
+    "uic": 8508359,
+    "name": "Innertkirchen Kraftwerk (Bahn)",
+    "km": 4.99
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "KWO",
+  "abschnitte_erfasst": 6,
+  "nach_isb": [
+   {
+    "wert": "KWO",
+    "abschnitte": 6
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 6
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 6
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Gleichstrom",
+    "abschnitte": 6
+   }
+  ],
+  "items": [
+   {
+    "von": "Meiringen",
+    "bis": "Meiringen Alpbach",
+    "km_von": 0,
+    "km_bis": 0.661,
+    "isb": "KWO",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Meiringen Alpbach",
+    "bis": "Aareschlucht West",
+    "km_von": 0.661,
+    "km_bis": 1.37,
+    "isb": "KWO",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Aareschlucht West",
+    "bis": "Aareschlucht Ost MIB",
+    "km_von": 1.37,
+    "km_bis": 3.38,
+    "isb": "KWO",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Aareschlucht Ost MIB",
+    "bis": "Innertkirchen Unterwasser",
+    "km_von": 3.38,
+    "km_bis": 4.082,
+    "isb": "KWO",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Innertkirchen Unterwasser",
+    "bis": "Innertkirchen Grimseltor",
+    "km_von": 4.082,
+    "km_bis": 4.44,
+    "isb": "KWO",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Innertkirchen Grimseltor",
+    "bis": "Innertkirchen MIB",
+    "km_von": 4.44,
+    "km_bis": 4.99,
+    "isb": "KWO",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

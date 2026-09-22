@@ -30,6 +30,149 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "asm",
+  "abschnitte_erfasst": 11,
+  "nach_isb": [
+   {
+    "wert": "asm",
+    "abschnitte": 11
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 11
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 11
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Gleichstrom",
+    "abschnitte": 11
+   }
+  ],
+  "items": [
+   {
+    "von": "Langenthal [Gleis 4-5]",
+    "bis": "Langenthal Gaswerk",
+    "km_von": 0,
+    "km_bis": 1.095,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Langenthal Gaswerk",
+    "bis": "Langenthal Weiche 46 (Verzw)",
+    "km_von": 1.095,
+    "km_bis": 1.135,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Langenthal Weiche 46 (Verzw)",
+    "bis": "Hard-Mumenthal",
+    "km_von": 1.135,
+    "km_bis": 2.329,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Hard-Mumenthal",
+    "bis": "Aarwangen Vorstadt",
+    "km_von": 2.329,
+    "km_bis": 2.822,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Aarwangen Vorstadt",
+    "bis": "Aarwangen",
+    "km_von": 2.822,
+    "km_bis": 3.195,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Aarwangen",
+    "bis": "Aarwangen Schloss",
+    "km_von": 3.195,
+    "km_bis": 3.97,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Aarwangen Schloss",
+    "bis": "Bannwil",
+    "km_von": 3.97,
+    "km_bis": 5.904,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Bannwil",
+    "bis": "Holzhäusern",
+    "km_von": 5.904,
+    "km_bis": 8.797,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Holzhäusern",
+    "bis": "Scharnageln",
+    "km_von": 8.797,
+    "km_bis": 9.74,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Scharnageln",
+    "bis": "Niederbipp Dorf",
+    "km_von": 9.74,
+    "km_bis": 10.33,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Niederbipp Dorf",
+    "bis": "Niederbipp Weiche 41 (Verzw)",
+    "km_von": 10.33,
+    "km_bis": 10.79,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -42,9 +185,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Brücken",
@@ -69,6 +212,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "netz"
  ]
 }

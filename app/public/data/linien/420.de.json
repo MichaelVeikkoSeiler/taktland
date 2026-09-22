@@ -1,0 +1,326 @@
+{
+  "linie": 420,
+  "name": "Solothurn West - Moutier",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 420 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Solothurn West - Moutier». Den kleinsten Kilometer hat dort der Betriebspunkt Solothurn West (Abzw) mit km 0.227, den grössten Moutier mit km 22.087.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Solothurn West (Abzw)",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0.227,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Moutier",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8500105
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 22.087,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:abef6348",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Moutier, der grösste auf der Linie 420?",
+          "min": 18,
+          "max": 33,
+          "step": 1,
+          "unit": "km",
+          "correct": 22.087,
+          "explanation": "Moutier liegt auf der Linie 420 bei km 22.087. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 420 11 Betriebspunkte. Davon sind 10 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 11,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 10,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Langendorf",
+          "value": 1.912,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8500261
+        },
+        {
+          "label": "Lommiswil",
+          "value": 5.345,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8500262
+        },
+        {
+          "label": "Im Holz",
+          "value": 8.023,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8500263
+        },
+        {
+          "label": "Oberdorf SO",
+          "value": 9.637,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8500264
+        },
+        {
+          "label": "Gänsbrunnen",
+          "value": 13.627,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8500265
+        },
+        {
+          "label": "Crémines-Zoo",
+          "value": 14.609,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8500260
+        },
+        {
+          "label": "Corcelles BE",
+          "value": 16.586,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8500266
+        },
+        {
+          "label": "Crémines",
+          "value": 17.767,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8500267
+        },
+        {
+          "label": "Grandval",
+          "value": 18.827,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8500268
+        },
+        {
+          "label": "Moutier",
+          "value": 22.087,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8500105
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:141d40dd",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 420, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Langendorf",
+              "value": 1.912,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Oberdorf SO",
+              "value": 9.637,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Corcelles BE",
+              "value": 16.586,
+              "factRef": "bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Moutier",
+              "value": 22.087,
+              "factRef": "bahnhoefe.items[9].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Langendorf bei km 1.912, Oberdorf SO bei km 9.637, Corcelles BE bei km 16.586 und Moutier bei km 22.087.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:ef8ef85a",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 420 liegt Crémines-Zoo?",
+          "options": [
+            "1.912 km",
+            "13.627 km",
+            "14.609 km",
+            "22.087 km"
+          ],
+          "correct": 2,
+          "explanation": "Crémines-Zoo liegt auf der Linie 420 bei km 14.609.",
+          "factRef": "bahnhoefe.items[5].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 420 aus 10 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «BLSN». Infrastruktur: «BLSN» bei allen 10 erfassten Abschnitten. Streckengleise: 1 bei allen 10 erfassten Abschnitten. Spurweite: 1435 mm bei allen 10 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 10 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "BLSN",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 10,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: BLSN",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:cbe13870",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 420 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 10 erfassten Abschnitte der Linie 420 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:e747a9fc",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 420 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 420: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 10 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 11 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

@@ -1,0 +1,462 @@
+{
+ "linie": 300,
+ "name": "Spiez - Kandersteg - Brig",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Spiez Niesenbrücke (Abzw)",
+  "kleinster_km": 0.347,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Brig-Lötschberg (Abzw)",
+  "groesster_km": 73.516,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 32,
+  "anzahl_in_taktland": 9,
+  "items": [
+   {
+    "uic": 8507481,
+    "name": "Mülenen",
+    "km": 6.846
+   },
+   {
+    "uic": 8507480,
+    "name": "Reichenbach im Kandertal",
+    "km": 8.3
+   },
+   {
+    "uic": 8507478,
+    "name": "Frutigen",
+    "km": 13.541
+   },
+   {
+    "uic": 8507475,
+    "name": "Kandersteg",
+    "km": 31.583
+   },
+   {
+    "uic": 8507474,
+    "name": "Goppenstein",
+    "km": 48.443
+   },
+   {
+    "uic": 8507473,
+    "name": "Hohtenn",
+    "km": 54.192
+   },
+   {
+    "uic": 8507472,
+    "name": "Ausserberg",
+    "km": 61.277
+   },
+   {
+    "uic": 8507471,
+    "name": "Eggerberg",
+    "km": 64.951
+   },
+   {
+    "uic": 8507470,
+    "name": "Lalden",
+    "km": 67.307
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "BLSN",
+  "abschnitte_erfasst": 31,
+  "nach_isb": [
+   {
+    "wert": "BLSN",
+    "abschnitte": 31
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 26
+   },
+   {
+    "wert": 1,
+    "abschnitte": 4
+   },
+   {
+    "wert": 4,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 31
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 31
+   }
+  ],
+  "items": [
+   {
+    "von": "Spiez Niesenbrücke (Abzw)",
+    "bis": "Hondrich Süd",
+    "km_von": 0.347,
+    "km_bis": 2.862,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hondrich Süd",
+    "bis": "Heustrich-Emdthal",
+    "km_von": 2.862,
+    "km_bis": 5.164,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Heustrich-Emdthal",
+    "bis": "Mülenen",
+    "km_von": 5.164,
+    "km_bis": 6.846,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mülenen",
+    "bis": "Reichenbach im Kandertal",
+    "km_von": 6.846,
+    "km_bis": 8.3,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Reichenbach im Kandertal",
+    "bis": "Rüdlen (Km-Sprung)",
+    "km_von": 8.3,
+    "km_bis": 9.974,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rüdlen (Km-Sprung)",
+    "bis": "Wengi-Ey (Abzw)",
+    "km_von": 9.974,
+    "km_bis": 10.279,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wengi-Ey (Abzw)",
+    "bis": "Winklen (Spw)",
+    "km_von": 10.279,
+    "km_bis": 12.025,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Winklen (Spw)",
+    "bis": "Frutigen",
+    "km_von": 12.025,
+    "km_bis": 13.541,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Frutigen",
+    "bis": "Frutigen Süd (Abzw)",
+    "km_von": 13.541,
+    "km_bis": 14.21,
+    "isb": "BLSN",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Frutigen Süd (Abzw)",
+    "bis": "Kandergrund",
+    "km_von": 14.21,
+    "km_bis": 17.45,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kandergrund",
+    "bis": "Grubi (Spw)",
+    "km_von": 17.45,
+    "km_bis": 20.7,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Grubi (Spw)",
+    "bis": "Blausee-Mitholz",
+    "km_von": 20.7,
+    "km_bis": 22.332,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Blausee-Mitholz",
+    "bis": "Fürten (Spw)",
+    "km_von": 22.332,
+    "km_bis": 23.673,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fürten (Spw)",
+    "bis": "Felsenburg",
+    "km_von": 23.673,
+    "km_bis": 27.103,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Felsenburg",
+    "bis": "Büel (Spw)",
+    "km_von": 27.103,
+    "km_bis": 30.441,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Büel (Spw)",
+    "bis": "Kandersteg",
+    "km_von": 30.441,
+    "km_bis": 31.583,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kandersteg",
+    "bis": "Eggenschwand (Spw)",
+    "km_von": 31.583,
+    "km_bis": 33.26,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eggenschwand (Spw)",
+    "bis": "Tunnelstation Lötschberg (Spw)",
+    "km_von": 33.26,
+    "km_bis": 39.766,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Tunnelstation Lötschberg (Spw)",
+    "bis": "Goppenstein Lötschberg (Spw)",
+    "km_von": 39.766,
+    "km_bis": 47.041,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Goppenstein Lötschberg (Spw)",
+    "bis": "Goppenstein",
+    "km_von": 47.041,
+    "km_bis": 48.443,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Goppenstein",
+    "bis": "Stockgraben (Spw)",
+    "km_von": 48.443,
+    "km_bis": 49.457,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Stockgraben (Spw)",
+    "bis": "Mittalgrabentunnel Nord",
+    "km_von": 49.457,
+    "km_bis": 50.34,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mittalgrabentunnel Nord",
+    "bis": "Mittalgrabentunnel Süd",
+    "km_von": 50.34,
+    "km_bis": 53.653,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mittalgrabentunnel Süd",
+    "bis": "Hohtenn",
+    "km_von": 53.653,
+    "km_bis": 54.192,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hohtenn",
+    "bis": "Rarnerkumme (Spw)",
+    "km_von": 54.192,
+    "km_bis": 57.291,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rarnerkumme (Spw)",
+    "bis": "Ausserberg",
+    "km_von": 57.291,
+    "km_bis": 61.277,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ausserberg",
+    "bis": "Viktoria (Spw)",
+    "km_von": 61.277,
+    "km_bis": 63.71,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Viktoria (Spw)",
+    "bis": "Eggerberg",
+    "km_von": 63.71,
+    "km_bis": 64.951,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eggerberg",
+    "bis": "Lalden",
+    "km_von": 64.951,
+    "km_bis": 67.307,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lalden",
+    "bis": "Mundbach (Spw)",
+    "km_von": 67.307,
+    "km_bis": 70.362,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mundbach (Spw)",
+    "bis": "Brig-Lötschberg (Abzw)",
+    "km_von": 70.362,
+    "km_bis": 73.516,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 9 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 32 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

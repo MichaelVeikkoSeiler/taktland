@@ -55,6 +55,189 @@
    }
   ]
  },
+ "weitere_bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Bahnhöfe aus Taktland, die das Schienennetz des BAV auf dieser Linie führt, die Liste der Betriebspunkte der SBB aber nicht. Kilometer laut Schienennetz.",
+  "anzahl": 1,
+  "items": [
+   {
+    "uic": 8507100,
+    "name": "Thun",
+    "km": 137.02
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 13,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 13
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 9
+   },
+   {
+    "wert": 3,
+    "abschnitte": 3
+   },
+   {
+    "wert": 4,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 13
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 13
+   }
+  ],
+  "items": [
+   {
+    "von": "Bern Wylerfeld",
+    "bis": "Bern Wankdorf Süd",
+    "km_von": 108.583,
+    "km_bis": 108.97,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Wankdorf Süd",
+    "bis": "Wankdorf (Abzw)",
+    "km_von": 108.97,
+    "km_bis": 109.484,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wankdorf (Abzw)",
+    "bis": "Ostermundigen",
+    "km_von": 109.484,
+    "km_bis": 110.765,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ostermundigen",
+    "bis": "Gümligen",
+    "km_von": 110.765,
+    "km_bis": 113.958,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gümligen",
+    "bis": "Gümligen Süd (Abzw)",
+    "km_von": 113.958,
+    "km_bis": 115.366,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gümligen Süd (Abzw)",
+    "bis": "Rubigen",
+    "km_von": 115.366,
+    "km_bis": 119.038,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rubigen",
+    "bis": "Münsingen",
+    "km_von": 119.038,
+    "km_bis": 122.131,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Münsingen",
+    "bis": "Wichtrach",
+    "km_von": 122.131,
+    "km_bis": 125.733,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wichtrach",
+    "bis": "Kiesen",
+    "km_von": 125.733,
+    "km_bis": 128.303,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kiesen",
+    "bis": "Uttigen",
+    "km_von": 128.303,
+    "km_bis": 131.095,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Uttigen",
+    "bis": "Thun (Abzw)",
+    "km_von": 131.095,
+    "km_bis": 136.15,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Thun (Abzw)",
+    "bis": "Thun",
+    "km_von": 136.15,
+    "km_bis": 137.02,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Thun",
+    "bis": "Thun (Eigentumsgrenze)",
+    "km_von": 137.02,
+    "km_bis": 137.593,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "bruecken": {
   "source": "brucken",
   "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
@@ -325,9 +508,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -368,6 +551,8 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "weitere_bahnhoefe",
+  "netz",
   "bruecken"
  ]
 }

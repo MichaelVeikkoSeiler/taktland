@@ -1,0 +1,183 @@
+{
+ "linie": 671,
+ "name": "Rapperswil - Pfäffikon Ost (SOB)",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Rapperswil SG",
+  "kleinster_km": 0.021,
+  "kleinster_km_bei_uic": 8503110,
+  "groesster_km_bei": "Pfäffikon SZ Ost (Abzw)",
+  "groesster_km": 3.5,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 4,
+  "anzahl_in_taktland": 2,
+  "items": [
+   {
+    "uic": 8503110,
+    "name": "Rapperswil SG",
+    "km": 0.021
+   },
+   {
+    "uic": 8503299,
+    "name": "Hurden",
+    "km": 1.745
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SOB",
+  "abschnitte_erfasst": 3,
+  "nach_isb": [
+   {
+    "wert": "SOB",
+    "abschnitte": 3
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 2
+   },
+   {
+    "wert": 2,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 3
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 3
+   }
+  ],
+  "items": [
+   {
+    "von": "Rapperswil SG",
+    "bis": "Hurden",
+    "km_von": 0.021,
+    "km_bis": 1.745,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hurden",
+    "bis": "Pfäffikon SZ Nord (Abzw)",
+    "km_von": 1.745,
+    "km_bis": 2.057,
+    "isb": "SOB",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pfäffikon SZ Nord (Abzw)",
+    "bis": "Pfäffikon SZ Ost (Abzw)",
+    "km_von": 2.057,
+    "km_bis": 3.5,
+    "isb": "SOB",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "bruecken": {
+  "source": "brucken",
+  "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
+  "anzahl_erfasst": 1,
+  "nach_kanton": [
+   {
+    "kanton": "St. Gallen",
+    "anzahl": 1
+   }
+  ],
+  "meiste_baueinheiten": 1,
+  "mit_meisten": [
+   0
+  ],
+  "anzahl_mit_meisten": 1,
+  "items": [
+   {
+    "name": "BDu Stadtbach",
+    "km": 0.021,
+    "baueinheiten": 1,
+    "kanton": "St. Gallen"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 2 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 4 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge und Baujahr der Brücken",
+   "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Namen der Brücken",
+   "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Stand der Brückendaten",
+   "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+   "quelle": "brucken"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz",
+  "bruecken"
+ ]
+}

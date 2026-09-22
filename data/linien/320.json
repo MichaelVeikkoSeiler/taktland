@@ -1,0 +1,354 @@
+{
+ "linie": 320,
+ "name": "Spiez - Zweisimmen",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Spiez (Abzw)",
+  "kleinster_km": 0.821,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Zweisimmen Gleisende",
+  "groesster_km": 35.202,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 19,
+  "anzahl_in_taktland": 15,
+  "items": [
+   {
+    "uic": 8507299,
+    "name": "Lattigen bei Spiez",
+    "km": 2.444
+   },
+   {
+    "uic": 8507288,
+    "name": "Eifeld",
+    "km": 3.488
+   },
+   {
+    "uic": 8507298,
+    "name": "Wimmis",
+    "km": 4.544
+   },
+   {
+    "uic": 8507287,
+    "name": "Burgholz",
+    "km": 7.152
+   },
+   {
+    "uic": 8507297,
+    "name": "Oey-Diemtigen",
+    "km": 9.336
+   },
+   {
+    "uic": 8507296,
+    "name": "Erlenbach im Simmental",
+    "km": 11.288
+   },
+   {
+    "uic": 8507286,
+    "name": "Ringoldingen",
+    "km": 13.789
+   },
+   {
+    "uic": 8507295,
+    "name": "Därstetten",
+    "km": 16.091
+   },
+   {
+    "uic": 8507294,
+    "name": "Weissenburg",
+    "km": 17.641
+   },
+   {
+    "uic": 8507293,
+    "name": "Oberwil im Simmental",
+    "km": 20.9
+   },
+   {
+    "uic": 8507284,
+    "name": "Enge im Simmental",
+    "km": 22.628
+   },
+   {
+    "uic": 8507292,
+    "name": "Boltigen",
+    "km": 25.906
+   },
+   {
+    "uic": 8507291,
+    "name": "Weissenbach",
+    "km": 28.884
+   },
+   {
+    "uic": 8507281,
+    "name": "Grubenwald",
+    "km": 31.821
+   },
+   {
+    "uic": 8507290,
+    "name": "Zweisimmen",
+    "km": 34.892
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "BLSN",
+  "abschnitte_erfasst": 18,
+  "nach_isb": [
+   {
+    "wert": "BLSN",
+    "abschnitte": 18
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 18
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 18
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 18
+   }
+  ],
+  "items": [
+   {
+    "von": "Spiez (Abzw)",
+    "bis": "Spiezmoos Süd",
+    "km_von": 0.821,
+    "km_bis": 1.567,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Spiezmoos Süd",
+    "bis": "Lattigen bei Spiez",
+    "km_von": 1.567,
+    "km_bis": 2.444,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lattigen bei Spiez",
+    "bis": "Eifeld",
+    "km_von": 2.444,
+    "km_bis": 3.488,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eifeld",
+    "bis": "Wimmis",
+    "km_von": 3.488,
+    "km_bis": 4.544,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wimmis",
+    "bis": "Burgholz",
+    "km_von": 4.544,
+    "km_bis": 7.152,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Burgholz",
+    "bis": "Oey-Diemtigen",
+    "km_von": 7.152,
+    "km_bis": 9.336,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oey-Diemtigen",
+    "bis": "Erlenbach im Simmental",
+    "km_von": 9.336,
+    "km_bis": 11.288,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Erlenbach im Simmental",
+    "bis": "Ringoldingen",
+    "km_von": 11.288,
+    "km_bis": 13.789,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ringoldingen",
+    "bis": "Därstetten",
+    "km_von": 13.789,
+    "km_bis": 16.091,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Därstetten",
+    "bis": "Weissenburg",
+    "km_von": 16.091,
+    "km_bis": 17.641,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Weissenburg",
+    "bis": "Oberwil im Simmental",
+    "km_von": 17.641,
+    "km_bis": 20.9,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberwil im Simmental",
+    "bis": "Enge im Simmental",
+    "km_von": 20.9,
+    "km_bis": 22.628,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Enge im Simmental",
+    "bis": "Boltigen",
+    "km_von": 22.628,
+    "km_bis": 25.906,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Boltigen",
+    "bis": "Weissenbach",
+    "km_von": 25.906,
+    "km_bis": 28.884,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Weissenbach",
+    "bis": "Grubenwald",
+    "km_von": 28.884,
+    "km_bis": 31.821,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Grubenwald",
+    "bis": "Galgenbühl (Agl)",
+    "km_von": 31.821,
+    "km_bis": 32.995,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Galgenbühl (Agl)",
+    "bis": "Zweisimmen",
+    "km_von": 32.995,
+    "km_bis": 34.892,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zweisimmen",
+    "bis": "Zweisimmen Gleisende",
+    "km_von": 34.892,
+    "km_bis": 35.202,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 15 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 19 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

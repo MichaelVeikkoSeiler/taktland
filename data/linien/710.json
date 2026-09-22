@@ -80,6 +80,241 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 19,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 19
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 4,
+    "abschnitte": 10
+   },
+   {
+    "wert": 2,
+    "abschnitte": 7
+   },
+   {
+    "wert": 12,
+    "abschnitte": 1
+   },
+   {
+    "wert": 3,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 19
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 19
+   }
+  ],
+  "items": [
+   {
+    "von": "Zürich HB",
+    "bis": "Zürich Langstrasse",
+    "km_von": 0,
+    "km_bis": 0.921,
+    "isb": "SBB CFF FFS",
+    "gleise": 12,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zürich Langstrasse",
+    "bis": "Zürich HB Nord",
+    "km_von": 0.921,
+    "km_bis": 1.437,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zürich HB Nord",
+    "bis": "Zürich Hardbrücke",
+    "km_von": 1.437,
+    "km_bis": 1.918,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zürich Hardbrücke",
+    "bis": "Zürich Hardbrücke West (Spw)",
+    "km_von": 1.918,
+    "km_bis": 3.02,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zürich Hardbrücke West (Spw)",
+    "bis": "Zürich Altstetten Ost (Abzw)",
+    "km_von": 3.02,
+    "km_bis": 3.696,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zürich Altstetten Ost (Abzw)",
+    "bis": "Zürich Altstetten",
+    "km_von": 3.696,
+    "km_bis": 4.166,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zürich Altstetten",
+    "bis": "Einfang (Abzw)",
+    "km_von": 4.166,
+    "km_bis": 6.319,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Einfang (Abzw)",
+    "bis": "Schlieren",
+    "km_von": 6.319,
+    "km_bis": 7.507,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schlieren",
+    "bis": "Glanzenberg",
+    "km_von": 7.507,
+    "km_bis": 9.549,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Glanzenberg",
+    "bis": "Dietikon",
+    "km_von": 9.549,
+    "km_bis": 11.065,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dietikon",
+    "bis": "RBL Kopf Zürich",
+    "km_von": 11.065,
+    "km_bis": 11.402,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "RBL Kopf Zürich",
+    "bis": "Silberen (Abzw)",
+    "km_von": 11.402,
+    "km_bis": 13.298,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Silberen (Abzw)",
+    "bis": "Killwangen-Spreitenbach",
+    "km_von": 13.298,
+    "km_bis": 16.112,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Killwangen-Spreitenbach",
+    "bis": "Killwangen West (Abzw)",
+    "km_von": 16.112,
+    "km_bis": 16.519,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Killwangen West (Abzw)",
+    "bis": "Neuenhof",
+    "km_von": 16.519,
+    "km_bis": 18.792,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Neuenhof",
+    "bis": "Wettingen",
+    "km_von": 18.792,
+    "km_bis": 20.334,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wettingen",
+    "bis": "Baden",
+    "km_von": 20.334,
+    "km_bis": 22.529,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Baden",
+    "bis": "Turgi",
+    "km_von": 22.529,
+    "km_bis": 27.43,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Turgi",
+    "bis": "Brugg AG",
+    "km_von": 27.43,
+    "km_bis": 31.266,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -528,9 +763,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -566,6 +801,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken"
  ]

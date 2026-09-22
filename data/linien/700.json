@@ -70,6 +70,243 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 20,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 20
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 19
+   },
+   {
+    "wert": 3,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 20
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 20
+   }
+  ],
+  "items": [
+   {
+    "von": "Brugg AG",
+    "bis": "Brugg AG Nord (Abzw)",
+    "km_von": 31.273,
+    "km_bis": 32.46,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brugg AG Nord (Abzw)",
+    "bis": "Villnachern (Spw)",
+    "km_von": 32.46,
+    "km_bis": 35.343,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Villnachern (Spw)",
+    "bis": "Schinznach Dorf",
+    "km_von": 35.343,
+    "km_bis": 39.283,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schinznach Dorf",
+    "bis": "Effingen",
+    "km_von": 39.283,
+    "km_bis": 42.436,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Effingen",
+    "bis": "Kirchmatt (Spw)",
+    "km_von": 42.436,
+    "km_bis": 45.495,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kirchmatt (Spw)",
+    "bis": "Hornussen",
+    "km_von": 45.495,
+    "km_bis": 46.973,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hornussen",
+    "bis": "Buchhalde (Spw)",
+    "km_von": 46.973,
+    "km_bis": 48.095,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Buchhalde (Spw)",
+    "bis": "Frick",
+    "km_von": 48.095,
+    "km_bis": 51.847,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Frick",
+    "bis": "Niederfeld (Spw)",
+    "km_von": 51.847,
+    "km_bis": 54.829,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Niederfeld (Spw)",
+    "bis": "Eiken",
+    "km_von": 54.829,
+    "km_bis": 55.411,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eiken",
+    "bis": "Stein-Säckingen Ost (Abzw)",
+    "km_von": 55.411,
+    "km_bis": 58.277,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Stein-Säckingen Ost (Abzw)",
+    "bis": "Stein-Säckingen",
+    "km_von": 58.277,
+    "km_bis": 58.762,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Stein-Säckingen",
+    "bis": "Mumpf",
+    "km_von": 58.762,
+    "km_bis": 61.881,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mumpf",
+    "bis": "Dossenboden (Spw)",
+    "km_von": 61.881,
+    "km_bis": 65.106,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dossenboden (Spw)",
+    "bis": "Möhlin",
+    "km_von": 65.106,
+    "km_bis": 68.268,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Möhlin",
+    "bis": "Rheinfelden",
+    "km_von": 68.268,
+    "km_bis": 71.628,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rheinfelden",
+    "bis": "Rheinfelden Augarten",
+    "km_von": 71.628,
+    "km_bis": 73.548,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rheinfelden Augarten",
+    "bis": "Kaiseraugst",
+    "km_von": 73.548,
+    "km_bis": 76.977,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kaiseraugst",
+    "bis": "Pratteln Salina Raurica",
+    "km_von": 76.977,
+    "km_bis": 78.38,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pratteln Salina Raurica",
+    "bis": "Pratteln Ost (Abzw)",
+    "km_von": 78.38,
+    "km_bis": 79.8,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -639,9 +876,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -682,6 +919,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

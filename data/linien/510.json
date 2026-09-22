@@ -30,6 +30,69 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 3,
+  "nach_isb": [
+   {
+    "wert": "SNCF",
+    "abschnitte": 3
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 3
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 3
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 50 Hz",
+    "abschnitte": 3
+   }
+  ],
+  "items": [
+   {
+    "von": "Basel Grenze (FR)",
+    "bis": "Basel St. Johann",
+    "km_von": 136.924,
+    "km_bis": 137.811,
+    "isb": "SNCF",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 50 Hz"
+   },
+   {
+    "von": "Basel St. Johann",
+    "bis": "Basel SBB West (Abzw)",
+    "km_von": 137.811,
+    "km_bis": 141.382,
+    "isb": "SNCF",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 50 Hz"
+   },
+   {
+    "von": "Basel SBB West (Abzw)",
+    "bis": "Basel SBB",
+    "km_von": 141.382,
+    "km_bis": 142.203,
+    "isb": "SNCF",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 50 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -106,9 +169,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -144,6 +207,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken"
  ]

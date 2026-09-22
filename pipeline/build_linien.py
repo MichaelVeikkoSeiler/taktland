@@ -24,6 +24,16 @@ Was die Daten nicht hergeben (geprüft im Katalog von data.sbb.ch):
   Gleiskategorie beschreibt die Quelle nicht oder mit Texten aus anderen
   Datensätzen. Verwendet sind Sicherungsart und Zahl der gekreuzten Gleise.
 
+Dazu kommt das «Schienennetz» des BAV (pipeline/schienennetz.py, Stand 2021):
+- Linien anderer Bahnen (BLS, SOB, RhB …), die in den Daten der SBB fehlen,
+  mit mindestens zwei Bahnhöfen aus Taktland. Tramlinien nicht: Sie tragen im
+  Schienennetz Nummern mit Buchstaben («Z021», «T003»).
+- auf jeder Linie, die es dort gibt, das Kapitel Netz: je Abschnitt zwischen
+  zwei Betriebspunkten Infrastrukturbetreiberin, Streckengleise, Spurweite und
+  Elektrifizierung
+- Bahnhöfe, die das Schienennetz auf einer Linie der SBB zusätzlich führt
+  (Ins auf Linie 220)
+
     .venv/bin/python pipeline/build_linien.py
 """
 import json
@@ -34,6 +44,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import schienennetz  # noqa: E402
 from sources import DATASETS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -52,6 +63,8 @@ STANDORT = ROOT / "data" / "standort.json"
 MINDESTENS_BAHNHOEFE = 2
 
 QUELLEN = ["linie", "linie-mit-betriebspunkten", "tunnel", "brucken", "bahnubergang"]
+#: vom BAV, nicht von data.sbb.ch (pipeline/fetch_schienennetz.py)
+QUELLEN_BAV = ["schienennetz"]
 
 
 def load(name):
@@ -75,7 +88,7 @@ def txt(v):
 
 def datenstand():
     abruf = json.loads((RAW / "_abruf.json").read_text(encoding="utf-8"))
-    return max(abruf[q] for q in QUELLEN)
+    return max(abruf[q] for q in QUELLEN + QUELLEN_BAV)
 
 
 def abgerufen(quelle):
@@ -212,36 +225,128 @@ def einzige_oder_alle(items, feld, beste):
     return [i for i, it in enumerate(items) if it[feld] == ziel]
 
 
+def nach_wert(segmente, feld):
+    """Wie viele Abschnitte je Wert, die meisten zuerst. Gezählt hier, nicht im Text."""
+    zaehler = {}
+    for x in segmente:
+        zaehler[x[feld]] = zaehler.get(x[feld], 0) + 1
+    return [{"wert": w, "abschnitte": n} for w, n in sorted(zaehler.items(), key=lambda x: (-x[1], str(x[0])))]
+
+
+def netz(bav, stand_bav):
+    """Das Kapitel Netz: je Abschnitt zwischen zwei Betriebspunkten wie im
+    Schienennetz des BAV, dazu gezählt je Wert."""
+    items = [{"von": x["von"], "bis": x["bis"], "km_von": num(x["km_anfang"]),
+              "km_bis": num(x["km_ende"]), "isb": x["isb"], "gleise": x["gleise"],
+              "spurweite": x["spurweite"], "strom": x["strom"]} for x in bav["segmente"]]
+    return {
+        "source": "schienennetz",
+        "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. "
+                   "gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, "
+                   "bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+        "stand": stand_bav,
+        "bahn": bav["datenherr"],
+        "abschnitte_erfasst": len(items),
+        "nach_isb": nach_wert(items, "isb"),
+        "nach_gleisen": nach_wert(items, "gleise"),
+        "nach_spurweite": nach_wert(items, "spurweite"),
+        "nach_strom": nach_wert(items, "strom"),
+        "items": items,
+    }
+
+
+def bav_fakten(nr, bav, namen, stand):
+    """Eine Linie, die es nur im Schienennetz des BAV gibt. Anfang und Ende
+    nennt die Quelle nicht: Aufgeführt sind die Betriebspunkte mit dem
+    kleinsten und dem grössten Kilometer."""
+    erster, letzter = bav["punkte"][0], bav["punkte"][-1]
+    eigene = [p for p in bav["punkte"] if p["nummer"] in namen]
+    return {
+        "linie": int(nr),
+        "name": bav["name"],
+        "datenstand": stand,
+        "quelle": "schienennetz",
+        "strecke": {
+            "source": "schienennetz",
+            "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang "
+                       "und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit "
+                       "dem kleinsten und dem grössten Kilometer.",
+            "kleinster_km_bei": erster["name"],
+            "kleinster_km": num(erster["km"]),
+            "kleinster_km_bei_uic": erster["nummer"] if erster["nummer"] in namen else None,
+            "groesster_km_bei": letzter["name"],
+            "groesster_km": num(letzter["km"]),
+            "groesster_km_bei_uic": letzter["nummer"] if letzter["nummer"] in namen else None,
+        },
+        "bahnhoefe": {
+            "source": "schienennetz",
+            "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut "
+                       "Schienennetz des BAV geordnet.",
+            "betriebspunkte_erfasst": len(bav["punkte"]),
+            "anzahl_in_taktland": len(eigene),
+            "items": [{"uic": p["nummer"], "name": namen[p["nummer"]], "km": num(p["km"])}
+                      for p in eigene],
+        },
+    }
+
+
 def luecken(f):
     fehlt = []
 
     def lueckt(thema, grund, quelle):
         fehlt.append({"thema": thema, "grund": grund, "quelle": quelle})
 
-    lueckt("Länge der Linie",
-           "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der "
-           "Anfangs- und der End-Kilometer ihrer Kilometrierung.",
-           "linie")
+    bav = f.get("quelle") == "schienennetz"
+    if bav:
+        lueckt("Linie einer anderen Bahn",
+               "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des "
+               "Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den "
+               "Daten der SBB erfasst.",
+               "schienennetz")
+        lueckt("Länge der Linie",
+               "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer "
+               "jedes Betriebspunkts, ein Standort auf der Linie.",
+               "schienennetz")
+        lueckt("Anfang und Ende",
+               "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das "
+               "Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem "
+               "grössten Kilometer.",
+               "schienennetz")
+    else:
+        lueckt("Länge der Linie",
+               "Die Länge der Linie steht nicht in den offenen Daten. Erfasst sind der "
+               "Anfangs- und der End-Kilometer ihrer Kilometrierung.",
+               "linie")
     lueckt("Baujahr der Linie",
            "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. "
            "Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
-           "linie, tunnel")
-    lueckt("Ein- oder mehrspurig",
-           "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. "
-           "Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-           "linie, tunnel")
+           "schienennetz" if bav else "linie, tunnel")
+    if f.get("netz"):
+        lueckt("Stand des Schienennetzes",
+               f"Das Schienennetz des BAV trägt den Stand vom {f['netz']['stand']}. Was sich "
+               "seither geändert hat, ist darin nicht erfasst.",
+               "schienennetz")
+    else:
+        lueckt("Ein- oder mehrspurig",
+               "Wie viele Gleise die Linie hat, steht in den Daten der SBB nicht, und im "
+               "Schienennetz des BAV fehlt diese Linie. Erfasst ist das nur für Tunnel, als "
+               "Tunnelsystem.",
+               "linie, tunnel")
     bh = f["bahnhoefe"]
+    quelle_bh = bh["source"]
     if not bh["anzahl_in_taktland"]:
         lueckt("Bahnhöfe",
                f"Keiner der {bh['betriebspunkte_erfasst']} erfassten Betriebspunkte dieser Linie "
                "ist ein Bahnhof in Taktland.",
-               "linie-mit-betriebspunkten")
+               quelle_bh)
     elif bh["betriebspunkte_erfasst"] > bh["anzahl_in_taktland"]:
         lueckt("Weitere Betriebspunkte",
                f"Aufgeführt sind die {bh['anzahl_in_taktland']} Bahnhöfe, die Taktland kennt. "
-               f"Die Liste der Betriebspunkte führt für diese Linie {bh['betriebspunkte_erfasst']} "
-               "Einträge. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
-               "linie-mit-betriebspunkten")
+               f"{'Das Schienennetz' if bav else 'Die Liste der Betriebspunkte'} führt für diese "
+               f"Linie {bh['betriebspunkte_erfasst']} "
+               f"{'Betriebspunkte' if bav else 'Einträge'}. Die übrigen sind in Taktland nicht als "
+               "Bahnhof geführt.",
+               quelle_bh)
     if f.get("bruecken"):
         lueckt("Länge und Baujahr der Brücken",
                "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst "
@@ -255,7 +360,7 @@ def luecken(f):
                "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch "
                "«Januar 24», auf Englisch «Jan 2026».",
                "brucken")
-    else:
+    elif not bav:
         lueckt("Brücken",
                "Für diese Linie ist keine Brücke erfasst. Das schliesst nicht aus, "
                "dass es eine gibt.",
@@ -283,12 +388,12 @@ def luecken(f):
                "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und "
                f"vervollständigt. Taktland zeigt den Stand vom {abgerufen('bahnubergang')}.",
                "bahnubergang")
-    else:
+    elif not bav:
         lueckt("Bahnübergänge",
                "Für diese Linie ist kein Bahnübergang erfasst. Das schliesst nicht aus, "
                "dass es einen gibt.",
                "bahnubergang")
-    if not f.get("tunnel"):
+    if not f.get("tunnel") and not bav:
         lueckt("Tunnel",
                "Für diese Linie ist kein Tunnel erfasst. Das schliesst nicht aus, "
                "dass es einen gibt.",
@@ -296,7 +401,7 @@ def luecken(f):
     lueckt("Züge auf der Linie",
            "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie "
            "ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
-           "linie")
+           "schienennetz" if bav else "linie")
     return fehlt
 
 
@@ -317,39 +422,19 @@ def main():
     for alt in ZIEL.glob("*.json"):
         alt.unlink()
 
+    bav_linien, stand_bav = schienennetz.je_linie()
     geschrieben = []
+    #: Name jeder Linie mit Seite, wie auf ihrer Seite
+    seiten_namen = {}
     standort = {"tunnel": [], "bruecken": [], "bahnuebergaenge": []}
-    for nr, gruppe in bp.groupby("linie"):
-        eigene = gruppe[gruppe.uic.isin(namen)].sort_values("km")
+
+    def fertig(f, nr):
+        """Tunnel, Brücken und Bahnübergänge aus den Daten der SBB, das Netz aus
+        dem Schienennetz des BAV, dann Lücken und Kapitel, und schreiben."""
         tu = tunnel[tunnel.linie == nr]
-        if nr not in linie.index or (eigene.uic.nunique() < MINDESTENS_BAHNHOEFE and tu.empty):
-            continue
-        li = linie.loc[nr]
-        f = {
-            "linie": int(nr),
-            "name": txt(li.linienname),
-            "datenstand": stand,
-            "strecke": {
-                "source": "linie",
-                "hinweis": "Kilometrierung: Standortangaben entlang der Linie. "
-                           "Die Differenz ist nicht als Länge der Linie belegt.",
-                "anfang": txt(li.bpk_anfang),
-                "ende": txt(li.bpk_ende),
-                "km_anfang": num(li.km_anfang),
-                "km_ende": num(li.km_ende),
-                # Bahnhof aus Taktland am Anfang oder Ende, sonst null
-                "anfang_uic": endpunkt_uic(gruppe, li.bpk_anfang, li.km_anfang, namen),
-                "ende_uic": endpunkt_uic(gruppe, li.bpk_ende, li.km_ende, namen),
-            },
-            "bahnhoefe": {
-                "source": "linie-mit-betriebspunkten",
-                "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
-                "betriebspunkte_erfasst": int(gruppe.abkurzung_bpk.nunique()),
-                "anzahl_in_taktland": int(eigene.uic.nunique()),
-                "items": [{"uic": int(r.uic), "name": namen[int(r.uic)], "km": num(r.km)}
-                          for _, r in eigene.iterrows()],
-            },
-        }
+        bav = bav_linien.get(str(int(nr)))
+        if bav:
+            f["netz"] = netz(bav, stand_bav)
         if not tu.empty:
             items = tunnel_items(tu)
             standort["tunnel"] += lagen(tu, "km_go", "geopos", nr, items)
@@ -406,12 +491,74 @@ def main():
         mit_kapitel = {"strecke": True, "tunnel": bool(f.get("tunnel")),
                        "bruecken": bool(f.get("bruecken")),
                        "bahnuebergaenge": bool(f.get("bahnuebergaenge")),
-                       "bahnhoefe": f["bahnhoefe"]["anzahl_in_taktland"] >= MINDESTENS_BAHNHOEFE}
-        f["verfuegbare_kapitel"] = [k for k in ("strecke", "bahnhoefe", "tunnel", "bruecken",
-                                                "bahnuebergaenge") if mit_kapitel[k]]
-        (ZIEL / f"{nr}.json").write_text(json.dumps(f, ensure_ascii=False, indent=1) + "\n",
-                                        encoding="utf-8")
+                       "bahnhoefe": f["bahnhoefe"]["anzahl_in_taktland"] >= MINDESTENS_BAHNHOEFE,
+                       "weitere_bahnhoefe": bool(f.get("weitere_bahnhoefe")),
+                       "netz": bool(f.get("netz"))}
+        f["verfuegbare_kapitel"] = [k for k in ("strecke", "bahnhoefe", "weitere_bahnhoefe", "netz",
+                                                "tunnel", "bruecken", "bahnuebergaenge")
+                                    if mit_kapitel[k]]
+        (ZIEL / f"{int(nr)}.json").write_text(json.dumps(f, ensure_ascii=False, indent=1) + "\n",
+                                             encoding="utf-8")
         geschrieben.append(int(nr))
+        seiten_namen[str(int(nr))] = f["name"]
+
+    for nr, gruppe in bp.groupby("linie"):
+        eigene = gruppe[gruppe.uic.isin(namen)].sort_values("km")
+        tu = tunnel[tunnel.linie == nr]
+        if nr not in linie.index or (eigene.uic.nunique() < MINDESTENS_BAHNHOEFE and tu.empty):
+            continue
+        li = linie.loc[nr]
+        f = {
+            "linie": int(nr),
+            "name": txt(li.linienname),
+            "datenstand": stand,
+            "strecke": {
+                "source": "linie",
+                "hinweis": "Kilometrierung: Standortangaben entlang der Linie. "
+                           "Die Differenz ist nicht als Länge der Linie belegt.",
+                "anfang": txt(li.bpk_anfang),
+                "ende": txt(li.bpk_ende),
+                "km_anfang": num(li.km_anfang),
+                "km_ende": num(li.km_ende),
+                # Bahnhof aus Taktland am Anfang oder Ende, sonst null
+                "anfang_uic": endpunkt_uic(gruppe, li.bpk_anfang, li.km_anfang, namen),
+                "ende_uic": endpunkt_uic(gruppe, li.bpk_ende, li.km_ende, namen),
+            },
+            "bahnhoefe": {
+                "source": "linie-mit-betriebspunkten",
+                "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie geordnet.",
+                "betriebspunkte_erfasst": int(gruppe.abkurzung_bpk.nunique()),
+                "anzahl_in_taktland": int(eigene.uic.nunique()),
+                "items": [{"uic": int(r.uic), "name": namen[int(r.uic)], "km": num(r.km)}
+                          for _, r in eigene.iterrows()],
+            },
+        }
+        # Bahnhöfe, die das Schienennetz des BAV auf dieser Linie zusätzlich führt
+        bav = bav_linien.get(str(int(nr)))
+        schon = {it["uic"] for it in f["bahnhoefe"]["items"]}
+        weitere = [x for x in (bav or {}).get("punkte", []) if x["nummer"] in namen and x["nummer"] not in schon]
+        if weitere:
+            f["weitere_bahnhoefe"] = {
+                "source": "schienennetz",
+                "hinweis": "Bahnhöfe aus Taktland, die das Schienennetz des BAV auf dieser Linie "
+                           "führt, die Liste der Betriebspunkte der SBB aber nicht. Kilometer laut "
+                           "Schienennetz.",
+                "anzahl": len(weitere),
+                "items": [{"uic": x["nummer"], "name": namen[x["nummer"]], "km": num(x["km"])}
+                          for x in weitere],
+            }
+        fertig(f, nr)
+    print(f"{len(geschrieben)} Linien aus den Daten der SBB")
+
+    # Linien anderer Bahnen, die nur das Schienennetz des BAV führt; keine
+    # Tramlinien (Nummern mit Buchstaben)
+    for nummer, bav in sorted(bav_linien.items(), key=lambda x: x[0]):
+        if not nummer.isdigit() or int(nummer) in geschrieben:
+            continue
+        f = bav_fakten(nummer, bav, namen, stand)
+        if f["bahnhoefe"]["anzahl_in_taktland"] < MINDESTENS_BAHNHOEFE:
+            continue
+        fertig(f, int(nummer))
     print(f"{len(geschrieben)} Linien geschrieben nach data/linien")
 
     # Was ohne eigene Seite bleibt, wird gezählt und in der App genannt
@@ -438,7 +585,11 @@ def main():
         for x in liste:
             standort[art] += lagen(df[df.linie == x["linie"]], sortfeld, geofeld,
                                    x["linie"], x["items"])
-    # Name jeder Linie aus «linie» und ob sie eine eigene Seite hat
+    # Name jeder Linie aus «linie», für Linien mit Seite der Name auf der Seite
+    # (bei Linien anderer Bahnen aus dem Schienennetz des BAV)
+    alle_namen = {str(int(nr)): txt(r.linienname) for nr, r in linie.iterrows()}
+    alle_namen.update(seiten_namen)
+    alle_namen = dict(sorted(alle_namen.items(), key=lambda x: int(x[0])))
     standort = {
         "datenstand": {q: abgerufen(q) for q in ("linie", "tunnel", "brucken", "bahnubergang")},
         "hinweis": "Lage wie in der Quelle (tunnel und brucken: geopos, bahnubergang: "
@@ -446,8 +597,7 @@ def main():
                    "Breite, Länge. Die Stelle ist der Platz des Eintrags in der Liste seiner "
                    "Linie in data/linien/, auf Linien ohne eigene Seite in "
                    "data/linien_uebersicht.json.",
-        "linien": {str(int(nr)): [txt(r.linienname), int(nr) in geschrieben]
-                   for nr, r in sorted(linie.iterrows(), key=lambda x: int(x[0]))},
+        "linien": {nr: [name, int(nr) in geschrieben] for nr, name in alle_namen.items()},
         **standort,
     }
     standort_schreiben(standort)
@@ -458,7 +608,7 @@ def main():
         # je Datensatz der Tag des Abrufs: Die Übersichten «Tunnel» und «Brücken»
         # und das Tunnel-Duell nennen den Stand ihrer eigenen Quelle, nicht den
         # neuesten aller Quellen
-        "abgerufen": {q: abgerufen(q) for q in QUELLEN},
+        "abgerufen": {q: abgerufen(q) for q in QUELLEN + QUELLEN_BAV},
         "hinweis": "Brücken und Bahnübergänge auf Linien ohne eigene Seite: weniger als zwei "
                    "Bahnhöfe in Taktland und kein Tunnel.",
         "bruecken_ohne_seite": int(len(ohne)),
@@ -469,9 +619,8 @@ def main():
             int(len(set(ohne.linie) | set(ohne_ue.linie))),
         "bruecken_ohne_seite_liste": bruecken_ohne_seite,
         "bahnuebergaenge_ohne_seite_liste": uebergaenge_ohne_seite,
-        # Name jeder Linie aus «linie», für Linien ohne eigene Seite (Seite «Strecke»)
-        "linien_namen": {str(int(nr)): txt(r.linienname)
-                         for nr, r in sorted(linie.iterrows(), key=lambda x: int(x[0]))},
+        # Name jeder Linie, auch ohne eigene Seite (Seite «Strecke»)
+        "linien_namen": alle_namen,
     }
     UEBERSICHT.write_text(json.dumps(uebersicht, ensure_ascii=False, indent=1) + "\n",
                           encoding="utf-8")

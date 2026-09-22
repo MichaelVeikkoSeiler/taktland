@@ -1,0 +1,583 @@
+{
+ "linie": 610,
+ "name": "Brig - Andermatt - Disentis",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Brig Bahnhofplatz",
+  "kleinster_km": 0,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Disentis/Mustér",
+  "groesster_km": 96.94,
+  "groesster_km_bei_uic": 8509179
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 33,
+  "anzahl_in_taktland": 32,
+  "items": [
+   {
+    "uic": 8501677,
+    "name": "Bitsch",
+    "km": 3.85
+   },
+   {
+    "uic": 8501676,
+    "name": "Mörel",
+    "km": 7.21
+   },
+   {
+    "uic": 8501675,
+    "name": "Bettmeralp Talstation",
+    "km": 10.22
+   },
+   {
+    "uic": 8501674,
+    "name": "Grengiols",
+    "km": 11.59
+   },
+   {
+    "uic": 8501673,
+    "name": "Lax",
+    "km": 14.75
+   },
+   {
+    "uic": 8501729,
+    "name": "Fiesch Feriendorf",
+    "km": 16.6
+   },
+   {
+    "uic": 8501672,
+    "name": "Fiesch",
+    "km": 17.27
+   },
+   {
+    "uic": 8501671,
+    "name": "Fürgangen-Bellwald Talstation",
+    "km": 20.4
+   },
+   {
+    "uic": 8501670,
+    "name": "Niederwald",
+    "km": 24.4
+   },
+   {
+    "uic": 8501669,
+    "name": "Blitzingen",
+    "km": 26.12
+   },
+   {
+    "uic": 8501668,
+    "name": "Biel (Goms)",
+    "km": 27.87
+   },
+   {
+    "uic": 8501667,
+    "name": "Gluringen",
+    "km": 29.4
+   },
+   {
+    "uic": 8501666,
+    "name": "Reckingen VS",
+    "km": 30.56
+   },
+   {
+    "uic": 8501665,
+    "name": "Münster VS",
+    "km": 33.28
+   },
+   {
+    "uic": 8501664,
+    "name": "Geschinen",
+    "km": 34.72
+   },
+   {
+    "uic": 8501663,
+    "name": "Ulrichen",
+    "km": 37.27
+   },
+   {
+    "uic": 8501662,
+    "name": "Obergesteln",
+    "km": 38.98
+   },
+   {
+    "uic": 8501661,
+    "name": "Oberwald",
+    "km": 41.33
+   },
+   {
+    "uic": 8505163,
+    "name": "Realp",
+    "km": 59.39
+   },
+   {
+    "uic": 8505164,
+    "name": "Hospental",
+    "km": 65.39
+   },
+   {
+    "uic": 8505165,
+    "name": "Andermatt",
+    "km": 67.94
+   },
+   {
+    "uic": 8505170,
+    "name": "Nätschen",
+    "km": 72.42
+   },
+   {
+    "uic": 8505172,
+    "name": "Oberalppass",
+    "km": 77.66
+   },
+   {
+    "uic": 8505173,
+    "name": "Tschamut-Selva",
+    "km": 81.52
+   },
+   {
+    "uic": 8505174,
+    "name": "Dieni",
+    "km": 85
+   },
+   {
+    "uic": 8505175,
+    "name": "Rueras",
+    "km": 86.41
+   },
+   {
+    "uic": 8505176,
+    "name": "Sedrun",
+    "km": 87.77
+   },
+   {
+    "uic": 8505177,
+    "name": "Bugnei",
+    "km": 89.87
+   },
+   {
+    "uic": 8505178,
+    "name": "Mumpé Tujetsch",
+    "km": 92.16
+   },
+   {
+    "uic": 8505179,
+    "name": "Segnas",
+    "km": 94
+   },
+   {
+    "uic": 8505180,
+    "name": "Acla da Fontauna",
+    "km": 95
+   },
+   {
+    "uic": 8509179,
+    "name": "Disentis/Mustér",
+    "km": 96.94
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "MGB",
+  "abschnitte_erfasst": 32,
+  "nach_isb": [
+   {
+    "wert": "MGI",
+    "abschnitte": 32
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 31
+   },
+   {
+    "wert": 2,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 32
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 32
+   }
+  ],
+  "items": [
+   {
+    "von": "Brig Bahnhofplatz",
+    "bis": "Bitsch",
+    "km_von": 0,
+    "km_bis": 3.85,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bitsch",
+    "bis": "Mörel",
+    "km_von": 3.85,
+    "km_bis": 7.21,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mörel",
+    "bis": "Betten Talstation",
+    "km_von": 7.21,
+    "km_bis": 10.22,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Betten Talstation",
+    "bis": "Grengiols",
+    "km_von": 10.22,
+    "km_bis": 11.59,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Grengiols",
+    "bis": "Lax",
+    "km_von": 11.59,
+    "km_bis": 14.75,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lax",
+    "bis": "Fiesch Feriendorf",
+    "km_von": 14.75,
+    "km_bis": 16.6,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fiesch Feriendorf",
+    "bis": "Fiesch",
+    "km_von": 16.6,
+    "km_bis": 17.27,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fiesch",
+    "bis": "Fürgangen-Bellwald Talstation",
+    "km_von": 17.27,
+    "km_bis": 20.4,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fürgangen-Bellwald Talstation",
+    "bis": "Niederwald",
+    "km_von": 20.4,
+    "km_bis": 24.4,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Niederwald",
+    "bis": "Blitzingen",
+    "km_von": 24.4,
+    "km_bis": 26.12,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Blitzingen",
+    "bis": "Biel (Goms)",
+    "km_von": 26.12,
+    "km_bis": 27.87,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Biel (Goms)",
+    "bis": "Gluringen",
+    "km_von": 27.87,
+    "km_bis": 29.4,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gluringen",
+    "bis": "Reckingen VS",
+    "km_von": 29.4,
+    "km_bis": 30.56,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Reckingen VS",
+    "bis": "Münster VS",
+    "km_von": 30.56,
+    "km_bis": 33.28,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Münster VS",
+    "bis": "Geschinen",
+    "km_von": 33.28,
+    "km_bis": 34.72,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Geschinen",
+    "bis": "Ulrichen",
+    "km_von": 34.72,
+    "km_bis": 37.27,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ulrichen",
+    "bis": "Obergesteln",
+    "km_von": 37.27,
+    "km_bis": 38.98,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Obergesteln",
+    "bis": "Oberwald",
+    "km_von": 38.98,
+    "km_bis": 41.33,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberwald",
+    "bis": "Realp",
+    "km_von": 41.33,
+    "km_bis": 59.39,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Realp",
+    "bis": "Hospental",
+    "km_von": 59.39,
+    "km_bis": 65.39,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hospental",
+    "bis": "Andermatt",
+    "km_von": 65.39,
+    "km_bis": 67.94,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Andermatt",
+    "bis": "Nätschen",
+    "km_von": 67.94,
+    "km_bis": 72.42,
+    "isb": "MGI",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Nätschen",
+    "bis": "Oberalppass",
+    "km_von": 72.42,
+    "km_bis": 77.66,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberalppass",
+    "bis": "Tschamut-Selva",
+    "km_von": 77.66,
+    "km_bis": 81.52,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Tschamut-Selva",
+    "bis": "Dieni",
+    "km_von": 81.52,
+    "km_bis": 85,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dieni",
+    "bis": "Rueras",
+    "km_von": 85,
+    "km_bis": 86.41,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rueras",
+    "bis": "Sedrun",
+    "km_von": 86.41,
+    "km_bis": 87.77,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sedrun",
+    "bis": "Bugnei",
+    "km_von": 87.77,
+    "km_bis": 89.87,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bugnei",
+    "bis": "Mumpé Tujetsch",
+    "km_von": 89.87,
+    "km_bis": 92.16,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mumpé Tujetsch",
+    "bis": "Segnas",
+    "km_von": 92.16,
+    "km_bis": 94,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Segnas",
+    "bis": "Acla da Fontauna",
+    "km_von": 94,
+    "km_bis": 95,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Acla da Fontauna",
+    "bis": "Disentis/Mustér",
+    "km_von": 95,
+    "km_bis": 96.94,
+    "isb": "MGI",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 32 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 33 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

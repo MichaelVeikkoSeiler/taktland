@@ -215,6 +215,581 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 53,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 53
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 43
+   },
+   {
+    "wert": 1,
+    "abschnitte": 5
+   },
+   {
+    "wert": 3,
+    "abschnitte": 3
+   },
+   {
+    "wert": 4,
+    "abschnitte": 2
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 53
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 53
+   }
+  ],
+  "items": [
+   {
+    "von": "Lausanne",
+    "bis": "Lausanne Est",
+    "km_von": 0,
+    "km_bis": 0.519,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lausanne Est",
+    "bis": "Pully",
+    "km_von": 0.519,
+    "km_bis": 2.506,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pully",
+    "bis": "Lutry",
+    "km_von": 2.506,
+    "km_bis": 5.073,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lutry",
+    "bis": "Villette VD",
+    "km_von": 5.073,
+    "km_bis": 6.68,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Villette VD",
+    "bis": "Cully",
+    "km_von": 6.68,
+    "km_bis": 8.523,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Cully",
+    "bis": "Epesses",
+    "km_von": 8.523,
+    "km_bis": 9.978,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Epesses",
+    "bis": "Rivaz",
+    "km_von": 9.978,
+    "km_bis": 13.552,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rivaz",
+    "bis": "St-Saphorin",
+    "km_von": 13.552,
+    "km_bis": 14.55,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St-Saphorin",
+    "bis": "Vevey Ouest (bif)",
+    "km_von": 14.55,
+    "km_bis": 17.636,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vevey Ouest (bif)",
+    "bis": "Vevey",
+    "km_von": 17.636,
+    "km_bis": 18.398,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vevey",
+    "bis": "La Tour-de-Peilz",
+    "km_von": 18.398,
+    "km_bis": 19.902,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "La Tour-de-Peilz",
+    "bis": "Burier",
+    "km_von": 19.902,
+    "km_bis": 21.527,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Burier",
+    "bis": "Clarens",
+    "km_von": 21.527,
+    "km_bis": 23.095,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Clarens",
+    "bis": "Montreux",
+    "km_von": 23.095,
+    "km_bis": 24.537,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Montreux",
+    "bis": "Territet",
+    "km_von": 24.537,
+    "km_bis": 26.02,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Territet",
+    "bis": "Veytaux-Chillon",
+    "km_von": 26.02,
+    "km_bis": 27.09,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Veytaux-Chillon",
+    "bis": "Villeneuve VD",
+    "km_von": 27.09,
+    "km_bis": 29.342,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Villeneuve VD",
+    "bis": "Roche VD",
+    "km_von": 29.342,
+    "km_bis": 33.841,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Roche VD",
+    "bis": "Aigle",
+    "km_von": 33.841,
+    "km_bis": 39.312,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Aigle",
+    "bis": "St-Triphon",
+    "km_von": 39.312,
+    "km_bis": 43.599,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St-Triphon",
+    "bis": "Bex",
+    "km_von": 43.599,
+    "km_bis": 47.56,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bex",
+    "bis": "Les Paluds",
+    "km_von": 47.56,
+    "km_bis": 50.069,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Les Paluds",
+    "bis": "St-Maurice",
+    "km_von": 50.069,
+    "km_bis": 51.565,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St-Maurice",
+    "bis": "Evionnaz",
+    "km_von": 51.565,
+    "km_bis": 57.855,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Evionnaz",
+    "bis": "Vernayaz",
+    "km_von": 57.855,
+    "km_bis": 61.509,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vernayaz",
+    "bis": "Martigny",
+    "km_von": 61.509,
+    "km_bis": 66.496,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Martigny",
+    "bis": "Ranconnex",
+    "km_von": 66.496,
+    "km_bis": 70.046,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ranconnex",
+    "bis": "Charrat-Fully",
+    "km_von": 70.046,
+    "km_bis": 70.86,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Charrat-Fully",
+    "bis": "Saxon",
+    "km_von": 70.86,
+    "km_bis": 75.272,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Saxon",
+    "bis": "Riddes",
+    "km_von": 75.272,
+    "km_bis": 79.57,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Riddes",
+    "bis": "Chamoson-St-Pierre-de-Clages",
+    "km_von": 79.57,
+    "km_bis": 82.123,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chamoson-St-Pierre-de-Clages",
+    "bis": "Ardon",
+    "km_von": 82.123,
+    "km_bis": 85.306,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ardon",
+    "bis": "Châteauneuf-Conthey",
+    "km_von": 85.306,
+    "km_bis": 88.069,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Châteauneuf-Conthey",
+    "bis": "Sion",
+    "km_von": 88.069,
+    "km_bis": 92.432,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sion",
+    "bis": "St-Léonard",
+    "km_von": 92.432,
+    "km_bis": 98.153,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St-Léonard",
+    "bis": "Granges-Lens",
+    "km_von": 98.153,
+    "km_bis": 101.558,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Granges-Lens",
+    "bis": "Pramont",
+    "km_von": 101.558,
+    "km_bis": 102.307,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pramont",
+    "bis": "Sierre/Siders",
+    "km_von": 102.307,
+    "km_bis": 108.133,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sierre/Siders",
+    "bis": "Sierre/Siders (saut km)",
+    "km_von": 108.133,
+    "km_bis": 110.47,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sierre/Siders (saut km)",
+    "bis": "Salgesch",
+    "km_von": 110.47,
+    "km_bis": 112.253,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Salgesch",
+    "bis": "Leuk",
+    "km_von": 112.253,
+    "km_bis": 117.584,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Leuk",
+    "bis": "Leuk (Km-Sprung)",
+    "km_von": 117.584,
+    "km_bis": 118.838,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Leuk (Km-Sprung)",
+    "bis": "Turtmann",
+    "km_von": 118.838,
+    "km_bis": 122.111,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Turtmann",
+    "bis": "Gampel-Steg",
+    "km_von": 122.111,
+    "km_bis": 125.873,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gampel-Steg",
+    "bis": "Raron",
+    "km_von": 125.873,
+    "km_bis": 130.09,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Raron",
+    "bis": "St. German (Abzw)",
+    "km_von": 130.09,
+    "km_bis": 133.4,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. German (Abzw)",
+    "bis": "Baltschieder (Agl)",
+    "km_von": 133.4,
+    "km_bis": 135.902,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Baltschieder (Agl)",
+    "bis": "Visp",
+    "km_von": 135.902,
+    "km_bis": 136.659,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Visp",
+    "bis": "Gamsen SBB",
+    "km_von": 136.659,
+    "km_bis": 141.437,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gamsen SBB",
+    "bis": "Brig-Lötschberg (Abzw)",
+    "km_von": 141.437,
+    "km_bis": 145.246,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brig-Lötschberg (Abzw)",
+    "bis": "Brig",
+    "km_von": 145.246,
+    "km_bis": 145.549,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brig",
+    "bis": "Brig Tunnel",
+    "km_von": 145.549,
+    "km_bis": 147.15,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brig Tunnel",
+    "bis": "Staz. della Galleria Sempione",
+    "km_von": 147.15,
+    "km_bis": 156.01,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -1617,9 +2192,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -1660,6 +2235,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

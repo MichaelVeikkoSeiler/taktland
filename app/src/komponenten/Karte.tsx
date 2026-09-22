@@ -130,7 +130,7 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [] }: {
   const halbeBreite = gewaehlt ? gewaehlt.name.length * 3.4 * px : 0
   // Bahnhöfe der Linie an ihrem Kilometer; die Orte zur Orientierung nur, wo
   // nicht schon ein Bahnhof der Linie mit demselben Namen steht
-  const stationen = bahnhoefe.flatMap((b) => {
+  const stationen = [...bahnhoefe].sort((a, b) => a.km - b.km).flatMap((b) => {
     const p = punktBei(eigene, b.km)
     return p ? [{ ...b, x: p[0], y: p[1] }] : []
   })
@@ -210,8 +210,8 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [] }: {
         )}
       </svg>
       <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-        Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), ohne Strassen, Orte und
-        Grenzen.{' '}
+        Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), Linien anderer Bahnen aus
+        dem Schienennetz des BAV, ohne Strassen, Orte und Grenzen.{' '}
         {stationen.length > 0 && 'Ringe: die Bahnhöfe dieser Linie in Taktland an ihrem '
           + 'Kilometer, beschriftet der erste und der letzte. '}
         {art === 'tunnel' && objekte.length > 0

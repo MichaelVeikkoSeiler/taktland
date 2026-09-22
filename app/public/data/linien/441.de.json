@@ -1,0 +1,321 @@
+{
+  "linie": 441,
+  "name": "Langenthal - Huttwil",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 441 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Langenthal - Huttwil». Den kleinsten Kilometer hat dort der Betriebspunkt Langenthal mit km -0.035, den grössten Huttwil mit km 14.083.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Langenthal",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei",
+          "bahnhof": 8508100
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": -0.035,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Huttwil",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8508187
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 14.083,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:0fbcb099",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Huttwil, der grösste auf der Linie 441?",
+          "min": 11.5,
+          "max": 20.5,
+          "step": 0.1,
+          "unit": "km",
+          "correct": 14.083,
+          "explanation": "Huttwil liegt auf der Linie 441 bei km 14.083. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 441 9 Betriebspunkte. Davon sind 9 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 9,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 9,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Langenthal",
+          "value": -0.035,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8508100
+        },
+        {
+          "label": "Langenthal Süd",
+          "value": 1.533,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8508181
+        },
+        {
+          "label": "Lotzwil",
+          "value": 3.406,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8508182
+        },
+        {
+          "label": "Gutenburg",
+          "value": 4.367,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8508174
+        },
+        {
+          "label": "Madiswil",
+          "value": 6.034,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8508183
+        },
+        {
+          "label": "Lindenholz",
+          "value": 7.51,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8508184
+        },
+        {
+          "label": "Kleindietwil",
+          "value": 8.43,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8508185
+        },
+        {
+          "label": "Rohrbach",
+          "value": 10.529,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8508186
+        },
+        {
+          "label": "Huttwil",
+          "value": 14.083,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8508187
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:31c8229f",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 441, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Langenthal",
+              "value": -0.035,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Gutenburg",
+              "value": 4.367,
+              "factRef": "bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Lindenholz",
+              "value": 7.51,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Huttwil",
+              "value": 14.083,
+              "factRef": "bahnhoefe.items[8].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Langenthal bei km -0.035, Gutenburg bei km 4.367, Lindenholz bei km 7.51 und Huttwil bei km 14.083.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:f6e6f80f",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 441 liegt Lindenholz?",
+          "options": [
+            "-0.035 km",
+            "6.034 km",
+            "7.51 km",
+            "14.083 km"
+          ],
+          "correct": 2,
+          "explanation": "Lindenholz liegt auf der Linie 441 bei km 7.51.",
+          "factRef": "bahnhoefe.items[5].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 441 aus 8 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «BLSN». Infrastruktur: «BLSN» bei allen 8 erfassten Abschnitten. Streckengleise: 1 (7 Abschnitte), 2 (ein Abschnitt). Spurweite: 1435 mm bei allen 8 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 8 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "BLSN",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 8,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: BLSN",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 7,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 1,
+          "unit": "Abschnitt",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:82269da9",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 441 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 8 erfassten Abschnitte der Linie 441 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:996e1e95",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 441 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 441: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

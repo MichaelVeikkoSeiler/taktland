@@ -50,6 +50,221 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 17,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 17
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 9
+   },
+   {
+    "wert": 1,
+    "abschnitte": 3
+   },
+   {
+    "wert": 3,
+    "abschnitte": 3
+   },
+   {
+    "wert": 4,
+    "abschnitte": 2
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 17
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 17
+   }
+  ],
+  "items": [
+   {
+    "von": "Killwangen West (Abzw)",
+    "bis": "Heitersberglinie Ost (Abzw)",
+    "km_von": 16.519,
+    "km_bis": 17.485,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Heitersberglinie Ost (Abzw)",
+    "bis": "Langacher (Spw)",
+    "km_von": 17.485,
+    "km_bis": 17.834,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Langacher (Spw)",
+    "bis": "Mellingen Heitersberg",
+    "km_von": 17.834,
+    "km_bis": 22.24,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mellingen Heitersberg",
+    "bis": "Gruemet (Abzw)",
+    "km_von": 22.24,
+    "km_bis": 22.837,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gruemet (Abzw)",
+    "bis": "Mägenwil",
+    "km_von": 22.837,
+    "km_bis": 25.936,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mägenwil",
+    "bis": "Mägenwil West (Abzw)",
+    "km_von": 25.936,
+    "km_bis": 26.288,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mägenwil West (Abzw)",
+    "bis": "Othmarsingen",
+    "km_von": 26.288,
+    "km_bis": 27.68,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Othmarsingen",
+    "bis": "Gexi Ost (Abzw)",
+    "km_von": 27.68,
+    "km_bis": 30.01,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gexi Ost (Abzw)",
+    "bis": "Gexi",
+    "km_von": 30.01,
+    "km_bis": 30.211,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gexi",
+    "bis": "Lenzburg",
+    "km_von": 30.211,
+    "km_bis": 31.936,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lenzburg",
+    "bis": "Lenzburg West (Abzw)",
+    "km_von": 31.936,
+    "km_bis": 32.313,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lenzburg West (Abzw)",
+    "bis": "Rupperswil",
+    "km_von": 32.313,
+    "km_bis": 35.637,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rupperswil",
+    "bis": "Aarau GB",
+    "km_von": 35.637,
+    "km_bis": 40.309,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Aarau GB",
+    "bis": "Aarau",
+    "km_von": 40.309,
+    "km_bis": 41.506,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Aarau",
+    "bis": "Wöschnau Tunnel",
+    "km_von": 41.506,
+    "km_bis": 42.558,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wöschnau Tunnel",
+    "bis": "Wöschnau SBB",
+    "km_von": 42.558,
+    "km_bis": 43.3,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wöschnau SBB",
+    "bis": "Däniken Ost",
+    "km_von": 43.3,
+    "km_bis": 48.119,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -406,9 +621,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -449,6 +664,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

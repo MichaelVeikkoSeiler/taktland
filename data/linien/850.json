@@ -100,6 +100,273 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 23,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 23
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 21
+   },
+   {
+    "wert": 3,
+    "abschnitte": 2
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 23
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 23
+   }
+  ],
+  "items": [
+   {
+    "von": "St. Gallen",
+    "bis": "St. Gallen West (Abzw)",
+    "km_von": 80.456,
+    "km_bis": 81.554,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Gallen West (Abzw)",
+    "bis": "St. Gallen Bruggen",
+    "km_von": 81.554,
+    "km_bis": 84.047,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Gallen Bruggen",
+    "bis": "St. Gallen Winkeln",
+    "km_von": 84.047,
+    "km_bis": 86.382,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Gallen Winkeln",
+    "bis": "Gossau SG",
+    "km_von": 86.382,
+    "km_bis": 90.127,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gossau SG",
+    "bis": "Burgau Deponie ZAB (Agl)",
+    "km_von": 90.127,
+    "km_bis": 93.219,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Burgau Deponie ZAB (Agl)",
+    "bis": "Flawil",
+    "km_von": 93.219,
+    "km_bis": 95.326,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Flawil",
+    "bis": "Uzwil",
+    "km_von": 95.326,
+    "km_bis": 100.936,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Uzwil",
+    "bis": "Algetshausen-Henau",
+    "km_von": 100.936,
+    "km_bis": 103.233,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Algetshausen-Henau",
+    "bis": "Schwarzenbach SG",
+    "km_von": 103.233,
+    "km_bis": 106.72,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schwarzenbach SG",
+    "bis": "Wil Süd (Abzw)",
+    "km_von": 106.72,
+    "km_bis": 109.101,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wil Süd (Abzw)",
+    "bis": "Wil SG",
+    "km_von": 109.101,
+    "km_bis": 110.621,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wil SG",
+    "bis": "Sirnach",
+    "km_von": 110.621,
+    "km_bis": 113.832,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sirnach",
+    "bis": "Eschlikon TG",
+    "km_von": 113.832,
+    "km_bis": 117.447,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eschlikon TG",
+    "bis": "Guntershausen",
+    "km_von": 117.447,
+    "km_bis": 120.95,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Guntershausen",
+    "bis": "Aadorf",
+    "km_von": 120.95,
+    "km_bis": 122.898,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Aadorf",
+    "bis": "Elgg",
+    "km_von": 122.898,
+    "km_bis": 126.147,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Elgg",
+    "bis": "Schneit",
+    "km_von": 126.147,
+    "km_bis": 127.484,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schneit",
+    "bis": "Schottikon",
+    "km_von": 127.484,
+    "km_bis": 130.506,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schottikon",
+    "bis": "Räterschen",
+    "km_von": 130.506,
+    "km_bis": 131.839,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Räterschen",
+    "bis": "Winterthur Hegi",
+    "km_von": 131.839,
+    "km_bis": 133.898,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Winterthur Hegi",
+    "bis": "Winterthur Grüze",
+    "km_von": 133.898,
+    "km_bis": 135.291,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Winterthur Grüze",
+    "bis": "Schwalmenacker (Spw)",
+    "km_von": 135.291,
+    "km_bis": 136.481,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schwalmenacker (Spw)",
+    "bis": "Winterthur Nord",
+    "km_von": 136.481,
+    "km_bis": 137.463,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "bruecken": {
   "source": "brucken",
   "hinweis": "Name, Kilometer und Kanton wie in der Quelle. Eine Brücke besteht aus einer oder mehreren Baueinheiten; Länge und Baujahr fehlen.",
@@ -619,9 +886,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -667,6 +934,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "bruecken",
   "bahnuebergaenge"
  ]

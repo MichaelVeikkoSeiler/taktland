@@ -110,6 +110,273 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 23,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 23
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 18
+   },
+   {
+    "wert": 1,
+    "abschnitte": 5
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 23
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 23
+   }
+  ],
+  "items": [
+   {
+    "von": "Thalwil",
+    "bis": "Oberrieden Dorf",
+    "km_von": 12.094,
+    "km_bis": 14.518,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberrieden Dorf",
+    "bis": "Horgen Oberdorf",
+    "km_von": 14.518,
+    "km_bis": 16.813,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Horgen Oberdorf",
+    "bis": "Sihlbrugg",
+    "km_von": 16.813,
+    "km_bis": 19.912,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sihlbrugg",
+    "bis": "Litti (Baar)",
+    "km_von": 19.912,
+    "km_bis": 24.516,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Litti (Baar)",
+    "bis": "Baar",
+    "km_von": 24.516,
+    "km_bis": 26.608,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Baar",
+    "bis": "Baar Neufeld",
+    "km_von": 26.608,
+    "km_bis": 27.56,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Baar Neufeld",
+    "bis": "Baar Lindenpark",
+    "km_von": 27.56,
+    "km_bis": 28.158,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Baar Lindenpark",
+    "bis": "Zug Nord (Abzw)",
+    "km_von": 28.158,
+    "km_bis": 28.718,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zug Nord (Abzw)",
+    "bis": "Zug",
+    "km_von": 28.718,
+    "km_bis": 38.829,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zug",
+    "bis": "Zug Schutzengel",
+    "km_von": 38.829,
+    "km_bis": 39.475,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zug Schutzengel",
+    "bis": "Zug Chollermüli",
+    "km_von": 39.475,
+    "km_bis": 41.196,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zug Chollermüli",
+    "bis": "Kollermühle (Abzw)",
+    "km_von": 41.196,
+    "km_bis": 41.425,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kollermühle (Abzw)",
+    "bis": "Cham Alpenblick",
+    "km_von": 41.425,
+    "km_bis": 42.425,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Cham Alpenblick",
+    "bis": "Cham",
+    "km_von": 42.425,
+    "km_bis": 43.574,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Cham",
+    "bis": "Hünenberg Zythus",
+    "km_von": 43.574,
+    "km_bis": 44.355,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hünenberg Zythus",
+    "bis": "Hünenberg Chämleten",
+    "km_von": 44.355,
+    "km_bis": 44.855,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hünenberg Chämleten",
+    "bis": "Rotkreuz",
+    "km_von": 44.855,
+    "km_bis": 49,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rotkreuz",
+    "bis": "Gisikon-Root",
+    "km_von": 49,
+    "km_bis": 52.823,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gisikon-Root",
+    "bis": "Root D4",
+    "km_von": 52.823,
+    "km_bis": 55.263,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Root D4",
+    "bis": "Buchrain",
+    "km_von": 55.263,
+    "km_bis": 57.065,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Buchrain",
+    "bis": "Ebikon",
+    "km_von": 57.065,
+    "km_bis": 58.58,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ebikon",
+    "bis": "Rotsee (Verzw)",
+    "km_von": 58.58,
+    "km_bis": 60.64,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rotsee (Verzw)",
+    "bis": "Fluhmühle (Abzw)",
+    "km_von": 60.64,
+    "km_bis": 64.009,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -727,9 +994,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -770,6 +1037,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

@@ -30,6 +30,237 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "RBS",
+  "abschnitte_erfasst": 19,
+  "nach_isb": [
+   {
+    "wert": "RBS",
+    "abschnitte": 19
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 10
+   },
+   {
+    "wert": 1,
+    "abschnitte": 9
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 17
+   },
+   {
+    "wert": "1000 mm und 1435 mm",
+    "abschnitte": 2
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Gleichstrom",
+    "abschnitte": 19
+   }
+  ],
+  "items": [
+   {
+    "von": "Solothurn [Gleis 9-10]",
+    "bis": "Biberist RBS",
+    "km_von": 0,
+    "km_bis": 3,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Biberist RBS",
+    "bis": "Lohn-Lüterkofen",
+    "km_von": 3,
+    "km_bis": 6.15,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Lohn-Lüterkofen",
+    "bis": "Bätterkinden",
+    "km_von": 6.15,
+    "km_bis": 9.98,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Bätterkinden",
+    "bis": "Schalunen",
+    "km_von": 9.98,
+    "km_bis": 11.43,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Schalunen",
+    "bis": "Büren zum Hof",
+    "km_von": 11.43,
+    "km_bis": 13.97,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Büren zum Hof",
+    "bis": "Fraubrunnen",
+    "km_von": 13.97,
+    "km_bis": 15.05,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Fraubrunnen",
+    "bis": "Grafenried",
+    "km_von": 15.05,
+    "km_bis": 16.25,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Grafenried",
+    "bis": "Jegenstorf",
+    "km_von": 16.25,
+    "km_bis": 20.03,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Jegenstorf",
+    "bis": "Urtenen",
+    "km_von": 20.03,
+    "km_bis": 22.21,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Urtenen",
+    "bis": "Schönbühl RBS",
+    "km_von": 22.21,
+    "km_bis": 23.17,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Schönbühl RBS",
+    "bis": "Schönbühl Shoppyland",
+    "km_von": 23.17,
+    "km_bis": 23.56,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Schönbühl Shoppyland",
+    "bis": "Moosseedorf",
+    "km_von": 23.56,
+    "km_bis": 24.37,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Moosseedorf",
+    "bis": "Zollikofen [Gleis 21-22]",
+    "km_von": 24.37,
+    "km_bis": 26.85,
+    "isb": "RBS",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Zollikofen [Gleis 21-22]",
+    "bis": "Oberzollikofen",
+    "km_von": 26.85,
+    "km_bis": 27.41,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm und 1435 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Oberzollikofen",
+    "bis": "Worblaufen",
+    "km_von": 27.41,
+    "km_bis": 29.71,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm und 1435 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Worblaufen",
+    "bis": "Worblaufen (Verzw)",
+    "km_von": 29.71,
+    "km_bis": 29.862,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Worblaufen (Verzw)",
+    "bis": "Bern Tiefenau",
+    "km_von": 29.862,
+    "km_bis": 30.74,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Bern Tiefenau",
+    "bis": "Bern Felsenau",
+    "km_von": 30.74,
+    "km_bis": 31.32,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Bern Felsenau",
+    "bis": "Bern RBS",
+    "km_von": 31.32,
+    "km_bis": 33.62,
+    "isb": "RBS",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   }
+  ]
+ },
  "luecken": [
   {
    "thema": "Länge der Linie",
@@ -42,9 +273,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Brücken",
@@ -69,6 +300,7 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
-  "bahnhoefe"
+  "bahnhoefe",
+  "netz"
  ]
 }

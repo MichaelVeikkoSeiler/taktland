@@ -1,0 +1,406 @@
+{
+  "linie": 140,
+  "name": "Brig - Visp - Zermatt",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "brucken",
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 140 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Brig - Visp - Zermatt». Den kleinsten Kilometer hat dort der Betriebspunkt Brig Bahnhofplatz mit km 0, den grössten Zermatt mit km 43.98.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Brig Bahnhofplatz",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Zermatt",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8501689
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 43.98,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:6ca3f097",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Zermatt, der grösste auf der Linie 140?",
+          "min": 36,
+          "max": 64,
+          "step": 1,
+          "unit": "km",
+          "correct": 43.98,
+          "explanation": "Zermatt liegt auf der Linie 140 bei km 43.98. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 140 19 Betriebspunkte. Davon sind 8 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 19,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 8,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Eyholz",
+          "value": 6.16,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501636
+        },
+        {
+          "label": "Stalden-Saas",
+          "value": 16.26,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8501683
+        },
+        {
+          "label": "Kalpetran",
+          "value": 19.77,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501684
+        },
+        {
+          "label": "St. Niklaus VS",
+          "value": 24.97,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501685
+        },
+        {
+          "label": "Herbriggen",
+          "value": 30.57,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501686
+        },
+        {
+          "label": "Randa",
+          "value": 34.59,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8501687
+        },
+        {
+          "label": "Täsch",
+          "value": 38.37,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8501688
+        },
+        {
+          "label": "Zermatt",
+          "value": 43.98,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8501689
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:004bcc08",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 140, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Eyholz",
+              "value": 6.16,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Kalpetran",
+              "value": 19.77,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Randa",
+              "value": 34.59,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Zermatt",
+              "value": 43.98,
+              "factRef": "bahnhoefe.items[7].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Eyholz bei km 6.16, Kalpetran bei km 19.77, Randa bei km 34.59 und Zermatt bei km 43.98.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:f5e30cc6",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 140 liegt Herbriggen?",
+          "options": [
+            "6.16 km",
+            "24.97 km",
+            "30.57 km",
+            "43.98 km"
+          ],
+          "correct": 2,
+          "explanation": "Herbriggen liegt auf der Linie 140 bei km 30.57.",
+          "factRef": "bahnhoefe.items[4].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 140 aus 18 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «MGB». Infrastruktur: «MGB» bei allen 18 erfassten Abschnitten. Streckengleise: 1 bei allen 18 erfassten Abschnitten. Spurweite: 1000 mm bei allen 18 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 18 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "MGB",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 18,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: MGB",
+          "value": 18,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 18,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 18,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 18,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:c5cfce26",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 140 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 2,
+          "explanation": "Alle 18 erfassten Abschnitte der Linie 140 haben die Spurweite 1000 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:efa48ef8",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 140 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 140: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bruecken",
+      "title": "Brücken",
+      "body": "Für die Linie 140 sind 2 Brücken erfasst. Als Kanton ist bei jeder erfassten Brücke «Valais» eingetragen. Aus den meisten Baueinheiten, 4, besteht SU Lonzastrasse.",
+      "facts": [
+        {
+          "label": "Erfasste Brücken",
+          "value": 2,
+          "source": "brucken",
+          "factRef": "bruecken.anzahl_erfasst",
+          "liste": "bruecken"
+        },
+        {
+          "label": "SU Lonzastrasse",
+          "value": 4,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[1].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 1
+        },
+        {
+          "label": "PU Lonza",
+          "value": 2,
+          "unit": "Baueinheiten",
+          "source": "brucken",
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
+        }
+      ],
+      "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
+      "questions": [
+        {
+          "id": "bruecken:32770942",
+          "type": "single_choice",
+          "prompt": "Wie viele Brücken sind für die Linie 140 erfasst?",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "6"
+          ],
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "factRef": "bruecken.anzahl_erfasst",
+          "difficulty": 1,
+          "optionen_aus_fakten": true
+        },
+        {
+          "id": "bruecken:117b34fc",
+          "type": "single_choice",
+          "prompt": "Welche dieser Brücken besteht laut den Daten aus den meisten Baueinheiten?",
+          "options": [
+            "PU Lonza",
+            "SU Lonzastrasse"
+          ],
+          "correct": 1,
+          "explanation": "SU Lonzastrasse besteht aus 4 Baueinheiten, PU Lonza aus 2.",
+          "factRef": "bruecken.items[1].name",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 8 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 19 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge und Baujahr der Brücken",
+      "grund": "Länge und Baujahr der Brücken stehen nicht in den offenen Daten. Erfasst sind Name, Kilometer, Kanton und die Zahl der Baueinheiten.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Namen der Brücken",
+      "grund": "Die Namen stehen wie in der Quelle, oft mit Abkürzungen wie «PI», «PU» oder «WU». Was diese bedeuten, erklärt die Quelle nicht.",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Stand der Brückendaten",
+      "grund": "Die Beschreibung der Quelle nennt als letzte Aktualisierung auf Deutsch «Januar 24», auf Englisch «Jan 2026».",
+      "quelle": "brucken"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ],
+  "listen": {
+    "bruecken": [
+      {
+        "name": "PU Lonza",
+        "km": 8.794,
+        "baueinheiten": 2,
+        "kanton": "Valais"
+      },
+      {
+        "name": "SU Lonzastrasse",
+        "km": 8.807,
+        "baueinheiten": 4,
+        "kanton": "Valais"
+      }
+    ]
+  }
+}

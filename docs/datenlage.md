@@ -127,9 +127,54 @@ Im Katalog von data.sbb.ch (60 Datensätze, geprüft 2026-09-21) steht zu Streck
   Rückmeldung der effektiven Ankunftszeit»). Zweimal steht 0 gekreuzte Gleise, das gilt
   als nicht erfasst. Laut Beschreibung wöchentlich aktualisiert.
 
-**Nicht in den offenen Daten:** die Länge einer Linie, ein Bau- oder Eröffnungsjahr der
-Linie, ob sie ein- oder mehrspurig ist (nur das Tunnelsystem sagt es, und nur für den
-Tunnel). Die Linienseiten führen das als Lücke.
+**Nicht in den offenen Daten:** die Länge einer Linie und ein Bau- oder Eröffnungsjahr der
+Linie. Die Linienseiten führen das als Lücke. Ob eine Linie ein- oder mehrspurig ist, steht
+nicht in den Daten der SBB, wohl aber im Schienennetz des BAV (nächster Abschnitt).
+
+## Schienennetz des BAV: Linien anderer Bahnen und Kapitel «Netz»
+
+Die Daten der SBB führen ihre eigenen Linien und nur Teile weniger anderer (920 der RhB):
+408 der 1175 Bahnhöfe liegen dort auf keiner Linie, fast alle anderer Bahnen (Ins, Spiez,
+die RhB). Das «Schienennetz» des
+Bundesamts für Verkehr (`ch.bav.schienennetz`, data.geo.admin.ch, Lizenz Opendata BY:
+freie Nutzung, Quellenangabe Pflicht) beschreibt die Linien aller Bahnen. Geladen mit
+`pipeline/fetch_schienennetz.py` (INTERLIS-Datei, deutsch, 30.9 MB, nicht in Git), gelesen
+mit `pipeline/schienennetz.py`.
+
+- **Stand:** Die Datei trägt `ENDSTATE="2021-07-06"`, jedes Objekt «Stand 2021-07-06». Beim
+  BAV geändert wurde die Datei am 15.9.2025, der Inhalt ist von 2021. Die App nennt 2021.
+- **Inhalt:** 460 Linien (KmLinie: Datenherr, Nummer, Name), 3210 Knoten (Betriebspunkt mit
+  Nummer wie die UIC der Bahnhöfe, Name, Abkürzung, Lage in LV95), 3424 Segmente (km Anfang
+  und Ende, Infrastrukturbetreiberin, Streckengleise, Spurweite, Elektrifizierung,
+  Linienzug). Jede Nummer kommt nur einmal vor, auch über die Bahnen hinweg. 1169 der 1175
+  Bahnhöfe sind Knoten.
+- **Tramlinien** (VBZ, BVB, Bernmobil, TPG, BLT, Glattalbahn: 126 Linien) tragen Nummern mit
+  Buchstaben («Z021», «T003») und berühren keinen Bahnhof aus Taktland. Sie sind
+  ausgeschlossen, auch auf der Seite «Strecke».
+- **Neue Linienseiten:** 44 Linien, die in den Daten der SBB fehlen, mit mindestens zwei
+  Bahnhöfen aus Taktland: BLSN 13, SOB 8, RhB 7, MVR 4, zb 3, MGB 2, MOB 2, je eine
+  cmBC, TPFH, OeBB, ETB, KWO. Das Kürzel ist der Datenherr, wie er in der Quelle steht.
+  Anfang und Ende nennt das Schienennetz nicht: Die Seite nennt die Betriebspunkte mit dem
+  kleinsten und dem grössten Kilometer. Tunnel, Brücken und Bahnübergänge führt nur die SBB.
+  Im Linien-Duell treten diese Linien nicht an, ihre Zählungen stammen aus einer anderen
+  Quelle.
+- **Kapitel «Netz»** auf 150 Linien (allen, die das Schienennetz führt; es fehlen 235, 241,
+  9210, 9250, 9660): je Abschnitt Streckengleise, Spurweite, Strom und
+  Infrastrukturbetreiberin, gezählt in der Pipeline. Die Lücke «Ein- oder mehrspurig» fällt
+  dort weg, dafür steht «Stand des Schienennetzes».
+- **Weitere Bahnhöfe laut BAV** auf 6 Linien der SBB (220, 201, 290, 770, 853, 920):
+  Bahnhöfe, die das Schienennetz auf der Linie führt, die SBB aber nicht (Ins auf 220, 22
+  Bahnhöfe auf der RhB-Linie 920).
+- **Kilometer:** 21 von 3884 Punkten liegen auf derselben Linie bei zwei Kilometern (Horw
+  4.485 und 4.524); es gilt der kleinere.
+- **Strecke:** Abschnitte anderer Bahnen erhalten die Linie des Schienennetzes, wenn dort
+  genau eine Linie beide Enden führt: 201 von 261. Ins – Müntschemier liegt auf 220;
+  Müntschemier – Kerzers nicht, weil die Linie 220 dort über «Kerzers BLS» führt, einen
+  eigenen Betriebspunkt neben «Kerzers».
+- **Karte:** Linien mit Seite, die die Kilometrierung der SBB nicht oder nur zum Teil kennt,
+  zeichnet `build_karte.py` aus den Segmenten (254 Stücke). Deren Kilometer ist nur an den
+  Enden erfasst und dazwischen nach dem Weg verteilt, nur für die Lage der Bahnhöfe auf der
+  Karte. Umrechnung LV95 → WGS84 mit der Näherungsformel von swisstopo (etwa 1 m).
 
 **Grauzone:** In `zugzahlen` ergibt Trassenkilometer geteilt durch Anzahl Züge bei 98 %
 der Abschnitte immer denselben Wert, sehr wahrscheinlich die Länge des Abschnitts. Die

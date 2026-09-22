@@ -160,6 +160,539 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 48,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 48
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 35
+   },
+   {
+    "wert": 4,
+    "abschnitte": 5
+   },
+   {
+    "wert": 3,
+    "abschnitte": 4
+   },
+   {
+    "wert": 1,
+    "abschnitte": 2
+   },
+   {
+    "wert": 5,
+    "abschnitte": 1
+   },
+   {
+    "wert": 6,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 48
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 48
+   }
+  ],
+  "items": [
+   {
+    "von": "Basel SBB",
+    "bis": "Basel SBB Ost (Abzw)",
+    "km_von": 0,
+    "km_bis": 0.531,
+    "isb": "SBB CFF FFS",
+    "gleise": 6,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Basel SBB Ost (Abzw)",
+    "bis": "Basel SBB Nordost (Abzw)",
+    "km_von": 0.531,
+    "km_bis": 1.136,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Basel SBB Nordost (Abzw)",
+    "bis": "Gellert West (Abzw)",
+    "km_von": 1.136,
+    "km_bis": 1.518,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gellert West (Abzw)",
+    "bis": "Muttenz",
+    "km_von": 1.518,
+    "km_bis": 4.839,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Muttenz",
+    "bis": "Muttenz Ost (Abzw)",
+    "km_von": 4.839,
+    "km_bis": 5.586,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Muttenz Ost (Abzw)",
+    "bis": "Pratteln West",
+    "km_von": 5.586,
+    "km_bis": 6.861,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pratteln West",
+    "bis": "Pratteln Ueberwerfung",
+    "km_von": 6.861,
+    "km_bis": 7.45,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pratteln Ueberwerfung",
+    "bis": "Pratteln",
+    "km_von": 7.45,
+    "km_bis": 8.338,
+    "isb": "SBB CFF FFS",
+    "gleise": 5,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pratteln",
+    "bis": "Pratteln Ost (Abzw)",
+    "km_von": 8.338,
+    "km_bis": 8.7,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pratteln Ost (Abzw)",
+    "bis": "Frenkendorf-Füllinsdorf",
+    "km_von": 8.7,
+    "km_bis": 12.2,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Frenkendorf-Füllinsdorf",
+    "bis": "Liestal Nord (Abzw)",
+    "km_von": 12.2,
+    "km_bis": 13.833,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Liestal Nord (Abzw)",
+    "bis": "Liestal",
+    "km_von": 13.833,
+    "km_bis": 14.376,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Liestal",
+    "bis": "Lausen",
+    "km_von": 14.376,
+    "km_bis": 17.041,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lausen",
+    "bis": "Itingen",
+    "km_von": 17.041,
+    "km_bis": 19.151,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Itingen",
+    "bis": "Sissach",
+    "km_von": 19.151,
+    "km_bis": 21.105,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sissach",
+    "bis": "Gelterkinden",
+    "km_von": 21.105,
+    "km_bis": 24.053,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gelterkinden",
+    "bis": "Tecknau",
+    "km_von": 24.053,
+    "km_bis": 28.16,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Tecknau",
+    "bis": "Hauenstein Nord (Spw)",
+    "km_von": 28.16,
+    "km_bis": 31.424,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hauenstein Nord (Spw)",
+    "bis": "Hauenstein Süd (Spw)",
+    "km_von": 31.424,
+    "km_bis": 34.035,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hauenstein Süd (Spw)",
+    "bis": "Olten Tunnel (Spw)",
+    "km_von": 34.035,
+    "km_bis": 36.614,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Olten Tunnel (Spw)",
+    "bis": "Olten Nord (Abzw)",
+    "km_von": 36.614,
+    "km_bis": 37.44,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Olten Nord (Abzw)",
+    "bis": "Olten",
+    "km_von": 37.44,
+    "km_bis": 39.292,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Olten",
+    "bis": "Olten Süd (Abzw)",
+    "km_von": 39.292,
+    "km_bis": 40,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Olten Süd (Abzw)",
+    "bis": "Aarburg-Oftringen",
+    "km_von": 40,
+    "km_bis": 43.005,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Aarburg-Oftringen",
+    "bis": "Aarburg-Oftringen Süd (Abzw)",
+    "km_von": 43.005,
+    "km_bis": 44,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Aarburg-Oftringen Süd (Abzw)",
+    "bis": "Zofingen Nord (Abzw)",
+    "km_von": 44,
+    "km_bis": 47.05,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zofingen Nord (Abzw)",
+    "bis": "Zofingen",
+    "km_von": 47.05,
+    "km_bis": 47.462,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zofingen",
+    "bis": "Brittnau-Wikon",
+    "km_von": 47.462,
+    "km_bis": 50.476,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brittnau-Wikon",
+    "bis": "Reiden",
+    "km_von": 50.476,
+    "km_bis": 52.994,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Reiden",
+    "bis": "Dagmersellen",
+    "km_von": 52.994,
+    "km_bis": 55.804,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dagmersellen",
+    "bis": "Nebikon",
+    "km_von": 55.804,
+    "km_bis": 58.74,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Nebikon",
+    "bis": "Wauwil",
+    "km_von": 58.74,
+    "km_bis": 62.53,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wauwil",
+    "bis": "St. Erhard-Knutwil",
+    "km_von": 62.53,
+    "km_bis": 66.804,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St. Erhard-Knutwil",
+    "bis": "Sursee (Abzw)",
+    "km_von": 66.804,
+    "km_bis": 68.647,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sursee (Abzw)",
+    "bis": "Sursee",
+    "km_von": 68.647,
+    "km_bis": 69.036,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sursee",
+    "bis": "Oberkirch LU",
+    "km_von": 69.036,
+    "km_bis": 71.166,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberkirch LU",
+    "bis": "Nottwil",
+    "km_von": 71.166,
+    "km_bis": 73.783,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Nottwil",
+    "bis": "Sempach-Neuenkirch",
+    "km_von": 73.783,
+    "km_bis": 78.992,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sempach-Neuenkirch",
+    "bis": "Rothenburg",
+    "km_von": 78.992,
+    "km_bis": 84.549,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rothenburg",
+    "bis": "Rothenburg Dorf",
+    "km_von": 84.549,
+    "km_bis": 86.995,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rothenburg Dorf",
+    "bis": "Hübeli LU",
+    "km_von": 86.995,
+    "km_bis": 88.45,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hübeli LU",
+    "bis": "Emmenbrücke Gersag",
+    "km_von": 88.45,
+    "km_bis": 89.155,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Emmenbrücke Gersag",
+    "bis": "Emmenbrücke",
+    "km_von": 89.155,
+    "km_bis": 90.186,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Emmenbrücke",
+    "bis": "Fluhmühle (Abzw)",
+    "km_von": 90.186,
+    "km_bis": 91.821,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fluhmühle (Abzw)",
+    "bis": "Gütsch (Abzw)",
+    "km_von": 91.821,
+    "km_bis": 92.846,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gütsch (Abzw)",
+    "bis": "Heimbach (Spw)",
+    "km_von": 92.846,
+    "km_bis": 93.36,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Heimbach (Spw)",
+    "bis": "Luzern Einfahrt (Abzw)",
+    "km_von": 93.36,
+    "km_bis": 94.466,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Luzern Einfahrt (Abzw)",
+    "bis": "Luzern",
+    "km_von": 94.466,
+    "km_bis": 95.093,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -1214,9 +1747,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -1257,6 +1790,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

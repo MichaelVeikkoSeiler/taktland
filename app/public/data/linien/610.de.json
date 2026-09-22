@@ -1,0 +1,509 @@
+{
+  "linie": 610,
+  "name": "Brig - Andermatt - Disentis",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 610 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Brig - Andermatt - Disentis». Den kleinsten Kilometer hat dort der Betriebspunkt Brig Bahnhofplatz mit km 0, den grössten Disentis/Mustér mit km 96.94.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Brig Bahnhofplatz",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Disentis/Mustér",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei",
+          "bahnhof": 8509179
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 96.94,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:52cef27a",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Disentis/Mustér, der grösste auf der Linie 610?",
+          "min": 79,
+          "max": 141,
+          "step": 1,
+          "unit": "km",
+          "correct": 96.94,
+          "explanation": "Disentis/Mustér liegt auf der Linie 610 bei km 96.94. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 610 33 Betriebspunkte. Davon sind 32 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 33,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 32,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Bitsch",
+          "value": 3.85,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8501677
+        },
+        {
+          "label": "Mörel",
+          "value": 7.21,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8501676
+        },
+        {
+          "label": "Bettmeralp Talstation",
+          "value": 10.22,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8501675
+        },
+        {
+          "label": "Grengiols",
+          "value": 11.59,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8501674
+        },
+        {
+          "label": "Lax",
+          "value": 14.75,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8501673
+        },
+        {
+          "label": "Fiesch Feriendorf",
+          "value": 16.6,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8501729
+        },
+        {
+          "label": "Fiesch",
+          "value": 17.27,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8501672
+        },
+        {
+          "label": "Fürgangen-Bellwald Talstation",
+          "value": 20.4,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8501671
+        },
+        {
+          "label": "Niederwald",
+          "value": 24.4,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8501670
+        },
+        {
+          "label": "Blitzingen",
+          "value": 26.12,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8501669
+        },
+        {
+          "label": "Biel (Goms)",
+          "value": 27.87,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8501668
+        },
+        {
+          "label": "Gluringen",
+          "value": 29.4,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8501667
+        },
+        {
+          "label": "Reckingen VS",
+          "value": 30.56,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8501666
+        },
+        {
+          "label": "Münster VS",
+          "value": 33.28,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8501665
+        },
+        {
+          "label": "Geschinen",
+          "value": 34.72,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8501664
+        },
+        {
+          "label": "Ulrichen",
+          "value": 37.27,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8501663
+        },
+        {
+          "label": "Obergesteln",
+          "value": 38.98,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[16].km",
+          "uic": 8501662
+        },
+        {
+          "label": "Oberwald",
+          "value": 41.33,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[17].km",
+          "uic": 8501661
+        },
+        {
+          "label": "Realp",
+          "value": 59.39,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[18].km",
+          "uic": 8505163
+        },
+        {
+          "label": "Hospental",
+          "value": 65.39,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[19].km",
+          "uic": 8505164
+        },
+        {
+          "label": "Andermatt",
+          "value": 67.94,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[20].km",
+          "uic": 8505165
+        },
+        {
+          "label": "Nätschen",
+          "value": 72.42,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[21].km",
+          "uic": 8505170
+        },
+        {
+          "label": "Oberalppass",
+          "value": 77.66,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[22].km",
+          "uic": 8505172
+        },
+        {
+          "label": "Tschamut-Selva",
+          "value": 81.52,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[23].km",
+          "uic": 8505173
+        },
+        {
+          "label": "Dieni",
+          "value": 85,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[24].km",
+          "uic": 8505174
+        },
+        {
+          "label": "Rueras",
+          "value": 86.41,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[25].km",
+          "uic": 8505175
+        },
+        {
+          "label": "Sedrun",
+          "value": 87.77,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[26].km",
+          "uic": 8505176
+        },
+        {
+          "label": "Bugnei",
+          "value": 89.87,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[27].km",
+          "uic": 8505177
+        },
+        {
+          "label": "Mumpé Tujetsch",
+          "value": 92.16,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[28].km",
+          "uic": 8505178
+        },
+        {
+          "label": "Segnas",
+          "value": 94,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[29].km",
+          "uic": 8505179
+        },
+        {
+          "label": "Acla da Fontauna",
+          "value": 95,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[30].km",
+          "uic": 8505180
+        },
+        {
+          "label": "Disentis/Mustér",
+          "value": 96.94,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[31].km",
+          "uic": 8509179
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:fa0be3ea",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 610, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Bitsch",
+              "value": 3.85,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Niederwald",
+              "value": 24.4,
+              "factRef": "bahnhoefe.items[8].km"
+            },
+            {
+              "label": "Oberwald",
+              "value": 41.33,
+              "factRef": "bahnhoefe.items[17].km"
+            },
+            {
+              "label": "Disentis/Mustér",
+              "value": 96.94,
+              "factRef": "bahnhoefe.items[31].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Bitsch bei km 3.85, Niederwald bei km 24.4, Oberwald bei km 41.33 und Disentis/Mustér bei km 96.94.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:73b20dc2",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 610 liegt Reckingen VS?",
+          "options": [
+            "3.85 km",
+            "30.56 km",
+            "34.72 km",
+            "96.94 km"
+          ],
+          "correct": 1,
+          "explanation": "Reckingen VS liegt auf der Linie 610 bei km 30.56.",
+          "factRef": "bahnhoefe.items[12].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 610 aus 32 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «MGB». Infrastruktur: «MGI» bei allen 32 erfassten Abschnitten. Streckengleise: 1 (31 Abschnitte), 2 (ein Abschnitt). Spurweite: 1000 mm bei allen 32 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 32 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "MGB",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 32,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: MGI",
+          "value": 32,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 31,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 1,
+          "unit": "Abschnitt",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 32,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 32,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:8b1d0bb8",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 610 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 2,
+          "explanation": "Alle 32 erfassten Abschnitte der Linie 610 haben die Spurweite 1000 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:b9671af9",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 610 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 610: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 32 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 33 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

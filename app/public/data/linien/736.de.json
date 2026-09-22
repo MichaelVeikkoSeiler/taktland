@@ -8,6 +8,7 @@
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
+    "schienennetz",
     "tunnel"
   ],
   "chapters": [
@@ -254,6 +255,86 @@
       ]
     },
     {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 736 aus 15 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «SBB CFF FFS». Infrastruktur: «SBB CFF FFS» bei allen 15 erfassten Abschnitten. Streckengleise: 1 bei allen 15 erfassten Abschnitten. Spurweite: 1435 mm bei allen 15 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 15 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "SBB CFF FFS",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 15,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: SBB CFF FFS",
+          "value": 15,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 15,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 15,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 15,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:8b9df7af",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 736 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 15 erfassten Abschnitte der Linie 736 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:e5f066a3",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 736 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 736: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
       "id": "tunnel",
       "title": "Tunnel",
       "body": "Für die Linie 736 ist 1 Tunnel erfasst: Erlenrunstunnel, 45 Meter, erstmals in Betrieb 1879, Tunnelsystem «1-Röhre / 1-Spur».",
@@ -394,7 +475,7 @@
           "type": "single_choice",
           "prompt": "Wie viele Brücken sind für die Linie 736 erfasst?",
           "options": [
-            "15",
+            "11",
             "21",
             "27",
             "38"
@@ -585,9 +666,9 @@
       "quelle": "linie, tunnel"
     },
     {
-      "thema": "Ein- oder mehrspurig",
-      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-      "quelle": "linie, tunnel"
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
     },
     {
       "thema": "Weitere Betriebspunkte",

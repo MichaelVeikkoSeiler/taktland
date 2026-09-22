@@ -5,7 +5,8 @@
   "generated": "2026-09-22",
   "sources": [
     "linie",
-    "linie-mit-betriebspunkten"
+    "linie-mit-betriebspunkten",
+    "schienennetz"
   ],
   "chapters": [
     {
@@ -108,6 +109,85 @@
           "optionen_aus_fakten": true
         }
       ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 292 aus 19 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «RBS». Infrastruktur: «RBS» bei allen 19 erfassten Abschnitten. Streckengleise: 2 (10 Abschnitte), 1 (9 Abschnitte). Spurweite: 1000 mm (17 Abschnitte), 1000 mm und 1435 mm (2 Abschnitte). Strom: Gleichstrom bei allen 19 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "RBS",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 19,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: RBS",
+          "value": 19,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 9,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 17,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm und 1435 mm",
+          "value": 2,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[1].abschnitte"
+        },
+        {
+          "label": "Strom: Gleichstrom",
+          "value": 19,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:fff1b84e",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 292 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 0,
+          "explanation": "Im Schienennetz steht für die Linie 292: Gleichstrom.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
     }
   ],
   "luecken": [
@@ -122,9 +202,9 @@
       "quelle": "linie, tunnel"
     },
     {
-      "thema": "Ein- oder mehrspurig",
-      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-      "quelle": "linie, tunnel"
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
     },
     {
       "thema": "Brücken",

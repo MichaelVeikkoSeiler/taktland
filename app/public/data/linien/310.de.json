@@ -1,0 +1,305 @@
+{
+  "linie": 310,
+  "name": "Thun - Spiez - Interlaken Ost",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 310 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Thun - Spiez - Interlaken Ost». Den kleinsten Kilometer hat dort der Betriebspunkt Thun (Eigentumsgrenze) mit km 0.062, den grössten Bönigen Gleisende mit km 29.73.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Thun (Eigentumsgrenze)",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0.062,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Bönigen Gleisende",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei"
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 29.73,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:374056e4",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Bönigen Gleisende, der grösste auf der Linie 310?",
+          "min": 24,
+          "max": 44,
+          "step": 1,
+          "unit": "km",
+          "correct": 29.73,
+          "explanation": "Bönigen Gleisende liegt auf der Linie 310 bei km 29.73. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 310 16 Betriebspunkte. Davon sind 4 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 16,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 4,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Spiez",
+          "value": 9.818,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8507483
+        },
+        {
+          "label": "Leissigen",
+          "value": 18.49,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8507495
+        },
+        {
+          "label": "Därligen",
+          "value": 22.005,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8507494
+        },
+        {
+          "label": "Interlaken West",
+          "value": 26.014,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8507493
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:44bfdde1",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 310, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Spiez",
+              "value": 9.818,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Leissigen",
+              "value": 18.49,
+              "factRef": "bahnhoefe.items[1].km"
+            },
+            {
+              "label": "Därligen",
+              "value": 22.005,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Interlaken West",
+              "value": 26.014,
+              "factRef": "bahnhoefe.items[3].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Spiez bei km 9.818, Leissigen bei km 18.49, Därligen bei km 22.005 und Interlaken West bei km 26.014.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:836fbea6",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 310 liegt Därligen?",
+          "options": [
+            "9.818 km",
+            "18.49 km",
+            "22.005 km",
+            "26.014 km"
+          ],
+          "correct": 2,
+          "explanation": "Därligen liegt auf der Linie 310 bei km 22.005.",
+          "factRef": "bahnhoefe.items[2].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 310 aus 15 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «BLSN». Infrastruktur: «BLSN» (12 Abschnitte), «BLS» (3 Abschnitte). Streckengleise: 1 (8 Abschnitte), 2 (5 Abschnitte), 3 (ein Abschnitt), 4 (ein Abschnitt). Spurweite: 1435 mm bei allen 15 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 15 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "BLSN",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 15,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: BLSN",
+          "value": 12,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Infrastruktur: BLS",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[1].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 5,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 3",
+          "value": 1,
+          "unit": "Abschnitt",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[2].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 4",
+          "value": 1,
+          "unit": "Abschnitt",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[3].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 15,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 15,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:2d5e9602",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 310 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 15 erfassten Abschnitte der Linie 310 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:a4e0696d",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 310 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 310: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 4 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 16 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

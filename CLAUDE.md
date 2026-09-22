@@ -83,7 +83,9 @@ data/facts/  geprüfte Fakten je Bahnhof: 1175, die 769 mit SBB-Infrastruktur un
              drei Kapitel (ALLE_BAHNHOEFE_VON, ANDERE_AB_KAPITEL in pipeline/sources.py)
 data/bauplan.json  was pro Bahnhof von Hand entschieden ist
 data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand geändert
-data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_linien.py
+data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_linien.py;
+             dazu Linien anderer Bahnen und das Kapitel Netz aus dem Schienennetz des BAV
+             (pipeline/schienennetz.py, Stand 2021, ohne Tramlinien)
 data/linienprofile/ Linienseiten, gebaut mit generator/linien.py, nie von Hand geändert
 data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brücken darauf,
              und der Tag, an dem jede Quelle der Linien geladen wurde
@@ -102,6 +104,7 @@ data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs a
 
 ```bash
 python pipeline/fetch.py                    # Datasets laden
+python3 pipeline/fetch_schienennetz.py      # Schienennetz des BAV laden (31 MB)
 .venv/bin/python pipeline/build_facts.py --all   # Fakten für alle Bahnhöfe
 .venv/bin/python generator/validate.py --alle    # Profile prüfen
 .venv/bin/python generator/bauplan.py 8502226 8506300  # neue Bahnhöfe in den Bauplan

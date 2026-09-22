@@ -1,0 +1,427 @@
+{
+ "linie": 470,
+ "name": "Luzern - Meiringen",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Luzern Brünig",
+  "kleinster_km": 0.126,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Meiringen Ost",
+  "groesster_km": 45.661,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 25,
+  "anzahl_in_taktland": 16,
+  "items": [
+   {
+    "uic": 8508321,
+    "name": "Luzern Allmend/Messe",
+    "km": 1.98
+   },
+   {
+    "uic": 8516351,
+    "name": "Kriens Mattenhof",
+    "km": 3.012
+   },
+   {
+    "uic": 8508319,
+    "name": "Horw",
+    "km": 4.485
+   },
+   {
+    "uic": 8508320,
+    "name": "Hergiswil Matt",
+    "km": 7.315
+   },
+   {
+    "uic": 8508318,
+    "name": "Hergiswil NW",
+    "km": 8.727
+   },
+   {
+    "uic": 8508317,
+    "name": "Alpnachstad",
+    "km": 13.146
+   },
+   {
+    "uic": 8508316,
+    "name": "Alpnach Dorf",
+    "km": 14.877
+   },
+   {
+    "uic": 8508323,
+    "name": "Sarnen Nord",
+    "km": 20.017
+   },
+   {
+    "uic": 8508314,
+    "name": "Sarnen",
+    "km": 20.637
+   },
+   {
+    "uic": 8508313,
+    "name": "Sachseln",
+    "km": 23.437
+   },
+   {
+    "uic": 8508327,
+    "name": "Ewil Maxon",
+    "km": 25.39
+   },
+   {
+    "uic": 8508312,
+    "name": "Giswil",
+    "km": 29.222
+   },
+   {
+    "uic": 8508311,
+    "name": "Kaiserstuhl OW",
+    "km": 32.165
+   },
+   {
+    "uic": 8508310,
+    "name": "Lungern",
+    "km": 35.805
+   },
+   {
+    "uic": 8508309,
+    "name": "Brünig-Hasliberg",
+    "km": 40.071
+   },
+   {
+    "uic": 8508308,
+    "name": "Meiringen",
+    "km": 45.471
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "zb",
+  "abschnitte_erfasst": 24,
+  "nach_isb": [
+   {
+    "wert": "zb",
+    "abschnitte": 24
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 18
+   },
+   {
+    "wert": 2,
+    "abschnitte": 6
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 19
+   },
+   {
+    "wert": "1000 mm und 1435 mm",
+    "abschnitte": 5
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 24
+   }
+  ],
+  "items": [
+   {
+    "von": "Luzern Brünig",
+    "bis": "Luzern Einfahrt zb",
+    "km_von": 0.126,
+    "km_bis": 0.768,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm und 1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Luzern Einfahrt zb",
+    "bis": "Luzern Allmend/Messe",
+    "km_von": 0.768,
+    "km_bis": 1.98,
+    "isb": "zb",
+    "gleise": 2,
+    "spurweite": "1000 mm und 1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Luzern Allmend/Messe",
+    "bis": "Kriens Mattenhof",
+    "km_von": 1.98,
+    "km_bis": 3.012,
+    "isb": "zb",
+    "gleise": 2,
+    "spurweite": "1000 mm und 1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kriens Mattenhof",
+    "bis": "Horw",
+    "km_von": 3.41,
+    "km_bis": 4.485,
+    "isb": "zb",
+    "gleise": 2,
+    "spurweite": "1000 mm und 1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Horw",
+    "bis": "Horw Süd (Spw)",
+    "km_von": 4.524,
+    "km_bis": 5.037,
+    "isb": "zb",
+    "gleise": 2,
+    "spurweite": "1000 mm und 1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Horw Süd (Spw)",
+    "bis": "Hergiswil Matt",
+    "km_von": 5.037,
+    "km_bis": 7.315,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hergiswil Matt",
+    "bis": "Hergiswil NW",
+    "km_von": 7.324,
+    "km_bis": 8.727,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hergiswil NW",
+    "bis": "Alpnachstad",
+    "km_von": 8.727,
+    "km_bis": 13.146,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Alpnachstad",
+    "bis": "Alpnach Dorf",
+    "km_von": 13.177,
+    "km_bis": 14.877,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Alpnach Dorf",
+    "bis": "Kerns-Kägiswil",
+    "km_von": 14.877,
+    "km_bis": 18.632,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kerns-Kägiswil",
+    "bis": "Sarnen Nord",
+    "km_von": 18.632,
+    "km_bis": 20.017,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sarnen Nord",
+    "bis": "Sarnen",
+    "km_von": 20.017,
+    "km_bis": 20.651,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sarnen",
+    "bis": "Sachseln",
+    "km_von": 20.637,
+    "km_bis": 23.437,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sachseln",
+    "bis": "Ewil Maxon",
+    "km_von": 23.437,
+    "km_bis": 25.39,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ewil Maxon",
+    "bis": "Giswil Grossmatt",
+    "km_von": 25.39,
+    "km_bis": 27.622,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Giswil Grossmatt",
+    "bis": "Giswil",
+    "km_von": 27.622,
+    "km_bis": 29.222,
+    "isb": "zb",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Giswil",
+    "bis": "Kaiserstuhl OW",
+    "km_von": 29.27,
+    "km_bis": 32.165,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kaiserstuhl OW",
+    "bis": "Lungern",
+    "km_von": 32.165,
+    "km_bis": 35.805,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lungern",
+    "bis": "Chäppeli",
+    "km_von": 35.805,
+    "km_bis": 37.778,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chäppeli",
+    "bis": "Brünig-Hasliberg",
+    "km_von": 37.778,
+    "km_bis": 40.071,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brünig-Hasliberg",
+    "bis": "Brunnenfluh",
+    "km_von": 40.076,
+    "km_bis": 42.14,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brunnenfluh",
+    "bis": "Meiringen West",
+    "km_von": 42.14,
+    "km_bis": 45.034,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Meiringen West",
+    "bis": "Meiringen",
+    "km_von": 45.034,
+    "km_bis": 45.471,
+    "isb": "zb",
+    "gleise": 2,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Meiringen",
+    "bis": "Meiringen Ost",
+    "km_von": 45.471,
+    "km_bis": 45.661,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 25 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

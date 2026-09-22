@@ -180,6 +180,841 @@
    }
   ]
  },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 79,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 79
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 2,
+    "abschnitte": 66
+   },
+   {
+    "wert": 1,
+    "abschnitte": 11
+   },
+   {
+    "wert": 3,
+    "abschnitte": 1
+   },
+   {
+    "wert": 4,
+    "abschnitte": 1
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 79
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 79
+   }
+  ],
+  "items": [
+   {
+    "von": "Immensee West (Abzw)",
+    "bis": "Immensee",
+    "km_von": 0,
+    "km_bis": 0.257,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Immensee",
+    "bis": "Brunnmatt (Spw)",
+    "km_von": 0.257,
+    "km_bis": 4.292,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brunnmatt (Spw)",
+    "bis": "Arth-Goldau",
+    "km_von": 4.292,
+    "km_bis": 8.864,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Arth-Goldau",
+    "bis": "Arth-Goldau Ost (Abzw)",
+    "km_von": 8.864,
+    "km_bis": 9.315,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Arth-Goldau Ost (Abzw)",
+    "bis": "Steinen",
+    "km_von": 9.315,
+    "km_bis": 13.922,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Steinen",
+    "bis": "Schwyz",
+    "km_von": 13.922,
+    "km_bis": 17.007,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Schwyz",
+    "bis": "Brunnen",
+    "km_von": 17.007,
+    "km_bis": 20.525,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brunnen",
+    "bis": "Brunnen Süd (Abzw)",
+    "km_von": 20.525,
+    "km_bis": 21.45,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brunnen Süd (Abzw)",
+    "bis": "Sisikon Nord",
+    "km_von": 21.45,
+    "km_bis": 25.842,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sisikon Nord",
+    "bis": "Sisikon",
+    "km_von": 25.842,
+    "km_bis": 26.383,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sisikon",
+    "bis": "Gruonbach (Spw)",
+    "km_von": 26.383,
+    "km_bis": 30.874,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gruonbach (Spw)",
+    "bis": "Flüelen",
+    "km_von": 30.874,
+    "km_bis": 32.301,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Flüelen",
+    "bis": "Altdorf UR",
+    "km_von": 32.301,
+    "km_bis": 35.25,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Altdorf UR",
+    "bis": "Rynächt Nord",
+    "km_von": 35.25,
+    "km_bis": 36.659,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rynächt Nord",
+    "bis": "Rynächt (Abzw)",
+    "km_von": 36.659,
+    "km_bis": 38.95,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rynächt (Abzw)",
+    "bis": "Erstfeld Nord (Abzw)",
+    "km_von": 38.95,
+    "km_bis": 40.902,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Erstfeld Nord (Abzw)",
+    "bis": "Erstfeld",
+    "km_von": 40.902,
+    "km_bis": 41.583,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Erstfeld",
+    "bis": "Amsteg-Silenen",
+    "km_von": 41.583,
+    "km_bis": 46.546,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Amsteg-Silenen",
+    "bis": "Zgraggen (Spw)",
+    "km_von": 46.546,
+    "km_bis": 50.534,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zgraggen (Spw)",
+    "bis": "Gurtnellen",
+    "km_von": 50.534,
+    "km_bis": 54.401,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gurtnellen",
+    "bis": "Pfaffensprung (Spw)",
+    "km_von": 54.401,
+    "km_bis": 58.415,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pfaffensprung (Spw)",
+    "bis": "Wassen",
+    "km_von": 58.415,
+    "km_bis": 62.765,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wassen",
+    "bis": "Eggwald (Spw)",
+    "km_von": 62.765,
+    "km_bis": 66.624,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eggwald (Spw)",
+    "bis": "Göschenen",
+    "km_von": 66.624,
+    "km_bis": 70.447,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Göschenen",
+    "bis": "Gotthard Nord (Spw)",
+    "km_von": 70.447,
+    "km_bis": 75.371,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gotthard Nord (Spw)",
+    "bis": "Airolo",
+    "km_von": 75.371,
+    "km_bis": 86.209,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Airolo",
+    "bis": "Sordo (c bin)",
+    "km_von": 86.209,
+    "km_bis": 89.655,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sordo (c bin)",
+    "bis": "Ambrì-Piotta",
+    "km_von": 89.655,
+    "km_bis": 93.044,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ambrì-Piotta",
+    "bis": "Rodi-Fiesso",
+    "km_von": 93.044,
+    "km_bis": 97.846,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rodi-Fiesso",
+    "bis": "Pardorea (c bin)",
+    "km_von": 97.846,
+    "km_bis": 101.93,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pardorea (c bin)",
+    "bis": "Faido",
+    "km_von": 101.93,
+    "km_bis": 106.037,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Faido",
+    "bis": "Chiggiogna (c bin)",
+    "km_von": 106.037,
+    "km_bis": 109.384,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chiggiogna (c bin)",
+    "bis": "Lavorgo",
+    "km_von": 109.384,
+    "km_bis": 112.58,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lavorgo",
+    "bis": "Pianotondo (c bin)",
+    "km_von": 112.58,
+    "km_bis": 117.416,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pianotondo (c bin)",
+    "bis": "Giornico (c bin)",
+    "km_von": 117.416,
+    "km_bis": 121.122,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Giornico (c bin)",
+    "bis": "Giornico",
+    "km_von": 121.122,
+    "km_bis": 121.656,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Giornico",
+    "bis": "Bodio TI",
+    "km_von": 121.656,
+    "km_bis": 125.495,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bodio TI",
+    "bis": "Pollegio Nord (dira)",
+    "km_von": 125.495,
+    "km_bis": 127.955,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Pollegio Nord (dira)",
+    "bis": "Biasca",
+    "km_von": 127.955,
+    "km_bis": 131.795,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Biasca",
+    "bis": "Giustizia (dira)",
+    "km_von": 131.795,
+    "km_bis": 135.045,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Giustizia (dira)",
+    "bis": "Osogna-Cresciano",
+    "km_von": 135.045,
+    "km_bis": 137.953,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Osogna-Cresciano",
+    "bis": "Claro",
+    "km_von": 137.953,
+    "km_bis": 143.469,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Claro",
+    "bis": "Castione Nord (c bin)",
+    "km_von": 143.469,
+    "km_bis": 145.859,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Castione Nord (c bin)",
+    "bis": "Castione-Arbedo",
+    "km_von": 145.859,
+    "km_bis": 147.525,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Castione-Arbedo",
+    "bis": "Bellinzona S. Paolo",
+    "km_von": 147.525,
+    "km_bis": 149.75,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bellinzona S. Paolo",
+    "bis": "Bellinzona",
+    "km_von": 149.75,
+    "km_bis": 150.891,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bellinzona",
+    "bis": "Giubiasco",
+    "km_von": 150.891,
+    "km_bis": 154.043,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Giubiasco",
+    "bis": "Giubiasco Sud (bif)",
+    "km_von": 154.043,
+    "km_bis": 154.358,
+    "isb": "SBB CFF FFS",
+    "gleise": 4,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Giubiasco Sud (bif)",
+    "bis": "Vigana (c bin)",
+    "km_von": 154.358,
+    "km_bis": 158.014,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vigana (c bin)",
+    "bis": "Al Sasso",
+    "km_von": 158.014,
+    "km_bis": 160.014,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Al Sasso",
+    "bis": "Al Motto Est",
+    "km_von": 160.014,
+    "km_bis": 160.828,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Al Motto Est",
+    "bis": "Al Motto (c bin)",
+    "km_von": 160.828,
+    "km_bis": 161.352,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Al Motto (c bin)",
+    "bis": "Monte Ceneri Nord",
+    "km_von": 161.352,
+    "km_bis": 162.683,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Monte Ceneri Nord",
+    "bis": "Rivera-Bironico Nord",
+    "km_von": 162.683,
+    "km_bis": 164.71,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rivera-Bironico Nord",
+    "bis": "Rivera-Bironico",
+    "km_von": 164.71,
+    "km_bis": 165.214,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rivera-Bironico",
+    "bis": "Mezzovico",
+    "km_von": 165.214,
+    "km_bis": 168.862,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mezzovico",
+    "bis": "Mezzovico (c bin)",
+    "km_von": 168.862,
+    "km_bis": 170.03,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mezzovico (c bin)",
+    "bis": "Sigirino",
+    "km_von": 170.03,
+    "km_bis": 171.235,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Sigirino",
+    "bis": "Taverne-Torricella",
+    "km_von": 171.235,
+    "km_bis": 173.992,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Taverne-Torricella",
+    "bis": "Taverne-Torricella Sud (bif)",
+    "km_von": 173.992,
+    "km_bis": 174.487,
+    "isb": "SBB CFF FFS",
+    "gleise": 3,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Taverne-Torricella Sud (bif)",
+    "bis": "Lamone-Cadempino",
+    "km_von": 174.487,
+    "km_bis": 176.098,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lamone-Cadempino",
+    "bis": "Vezia (bif)",
+    "km_von": 176.098,
+    "km_bis": 177.718,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Vezia (bif)",
+    "bis": "Massagno Nord",
+    "km_von": 177.718,
+    "km_bis": 178.617,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Massagno Nord",
+    "bis": "Lugano Nord",
+    "km_von": 178.617,
+    "km_bis": 179.79,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lugano Nord",
+    "bis": "Lugano",
+    "km_von": 179.79,
+    "km_bis": 180.45,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lugano",
+    "bis": "Lugano-Paradiso",
+    "km_von": 180.45,
+    "km_bis": 182.834,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lugano-Paradiso",
+    "bis": "Lugano Paradiso (c bin)",
+    "km_von": 182.834,
+    "km_bis": 183.211,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lugano Paradiso (c bin)",
+    "bis": "Melide Centrale (bif)",
+    "km_von": 183.211,
+    "km_bis": 186.158,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Melide Centrale (bif)",
+    "bis": "Melide",
+    "km_von": 186.158,
+    "km_bis": 187.23,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Melide",
+    "bis": "Maroggia-Melano",
+    "km_von": 187.23,
+    "km_bis": 191.031,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Maroggia-Melano",
+    "bis": "Capolago-Riva S. Vitale",
+    "km_von": 191.031,
+    "km_bis": 194.614,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Capolago-Riva S. Vitale",
+    "bis": "Mendrisio S. Martino",
+    "km_von": 194.614,
+    "km_bis": 197.702,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mendrisio S. Martino",
+    "bis": "Mendrisio",
+    "km_von": 197.702,
+    "km_bis": 198.713,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mendrisio",
+    "bis": "Mendrisio Sud (bif)",
+    "km_von": 198.713,
+    "km_bis": 199.246,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Mendrisio Sud (bif)",
+    "bis": "Balerna per Smistamento (bif)",
+    "km_von": 199.246,
+    "km_bis": 203.051,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Balerna per Smistamento (bif)",
+    "bis": "Balerna",
+    "km_von": 203.051,
+    "km_bis": 203.534,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Balerna",
+    "bis": "Chiasso Ovest (bif)",
+    "km_von": 203.534,
+    "km_bis": 205.773,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chiasso Ovest (bif)",
+    "bis": "Chiasso",
+    "km_von": 205.773,
+    "km_bis": 206.166,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Chiasso",
+    "bis": "Chiasso Est",
+    "km_von": 206.166,
+    "km_bis": 206.654,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -3903,9 +4738,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -3946,6 +4781,7 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

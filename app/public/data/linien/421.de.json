@@ -1,0 +1,301 @@
+{
+  "linie": 421,
+  "name": "Solothurn RM - Burgdorf West",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 421 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Solothurn RM - Burgdorf West». Den kleinsten Kilometer hat dort der Betriebspunkt Solothurn RM (Abzw) mit km 0.306, den grössten Burgdorf West (Abzw) mit km 20.401.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Solothurn RM (Abzw)",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0.306,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Burgdorf West (Abzw)",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei"
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 20.401,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:0fd9c01f",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Burgdorf West (Abzw), der grösste auf der Linie 421?",
+          "min": 16,
+          "max": 30,
+          "step": 1,
+          "unit": "km",
+          "correct": 20.401,
+          "explanation": "Burgdorf West (Abzw) liegt auf der Linie 421 bei km 20.401. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 421 9 Betriebspunkte. Davon sind 7 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 9,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 7,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Biberist Ost",
+          "value": 4.868,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8508089
+        },
+        {
+          "label": "Gerlafingen",
+          "value": 5.986,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8508088
+        },
+        {
+          "label": "Wiler",
+          "value": 8.154,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8508087
+        },
+        {
+          "label": "Utzenstorf",
+          "value": 10.705,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8508086
+        },
+        {
+          "label": "Aefligen",
+          "value": 14.569,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8508085
+        },
+        {
+          "label": "Kirchberg-Alchenflüh",
+          "value": 16.764,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8508084
+        },
+        {
+          "label": "Burgdorf Buchmatt",
+          "value": 19.656,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8508083
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:e427dd22",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 421, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Biberist Ost",
+              "value": 4.868,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Wiler",
+              "value": 8.154,
+              "factRef": "bahnhoefe.items[2].km"
+            },
+            {
+              "label": "Aefligen",
+              "value": 14.569,
+              "factRef": "bahnhoefe.items[4].km"
+            },
+            {
+              "label": "Burgdorf Buchmatt",
+              "value": 19.656,
+              "factRef": "bahnhoefe.items[6].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Biberist Ost bei km 4.868, Wiler bei km 8.154, Aefligen bei km 14.569 und Burgdorf Buchmatt bei km 19.656.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:34c0ee09",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 421 liegt Utzenstorf?",
+          "options": [
+            "4.868 km",
+            "8.154 km",
+            "10.705 km",
+            "19.656 km"
+          ],
+          "correct": 2,
+          "explanation": "Utzenstorf liegt auf der Linie 421 bei km 10.705.",
+          "factRef": "bahnhoefe.items[3].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 421 aus 8 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «BLSN». Infrastruktur: «BLSN» bei allen 8 erfassten Abschnitten. Streckengleise: 1 bei allen 8 erfassten Abschnitten. Spurweite: 1435 mm bei allen 8 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 8 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "BLSN",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 8,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: BLSN",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:3b94cb33",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 421 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 8 erfassten Abschnitte der Linie 421 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:fb1cb443",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 421 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 421: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 9 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

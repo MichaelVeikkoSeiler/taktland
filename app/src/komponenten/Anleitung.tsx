@@ -150,9 +150,20 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Kasten und rot markiert in der Liste.
           </li>
           <li>
-            Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Länge, Baujahr und
-            Anzahl Gleise einer Linie stehen nicht in den offenen Daten, ebenso wenig Länge und
-            Baujahr der Brücken.
+            Das Kapitel «Netz» nennt je Abschnitt zwischen zwei Betriebspunkten die Zahl der
+            Streckengleise, die Spurweite, den Strom und die Infrastrukturbetreiberin, aus dem
+            Schienennetz des BAV (Stand 2021).
+          </li>
+          <li>
+            Linien anderer Bahnen, etwa der BLS, der SOB oder der RhB, tragen das Kürzel ihrer
+            Bahn, wie es im Schienennetz steht («BLSN», «RhB FR VR», «zb»). Für sie gibt es
+            Bahnhöfe und Netz, aber keine Tunnel, Brücken und Bahnübergänge: Diese Daten führt
+            nur die SBB. Tramlinien sind nicht aufgenommen.
+          </li>
+          <li>
+            Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Länge und Baujahr
+            einer Linie stehen nicht in den offenen Daten, ebenso wenig Länge und Baujahr der
+            Brücken.
           </li>
         </Punkte>
       </Abschnitt>
@@ -281,6 +292,13 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             <Verweis href="https://data.sbb.ch">data.sbb.ch</Verweis>. Der Datensatz zu den
             Wartehallen steht unter den Nutzungsbedingungen von{' '}
             <Verweis href="https://opentransportdata.swiss">opentransportdata.swiss</Verweis>.
+          </li>
+          <li>
+            Die Linien anderer Bahnen (BLS, SOB, RhB …) und das Kapitel «Netz» auf den
+            Linienseiten stammen aus dem Schienennetz des Bundesamts für Verkehr BAV auf{' '}
+            <Verweis href="https://data.geo.admin.ch/browser/#/collections/ch.bav.schienennetz">
+              data.geo.admin.ch</Verweis>, freie Nutzung mit Quellenangabe. Die Datei trägt den
+            Stand vom 6. Juli 2021.
           </li>
           <li>
             Taktland gibt die Werte so weiter, wie sie in den Daten stehen, zum Teil gezählt

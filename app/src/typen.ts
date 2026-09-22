@@ -154,6 +154,12 @@ export interface LinienEintrag {
   bruecken: number
   /** erfasste Bahnübergänge */
   bahnuebergaenge: number
+  /** Datenherr laut Schienennetz des BAV, wenn nicht die SBB («BLSN», «RhB FR VR») */
+  bahn?: string
+  /** «schienennetz»: die Linie fehlt in den Daten der SBB */
+  quelle?: 'schienennetz'
+  /** Bahnhöfe, die nur das Schienennetz auf dieser Linie führt */
+  weitere_bahnhoefe?: number
 }
 
 export interface LinienVerzeichnis {
@@ -288,6 +294,8 @@ export interface StreckenAbschnitt {
   gewicht: number
   isb: string
   teile?: StreckenTeil[]
+  /** ohne teile: die Linie laut Schienennetz des BAV, wenn genau eine beide Enden führt */
+  linie_bav?: number
 }
 
 /** Das Netz für die Seite «Strecke» (pipeline/build_strecken.py) */

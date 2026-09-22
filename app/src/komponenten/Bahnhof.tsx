@@ -122,6 +122,16 @@ export function Bahnhof({ uic, zurueck, eintrag }: {
                         anhang={k.id === 'linien' && linien.length > 0
                           ? <LinienLinks linien={linien} /> : undefined} />
         ))}
+        {linien.length > 0 && !profil.chapters.some((k) => k.id === 'linien') && !eintrag?.linien?.length && (
+          <section className="mt-10">
+            <h2 className="text-xl font-bold tracking-tight">Linien</h2>
+            <p className="mt-2 leading-relaxed">
+              In den Daten der SBB zu den Linien ist {profil.name} nicht erfasst. Das Schienennetz
+              des BAV führt den Bahnhof auf {linien.length === 1 ? 'dieser Linie' : 'diesen Linien'}:
+            </p>
+            <LinienLinks linien={linien} />
+          </section>
+        )}
         <Luecken luecken={profil.luecken} />
         <Quellen profil={profil} />
       </div>
@@ -141,6 +151,7 @@ function LinienLinks({ linien }: { linien: LinienEintrag[] }) {
                         dark:hover:border-sbb-white">
             <span className="min-w-0">
               <span className="font-medium text-sbb-black dark:text-sbb-white">Linie {l.linie}</span>
+              {l.bahn && <span className="ml-2"><BahnKuerzel isb={l.bahn} titel={`Datenherr laut BAV: ${l.bahn}`} /></span>}
               <span className="ml-2 text-sm text-sbb-metal dark:text-sbb-storm">{l.name}</span>
             </span>
             <span className="shrink-0 text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>
@@ -292,7 +303,7 @@ export function Quellen({ profil }: { profil: { sources: string[]; generated: st
         Woher diese Angaben stammen
       </h2>
       <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
-        Alle Angaben stammen aus offenen Daten der SBB (data.sbb.ch), verwendete Datensätze:
+        {herkunft(profil.sources)}
       </p>
       <ul className="mt-2 flex flex-wrap gap-1.5">
         {profil.sources.map((s) => (
@@ -310,6 +321,16 @@ export function Quellen({ profil }: { profil: { sources: string[]; generated: st
       </p>
     </section>
   )
+}
+
+/** Die Herkunft der Angaben: offene Daten der SBB, das Schienennetz des BAV oder beide */
+function herkunft(quellen: string[]) {
+  const bav = quellen.includes('schienennetz')
+  const sbb = quellen.some((q) => q !== 'schienennetz')
+  const netz = 'dem Schienennetz des Bundesamts für Verkehr BAV (data.geo.admin.ch, Stand 2021)'
+  if (bav && !sbb) return `Alle Angaben stammen aus ${netz}:`
+  if (bav) return `Die Angaben stammen aus offenen Daten der SBB (data.sbb.ch) und aus ${netz}, verwendete Datensätze:`
+  return 'Alle Angaben stammen aus offenen Daten der SBB (data.sbb.ch), verwendete Datensätze:'
 }
 
 export function Rahmen({ children, zurueck, zurueckText = 'Alle Bahnhöfe' }: {

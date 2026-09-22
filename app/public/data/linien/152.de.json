@@ -7,6 +7,7 @@
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
+    "schienennetz",
     "tunnel"
   ],
   "chapters": [
@@ -171,6 +172,85 @@
           "factRef": "bahnhoefe.items[2].km",
           "difficulty": 2,
           "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 152 aus 10 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «SBB CFF FFS». Infrastruktur: «SBB CFF FFS» bei allen 10 erfassten Abschnitten. Streckengleise: 2 (7 Abschnitte), 1 (3 Abschnitte). Spurweite: 1435 mm bei allen 10 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz (8 Abschnitte), Wechselstrom 16,7 Hz und 50 Hz (2 Abschnitte).",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "SBB CFF FFS",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 10,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: SBB CFF FFS",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 7,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz und 50 Hz",
+          "value": 2,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[1].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:b4675955",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 152 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 10 erfassten Abschnitte der Linie 152 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
         }
       ]
     },
@@ -352,7 +432,7 @@
           "type": "single_choice",
           "prompt": "Wie viele Brücken sind für die Linie 152 erfasst?",
           "options": [
-            "8",
+            "4",
             "9",
             "11",
             "13"
@@ -377,9 +457,9 @@
       "quelle": "linie, tunnel"
     },
     {
-      "thema": "Ein- oder mehrspurig",
-      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-      "quelle": "linie, tunnel"
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
     },
     {
       "thema": "Weitere Betriebspunkte",

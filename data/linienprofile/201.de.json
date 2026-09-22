@@ -8,6 +8,7 @@
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
+    "schienennetz",
     "tunnel"
   ],
   "chapters": [
@@ -78,6 +79,220 @@
           "explanation": "Die Kilometrierung der Linie 201 beginnt bei km 3.005.",
           "factRef": "strecke.km_anfang",
           "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "weitere_bahnhoefe",
+      "title": "Weitere Bahnhöfe laut BAV",
+      "body": "Auf der Linie 201 führt das Schienennetz des BAV 10 Bahnhöfe aus Taktland, die in der Liste der Betriebspunkte der SBB fehlen. Die Kilometer sind die des Schienennetzes.",
+      "facts": [
+        {
+          "label": "Weitere Bahnhöfe",
+          "value": 10,
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.anzahl"
+        },
+        {
+          "label": "Le Day",
+          "value": 3.026,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[0].km",
+          "uic": 8501104
+        },
+        {
+          "label": "Les Charbonnières",
+          "value": 12.194,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[1].km",
+          "uic": 8501151
+        },
+        {
+          "label": "Le Séchey",
+          "value": 13.264,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[2].km",
+          "uic": 8501152
+        },
+        {
+          "label": "Le Lieu",
+          "value": 15.454,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[3].km",
+          "uic": 8501153
+        },
+        {
+          "label": "Les Esserts-de-Rive",
+          "value": 17.9,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[4].km",
+          "uic": 8501154
+        },
+        {
+          "label": "Le Rocheray",
+          "value": 19.053,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[5].km",
+          "uic": 8501155
+        },
+        {
+          "label": "Le Solliat-La Golisse",
+          "value": 20.497,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[6].km",
+          "uic": 8501156
+        },
+        {
+          "label": "Le Sentier-L'Orient",
+          "value": 21.646,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[7].km",
+          "uic": 8501157
+        },
+        {
+          "label": "Chez-le-Maître-Ecoles",
+          "value": 22.796,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[8].km",
+          "uic": 8530783
+        },
+        {
+          "label": "Le Brassus",
+          "value": 24.55,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[9].km",
+          "uic": 8501159
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "weitere_bahnhoefe:485a8531",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 201, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Le Day",
+              "value": 3.026,
+              "factRef": "weitere_bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Le Lieu",
+              "value": 15.454,
+              "factRef": "weitere_bahnhoefe.items[3].km"
+            },
+            {
+              "label": "Le Solliat-La Golisse",
+              "value": 20.497,
+              "factRef": "weitere_bahnhoefe.items[6].km"
+            },
+            {
+              "label": "Le Brassus",
+              "value": 24.55,
+              "factRef": "weitere_bahnhoefe.items[9].km"
+            }
+          ],
+          "factRef": "weitere_bahnhoefe.items",
+          "explanation": "Le Day bei km 3.026, Le Lieu bei km 15.454, Le Solliat-La Golisse bei km 20.497 und Le Brassus bei km 24.55.",
+          "difficulty": 3
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 201 aus 11 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «SBB CFF FFS». Infrastruktur: «TRAVYS» (10 Abschnitte), «SBB CFF FFS» (ein Abschnitt). Streckengleise: 1 bei allen 11 erfassten Abschnitten. Spurweite: 1435 mm bei allen 11 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 11 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "SBB CFF FFS",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 11,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: TRAVYS",
+          "value": 10,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Infrastruktur: SBB CFF FFS",
+          "value": 1,
+          "unit": "Abschnitt",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[1].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:a6251b88",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 201 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 11 erfassten Abschnitte der Linie 201 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:8c5287e6",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 201 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 201: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
         }
       ]
     },
@@ -174,7 +389,7 @@
             "6",
             "7",
             "8",
-            "10"
+            "13"
           ],
           "correct": 0,
           "explanation": "Erfasst sind 6 Brücken. Die Zahl gibt wieder, was in den offenen Daten steht.",
@@ -275,7 +490,7 @@
             "5",
             "7",
             "8",
-            "11"
+            "15"
           ],
           "correct": 0,
           "explanation": "Erfasst sind 5 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
@@ -327,9 +542,9 @@
       "quelle": "linie, tunnel"
     },
     {
-      "thema": "Ein- oder mehrspurig",
-      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-      "quelle": "linie, tunnel"
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
     },
     {
       "thema": "Weitere Betriebspunkte",

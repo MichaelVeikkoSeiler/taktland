@@ -50,6 +50,166 @@
    }
   ]
  },
+ "weitere_bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Bahnhöfe aus Taktland, die das Schienennetz des BAV auf dieser Linie führt, die Liste der Betriebspunkte der SBB aber nicht. Kilometer laut Schienennetz.",
+  "anzahl": 2,
+  "items": [
+   {
+    "uic": 8506201,
+    "name": "Lichtensteig",
+    "km": 17.51
+   },
+   {
+    "uic": 8506200,
+    "name": "Wattwil",
+    "km": 20.007
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 11,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 11
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 11
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 11
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 11
+   }
+  ],
+  "items": [
+   {
+    "von": "Wil Süd (Abzw)",
+    "bis": "Bazenheid ZAB (Agl)",
+    "km_von": 1.304,
+    "km_bis": 5.898,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bazenheid ZAB (Agl)",
+    "bis": "Bazenheid MICARNA (Abzw)",
+    "km_von": 5.898,
+    "km_bis": 6.379,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bazenheid MICARNA (Abzw)",
+    "bis": "Bazenheid",
+    "km_von": 6.379,
+    "km_bis": 6.922,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bazenheid",
+    "bis": "Lütisburg",
+    "km_von": 6.922,
+    "km_bis": 10.149,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lütisburg",
+    "bis": "Bütschwil",
+    "km_von": 10.149,
+    "km_bis": 12.926,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bütschwil",
+    "bis": "Dietfurt",
+    "km_von": 12.926,
+    "km_bis": 14.615,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Dietfurt",
+    "bis": "Lichtensteig",
+    "km_von": 14.615,
+    "km_bis": 17.51,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lichtensteig",
+    "bis": "Lichtensteig Süd (Abzw)",
+    "km_von": 17.51,
+    "km_bis": 17.892,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lichtensteig Süd (Abzw)",
+    "bis": "Wattwil",
+    "km_von": 17.892,
+    "km_bis": 20.007,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wattwil",
+    "bis": "Kaltbrunn",
+    "km_von": 20.007,
+    "km_bis": 30.982,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kaltbrunn",
+    "bis": "Uznach",
+    "km_von": 30.982,
+    "km_bis": 34.387,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -362,9 +522,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -405,6 +565,8 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "weitere_bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

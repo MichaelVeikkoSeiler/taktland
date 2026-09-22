@@ -36,6 +36,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import schienennetz  # noqa: E402
 from sources import DATASETS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -48,6 +49,8 @@ GEOMETRIE = ROOT / "data" / "strecken_geometrie.json"
 
 QUELLEN = ["zugzahlen", "linienkilometrierung", "linie-mit-betriebspunkten", "linie", "tunnel",
            "brucken"]
+#: vom BAV: die Linie auf Abschnitten anderer Bahnen (pipeline/schienennetz.py)
+QUELLEN_BAV = ["schienennetz"]
 
 #: So weit darf ein Betriebspunkt von einer Linie entfernt liegen, um auf ihr
 #: zu gelten. 150 m genügen fast überall; an Übergängen zwischen zwei Linien
@@ -291,7 +294,7 @@ def tunnel_bereich(km, laenge_m, lo, hi):
 
 def main():
     abruf = json.loads((RAW / "_abruf.json").read_text(encoding="utf-8"))
-    stand = max(abruf[q] for q in QUELLEN)
+    stand = max(abruf[q] for q in QUELLEN + QUELLEN_BAV)
     jahr, kanten, punkte = abschnitte()
     zuege, wgs = linienzuege()
     lage = lagen(punkte, zuege)
@@ -299,6 +302,13 @@ def main():
     sbb_linien = set(load("linie").linie.astype(int))
     tunnel, bruecken = objekte()
     bereich = {nr: (float(z[2].min()), float(z[2].max())) for nr, z in zuege.items()}
+    # Linien des Schienennetzes je Betriebspunkt, ohne Tramlinien (Buchstaben)
+    bav_linien, _ = schienennetz.je_linie()
+    bav_je_punkt = defaultdict(set)
+    for nummer, l in bav_linien.items():
+        if nummer.isdigit():
+            for x in l["punkte"]:
+                bav_je_punkt[x["nummer"]].add(int(nummer))
 
     liste, ohne_zuordnung, bereiche = [], [], {}
     for (a, b), k in sorted(kanten.items()):
@@ -329,8 +339,16 @@ def main():
                     "tunnel": auf_teil,
                     "bruecken": [i for i, km in bruecken.get(nr, []) if lo <= km <= hi],
                 })
-        elif k["isb"] == "SBB":
-            ohne_zuordnung.append((a, b, k["km"]))
+        else:
+            if k["isb"] == "SBB":
+                ohne_zuordnung.append((a, b, k["km"]))
+            # Ohne Linie der SBB: die Linie laut Schienennetz des BAV, wenn genau
+            # eine beide Enden führt (Ins – Müntschemier: 220). Nur die Nummer;
+            # Tunnel und Brücken gibt es dafür nicht.
+            gemeinsam = (bav_je_punkt.get(punkte[a]["uic"], set())
+                         & bav_je_punkt.get(punkte[b]["uic"], set()))
+            if len(gemeinsam) == 1:
+                eintrag["linie_bav"] = gemeinsam.pop()
         liste.append(eintrag)
 
     namen = {json.loads(p.read_text(encoding="utf-8"))["uic"]: json.loads(p.read_text(encoding="utf-8"))["name"]
@@ -339,11 +357,12 @@ def main():
     raus = {
         "datenstand": stand,
         "zugzahlen_jahr": jahr,
-        "quellen": QUELLEN,
+        "quellen": QUELLEN + QUELLEN_BAV,
         "hinweis": "Abschnitte mit Personenzügen laut zugzahlen. teile: die Linie der SBB, "
                    "auf der der Abschnitt liegt (selten zwei nacheinander), mit Kilometrierung "
                    "(ein Standort, keine Länge). tunnel und bruecken: Kennungen «Linie:Stelle» "
-                   "in den Listen der Linienfakten. Ohne teile: keine Tunnel- und Brückendaten. "
+                   "in den Listen der Linienfakten. Ohne teile: keine Tunnel- und Brückendaten; "
+                   "linie_bav: die Linie laut Schienennetz des BAV, wenn genau eine beide Enden führt. "
                    "gewicht dient nur der Wegsuche.",
         "linien_bereich": {str(nr): [round(lo, 3), round(hi, 3)] for nr, (lo, hi) in sorted(bereich.items())
                            if any(t["linie"] == nr for e in liste for t in e.get("teile", []))},
@@ -369,7 +388,8 @@ def main():
           f"{len(im_netz)} von {len(namen)} Bahnhöfen im Netz ({ZIEL.stat().st_size/1024:.0f} KB)")
     print(f"  SBB-Abschnitte: {len(zugeordnet)} von {len(sbb)} einer Linie zugeordnet, "
           f"davon {geteilt} auf zwei Linien, ohne Zuordnung ~{km_ohne:.0f} von ~{km_sbb:.0f} km Luftlinie")
-    print(f"  andere Bahnen (keine Tunnel- und Brückendaten): {len(liste) - len(sbb)} Abschnitte")
+    print(f"  andere Bahnen (keine Tunnel- und Brückendaten): {len(liste) - len(sbb)} Abschnitte, "
+          f"davon {sum(1 for e in liste if e['isb'] != 'SBB' and 'linie_bav' in e)} mit Linie laut BAV")
     print(f"strecken_geometrie.json: {len(genutzt)} Linien ({GEOMETRIE.stat().st_size/1024:.0f} KB)")
     for a, b, km in sorted(ohne_zuordnung, key=lambda x: -x[2])[:12]:
         print(f"    ohne Zuordnung: {punkte[a]['name']} – {punkte[b]['name']} ({km:.1f} km)")

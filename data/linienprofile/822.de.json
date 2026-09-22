@@ -7,7 +7,8 @@
     "bahnubergang",
     "brucken",
     "linie",
-    "linie-mit-betriebspunkten"
+    "linie-mit-betriebspunkten",
+    "schienennetz"
   ],
   "chapters": [
     {
@@ -230,6 +231,93 @@
       ]
     },
     {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 822 aus 12 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «SBB CFF FFS». Infrastruktur: «SBB CFF FFS» bei allen 12 erfassten Abschnitten. Streckengleise: 1 (11 Abschnitte), 2 (ein Abschnitt). Spurweite: 1435 mm bei allen 12 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 12 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "SBB CFF FFS",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 12,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: SBB CFF FFS",
+          "value": 12,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 1,
+          "unit": "Abschnitt",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 12,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 12,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:5e47cea0",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 822 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 12 erfassten Abschnitte der Linie 822 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:4a9b0a6c",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 822 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 822: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
       "id": "bruecken",
       "title": "Brücken",
       "body": "Für die Linie 822 sind 27 Brücken erfasst. Als Kanton eingetragen ist «Thurgau» bei 26 Brücken und «Schaffhausen» bei 1. Aus den meisten Baueinheiten, 3, besteht BDu Eschenz. Die Liste zeigt die Brücken mit den meisten Baueinheiten.",
@@ -431,9 +519,9 @@
       "quelle": "linie, tunnel"
     },
     {
-      "thema": "Ein- oder mehrspurig",
-      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-      "quelle": "linie, tunnel"
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
     },
     {
       "thema": "Weitere Betriebspunkte",

@@ -55,6 +55,170 @@
    }
   ]
  },
+ "weitere_bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Bahnhöfe aus Taktland, die das Schienennetz des BAV auf dieser Linie führt, die Liste der Betriebspunkte der SBB aber nicht. Kilometer laut Schienennetz.",
+  "anzahl": 2,
+  "items": [
+   {
+    "uic": 8503420,
+    "name": "Lottstetten",
+    "km": 30.155
+   },
+   {
+    "uic": 8503421,
+    "name": "Jestetten",
+    "km": 34.33
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "SBB CFF FFS",
+  "abschnitte_erfasst": 11,
+  "nach_isb": [
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 11
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 8
+   },
+   {
+    "wert": 2,
+    "abschnitte": 3
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 11
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 11
+   }
+  ],
+  "items": [
+   {
+    "von": "Bülach",
+    "bis": "Glattfelden",
+    "km_von": 16.254,
+    "km_bis": 19.395,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Glattfelden",
+    "bis": "Eglisau",
+    "km_von": 19.395,
+    "km_bis": 22.247,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Eglisau",
+    "bis": "Hüntwangen-Wil",
+    "km_von": 22.247,
+    "km_bis": 23.602,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Hüntwangen-Wil",
+    "bis": "Rafz",
+    "km_von": 23.602,
+    "km_bis": 27.038,
+    "isb": "SBB CFF FFS",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rafz",
+    "bis": "Lottstetten",
+    "km_von": 27.038,
+    "km_bis": 30.155,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lottstetten",
+    "bis": "Jestetten Süd",
+    "km_von": 30.155,
+    "km_bis": 32.395,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Jestetten Süd",
+    "bis": "Jestetten",
+    "km_von": 32.395,
+    "km_bis": 34.33,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Jestetten",
+    "bis": "Altenburg-Rheinau",
+    "km_von": 34.33,
+    "km_bis": 36.421,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Altenburg-Rheinau",
+    "bis": "Fischerhölzli",
+    "km_von": 36.421,
+    "km_bis": 37.73,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Fischerhölzli",
+    "bis": "Neuhausen Rheinfall",
+    "km_von": 37.73,
+    "km_bis": 39.05,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Neuhausen Rheinfall",
+    "bis": "Neuhausen",
+    "km_von": 39.05,
+    "km_bis": 40.126,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -377,9 +541,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -420,6 +584,8 @@
  "verfuegbare_kapitel": [
   "strecke",
   "bahnhoefe",
+  "weitere_bahnhoefe",
+  "netz",
   "tunnel",
   "bruecken",
   "bahnuebergaenge"

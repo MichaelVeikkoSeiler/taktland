@@ -5,33 +5,16 @@
   "linie-mit-betriebspunkten": "2026-09-19",
   "tunnel": "2026-09-21",
   "brucken": "2026-09-21",
-  "bahnubergang": "2026-09-21"
+  "bahnubergang": "2026-09-21",
+  "schienennetz": "2026-09-22"
  },
  "hinweis": "Brücken und Bahnübergänge auf Linien ohne eigene Seite: weniger als zwei Bahnhöfe in Taktland und kein Tunnel.",
- "bruecken_ohne_seite": 159,
- "linien_ohne_seite_mit_bruecken": 57,
+ "bruecken_ohne_seite": 155,
+ "linien_ohne_seite_mit_bruecken": 54,
  "bahnuebergaenge_ohne_seite": 53,
  "linien_ohne_seite_mit_bahnuebergaengen": 29,
- "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen": 70,
+ "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen": 67,
  "bruecken_ohne_seite_liste": [
-  {
-   "linie": 140,
-   "name": "Brig - Visp - Zermatt",
-   "items": [
-    {
-     "name": "PU Lonza",
-     "km": 8.794,
-     "baueinheiten": 2,
-     "kanton": "Valais"
-    },
-    {
-     "name": "SU Lonzastrasse",
-     "km": 8.807,
-     "baueinheiten": 4,
-     "kanton": "Valais"
-    }
-   ]
-  },
   {
    "linie": 153,
    "name": "St-Jean - Geneve-La-Praille",
@@ -275,18 +258,6 @@
      "km": 5.531,
      "baueinheiten": 7,
      "kanton": "Vaud"
-    }
-   ]
-  },
-  {
-   "linie": 232,
-   "name": "Moutier - Lengnau Ost",
-   "items": [
-    {
-     "name": "PI de Moutier",
-     "km": 0.323,
-     "baueinheiten": 1,
-     "kanton": "Bern"
     }
    ]
   },
@@ -929,18 +900,6 @@
      "km": 9.03,
      "baueinheiten": 1,
      "kanton": "Schwyz"
-    }
-   ]
-  },
-  {
-   "linie": 671,
-   "name": "Rapperswil - Pfaffikon Ost (SOB)",
-   "items": [
-    {
-     "name": "BDu Stadtbach",
-     "km": 0.021,
-     "baueinheiten": 1,
-     "kanton": "St. Gallen"
     }
    ]
   },
@@ -1812,8 +1771,9 @@
   "109": "Simplon Tunnel II",
   "111": "Vevey Ouest - Puidoux-Chexbres",
   "112": "Vevey - Blonay",
-  "113": "Blonay - Les Pleiades",
+  "113": "Blonay - Les Pléiades",
   "114": "Blonay - Chamby",
+  "115": "Blonay-Chamby",
   "120": "Montreux - Zweisimmen",
   "121": "Montreux - Glion",
   "122": "Glion - Rochers-de-Naye",
@@ -1921,8 +1881,8 @@
   "293": "Unterzollikofen - Worblaufen",
   "294": "Worb Dorf - Worblaufen",
   "295": "Bern Zytglogge - Worb Dorf",
-  "297": "Bern Fischermatteli - Schwarzenburg",
-  "298": "Bern Holligen - Lerchenfeld",
+  "297": "Bern Fischermätteli - Schwarzenburg",
+  "298": "Bern Holligen - Thun Abzweigung",
   "300": "Spiez - Kandersteg - Brig",
   "301": "alter Hondrichtunnel",
   "302": "Zweiter Mittalgrabentunnel",
@@ -1959,11 +1919,12 @@
   "418": "Anschlussgleis Herzogenbuchsee Nord",
   "420": "Solothurn West - Moutier",
   "421": "Solothurn RM - Burgdorf West",
-  "430": "Hasle Ruegsau - Thun",
+  "430": "Hasle Rüegsau - Thun",
   "440": "Burgdorf West - Obermatt",
   "441": "Langenthal - Huttwil",
   "442": "Ramsei - Huttwil",
   "443": "Sumiswald Grunen - Wasen im Emmental",
+  "444": "Sumiswald-Grünen - Huttwil",
   "445": "Huttwil - Wolhusen",
   "450": "Olten Sud - Bern",
   "451": "Aarburg-Oftringen - Rothrist Gleis 1",
@@ -1974,7 +1935,7 @@
   "457": "Hardfeld (Spw) - Mattstetten",
   "459": "Rutti - Lochligut",
   "460": "Gumligen Sud - Fluhmuhle",
-  "469": "Meiringen West - Interlaken Ost Brunig",
+  "469": "Meiringen West - Interlaken Ost Brünig",
   "470": "Luzern - Meiringen",
   "473": "Alpnachstad - Pilatus Kulm",
   "474": "Meiringen - Innertkirchen",
@@ -2072,9 +2033,9 @@
   "664": "Zug Nord - Zug Sud",
   "665": "Zug Sud - Arth-Goldau",
   "666": "Goldau Nord - Goldau Ost",
-  "670": "Wadenswil - Einsiedeln",
-  "671": "Rapperswil - Pfaffikon Ost (SOB)",
-  "672": "Pfaffikon SZ - Samstagern",
+  "670": "Wädenswil - Einsiedeln",
+  "671": "Rapperswil - Pfäffikon Ost (SOB)",
+  "672": "Pfäffikon SZ - Samstagern",
   "673": "Biberbrugg - Arth-Goldau",
   "691": "RBL Kopf Zurich - Killwangen West",
   "692": "RBL Nord",
@@ -2162,7 +2123,7 @@
   "858": "Rheineck - Walzenhausen",
   "859": "St. Gallen AB - Trogen",
   "868": "Spange SOB Bruggwaldtunnel - St.Fiden",
-  "869": "Romanshorn Sud - St.Gallen St.Fiden",
+  "869": "Romanshorn Süd - St.Gallen St.Fiden",
   "870": "St.Gallen West - Lichtensteig",
   "871": "Wattwil - Ebnat-Kappel",
   "872": "Ebnat-Kappel - Nesslau-Neu St.Johann",
@@ -2179,7 +2140,7 @@
   "915": "Klosters - Davos - Filisur",
   "920": "Landquart RhB - Chur - Disentis",
   "930": "Chur - Arosa",
-  "940": "Reichenau Farsch (Abzw) - St. Moritz",
+  "940": "Reichenau-Tamins - St. Moritz",
   "950": "St. Moritz - Tirano",
   "959": "Samedan - Pontresina",
   "960": "Bever - Scuol-Tarasp",

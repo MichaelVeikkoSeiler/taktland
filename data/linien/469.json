@@ -1,0 +1,234 @@
+{
+ "linie": 469,
+ "name": "Meiringen West - Interlaken Ost Brünig",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Meiringen West",
+  "kleinster_km": 45.905,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Interlaken Brünig (Gleisende)",
+  "groesster_km": 74.16,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 11,
+  "anzahl_in_taktland": 7,
+  "items": [
+   {
+    "uic": 8508306,
+    "name": "Brienzwiler",
+    "km": 53.183
+   },
+   {
+    "uic": 8508305,
+    "name": "Brienz",
+    "km": 57.76
+   },
+   {
+    "uic": 8508329,
+    "name": "Brienz West",
+    "km": 59.296
+   },
+   {
+    "uic": 8508304,
+    "name": "Ebligen",
+    "km": 61.837
+   },
+   {
+    "uic": 8508303,
+    "name": "Oberried am Brienzersee",
+    "km": 65.017
+   },
+   {
+    "uic": 8508302,
+    "name": "Niederried",
+    "km": 68.308
+   },
+   {
+    "uic": 8508301,
+    "name": "Ringgenberg",
+    "km": 71.002
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "zb",
+  "abschnitte_erfasst": 10,
+  "nach_isb": [
+   {
+    "wert": "zb",
+    "abschnitte": 10
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 10
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 10
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 10
+   }
+  ],
+  "items": [
+   {
+    "von": "Meiringen West",
+    "bis": "Brienzwiler",
+    "km_von": 45.905,
+    "km_bis": 53.183,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brienzwiler",
+    "bis": "Brienzwiler West (Spw)",
+    "km_von": 53.183,
+    "km_bis": 54.08,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brienzwiler West (Spw)",
+    "bis": "Brienz",
+    "km_von": 54.08,
+    "km_bis": 57.76,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brienz",
+    "bis": "Brienz West",
+    "km_von": 57.771,
+    "km_bis": 59.296,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Brienz West",
+    "bis": "Ebligen",
+    "km_von": 59.296,
+    "km_bis": 61.837,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ebligen",
+    "bis": "Oberried am Brienzersee",
+    "km_von": 61.837,
+    "km_bis": 65.017,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Oberried am Brienzersee",
+    "bis": "Niederried",
+    "km_von": 65.017,
+    "km_bis": 68.308,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Niederried",
+    "bis": "Ringgenberg",
+    "km_von": 68.308,
+    "km_bis": 71.002,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ringgenberg",
+    "bis": "Interlaken Ost [Gleis 3-4]",
+    "km_von": 71.002,
+    "km_bis": 74.025,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Interlaken Ost [Gleis 3-4]",
+    "bis": "Interlaken Brünig (Gleisende)",
+    "km_von": 74.025,
+    "km_bis": 74.16,
+    "isb": "zb",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 7 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 11 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

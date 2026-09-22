@@ -1,0 +1,358 @@
+{
+ "linie": 298,
+ "name": "Bern Holligen - Thun Abzweigung",
+ "datenstand": "2026-09-22",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Bern Holligen",
+  "kleinster_km": 2.707,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Thun (Abzw)",
+  "groesster_km": 33.601,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 20,
+  "anzahl_in_taktland": 13,
+  "items": [
+   {
+    "uic": 8507079,
+    "name": "Bern Weissenbühl",
+    "km": 5.091
+   },
+   {
+    "uic": 8507078,
+    "name": "Wabern bei Bern",
+    "km": 6.567
+   },
+   {
+    "uic": 8507093,
+    "name": "Kehrsatz Nord",
+    "km": 8.726
+   },
+   {
+    "uic": 8507077,
+    "name": "Kehrsatz",
+    "km": 9.664
+   },
+   {
+    "uic": 8507092,
+    "name": "Belp Steinbach",
+    "km": 11.88
+   },
+   {
+    "uic": 8507076,
+    "name": "Belp",
+    "km": 12.698
+   },
+   {
+    "uic": 8507075,
+    "name": "Toffen",
+    "km": 16.136
+   },
+   {
+    "uic": 8507074,
+    "name": "Kaufdorf",
+    "km": 18.472
+   },
+   {
+    "uic": 8507073,
+    "name": "Thurnen",
+    "km": 21.338
+   },
+   {
+    "uic": 8507072,
+    "name": "Burgistein",
+    "km": 24.199
+   },
+   {
+    "uic": 8507071,
+    "name": "Seftigen",
+    "km": 25.718
+   },
+   {
+    "uic": 8507070,
+    "name": "Uetendorf",
+    "km": 29.299
+   },
+   {
+    "uic": 8507094,
+    "name": "Uetendorf Allmend",
+    "km": 30.995
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "BLSN",
+  "abschnitte_erfasst": 19,
+  "nach_isb": [
+   {
+    "wert": "BLSN",
+    "abschnitte": 19
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 11
+   },
+   {
+    "wert": 2,
+    "abschnitte": 8
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 19
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 19
+   }
+  ],
+  "items": [
+   {
+    "von": "Bern Holligen",
+    "bis": "Bern  Europaplatz",
+    "km_von": 2.707,
+    "km_bis": 3.118,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern  Europaplatz",
+    "bis": "Bern Fischermätteli",
+    "km_von": 3.118,
+    "km_bis": 3.525,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Fischermätteli",
+    "bis": "Bern Weissenbühl",
+    "km_von": 3.525,
+    "km_bis": 5.091,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Weissenbühl",
+    "bis": "Wabern bei Bern",
+    "km_von": 5.091,
+    "km_bis": 6.567,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Wabern bei Bern",
+    "bis": "Breitenacker (Spw)",
+    "km_von": 6.567,
+    "km_bis": 8.266,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Breitenacker (Spw)",
+    "bis": "Kehrsatz Nord",
+    "km_von": 8.266,
+    "km_bis": 8.726,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kehrsatz Nord",
+    "bis": "Kehrsatz",
+    "km_von": 8.726,
+    "km_bis": 9.664,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kehrsatz",
+    "bis": "Falkenhaus (Spw)",
+    "km_von": 9.664,
+    "km_bis": 10.814,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Falkenhaus (Spw)",
+    "bis": "Belp Steinbach",
+    "km_von": 10.814,
+    "km_bis": 11.88,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Belp Steinbach",
+    "bis": "Belp",
+    "km_von": 11.88,
+    "km_bis": 12.698,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Belp",
+    "bis": "Toffen",
+    "km_von": 12.698,
+    "km_bis": 16.136,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Toffen",
+    "bis": "Kaufdorf",
+    "km_von": 16.136,
+    "km_bis": 18.472,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kaufdorf",
+    "bis": "Thurnen",
+    "km_von": 18.472,
+    "km_bis": 21.338,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Thurnen",
+    "bis": "Burgistein",
+    "km_von": 21.338,
+    "km_bis": 24.199,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Burgistein",
+    "bis": "Seftigen",
+    "km_von": 24.199,
+    "km_bis": 25.718,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Seftigen",
+    "bis": "Uetendorf",
+    "km_von": 25.718,
+    "km_bis": 29.299,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Uetendorf",
+    "bis": "Uetendorf Allmend",
+    "km_von": 29.299,
+    "km_bis": 30.995,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Uetendorf Allmend",
+    "bis": "Lerchenfeld",
+    "km_von": 30.995,
+    "km_bis": 32.079,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Lerchenfeld",
+    "bis": "Thun (Abzw)",
+    "km_von": 32.079,
+    "km_bis": 33.601,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 13 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 20 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

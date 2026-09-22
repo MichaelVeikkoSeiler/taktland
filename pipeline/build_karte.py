@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import schienennetz  # noqa: E402
 from build_strecken import tunnel_bereich  # noqa: E402
 from sources import DATASETS  # noqa: E402
 
@@ -32,6 +33,8 @@ FACTS = ROOT / "data" / "facts"
 ZIEL = ROOT / "data" / "karte.json"
 
 QUELLEN = ["linienkilometrierung", "tunnel"]
+#: Linien anderer Bahnen und Stücke, die die Kilometrierung der SBB nicht kennt
+QUELLEN_BAV = ["schienennetz"]
 TOLERANZ_M = 30
 SPRUNG_KM = 1.5
 M_LAT, M_LON = 111_200, 73_000
@@ -93,6 +96,37 @@ def main():
         if stuecke:
             linien[str(int(nr))] = stuecke
 
+    # Linien mit Seite, die die Kilometrierung der SBB nicht oder nur zum Teil
+    # kennt (Linie 470 der zb, Linie 220 westlich von Bern): die Abschnitte aus
+    # dem Schienennetz des BAV. Deren Kilometer gibt es nur an den Enden; dazwischen
+    # ist er nach dem Weg verteilt, nur damit die Karte einen Bahnhof an seinem
+    # Kilometer zeichnen kann.
+    bav_linien, _ = schienennetz.je_linie()
+    bav_stuecke = 0
+    for p in sorted(LINIEN.glob("*.json")):
+        nr = p.stem
+        bav = bav_linien.get(nr)
+        if not bav:
+            continue
+        gedeckt = []
+        for st in linien.get(nr, []):
+            m, d = st["start"][0], st["d"]
+            kms = [m] + [m := m + d[i] for i in range(0, len(d), 3)]
+            gedeckt.append((min(kms) / 1000 - 0.05, max(kms) / 1000 + 0.05))
+        for seg in bav["segmente"]:
+            mitte = (seg["km_anfang"] + seg["km_ende"]) / 2
+            if any(a <= mitte <= b for a, b in gedeckt) or len(seg["zug"]) < 2:
+                continue
+            la = np.array([z[0] for z in seg["zug"]])
+            lo = np.array([z[1] for z in seg["zug"]])
+            x, y = lo * M_LON, la * M_LAT
+            weg = np.concatenate([[0], np.cumsum(np.hypot(np.diff(x), np.diff(y)))])
+            km = seg["km_anfang"] + (seg["km_ende"] - seg["km_anfang"]) * weg / (weg[-1] or 1)
+            k = vereinfachen(x, y, TOLERANZ_M)
+            linien.setdefault(nr, []).append(kodieren(km[k], la[k], lo[k]))
+            punkte += int(k.sum())
+            bav_stuecke += 1
+
     # Tunnel: Bereich wie auf der Seite Strecke, für alle Tunnel der Linienfakten
     tunnel = {}
     for p in LINIEN.glob("*.json"):
@@ -111,19 +145,22 @@ def main():
     orte = [{"name": n, "lage": namen[n]} for n in ORTE if n in namen]
 
     raus = {
-        "datenstand": max(abruf[q] for q in QUELLEN),
-        "quellen": QUELLEN,
+        "datenstand": max(abruf[q] for q in QUELLEN + QUELLEN_BAV),
+        "quellen": QUELLEN + QUELLEN_BAV,
         "hinweis": "Linien: je Stück start = [Meter, Breite, Länge] als ganze Zahlen (Grad mal "
                    "100000), d = Differenzen; vereinfacht auf {} m. tunnel: km von, km bis auf "
                    "der Linie, gleich, wenn die Richtung der Länge nicht erfasst ist. orte: Lage "
-                   "aus den Fakten, nur zur Orientierung.".format(TOLERANZ_M),
+                   "aus den Fakten, nur zur Orientierung. Stücke aus dem Schienennetz des BAV: "
+                   "Kilometer nur an den Enden erfasst, dazwischen nach dem Weg verteilt."
+                   .format(TOLERANZ_M),
         "linien": linien,
         "tunnel": dict(sorted(tunnel.items())),
         "orte": orte,
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     print(f"karte.json: {len(linien)} Linien, {punkte} Punkte, {len(tunnel)} Tunnel, "
-          f"{len(orte)} Orte ({ZIEL.stat().st_size / 1024:.0f} KB)")
+          f"{len(orte)} Orte ({ZIEL.stat().st_size / 1024:.0f} KB), davon {bav_stuecke} Stücke "
+          "aus dem Schienennetz")
 
 
 if __name__ == "__main__":

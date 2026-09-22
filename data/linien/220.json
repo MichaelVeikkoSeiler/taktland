@@ -25,6 +25,339 @@
    }
   ]
  },
+ "weitere_bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Bahnhöfe aus Taktland, die das Schienennetz des BAV auf dieser Linie führt, die Liste der Betriebspunkte der SBB aber nicht. Kilometer laut Schienennetz.",
+  "anzahl": 13,
+  "items": [
+   {
+    "uic": 8504495,
+    "name": "Bern Stöckacker",
+    "km": 3.308
+   },
+   {
+    "uic": 8504489,
+    "name": "Bern Bümpliz Nord",
+    "km": 4.186
+   },
+   {
+    "uic": 8516154,
+    "name": "Bern Brünnen Westside",
+    "km": 5.307
+   },
+   {
+    "uic": 8504488,
+    "name": "Bern Riedbach",
+    "km": 8.494
+   },
+   {
+    "uic": 8504487,
+    "name": "Rosshäusern",
+    "km": 11.445
+   },
+   {
+    "uic": 8504486,
+    "name": "Gümmenen",
+    "km": 17.001
+   },
+   {
+    "uic": 8504485,
+    "name": "Ferenbalm-Gurbrü",
+    "km": 18.853
+   },
+   {
+    "uic": 8504484,
+    "name": "Müntschemier",
+    "km": 26.436
+   },
+   {
+    "uic": 8504483,
+    "name": "Ins",
+    "km": 29.782
+   },
+   {
+    "uic": 8504482,
+    "name": "Gampelen",
+    "km": 33.241
+   },
+   {
+    "uic": 8504490,
+    "name": "Zihlbrücke",
+    "km": 35.208
+   },
+   {
+    "uic": 8504481,
+    "name": "Marin-Epagnier",
+    "km": 36.726
+   },
+   {
+    "uic": 8504480,
+    "name": "St-Blaise-Lac",
+    "km": 38.742
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "BLSN",
+  "abschnitte_erfasst": 22,
+  "nach_isb": [
+   {
+    "wert": "BLSN",
+    "abschnitte": 21
+   },
+   {
+    "wert": "SBB CFF FFS",
+    "abschnitte": 1
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 13
+   },
+   {
+    "wert": 2,
+    "abschnitte": 9
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1435 mm",
+    "abschnitte": 22
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Wechselstrom 16,7 Hz",
+    "abschnitte": 22
+   }
+  ],
+  "items": [
+   {
+    "von": "Bern Henkerbrünnli",
+    "bis": "Bern",
+    "km_von": -0.4,
+    "km_bis": 0.106,
+    "isb": "SBB CFF FFS",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern",
+    "bis": "Bern Weyermannshaus (Spw)",
+    "km_von": 0.106,
+    "km_bis": 2.234,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Weyermannshaus (Spw)",
+    "bis": "Bern Holligen",
+    "km_von": 2.234,
+    "km_bis": 2.707,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Holligen",
+    "bis": "Bern Stöckacker",
+    "km_von": 2.707,
+    "km_bis": 3.308,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Stöckacker",
+    "bis": "Bern Bümpliz Nord",
+    "km_von": 3.308,
+    "km_bis": 4.186,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Bümpliz Nord",
+    "bis": "Bern Brünnen Westside",
+    "km_von": 4.186,
+    "km_bis": 5.307,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Bern Brünnen Westside",
+    "bis": "Niederbottigen BN",
+    "km_von": 5.307,
+    "km_bis": 5.887,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Niederbottigen BN",
+    "bis": "Riedbach",
+    "km_von": 5.887,
+    "km_bis": 8.494,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Riedbach",
+    "bis": "Rosshäusern",
+    "km_von": 8.494,
+    "km_bis": 11.445,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rosshäusern",
+    "bis": "Rosshäuserntunnel Portal Ost",
+    "km_von": 11.445,
+    "km_bis": 12.081,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Rosshäuserntunnel Portal Ost",
+    "bis": "Gümmenen Viadukt",
+    "km_von": 12.081,
+    "km_bis": 15.589,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gümmenen Viadukt",
+    "bis": "Gümmenen",
+    "km_von": 15.589,
+    "km_bis": 17.001,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gümmenen",
+    "bis": "Ferenbalm-Gurbrü",
+    "km_von": 17.001,
+    "km_bis": 18.853,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ferenbalm-Gurbrü",
+    "bis": "Kerzers Süd (Abzw)",
+    "km_von": 18.853,
+    "km_bis": 21.977,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kerzers Süd (Abzw)",
+    "bis": "Kerzers BLS",
+    "km_von": 21.977,
+    "km_bis": 22.186,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Kerzers BLS",
+    "bis": "Müntschemier",
+    "km_von": 22.186,
+    "km_bis": 26.436,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Müntschemier",
+    "bis": "Ins",
+    "km_von": 26.436,
+    "km_bis": 29.782,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Ins",
+    "bis": "Gampelen",
+    "km_von": 29.782,
+    "km_bis": 33.241,
+    "isb": "BLSN",
+    "gleise": 2,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Gampelen",
+    "bis": "Zihlbrücke",
+    "km_von": 33.241,
+    "km_bis": 35.208,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Zihlbrücke",
+    "bis": "Marin-Epagnier",
+    "km_von": 35.208,
+    "km_bis": 36.726,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "Marin-Epagnier",
+    "bis": "St-Blaise-Lac",
+    "km_von": 36.726,
+    "km_bis": 38.742,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   },
+   {
+    "von": "St-Blaise-Lac",
+    "bis": "Neuchâtel Est (bif)",
+    "km_von": 38.742,
+    "km_bis": 42.087,
+    "isb": "BLSN",
+    "gleise": 1,
+    "spurweite": "1435 mm",
+    "strom": "Wechselstrom 16,7 Hz"
+   }
+  ]
+ },
  "tunnel": {
   "source": "tunnel",
   "hinweis": "Länge, Jahr der ersten Inbetriebnahme, Tunnelsystem und Kanton wie in der Quelle. km ist der Kilometer auf der Linie.",
@@ -61,9 +394,9 @@
    "quelle": "linie, tunnel"
   },
   {
-   "thema": "Ein- oder mehrspurig",
-   "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-   "quelle": "linie, tunnel"
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
   },
   {
    "thema": "Weitere Betriebspunkte",
@@ -88,6 +421,8 @@
  ],
  "verfuegbare_kapitel": [
   "strecke",
+  "weitere_bahnhoefe",
+  "netz",
   "tunnel"
  ]
 }

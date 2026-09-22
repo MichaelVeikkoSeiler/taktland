@@ -1,0 +1,372 @@
+{
+  "linie": 470,
+  "name": "Luzern - Meiringen",
+  "lang": "de",
+  "generated": "2026-09-22",
+  "sources": [
+    "schienennetz"
+  ],
+  "chapters": [
+    {
+      "id": "strecke",
+      "title": "Strecke",
+      "body": "Die Linie 470 fehlt in den Daten der SBB. Im Schienennetz des Bundesamts für Verkehr heisst sie «Luzern - Meiringen». Den kleinsten Kilometer hat dort der Betriebspunkt Luzern Brünig mit km 0.126, den grössten Meiringen Ost mit km 45.661.",
+      "facts": [
+        {
+          "label": "Kleinster Kilometer bei",
+          "value": "Luzern Brünig",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km_bei"
+        },
+        {
+          "label": "Kleinster Kilometer",
+          "value": 0.126,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.kleinster_km"
+        },
+        {
+          "label": "Grösster Kilometer bei",
+          "value": "Meiringen Ost",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km_bei"
+        },
+        {
+          "label": "Grösster Kilometer",
+          "value": 45.661,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "strecke.groesster_km"
+        }
+      ],
+      "erlaeuterung": "Die Kilometrierung gibt Standorte entlang einer Linie an, so wie die Kilometertafeln an der Strecke. Die Differenz zweier Kilometerangaben ist nicht in jedem Fall die Strecke dazwischen.",
+      "questions": [
+        {
+          "id": "strecke:2f4ab9e2",
+          "type": "slider",
+          "prompt": "Welchen Kilometer hat Meiringen Ost, der grösste auf der Linie 470?",
+          "min": 37,
+          "max": 67,
+          "step": 1,
+          "unit": "km",
+          "correct": 45.661,
+          "explanation": "Meiringen Ost liegt auf der Linie 470 bei km 45.661. Der Wert ist ein Standort auf der Linie.",
+          "factRef": "strecke.groesster_km",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "bahnhoefe",
+      "title": "Bahnhöfe",
+      "body": "Im Schienennetz des BAV liegen auf der Linie 470 25 Betriebspunkte. Davon sind 16 Bahnhöfe in Taktland. Sie stehen hier nach ihrem Kilometer auf der Linie geordnet, der kleinste zuerst.",
+      "facts": [
+        {
+          "label": "Erfasste Betriebspunkte",
+          "value": 25,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.betriebspunkte_erfasst"
+        },
+        {
+          "label": "Bahnhöfe in Taktland",
+          "value": 16,
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.anzahl_in_taktland"
+        },
+        {
+          "label": "Luzern Allmend/Messe",
+          "value": 1.98,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[0].km",
+          "uic": 8508321
+        },
+        {
+          "label": "Kriens Mattenhof",
+          "value": 3.012,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[1].km",
+          "uic": 8516351
+        },
+        {
+          "label": "Horw",
+          "value": 4.485,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[2].km",
+          "uic": 8508319
+        },
+        {
+          "label": "Hergiswil Matt",
+          "value": 7.315,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[3].km",
+          "uic": 8508320
+        },
+        {
+          "label": "Hergiswil NW",
+          "value": 8.727,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[4].km",
+          "uic": 8508318
+        },
+        {
+          "label": "Alpnachstad",
+          "value": 13.146,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[5].km",
+          "uic": 8508317
+        },
+        {
+          "label": "Alpnach Dorf",
+          "value": 14.877,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[6].km",
+          "uic": 8508316
+        },
+        {
+          "label": "Sarnen Nord",
+          "value": 20.017,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[7].km",
+          "uic": 8508323
+        },
+        {
+          "label": "Sarnen",
+          "value": 20.637,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[8].km",
+          "uic": 8508314
+        },
+        {
+          "label": "Sachseln",
+          "value": 23.437,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[9].km",
+          "uic": 8508313
+        },
+        {
+          "label": "Ewil Maxon",
+          "value": 25.39,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[10].km",
+          "uic": 8508327
+        },
+        {
+          "label": "Giswil",
+          "value": 29.222,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[11].km",
+          "uic": 8508312
+        },
+        {
+          "label": "Kaiserstuhl OW",
+          "value": 32.165,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[12].km",
+          "uic": 8508311
+        },
+        {
+          "label": "Lungern",
+          "value": 35.805,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[13].km",
+          "uic": 8508310
+        },
+        {
+          "label": "Brünig-Hasliberg",
+          "value": 40.071,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[14].km",
+          "uic": 8508309
+        },
+        {
+          "label": "Meiringen",
+          "value": 45.471,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "bahnhoefe.items[15].km",
+          "uic": 8508308
+        }
+      ],
+      "questions": [
+        {
+          "id": "bahnhoefe:c9962eec",
+          "type": "sort",
+          "prompt": "Ordne diese Bahnhöfe nach ihrem Kilometer auf der Linie 470, kleinster zuerst.",
+          "richtung": "aufsteigend",
+          "items": [
+            {
+              "label": "Luzern Allmend/Messe",
+              "value": 1.98,
+              "factRef": "bahnhoefe.items[0].km"
+            },
+            {
+              "label": "Alpnachstad",
+              "value": 13.146,
+              "factRef": "bahnhoefe.items[5].km"
+            },
+            {
+              "label": "Ewil Maxon",
+              "value": 25.39,
+              "factRef": "bahnhoefe.items[10].km"
+            },
+            {
+              "label": "Meiringen",
+              "value": 45.471,
+              "factRef": "bahnhoefe.items[15].km"
+            }
+          ],
+          "factRef": "bahnhoefe.items",
+          "explanation": "Luzern Allmend/Messe bei km 1.98, Alpnachstad bei km 13.146, Ewil Maxon bei km 25.39 und Meiringen bei km 45.471.",
+          "difficulty": 3
+        },
+        {
+          "id": "bahnhoefe:b33a565e",
+          "type": "single_choice",
+          "prompt": "Bei welchem Kilometer der Linie 470 liegt Sarnen?",
+          "options": [
+            "1.98 km",
+            "14.877 km",
+            "20.637 km",
+            "45.471 km"
+          ],
+          "correct": 2,
+          "explanation": "Sarnen liegt auf der Linie 470 bei km 20.637.",
+          "factRef": "bahnhoefe.items[8].km",
+          "difficulty": 2,
+          "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 470 aus 24 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «zb». Infrastruktur: «zb» bei allen 24 erfassten Abschnitten. Streckengleise: 1 (18 Abschnitte), 2 (6 Abschnitte). Spurweite: 1000 mm (19 Abschnitte), 1000 mm und 1435 mm (5 Abschnitte). Strom: Wechselstrom 16,7 Hz bei allen 24 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "zb",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 24,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: zb",
+          "value": 24,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 18,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 6,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm",
+          "value": 19,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1000 mm und 1435 mm",
+          "value": 5,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[1].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 24,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:595b7902",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 470 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 470: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
+        }
+      ]
+    }
+  ],
+  "luecken": [
+    {
+      "thema": "Linie einer anderen Bahn",
+      "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Länge der Linie",
+      "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Anfang und Ende",
+      "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Baujahr der Linie",
+      "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Weitere Betriebspunkte",
+      "grund": "Aufgeführt sind die 16 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 25 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+      "quelle": "schienennetz"
+    },
+    {
+      "thema": "Züge auf der Linie",
+      "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+      "quelle": "schienennetz"
+    }
+  ]
+}

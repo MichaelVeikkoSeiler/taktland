@@ -130,9 +130,9 @@ function Eintrag({ e, oeffnen }: { e: IndexEintrag; oeffnen: (uic: number) => vo
 }
 
 /** Kennzeichen für Bahnhöfe, deren Infrastruktur nicht die SBB betreibt */
-export function BahnKuerzel({ isb }: { isb: string }) {
+export function BahnKuerzel({ isb, titel = `Infrastruktur: ${isb}` }: { isb: string; titel?: string }) {
   return (
-    <span title={`Infrastruktur: ${isb}`} aria-label={`Infrastruktur ${isb}`}
+    <span title={titel} aria-label={titel}
           className="shrink-0 border border-sbb-metal px-1 text-xs font-medium leading-4
                      text-sbb-metal dark:border-sbb-storm dark:text-sbb-storm">
       {isb}

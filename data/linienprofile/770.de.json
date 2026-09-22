@@ -8,6 +8,7 @@
     "brucken",
     "linie",
     "linie-mit-betriebspunkten",
+    "schienennetz",
     "tunnel"
   ],
   "chapters": [
@@ -196,6 +197,140 @@
           "factRef": "bahnhoefe.items[3].km",
           "difficulty": 2,
           "optionen_aus_fakten": true
+        }
+      ]
+    },
+    {
+      "id": "weitere_bahnhoefe",
+      "title": "Weitere Bahnhöfe laut BAV",
+      "body": "Auf der Linie 770 führt das Schienennetz des BAV 2 Bahnhöfe aus Taktland, die in der Liste der Betriebspunkte der SBB fehlen: Lottstetten und Jestetten. Die Kilometer sind die des Schienennetzes.",
+      "facts": [
+        {
+          "label": "Weitere Bahnhöfe",
+          "value": 2,
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.anzahl"
+        },
+        {
+          "label": "Lottstetten",
+          "value": 30.155,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[0].km",
+          "uic": 8503420
+        },
+        {
+          "label": "Jestetten",
+          "value": 34.33,
+          "unit": "km",
+          "source": "schienennetz",
+          "factRef": "weitere_bahnhoefe.items[1].km",
+          "uic": 8503421
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "weitere_bahnhoefe:edecff35",
+          "type": "single_choice",
+          "prompt": "Welcher dieser Bahnhöfe liegt laut Schienennetz des BAV auf der Linie 770?",
+          "options": [
+            "Eschenz",
+            "Faoug",
+            "Filisur",
+            "Lottstetten"
+          ],
+          "correct": 3,
+          "explanation": "Lottstetten liegt laut Schienennetz auf der Linie 770, bei km 30.155.",
+          "factRef": "weitere_bahnhoefe.items[0].name",
+          "difficulty": 2
+        }
+      ]
+    },
+    {
+      "id": "netz",
+      "title": "Netz",
+      "body": "Im Schienennetz des BAV besteht die Linie 770 aus 11 Abschnitten zwischen Betriebspunkten. Datenherr der Linie ist «SBB CFF FFS». Infrastruktur: «SBB CFF FFS» bei allen 11 erfassten Abschnitten. Streckengleise: 1 (8 Abschnitte), 2 (3 Abschnitte). Spurweite: 1435 mm bei allen 11 erfassten Abschnitten. Strom: Wechselstrom 16,7 Hz bei allen 11 erfassten Abschnitten.",
+      "facts": [
+        {
+          "label": "Datenherr der Linie",
+          "value": "SBB CFF FFS",
+          "source": "schienennetz",
+          "factRef": "netz.bahn"
+        },
+        {
+          "label": "Abschnitte",
+          "value": 11,
+          "source": "schienennetz",
+          "factRef": "netz.abschnitte_erfasst"
+        },
+        {
+          "label": "Infrastruktur: SBB CFF FFS",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_isb[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 1",
+          "value": 8,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[0].abschnitte"
+        },
+        {
+          "label": "Streckengleise: 2",
+          "value": 3,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_gleisen[1].abschnitte"
+        },
+        {
+          "label": "Spurweite: 1435 mm",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_spurweite[0].abschnitte"
+        },
+        {
+          "label": "Strom: Wechselstrom 16,7 Hz",
+          "value": 11,
+          "unit": "Abschnitte",
+          "source": "schienennetz",
+          "factRef": "netz.nach_strom[0].abschnitte"
+        }
+      ],
+      "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
+      "questions": [
+        {
+          "id": "netz:29d074cf",
+          "type": "single_choice",
+          "prompt": "Welche Spurweite hat die Linie 770 laut Schienennetz?",
+          "options": [
+            "750 mm",
+            "800 mm",
+            "1000 mm",
+            "1435 mm"
+          ],
+          "correct": 3,
+          "explanation": "Alle 11 erfassten Abschnitte der Linie 770 haben die Spurweite 1435 mm.",
+          "factRef": "netz.nach_spurweite[0].wert",
+          "difficulty": 1
+        },
+        {
+          "id": "netz:09292e2f",
+          "type": "single_choice",
+          "prompt": "Mit welchem Strom ist die Linie 770 laut Schienennetz elektrifiziert?",
+          "options": [
+            "Gleichstrom",
+            "Wechselstrom 16,7 Hz",
+            "Wechselstrom 50 Hz",
+            "nicht elektrifiziert"
+          ],
+          "correct": 1,
+          "explanation": "Im Schienennetz steht für die Linie 770: Wechselstrom 16,7 Hz.",
+          "factRef": "netz.nach_strom[0].wert",
+          "difficulty": 2
         }
       ]
     },
@@ -470,9 +605,9 @@
       "quelle": "linie, tunnel"
     },
     {
-      "thema": "Ein- oder mehrspurig",
-      "grund": "Wie viele Gleise die Linie hat, steht nicht in den offenen Daten. Erfasst ist das nur für Tunnel, als Tunnelsystem.",
-      "quelle": "linie, tunnel"
+      "thema": "Stand des Schienennetzes",
+      "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+      "quelle": "schienennetz"
     },
     {
       "thema": "Weitere Betriebspunkte",
