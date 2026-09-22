@@ -67,11 +67,16 @@ body {
 .pfeil {
   display: inline-block;
   color: var(--color-sbb-red);
-  animation: pfeil-rechts 1.8s ease-in-out infinite;
+  font-size: 1.4em;
+  line-height: 1;
+  animation: pfeil-rechts 1.5s ease-in-out infinite;
 }
 .pfeil-links { animation-name: pfeil-links; }
 .pfeil-unten { animation-name: pfeil-unten; }
+.pfeil-oben { animation-name: pfeil-oben; }
 .pfeil-schraeg { animation-name: pfeil-schraeg; }
+/* die Blätterpfeile sind schon gross genug */
+.pfeil-gleich { font-size: inherit; }
 
 @keyframes pfeil-rechts {
   0%, 55%, 100% { transform: translateX(0); }
@@ -84,6 +89,10 @@ body {
 @keyframes pfeil-unten {
   0%, 55%, 100% { transform: translateY(0); }
   25% { transform: translateY(3px); }
+}
+@keyframes pfeil-oben {
+  0%, 55%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-3px); }
 }
 @keyframes pfeil-schraeg {
   0%, 55%, 100% { transform: translate(0, 0); }

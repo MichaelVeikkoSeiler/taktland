@@ -278,13 +278,19 @@ function Sortieren({ items, gezeigt, abschliessen }: {
                     onClick={() => schieben(i, i - 1)} disabled={i === 0}
                     className="size-9 border border-sbb-cloud text-lg disabled:opacity-30
                                dark:border-sbb-iron dark:text-sbb-white"
-                  >↑</button>
+                  >
+                    <span className={i === 0 ? undefined : 'pfeil pfeil-gleich pfeil-oben'}
+                          aria-hidden="true">↑</span>
+                  </button>
                   <button
                     type="button" aria-label="nach unten"
                     onClick={() => schieben(i, i + 1)} disabled={i === reihe.length - 1}
                     className="size-9 border border-sbb-cloud text-lg disabled:opacity-30
                                dark:border-sbb-iron dark:text-sbb-white"
-                  >↓</button>
+                  >
+                    <span className={i === reihe.length - 1 ? undefined : 'pfeil pfeil-gleich pfeil-unten'}
+                          aria-hidden="true">↓</span>
+                  </button>
                 </span>
               )}
             </li>
