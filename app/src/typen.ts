@@ -194,6 +194,8 @@ export interface IndexEintrag {
 export interface BahnhofIndex {
   stand: string
   bahnhoefe_gesamt: number
+  /** gezählt in pipeline/export_app.py, für die Startseite */
+  zahlen?: { linien: number; tunnel: number; bruecken: number }
   mit_profil: number
   quelle: string
   bahnhoefe: IndexEintrag[]

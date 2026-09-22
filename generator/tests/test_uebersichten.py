@@ -62,3 +62,14 @@ def test_liniennamen_wie_auf_den_linienseiten():
     verzeichnis = json.loads((ROOT / "app" / "public" / "data" / "linien.json").read_text(encoding="utf-8"))
     for f in fakten():
         assert verzeichnis["namen"][str(f["linie"])] == f["name"], f["linie"]
+
+
+def test_zahlen_der_startseite():
+    """Die Startseite nennt so viele Strecken, Tunnel und Brücken, wie es gibt"""
+    index = json.loads((ROOT / "app" / "public" / "data" / "index.json").read_text(encoding="utf-8"))
+    z = index["zahlen"]
+    assert z["linien"] == len(fakten())
+    for art in ("tunnel", "bruecken"):
+        d = json.loads((ROOT / "app" / "public" / "data" / f"{art}.json").read_text(encoding="utf-8"))
+        assert z[art] == len(d["eintraege"])
+    assert index["bahnhoefe_gesamt"] == len(index["bahnhoefe"])

@@ -67,10 +67,15 @@ def main():
         })
     eintraege.sort(key=lambda e: (e["dwv"] or 0), reverse=True)
 
+    # gezählt hier, nicht im Text der Startseite
+    uebersicht = uebersicht_daten()
     index = {
         "stand": max(json.loads(f.read_text(encoding="utf-8"))["datenstand"]
                      for f in FACTS.glob("*.json")),
         "bahnhoefe_gesamt": len(eintraege),
+        "zahlen": {"linien": len(list(LINIENPROFILE.glob("*.json"))),
+                   "tunnel": len(uebersicht["tunnel"]["eintraege"]),
+                   "bruecken": len(uebersicht["bruecken"]["eintraege"])},
         "mit_profil": sum(1 for e in eintraege if e["sprachen"]),
         "quelle": "data.sbb.ch",
         "bahnhoefe": eintraege,

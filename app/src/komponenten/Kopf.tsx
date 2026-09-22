@@ -18,7 +18,8 @@ export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' |
 
 /** Die Reiter oben auf jeder Seite, in dieser Reihenfolge */
 const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
-  { bereich: 'bahnhoefe', text: 'Bahnhöfe', adresse: '#/' },
+  // die Startseite (#/) ist die Einleitung; die Bahnhöfe sind ein Bereich wie die anderen
+  { bereich: 'bahnhoefe', text: 'Bahnhöfe', adresse: '#/bahnhoefe' },
   // Michael, 2026-09-22: «Bereich Linien soll neu Strecken heissen», Brücken vor Tunnel
   { bereich: 'linien', text: 'Strecken', adresse: '#/strecken' },
   { bereich: 'bruecken', text: 'Brücken', adresse: '#/bruecken' },

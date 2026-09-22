@@ -11,6 +11,7 @@ import { Objekte } from './komponenten/Objekte'
 import { eintragAusAdresse, type Filter, filterAusAdresse } from './listen'
 import type { ListenArt } from './typen'
 import { Standort } from './komponenten/Standort'
+import { Start } from './komponenten/Start'
 import { Strecke, type StreckenWahl, wahlAusAdresse } from './komponenten/Strecke'
 import { Suche, type ListenStand } from './komponenten/Suche'
 import {
@@ -24,7 +25,7 @@ import { Ladefehler } from './komponenten/Ladefehler'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
@@ -52,7 +53,9 @@ function seiteAusAdresse(): Seite {
   if (strecke) return { art: 'strecke', wahl: wahlAusAdresse(strecke[1]) }
   if (h === '#/tunnel') return { art: 'uebersicht', liste: 'tunnel' }
   if (h === '#/bruecken') return { art: 'uebersicht', liste: 'bruecken' }
-  return { art: 'liste' }
+  if (h === '#/bahnhoefe') return { art: 'liste' }
+  // #/ und alles Unbekannte: die Startseite mit der Einleitung
+  return { art: 'start' }
 }
 
 /** Von welcher Übersicht aus eine Linie geöffnet wurde. Dorthin führt ihr
@@ -68,6 +71,7 @@ const ZURUECK_ZU: Record<Herkunft, { text: string; adresse: string }> = {
 function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
   switch (seite.art) {
     case 'liste': case 'bahnhof': return 'bahnhoefe'
+    case 'start': return null
     case 'linien': case 'strecke': return 'linien'
     case 'linie': case 'objekte': return herkunft
     case 'uebersicht': return seite.liste
@@ -111,7 +115,7 @@ export default function App() {
   useEffect(() => { window.scrollTo(0, 0) }, [adresse])
 
   function oeffnen(neu: number) { window.location.hash = `#/bahnhof/${neu}` }
-  function zurueck() { window.location.hash = '' }
+  function zurueck() { window.location.hash = '#/bahnhoefe' }
   const zurueckZu = ZURUECK_ZU[herkunft]
   const bereich = bereichVon(seite, herkunft)
 
@@ -120,7 +124,7 @@ export default function App() {
       <div className="mx-auto max-w-2xl">
         {/* während der Entwicklung: Version und Knopf zum Aktualisieren */}
         <Aktualisieren />
-        <Kopf aktiv={bereich} startseite={seite.art === 'liste'} anleitung={seite.art === 'anleitung'} />
+        <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'} />
 
         {fehler && (
           <Ladefehler className="px-4 py-8" was="Die Bahnhofsliste konnte nicht geladen werden." fehler={fehler} />
@@ -128,7 +132,10 @@ export default function App() {
 
         {!index && !fehler && <p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>}
 
-        {seite.art === 'anleitung' && <Anleitung index={index} zurueck={zurueck} />}
+        {seite.art === 'start' && index && <Start index={index} />}
+        {seite.art === 'anleitung' && (
+          <Anleitung index={index} zurueck={() => { window.location.hash = '#/' }} />
+        )}
         {seite.art === 'duell' && <Duell />}
         {seite.art === 'standort' && <Standort index={index} />}
         {seite.art === 'linien' && <Linien index={index} />}

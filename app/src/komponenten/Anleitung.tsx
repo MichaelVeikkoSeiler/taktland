@@ -14,7 +14,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
   const stand = index ? datum(index.stand) : null
   return (
     <div className="px-4 pb-16">
-      <Zurueck onClick={zurueck} text="Alle Bahnhöfe" />
+      <Zurueck onClick={zurueck} text="Startseite" />
 
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
@@ -283,7 +283,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             die Browserdaten löscht, löscht auch den Fortschritt.
           </li>
           <li>
-            Unten auf der Startseite lässt sich der ganze Fortschritt löschen.
+            Ganz unten auf jeder Seite lässt sich der ganze Fortschritt löschen.
           </li>
           <li>
             Ganz oben steht, von wann die geladene Version ist. «Aktualisieren» holt den
