@@ -748,6 +748,36 @@
    ]
   }
  },
+ "8500292": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Oensingen",
+    "Niederbipp",
+    "Oberbuchsiten"
+   ]
+  }
+ },
+ "8500293": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Oensingen",
+    "Niederbipp",
+    "Oberbuchsiten"
+   ]
+  }
+ },
+ "8500294": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Gäu",
+    "Olten",
+    "Wasseramt"
+   ]
+  }
+ },
  "8500300": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -1342,6 +1372,96 @@
    ]
   }
  },
+ "8501151": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "L'Abbaye",
+    "Le Chenit",
+    "Vallorbe"
+   ]
+  }
+ },
+ "8501152": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "L'Abbaye",
+    "Le Chenit",
+    "Vallorbe"
+   ]
+  }
+ },
+ "8501153": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Morges",
+    "Gros-de-Vaud",
+    "Nyon"
+   ]
+  }
+ },
+ "8501154": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Le Chenit",
+    "L'Abbaye",
+    "Vallorbe"
+   ]
+  }
+ },
+ "8501155": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Le Lieu",
+    "L'Abbaye",
+    "Vallorbe"
+   ]
+  }
+ },
+ "8501156": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Le Lieu",
+    "L'Abbaye",
+    "Vallorbe"
+   ]
+  }
+ },
+ "8501157": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Le Lieu",
+    "L'Abbaye",
+    "Vallorbe"
+   ]
+  }
+ },
+ "8501159": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Le Lieu",
+    "L'Abbaye",
+    "Rolle"
+   ]
+  }
+ },
+ "8501198": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aigle",
+    "Lavaux-Oron",
+    "Broye-Vully"
+   ]
+  }
+ },
  "8501200": {
   "stammdaten": {
    "frage": "bezirk",
@@ -1378,6 +1498,156 @@
     "Clarens",
     "La Tour-de-Peilz",
     "Vevey"
+   ]
+  }
+ },
+ "8501230": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "La Tour-de-Peilz"
+   ]
+  }
+ },
+ "8501262": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Vevey",
+    "La Tour-de-Peilz",
+    "Corseaux"
+   ]
+  }
+ },
+ "8501263": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Vevey",
+    "La Tour-de-Peilz",
+    "Corseaux"
+   ]
+  }
+ },
+ "8501264": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
+   ]
+  }
+ },
+ "8501265": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Vevey",
+    "La Tour-de-Peilz",
+    "Montreux"
+   ]
+  }
+ },
+ "8501266": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
+   ]
+  }
+ },
+ "8501280": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
+   ]
+  }
+ },
+ "8501281": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
+   ]
+  }
+ },
+ "8501282": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
+   ]
+  }
+ },
+ "8501283": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "La Tour-de-Peilz",
+    "Vevey"
+   ]
+  }
+ },
+ "8501284": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "Vevey",
+    "La Tour-de-Peilz"
+   ]
+  }
+ },
+ "8501285": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "La Tour-de-Peilz",
+    "Vevey"
+   ]
+  }
+ },
+ "8501286": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "La Tour-de-Peilz",
+    "Vevey"
+   ]
+  }
+ },
+ "8501287": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "La Tour-de-Peilz",
+    "Vevey"
+   ]
+  }
+ },
+ "8501288": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "Vevey",
+    "La Tour-de-Peilz"
    ]
   }
  },
@@ -1428,6 +1698,395 @@
     "Riviera-Pays-d'Enhaut",
     "Lavaux-Oron",
     "Lausanne"
+   ]
+  }
+ },
+ "8501308": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "La Tour-de-Peilz"
+   ]
+  }
+ },
+ "8501357": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "Haut-Intyamon"
+   ]
+  }
+ },
+ "8501360": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aigle",
+    "Lavaux-Oron",
+    "Lausanne"
+   ]
+  }
+ },
+ "8501361": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "La Tour-de-Peilz"
+   ]
+  }
+ },
+ "8501362": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "La Tour-de-Peilz"
+   ]
+  }
+ },
+ "8501363": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "Blonay - Saint-Légier"
+   ]
+  }
+ },
+ "8501364": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "Haut-Intyamon"
+   ]
+  }
+ },
+ "8501365": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Haut-Intyamon",
+    "Villeneuve (VD)"
+   ]
+  }
+ },
+ "8501366": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Haut-Intyamon",
+    "Villeneuve (VD)"
+   ]
+  }
+ },
+ "8501367": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Haut-Intyamon",
+    "Blonay - Saint-Légier"
+   ]
+  }
+ },
+ "8501368": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Haut-Intyamon",
+    "Villeneuve (VD)"
+   ]
+  }
+ },
+ "8501369": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "Haut-Intyamon",
+    "Villeneuve (VD)"
+   ]
+  }
+ },
+ "8501370": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "La Tour-de-Peilz"
+   ]
+  }
+ },
+ "8501371": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "Villeneuve (VD)",
+    "Blonay - Saint-Légier"
+   ]
+  }
+ },
+ "8501374": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Blonay - Saint-Légier",
+    "La Tour-de-Peilz",
+    "Vevey"
+   ]
+  }
+ },
+ "8501375": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Blonay - Saint-Légier",
+    "La Tour-de-Peilz",
+    "Veytaux"
+   ]
+  }
+ },
+ "8501376": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Blonay - Saint-Légier",
+    "La Tour-de-Peilz",
+    "Veytaux"
+   ]
+  }
+ },
+ "8501377": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Blonay - Saint-Légier",
+    "Veytaux",
+    "Haut-Intyamon"
+   ]
+  }
+ },
+ "8501378": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rossinière",
+    "Montreux",
+    "Veytaux"
+   ]
+  }
+ },
+ "8501379": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rossinière",
+    "Montreux",
+    "Château-d'Oex"
+   ]
+  }
+ },
+ "8501380": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aigle",
+    "Lavaux-Oron",
+    "Lausanne"
+   ]
+  }
+ },
+ "8501381": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "La Tour-de-Peilz",
+    "Blonay - Saint-Légier"
+   ]
+  }
+ },
+ "8501382": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "La Tour-de-Peilz",
+    "Blonay - Saint-Légier",
+    "Veytaux"
+   ]
+  }
+ },
+ "8501383": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Blonay - Saint-Légier",
+    "La Tour-de-Peilz",
+    "Vevey"
+   ]
+  }
+ },
+ "8501384": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Veytaux",
+    "La Tour-de-Peilz",
+    "Blonay - Saint-Légier"
+   ]
+  }
+ },
+ "8501385": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Blonay - Saint-Légier",
+    "Veytaux",
+    "La Tour-de-Peilz"
+   ]
+  }
+ },
+ "8501386": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Haut-Intyamon",
+    "Veytaux",
+    "Blonay - Saint-Légier"
+   ]
+  }
+ },
+ "8501387": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "Veytaux",
+    "Rossinière"
+   ]
+  }
+ },
+ "8501388": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rougemont",
+    "Rossinière",
+    "Saanen"
+   ]
+  }
+ },
+ "8501390": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aigle",
+    "Lavaux-Oron",
+    "Lausanne"
+   ]
+  }
+ },
+ "8501391": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Haut-Intyamon",
+    "Montreux",
+    "Veytaux"
+   ]
+  }
+ },
+ "8501392": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aigle",
+    "Lavaux-Oron",
+    "Broye-Vully"
+   ]
+  }
+ },
+ "8501393": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Château-d'Oex",
+    "Haut-Intyamon",
+    "Rougemont"
+   ]
+  }
+ },
+ "8501394": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aigle",
+    "Lavaux-Oron",
+    "Broye-Vully"
+   ]
+  }
+ },
+ "8501395": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rougemont",
+    "Rossinière",
+    "Saanen"
+   ]
+  }
+ },
+ "8501396": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Château-d'Oex",
+    "Saanen",
+    "Rossinière"
+   ]
+  }
+ },
+ "8501397": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Aigle",
+    "Lavaux-Oron",
+    "Broye-Vully"
+   ]
+  }
+ },
+ "8501398": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GRUB",
+    "GST"
+   ]
+  }
+ },
+ "8501399": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rougemont",
+    "Zweisimmen",
+    "Château-d'Oex"
    ]
   }
  },
@@ -1716,6 +2375,265 @@
    "distraktoren": [
     "VI",
     "RAR"
+   ]
+  }
+ },
+ "8501636": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lalden",
+    "Eggerberg",
+    "Ausserberg"
+   ]
+  }
+ },
+ "8501661": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Goms",
+    "Realp",
+    "Bellwald"
+   ]
+  }
+ },
+ "8501662": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Goms",
+    "Realp",
+    "Bellwald"
+   ]
+  }
+ },
+ "8501663": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Goms",
+    "Bellwald",
+    "Fiesch"
+   ]
+  }
+ },
+ "8501664": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Obergoms",
+    "Bellwald",
+    "Fiesch"
+   ]
+  }
+ },
+ "8501665": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Obergoms",
+    "Bellwald",
+    "Fiesch"
+   ]
+  }
+ },
+ "8501666": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Obergoms",
+    "Bellwald",
+    "Fiesch"
+   ]
+  }
+ },
+ "8501667": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Obergoms",
+    "Bellwald",
+    "Fiesch"
+   ]
+  }
+ },
+ "8501668": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GLUR",
+    "BLIZ"
+   ]
+  }
+ },
+ "8501669": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bellwald",
+    "Fiesch",
+    "Lax"
+   ]
+  }
+ },
+ "8501670": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bellwald",
+    "Fiesch",
+    "Lax"
+   ]
+  }
+ },
+ "8501671": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Brig",
+    "Visp"
+   ]
+  }
+ },
+ "8501672": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Brig",
+    "Visp"
+   ]
+  }
+ },
+ "8501673": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Brig",
+    "Visp"
+   ]
+  }
+ },
+ "8501674": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Goms",
+    "Brig",
+    "Visp"
+   ]
+  }
+ },
+ "8501675": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Mörel-Filet",
+    "Lax",
+    "Fiesch"
+   ]
+  }
+ },
+ "8501676": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Brig",
+    "Goms",
+    "Visp"
+   ]
+  }
+ },
+ "8501677": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Brig",
+    "Visp",
+    "Goms"
+   ]
+  }
+ },
+ "8501683": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Brig",
+    "Raron",
+    "Leuk"
+   ]
+  }
+ },
+ "8501684": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Stalden (VS)",
+    "St. Niklaus",
+    "Visp"
+   ]
+  }
+ },
+ "8501685": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Brig",
+    "Leuk"
+   ]
+  }
+ },
+ "8501686": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Randa",
+    "Täsch",
+    "Embd"
+   ]
+  }
+ },
+ "8501687": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Leuk",
+    "Brig"
+   ]
+  }
+ },
+ "8501688": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Leuk",
+    "Brig"
+   ]
+  }
+ },
+ "8501689": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Leuk",
+    "Brig"
+   ]
+  }
+ },
+ "8501729": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Brig",
+    "Visp"
    ]
   }
  },
@@ -2533,6 +3451,16 @@
    ]
   }
  },
+ "8502476": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Lavaux-Oron",
+    "Aigle",
+    "Lausanne"
+   ]
+  }
+ },
  "8503000": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -3334,6 +4262,55 @@
    ]
   }
  },
+ "8503280": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Küssnacht (SZ)",
+    "Einsiedeln",
+    "Höfe"
+   ]
+  }
+ },
+ "8503281": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Einsiedeln",
+    "Höfe",
+    "Küssnacht (SZ)"
+   ]
+  }
+ },
+ "8503282": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Einsiedeln",
+    "Höfe",
+    "March"
+   ]
+  }
+ },
+ "8503283": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BIB",
+    "AT"
+   ]
+  }
+ },
+ "8503284": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rothenthurm",
+    "Einsiedeln",
+    "Freienbach"
+   ]
+  }
+ },
  "8503285": {
   "stammdaten": {
    "frage": "bezirk",
@@ -3341,6 +4318,96 @@
     "March",
     "Schwyz",
     "Küssnacht (SZ)"
+   ]
+  }
+ },
+ "8503286": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wollerau",
+    "Feusisberg",
+    "Freienbach"
+   ]
+  }
+ },
+ "8503287": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wollerau",
+    "Wädenswil",
+    "Freienbach"
+   ]
+  }
+ },
+ "8503288": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wollerau",
+    "Richterswil",
+    "Feusisberg"
+   ]
+  }
+ },
+ "8503289": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "March",
+    "Einsiedeln",
+    "Schwyz"
+   ]
+  }
+ },
+ "8503290": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Sattel",
+    "Einsiedeln",
+    "Steinen"
+   ]
+  }
+ },
+ "8503292": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Feusisberg",
+    "Einsiedeln",
+    "Richterswil"
+   ]
+  }
+ },
+ "8503293": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wollerau",
+    "Freienbach",
+    "Feusisberg"
+   ]
+  }
+ },
+ "8503294": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Freienbach",
+    "Richterswil",
+    "Feusisberg"
+   ]
+  }
+ },
+ "8503295": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wollerau",
+    "Richterswil",
+    "Feusisberg"
    ]
   }
  },
@@ -4123,6 +5190,16 @@
     "Lavaux-Oron",
     "Aigle",
     "Lausanne"
+   ]
+  }
+ },
+ "8504070": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rossinière",
+    "Montreux",
+    "Château-d'Oex"
    ]
   }
  },
@@ -5343,6 +6420,133 @@
    ]
   }
  },
+ "8505163": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HOS",
+    "AND"
+   ]
+  }
+ },
+ "8505164": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AND",
+    "NAET"
+   ]
+  }
+ },
+ "8505165": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NAET",
+    "HOS"
+   ]
+  }
+ },
+ "8505170": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Göschenen",
+    "Hospental",
+    "Tujetsch"
+   ]
+  }
+ },
+ "8505172": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Tujetsch",
+    "Göschenen",
+    "Hospental"
+   ]
+  }
+ },
+ "8505173": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Andermatt",
+    "Göschenen",
+    "Disentis/Mustér"
+   ]
+  }
+ },
+ "8505174": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Andermatt",
+    "Disentis/Mustér",
+    "Göschenen"
+   ]
+  }
+ },
+ "8505175": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Disentis/Mustér",
+    "Andermatt",
+    "Göschenen"
+   ]
+  }
+ },
+ "8505176": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Disentis/Mustér",
+    "Andermatt",
+    "Sumvitg"
+   ]
+  }
+ },
+ "8505177": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Disentis/Mustér",
+    "Andermatt",
+    "Sumvitg"
+   ]
+  }
+ },
+ "8505178": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Tujetsch",
+    "Sumvitg",
+    "Andermatt"
+   ]
+  }
+ },
+ "8505179": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Tujetsch",
+    "Sumvitg",
+    "Andermatt"
+   ]
+  }
+ },
+ "8505180": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Tujetsch",
+    "Sumvitg",
+    "Trun"
+   ]
+  }
+ },
  "8505201": {
   "stammdaten": {
    "frage": "bezirk",
@@ -5546,6 +6750,16 @@
     "Bellinzona",
     "Locarno",
     "Lugano"
+   ]
+  }
+ },
+ "8505350": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Einsiedeln",
+    "Höfe",
+    "Küssnacht (SZ)"
    ]
   }
  },
@@ -6492,6 +7706,26 @@
    ]
   }
  },
+ "8506200": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "See-Gaster",
+    "Wil",
+    "St. Gallen"
+   ]
+  }
+ },
+ "8506201": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bütschwil-Ganterschwil",
+    "Neckertal",
+    "Ebnat-Kappel"
+   ]
+  }
+ },
  "8506202": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -6637,6 +7871,84 @@
     "Arbon",
     "Kreuzlingen",
     "Münchwilen"
+   ]
+  }
+ },
+ "8506290": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SGWI",
+    "SCH"
+   ]
+  }
+ },
+ "8506291": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HE",
+    "GSS"
+   ]
+  }
+ },
+ "8506292": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Toggenburg",
+    "St. Gallen",
+    "Rorschach"
+   ]
+  }
+ },
+ "8506293": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Degersheim",
+    "Bütschwil-Ganterschwil",
+    "Lütisburg"
+   ]
+  }
+ },
+ "8506294": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Wil",
+    "St. Gallen",
+    "See-Gaster"
+   ]
+  }
+ },
+ "8506297": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "See-Gaster",
+    "Wil",
+    "Sarganserland"
+   ]
+  }
+ },
+ "8506298": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Ebnat-Kappel",
+    "Wattwil",
+    "Neckertal"
+   ]
+  }
+ },
+ "8506299": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sarganserland",
+    "See-Gaster",
+    "Wil"
    ]
   }
  },
@@ -6816,6 +8128,75 @@
    "distraktoren": [
     "RSS",
     "RST"
+   ]
+  }
+ },
+ "8506392": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SGBR",
+    "SGWI"
+   ]
+  }
+ },
+ "8506393": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rorschach",
+    "Rheintal",
+    "Wil"
+   ]
+  }
+ },
+ "8506394": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Weinfelden",
+    "Kreuzlingen",
+    "Münchwilen"
+   ]
+  }
+ },
+ "8506395": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Muolen",
+    "Roggwil (TG)",
+    "Wittenbach"
+   ]
+  }
+ },
+ "8506396": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Rorschach",
+    "Wil",
+    "Rheintal"
+   ]
+  }
+ },
+ "8506397": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Muolen",
+    "Amriswil",
+    "Romanshorn"
+   ]
+  }
+ },
+ "8506398": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Kreuzlingen",
+    "Weinfelden",
+    "Münchwilen"
    ]
   }
  },
@@ -7119,6 +8500,105 @@
    "distraktoren": [
     "UTI",
     "KI"
+   ]
+  }
+ },
+ "8507270": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rougemont",
+    "Zweisimmen",
+    "Château-d'Oex"
+   ]
+  }
+ },
+ "8507271": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zweisimmen",
+    "Rougemont",
+    "St. Stephan"
+   ]
+  }
+ },
+ "8507272": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Bern-Mittelland",
+    "Thun"
+   ]
+  }
+ },
+ "8507273": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "St. Stephan",
+    "Saanen",
+    "Boltigen"
+   ]
+  }
+ },
+ "8507274": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "St. Stephan",
+    "Saanen",
+    "Boltigen"
+   ]
+  }
+ },
+ "8507275": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zweisimmen",
+    "Saanen",
+    "Lenk"
+   ]
+  }
+ },
+ "8507276": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Interlaken-Oberhasli",
+    "Thun"
+   ]
+  }
+ },
+ "8507277": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lenk",
+    "Zweisimmen",
+    "Saanen"
+   ]
+  }
+ },
+ "8507278": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "St. Stephan",
+    "Zweisimmen",
+    "Saanen"
+   ]
+  }
+ },
+ "8507279": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BODE",
+    "MATE"
    ]
   }
  },
@@ -8090,6 +9570,301 @@
    ]
   }
  },
+ "8508301": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Thun",
+    "Emmental"
+   ]
+  }
+ },
+ "8508302": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Thun",
+    "Emmental"
+   ]
+  }
+ },
+ "8508303": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Emmental",
+    "Thun"
+   ]
+  }
+ },
+ "8508304": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Brienz (BE)",
+    "Niederried bei Interlaken",
+    "Brienzwiler"
+   ]
+  }
+ },
+ "8508305": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Frutigen-Niedersimmental",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8508306": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Frutigen-Niedersimmental",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8508308": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Frutigen-Niedersimmental",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8508309": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lungern",
+    "Brienzwiler",
+    "Brienz (BE)"
+   ]
+  }
+ },
+ "8508310": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KAI",
+    "BRUE"
+   ]
+  }
+ },
+ "8508311": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Giswil",
+    "Sachseln",
+    "Meiringen"
+   ]
+  }
+ },
+ "8508312": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KAI",
+    "EWMA"
+   ]
+  }
+ },
+ "8508313": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "EWMA",
+    "SAR"
+   ]
+  }
+ },
+ "8508314": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SRND",
+    "SACH"
+   ]
+  }
+ },
+ "8508316": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "AST",
+    "SRND"
+   ]
+  }
+ },
+ "8508317": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ADF",
+    "HGW"
+   ]
+  }
+ },
+ "8508318": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "MATT",
+    "SSTA"
+   ]
+  }
+ },
+ "8508319": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Luzern-Stadt",
+    "Hochdorf",
+    "Entlebuch"
+   ]
+  }
+ },
+ "8508320": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HGW",
+    "HW"
+   ]
+  }
+ },
+ "8508321": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "KRM",
+    "LZ"
+   ]
+  }
+ },
+ "8508323": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SAR",
+    "SACH"
+   ]
+  }
+ },
+ "8508327": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Giswil",
+    "Sarnen",
+    "Lungern"
+   ]
+  }
+ },
+ "8508329": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Frutigen-Niedersimmental",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8508359": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Frutigen-Niedersimmental",
+    "Thun"
+   ]
+  }
+ },
+ "8508384": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Dallenwil",
+    "Stans",
+    "Engelberg"
+   ]
+  }
+ },
+ "8508390": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "HGW",
+    "MATT"
+   ]
+  }
+ },
+ "8508391": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "SSTA",
+    "DAL"
+   ]
+  }
+ },
+ "8508392": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NRRB",
+    "WOS"
+   ]
+  }
+ },
+ "8508394": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "NRRB",
+    "DAL"
+   ]
+  }
+ },
+ "8508395": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Frutigen-Niedersimmental",
+    "Thun"
+   ]
+  }
+ },
+ "8508396": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Wolfenschiessen",
+    "Dallenwil",
+    "Sarnen"
+   ]
+  }
+ },
+ "8508399": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GRAF",
+    "WOS"
+   ]
+  }
+ },
  "8509000": {
   "stammdaten": {
    "frage": "abkuerzung",
@@ -8124,6 +9899,977 @@
     "Rheintal",
     "See-Gaster",
     "Werdenberg"
+   ]
+  }
+ },
+ "8509006": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Landquart",
+    "Viamala"
+   ]
+  }
+ },
+ "8509051": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Trimmis",
+    "Domat/Ems",
+    "Zizers"
+   ]
+  }
+ },
+ "8509053": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Plessur",
+    "Prättigau/Davos",
+    "Imboden"
+   ]
+  }
+ },
+ "8509054": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Plessur",
+    "Prättigau/Davos",
+    "Imboden"
+   ]
+  }
+ },
+ "8509055": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zizers",
+    "Malans",
+    "Trimmis"
+   ]
+  }
+ },
+ "8509056": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "IGIS",
+    "LQ"
+   ]
+  }
+ },
+ "8509057": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Prättigau/Davos",
+    "Plessur",
+    "Imboden"
+   ]
+  }
+ },
+ "8509058": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Landquart",
+    "Plessur",
+    "Imboden"
+   ]
+  }
+ },
+ "8509059": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Landquart",
+    "Plessur",
+    "Imboden"
+   ]
+  }
+ },
+ "8509060": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Landquart",
+    "Plessur",
+    "Imboden"
+   ]
+  }
+ },
+ "8509061": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Fideris",
+    "Schiers",
+    "Küblis"
+   ]
+  }
+ },
+ "8509062": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Plessur",
+    "Landquart",
+    "Imboden"
+   ]
+  }
+ },
+ "8509063": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Plessur",
+    "Landquart",
+    "Imboden"
+   ]
+  }
+ },
+ "8509064": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Plessur",
+    "Landquart",
+    "Imboden"
+   ]
+  }
+ },
+ "8509065": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Küblis",
+    "Fideris",
+    "Jenaz"
+   ]
+  }
+ },
+ "8509067": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Plessur",
+    "Engiadina Bassa/Val Müstair",
+    "Landquart"
+   ]
+  }
+ },
+ "8509068": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Plessur",
+    "Engiadina Bassa/Val Müstair",
+    "Landquart"
+   ]
+  }
+ },
+ "8509069": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Davos",
+    "Küblis",
+    "Fideris"
+   ]
+  }
+ },
+ "8509070": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DAW",
+    "KLO"
+   ]
+  }
+ },
+ "8509071": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DALT",
+    "DAD"
+   ]
+  }
+ },
+ "8509072": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DAV",
+    "DAW"
+   ]
+  }
+ },
+ "8509073": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DAD",
+    "DAF"
+   ]
+  }
+ },
+ "8509075": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DAGL",
+    "DAV"
+   ]
+  }
+ },
+ "8509076": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DAF",
+    "DAM"
+   ]
+  }
+ },
+ "8509077": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DAGL",
+    "WIES"
+   ]
+  }
+ },
+ "8509078": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "FILI",
+    "SCGR"
+   ]
+  }
+ },
+ "8509150": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Landquart",
+    "Viamala"
+   ]
+  }
+ },
+ "8509152": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Chur",
+    "Domat/Ems",
+    "Trimmis"
+   ]
+  }
+ },
+ "8509153": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Chur",
+    "Fideris",
+    "Jenaz"
+   ]
+  }
+ },
+ "8509154": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Chur",
+    "Fideris",
+    "Jenaz"
+   ]
+  }
+ },
+ "8509155": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Davos",
+    "Küblis",
+    "Fideris"
+   ]
+  }
+ },
+ "8509156": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Davos",
+    "Schmitten (GR)",
+    "Bergün Filisur"
+   ]
+  }
+ },
+ "8509157": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Prättigau/Davos",
+    "Albula",
+    "Imboden"
+   ]
+  }
+ },
+ "8509167": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Surselva",
+    "Viamala",
+    "Plessur"
+   ]
+  }
+ },
+ "8509168": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Viamala",
+    "Plessur"
+   ]
+  }
+ },
+ "8509169": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Ilanz/Glion",
+    "Trin",
+    "Rhäzüns"
+   ]
+  }
+ },
+ "8509170": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Safiental",
+    "Breil/Brigels",
+    "Trin"
+   ]
+  }
+ },
+ "8509171": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Viamala",
+    "Plessur"
+   ]
+  }
+ },
+ "8509173": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Breil/Brigels",
+    "Safiental",
+    "Trun"
+   ]
+  }
+ },
+ "8509174": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Ilanz/Glion",
+    "Trun",
+    "Safiental"
+   ]
+  }
+ },
+ "8509175": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Viamala",
+    "Plessur"
+   ]
+  }
+ },
+ "8509176": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Viamala",
+    "Plessur"
+   ]
+  }
+ },
+ "8509177": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Trun",
+    "Disentis/Mustér",
+    "Breil/Brigels"
+   ]
+  }
+ },
+ "8509178": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Viamala",
+    "Plessur"
+   ]
+  }
+ },
+ "8509179": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Viamala",
+    "Plessur"
+   ]
+  }
+ },
+ "8509180": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Chur",
+    "Bonaduz",
+    "Rhäzüns"
+   ]
+  }
+ },
+ "8509181": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Plessur",
+    "Viamala",
+    "Surselva"
+   ]
+  }
+ },
+ "8509182": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Viamala",
+    "Plessur",
+    "Surselva"
+   ]
+  }
+ },
+ "8509183": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bonaduz",
+    "Rhäzüns",
+    "Trin"
+   ]
+  }
+ },
+ "8509184": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Viamala",
+    "Surselva",
+    "Plessur"
+   ]
+  }
+ },
+ "8509185": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Viamala",
+    "Surselva",
+    "Plessur"
+   ]
+  }
+ },
+ "8509186": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rhäzüns",
+    "Bonaduz",
+    "Domat/Ems"
+   ]
+  }
+ },
+ "8509187": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Thusis",
+    "Rhäzüns",
+    "Bonaduz"
+   ]
+  }
+ },
+ "8509188": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Imboden",
+    "Albula",
+    "Surselva"
+   ]
+  }
+ },
+ "8509189": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Imboden",
+    "Surselva"
+   ]
+  }
+ },
+ "8509192": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schmitten (GR)",
+    "Bergün Filisur",
+    "Thusis"
+   ]
+  }
+ },
+ "8509193": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schmitten (GR)",
+    "Bergün Filisur",
+    "Davos"
+   ]
+  }
+ },
+ "8509194": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schmitten (GR)",
+    "Bergün Filisur",
+    "Davos"
+   ]
+  }
+ },
+ "8509195": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Prättigau/Davos",
+    "Plessur",
+    "Maloja"
+   ]
+  }
+ },
+ "8509197": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Prättigau/Davos",
+    "Maloja",
+    "Plessur"
+   ]
+  }
+ },
+ "8509198": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bever",
+    "Samedan",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509199": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Samedan",
+    "Celerina/Schlarigna",
+    "Bergün Filisur"
+   ]
+  }
+ },
+ "8509250": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Bernina",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509251": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Bernina",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509252": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Bernina",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509253": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Bernina",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509254": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Celerina/Schlarigna",
+    "Pontresina",
+    "St. Moritz"
+   ]
+  }
+ },
+ "8509255": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bernina",
+    "Albula",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509256": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Engiadina Bassa/Val Müstair",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509257": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Engiadina Bassa/Val Müstair",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509258": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Engiadina Bassa/Val Müstair",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509259": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Engiadina Bassa/Val Müstair",
+    "Albula",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509260": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zuoz",
+    "Madulain",
+    "Zernez"
+   ]
+  }
+ },
+ "8509262": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Maloja",
+    "Prättigau/Davos",
+    "Albula"
+   ]
+  }
+ },
+ "8509263": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Scuol",
+    "S-chanf",
+    "Davos"
+   ]
+  }
+ },
+ "8509264": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Scuol",
+    "S-chanf",
+    "Davos"
+   ]
+  }
+ },
+ "8509265": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zernez",
+    "S-chanf",
+    "Davos"
+   ]
+  }
+ },
+ "8509266": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zernez",
+    "S-chanf",
+    "Davos"
+   ]
+  }
+ },
+ "8509267": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zernez",
+    "S-chanf",
+    "Davos"
+   ]
+  }
+ },
+ "8509268": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Maloja",
+    "Prättigau/Davos",
+    "Plessur"
+   ]
+  }
+ },
+ "8509269": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Scuol",
+    "S-chanf",
+    "Davos"
+   ]
+  }
+ },
+ "8509350": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Albula",
+    "Bernina",
+    "Prättigau/Davos"
+   ]
+  }
+ },
+ "8509351": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Samedan",
+    "Pontresina",
+    "St. Moritz"
+   ]
+  }
+ },
+ "8509352": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Celerina/Schlarigna",
+    "Samedan",
+    "St. Moritz"
+   ]
+  }
+ },
+ "8509353": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Poschiavo",
+    "Celerina/Schlarigna",
+    "Samedan"
+   ]
+  }
+ },
+ "8509354": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Poschiavo",
+    "Celerina/Schlarigna",
+    "Samedan"
+   ]
+  }
+ },
+ "8509356": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Pontresina",
+    "Celerina/Schlarigna",
+    "Samedan"
+   ]
+  }
+ },
+ "8509357": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Pontresina",
+    "Brusio",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509358": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Pontresina",
+    "Brusio",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509359": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Brusio",
+    "Pontresina",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509361": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Maloja",
+    "Albula",
+    "Engiadina Bassa/Val Müstair"
+   ]
+  }
+ },
+ "8509363": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Brusio",
+    "Pontresina",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509364": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Brusio",
+    "Pontresina",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509365": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Brusio",
+    "Pontresina",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509366": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Maloja",
+    "Albula",
+    "Engiadina Bassa/Val Müstair"
+   ]
+  }
+ },
+ "8509367": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Poschiavo",
+    "Pontresina",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509368": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Poschiavo",
+    "Pontresina",
+    "Celerina/Schlarigna"
+   ]
+  }
+ },
+ "8509373": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Poschiavo",
+    "Celerina/Schlarigna",
+    "Samedan"
    ]
   }
  },
@@ -8251,6 +10997,15 @@
     "Quarten",
     "Schänis",
     "Glarus"
+   ]
+  }
+ },
+ "8510456": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "FILI",
+    "ALV"
    ]
   }
  },
@@ -8440,6 +11195,16 @@
    ]
   }
  },
+ "8516351": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Luzern-Stadt",
+    "Hochdorf",
+    "Entlebuch"
+   ]
+  }
+ },
  "8516353": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -8598,6 +11363,76 @@
     "Sense",
     "La Broye",
     "See"
+   ]
+  }
+ },
+ "8519370": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Poschiavo",
+    "Celerina/Schlarigna",
+    "Samedan"
+   ]
+  }
+ },
+ "8530261": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Montreux",
+    "La Tour-de-Peilz",
+    "Vevey"
+   ]
+  }
+ },
+ "8530760": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Innertkirchen",
+    "Lungern",
+    "Brienzwiler"
+   ]
+  }
+ },
+ "8530783": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Le Lieu",
+    "L'Abbaye",
+    "Vallorbe"
+   ]
+  }
+ },
+ "8530799": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Frutigen-Niedersimmental",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8530800": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Frutigen-Niedersimmental",
+    "Thun"
+   ]
+  }
+ },
+ "8530801": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Meiringen",
+    "Lungern",
+    "Brienzwiler"
    ]
   }
  },

@@ -1,0 +1,204 @@
+{
+  "uic": 8503280,
+  "name": "Steinerberg",
+  "kanton": "SZ",
+  "bps": "STBG",
+  "tier": "S",
+  "datenstand": "2026-09-20",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Steinerberg",
+    "kanton": "SZ",
+    "isb": "SOB",
+    "evu": "SOB",
+    "lon": 8.585278,
+    "lat": 47.052212,
+    "dwv": 120,
+    "dtv": 100,
+    "dnwv": 60,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 190
+      },
+      {
+        "jahr": 2022,
+        "dwv": 120
+      },
+      {
+        "jahr": 2023,
+        "dwv": 120
+      },
+      {
+        "jahr": 2024,
+        "dwv": 130
+      },
+      {
+        "jahr": 2025,
+        "dwv": 120
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Steinerberg",
+    "abkuerzung": "STBG",
+    "hoehe_m_ue_m": 591.8,
+    "gemeinde": "Steinerberg",
+    "ortschaft": "Steinerberg",
+    "bezirk": "Schwyz",
+    "kanton": "Schwyz",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Schweizerische Südostbahn (sob)"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Steinerberg",
+      "bis": "Sattel-Aegeri",
+      "strecke_nr": 866,
+      "strecke": "Biberbrugg - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25523,
+      "zuege_pro_tag": 70
+    },
+    "staerkster_personenverkehr": {
+      "von": "Steinerberg",
+      "bis": "Sattel-Aegeri",
+      "strecke_nr": 866,
+      "strecke": "Biberbrugg - Arth-Goldau",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 25523,
+      "zuege_pro_tag": 70
+    },
+    "abschnitte": [
+      {
+        "von": "Steinerberg",
+        "bis": "Sattel-Aegeri",
+        "strecke_nr": 866,
+        "strecke": "Biberbrugg - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25523,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Eidg. Magazine",
+        "bis": "Steinerberg",
+        "strecke_nr": 866,
+        "strecke": "Biberbrugg - Arth-Goldau",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 25475,
+        "zuege_pro_tag": 70
+      },
+      {
+        "von": "Steinerberg",
+        "bis": "Sattel-Aegeri",
+        "strecke_nr": 866,
+        "strecke": "Biberbrugg - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 57,
+        "zuege_pro_tag": 0
+      },
+      {
+        "von": "Eidg. Magazine",
+        "bis": "Steinerberg",
+        "strecke_nr": 866,
+        "strecke": "Biberbrugg - Arth-Goldau",
+        "art": "Gueterverkehr",
+        "richtungen": 1,
+        "zuege_pro_jahr": 1,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": false,
+    "billettautomaten_erfasst": 0,
+    "billettentwerter_erfasst": 0,
+    "wartehallen_erfasst": 0
+  },
+  "ausstattung": null,
+  "bahnhofplan": null,
+  "luecken": [
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
+      "quelle": "mobiliar-im-bahnhof, perronoberflache"
+    },
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Billettautomaten",
+      "grund": "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, dass vor Ort einer steht.",
+      "quelle": "billetautomat"
+    },
+    {
+      "thema": "Hindernisfreiheit",
+      "grund": "Zur Hindernisfreiheit liegen für diesen Bahnhof keine Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "zuege",
+    "services"
+  ]
+}

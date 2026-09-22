@@ -21,8 +21,9 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
         Taktland ist ein Lernspiel zu
         {index ? ` ${index.bahnhoefe_gesamt} ` : ' '}
         Bahnhöfen: allen, deren Infrastruktur die SBB betreibt, dazu Bahnhöfen anderer Bahnen
-        wie der BLS, sofern die offenen Daten für mindestens sechs Kapitel reichen. Alles, was
-        hier über einen Bahnhof steht, stammt aus den offenen Daten der SBB.
+        wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn, sofern die offenen Daten für mindestens
+        drei Kapitel reichen. Alles, was hier über einen Bahnhof steht, stammt aus den offenen
+        Daten der SBB.
       </p>
       <p className="mt-2 leading-relaxed">
         Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnhöfe, Linien, Tunnel,

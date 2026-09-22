@@ -113,9 +113,12 @@ MVP_STATIONS = {
 # Bahnhoefe ausserhalb der SBB-Infrastruktur. Die Frequenzdaten decken 1178
 # Bahnhoefe ab, die Infrastrukturdaten im Wesentlichen nur die der SBB.
 # Aufgenommen wird ein Bahnhof einer anderen Bahn, wenn die Daten fuer mindestens
-# so viele Kapitel reichen (build_facts.py); das sind Steckbrief, Stammdaten,
-# Gleise, Hindernisfreiheit, Zuege und Services, bei Thun mehr.
-ANDERE_AB_KAPITEL = 6
+# so viele Kapitel reichen (build_facts.py): Steckbrief, Stammdaten und Services.
+# Zuerst lag die Grenze bei 6; Michael, 2026-09-22: «Wenn du es sinnvoll findest
+# kannst du auch andere Bahnhöfe von RhB oder SOB etc. einfügen». Mit 3 kommen
+# RhB, MGB, MOB, MVR, ZB, SOB, TRAVYS, OeBB und TPF dazu (Zermatt, St. Moritz,
+# Stans). Mit 2 Kapiteln bleiben drei weg, etwa Tirano ohne Stammdaten.
+ANDERE_AB_KAPITEL = 3
 
 # Von diesen Bahnen kommen alle Bahnhoefe dazu, auch mit weniger Kapiteln
 # (Michael, 2026-09-22: «Du kannst auch weitere BLS-Bahnhöfe aufnehmen»). Die

@@ -952,6 +952,36 @@
    }
   },
   {
+   "uic": 8500292,
+   "name": "Klus",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 90,
+    "hoehe": 481
+   }
+  },
+  {
+   "uic": 8500293,
+   "name": "Thalbrücke",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 870,
+    "dnwv": 480,
+    "hoehe": 483
+   }
+  },
+  {
+   "uic": 8500294,
+   "name": "Balsthal",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 690,
+    "hoehe": 489
+   }
+  },
+  {
    "uic": 8500300,
    "name": "Kaiseraugst",
    "kanton": "AG",
@@ -1694,6 +1724,98 @@
    }
   },
   {
+   "uic": 8501151,
+   "name": "Les Charbonnières",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 70,
+    "dnwv": 60,
+    "hoehe": 1024.6,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8501152,
+   "name": "Le Séchey",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1045,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8501153,
+   "name": "Le Lieu",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 100,
+    "dnwv": 60,
+    "hoehe": 1050,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8501154,
+   "name": "Les Esserts-de-Rive",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1036,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8501155,
+   "name": "Le Rocheray",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1026.2,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8501156,
+   "name": "Le Solliat-La Golisse",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 90,
+    "dnwv": 60,
+    "hoehe": 1011.2,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8501157,
+   "name": "Le Sentier-L'Orient",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 430,
+    "dnwv": 240,
+    "hoehe": 1013,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8501159,
+   "name": "Le Brassus",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 270,
+    "dnwv": 170,
+    "hoehe": 1021,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8501198,
+   "name": "Château-d'Oex La Palaz",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 90,
+    "hoehe": 985
+   }
+  },
+  {
    "uic": 8501200,
    "name": "Vevey",
    "kanton": "VD",
@@ -1739,6 +1861,148 @@
     "hoehe": 399.61,
     "zuege": 231,
     "perron": 162
+   }
+  },
+  {
+   "uic": 8501230,
+   "name": "Glion-Alpes",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 100,
+    "hoehe": 707.1
+   }
+  },
+  {
+   "uic": 8501262,
+   "name": "Hauteville",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 220,
+    "dnwv": 100,
+    "hoehe": 489.8
+   }
+  },
+  {
+   "uic": 8501263,
+   "name": "Château-d'Hauteville",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 380,
+    "dnwv": 210,
+    "hoehe": 505.1
+   }
+  },
+  {
+   "uic": 8501264,
+   "name": "St-Légier-Village",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 420,
+    "dnwv": 200,
+    "hoehe": 553.2
+   }
+  },
+  {
+   "uic": 8501265,
+   "name": "La Chiésaz",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 830,
+    "dnwv": 370,
+    "hoehe": 576
+   }
+  },
+  {
+   "uic": 8501266,
+   "name": "Château-de-Blonay",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 450,
+    "dnwv": 270,
+    "hoehe": 613.8
+   }
+  },
+  {
+   "uic": 8501280,
+   "name": "St-Légier-Gare",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 440,
+    "dnwv": 220,
+    "hoehe": 533.1
+   }
+  },
+  {
+   "uic": 8501281,
+   "name": "Blonay",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 1400,
+    "dnwv": 740,
+    "hoehe": 619.7
+   }
+  },
+  {
+   "uic": 8501282,
+   "name": "Prélaz-sur-Blonay",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 661.4
+   }
+  },
+  {
+   "uic": 8501283,
+   "name": "Tusinge",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 70,
+    "hoehe": 725.3
+   }
+  },
+  {
+   "uic": 8501284,
+   "name": "Les Chevalleyres",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 100,
+    "hoehe": 773.6
+   }
+  },
+  {
+   "uic": 8501285,
+   "name": "Fayaux",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 968.3
+   }
+  },
+  {
+   "uic": 8501286,
+   "name": "Ondallaz-L'Alliaz",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1085.9
+   }
+  },
+  {
+   "uic": 8501287,
+   "name": "Lally",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 130,
+    "hoehe": 1231.6
+   }
+  },
+  {
+   "uic": 8501288,
+   "name": "Les Pléiades",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 120,
+    "dnwv": 230,
+    "hoehe": 1347.6
    }
   },
   {
@@ -1799,6 +2063,361 @@
     "hoehe": 379.617,
     "zuege": 226,
     "perron": 160
+   }
+  },
+  {
+   "uic": 8501308,
+   "name": "Glion-Collège",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 748.5
+   }
+  },
+  {
+   "uic": 8501357,
+   "name": "Haut-de-Caux",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 200,
+    "dnwv": 380,
+    "hoehe": 1174.5
+   }
+  },
+  {
+   "uic": 8501360,
+   "name": "Montreux-Les Planches",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 60,
+    "dnwv": 70,
+    "hoehe": 451.2
+   }
+  },
+  {
+   "uic": 8501361,
+   "name": "Toveyre",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 60,
+    "hoehe": 576.7
+   }
+  },
+  {
+   "uic": 8501362,
+   "name": "Valmont",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 638.7
+   }
+  },
+  {
+   "uic": 8501363,
+   "name": "Le Tremblex",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 812.4
+   }
+  },
+  {
+   "uic": 8501364,
+   "name": "Les Echets",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1102.7
+   }
+  },
+  {
+   "uic": 8501365,
+   "name": "Crêt-d'y-Bau",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1283.6
+   }
+  },
+  {
+   "uic": 8501366,
+   "name": "Paccot",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1423.7
+   }
+  },
+  {
+   "uic": 8501367,
+   "name": "Jaman",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 200,
+    "hoehe": 1737.7
+   }
+  },
+  {
+   "uic": 8501368,
+   "name": "La Perche",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1794.9
+   }
+  },
+  {
+   "uic": 8501369,
+   "name": "Rochers-de-Naye",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 480,
+    "dnwv": 900,
+    "hoehe": 1967.9
+   }
+  },
+  {
+   "uic": 8501370,
+   "name": "Glion",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 240,
+    "dnwv": 290,
+    "hoehe": 688.2
+   }
+  },
+  {
+   "uic": 8501371,
+   "name": "Caux",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 510,
+    "dnwv": 550,
+    "hoehe": 1050
+   }
+  },
+  {
+   "uic": 8501374,
+   "name": "Fontanivent",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 400,
+    "dnwv": 190,
+    "hoehe": 555.9
+   }
+  },
+  {
+   "uic": 8501375,
+   "name": "Chernex",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 700,
+    "dnwv": 370,
+    "hoehe": 600.5
+   }
+  },
+  {
+   "uic": 8501376,
+   "name": "Chamby",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 150,
+    "dnwv": 120,
+    "hoehe": 749.2
+   }
+  },
+  {
+   "uic": 8501377,
+   "name": "Les Avants",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 370,
+    "dnwv": 440,
+    "hoehe": 970.5
+   }
+  },
+  {
+   "uic": 8501378,
+   "name": "Allières",
+   "kanton": "FR",
+   "werte": {
+    "dwv": 50,
+    "hoehe": 1008.8
+   }
+  },
+  {
+   "uic": 8501379,
+   "name": "Les Sciernes",
+   "kanton": "FR",
+   "werte": {
+    "dwv": 90,
+    "dnwv": 80,
+    "hoehe": 885.2
+   }
+  },
+  {
+   "uic": 8501380,
+   "name": "Montreux-Collège",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 160,
+    "hoehe": 424.5
+   }
+  },
+  {
+   "uic": 8501381,
+   "name": "Vuarennes",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 441.4
+   }
+  },
+  {
+   "uic": 8501382,
+   "name": "Châtelard VD",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 501.6
+   }
+  },
+  {
+   "uic": 8501383,
+   "name": "Planchamp",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 527.3
+   }
+  },
+  {
+   "uic": 8501384,
+   "name": "Sonzier",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 80,
+    "hoehe": 657.8
+   }
+  },
+  {
+   "uic": 8501385,
+   "name": "Sendy-Sollard",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 871.8
+   }
+  },
+  {
+   "uic": 8501386,
+   "name": "Jor",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 1080.6
+   }
+  },
+  {
+   "uic": 8501387,
+   "name": "Les Cases",
+   "kanton": "FR",
+   "werte": {
+    "dwv": 60,
+    "dnwv": 60,
+    "hoehe": 1116.7
+   }
+  },
+  {
+   "uic": 8501388,
+   "name": "Les Combes",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 990.8
+   }
+  },
+  {
+   "uic": 8501390,
+   "name": "Belmont-sur-Montreux",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 462
+   }
+  },
+  {
+   "uic": 8501391,
+   "name": "La Tine",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 100,
+    "hoehe": 849.7
+   }
+  },
+  {
+   "uic": 8501392,
+   "name": "Rossinière",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 210,
+    "dnwv": 120,
+    "hoehe": 891.3
+   }
+  },
+  {
+   "uic": 8501393,
+   "name": "La Chaudanne-Les Moulins",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 887
+   }
+  },
+  {
+   "uic": 8501394,
+   "name": "Château-d'Oex",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 790,
+    "hoehe": 968
+   }
+  },
+  {
+   "uic": 8501395,
+   "name": "Les Granges-Gérignoz",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 50,
+    "dnwv": 50,
+    "hoehe": 1002
+   }
+  },
+  {
+   "uic": 8501396,
+   "name": "Flendruz",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 70,
+    "hoehe": 978.6
+   }
+  },
+  {
+   "uic": 8501397,
+   "name": "Rougemont",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 480,
+    "dnwv": 340,
+    "hoehe": 992.2
+   }
+  },
+  {
+   "uic": 8501398,
+   "name": "Saanen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 760,
+    "dnwv": 560,
+    "hoehe": 1010.4
+   }
+  },
+  {
+   "uic": 8501399,
+   "name": "Gstaad",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 2100,
+    "dnwv": 1700,
+    "hoehe": 1049.6
    }
   },
   {
@@ -2159,6 +2778,266 @@
     "hoehe": 677.74,
     "zuege": 244,
     "perron": 456
+   }
+  },
+  {
+   "uic": 8501636,
+   "name": "Eyholz",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 290,
+    "dnwv": 300,
+    "hoehe": 653.012
+   }
+  },
+  {
+   "uic": 8501661,
+   "name": "Oberwald",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 720,
+    "dnwv": 630,
+    "hoehe": 1366
+   }
+  },
+  {
+   "uic": 8501662,
+   "name": "Obergesteln",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 290,
+    "dnwv": 230,
+    "hoehe": 1353
+   }
+  },
+  {
+   "uic": 8501663,
+   "name": "Ulrichen",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 310,
+    "dnwv": 310,
+    "hoehe": 1347
+   }
+  },
+  {
+   "uic": 8501664,
+   "name": "Geschinen",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 150,
+    "hoehe": 1340
+   }
+  },
+  {
+   "uic": 8501665,
+   "name": "Münster VS",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 610,
+    "dnwv": 380,
+    "hoehe": 1359.1
+   }
+  },
+  {
+   "uic": 8501666,
+   "name": "Reckingen VS",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 430,
+    "dnwv": 360,
+    "hoehe": 1315.6
+   }
+  },
+  {
+   "uic": 8501667,
+   "name": "Gluringen",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 140,
+    "dnwv": 120,
+    "hoehe": 1310.6
+   }
+  },
+  {
+   "uic": 8501668,
+   "name": "Biel (Goms)",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 170,
+    "dnwv": 120,
+    "hoehe": 1283.1
+   }
+  },
+  {
+   "uic": 8501669,
+   "name": "Blitzingen",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 170,
+    "dnwv": 140,
+    "hoehe": 1266.6
+   }
+  },
+  {
+   "uic": 8501670,
+   "name": "Niederwald",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 150,
+    "dnwv": 140,
+    "hoehe": 1243.5
+   }
+  },
+  {
+   "uic": 8501671,
+   "name": "Fürgangen-Bellwald Talstation",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 280,
+    "dnwv": 300,
+    "hoehe": 1201.9
+   }
+  },
+  {
+   "uic": 8501672,
+   "name": "Fiesch",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 1600,
+    "dnwv": 1900,
+    "hoehe": 1062.55
+   }
+  },
+  {
+   "uic": 8501673,
+   "name": "Lax",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 280,
+    "dnwv": 350,
+    "hoehe": 1044.9
+   }
+  },
+  {
+   "uic": 8501674,
+   "name": "Grengiols",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 170,
+    "dnwv": 140,
+    "hoehe": 891.2
+   }
+  },
+  {
+   "uic": 8501675,
+   "name": "Bettmeralp Talstation",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 830,
+    "dnwv": 1100,
+    "hoehe": 828.8
+   }
+  },
+  {
+   "uic": 8501676,
+   "name": "Mörel",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 1000,
+    "dnwv": 1200,
+    "hoehe": 759.3
+   }
+  },
+  {
+   "uic": 8501677,
+   "name": "Bitsch",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 310,
+    "dnwv": 270,
+    "hoehe": 696.1
+   }
+  },
+  {
+   "uic": 8501683,
+   "name": "Stalden-Saas",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 1200,
+    "dnwv": 1400,
+    "hoehe": 799.567
+   }
+  },
+  {
+   "uic": 8501684,
+   "name": "Kalpetran",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 620,
+    "dnwv": 850,
+    "hoehe": 897.15
+   }
+  },
+  {
+   "uic": 8501685,
+   "name": "St. Niklaus VS",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 1400,
+    "dnwv": 1500,
+    "hoehe": 1127
+   }
+  },
+  {
+   "uic": 8501686,
+   "name": "Herbriggen",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 550,
+    "dnwv": 420,
+    "hoehe": 1254.55
+   }
+  },
+  {
+   "uic": 8501687,
+   "name": "Randa",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 930,
+    "dnwv": 800,
+    "hoehe": 1406.35
+   }
+  },
+  {
+   "uic": 8501688,
+   "name": "Täsch",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 6600,
+    "dnwv": 7600,
+    "hoehe": 1438.1
+   }
+  },
+  {
+   "uic": 8501689,
+   "name": "Zermatt",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 11300,
+    "dnwv": 13500,
+    "hoehe": 1605.324
+   }
+  },
+  {
+   "uic": 8501729,
+   "name": "Fiesch Feriendorf",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 350,
+    "dnwv": 280,
+    "hoehe": 1048.8
    }
   },
   {
@@ -3170,6 +4049,16 @@
    }
   },
   {
+   "uic": 8502476,
+   "name": "Vevey Vignerons",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 210,
+    "dnwv": 110,
+    "hoehe": 446
+   }
+  },
+  {
    "uic": 8503000,
    "name": "Zürich HB",
    "kanton": "ZH",
@@ -4161,6 +5050,61 @@
    }
   },
   {
+   "uic": 8503280,
+   "name": "Steinerberg",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 120,
+    "dnwv": 60,
+    "hoehe": 591.8,
+    "zuege": 70
+   }
+  },
+  {
+   "uic": 8503281,
+   "name": "Sattel-Aegeri",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 390,
+    "dnwv": 280,
+    "hoehe": 771.62,
+    "zuege": 70
+   }
+  },
+  {
+   "uic": 8503282,
+   "name": "Rothenthurm",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 660,
+    "dnwv": 570,
+    "hoehe": 923,
+    "zuege": 70
+   }
+  },
+  {
+   "uic": 8503283,
+   "name": "Einsiedeln",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 4400,
+    "dnwv": 4100,
+    "hoehe": 880.8,
+    "zuege": 149
+   }
+  },
+  {
+   "uic": 8503284,
+   "name": "Biberbrugg",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 3500,
+    "dnwv": 2900,
+    "hoehe": 829.53,
+    "zuege": 185
+   }
+  },
+  {
    "uic": 8503285,
    "name": "Schindellegi-Feusisberg",
    "kanton": "SZ",
@@ -4169,6 +5113,101 @@
     "dnwv": 650,
     "hoehe": 754.82,
     "zuege": 186
+   }
+  },
+  {
+   "uic": 8503286,
+   "name": "Samstagern",
+   "kanton": "ZH",
+   "werte": {
+    "dwv": 1300,
+    "dnwv": 640,
+    "hoehe": 628.55,
+    "zuege": 186
+   }
+  },
+  {
+   "uic": 8503287,
+   "name": "Burghalden",
+   "kanton": "ZH",
+   "werte": {
+    "dwv": 1000,
+    "dnwv": 570,
+    "hoehe": 529.32,
+    "zuege": 81
+   }
+  },
+  {
+   "uic": 8503288,
+   "name": "Wollerau",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 710,
+    "dnwv": 420,
+    "hoehe": 504.51,
+    "zuege": 109
+   }
+  },
+  {
+   "uic": 8503289,
+   "name": "Freienbach SOB",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 560,
+    "dnwv": 290,
+    "hoehe": 413.77,
+    "zuege": 109
+   }
+  },
+  {
+   "uic": 8503290,
+   "name": "Biberegg",
+   "kanton": "SZ",
+   "werte": {
+    "hoehe": 933,
+    "zuege": 70
+   }
+  },
+  {
+   "uic": 8503292,
+   "name": "Altmatt",
+   "kanton": "SZ",
+   "werte": {
+    "hoehe": 920.2,
+    "zuege": 70
+   }
+  },
+  {
+   "uic": 8503293,
+   "name": "Grüenfeld",
+   "kanton": "ZH",
+   "werte": {
+    "dwv": 220,
+    "dnwv": 140,
+    "hoehe": 591.91,
+    "zuege": 81
+   }
+  },
+  {
+   "uic": 8503294,
+   "name": "Riedmatt SZ",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 480,
+    "dnwv": 190,
+    "hoehe": 544,
+    "zuege": 109
+   }
+  },
+  {
+   "uic": 8503295,
+   "name": "Wilen bei Wollerau",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 460,
+    "dnwv": 290,
+    "hoehe": 493.6,
+    "zuege": 109
    }
   },
   {
@@ -5145,6 +6184,16 @@
     "hoehe": 419.939,
     "zuege": 39,
     "perron": 70
+   }
+  },
+  {
+   "uic": 8504070,
+   "name": "Montbovon",
+   "kanton": "FR",
+   "werte": {
+    "dwv": 980,
+    "dnwv": 770,
+    "hoehe": 797.2
    }
   },
   {
@@ -6631,6 +7680,135 @@
    }
   },
   {
+   "uic": 8505163,
+   "name": "Realp",
+   "kanton": "UR",
+   "werte": {
+    "dwv": 290,
+    "dnwv": 380,
+    "hoehe": 1537.8
+   }
+  },
+  {
+   "uic": 8505164,
+   "name": "Hospental",
+   "kanton": "UR",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 120,
+    "hoehe": 1452.2
+   }
+  },
+  {
+   "uic": 8505165,
+   "name": "Andermatt",
+   "kanton": "UR",
+   "werte": {
+    "dwv": 3000,
+    "dnwv": 4200,
+    "hoehe": 1435.9
+   }
+  },
+  {
+   "uic": 8505170,
+   "name": "Nätschen",
+   "kanton": "UR",
+   "werte": {
+    "dwv": 280,
+    "dnwv": 650,
+    "hoehe": 1825.314
+   }
+  },
+  {
+   "uic": 8505172,
+   "name": "Oberalppass",
+   "kanton": "UR",
+   "werte": {
+    "dwv": 430,
+    "dnwv": 1200,
+    "hoehe": 2033.2
+   }
+  },
+  {
+   "uic": 8505173,
+   "name": "Tschamut-Selva",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 150,
+    "dnwv": 150,
+    "hoehe": 1701.3
+   }
+  },
+  {
+   "uic": 8505174,
+   "name": "Dieni",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 330,
+    "dnwv": 300,
+    "hoehe": 1455.4
+   }
+  },
+  {
+   "uic": 8505175,
+   "name": "Rueras",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 120,
+    "dnwv": 180,
+    "hoehe": 1447
+   }
+  },
+  {
+   "uic": 8505176,
+   "name": "Sedrun",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 670,
+    "dnwv": 630,
+    "hoehe": 1441.5
+   }
+  },
+  {
+   "uic": 8505177,
+   "name": "Bugnei",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 70,
+    "dnwv": 90,
+    "hoehe": 1438.7
+   }
+  },
+  {
+   "uic": 8505178,
+   "name": "Mumpé Tujetsch",
+   "kanton": "GR",
+   "werte": {
+    "dnwv": 50,
+    "hoehe": 1338
+   }
+  },
+  {
+   "uic": 8505179,
+   "name": "Segnas",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 70,
+    "dnwv": 90,
+    "hoehe": 1275.5
+   }
+  },
+  {
+   "uic": 8505180,
+   "name": "Acla da Fontauna",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 210,
+    "dnwv": 220,
+    "hoehe": 1201.6
+   }
+  },
+  {
    "uic": 8505201,
    "name": "Airolo",
    "kanton": "TI",
@@ -6880,6 +8058,17 @@
     "hoehe": 237,
     "zuege": 221,
     "perron": 800
+   }
+  },
+  {
+   "uic": 8505350,
+   "name": "Sattel",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 380,
+    "dnwv": 280,
+    "hoehe": 792.8,
+    "zuege": 70
    }
   },
   {
@@ -8023,6 +9212,28 @@
    }
   },
   {
+   "uic": 8506200,
+   "name": "Wattwil",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 9200,
+    "dnwv": 6300,
+    "hoehe": 613.6,
+    "zuege": 195
+   }
+  },
+  {
+   "uic": 8506201,
+   "name": "Lichtensteig",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 870,
+    "hoehe": 615.5,
+    "zuege": 195
+   }
+  },
+  {
    "uic": 8506202,
    "name": "Dietfurt",
    "kanton": "SG",
@@ -8200,6 +9411,94 @@
     "hoehe": 449.2,
     "zuege": 224,
     "perron": 324
+   }
+  },
+  {
+   "uic": 8506290,
+   "name": "Herisau",
+   "kanton": "AR",
+   "werte": {
+    "dwv": 6500,
+    "dnwv": 4200,
+    "hoehe": 744.75,
+    "zuege": 195
+   }
+  },
+  {
+   "uic": 8506291,
+   "name": "Schachen (Herisau)",
+   "kanton": "AR",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 110,
+    "hoehe": 788.7,
+    "zuege": 116
+   }
+  },
+  {
+   "uic": 8506292,
+   "name": "Degersheim",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 1500,
+    "dnwv": 970,
+    "hoehe": 798.7,
+    "zuege": 116
+   }
+  },
+  {
+   "uic": 8506293,
+   "name": "Mogelsberg",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 280,
+    "dnwv": 230,
+    "hoehe": 714.7,
+    "zuege": 116
+   }
+  },
+  {
+   "uic": 8506294,
+   "name": "Brunnadern-Neckertal",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 650,
+    "dnwv": 450,
+    "hoehe": 654.4,
+    "zuege": 116
+   }
+  },
+  {
+   "uic": 8506297,
+   "name": "Ebnat-Kappel",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 410,
+    "dnwv": 280,
+    "hoehe": 630,
+    "zuege": 35
+   }
+  },
+  {
+   "uic": 8506298,
+   "name": "Krummenau",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 140,
+    "dnwv": 110,
+    "hoehe": 713,
+    "zuege": 35
+   }
+  },
+  {
+   "uic": 8506299,
+   "name": "Nesslau-Neu St. Johann",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 890,
+    "dnwv": 800,
+    "hoehe": 758.5,
+    "zuege": 35
    }
   },
   {
@@ -8428,6 +9727,83 @@
     "hoehe": 413.2,
     "zuege": 231,
     "perron": 221
+   }
+  },
+  {
+   "uic": 8506392,
+   "name": "St. Gallen Haggen",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 920,
+    "dnwv": 580,
+    "hoehe": 676.5,
+    "zuege": 195
+   }
+  },
+  {
+   "uic": 8506393,
+   "name": "Wittenbach",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 1800,
+    "dnwv": 800,
+    "hoehe": 603.5,
+    "zuege": 127
+   }
+  },
+  {
+   "uic": 8506394,
+   "name": "Roggwil-Berg",
+   "kanton": "TG",
+   "werte": {
+    "dwv": 350,
+    "dnwv": 260,
+    "hoehe": 560.2,
+    "zuege": 113
+   }
+  },
+  {
+   "uic": 8506395,
+   "name": "Häggenschwil-Winden",
+   "kanton": "TG",
+   "werte": {
+    "dwv": 270,
+    "dnwv": 220,
+    "hoehe": 512.1,
+    "zuege": 113
+   }
+  },
+  {
+   "uic": 8506396,
+   "name": "Muolen",
+   "kanton": "SG",
+   "werte": {
+    "dwv": 550,
+    "dnwv": 350,
+    "hoehe": 478.9,
+    "zuege": 113
+   }
+  },
+  {
+   "uic": 8506397,
+   "name": "Steinebrunn",
+   "kanton": "TG",
+   "werte": {
+    "dwv": 340,
+    "dnwv": 230,
+    "hoehe": 448.1,
+    "zuege": 113
+   }
+  },
+  {
+   "uic": 8506398,
+   "name": "Neukirch-Egnach",
+   "kanton": "TG",
+   "werte": {
+    "dwv": 330,
+    "dnwv": 260,
+    "hoehe": 412,
+    "zuege": 113
    }
   },
   {
@@ -8777,6 +10153,102 @@
     "dnwv": 26900,
     "hoehe": 559.75,
     "zuege": 398
+   }
+  },
+  {
+   "uic": 8507270,
+   "name": "Gruben",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 1141
+   }
+  },
+  {
+   "uic": 8507271,
+   "name": "Schönried",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 680,
+    "dnwv": 490,
+    "hoehe": 1230.9
+   }
+  },
+  {
+   "uic": 8507272,
+   "name": "Saanenmöser",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 440,
+    "dnwv": 430,
+    "hoehe": 1271.2
+   }
+  },
+  {
+   "uic": 8507273,
+   "name": "Oeschseite",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 1150.8
+   }
+  },
+  {
+   "uic": 8507274,
+   "name": "Blankenburg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 50,
+    "dnwv": 60,
+    "hoehe": 957.7
+   }
+  },
+  {
+   "uic": 8507275,
+   "name": "Stöckli",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 110,
+    "dnwv": 90,
+    "hoehe": 967.7
+   }
+  },
+  {
+   "uic": 8507276,
+   "name": "St. Stephan",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 140,
+    "dnwv": 90,
+    "hoehe": 993.6
+   }
+  },
+  {
+   "uic": 8507277,
+   "name": "Matten i.S.",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 100,
+    "dnwv": 90,
+    "hoehe": 1023.4
+   }
+  },
+  {
+   "uic": 8507278,
+   "name": "Boden",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 90,
+    "dnwv": 70,
+    "hoehe": 1036.7
+   }
+  },
+  {
+   "uic": 8507279,
+   "name": "Lenk im Simmental",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 710,
+    "dnwv": 760,
+    "hoehe": 1068.6
    }
   },
   {
@@ -9870,6 +11342,314 @@
    }
   },
   {
+   "uic": 8508301,
+   "name": "Ringgenberg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 200,
+    "dnwv": 200,
+    "hoehe": 595.87
+   }
+  },
+  {
+   "uic": 8508302,
+   "name": "Niederried",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 200,
+    "dnwv": 220,
+    "hoehe": 578.32
+   }
+  },
+  {
+   "uic": 8508303,
+   "name": "Oberried am Brienzersee",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 260,
+    "dnwv": 220,
+    "hoehe": 588.89
+   }
+  },
+  {
+   "uic": 8508304,
+   "name": "Ebligen",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 582
+   }
+  },
+  {
+   "uic": 8508305,
+   "name": "Brienz",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 2800,
+    "dnwv": 2700,
+    "hoehe": 565.95
+   }
+  },
+  {
+   "uic": 8508306,
+   "name": "Brienzwiler",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 120,
+    "dnwv": 100,
+    "hoehe": 574.9
+   }
+  },
+  {
+   "uic": 8508308,
+   "name": "Meiringen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 4100,
+    "dnwv": 4000,
+    "hoehe": 595.22
+   }
+  },
+  {
+   "uic": 8508309,
+   "name": "Brünig-Hasliberg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 530,
+    "dnwv": 720,
+    "hoehe": 1001.97
+   }
+  },
+  {
+   "uic": 8508310,
+   "name": "Lungern",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 670,
+    "dnwv": 750,
+    "hoehe": 751.85
+   }
+  },
+  {
+   "uic": 8508311,
+   "name": "Kaiserstuhl OW",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 140,
+    "dnwv": 190,
+    "hoehe": 698
+   }
+  },
+  {
+   "uic": 8508312,
+   "name": "Giswil",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 1600,
+    "dnwv": 1300,
+    "hoehe": 485
+   }
+  },
+  {
+   "uic": 8508313,
+   "name": "Sachseln",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 1300,
+    "dnwv": 1100,
+    "hoehe": 471
+   }
+  },
+  {
+   "uic": 8508314,
+   "name": "Sarnen",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 4100,
+    "dnwv": 3300,
+    "hoehe": 473
+   }
+  },
+  {
+   "uic": 8508316,
+   "name": "Alpnach Dorf",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 1900,
+    "dnwv": 1100,
+    "hoehe": 451.6
+   }
+  },
+  {
+   "uic": 8508317,
+   "name": "Alpnachstad",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 750,
+    "dnwv": 840,
+    "hoehe": 434.9
+   }
+  },
+  {
+   "uic": 8508318,
+   "name": "Hergiswil NW",
+   "kanton": "NW",
+   "werte": {
+    "dwv": 3000,
+    "dnwv": 2000,
+    "hoehe": 448.86
+   }
+  },
+  {
+   "uic": 8508319,
+   "name": "Horw",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 3900,
+    "dnwv": 2200,
+    "hoehe": 441.42
+   }
+  },
+  {
+   "uic": 8508320,
+   "name": "Hergiswil Matt",
+   "kanton": "NW",
+   "werte": {
+    "dwv": 1300,
+    "dnwv": 940,
+    "hoehe": 444.7
+   }
+  },
+  {
+   "uic": 8508321,
+   "name": "Luzern Allmend/Messe",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 2600,
+    "dnwv": 3200,
+    "hoehe": 444
+   }
+  },
+  {
+   "uic": 8508323,
+   "name": "Sarnen Nord",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 900,
+    "dnwv": 470,
+    "hoehe": 468
+   }
+  },
+  {
+   "uic": 8508327,
+   "name": "Ewil Maxon",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 440,
+    "dnwv": 100,
+    "hoehe": 474
+   }
+  },
+  {
+   "uic": 8508329,
+   "name": "Brienz West",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 190,
+    "dnwv": 150,
+    "hoehe": 581.16
+   }
+  },
+  {
+   "uic": 8508359,
+   "name": "Innertkirchen Kraftwerk (Bahn)",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 310,
+    "dnwv": 120,
+    "hoehe": 633.33
+   }
+  },
+  {
+   "uic": 8508384,
+   "name": "Niederrickenbach Station",
+   "kanton": "NW",
+   "werte": {
+    "dwv": 90,
+    "dnwv": 140,
+    "hoehe": 495.9
+   }
+  },
+  {
+   "uic": 8508390,
+   "name": "Stansstad",
+   "kanton": "NW",
+   "werte": {
+    "dwv": 1900,
+    "dnwv": 1400,
+    "hoehe": 436.2
+   }
+  },
+  {
+   "uic": 8508391,
+   "name": "Stans",
+   "kanton": "NW",
+   "werte": {
+    "dwv": 7800,
+    "dnwv": 5600,
+    "hoehe": 450.7
+   }
+  },
+  {
+   "uic": 8508392,
+   "name": "Dallenwil",
+   "kanton": "NW",
+   "werte": {
+    "dwv": 690,
+    "dnwv": 680,
+    "hoehe": 485.3
+   }
+  },
+  {
+   "uic": 8508394,
+   "name": "Wolfenschiessen",
+   "kanton": "NW",
+   "werte": {
+    "dwv": 770,
+    "dnwv": 700,
+    "hoehe": 511.2
+   }
+  },
+  {
+   "uic": 8508395,
+   "name": "Innertkirchen Grimseltor",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 370,
+    "dnwv": 430,
+    "hoehe": 626.34
+   }
+  },
+  {
+   "uic": 8508396,
+   "name": "Grafenort",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 150,
+    "hoehe": 567
+   }
+  },
+  {
+   "uic": 8508399,
+   "name": "Engelberg",
+   "kanton": "OW",
+   "werte": {
+    "dwv": 2200,
+    "dnwv": 3600,
+    "hoehe": 999.5
+   }
+  },
+  {
    "uic": 8509000,
    "name": "Chur",
    "kanton": "GR",
@@ -9915,6 +11695,963 @@
     "hoehe": 502.1,
     "zuege": 201,
     "perron": 393
+   }
+  },
+  {
+   "uic": 8509006,
+   "name": "Chur Wiesental",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 350,
+    "dnwv": 190,
+    "hoehe": 577.105
+   }
+  },
+  {
+   "uic": 8509051,
+   "name": "Haldenstein",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 60,
+    "hoehe": 562.677
+   }
+  },
+  {
+   "uic": 8509053,
+   "name": "Untervaz-Trimmis",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 630,
+    "hoehe": 536.65
+   }
+  },
+  {
+   "uic": 8509054,
+   "name": "Zizers",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 610,
+    "dnwv": 500,
+    "hoehe": 530.851
+   }
+  },
+  {
+   "uic": 8509055,
+   "name": "Igis",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 650,
+    "dnwv": 420,
+    "hoehe": 523.198
+   }
+  },
+  {
+   "uic": 8509056,
+   "name": "Landquart Ried",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 430,
+    "dnwv": 230,
+    "hoehe": 521.41
+   }
+  },
+  {
+   "uic": 8509057,
+   "name": "Malans GR",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 440,
+    "dnwv": 280,
+    "hoehe": 536.277
+   }
+  },
+  {
+   "uic": 8509058,
+   "name": "Seewis-Pardisla",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 120,
+    "dnwv": 70,
+    "hoehe": 593.309
+   }
+  },
+  {
+   "uic": 8509059,
+   "name": "Grüsch",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 730,
+    "dnwv": 460,
+    "hoehe": 629.684
+   }
+  },
+  {
+   "uic": 8509060,
+   "name": "Schiers",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 2500,
+    "dnwv": 1600,
+    "hoehe": 654.102
+   }
+  },
+  {
+   "uic": 8509061,
+   "name": "Furna",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 715.54
+   }
+  },
+  {
+   "uic": 8509062,
+   "name": "Jenaz",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 270,
+    "dnwv": 240,
+    "hoehe": 723.172
+   }
+  },
+  {
+   "uic": 8509063,
+   "name": "Fideris",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 743.598
+   }
+  },
+  {
+   "uic": 8509064,
+   "name": "Küblis",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1200,
+    "dnwv": 1100,
+    "hoehe": 809.623
+   }
+  },
+  {
+   "uic": 8509065,
+   "name": "Saas im Prättigau",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 160,
+    "dnwv": 220,
+    "hoehe": 935.391
+   }
+  },
+  {
+   "uic": 8509067,
+   "name": "Klosters Dorf",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 550,
+    "dnwv": 570,
+    "hoehe": 1124.023
+   }
+  },
+  {
+   "uic": 8509068,
+   "name": "Klosters Platz",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 3100,
+    "dnwv": 3500,
+    "hoehe": 1190.804
+   }
+  },
+  {
+   "uic": 8509069,
+   "name": "Cavadürli",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 1350.978
+   }
+  },
+  {
+   "uic": 8509070,
+   "name": "Davos Laret",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 170,
+    "dnwv": 190,
+    "hoehe": 1521.62
+   }
+  },
+  {
+   "uic": 8509071,
+   "name": "Davos Wolfgang",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 190,
+    "dnwv": 230,
+    "hoehe": 1625.336
+   }
+  },
+  {
+   "uic": 8509072,
+   "name": "Davos Dorf",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1700,
+    "dnwv": 2000,
+    "hoehe": 1559.591
+   }
+  },
+  {
+   "uic": 8509073,
+   "name": "Davos Platz",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 2600,
+    "dnwv": 2800,
+    "hoehe": 1540.192
+   }
+  },
+  {
+   "uic": 8509075,
+   "name": "Davos Frauenkirch",
+   "kanton": "GR",
+   "werte": {
+    "dnwv": 60,
+    "hoehe": 1504.961
+   }
+  },
+  {
+   "uic": 8509076,
+   "name": "Davos Glaris",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 220,
+    "dnwv": 180,
+    "hoehe": 1454.346
+   }
+  },
+  {
+   "uic": 8509077,
+   "name": "Davos Monstein",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 1346.942
+   }
+  },
+  {
+   "uic": 8509078,
+   "name": "Davos Wiesen",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 120,
+    "hoehe": 1196.886
+   }
+  },
+  {
+   "uic": 8509150,
+   "name": "Chur Altstadt",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 210,
+    "dnwv": 250,
+    "hoehe": 596.132
+   }
+  },
+  {
+   "uic": 8509152,
+   "name": "Lüen-Castiel",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 70,
+    "hoehe": 938.024
+   }
+  },
+  {
+   "uic": 8509153,
+   "name": "St. Peter-Molinis",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 100,
+    "dnwv": 110,
+    "hoehe": 1156.615
+   }
+  },
+  {
+   "uic": 8509154,
+   "name": "Peist",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 60,
+    "dnwv": 60,
+    "hoehe": 1243.307
+   }
+  },
+  {
+   "uic": 8509155,
+   "name": "Langwies GR",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 180,
+    "dnwv": 240,
+    "hoehe": 1316.533
+   }
+  },
+  {
+   "uic": 8509156,
+   "name": "Litzirüti",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 240,
+    "dnwv": 280,
+    "hoehe": 1451.756
+   }
+  },
+  {
+   "uic": 8509157,
+   "name": "Arosa",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1500,
+    "dnwv": 2100,
+    "hoehe": 1738.16
+   }
+  },
+  {
+   "uic": 8509167,
+   "name": "Trin",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 90,
+    "dnwv": 110,
+    "hoehe": 608.975
+   }
+  },
+  {
+   "uic": 8509168,
+   "name": "Versam-Safien",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 280,
+    "dnwv": 370,
+    "hoehe": 635.37
+   }
+  },
+  {
+   "uic": 8509169,
+   "name": "Valendas-Sagogn",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 160,
+    "dnwv": 210,
+    "hoehe": 668.911
+   }
+  },
+  {
+   "uic": 8509170,
+   "name": "Castrisch",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 180,
+    "dnwv": 170,
+    "hoehe": 705.471
+   }
+  },
+  {
+   "uic": 8509171,
+   "name": "Ilanz",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 2200,
+    "dnwv": 1800,
+    "hoehe": 698.52
+   }
+  },
+  {
+   "uic": 8509173,
+   "name": "Rueun",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 120,
+    "dnwv": 100,
+    "hoehe": 732.98
+   }
+  },
+  {
+   "uic": 8509174,
+   "name": "Waltensburg/Vuorz",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 744.294
+   }
+  },
+  {
+   "uic": 8509175,
+   "name": "Tavanasa-Breil/Brigels",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 340,
+    "dnwv": 320,
+    "hoehe": 787.798
+   }
+  },
+  {
+   "uic": 8509176,
+   "name": "Trun",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 400,
+    "dnwv": 280,
+    "hoehe": 852.097
+   }
+  },
+  {
+   "uic": 8509177,
+   "name": "Rabius-Surrein",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 200,
+    "dnwv": 150,
+    "hoehe": 927.641
+   }
+  },
+  {
+   "uic": 8509178,
+   "name": "Sumvitg-Cumpadials",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 120,
+    "dnwv": 120,
+    "hoehe": 982.319
+   }
+  },
+  {
+   "uic": 8509179,
+   "name": "Disentis/Mustér",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 2200,
+    "dnwv": 2300,
+    "hoehe": 1129.683
+   }
+  },
+  {
+   "uic": 8509180,
+   "name": "Felsberg",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 280,
+    "dnwv": 140,
+    "hoehe": 569.682
+   }
+  },
+  {
+   "uic": 8509181,
+   "name": "Domat/Ems",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1900,
+    "dnwv": 1300,
+    "hoehe": 581.243
+   }
+  },
+  {
+   "uic": 8509182,
+   "name": "Domat/Ems Werk",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 510,
+    "dnwv": 110,
+    "hoehe": 598.204
+   }
+  },
+  {
+   "uic": 8509183,
+   "name": "Reichenau-Tamins",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 900,
+    "dnwv": 960,
+    "hoehe": 604.528
+   }
+  },
+  {
+   "uic": 8509184,
+   "name": "Bonaduz",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1300,
+    "dnwv": 750,
+    "hoehe": 658.95
+   }
+  },
+  {
+   "uic": 8509185,
+   "name": "Rhäzüns",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1000,
+    "dnwv": 730,
+    "hoehe": 654.383
+   }
+  },
+  {
+   "uic": 8509186,
+   "name": "Rothenbrunnen",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 260,
+    "dnwv": 100,
+    "hoehe": 621.718
+   }
+  },
+  {
+   "uic": 8509187,
+   "name": "Rodels-Realta",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 90,
+    "dnwv": 80,
+    "hoehe": 639.761
+   }
+  },
+  {
+   "uic": 8509188,
+   "name": "Cazis",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 290,
+    "dnwv": 170,
+    "hoehe": 657.677
+   }
+  },
+  {
+   "uic": 8509189,
+   "name": "Thusis",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 2300,
+    "dnwv": 2100,
+    "hoehe": 697.37
+   }
+  },
+  {
+   "uic": 8509192,
+   "name": "Tiefencastel",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 660,
+    "dnwv": 730,
+    "hoehe": 883.849
+   }
+  },
+  {
+   "uic": 8509193,
+   "name": "Surava",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 939.316
+   }
+  },
+  {
+   "uic": 8509194,
+   "name": "Alvaneu",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 50,
+    "dnwv": 130,
+    "hoehe": 999.376
+   }
+  },
+  {
+   "uic": 8509195,
+   "name": "Filisur",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1600,
+    "dnwv": 1600,
+    "hoehe": 1080.3
+   }
+  },
+  {
+   "uic": 8509197,
+   "name": "Bergün/Bravuogn",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 900,
+    "dnwv": 1400,
+    "hoehe": 1372.449
+   }
+  },
+  {
+   "uic": 8509198,
+   "name": "Preda",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 450,
+    "dnwv": 880,
+    "hoehe": 1788.6
+   }
+  },
+  {
+   "uic": 8509199,
+   "name": "Spinas",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 150,
+    "hoehe": 1815.03
+   }
+  },
+  {
+   "uic": 8509250,
+   "name": "Bever",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 330,
+    "dnwv": 350,
+    "hoehe": 1710.43
+   }
+  },
+  {
+   "uic": 8509251,
+   "name": "Samedan",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 3900,
+    "dnwv": 4200,
+    "hoehe": 1705.5
+   }
+  },
+  {
+   "uic": 8509252,
+   "name": "Celerina",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 580,
+    "dnwv": 670,
+    "hoehe": 1729.799
+   }
+  },
+  {
+   "uic": 8509253,
+   "name": "St. Moritz",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 5300,
+    "dnwv": 7200,
+    "hoehe": 1774.98
+   }
+  },
+  {
+   "uic": 8509254,
+   "name": "Punt Muragl",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 100,
+    "dnwv": 100,
+    "hoehe": 1728.536
+   }
+  },
+  {
+   "uic": 8509255,
+   "name": "Pontresina",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 2300,
+    "dnwv": 2500,
+    "hoehe": 1773.9
+   }
+  },
+  {
+   "uic": 8509256,
+   "name": "La Punt Chamues-ch",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 180,
+    "dnwv": 220,
+    "hoehe": 1696.809
+   }
+  },
+  {
+   "uic": 8509257,
+   "name": "Madulain",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 180,
+    "dnwv": 200,
+    "hoehe": 1696.909
+   }
+  },
+  {
+   "uic": 8509258,
+   "name": "Zuoz",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 900,
+    "dnwv": 900,
+    "hoehe": 1691.829
+   }
+  },
+  {
+   "uic": 8509259,
+   "name": "S-chanf",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 360,
+    "dnwv": 340,
+    "hoehe": 1669.631
+   }
+  },
+  {
+   "uic": 8509260,
+   "name": "Cinuos-chel-Brail",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 90,
+    "hoehe": 1628.451
+   }
+  },
+  {
+   "uic": 8509262,
+   "name": "Zernez",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1200,
+    "dnwv": 1300,
+    "hoehe": 1470.77
+   }
+  },
+  {
+   "uic": 8509263,
+   "name": "Susch",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 240,
+    "dnwv": 240,
+    "hoehe": 1434.848
+   }
+  },
+  {
+   "uic": 8509264,
+   "name": "Lavin",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 350,
+    "dnwv": 400,
+    "hoehe": 1431.74
+   }
+  },
+  {
+   "uic": 8509265,
+   "name": "Guarda",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 290,
+    "dnwv": 300,
+    "hoehe": 1431.666
+   }
+  },
+  {
+   "uic": 8509266,
+   "name": "Ardez",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 420,
+    "dnwv": 470,
+    "hoehe": 1431.854
+   }
+  },
+  {
+   "uic": 8509267,
+   "name": "Ftan Baraigla",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 1334.804
+   }
+  },
+  {
+   "uic": 8509268,
+   "name": "Scuol-Tarasp",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1900,
+    "dnwv": 2200,
+    "hoehe": 1286.7
+   }
+  },
+  {
+   "uic": 8509269,
+   "name": "Sagliains",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 1200,
+    "hoehe": 1432.02
+   }
+  },
+  {
+   "uic": 8509350,
+   "name": "Celerina Staz",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 100,
+    "dnwv": 100,
+    "hoehe": 1717.041
+   }
+  },
+  {
+   "uic": 8509351,
+   "name": "Punt Muragl Staz",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 1736.681
+   }
+  },
+  {
+   "uic": 8509352,
+   "name": "Surovas",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 140,
+    "dnwv": 150,
+    "hoehe": 1822.287
+   }
+  },
+  {
+   "uic": 8509353,
+   "name": "Morteratsch",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 500,
+    "dnwv": 610,
+    "hoehe": 1895.912
+   }
+  },
+  {
+   "uic": 8509354,
+   "name": "Bernina Suot",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 90,
+    "hoehe": 2046.29
+   }
+  },
+  {
+   "uic": 8509356,
+   "name": "Ospizio Bernina",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 390,
+    "dnwv": 720,
+    "hoehe": 2253.354
+   }
+  },
+  {
+   "uic": 8509357,
+   "name": "Alp Grüm",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 920,
+    "dnwv": 1200,
+    "hoehe": 2090.588
+   }
+  },
+  {
+   "uic": 8509358,
+   "name": "Cavaglia",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 300,
+    "dnwv": 320,
+    "hoehe": 1692.909
+   }
+  },
+  {
+   "uic": 8509359,
+   "name": "Cadera",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 1383.071
+   }
+  },
+  {
+   "uic": 8509361,
+   "name": "Poschiavo",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 980,
+    "dnwv": 1000,
+    "hoehe": 1013.688
+   }
+  },
+  {
+   "uic": 8509363,
+   "name": "Li Curt",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 60,
+    "hoehe": 987.888
+   }
+  },
+  {
+   "uic": 8509364,
+   "name": "Le Prese",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 250,
+    "dnwv": 290,
+    "hoehe": 965.214
+   }
+  },
+  {
+   "uic": 8509365,
+   "name": "Miralago",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 70,
+    "dnwv": 90,
+    "hoehe": 964.375
+   }
+  },
+  {
+   "uic": 8509366,
+   "name": "Brusio",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 100,
+    "dnwv": 100,
+    "hoehe": 779.874
+   }
+  },
+  {
+   "uic": 8509367,
+   "name": "Campascio",
+   "kanton": "GR",
+   "werte": {
+    "hoehe": 636.387
+   }
+  },
+  {
+   "uic": 8509368,
+   "name": "Campocologno",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 110,
+    "dnwv": 90,
+    "hoehe": 552.818
+   }
+  },
+  {
+   "uic": 8509373,
+   "name": "Bernina Lagalb",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 80,
+    "dnwv": 190,
+    "hoehe": 2099.805
    }
   },
   {
@@ -10070,6 +12807,15 @@
     "hoehe": 426.2,
     "zuege": 149,
     "perron": 166
+   }
+  },
+  {
+   "uic": 8510456,
+   "name": "Schmitten (Albula) Landwasserviadukt",
+   "kanton": "GR",
+   "werte": {
+    "dnwv": 80,
+    "hoehe": 1045.431
    }
   },
   {
@@ -10312,6 +13058,16 @@
    }
   },
   {
+   "uic": 8516351,
+   "name": "Kriens Mattenhof",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 4300,
+    "dnwv": 2700,
+    "hoehe": 443
+   }
+  },
+  {
    "uic": 8516353,
    "name": "Baldegg Kloster",
    "kanton": "LU",
@@ -10512,6 +13268,73 @@
     "hoehe": 614,
     "zuege": 170,
     "perron": 220
+   }
+  },
+  {
+   "uic": 8519370,
+   "name": "Bernina Diavolezza",
+   "kanton": "GR",
+   "werte": {
+    "dwv": 350,
+    "dnwv": 390,
+    "hoehe": 2081.64
+   }
+  },
+  {
+   "uic": 8530261,
+   "name": "Bois-de-Chexbres",
+   "kanton": "VD",
+   "werte": {
+    "hoehe": 835.8
+   }
+  },
+  {
+   "uic": 8530760,
+   "name": "Aareschlucht West",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 340,
+    "dnwv": 480,
+    "hoehe": 604.03
+   }
+  },
+  {
+   "uic": 8530783,
+   "name": "Chez-le-Maître-Ecoles",
+   "kanton": "VD",
+   "werte": {
+    "dwv": 290,
+    "dnwv": 90,
+    "hoehe": 1015,
+    "zuege": 11
+   }
+  },
+  {
+   "uic": 8530799,
+   "name": "Meiringen Alpbach",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 150,
+    "hoehe": 602.47
+   }
+  },
+  {
+   "uic": 8530800,
+   "name": "Innertkirchen Unterwasser",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 624.34
+   }
+  },
+  {
+   "uic": 8530801,
+   "name": "Aareschlucht Ost (Bahn)",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 220,
+    "dnwv": 380,
+    "hoehe": 618.26
    }
   },
   {
