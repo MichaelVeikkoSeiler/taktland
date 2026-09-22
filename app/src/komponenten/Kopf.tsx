@@ -59,7 +59,7 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
   },
   standort: {
     hell: standortHell, dunkel: standortDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration: Ein Mann schaut neben dem Gleis auf eine Karte in seinem Handy, vor ihm ein Tunnelportal mit Signal, links ein See.',
+    alt: 'Illustration: Ein Mann schaut neben dem Gleis auf eine Karte in seinem Handy, vor ihm ein Tunnelportal mit einer roten Ortsmarke, links ein See.',
   },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
