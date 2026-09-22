@@ -10,7 +10,7 @@
  *
  * Es wird nichts an einen Server gemeldet. Der Cache liegt auf dem Gerät.
  */
-const VERSION = 'taktland-v4'
+const VERSION = 'taktland-v5'
 const SHELL = './'
 
 /** So viele Profile werden im Voraus gespeichert. Bei vielen Bahnhöfen ist
@@ -60,10 +60,13 @@ self.addEventListener('fetch', (e) => {
   const anfrage = e.request
   if (anfrage.method !== 'GET' || new URL(anfrage.url).origin !== self.location.origin) return
 
-  // Seitenaufruf: erst das Netz, damit Aktualisierungen ankommen; sonst der Cache
+  // Seitenaufruf: erst das Netz, damit Aktualisierungen ankommen; sonst der Cache.
+  // «no-cache» fragt beim Server nach, ob es eine neuere Fassung gibt. Ohne
+  // das hielt der Browser die Seite bis zu 10 Minuten fest (GitHub Pages
+  // erlaubt so lange), und eine Korrektur kam erst später an.
   if (anfrage.mode === 'navigate') {
     e.respondWith(
-      fetch(anfrage)
+      fetch(anfrage.url, { cache: 'no-cache', credentials: 'same-origin' })
         .then((antwort) => {
           const kopie = antwort.clone()
           caches.open(VERSION).then((c) => c.put(SHELL, kopie))
@@ -79,7 +82,7 @@ self.addEventListener('fetch', (e) => {
   // antwortet der Cache.
   if (new URL(anfrage.url).pathname.includes('/data/')) {
     e.respondWith(
-      fetch(anfrage)
+      fetch(anfrage, { cache: 'no-cache' })
         .then((antwort) => {
           if (antwort.ok) {
             const kopie = antwort.clone()
