@@ -14,10 +14,12 @@ function zahl(n: number) {
  */
 export function Start({ index }: { index: BahnhofIndex }) {
   const z = index.zahlen
-  const absatz = 'mt-4 text-[15px] leading-relaxed first:mt-0'
+  const absatz = 'mt-4 text-[15px] leading-relaxed'
   return (
     <main className="px-4 py-6">
-      <p className={absatz}>
+      {/* h2, nicht h1: «Taktland» im Kopf ist die erste Überschrift der Seite */}
+      <h2 className="text-2xl font-bold tracking-tight">Lerne das Bahnland Schweiz kennen</h2>
+      <p className="mt-3 text-[15px] leading-relaxed">
         Taktland ist ein Lernspiel rund um die Schweizer Bahn. Es stellt{' '}
         {zahl(index.bahnhoefe_gesamt)} Bahnhöfe vor
         {z ? `, dazu ${zahl(z.linien)} Strecken mit ${zahl(z.tunnel)} Tunneln und `
