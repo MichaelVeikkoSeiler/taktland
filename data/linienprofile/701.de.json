@@ -245,35 +245,56 @@
           "label": "Abschnitte",
           "value": 21,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -981,6 +1002,218 @@
         "km": 71.107,
         "sicherungsart": "Schrankenanlage",
         "gleise": 3
+      }
+    ],
+    "netz": [
+      {
+        "von": "Eglisau",
+        "bis": "Zweidlen",
+        "km_von": 22.247,
+        "km_bis": 26.162,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zweidlen",
+        "bis": "Weiach-Kaiserstuhl",
+        "km_von": 26.162,
+        "km_bis": 29.626,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Weiach-Kaiserstuhl",
+        "bis": "Kaiserstuhl AG",
+        "km_von": 29.626,
+        "km_bis": 30.198,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kaiserstuhl AG",
+        "bis": "Rümikon AG",
+        "km_von": 30.198,
+        "km_bis": 34.543,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rümikon AG",
+        "bis": "Mellikon",
+        "km_von": 34.543,
+        "km_bis": 36.193,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Mellikon",
+        "bis": "Rekingen AG",
+        "km_von": 36.193,
+        "km_bis": 38.117,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rekingen AG",
+        "bis": "Bad Zurzach",
+        "km_von": 38.117,
+        "km_bis": 41.402,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bad Zurzach",
+        "bis": "Rietheim",
+        "km_von": 41.402,
+        "km_bis": 43.389,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rietheim",
+        "bis": "Koblenz Dorf",
+        "km_von": 43.389,
+        "km_bis": 46.925,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Koblenz Dorf",
+        "bis": "Koblenz",
+        "km_von": 46.925,
+        "km_bis": 48.379,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Koblenz",
+        "bis": "Felsenau AG",
+        "km_von": 48.379,
+        "km_bis": 50.022,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Felsenau AG",
+        "bis": "Full",
+        "km_von": 50.022,
+        "km_bis": 52.261,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Full",
+        "bis": "Leibstadt",
+        "km_von": 52.261,
+        "km_bis": 55.271,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Leibstadt",
+        "bis": "Schwaderloch",
+        "km_von": 55.271,
+        "km_bis": 57.048,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Schwaderloch",
+        "bis": "Etzgen",
+        "km_von": 57.048,
+        "km_bis": 60.944,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Etzgen",
+        "bis": "Sulz",
+        "km_von": 60.944,
+        "km_bis": 63.106,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sulz",
+        "bis": "Laufenburg",
+        "km_von": 63.106,
+        "km_bis": 65.511,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Laufenburg",
+        "bis": "Kaisten Ost (Abzw)",
+        "km_von": 65.511,
+        "km_bis": 66.9,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kaisten Ost (Abzw)",
+        "bis": "Sisseln",
+        "km_von": 66.9,
+        "km_bis": 71.001,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sisseln",
+        "bis": "Münchwilen AG (Abzw)",
+        "km_von": 71.001,
+        "km_bis": 72.807,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Münchwilen AG (Abzw)",
+        "bis": "Stein-Säckingen Ost (Abzw)",
+        "km_von": 72.807,
+        "km_bis": 73.97,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

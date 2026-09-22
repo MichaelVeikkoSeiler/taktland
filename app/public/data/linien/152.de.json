@@ -190,49 +190,80 @@
           "label": "Abschnitte",
           "value": 10,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 7,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz und 50 Hz",
           "value": 2,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[1].abschnitte"
+          "factRef": "netz.nach_strom[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz und 50 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -684,6 +715,108 @@
         "km": 72.704,
         "baueinheiten": 1,
         "kanton": "Genève"
+      }
+    ],
+    "netz": [
+      {
+        "von": "St-Jean (bif)",
+        "bis": "Jonction (Genève)",
+        "km_von": 61.59,
+        "km_bis": 62.4,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz und 50 Hz"
+      },
+      {
+        "von": "Jonction (Genève)",
+        "bis": "Lancy-Bâtie (bif)",
+        "km_von": 62.4,
+        "km_bis": 63.784,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz und 50 Hz"
+      },
+      {
+        "von": "Lancy-Bâtie (bif)",
+        "bis": "Lancy-Pont-Rouge",
+        "km_von": 63.784,
+        "km_bis": 64.222,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lancy-Pont-Rouge",
+        "bis": "Genève-La-Praille",
+        "km_von": 64.222,
+        "km_bis": 64.544,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Genève-La-Praille",
+        "bis": "Genève-La-Praille (bif)",
+        "km_von": 64.544,
+        "km_bis": 65.033,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Genève-La-Praille (bif)",
+        "bis": "Genève-Stade",
+        "km_von": 65.033,
+        "km_bis": 65.274,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Genève-Stade",
+        "bis": "Carouge-Bachet (saut km)",
+        "km_von": 65.274,
+        "km_bis": 65.426,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Carouge-Bachet (saut km)",
+        "bis": "Lancy-Bachet",
+        "km_von": 65.426,
+        "km_bis": 65.649,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Genève-Champel",
+        "bis": "Genève-Eaux-Vives",
+        "km_von": 68.986,
+        "km_bis": 70.45,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Genève-Eaux-Vives",
+        "bis": "Chêne-Bourg",
+        "km_von": 70.45,
+        "km_bis": 73.11,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

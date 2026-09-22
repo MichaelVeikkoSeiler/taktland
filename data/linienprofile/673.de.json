@@ -188,35 +188,56 @@
           "label": "Abschnitte",
           "value": 7,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SOB",
           "value": 7,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SOB"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 7,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 7,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 7,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -290,5 +311,79 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Biberbrugg",
+        "bis": "Altmatt",
+        "km_von": 18.412,
+        "km_bis": 22.247,
+        "isb": "SOB",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Altmatt",
+        "bis": "Rothenthurm",
+        "km_von": 22.247,
+        "km_bis": 25.643,
+        "isb": "SOB",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rothenthurm",
+        "bis": "Biberegg",
+        "km_von": 25.643,
+        "km_bis": 27.124,
+        "isb": "SOB",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Biberegg",
+        "bis": "Sattel-Aegeri",
+        "km_von": 27.124,
+        "km_bis": 30.795,
+        "isb": "SOB",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sattel-Aegeri",
+        "bis": "Steinerberg",
+        "km_von": 30.794,
+        "km_bis": 35.593,
+        "isb": "SOB",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Steinerberg",
+        "bis": "Eidg. Magazine",
+        "km_von": 35.593,
+        "km_bis": 36.792,
+        "isb": "SOB",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Eidg. Magazine",
+        "bis": "Arth-Goldau Ost (Abzw)",
+        "km_von": 36.792,
+        "km_bis": 38.2,
+        "isb": "SOB",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

@@ -192,35 +192,56 @@
           "label": "Abschnitte",
           "value": 8,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -739,6 +760,88 @@
         "km": 26.849,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
+      }
+    ],
+    "netz": [
+      {
+        "von": "Yverdon Est (bif)",
+        "bis": "Yverdon-les-Bains-Champ Pittet",
+        "km_von": 0.485,
+        "km_bis": 1.78,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Yverdon-les-Bains-Champ Pittet",
+        "bis": "Yvonand",
+        "km_von": 1.78,
+        "km_bis": 8.81,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Yvonand",
+        "bis": "Cheyres",
+        "km_von": 8.81,
+        "km_bis": 12.621,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Cheyres",
+        "bis": "Estavayer-le-Lac",
+        "km_von": 12.621,
+        "km_bis": 18.07,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Estavayer-le-Lac",
+        "bis": "Siporex (embr)",
+        "km_von": 18.07,
+        "km_bis": 19.47,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Siporex (embr)",
+        "bis": "Sévaz (embr)",
+        "km_von": 19.47,
+        "km_bis": 20.03,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sévaz (embr)",
+        "bis": "Cugy FR",
+        "km_von": 20.03,
+        "km_bis": 23.684,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Cugy FR",
+        "bis": "Payerne",
+        "km_von": 23.684,
+        "km_bis": 27.895,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

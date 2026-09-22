@@ -192,42 +192,68 @@
           "label": "Abschnitte",
           "value": 8,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 7,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -1043,6 +1069,88 @@
         "km": 6.029,
         "sicherungsart": "Blinklichtanlage",
         "gleise": 1
+      }
+    ],
+    "netz": [
+      {
+        "von": "Zug Süd",
+        "bis": "Zug Postplatz",
+        "km_von": 0.003,
+        "km_bis": 0.605,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zug Postplatz",
+        "bis": "Zug Casino",
+        "km_von": 0.605,
+        "km_bis": 1.406,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zug Casino",
+        "bis": "Zug Fridbach",
+        "km_von": 1.406,
+        "km_bis": 2.09,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zug Fridbach",
+        "bis": "Zug Oberwil",
+        "km_von": 2.09,
+        "km_bis": 3.135,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zug Oberwil",
+        "bis": "Walchwil Hörndli",
+        "km_von": 3.135,
+        "km_bis": 7.978,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Walchwil Hörndli",
+        "bis": "Walchwil",
+        "km_von": 7.978,
+        "km_bis": 9.452,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Walchwil",
+        "bis": "Goldau Mühlefluh (Verzw)",
+        "km_von": 9.452,
+        "km_bis": 14.547,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Goldau Mühlefluh (Verzw)",
+        "bis": "Arth-Goldau Nordwest",
+        "km_von": 14.547,
+        "km_bis": 15.758,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

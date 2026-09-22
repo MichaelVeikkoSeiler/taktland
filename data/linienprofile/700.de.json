@@ -238,42 +238,68 @@
           "label": "Abschnitte",
           "value": 20,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 20,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 19,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Streckengleise: 3",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 3
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 20,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 20,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -1076,6 +1102,208 @@
         "km": 55.096,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
+      }
+    ],
+    "netz": [
+      {
+        "von": "Brugg AG",
+        "bis": "Brugg AG Nord (Abzw)",
+        "km_von": 31.273,
+        "km_bis": 32.46,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Brugg AG Nord (Abzw)",
+        "bis": "Villnachern (Spw)",
+        "km_von": 32.46,
+        "km_bis": 35.343,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Villnachern (Spw)",
+        "bis": "Schinznach Dorf",
+        "km_von": 35.343,
+        "km_bis": 39.283,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Schinznach Dorf",
+        "bis": "Effingen",
+        "km_von": 39.283,
+        "km_bis": 42.436,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Effingen",
+        "bis": "Kirchmatt (Spw)",
+        "km_von": 42.436,
+        "km_bis": 45.495,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kirchmatt (Spw)",
+        "bis": "Hornussen",
+        "km_von": 45.495,
+        "km_bis": 46.973,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hornussen",
+        "bis": "Buchhalde (Spw)",
+        "km_von": 46.973,
+        "km_bis": 48.095,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Buchhalde (Spw)",
+        "bis": "Frick",
+        "km_von": 48.095,
+        "km_bis": 51.847,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Frick",
+        "bis": "Niederfeld (Spw)",
+        "km_von": 51.847,
+        "km_bis": 54.829,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Niederfeld (Spw)",
+        "bis": "Eiken",
+        "km_von": 54.829,
+        "km_bis": 55.411,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Eiken",
+        "bis": "Stein-Säckingen Ost (Abzw)",
+        "km_von": 55.411,
+        "km_bis": 58.277,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Stein-Säckingen Ost (Abzw)",
+        "bis": "Stein-Säckingen",
+        "km_von": 58.277,
+        "km_bis": 58.762,
+        "isb": "SBB CFF FFS",
+        "gleise": 3,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Stein-Säckingen",
+        "bis": "Mumpf",
+        "km_von": 58.762,
+        "km_bis": 61.881,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Mumpf",
+        "bis": "Dossenboden (Spw)",
+        "km_von": 61.881,
+        "km_bis": 65.106,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Dossenboden (Spw)",
+        "bis": "Möhlin",
+        "km_von": 65.106,
+        "km_bis": 68.268,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Möhlin",
+        "bis": "Rheinfelden",
+        "km_von": 68.268,
+        "km_bis": 71.628,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rheinfelden",
+        "bis": "Rheinfelden Augarten",
+        "km_von": 71.628,
+        "km_bis": 73.548,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rheinfelden Augarten",
+        "bis": "Kaiseraugst",
+        "km_von": 73.548,
+        "km_bis": 76.977,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kaiseraugst",
+        "bis": "Pratteln Salina Raurica",
+        "km_von": 76.977,
+        "km_bis": 78.38,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Pratteln Salina Raurica",
+        "bis": "Pratteln Ost (Abzw)",
+        "km_von": 78.38,
+        "km_bis": 79.8,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

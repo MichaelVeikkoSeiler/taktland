@@ -302,42 +302,68 @@
           "label": "Abschnitte",
           "value": 23,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 23,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 18,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 5,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 23,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 23,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -1265,6 +1291,238 @@
         "km": 43.789,
         "sicherungsart": "Schrankenanlage",
         "gleise": 3
+      }
+    ],
+    "netz": [
+      {
+        "von": "Thalwil",
+        "bis": "Oberrieden Dorf",
+        "km_von": 12.094,
+        "km_bis": 14.518,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oberrieden Dorf",
+        "bis": "Horgen Oberdorf",
+        "km_von": 14.518,
+        "km_bis": 16.813,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Horgen Oberdorf",
+        "bis": "Sihlbrugg",
+        "km_von": 16.813,
+        "km_bis": 19.912,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sihlbrugg",
+        "bis": "Litti (Baar)",
+        "km_von": 19.912,
+        "km_bis": 24.516,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Litti (Baar)",
+        "bis": "Baar",
+        "km_von": 24.516,
+        "km_bis": 26.608,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Baar",
+        "bis": "Baar Neufeld",
+        "km_von": 26.608,
+        "km_bis": 27.56,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Baar Neufeld",
+        "bis": "Baar Lindenpark",
+        "km_von": 27.56,
+        "km_bis": 28.158,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Baar Lindenpark",
+        "bis": "Zug Nord (Abzw)",
+        "km_von": 28.158,
+        "km_bis": 28.718,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zug Nord (Abzw)",
+        "bis": "Zug",
+        "km_von": 28.718,
+        "km_bis": 38.829,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zug",
+        "bis": "Zug Schutzengel",
+        "km_von": 38.829,
+        "km_bis": 39.475,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zug Schutzengel",
+        "bis": "Zug Chollermüli",
+        "km_von": 39.475,
+        "km_bis": 41.196,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zug Chollermüli",
+        "bis": "Kollermühle (Abzw)",
+        "km_von": 41.196,
+        "km_bis": 41.425,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kollermühle (Abzw)",
+        "bis": "Cham Alpenblick",
+        "km_von": 41.425,
+        "km_bis": 42.425,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Cham Alpenblick",
+        "bis": "Cham",
+        "km_von": 42.425,
+        "km_bis": 43.574,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Cham",
+        "bis": "Hünenberg Zythus",
+        "km_von": 43.574,
+        "km_bis": 44.355,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hünenberg Zythus",
+        "bis": "Hünenberg Chämleten",
+        "km_von": 44.355,
+        "km_bis": 44.855,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hünenberg Chämleten",
+        "bis": "Rotkreuz",
+        "km_von": 44.855,
+        "km_bis": 49,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rotkreuz",
+        "bis": "Gisikon-Root",
+        "km_von": 49,
+        "km_bis": 52.823,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Gisikon-Root",
+        "bis": "Root D4",
+        "km_von": 52.823,
+        "km_bis": 55.263,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Root D4",
+        "bis": "Buchrain",
+        "km_von": 55.263,
+        "km_bis": 57.065,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Buchrain",
+        "bis": "Ebikon",
+        "km_von": 57.065,
+        "km_bis": 58.58,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ebikon",
+        "bis": "Rotsee (Verzw)",
+        "km_von": 58.58,
+        "km_bis": 60.64,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rotsee (Verzw)",
+        "bis": "Fluhmühle (Abzw)",
+        "km_von": 60.64,
+        "km_bis": 64.009,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

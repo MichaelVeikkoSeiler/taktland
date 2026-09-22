@@ -140,35 +140,56 @@
           "label": "Abschnitte",
           "value": 3,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SNCF",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SNCF"
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 50 Hz",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 50 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -399,6 +420,38 @@
         "km": 142.193,
         "baueinheiten": 1,
         "kanton": "Basel-Stadt"
+      }
+    ],
+    "netz": [
+      {
+        "von": "Basel Grenze (FR)",
+        "bis": "Basel St. Johann",
+        "km_von": 136.924,
+        "km_bis": 137.811,
+        "isb": "SNCF",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Basel St. Johann",
+        "bis": "Basel SBB West (Abzw)",
+        "km_von": 137.811,
+        "km_bis": 141.382,
+        "isb": "SNCF",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Basel SBB West (Abzw)",
+        "bis": "Basel SBB",
+        "km_von": 141.382,
+        "km_bis": 142.203,
+        "isb": "SNCF",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
       }
     ]
   }

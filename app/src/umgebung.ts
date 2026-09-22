@@ -7,7 +7,7 @@
 import type { Stueck } from './komponenten/Karte'
 import { LAENGE_ZU_BREITE } from './komponenten/Karte'
 import { listenAdresse } from './listen'
-import type { BahnhofIndex, ListenArt, StandortDaten } from './typen'
+import type { BahnhofIndex, StandortDaten } from './typen'
 
 export interface Lage { lat: number; lon: number }
 
@@ -53,8 +53,10 @@ export function bahnhoefeBei(von: Lage, index: BahnhofIndex): Treffer[] {
     .sort(nachAbstand)
 }
 
-/** Tunnel, Brücken oder Bahnübergänge mit Lage, die nächsten zuerst */
-export function objekteBei(von: Lage, daten: StandortDaten, art: ListenArt): Treffer[] {
+/** Tunnel, Brücken oder Bahnübergänge mit Lage, die nächsten zuerst. Die
+ *  Abschnitte des Netzes haben keine Lage und stehen nicht auf «Standort». */
+export function objekteBei(von: Lage, daten: StandortDaten,
+                           art: 'tunnel' | 'bruecken' | 'bahnuebergaenge'): Treffer[] {
   return daten[art]
     .filter(([, , , la, lo]) => la !== null && lo !== null)
     .map(([linie, stelle, name, la, lo]) => ({

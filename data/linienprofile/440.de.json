@@ -195,42 +195,68 @@
           "label": "Abschnitte",
           "value": 9,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: BLSN",
           "value": 9,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "BLSN"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 5,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 4,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 9,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 9,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -304,5 +330,99 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Burgdorf West (Abzw)",
+        "bis": "Lerchenbühl (Verzw)",
+        "km_von": 21.364,
+        "km_bis": 21.785,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lerchenbühl (Verzw)",
+        "bis": "Burgdorf Steinhof",
+        "km_von": 21.785,
+        "km_bis": 22.814,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Burgdorf Steinhof",
+        "bis": "Oberburg",
+        "km_von": 22.814,
+        "km_bis": 24.445,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oberburg",
+        "bis": "Hasle-Rüegsau",
+        "km_von": 24.445,
+        "km_bis": 27.813,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hasle-Rüegsau",
+        "bis": "Lützelflüh-Goldbach",
+        "km_von": 27.813,
+        "km_bis": 30.223,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lützelflüh-Goldbach",
+        "bis": "Ramsei",
+        "km_von": 30.223,
+        "km_bis": 32.574,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ramsei",
+        "bis": "Zollbrück",
+        "km_von": 32.574,
+        "km_bis": 36.552,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zollbrück",
+        "bis": "Neumühle",
+        "km_von": 36.552,
+        "km_bis": 37.856,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Neumühle",
+        "bis": "Obermatt",
+        "km_von": 37.856,
+        "km_bis": 39.651,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

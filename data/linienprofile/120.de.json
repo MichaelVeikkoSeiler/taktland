@@ -387,42 +387,68 @@
           "label": "Abschnitte",
           "value": 33,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: MOB",
           "value": 33,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "MOB"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 30,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 33,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Gleichstrom",
           "value": 33,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Gleichstrom"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -496,5 +522,339 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Montreux MOB",
+        "bis": "Montreux-Collège",
+        "km_von": 0.07,
+        "km_bis": 0.65,
+        "isb": "MOB",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Montreux-Collège",
+        "bis": "Vuarennes",
+        "km_von": 0.65,
+        "km_bis": 1,
+        "isb": "MOB",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Vuarennes",
+        "bis": "Belmont-sur-Montreux",
+        "km_von": 1,
+        "km_bis": 1.51,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Belmont-sur-Montreux",
+        "bis": "Châtelard VD",
+        "km_von": 1.51,
+        "km_bis": 2.15,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Châtelard VD",
+        "bis": "Planchamp",
+        "km_von": 2.15,
+        "km_bis": 2.66,
+        "isb": "MOB",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Planchamp",
+        "bis": "Fontanivent",
+        "km_von": 2.66,
+        "km_bis": 3.28,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Fontanivent",
+        "bis": "Chernex",
+        "km_von": 3.28,
+        "km_bis": 4.29,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Chernex",
+        "bis": "Sonzier",
+        "km_von": 4.29,
+        "km_bis": 5.47,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Sonzier",
+        "bis": "Chamby",
+        "km_von": 5.47,
+        "km_bis": 7.15,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Chamby",
+        "bis": "Sendy-Sollard",
+        "km_von": 7.15,
+        "km_bis": 9.2,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Sendy-Sollard",
+        "bis": "Les Avants",
+        "km_von": 9.2,
+        "km_bis": 10.85,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Les Avants",
+        "bis": "Jor",
+        "km_von": 10.85,
+        "km_bis": 12.63,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Jor",
+        "bis": "Les Cases",
+        "km_von": 12.63,
+        "km_bis": 15.19,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Les Cases",
+        "bis": "Allières",
+        "km_von": 15.19,
+        "km_bis": 16.97,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Allières",
+        "bis": "Les Sciernes",
+        "km_von": 16.97,
+        "km_bis": 20.43,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Les Sciernes",
+        "bis": "Montbovon",
+        "km_von": 20.43,
+        "km_bis": 22.14,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Montbovon",
+        "bis": "La Tine",
+        "km_von": 22.14,
+        "km_bis": 24.99,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "La Tine",
+        "bis": "Rossinière",
+        "km_von": 24.99,
+        "km_bis": 28.23,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Rossinière",
+        "bis": "La Chaudanne-Les Moulins",
+        "km_von": 28.23,
+        "km_bis": 29.38,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "La Chaudanne-Les Moulins",
+        "bis": "Château-d'Oex",
+        "km_von": 29.38,
+        "km_bis": 32.67,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Château-d'Oex",
+        "bis": "Château-d'Oex La Palaz",
+        "km_von": 32.67,
+        "km_bis": 33.48,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Château-d'Oex La Palaz",
+        "bis": "Les Granges-Gérignoz",
+        "km_von": 33.48,
+        "km_bis": 34.61,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Les Granges-Gérignoz",
+        "bis": "Les Combes",
+        "km_von": 34.61,
+        "km_bis": 36.13,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Les Combes",
+        "bis": "Flendruz",
+        "km_von": 36.13,
+        "km_bis": 37.41,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Flendruz",
+        "bis": "Rougemont",
+        "km_von": 37.41,
+        "km_bis": 39.32,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Rougemont",
+        "bis": "Saanen",
+        "km_von": 39.32,
+        "km_bis": 43.36,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Saanen",
+        "bis": "Gstaad",
+        "km_von": 43.36,
+        "km_bis": 45.76,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Gstaad",
+        "bis": "Gruben",
+        "km_von": 45.76,
+        "km_bis": 48.27,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Gruben",
+        "bis": "Schönried",
+        "km_von": 48.27,
+        "km_bis": 50.85,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Schönried",
+        "bis": "Saanenmöser",
+        "km_von": 50.85,
+        "km_bis": 53.06,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Saanenmöser",
+        "bis": "Oeschseite",
+        "km_von": 53.06,
+        "km_bis": 56.89,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Oeschseite",
+        "bis": "Halten",
+        "km_von": 56.89,
+        "km_bis": 59.53,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Halten",
+        "bis": "Zweisimmen [Gleis 3-6]",
+        "km_von": 59.53,
+        "km_bis": 62.43,
+        "isb": "MOB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      }
+    ]
+  }
 }

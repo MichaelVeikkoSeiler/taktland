@@ -196,35 +196,56 @@
           "label": "Abschnitte",
           "value": 9,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: MVR",
           "value": 9,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "MVR"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 9,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 9,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Gleichstrom",
           "value": 9,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Gleichstrom"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -298,5 +319,99 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Vevey [voie 6-7]",
+        "bis": "Gilamont",
+        "km_von": 0,
+        "km_bis": 1.21,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Gilamont",
+        "bis": "Clies",
+        "km_von": 1.21,
+        "km_bis": 1.83,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Clies",
+        "bis": "Hauteville",
+        "km_von": 1.83,
+        "km_bis": 2.46,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Hauteville",
+        "bis": "Château-d'Hauteville",
+        "km_von": 2.46,
+        "km_bis": 2.88,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Château-d'Hauteville",
+        "bis": "St-Légier-Gare",
+        "km_von": 2.88,
+        "km_bis": 3.6,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "St-Légier-Gare",
+        "bis": "St-Légier-Village",
+        "km_von": 3.6,
+        "km_bis": 4.02,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "St-Légier-Village",
+        "bis": "La Chiésaz",
+        "km_von": 4.02,
+        "km_bis": 4.51,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "La Chiésaz",
+        "bis": "Château-de-Blonay",
+        "km_von": 4.51,
+        "km_bis": 5.35,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Château-de-Blonay",
+        "bis": "Blonay",
+        "km_von": 5.35,
+        "km_bis": 5.72,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      }
+    ]
+  }
 }

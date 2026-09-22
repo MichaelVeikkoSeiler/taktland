@@ -225,35 +225,56 @@
           "label": "Abschnitte",
           "value": 10,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: THURBO",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "THURBO"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -730,6 +751,108 @@
         "km": 17.777,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
+      }
+    ],
+    "netz": [
+      {
+        "von": "Wil SG",
+        "bis": "Bronschhofen",
+        "km_von": -0.003,
+        "km_bis": 2.571,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bronschhofen",
+        "bis": "Bronschhofen AMP",
+        "km_von": 2.571,
+        "km_bis": 3.29,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bronschhofen AMP",
+        "bis": "Bettwiesen",
+        "km_von": 3.29,
+        "km_bis": 5.45,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bettwiesen",
+        "bis": "Tägerschen",
+        "km_von": 5.45,
+        "km_bis": 6.714,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Tägerschen",
+        "bis": "Tobel-Affeltrangen",
+        "km_von": 6.714,
+        "km_bis": 8.225,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Tobel-Affeltrangen",
+        "bis": "Märwil",
+        "km_von": 8.225,
+        "km_bis": 11.252,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Märwil",
+        "bis": "Oppikon",
+        "km_von": 11.252,
+        "km_bis": 14.054,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oppikon",
+        "bis": "Bussnang",
+        "km_von": 14.054,
+        "km_bis": 16.351,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bussnang",
+        "bis": "Weinfelden Süd",
+        "km_von": 16.351,
+        "km_bis": 17.638,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Weinfelden Süd",
+        "bis": "Weinfelden",
+        "km_von": 17.638,
+        "km_bis": 19.175,
+        "isb": "THURBO",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

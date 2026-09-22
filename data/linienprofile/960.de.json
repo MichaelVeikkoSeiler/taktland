@@ -253,35 +253,56 @@
           "label": "Abschnitte",
           "value": 16,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: RhB FR VR",
           "value": 16,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "RhB FR VR"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 16,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 16,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 16,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -355,5 +376,169 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Bever",
+        "bis": "La Punt Chamues-ch",
+        "km_von": 95.6,
+        "km_bis": 99.997,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "La Punt Chamues-ch",
+        "bis": "Madulain",
+        "km_von": 99.997,
+        "km_bis": 101.48,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Madulain",
+        "bis": "Zuoz",
+        "km_von": 101.48,
+        "km_bis": 103.806,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zuoz",
+        "bis": "S-chanf",
+        "km_von": 103.806,
+        "km_bis": 106,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "S-chanf",
+        "bis": "S-chanf Marathon",
+        "km_von": 106,
+        "km_bis": 108.842,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "S-chanf Marathon",
+        "bis": "Cinuos-chel-Brail",
+        "km_von": 108.842,
+        "km_bis": 110.28,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Cinuos-chel-Brail",
+        "bis": "Carolina",
+        "km_von": 110.28,
+        "km_bis": 115.185,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Carolina",
+        "bis": "Zernez",
+        "km_von": 115.185,
+        "km_bis": 120.365,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zernez",
+        "bis": "Susch",
+        "km_von": 120.365,
+        "km_bis": 126.829,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Susch",
+        "bis": "Sasslatsch",
+        "km_von": 126.829,
+        "km_bis": 127.804,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sasslatsch",
+        "bis": "Sagliains",
+        "km_von": 127.804,
+        "km_bis": 128.67,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sagliains",
+        "bis": "Lavin",
+        "km_von": 128.67,
+        "km_bis": 130.108,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lavin",
+        "bis": "Guarda",
+        "km_von": 130.108,
+        "km_bis": 133.28,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Guarda",
+        "bis": "Ardez",
+        "km_von": 133.28,
+        "km_bis": 137.383,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ardez",
+        "bis": "Ftan Baraigla",
+        "km_von": 137.383,
+        "km_bis": 142.674,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ftan Baraigla",
+        "bis": "Scuol-Tarasp",
+        "km_von": 142.674,
+        "km_bis": 145.009,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

@@ -746,16 +746,20 @@ def netz(f):
     facts = [
         {"label": "Datenherr der Linie", "value": x["bahn"], "source": "schienennetz",
          "factRef": "netz.bahn"},
-        {"label": "Abschnitte", "value": n, "source": "schienennetz", "factRef": "netz.abschnitte_erfasst"},
+        # führt zur Liste aller Abschnitte, wie «Erfasste Tunnel»
+        {"label": "Abschnitte", "value": n, "source": "schienennetz",
+         "factRef": "netz.abschnitte_erfasst", "liste": "netz"},
     ]
-    for liste, feld, wort in ((x["nach_isb"], "nach_isb", "Infrastruktur"),
-                              (gleise, "nach_gleisen", "Streckengleise"),
-                              (spur, "nach_spurweite", "Spurweite"),
-                              (strom, "nach_strom", "Strom")):
+    for liste, feld, wort, schluessel in ((x["nach_isb"], "nach_isb", "Infrastruktur", "isb"),
+                                          (gleise, "nach_gleisen", "Streckengleise", "gleise"),
+                                          (spur, "nach_spurweite", "Spurweite", "spurweite"),
+                                          (strom, "nach_strom", "Strom", "strom")):
         for j, g in enumerate(liste):
             facts.append({"label": f"{wort}: {g['wert']}", "value": g["abschnitte"],
                           "unit": "Abschnitte" if g["abschnitte"] != 1 else "Abschnitt",
-                          "source": "schienennetz", "factRef": f"netz.{feld}[{j}].abschnitte"})
+                          "source": "schienennetz", "factRef": f"netz.{feld}[{j}].abschnitte",
+                          # ein Tipp zeigt genau diese Abschnitte, etwa die einspurigen
+                          "liste": "netz", "filter": {"feld": schluessel, "wert": g["wert"]}})
     fr = []
     # Spurweite nur, wenn sie auf der ganzen Linie dieselbe ist
     if len(spur) == 1 and spur[0]["wert"] in ("1435 mm", "1000 mm", "800 mm"):

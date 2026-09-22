@@ -37,7 +37,7 @@ function seiteAusAdresse(): Seite {
   const bahnhof = /^#\/bahnhof\/(\d+)$/.exec(h)
   if (bahnhof) return { art: 'bahnhof', uic: Number(bahnhof[1]) }
   // #/linie/600/bruecken?kanton=Ticino: die Liste hinter einer Kachel
-  const objekte = /^#\/linie\/(\d+)\/(tunnel|bruecken|bahnuebergaenge)(?:\?(.*))?$/.exec(h)
+  const objekte = /^#\/linie\/(\d+)\/(tunnel|bruecken|bahnuebergaenge|netz)(?:\?(.*))?$/.exec(h)
   if (objekte) {
     return { art: 'objekte', nr: Number(objekte[1]), liste: objekte[2] as ListenArt,
              filter: filterAusAdresse(objekte[3]), eintrag: eintragAusAdresse(objekte[3]) }

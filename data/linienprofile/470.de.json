@@ -267,49 +267,80 @@
           "label": "Abschnitte",
           "value": 24,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: zb",
           "value": 24,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "zb"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 18,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 6,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 19,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Spurweite: 1000 mm und 1435 mm",
           "value": 5,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[1].abschnitte"
+          "factRef": "netz.nach_spurweite[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm und 1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 24,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -368,5 +399,249 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Luzern Brünig",
+        "bis": "Luzern Einfahrt zb",
+        "km_von": 0.126,
+        "km_bis": 0.768,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm und 1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Luzern Einfahrt zb",
+        "bis": "Luzern Allmend/Messe",
+        "km_von": 0.768,
+        "km_bis": 1.98,
+        "isb": "zb",
+        "gleise": 2,
+        "spurweite": "1000 mm und 1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Luzern Allmend/Messe",
+        "bis": "Kriens Mattenhof",
+        "km_von": 1.98,
+        "km_bis": 3.012,
+        "isb": "zb",
+        "gleise": 2,
+        "spurweite": "1000 mm und 1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kriens Mattenhof",
+        "bis": "Horw",
+        "km_von": 3.41,
+        "km_bis": 4.485,
+        "isb": "zb",
+        "gleise": 2,
+        "spurweite": "1000 mm und 1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Horw",
+        "bis": "Horw Süd (Spw)",
+        "km_von": 4.524,
+        "km_bis": 5.037,
+        "isb": "zb",
+        "gleise": 2,
+        "spurweite": "1000 mm und 1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Horw Süd (Spw)",
+        "bis": "Hergiswil Matt",
+        "km_von": 5.037,
+        "km_bis": 7.315,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hergiswil Matt",
+        "bis": "Hergiswil NW",
+        "km_von": 7.324,
+        "km_bis": 8.727,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hergiswil NW",
+        "bis": "Alpnachstad",
+        "km_von": 8.727,
+        "km_bis": 13.146,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Alpnachstad",
+        "bis": "Alpnach Dorf",
+        "km_von": 13.177,
+        "km_bis": 14.877,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Alpnach Dorf",
+        "bis": "Kerns-Kägiswil",
+        "km_von": 14.877,
+        "km_bis": 18.632,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kerns-Kägiswil",
+        "bis": "Sarnen Nord",
+        "km_von": 18.632,
+        "km_bis": 20.017,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sarnen Nord",
+        "bis": "Sarnen",
+        "km_von": 20.017,
+        "km_bis": 20.651,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sarnen",
+        "bis": "Sachseln",
+        "km_von": 20.637,
+        "km_bis": 23.437,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sachseln",
+        "bis": "Ewil Maxon",
+        "km_von": 23.437,
+        "km_bis": 25.39,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ewil Maxon",
+        "bis": "Giswil Grossmatt",
+        "km_von": 25.39,
+        "km_bis": 27.622,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Giswil Grossmatt",
+        "bis": "Giswil",
+        "km_von": 27.622,
+        "km_bis": 29.222,
+        "isb": "zb",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Giswil",
+        "bis": "Kaiserstuhl OW",
+        "km_von": 29.27,
+        "km_bis": 32.165,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kaiserstuhl OW",
+        "bis": "Lungern",
+        "km_von": 32.165,
+        "km_bis": 35.805,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lungern",
+        "bis": "Chäppeli",
+        "km_von": 35.805,
+        "km_bis": 37.778,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Chäppeli",
+        "bis": "Brünig-Hasliberg",
+        "km_von": 37.778,
+        "km_bis": 40.071,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Brünig-Hasliberg",
+        "bis": "Brunnenfluh",
+        "km_von": 40.076,
+        "km_bis": 42.14,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Brunnenfluh",
+        "bis": "Meiringen West",
+        "km_von": 42.14,
+        "km_bis": 45.034,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Meiringen West",
+        "bis": "Meiringen",
+        "km_von": 45.034,
+        "km_bis": 45.471,
+        "isb": "zb",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Meiringen",
+        "bis": "Meiringen Ost",
+        "km_von": 45.471,
+        "km_bis": 45.661,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

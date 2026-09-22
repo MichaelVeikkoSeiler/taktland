@@ -205,35 +205,56 @@
           "label": "Abschnitte",
           "value": 18,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: MGB",
           "value": 18,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "MGB"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 18,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 18,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 18,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -400,6 +421,188 @@
         "km": 8.807,
         "baueinheiten": 4,
         "kanton": "Valais"
+      }
+    ],
+    "netz": [
+      {
+        "von": "Brig Bahnhofplatz",
+        "bis": "Glisergrund",
+        "km_von": 0,
+        "km_bis": 1.3,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Glisergrund",
+        "bis": "Gamsensand",
+        "km_von": 1.3,
+        "km_bis": 3.94,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Gamsensand",
+        "bis": "Eyholz",
+        "km_von": 3.94,
+        "km_bis": 6.16,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Eyholz",
+        "bis": "Visp MGB-bvz",
+        "km_von": 6.16,
+        "km_bis": 8.9,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Visp MGB-bvz",
+        "bis": "Vispesand",
+        "km_von": 8.9,
+        "km_bis": 9.66,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Vispesand",
+        "bis": "Ackersand",
+        "km_von": 9.66,
+        "km_bis": 15.07,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ackersand",
+        "bis": "Stalden-Saas",
+        "km_von": 15.07,
+        "km_bis": 16.26,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Stalden-Saas",
+        "bis": "Kalpetran",
+        "km_von": 16.26,
+        "km_bis": 19.77,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kalpetran",
+        "bis": "Kipferwald",
+        "km_von": 19.77,
+        "km_bis": 22.02,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kipferwald",
+        "bis": "St. Niklaus VS",
+        "km_von": 22.02,
+        "km_bis": 24.97,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "St. Niklaus VS",
+        "bis": "Mattsand",
+        "km_von": 24.97,
+        "km_bis": 29.55,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Mattsand",
+        "bis": "Herbriggen",
+        "km_von": 29.55,
+        "km_bis": 30.57,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Herbriggen",
+        "bis": "Randa",
+        "km_von": 30.57,
+        "km_bis": 34.59,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Randa",
+        "bis": "Täsch Monte Rosa",
+        "km_von": 34.59,
+        "km_bis": 37.52,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Täsch Monte Rosa",
+        "bis": "Täsch",
+        "km_von": 37.52,
+        "km_bis": 38.37,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Täsch",
+        "bis": "Täschsand",
+        "km_von": 38.37,
+        "km_bis": 39.7,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Täschsand",
+        "bis": "Kalter Boden",
+        "km_von": 39.7,
+        "km_bis": 41.01,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kalter Boden",
+        "bis": "Zermatt",
+        "km_von": 41.01,
+        "km_bis": 43.98,
+        "isb": "MGB",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

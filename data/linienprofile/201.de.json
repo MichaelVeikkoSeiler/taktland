@@ -224,42 +224,68 @@
           "label": "Abschnitte",
           "value": 11,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: TRAVYS",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "TRAVYS"
+          }
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[1].abschnitte"
+          "factRef": "netz.nach_isb[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -662,6 +688,118 @@
         "km": 11.342,
         "sicherungsart": "Schrankenanlage",
         "gleise": 2
+      }
+    ],
+    "netz": [
+      {
+        "von": "Le Day",
+        "bis": "Le Pont",
+        "km_von": 3.026,
+        "km_bis": 11.628,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Le Pont",
+        "bis": "Les Charbonnières",
+        "km_von": 11.292,
+        "km_bis": 12.194,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Les Charbonnières",
+        "bis": "Le Séchey",
+        "km_von": 12.194,
+        "km_bis": 13.264,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Le Séchey",
+        "bis": "Le Lieu",
+        "km_von": 13.264,
+        "km_bis": 15.454,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Le Lieu",
+        "bis": "Les Esserts-de-Rive",
+        "km_von": 15.454,
+        "km_bis": 17.9,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Les Esserts-de-Rive",
+        "bis": "Le Rocheray",
+        "km_von": 17.9,
+        "km_bis": 19.053,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Le Rocheray",
+        "bis": "Le Solliat-La Golisse",
+        "km_von": 19.053,
+        "km_bis": 20.497,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Le Solliat-La Golisse",
+        "bis": "Le Sentier-L'Orient",
+        "km_von": 20.497,
+        "km_bis": 21.646,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Le Sentier-L'Orient",
+        "bis": "Chez-le-Maître-Ecoles",
+        "km_von": 21.646,
+        "km_bis": 22.796,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Chez-le-Maître-Ecoles",
+        "bis": "Chez-le-Maître",
+        "km_von": 22.796,
+        "km_bis": 23.004,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Chez-le-Maître",
+        "bis": "Le Brassus",
+        "km_von": 23.004,
+        "km_bis": 24.55,
+        "isb": "TRAVYS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

@@ -195,35 +195,56 @@
           "label": "Abschnitte",
           "value": 10,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: zb",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "zb"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -297,5 +318,109 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Meiringen West",
+        "bis": "Brienzwiler",
+        "km_von": 45.905,
+        "km_bis": 53.183,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Brienzwiler",
+        "bis": "Brienzwiler West (Spw)",
+        "km_von": 53.183,
+        "km_bis": 54.08,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Brienzwiler West (Spw)",
+        "bis": "Brienz",
+        "km_von": 54.08,
+        "km_bis": 57.76,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Brienz",
+        "bis": "Brienz West",
+        "km_von": 57.771,
+        "km_bis": 59.296,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Brienz West",
+        "bis": "Ebligen",
+        "km_von": 59.296,
+        "km_bis": 61.837,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ebligen",
+        "bis": "Oberried am Brienzersee",
+        "km_von": 61.837,
+        "km_bis": 65.017,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oberried am Brienzersee",
+        "bis": "Niederried",
+        "km_von": 65.017,
+        "km_bis": 68.308,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Niederried",
+        "bis": "Ringgenberg",
+        "km_von": 68.308,
+        "km_bis": 71.002,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ringgenberg",
+        "bis": "Interlaken Ost [Gleis 3-4]",
+        "km_von": 71.002,
+        "km_bis": 74.025,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Interlaken Ost [Gleis 3-4]",
+        "bis": "Interlaken Brünig (Gleisende)",
+        "km_von": 74.025,
+        "km_bis": 74.16,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

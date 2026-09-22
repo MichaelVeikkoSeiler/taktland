@@ -276,35 +276,56 @@
           "label": "Abschnitte",
           "value": 21,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: RhB FR VR",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "RhB FR VR"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -378,5 +399,219 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Reichenau Farsch (Abzw)",
+        "bis": "Bonaduz",
+        "km_von": 24.163,
+        "km_bis": 27.447,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bonaduz",
+        "bis": "Rhäzüns",
+        "km_von": 27.447,
+        "km_bis": 28.691,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rhäzüns",
+        "bis": "Rothenbrunnen",
+        "km_von": 28.691,
+        "km_bis": 32.815,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rothenbrunnen",
+        "bis": "Rodels-Realta",
+        "km_von": 32.815,
+        "km_bis": 36.596,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rodels-Realta",
+        "bis": "Cazis",
+        "km_von": 36.596,
+        "km_bis": 38.494,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Cazis",
+        "bis": "Thusis",
+        "km_von": 38.494,
+        "km_bis": 41.262,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Thusis",
+        "bis": "Sils im Domleschg",
+        "km_von": 41.262,
+        "km_bis": 43.084,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sils im Domleschg",
+        "bis": "Solis",
+        "km_von": 43.084,
+        "km_bis": 49.336,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Solis",
+        "bis": "Tiefencastel",
+        "km_von": 49.336,
+        "km_bis": 53.952,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Tiefencastel",
+        "bis": "Surava",
+        "km_von": 53.952,
+        "km_bis": 58.131,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Surava",
+        "bis": "Alvaneu",
+        "km_von": 58.131,
+        "km_bis": 60.787,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Alvaneu",
+        "bis": "Filisur",
+        "km_von": 60.787,
+        "km_bis": 64.359,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Filisur",
+        "bis": "Stugl/Stuls",
+        "km_von": 64.359,
+        "km_bis": 70.193,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Stugl/Stuls",
+        "bis": "Bergün/Bravuogn",
+        "km_von": 70.193,
+        "km_bis": 73.138,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bergün/Bravuogn",
+        "bis": "Muot",
+        "km_von": 73.138,
+        "km_bis": 79.199,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Muot",
+        "bis": "Preda",
+        "km_von": 79.199,
+        "km_bis": 85.717,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Preda",
+        "bis": "Spinas",
+        "km_von": 85.717,
+        "km_bis": 91.804,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Spinas",
+        "bis": "Bever",
+        "km_von": 91.804,
+        "km_bis": 95.599,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bever",
+        "bis": "Samedan",
+        "km_von": 95.599,
+        "km_bis": 97.71,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Samedan",
+        "bis": "Celerina",
+        "km_von": 97.71,
+        "km_bis": 100.321,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Celerina",
+        "bis": "St. Moritz",
+        "km_von": 100.321,
+        "km_bis": 102.936,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

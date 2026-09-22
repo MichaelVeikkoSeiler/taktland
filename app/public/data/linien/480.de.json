@@ -205,35 +205,56 @@
           "label": "Abschnitte",
           "value": 12,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: zb",
           "value": 12,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "zb"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 12,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 12,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 12,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -307,5 +328,129 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Hergiswil NW",
+        "bis": "Stansstad",
+        "km_von": 0,
+        "km_bis": 2.699,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Stansstad",
+        "bis": "Stans",
+        "km_von": 2.699,
+        "km_bis": 5.828,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Stans",
+        "bis": "Dallenwil",
+        "km_von": 5.828,
+        "km_bis": 9.5,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Dallenwil",
+        "bis": "Niederrickenbach Station",
+        "km_von": 9.5,
+        "km_bis": 10.215,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Niederrickenbach Station",
+        "bis": "Wolfenschiessen",
+        "km_von": 10.215,
+        "km_bis": 12.524,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Wolfenschiessen",
+        "bis": "Dörfli",
+        "km_von": 12.525,
+        "km_bis": 13.785,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Dörfli",
+        "bis": "Grafenort",
+        "km_von": 13.785,
+        "km_bis": 17.036,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Grafenort",
+        "bis": "Grafenort Ausweiche",
+        "km_von": 17.036,
+        "km_bis": 17.23,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Grafenort Ausweiche",
+        "bis": "Fangboden",
+        "km_von": 17.23,
+        "km_bis": 19.897,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Fangboden",
+        "bis": "Brunni",
+        "km_von": 19.897,
+        "km_bis": 21.877,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Brunni",
+        "bis": "Engelberg Boden",
+        "km_von": 21.877,
+        "km_bis": 22.8,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Engelberg Boden",
+        "bis": "Engelberg",
+        "km_von": 23.076,
+        "km_bis": 24.74,
+        "isb": "zb",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

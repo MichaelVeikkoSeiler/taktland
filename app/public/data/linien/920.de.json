@@ -349,49 +349,80 @@
           "label": "Abschnitte",
           "value": 26,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: RhB FR VR",
           "value": 26,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "RhB FR VR"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 20,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 6,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 23,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Spurweite: 1000 mm und 1435 mm",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[1].abschnitte"
+          "factRef": "netz.nach_spurweite[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm und 1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 26,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -501,6 +532,268 @@
         "km": 11.293,
         "baueinheiten": 1,
         "kanton": "Graubünden"
+      }
+    ],
+    "netz": [
+      {
+        "von": "Landquart [Gleis 5-8]",
+        "bis": "Landquart Ried",
+        "km_von": 0,
+        "km_bis": 1.289,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Landquart Ried",
+        "bis": "Igis",
+        "km_von": 1.289,
+        "km_bis": 2.219,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Igis",
+        "bis": "Zizers",
+        "km_von": 2.219,
+        "km_bis": 3.99,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zizers",
+        "bis": "Untervaz-Trimmis",
+        "km_von": 3.99,
+        "km_bis": 5.818,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Untervaz-Trimmis",
+        "bis": "Trimmis",
+        "km_von": 5.818,
+        "km_bis": 7.168,
+        "isb": "RhB FR VR",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Trimmis",
+        "bis": "Haldenstein",
+        "km_von": 7.168,
+        "km_bis": 10.961,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Haldenstein",
+        "bis": "Chur Wiesental",
+        "km_von": 10.961,
+        "km_bis": 12.8,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Chur Wiesental",
+        "bis": "Chur [Gleis 10-14]",
+        "km_von": 12.8,
+        "km_bis": 13.871,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Chur [Gleis 10-14]",
+        "bis": "Chur West",
+        "km_von": 13.871,
+        "km_bis": 15.165,
+        "isb": "RhB FR VR",
+        "gleise": 2,
+        "spurweite": "1000 mm und 1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Chur West",
+        "bis": "Felsberg",
+        "km_von": 15.165,
+        "km_bis": 17.723,
+        "isb": "RhB FR VR",
+        "gleise": 2,
+        "spurweite": "1000 mm und 1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Felsberg",
+        "bis": "Domat/Ems",
+        "km_von": 17.723,
+        "km_bis": 20.155,
+        "isb": "RhB FR VR",
+        "gleise": 2,
+        "spurweite": "1000 mm und 1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Domat/Ems",
+        "bis": "Ems Werk",
+        "km_von": 20.155,
+        "km_bis": 22.019,
+        "isb": "RhB FR VR",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ems Werk",
+        "bis": "Reichenau-Tamins",
+        "km_von": 22.019,
+        "km_bis": 23.571,
+        "isb": "RhB FR VR",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Reichenau-Tamins",
+        "bis": "Reichenau Farsch (Abzw)",
+        "km_von": 23.571,
+        "km_bis": 24.2,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Reichenau Farsch (Abzw)",
+        "bis": "Trin",
+        "km_von": 24.2,
+        "km_bis": 28.262,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Trin",
+        "bis": "Versam-Safien",
+        "km_von": 28.262,
+        "km_bis": 32.734,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Versam-Safien",
+        "bis": "Valendas-Sagogn",
+        "km_von": 32.734,
+        "km_bis": 36.859,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Valendas-Sagogn",
+        "bis": "Castrisch",
+        "km_von": 36.859,
+        "km_bis": 40.741,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Castrisch",
+        "bis": "Ilanz",
+        "km_von": 40.741,
+        "km_bis": 42.91,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ilanz",
+        "bis": "Rueun",
+        "km_von": 42.91,
+        "km_bis": 47.958,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rueun",
+        "bis": "Waltensburg/Vuorz",
+        "km_von": 47.958,
+        "km_bis": 50.073,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Waltensburg/Vuorz",
+        "bis": "Tavanasa-Breil/Brigels",
+        "km_von": 50.073,
+        "km_bis": 54.868,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Tavanasa-Breil/Brigels",
+        "bis": "Trun",
+        "km_von": 54.868,
+        "km_bis": 60.821,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Trun",
+        "bis": "Rabius-Surrein",
+        "km_von": 60.821,
+        "km_bis": 64.003,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rabius-Surrein",
+        "bis": "Sumvitg-Cumpadials",
+        "km_von": 64.003,
+        "km_bis": 66.255,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sumvitg-Cumpadials",
+        "bis": "Disentis/Mustér",
+        "km_von": 66.255,
+        "km_bis": 72.878,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

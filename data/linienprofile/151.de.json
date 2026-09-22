@@ -199,42 +199,68 @@
           "label": "Abschnitte",
           "value": 10,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 2,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 50 Hz",
           "value": 10,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 50 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -704,6 +730,108 @@
         "km": 72.85,
         "sicherungsart": "Schrankenanlage",
         "gleise": 2
+      }
+    ],
+    "netz": [
+      {
+        "von": "St-Jean (bif)",
+        "bis": "Furet (bif)",
+        "km_von": 61.59,
+        "km_bis": 62.593,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Furet (bif)",
+        "bis": "Châtelaine (bif)",
+        "km_von": 62.593,
+        "km_bis": 63.981,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Châtelaine (bif)",
+        "bis": "Vernier",
+        "km_von": 63.981,
+        "km_bis": 64.775,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Vernier",
+        "bis": "Vernier-Meyrin Cargo",
+        "km_von": 64.775,
+        "km_bis": 65.433,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Vernier-Meyrin Cargo",
+        "bis": "Meyrin",
+        "km_von": 65.433,
+        "km_bis": 66.114,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Meyrin",
+        "bis": "Zimeysa",
+        "km_von": 66.114,
+        "km_bis": 66.965,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Zimeysa",
+        "bis": "Satigny",
+        "km_von": 66.965,
+        "km_bis": 69.365,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Satigny",
+        "bis": "Russin",
+        "km_von": 69.365,
+        "km_bis": 72.752,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "Russin",
+        "bis": "La Plaine",
+        "km_von": 72.752,
+        "km_bis": 74.778,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
+      },
+      {
+        "von": "La Plaine",
+        "bis": "La Plaine-Frontière",
+        "km_von": 74.778,
+        "km_bis": 75.559,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 50 Hz"
       }
     ]
   }

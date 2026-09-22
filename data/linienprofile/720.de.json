@@ -326,49 +326,80 @@
           "label": "Abschnitte",
           "value": 29,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 29,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 25,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Streckengleise: 3",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 3
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[2].abschnitte"
+          "factRef": "netz.nach_gleisen[2].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 29,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 29,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -1533,6 +1564,298 @@
         "km": 56.636,
         "sicherungsart": "Schrankenanlage",
         "gleise": 4
+      }
+    ],
+    "netz": [
+      {
+        "von": "Zürich Langstrasse",
+        "bis": "Zürich Aussersihl (Abzw)",
+        "km_von": 1.213,
+        "km_bis": 1.963,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zürich Aussersihl (Abzw)",
+        "bis": "Zürich Lochergut (Abzw)",
+        "km_von": 1.963,
+        "km_bis": 2.227,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zürich Lochergut (Abzw)",
+        "bis": "Zürich Wiedikon",
+        "km_von": 2.227,
+        "km_bis": 2.934,
+        "isb": "SBB CFF FFS",
+        "gleise": 3,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zürich Wiedikon",
+        "bis": "Zürich Enge",
+        "km_von": 2.934,
+        "km_bis": 3.932,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zürich Enge",
+        "bis": "Zürich Wollishofen",
+        "km_von": 3.932,
+        "km_bis": 5.806,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Zürich Wollishofen",
+        "bis": "Kilchberg ZH",
+        "km_von": 5.806,
+        "km_bis": 8.636,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Kilchberg ZH",
+        "bis": "Rüschlikon",
+        "km_von": 8.636,
+        "km_bis": 10.641,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rüschlikon",
+        "bis": "Thalwil Nord (Abzw)",
+        "km_von": 10.641,
+        "km_bis": 11.664,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Thalwil Nord (Abzw)",
+        "bis": "Thalwil",
+        "km_von": 11.664,
+        "km_bis": 12.093,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Thalwil",
+        "bis": "Thalwil Süd (Abzw)",
+        "km_von": 12.093,
+        "km_bis": 12.978,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Thalwil Süd (Abzw)",
+        "bis": "Oberrieden",
+        "km_von": 12.978,
+        "km_bis": 14.227,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oberrieden",
+        "bis": "Horgen",
+        "km_von": 14.227,
+        "km_bis": 16.786,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Horgen",
+        "bis": "Meilibach (Abzw)",
+        "km_von": 16.786,
+        "km_bis": 19.439,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Meilibach (Abzw)",
+        "bis": "Au ZH",
+        "km_von": 19.439,
+        "km_bis": 20.726,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Au ZH",
+        "bis": "Wädenswil",
+        "km_von": 20.726,
+        "km_bis": 23.974,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Wädenswil",
+        "bis": "Richterswil",
+        "km_von": 23.974,
+        "km_bis": 27.46,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Richterswil",
+        "bis": "Hafen Bäch (Spw)",
+        "km_von": 27.46,
+        "km_bis": 28.727,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hafen Bäch (Spw)",
+        "bis": "Bäch SZ",
+        "km_von": 28.727,
+        "km_bis": 29.374,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bäch SZ",
+        "bis": "Freienbach SBB",
+        "km_von": 29.374,
+        "km_bis": 31.709,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Freienbach SBB",
+        "bis": "Pfäffikon SZ",
+        "km_von": 31.709,
+        "km_bis": 33.439,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Pfäffikon SZ",
+        "bis": "Pfäffikon SZ Ost (Abzw)",
+        "km_von": 33.439,
+        "km_bis": 34.011,
+        "isb": "SBB CFF FFS",
+        "gleise": 3,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Pfäffikon SZ Ost (Abzw)",
+        "bis": "Altendorf",
+        "km_von": 34.011,
+        "km_bis": 37.179,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Altendorf",
+        "bis": "Lachen SZ",
+        "km_von": 37.179,
+        "km_bis": 39.579,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lachen SZ",
+        "bis": "Siebnen-Wangen",
+        "km_von": 39.579,
+        "km_bis": 43.484,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Siebnen-Wangen",
+        "bis": "Schübelbach-Buttikon",
+        "km_von": 43.484,
+        "km_bis": 46.57,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Schübelbach-Buttikon",
+        "bis": "Reichenburg",
+        "km_von": 46.57,
+        "km_bis": 49.941,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Reichenburg",
+        "bis": "Bilten",
+        "km_von": 49.941,
+        "km_bis": 54.23,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bilten",
+        "bis": "Ziegelbrücke West (Abzw)",
+        "km_von": 54.23,
+        "km_bis": 56.671,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ziegelbrücke West (Abzw)",
+        "bis": "Ziegelbrücke",
+        "km_von": 56.671,
+        "km_bis": 57.146,
+        "isb": "SBB CFF FFS",
+        "gleise": 3,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

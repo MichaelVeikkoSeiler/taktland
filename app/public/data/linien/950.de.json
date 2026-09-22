@@ -300,35 +300,56 @@
           "label": "Abschnitte",
           "value": 21,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: RhB FR VR",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "RhB FR VR"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Gleichstrom",
           "value": 21,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Gleichstrom"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -402,5 +423,219 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "St. Moritz",
+        "bis": "Celerina Staz",
+        "km_von": 0,
+        "km_bis": 2.028,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Celerina Staz",
+        "bis": "Punt Muragl Staz",
+        "km_von": 2.028,
+        "km_bis": 3.509,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Punt Muragl Staz",
+        "bis": "Pontresina",
+        "km_von": 3.509,
+        "km_bis": 5.788,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Pontresina",
+        "bis": "Surovas",
+        "km_von": 5.788,
+        "km_bis": 7.257,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Surovas",
+        "bis": "Morteratsch",
+        "km_von": 7.257,
+        "km_bis": 12.165,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Morteratsch",
+        "bis": "Bernina Suot",
+        "km_von": 12.165,
+        "km_bis": 15.716,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Bernina Suot",
+        "bis": "Bernina Diavolezza",
+        "km_von": 15.716,
+        "km_bis": 16.8,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Bernina Diavolezza",
+        "bis": "Bernina Lagalb",
+        "km_von": 16.8,
+        "km_bis": 17.866,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Bernina Lagalb",
+        "bis": "Ospizio Bernina",
+        "km_von": 17.866,
+        "km_bis": 22.324,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Ospizio Bernina",
+        "bis": "Alp Grüm",
+        "km_von": 22.324,
+        "km_bis": 27.086,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Alp Grüm",
+        "bis": "Stablini",
+        "km_von": 27.086,
+        "km_bis": 29.505,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Stablini",
+        "bis": "Cavaglia",
+        "km_von": 29.505,
+        "km_bis": 33.074,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Cavaglia",
+        "bis": "Cadera",
+        "km_von": 33.074,
+        "km_bis": 38.179,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Cadera",
+        "bis": "Poschiavo",
+        "km_von": 38.179,
+        "km_bis": 43.618,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Poschiavo",
+        "bis": "Li Curt",
+        "km_von": 43.618,
+        "km_bis": 45.3,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Li Curt",
+        "bis": "Le Prese",
+        "km_von": 45.3,
+        "km_bis": 47.957,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Le Prese",
+        "bis": "Miralago",
+        "km_von": 47.957,
+        "km_bis": 50.786,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Miralago",
+        "bis": "Brusio",
+        "km_von": 50.786,
+        "km_bis": 53.875,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Brusio",
+        "bis": "Campascio",
+        "km_von": 53.875,
+        "km_bis": 56.162,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Campascio",
+        "bis": "Campocologno",
+        "km_von": 56.162,
+        "km_bis": 57.649,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Campocologno",
+        "bis": "Tirano",
+        "km_von": 57.649,
+        "km_bis": 60.688,
+        "isb": "RhB FR VR",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      }
+    ]
+  }
 }

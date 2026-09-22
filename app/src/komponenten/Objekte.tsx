@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { linienProfilLaden } from '../daten'
 import type {
-  BrueckenEintrag, ListenArt, LinienProfil, TunnelEintrag, UebergangEintrag,
+  BrueckenEintrag, ListenArt, LinienProfil, NetzEintrag, TunnelEintrag, UebergangEintrag,
 } from '../typen'
 import { type Filter, listenAdresse } from '../listen'
 import { ObjektKarte } from './Karte'
@@ -13,9 +13,13 @@ const TITEL: Record<ListenArt, { mehrzahl: string; einzahl: string; quelle: stri
   tunnel: { mehrzahl: 'Tunnel', einzahl: 'erfasster Tunnel', quelle: 'tunnel' },
   bruecken: { mehrzahl: 'Brücken', einzahl: 'erfasste Brücke', quelle: 'brucken' },
   bahnuebergaenge: { mehrzahl: 'Bahnübergänge', einzahl: 'erfasster Bahnübergang', quelle: 'bahnubergang' },
+  netz: { mehrzahl: 'Abschnitte', einzahl: 'erfasster Abschnitt', quelle: 'schienennetz' },
 }
 
-const FELDNAME: Record<string, string> = { kanton: 'Kanton', sicherungsart: 'Sicherungsart' }
+const FELDNAME: Record<string, string> = {
+  kanton: 'Kanton', sicherungsart: 'Sicherungsart', gleise: 'Streckengleisen',
+  spurweite: 'Spurweite', strom: 'Strom', isb: 'Infrastruktur',
+}
 
 /** So, wie die Zahl in den Daten steht, ohne Rundung */
 export function genau(n: number) {
@@ -50,7 +54,10 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
   const alle = (profil?.listen?.[art] ?? []) as unknown as Array<Record<string, unknown>>
   // mit ihrer Stelle in der ganzen Liste, auch wenn ein Filter gilt
   const eintraege = alle.map((e, stelle) => ({ e, stelle }))
-    .filter(({ e }) => !filter || (e[filter.feld] ?? null) === filter.wert)
+    // als Text vergleichen: In der Adresse steht «?gleise=1», in den Daten die Zahl 1
+    .filter(({ e }) => !filter
+      || (e[filter.feld] === null || e[filter.feld] === undefined
+        ? filter.wert === null : String(e[filter.feld]) === filter.wert))
 
   /** Ein Tipp wählt den Eintrag: oben im Kasten und auf der Karte markiert.
    *  replace: Die Auswahl füllt den Verlauf nicht, «Zurück» führt zur Linie. */
@@ -62,11 +69,25 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
   // Seite zu ihm in die Liste, und Bild und Titel waren weg (Simplontunnel:
   // 1000 Pixel nach unten); das wirkte wie ein Sprung.
   const gewaehlt = markiert !== null && !filter ? alle[markiert] : undefined
+  // Auf der Karte: Tunnel und Brücken immer alle, damit man sie im Netz sieht.
+  // Abschnitte nur die der gezeigten Liste, sonst wäre die ganze Linie rot.
+  const karteObjekte = (art === 'netz'
+    ? (filter ? eintraege : markiert !== null && gewaehlt
+        ? [{ e: gewaehlt, stelle: markiert }] : [])
+    : alle.map((e, stelle) => ({ e, stelle })))
+    .map(({ e, stelle }) => ({
+      kennung: `${nr}:${stelle}`,
+      name: art === 'netz' ? `${e.von as string} – ${e.bis as string}` : String(e.name),
+      km: typeof e.km === 'number' ? e.km : typeof e.km_von === 'number' ? e.km_von : null,
+      bis: typeof e.km_bis === 'number' ? e.km_bis : null,
+    }))
+
   const zeile = (e: Record<string, unknown>) => (
     <>
       {art === 'tunnel' && <Tunnel t={e as unknown as TunnelEintrag} />}
       {art === 'bruecken' && <Bruecke b={e as unknown as BrueckenEintrag} />}
       {art === 'bahnuebergaenge' && <Uebergang u={e as unknown as UebergangEintrag} />}
+      {art === 'netz' && <Abschnitt a={e as unknown as NetzEintrag} />}
     </>
   )
 
@@ -97,10 +118,9 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
         </div>
       )}
 
-      {profil && (art === 'tunnel' || art === 'bruecken') && (
+      {profil && art !== 'bahnuebergaenge' && (
         <ObjektKarte art={art} linie={nr} markiert={gewaehlt ? `${nr}:${markiert}` : null}
-                     objekte={alle.map((e, i) => ({ kennung: `${nr}:${i}`, name: String(e.name),
-                                                    km: typeof e.km === 'number' ? e.km : null }))}
+                     objekte={karteObjekte}
                      waehlen={(kennung) => waehlen(Number(kennung.split(':')[1]))} />
       )}
 
@@ -110,7 +130,9 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
             {eintraege.length} {eintraege.length === 1 ? t.einzahl : `erfasste ${t.mehrzahl}`}
             {filter && (filter.wert === null
               ? ` ohne eingetragene ${FELDNAME[filter.feld] ?? filter.feld}`
-              : ` mit ${FELDNAME[filter.feld] ?? filter.feld} «${filter.wert}»`)}
+              : filter.feld === 'gleise'
+                ? ` mit ${filter.wert} ${filter.wert === '1' ? 'Streckengleis' : 'Streckengleisen'}`
+                : ` mit ${FELDNAME[filter.feld] ?? filter.feld} «${filter.wert}»`)}
             {eintraege.length > 1 ? ', nach ihrem Kilometer auf der Linie geordnet.' : '.'}
           </p>
           {filter && (
@@ -194,6 +216,23 @@ function Bruecke({ b }: { b: BrueckenEintrag }) {
       b.baueinheiten === null ? 'Baueinheiten: keine Angabe'
         : `${b.baueinheiten} ${b.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`,
     ]} />
+  )
+}
+
+/** Ein Abschnitt zwischen zwei Betriebspunkten, aus dem Schienennetz des BAV */
+function Abschnitt({ a }: { a: NetzEintrag }) {
+  return (
+    <Zeile
+      name={`${a.von} – ${a.bis}`}
+      teile={[
+        a.km_von === null || a.km_bis === null
+          ? 'km: keine Angabe' : `km ${genau(a.km_von)} bis ${genau(a.km_bis)}`,
+        `${a.gleise} ${a.gleise === 1 ? 'Streckengleis' : 'Streckengleise'}`,
+        `Spurweite ${a.spurweite}`,
+        a.strom,
+        `Infrastruktur «${a.isb}»`,
+      ]}
+    />
   )
 }
 

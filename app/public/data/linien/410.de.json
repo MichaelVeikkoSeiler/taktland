@@ -342,56 +342,92 @@
           "label": "Abschnitte",
           "value": 29,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: SBB CFF FFS",
           "value": 29,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "SBB CFF FFS"
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 26,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Streckengleise: 3",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[2].abschnitte"
+          "factRef": "netz.nach_gleisen[2].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 3
+          }
         },
         {
           "label": "Streckengleise: 4",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[3].abschnitte"
+          "factRef": "netz.nach_gleisen[3].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 4
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 29,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 29,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -1508,6 +1544,298 @@
         "km": 98.173,
         "sicherungsart": "unbewacht",
         "gleise": 2
+      }
+    ],
+    "netz": [
+      {
+        "von": "Olten",
+        "bis": "Olten Hammer",
+        "km_von": 39.292,
+        "km_bis": 40.627,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Olten Hammer",
+        "bis": "Wangen bei Olten",
+        "km_von": 40.627,
+        "km_bis": 43.042,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Wangen bei Olten",
+        "bis": "Hägendorf",
+        "km_von": 43.042,
+        "km_bis": 45.303,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hägendorf",
+        "bis": "Härkingen Post",
+        "km_von": 45.303,
+        "km_bis": 47.448,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Härkingen Post",
+        "bis": "Egerkingen",
+        "km_von": 47.448,
+        "km_bis": 49.101,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Egerkingen",
+        "bis": "Oberbuchsiten",
+        "km_von": 49.101,
+        "km_bis": 51.422,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oberbuchsiten",
+        "bis": "Oensingen",
+        "km_von": 51.422,
+        "km_bis": 56.627,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oensingen",
+        "bis": "Niederbipp",
+        "km_von": 56.627,
+        "km_bis": 58.611,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Niederbipp",
+        "bis": "Wangen an der Aare",
+        "km_von": 58.611,
+        "km_bis": 64.3,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Wangen an der Aare",
+        "bis": "Deitingen",
+        "km_von": 64.3,
+        "km_bis": 67.598,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Deitingen",
+        "bis": "Luterbach-Attisholz",
+        "km_von": 67.598,
+        "km_bis": 70.35,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Luterbach-Attisholz",
+        "bis": "Solothurn",
+        "km_von": 70.35,
+        "km_bis": 73.819,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Solothurn",
+        "bis": "Solothurn West",
+        "km_von": 73.819,
+        "km_bis": 74.783,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Solothurn West",
+        "bis": "Solothurn West (Abzw)",
+        "km_von": 74.783,
+        "km_bis": 75.008,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Solothurn West (Abzw)",
+        "bis": "Solothurn Allmend",
+        "km_von": 75.008,
+        "km_bis": 75.652,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Solothurn Allmend",
+        "bis": "Bellach",
+        "km_von": 75.652,
+        "km_bis": 76.682,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bellach",
+        "bis": "Bellach Industrie",
+        "km_von": 76.682,
+        "km_bis": 77.629,
+        "isb": "SBB CFF FFS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bellach Industrie",
+        "bis": "Selzach",
+        "km_von": 77.629,
+        "km_bis": 80.692,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Selzach",
+        "bis": "Bettlach",
+        "km_von": 80.692,
+        "km_bis": 82.925,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bettlach",
+        "bis": "Grenchen Süd",
+        "km_von": 82.925,
+        "km_bis": 85.314,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Grenchen Süd",
+        "bis": "Lengnau Ost (Abzw)",
+        "km_von": 85.314,
+        "km_bis": 87.655,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lengnau Ost (Abzw)",
+        "bis": "Lengnau BE",
+        "km_von": 87.655,
+        "km_bis": 87.993,
+        "isb": "SBB CFF FFS",
+        "gleise": 3,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lengnau BE",
+        "bis": "Pieterlen",
+        "km_von": 87.993,
+        "km_bis": 90.211,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Pieterlen",
+        "bis": "Biel/Bienne Bözingenfeld/Champs-de-Boujean",
+        "km_von": 90.211,
+        "km_bis": 93.981,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Biel/Bienne Bözingenfeld/Champs-de-Boujean",
+        "bis": "Biel Mett (Abzw)",
+        "km_von": 93.981,
+        "km_bis": 95.814,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Biel Mett (Abzw)",
+        "bis": "Biel Mett",
+        "km_von": 95.814,
+        "km_bis": 96.25,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Biel Mett",
+        "bis": "Biel/Bienne Ost",
+        "km_von": 96.25,
+        "km_bis": 97.63,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Biel/Bienne Ost",
+        "bis": "Biel/Bienne Aebistrasse",
+        "km_von": 97.63,
+        "km_bis": 98.843,
+        "isb": "SBB CFF FFS",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Biel/Bienne Aebistrasse",
+        "bis": "Biel/Bienne",
+        "km_von": 98.843,
+        "km_bis": 99.369,
+        "isb": "SBB CFF FFS",
+        "gleise": 4,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
       }
     ]
   }

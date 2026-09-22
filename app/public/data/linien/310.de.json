@@ -171,63 +171,104 @@
           "label": "Abschnitte",
           "value": 15,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: BLSN",
           "value": 12,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "BLSN"
+          }
         },
         {
           "label": "Infrastruktur: BLS",
           "value": 3,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[1].abschnitte"
+          "factRef": "netz.nach_isb[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "BLS"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 8,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 5,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Streckengleise: 3",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[2].abschnitte"
+          "factRef": "netz.nach_gleisen[2].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 3
+          }
         },
         {
           "label": "Streckengleise: 4",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[3].abschnitte"
+          "factRef": "netz.nach_gleisen[3].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 4
+          }
         },
         {
           "label": "Spurweite: 1435 mm",
           "value": 15,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1435 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 15,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -301,5 +342,159 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Thun (Eigentumsgrenze)",
+        "bis": "Thun Schadau",
+        "km_von": 0.062,
+        "km_bis": 0.487,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Thun Schadau",
+        "bis": "Gwatt",
+        "km_von": 0.487,
+        "km_bis": 3.103,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Gwatt",
+        "bis": "Einigen (Spw)",
+        "km_von": 3.103,
+        "km_bis": 5.426,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Einigen (Spw)",
+        "bis": "Spiez (Abzw)",
+        "km_von": 5.426,
+        "km_bis": 8.956,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Spiez (Abzw)",
+        "bis": "Spiez",
+        "km_von": 8.956,
+        "km_bis": 9.818,
+        "isb": "BLSN",
+        "gleise": 3,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Spiez",
+        "bis": "Spiez Niesenbrücke (Abzw)",
+        "km_von": 9.818,
+        "km_bis": 10.333,
+        "isb": "BLSN",
+        "gleise": 4,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Spiez Niesenbrücke (Abzw)",
+        "bis": "Faulensee",
+        "km_von": 10.333,
+        "km_bis": 11.89,
+        "isb": "BLSN",
+        "gleise": 2,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Faulensee",
+        "bis": "Krattighalde",
+        "km_von": 11.89,
+        "km_bis": 15.402,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Krattighalde",
+        "bis": "Leissigbad (Agl)",
+        "km_von": 15.402,
+        "km_bis": 16.706,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Leissigbad (Agl)",
+        "bis": "Leissigen",
+        "km_von": 16.706,
+        "km_bis": 18.49,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Leissigen",
+        "bis": "Därligen",
+        "km_von": 18.49,
+        "km_bis": 22.005,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Därligen",
+        "bis": "Interlaken West",
+        "km_von": 22.005,
+        "km_bis": 26.014,
+        "isb": "BLSN",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Interlaken West",
+        "bis": "Interlaken Ost [Gleis 5-8]",
+        "km_von": 26.014,
+        "km_bis": 27.962,
+        "isb": "BLS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Interlaken Ost [Gleis 5-8]",
+        "bis": "Bönigen Werkstätte BLS",
+        "km_von": 27.962,
+        "km_bis": 29.53,
+        "isb": "BLS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bönigen Werkstätte BLS",
+        "bis": "Bönigen Gleisende",
+        "km_von": 29.53,
+        "km_bis": 29.73,
+        "isb": "BLS",
+        "gleise": 1,
+        "spurweite": "1435 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

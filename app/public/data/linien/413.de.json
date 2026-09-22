@@ -126,35 +126,56 @@
           "label": "Abschnitte",
           "value": 11,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: asm",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "asm"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Gleichstrom",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Gleichstrom"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -228,5 +249,119 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "linie"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Langenthal [Gleis 4-5]",
+        "bis": "Langenthal Gaswerk",
+        "km_von": 0,
+        "km_bis": 1.095,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Langenthal Gaswerk",
+        "bis": "Langenthal Weiche 46 (Verzw)",
+        "km_von": 1.095,
+        "km_bis": 1.135,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Langenthal Weiche 46 (Verzw)",
+        "bis": "Hard-Mumenthal",
+        "km_von": 1.135,
+        "km_bis": 2.329,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Hard-Mumenthal",
+        "bis": "Aarwangen Vorstadt",
+        "km_von": 2.329,
+        "km_bis": 2.822,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Aarwangen Vorstadt",
+        "bis": "Aarwangen",
+        "km_von": 2.822,
+        "km_bis": 3.195,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Aarwangen",
+        "bis": "Aarwangen Schloss",
+        "km_von": 3.195,
+        "km_bis": 3.97,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Aarwangen Schloss",
+        "bis": "Bannwil",
+        "km_von": 3.97,
+        "km_bis": 5.904,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Bannwil",
+        "bis": "Holzhäusern",
+        "km_von": 5.904,
+        "km_bis": 8.797,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Holzhäusern",
+        "bis": "Scharnageln",
+        "km_von": 8.797,
+        "km_bis": 9.74,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Scharnageln",
+        "bis": "Niederbipp Dorf",
+        "km_von": 9.74,
+        "km_bis": 10.33,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Niederbipp Dorf",
+        "bis": "Niederbipp Weiche 41 (Verzw)",
+        "km_von": 10.33,
+        "km_bis": 10.79,
+        "isb": "asm",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Gleichstrom"
+      }
+    ]
+  }
 }

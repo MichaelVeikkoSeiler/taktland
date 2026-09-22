@@ -32,7 +32,7 @@ FELDER = ("linie", "name", "lang", "generated", "sources", "chapters", "luecken"
 
 #: Ganze Listen für die Seiten hinter den Kacheln «Erfasste Tunnel» usw.
 #: Unverändert aus den Fakten übernommen und so geprüft.
-LISTEN = ("tunnel", "bruecken", "bahnuebergaenge")
+LISTEN = ("tunnel", "bruecken", "bahnuebergaenge", "netz")
 
 #: Höchstens so viele Fragen je Kapitel. Mehr hiesse, dieselben Werte
 #: mehrfach abzufragen.

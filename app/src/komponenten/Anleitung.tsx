@@ -152,7 +152,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Das Kapitel «Netz» nennt je Abschnitt zwischen zwei Betriebspunkten die Zahl der
             Streckengleise, die Spurweite, den Strom und die Infrastrukturbetreiberin, aus dem
-            Schienennetz des BAV (Stand 2021).
+            Schienennetz des BAV (Stand 2021). Ein Tipp auf eine Kachel zeigt genau diese
+            Abschnitte, etwa alle mit einem Streckengleis, und die kleine Karte hebt sie rot
+            hervor.
           </li>
           <li>
             Linien anderer Bahnen, etwa der BLS, der SOB oder der RhB, tragen das Kürzel ihrer

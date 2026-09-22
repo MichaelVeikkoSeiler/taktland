@@ -4,6 +4,11 @@ import type { ListenArt } from './typen'
  *  heisst: in den Daten steht nichts. */
 export interface Filter { feld: string; wert: string | null }
 
+/** Der Wert einer Kachel als Text, wie er in der Adresse steht */
+export function filterText(wert: string | number | null | undefined) {
+  return wert === null || wert === undefined ? null : String(wert)
+}
+
 /** #/linie/600/bruecken, gefiltert #/linie/600/bruecken?kanton=Ticino.
  *  Ein leerer Wert (?sicherungsart=) heisst: nichts eingetragen. Mit eintrag
  *  (#/linie/600/bruecken?eintrag=12) hebt die Liste diesen Eintrag hervor. */

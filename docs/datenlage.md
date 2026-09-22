@@ -158,7 +158,8 @@ mit `pipeline/schienennetz.py`.
   kleinsten und dem grössten Kilometer. Tunnel, Brücken und Bahnübergänge führt nur die SBB.
   Im Linien-Duell treten diese Linien nicht an, ihre Zählungen stammen aus einer anderen
   Quelle.
-- **Kapitel «Netz»** auf 150 Linien (allen, die das Schienennetz führt; es fehlen 235, 241,
+- **Kapitel «Netz»** (die Kacheln führen zur Liste der Abschnitte, gefiltert nach Gleiszahl,
+  Spurweite, Strom oder Infrastruktur; die Karte zeigt die Abschnitte der Liste rot) auf 150 Linien (allen, die das Schienennetz führt; es fehlen 235, 241,
   9210, 9250, 9660): je Abschnitt Streckengleise, Spurweite, Strom und
   Infrastrukturbetreiberin, gezählt in der Pipeline. Die Lücke «Ein- oder mehrspurig» fällt
   dort weg, dafür steht «Stand des Schienennetzes».

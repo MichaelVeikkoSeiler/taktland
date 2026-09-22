@@ -19,12 +19,24 @@ export interface Fakt {
   bahnhof?: number
   /** Linienseite: Die Kachel führt zur ganzen Liste, auf Wunsch gefiltert */
   liste?: ListenArt
-  filter?: { feld: string; wert: string | null }
+  filter?: { feld: string; wert: string | number | null }
   /** Stelle des Eintrags in der Liste, bei einer Kachel zu einem einzelnen Objekt */
   eintrag?: number
 }
 
-export type ListenArt = 'tunnel' | 'bruecken' | 'bahnuebergaenge'
+export type ListenArt = 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'netz'
+
+/** Ein Abschnitt zwischen zwei Betriebspunkten, aus dem Schienennetz des BAV */
+export interface NetzEintrag {
+  von: string
+  bis: string
+  km_von: number | null
+  km_bis: number | null
+  isb: string
+  gleise: number
+  spurweite: string
+  strom: string
+}
 
 export interface TunnelEintrag {
   name: string
@@ -140,6 +152,7 @@ export interface LinienProfil {
     tunnel?: TunnelEintrag[]
     bruecken?: BrueckenEintrag[]
     bahnuebergaenge?: UebergangEintrag[]
+    netz?: NetzEintrag[]
   }
 }
 

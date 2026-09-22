@@ -172,35 +172,56 @@
           "label": "Abschnitte",
           "value": 4,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: MVR",
           "value": 4,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "MVR"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 4,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 800 mm",
           "value": 4,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "800 mm"
+          }
         },
         {
           "label": "Strom: Gleichstrom",
           "value": 4,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Gleichstrom"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -274,5 +295,49 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Montreux MVR-mtgn",
+        "bis": "Montreux-Les Planches",
+        "km_von": 0,
+        "km_bis": 0.6,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Montreux-Les Planches",
+        "bis": "Toveyre",
+        "km_von": 0.6,
+        "km_bis": 1.68,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Toveyre",
+        "bis": "Valmont",
+        "km_von": 1.68,
+        "km_bis": 2.15,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Valmont",
+        "bis": "Glion",
+        "km_von": 2.15,
+        "km_bis": 2.73,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      }
+    ]
+  }
 }

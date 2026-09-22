@@ -396,42 +396,68 @@
           "label": "Abschnitte",
           "value": 32,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: MGI",
           "value": 32,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "MGI"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 31,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Streckengleise: 2",
           "value": 1,
           "unit": "Abschnitt",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[1].abschnitte"
+          "factRef": "netz.nach_gleisen[1].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 2
+          }
         },
         {
           "label": "Spurweite: 1000 mm",
           "value": 32,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "1000 mm"
+          }
         },
         {
           "label": "Strom: Wechselstrom 16,7 Hz",
           "value": 32,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Wechselstrom 16,7 Hz"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -505,5 +531,329 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Brig Bahnhofplatz",
+        "bis": "Bitsch",
+        "km_von": 0,
+        "km_bis": 3.85,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bitsch",
+        "bis": "Mörel",
+        "km_von": 3.85,
+        "km_bis": 7.21,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Mörel",
+        "bis": "Betten Talstation",
+        "km_von": 7.21,
+        "km_bis": 10.22,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Betten Talstation",
+        "bis": "Grengiols",
+        "km_von": 10.22,
+        "km_bis": 11.59,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Grengiols",
+        "bis": "Lax",
+        "km_von": 11.59,
+        "km_bis": 14.75,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Lax",
+        "bis": "Fiesch Feriendorf",
+        "km_von": 14.75,
+        "km_bis": 16.6,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Fiesch Feriendorf",
+        "bis": "Fiesch",
+        "km_von": 16.6,
+        "km_bis": 17.27,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Fiesch",
+        "bis": "Fürgangen-Bellwald Talstation",
+        "km_von": 17.27,
+        "km_bis": 20.4,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Fürgangen-Bellwald Talstation",
+        "bis": "Niederwald",
+        "km_von": 20.4,
+        "km_bis": 24.4,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Niederwald",
+        "bis": "Blitzingen",
+        "km_von": 24.4,
+        "km_bis": 26.12,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Blitzingen",
+        "bis": "Biel (Goms)",
+        "km_von": 26.12,
+        "km_bis": 27.87,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Biel (Goms)",
+        "bis": "Gluringen",
+        "km_von": 27.87,
+        "km_bis": 29.4,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Gluringen",
+        "bis": "Reckingen VS",
+        "km_von": 29.4,
+        "km_bis": 30.56,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Reckingen VS",
+        "bis": "Münster VS",
+        "km_von": 30.56,
+        "km_bis": 33.28,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Münster VS",
+        "bis": "Geschinen",
+        "km_von": 33.28,
+        "km_bis": 34.72,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Geschinen",
+        "bis": "Ulrichen",
+        "km_von": 34.72,
+        "km_bis": 37.27,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Ulrichen",
+        "bis": "Obergesteln",
+        "km_von": 37.27,
+        "km_bis": 38.98,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Obergesteln",
+        "bis": "Oberwald",
+        "km_von": 38.98,
+        "km_bis": 41.33,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oberwald",
+        "bis": "Realp",
+        "km_von": 41.33,
+        "km_bis": 59.39,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Realp",
+        "bis": "Hospental",
+        "km_von": 59.39,
+        "km_bis": 65.39,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Hospental",
+        "bis": "Andermatt",
+        "km_von": 65.39,
+        "km_bis": 67.94,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Andermatt",
+        "bis": "Nätschen",
+        "km_von": 67.94,
+        "km_bis": 72.42,
+        "isb": "MGI",
+        "gleise": 2,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Nätschen",
+        "bis": "Oberalppass",
+        "km_von": 72.42,
+        "km_bis": 77.66,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Oberalppass",
+        "bis": "Tschamut-Selva",
+        "km_von": 77.66,
+        "km_bis": 81.52,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Tschamut-Selva",
+        "bis": "Dieni",
+        "km_von": 81.52,
+        "km_bis": 85,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Dieni",
+        "bis": "Rueras",
+        "km_von": 85,
+        "km_bis": 86.41,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Rueras",
+        "bis": "Sedrun",
+        "km_von": 86.41,
+        "km_bis": 87.77,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Sedrun",
+        "bis": "Bugnei",
+        "km_von": 87.77,
+        "km_bis": 89.87,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Bugnei",
+        "bis": "Mumpé Tujetsch",
+        "km_von": 89.87,
+        "km_bis": 92.16,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Mumpé Tujetsch",
+        "bis": "Segnas",
+        "km_von": 92.16,
+        "km_bis": 94,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Segnas",
+        "bis": "Acla da Fontauna",
+        "km_von": 94,
+        "km_bis": 95,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      },
+      {
+        "von": "Acla da Fontauna",
+        "bis": "Disentis/Mustér",
+        "km_von": 95,
+        "km_bis": 96.94,
+        "isb": "MGI",
+        "gleise": 1,
+        "spurweite": "1000 mm",
+        "strom": "Wechselstrom 16,7 Hz"
+      }
+    ]
+  }
 }

@@ -237,35 +237,56 @@
           "label": "Abschnitte",
           "value": 11,
           "source": "schienennetz",
-          "factRef": "netz.abschnitte_erfasst"
+          "factRef": "netz.abschnitte_erfasst",
+          "liste": "netz"
         },
         {
           "label": "Infrastruktur: MVR",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_isb[0].abschnitte"
+          "factRef": "netz.nach_isb[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "isb",
+            "wert": "MVR"
+          }
         },
         {
           "label": "Streckengleise: 1",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_gleisen[0].abschnitte"
+          "factRef": "netz.nach_gleisen[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "gleise",
+            "wert": 1
+          }
         },
         {
           "label": "Spurweite: 800 mm",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_spurweite[0].abschnitte"
+          "factRef": "netz.nach_spurweite[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "spurweite",
+            "wert": "800 mm"
+          }
         },
         {
           "label": "Strom: Gleichstrom",
           "value": 11,
           "unit": "Abschnitte",
           "source": "schienennetz",
-          "factRef": "netz.nach_strom[0].abschnitte"
+          "factRef": "netz.nach_strom[0].abschnitte",
+          "liste": "netz",
+          "filter": {
+            "feld": "strom",
+            "wert": "Gleichstrom"
+          }
         }
       ],
       "erlaeuterung": "Das Schienennetz des Bundesamts für Verkehr (BAV) beschreibt die Linien aller Bahnen in der Schweiz, Abschnitt für Abschnitt zwischen zwei Betriebspunkten. Die Spurweite ist der innere Abstand zwischen den beiden Schienen eines Gleises.",
@@ -334,5 +355,119 @@
       "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
       "quelle": "schienennetz"
     }
-  ]
+  ],
+  "listen": {
+    "netz": [
+      {
+        "von": "Glion",
+        "bis": "Glion-Alpes",
+        "km_von": 0,
+        "km_bis": 0.25,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Glion-Alpes",
+        "bis": "Glion-Collège",
+        "km_von": 0.25,
+        "km_bis": 0.53,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Glion-Collège",
+        "bis": "Le Tremblex",
+        "km_von": 0.53,
+        "km_bis": 0.9,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Le Tremblex",
+        "bis": "Caux",
+        "km_von": 0.9,
+        "km_bis": 2.17,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Caux",
+        "bis": "Les Echets",
+        "km_von": 2.17,
+        "km_bis": 2.72,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Les Echets",
+        "bis": "Haut-de-Caux",
+        "km_von": 2.72,
+        "km_bis": 3.06,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Haut-de-Caux",
+        "bis": "Crêt-d'y-Bau",
+        "km_von": 3.06,
+        "km_bis": 3.62,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Crêt-d'y-Bau",
+        "bis": "Paccot",
+        "km_von": 3.62,
+        "km_bis": 4.32,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Paccot",
+        "bis": "Jaman",
+        "km_von": 4.32,
+        "km_bis": 5.91,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "Jaman",
+        "bis": "La Perche",
+        "km_von": 5.91,
+        "km_bis": 6.46,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      },
+      {
+        "von": "La Perche",
+        "bis": "Rochers-de-Naye",
+        "km_von": 6.46,
+        "km_bis": 7.63,
+        "isb": "MVR",
+        "gleise": 1,
+        "spurweite": "800 mm",
+        "strom": "Gleichstrom"
+      }
+    ]
+  }
 }

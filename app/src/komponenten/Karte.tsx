@@ -68,6 +68,8 @@ export interface KartenObjekt {
   name: string
   /** Kilometer auf der Linie, wie in der Quelle */
   km: number | null
+  /** zweiter Kilometer: Der Eintrag reicht von km bis bis, etwa ein Abschnitt */
+  bis?: number | null
 }
 
 /**
@@ -78,7 +80,7 @@ export interface KartenObjekt {
  * Richtung der Länge erfasst ist; eine Brücke hat keine Länge und ist ein Punkt.
  */
 export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], waehlen, bahnhofOeffnen }: {
-  art: 'tunnel' | 'bruecken'
+  art: 'tunnel' | 'bruecken' | 'netz'
   linie: number
   objekte: KartenObjekt[]
   markiert: string | null
@@ -127,7 +129,8 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], wae
 
   const bereiche = objekte
     .map((o) => ({ ...o, bereich: art === 'tunnel' ? daten.tunnel[o.kennung]
-      : o.km === null ? undefined : [o.km, o.km] as [number, number] }))
+      : o.km === null ? undefined
+        : [o.km, o.bis ?? o.km] as [number, number] }))
     .filter((o): o is typeof o & { bereich: [number, number] } => o.bereich !== undefined)
   const gewaehlt = bereiche.find((t) => t.kennung === markiert)
   const gewaehltPunkt = gewaehlt ? punktBei(eigene, gewaehlt.bereich[0]) : null
@@ -241,6 +244,9 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], wae
         {art === 'bruecken'
           && 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge ist '
             + 'nicht erfasst.'}
+        {art === 'netz'
+          && 'Rot die Abschnitte dieser Liste, je von ihrem ersten bis zu ihrem letzten '
+            + 'Kilometer laut Schienennetz des BAV.'}
         {(waehlen || bahnhofOeffnen) && ` Ein Tipp auf einen Punkt ${bahnhofOeffnen
           ? 'öffnet den Tunnel oder den Bahnhof.' : 'wählt ihn aus.'}`}
       </figcaption>
