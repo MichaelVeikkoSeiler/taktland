@@ -56,7 +56,7 @@ const BILDER: Partial<Record<Bereich | 'anleitung', AuftaktBild>> = {
   },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration in zwei Hälften: links ein moderner Bahnhof aus Glas und Beton, rechts ein alter Bahnhof mit Holzdach und Bahnhofsuhr.',
+    alt: 'Illustration in zwei Hälften: links ein moderner Bahnhof mit Passerelle, Glaslift und Zug, rechts ein kleiner Bahnhof mit Holzdach vor einem Tunnel.',
   },
 }
 
