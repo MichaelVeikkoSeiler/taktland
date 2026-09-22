@@ -167,12 +167,13 @@ nur, wo die Richtung der Länge eindeutig ist (`tunnel_bereiche`). Die Zeit bis 
 ist Weg durch Tempo, eine Schätzung. Getestet mit vorgespieltem Standort (Einfahrt
 Gotthard-Basistunnel, Standort 80 km neben der Strecke, Tunnel ohne GPS), nicht im Zug.
 
-## Kleine Karte bei den Tunneln
+## Kleine Karte bei Tunneln und Brücken
 
 `pipeline/build_karte.py` vereinfacht die Kilometrierung aller 338 Linien auf 30 m
 (Douglas-Peucker, 8407 Punkte, 125 KB) und schreibt für jeden Tunnel den Bereich auf der
 Linie, gleich wie die Seite Strecke. Die App zeichnet daraus eine Karte: grau das Netz,
 dunkel die Linie, rot die Tunnel. Bei 271 von 289 Tunneln gibt die Quelle nur den
 Kilometer eines Portals, nicht die Richtung der Länge: Sie erscheinen als Punkt. Zur
-Orientierung stehen zwölf grosse Bahnhöfe mit ihrer Lage aus den Fakten darin. Keine
+Orientierung stehen zwölf grosse Bahnhöfe mit ihrer Lage aus den Fakten darin. Brücken
+sind immer Punkte bei ihrem Kilometer, eine Länge ist nicht erfasst. Keine
 Kartenbilder eines fremden Dienstes; die Zusage im Datenschutz bleibt gültig.

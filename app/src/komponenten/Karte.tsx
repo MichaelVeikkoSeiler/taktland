@@ -62,20 +62,25 @@ function zwischen(stuecke: Stueck[], von: number, bis: number) {
 const pfad = (pts: Array<[number, number]>) =>
   pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(5)} ${y.toFixed(5)}`).join('')
 
-export interface KartenTunnel {
+export interface KartenObjekt {
   /** «Linie:Stelle» */
   kennung: string
   name: string
+  /** Kilometer auf der Linie, wie in der Quelle */
+  km: number | null
 }
 
 /**
- * Kleine Karte zu den Tunneln einer Linie: grau das Streckennetz der SBB,
- * dunkel die Linie, rot ihre Tunnel, der gewählte grösser und beschriftet.
- * Gezeichnet aus den Daten, ohne Kartenbilder eines fremden Dienstes.
+ * Kleine Karte zu den Tunneln oder Brücken einer Linie: grau das Streckennetz
+ * der SBB, dunkel die Linie, rot ihre Tunnel oder Brücken, der gewählte
+ * grösser und beschriftet. Gezeichnet aus den Daten, ohne Kartenbilder eines
+ * fremden Dienstes. Ein Tunnel liegt über seinem Bereich (karte.json), wo die
+ * Richtung der Länge erfasst ist; eine Brücke hat keine Länge und ist ein Punkt.
  */
-export function TunnelKarte({ linie, tunnel, markiert }: {
+export function ObjektKarte({ art, linie, objekte, markiert }: {
+  art: 'tunnel' | 'bruecken'
   linie: number
-  tunnel: KartenTunnel[]
+  objekte: KartenObjekt[]
   markiert: string | null
 }) {
   const [daten, setDaten] = useState<KartenDaten | null>(null)
@@ -114,8 +119,10 @@ export function TunnelKarte({ linie, tunnel, markiert }: {
   // Masse in Bildpunkten der Karte, bei rund 350 Punkten Breite
   const px = w / 350
 
-  const bereiche = tunnel.map((t) => ({ ...t, bereich: daten.tunnel[t.kennung] }))
-    .filter((t) => t.bereich)
+  const bereiche = objekte
+    .map((o) => ({ ...o, bereich: art === 'tunnel' ? daten.tunnel[o.kennung]
+      : o.km === null ? undefined : [o.km, o.km] as [number, number] }))
+    .filter((o): o is typeof o & { bereich: [number, number] } => o.bereich !== undefined)
   const gewaehlt = bereiche.find((t) => t.kennung === markiert)
   const gewaehltPunkt = gewaehlt ? punktBei(eigene, gewaehlt.bereich[0]) : null
   const halbeBreite = gewaehlt ? gewaehlt.name.length * 3.4 * px : 0
@@ -164,8 +171,9 @@ export function TunnelKarte({ linie, tunnel, markiert }: {
                          vectorEffect="non-scaling-stroke" strokeLinecap="round" />
           }
           const p = punktBei(eigene, v)
-          return p && <circle key={t.kennung} cx={p[0]} cy={p[1]}
-                              r={(t.kennung === markiert ? 4 : 2.5) * px} className="fill-sbb-red" />
+          // viele Brücken: kleinere Punkte, damit die Linie noch zu sehen ist
+          const r = t.kennung === markiert ? 4 : art === 'bruecken' ? 1.8 : 2.5
+          return p && <circle key={t.kennung} cx={p[0]} cy={p[1]} r={r * px} className="fill-sbb-red" />
         })}
         {gewaehlt && gewaehltPunkt && (
           <g>
@@ -183,8 +191,12 @@ export function TunnelKarte({ linie, tunnel, markiert }: {
       </svg>
       <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), ohne Strassen, Orte und
-        Grenzen. Rot die Tunnel dieser Linie: als Strecke, wo die Daten die Richtung der Länge
-        hergeben, sonst als Punkt beim erfassten Kilometer, dem Portal.
+        Grenzen.{' '}
+        {art === 'tunnel'
+          ? 'Rot die Tunnel dieser Linie: als Strecke, wo die Daten die Richtung der Länge '
+            + 'hergeben, sonst als Punkt beim erfassten Kilometer, dem Portal.'
+          : 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge ist '
+            + 'nicht erfasst.'}
       </figcaption>
     </figure>
   )

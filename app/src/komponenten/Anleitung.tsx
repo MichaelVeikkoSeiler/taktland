@@ -194,8 +194,8 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             blättern geht wie bei den Bahnhöfen.
           </li>
           <li>
-            Ein Tipp auf einen Eintrag öffnet die Liste seiner Linie und zeigt ihn oben. Bei den
-            Tunneln zeigt eine kleine Karte, wo die Linie und ihre Tunnel liegen; sie ist aus dem
+            Ein Tipp auf einen Eintrag öffnet die Liste seiner Linie und zeigt ihn oben. Eine
+            kleine Karte zeigt, wo die Linie und ihre Tunnel oder Brücken liegen; sie ist aus dem
             Streckennetz der SBB gezeichnet, ohne Kartenbilder eines fremden Dienstes. Brücken
             auf Linien ohne eigene Seite stehen trotzdem in der Liste, nur ohne Verweis.
           </li>
