@@ -427,8 +427,8 @@ function Ergebnis({
         </details>
 
         <div className="mt-4 grid grid-cols-2 gap-2">
-          <Kachel zahl={t.length} text="Tunnel" />
-          <Kachel zahl={b.length} text={b.length === 1 ? 'Brücke' : 'Brücken'} />
+          <Kachel zahl={t.length} text="Tunnel" ziel="weg-tunnel" />
+          <Kachel zahl={b.length} text={b.length === 1 ? 'Brücke' : 'Brücken'} ziel="weg-bruecken" />
         </div>
         <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
           Erfasst entlang dieses Wegs, jede nur einmal gezählt.
@@ -489,7 +489,7 @@ function Ergebnis({
       <WegLinien laeufe={laeufe(weg)} netz={netz} verzeichnis={verzeichnis} />
 
       {t.length > 0 && (
-        <section className="mt-8">
+        <section id="weg-tunnel" className="mt-8 scroll-mt-4">
           <h2 className="text-lg font-bold">Tunnel in Wegrichtung</h2>
           <ol className="mt-3 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
                          dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
@@ -506,7 +506,7 @@ function Ergebnis({
       )}
 
       {b.length > 0 && (
-        <section className="mt-8">
+        <section id="weg-bruecken" className="mt-8 scroll-mt-4">
           <h2 className="text-lg font-bold">Brücken in Wegrichtung</h2>
           <ol className="mt-3 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
                          dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
@@ -652,14 +652,31 @@ function BahnhofLinien({ b, verzeichnis }: {
   )
 }
 
-function Kachel({ zahl, text }: { zahl: number; text: string }) {
-  return (
-    <div className="border border-sbb-cloud bg-white px-4 py-3 dark:border-sbb-iron dark:bg-sbb-midnight">
+/**
+ * Zahl der Tunnel oder Brücken des Wegs. Mit ziel führt ein Tipp zur Liste
+ * weiter unten auf der Seite; die Seite rollt nur auf diesen Tipp hin.
+ */
+function Kachel({ zahl, text, ziel }: { zahl: number; text: string; ziel?: string }) {
+  const inhalt = (
+    <>
       <p className="text-3xl font-bold tabular-nums text-sbb-black dark:text-sbb-white">
         {zahl.toLocaleString('de-CH')}
       </p>
-      <p className="text-sm text-sbb-metal dark:text-sbb-storm">{text}</p>
-    </div>
+      <p className="text-sm text-sbb-metal dark:text-sbb-storm">
+        {text}{ziel && zahl > 0 && <span aria-hidden="true"> ↓</span>}
+      </p>
+    </>
+  )
+  const stil = 'border border-sbb-cloud bg-white px-4 py-3 dark:border-sbb-iron dark:bg-sbb-midnight'
+  if (!ziel || zahl === 0) return <div className={stil}>{inhalt}</div>
+  return (
+    <button
+      type="button" aria-label={`${zahl} ${text}: zur Liste`}
+      onClick={() => document.getElementById(ziel)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+      className={`${stil} text-left transition hover:border-sbb-black dark:hover:border-sbb-white`}
+    >
+      {inhalt}
+    </button>
   )
 }
 
