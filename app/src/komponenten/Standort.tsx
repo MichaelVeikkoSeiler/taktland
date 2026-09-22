@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
-import { karteLaden, standortLaden } from '../daten'
+import { karteLaden, linienLaden, standortLaden } from '../daten'
 import type { BahnhofIndex, KartenDaten, StandortDaten } from '../typen'
 import {
   abstandText, bahnhoefeBei, freigabeHilfe, type Lage, linienBei, objekteBei, type Treffer,
   type UmgebungsArt,
 } from '../umgebung'
-import { LAENGE_ZU_BREITE, lesen, pfad, type Stueck, zwischen } from './Karte'
+import {
+  type Box, lage, lesen, Netzkarte, pfad, type Stueck, zwischen,
+} from './Karte'
 import { Ladefehler } from './Ladefehler'
 import { BahnKuerzel } from './Suche'
 
@@ -49,6 +51,16 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
   const [stand, setStand] = useState<Standpunkt | null>(merker.stand)
   const [meldung, setMeldung] = useState<Meldung | null>(null)
   const [offen, setOffen] = useState<Set<UmgebungsArt>>(new Set())
+  // die Linien mit eigener Seite: nur sie lassen sich auf der Karte antippen
+  const [seiten, setSeiten] = useState<Set<number> | undefined>(undefined)
+
+  useEffect(() => {
+    let abgebrochen = false
+    linienLaden()
+      .then((v) => { if (!abgebrochen) setSeiten(new Set(v.linien.map((l) => l.linie))) })
+      .catch(() => {})
+    return () => { abgebrochen = true }
+  }, [])
 
   useEffect(() => {
     let abgebrochen = false
@@ -147,7 +159,7 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
         <>
           <UmgebungsKarte stand={stand} linien={linien} karte={karte} daten={daten}
                           naechsteLinie={treffer.linien[0]?.m ?? null}
-                          bahnhoefe={treffer.bahnhoefe} />
+                          bahnhoefe={treffer.bahnhoefe} seiten={seiten} />
           {ABSCHNITTE.map(({ art, titel }) => {
             const alle = treffer[art]
             const zeigen = alle.slice(0, offen.has(art) ? MEHR : WENIGE)
@@ -230,104 +242,55 @@ function Eintrag({ t }: { t: Treffer }) {
   )
 }
 
-/** Breite des Ausschnitts in km */
+/** Ausschnitte rund um den Standort, Breite in km */
 const AUSSCHNITTE = [2, 6, 20, 60]
 /** Meter je Einheit der Zeichnung: y ist Breite in Grad, x Länge mal LAENGE_ZU_BREITE */
 const M_JE_EINHEIT = 111_200
-const SEITENVERHAELTNIS = 1.6
 
 /**
  * Kleine Karte rund um den Standort, gezeichnet aus den Daten wie die Karten
  * bei Tunneln und Brücken: grau die Linien, Ringe die Bahnhöfe, rot Tunnel
  * und Brücken, Quadrate die Bahnübergänge, ein gefüllter Punkt der Standort.
+ * Zoomen und Verschieben kann man wie auf jeder Karte.
  */
-function UmgebungsKarte({ stand, linien, karte, daten, bahnhoefe, naechsteLinie }: {
+function UmgebungsKarte({ stand, linien, karte, daten, bahnhoefe, naechsteLinie, seiten }: {
   stand: Standpunkt
   linien: Map<number, Stueck[]>
   karte: KartenDaten
   daten: StandortDaten
   bahnhoefe: Treffer[]
   naechsteLinie: number | null
+  seiten: Set<number> | undefined
 }) {
   // von selbst 6 km breit, weiter, wenn sonst keine Linie im Bild wäre
   const vorschlag = AUSSCHNITTE.find((km) => km >= 6 && naechsteLinie !== null
-    && naechsteLinie * 2.2 < km * 1000 / SEITENVERHAELTNIS) ?? AUSSCHNITTE[AUSSCHNITTE.length - 1]
-  const [gewaehlt, setGewaehlt] = useState<number | null>(null)
-  const breiteKm = gewaehlt ?? vorschlag
+    && naechsteLinie * 2.2 < km * 1000 / 1.6) ?? AUSSCHNITTE[AUSSCHNITTE.length - 1]
+  const [cx, cy] = lage(stand.lat, stand.lon)
+  const start = useMemo<Box>(() => ({ cx, cy, w: (vorschlag * 1000) / M_JE_EINHEIT }),
+                             [cx, cy, vorschlag])
 
-  const cx = stand.lon * LAENGE_ZU_BREITE
-  const cy = -stand.lat
-  const w = (breiteKm * 1000) / M_JE_EINHEIT
-  const h = w / SEITENVERHAELTNIS
-  const box = [cx - w / 2, cy - h / 2, w, h]
-  const px = w / 350
-  const drin = (x: number, y: number) => Math.abs(x - cx) < w * 0.55 && Math.abs(y - cy) < h * 0.55
-  const lage = (la: number, lo: number): [number, number] => [lo * LAENGE_ZU_BREITE, -la]
-
-  const stuecke = useMemo(() => {
-    const raus: Array<{ nr: number; s: Stueck; i: number }> = []
-    for (const [nr, ss] of linien) {
-      ss.forEach((s, i) => {
-        if (s.x.some((x, j) => Math.abs(x - cx) < w && Math.abs(s.y[j] - cy) < h)) raus.push({ nr, s, i })
-      })
-    }
-    return raus
-  }, [linien, cx, cy, w, h])
-
-  const punkte = (art: 'tunnel' | 'bruecken' | 'bahnuebergaenge') => daten[art].flatMap(([linie, stelle, name, la, lo]) => {
-    if (la === null || lo === null) return []
-    const [x, y] = lage(la, lo)
-    return drin(x, y) ? [{ kennung: `${linie}:${stelle}`, linie, name, x, y }] : []
-  })
-  const tunnel = punkte('tunnel')
-  const bruecken = punkte('bruecken')
-  const uebergaenge = punkte('bahnuebergaenge')
-  const stationen = bahnhoefe.flatMap((b) => {
-    if (b.m > w * M_JE_EINHEIT || !b.lage) return []
+  const punkte = bahnhoefe.slice(0, 60).flatMap((b) => {
+    if (!b.lage) return []
     const [x, y] = lage(b.lage[0], b.lage[1])
-    return drin(x, y) ? [{ ...b, x, y }] : []
+    return [{ name: b.name, x, y, uic: Number(b.schluessel.replace(/^b/, '')) || undefined }]
   })
-  // beschriftet die nächsten, solange sich die Namen nicht überdecken; die
-  // Breite eines Namens ist geschätzt, der Name bleibt ganz im Bild
-  const beschriftet: Array<{ schluessel: string; name: string; x: number; y: number; anker: 'start' | 'end' }> = []
-  const belegt: Array<[number, number, number, number]> = []
-  for (const b of stationen.slice(0, 8)) {
-    if (beschriftet.length === 4) break
-    const breite = b.name.length * 6.2 * px
-    const rechts = b.x + 6 * px + breite < box[0] + w - 3 * px
-    const x0 = rechts ? b.x + 6 * px : b.x - 6 * px - breite
-    if (x0 < box[0] + 3 * px) continue
-    const feld: [number, number, number, number] = [x0, b.y - 6 * px, x0 + breite, b.y + 6 * px]
-    if (belegt.some((f) => f[0] < feld[2] && feld[0] < f[2] && f[1] < feld[3] && feld[1] < f[3])) continue
-    belegt.push(feld)
-    beschriftet.push({ schluessel: b.schluessel, name: b.name, y: b.y,
-                       x: rechts ? b.x + 6 * px : b.x - 6 * px, anker: rechts ? 'start' : 'end' })
-  }
-  const genauR = stand.genau !== null ? stand.genau / M_JE_EINHEIT : 0
 
-  return (
-    <figure className="mt-6">
-      <div className="flex items-center justify-end gap-3 text-xs">
-        <span className="text-sbb-metal dark:text-sbb-storm">Breite</span>
-        {AUSSCHNITTE.map((km) => (
-          <button key={km} type="button" onClick={() => setGewaehlt(km)} aria-pressed={km === breiteKm}
-                  className={`underline-offset-2 ${km === breiteKm
-                    ? 'font-bold text-sbb-black dark:text-sbb-white'
-                    : 'text-sbb-metal underline hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
-            {km} km
-          </button>
-        ))}
-      </div>
-      <svg viewBox={box.join(' ')} role="img" preserveAspectRatio="xMidYMid meet"
-           aria-label={`Karte rund um deinen Standort, ${breiteKm} km breit`}
-           className="mt-1 aspect-[1.6] w-full border border-sbb-cloud bg-white dark:border-sbb-iron
-                      dark:bg-sbb-midnight">
-        {stuecke.map(({ nr, s, i }) => (
-          <path key={`${nr}-${i}`} d={pfad(s.x.map((x, j) => [x, s.y[j]]))} fill="none"
-                className="stroke-sbb-metal dark:stroke-sbb-storm" strokeWidth={1.5}
-                vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
-        ))}
-        {tunnel.map((t) => {
+  function objekte(art: 'tunnel' | 'bruecken' | 'bahnuebergaenge') {
+    return daten[art].flatMap(([linie, stelle, name, la, lo]) => {
+      if (la === null || lo === null) return []
+      const [x, y] = lage(la, lo)
+      return [{ kennung: `${linie}:${stelle}`, linie, name, x, y }]
+    })
+  }
+
+  function zeichnen(px: number, box: Box) {
+    const h = box.w / 1.6
+    const drin = (x: number, y: number) =>
+      Math.abs(x - box.cx) < box.w * 0.55 && Math.abs(y - box.cy) < h * 0.55
+    const genauR = stand.genau !== null ? stand.genau / M_JE_EINHEIT : 0
+    return (
+      <>
+        {objekte('tunnel').filter((t) => drin(t.x, t.y)).map((t) => {
           const bereich = karte.tunnel[t.kennung]
           const eigene = linien.get(t.linie) ?? []
           if (bereich && bereich[0] !== bereich[1] && eigene.length) {
@@ -337,39 +300,39 @@ function UmgebungsKarte({ stand, linien, karte, daten, bahnhoefe, naechsteLinie 
           }
           return <circle key={`t${t.kennung}`} cx={t.x} cy={t.y} r={3.5 * px} className="fill-sbb-red" />
         })}
-        {bruecken.map((b) => (
+        {objekte('bruecken').filter((b) => drin(b.x, b.y)).map((b) => (
           <circle key={`b${b.kennung}`} cx={b.x} cy={b.y} r={1.8 * px} className="fill-sbb-red" />
         ))}
-        {uebergaenge.map((u) => (
+        {objekte('bahnuebergaenge').filter((u) => drin(u.x, u.y)).map((u) => (
           <rect key={`u${u.kennung}`} x={u.x - 2.2 * px} y={u.y - 2.2 * px} width={4.4 * px}
                 height={4.4 * px} className="fill-sbb-charcoal dark:fill-sbb-white" />
-        ))}
-        {stationen.map((b) => (
-          <circle key={b.schluessel} cx={b.x} cy={b.y} r={3.5 * px} strokeWidth={1.3}
-                  vectorEffect="non-scaling-stroke"
-                  className="fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white" />
-        ))}
-        {beschriftet.map((b) => (
-          <text key={`n${b.schluessel}`} x={b.x} y={b.y + 3.5 * px}
-                fontSize={10.5 * px} fontWeight="bold" textAnchor={b.anker}
-                className="fill-sbb-black stroke-white dark:fill-sbb-white dark:stroke-sbb-midnight"
-                strokeWidth={3} paintOrder="stroke" vectorEffect="non-scaling-stroke">{b.name}</text>
         ))}
         {genauR > 0 && (
           <circle cx={cx} cy={cy} r={genauR} className="fill-sbb-charcoal/10 dark:fill-sbb-white/15" />
         )}
         <circle cx={cx} cy={cy} r={5 * px} strokeWidth={2} vectorEffect="non-scaling-stroke"
                 className="fill-sbb-black stroke-white dark:fill-sbb-white dark:stroke-sbb-black" />
-      </svg>
-      <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-        Gezeichnet aus den Daten der SBB, ohne Strassen und ohne Kartenbilder eines fremden
-        Dienstes. Der grosse gefüllte Punkt ist dein Standort, der Kreis darum seine
-        Genauigkeit laut Gerät. Ringe: Bahnhöfe, beschriftet die nächsten, soweit Platz ist.
-        Rot: Tunnel (als Strecke, wo die Daten die Richtung der Länge hergeben, sonst als
-        Punkt) und Brücken (kleine Punkte). Quadrate: Bahnübergänge. Graue Linien: das
-        Streckennetz. Punkte stehen dort, wo ihre Quelle die Lage angibt, nicht immer genau
-        auf der gezeichneten Linie.
-      </figcaption>
-    </figure>
+      </>
+    )
+  }
+
+  return (
+    <Netzkarte
+      daten={karte} linien={linien} start={start} punkte={punkte} zeichnen={zeichnen}
+      presets={AUSSCHNITTE.map((km) => ({ text: `${km} km`, box: { cx, cy, w: (km * 1000) / M_JE_EINHEIT } }))}
+      seiten={seiten} linieOeffnen={(nr) => { window.location.hash = `#/linie/${nr}` }}
+      bahnhofOeffnen={(uic) => { window.location.hash = `#/bahnhof/${uic}` }}
+      titel="Karte rund um deinen Standort"
+      beschriftung={(
+        <>
+          Gezeichnet aus den Daten der SBB und des BAV, ohne Strassen und ohne Kartenbilder eines
+          fremden Dienstes. Der grosse gefüllte Punkt ist dein Standort, der Kreis darum seine
+          Genauigkeit laut Gerät. Ringe: Bahnhöfe. Rot: Tunnel (als Strecke, wo die Daten die
+          Richtung der Länge hergeben, sonst als Punkt) und Brücken (kleine Punkte). Quadrate:
+          Bahnübergänge. Punkte stehen dort, wo ihre Quelle die Lage angibt, nicht immer genau
+          auf der gezeichneten Linie. Ein Tipp auf einen Bahnhof oder eine Linie führt dorthin.
+        </>
+      )}
+    />
   )
 }

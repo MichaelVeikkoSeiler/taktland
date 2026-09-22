@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { linienLaden, profilLaden } from '../daten'
 import { antwortSpeichern, antwortenLesen, bahnhofZuruecksetzen } from '../fortschritt'
 import type { Fakt, Gleis, IndexEintrag, Kapitel, LinienEintrag, Profil } from '../typen'
+import { BahnhofKarte } from './Karte'
 import { Frage } from './Frage'
 import { Luecken } from './Luecken'
 import { streckenAdresse } from './Strecke'
@@ -114,6 +115,13 @@ export function Bahnhof({ uic, zurueck, eintrag }: {
           </p>
         )}
       </header>
+
+      {/* wo der Bahnhof im Netz liegt */}
+      {eintrag && (
+        <div className="px-4">
+          <BahnhofKarte eintrag={eintrag} />
+        </div>
+      )}
 
       <div className="px-4">
         {profil.chapters.map((k) => (
