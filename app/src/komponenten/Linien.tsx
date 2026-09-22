@@ -75,7 +75,7 @@ export function Linien({ index }: { index: BahnhofIndex | null }) {
           <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
             {begriff ? `${treffer.length} von ${daten.linien.length} Linien` : `${daten.linien.length} Linien`}
           </p>
-          <ul className="mt-3 space-y-2">
+          <ul className="mt-3 space-y-2 md:grid md:grid-cols-2 md:gap-2 md:space-y-0">
             {treffer.map(({ l, durch }) => <Eintrag key={l.linie} l={l} durch={durch} />)}
           </ul>
         </>

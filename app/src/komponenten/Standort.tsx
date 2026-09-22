@@ -154,7 +154,7 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
             return (
               <section key={art} className="mt-8">
                 <h3 className="text-lg font-bold">{titel}</h3>
-                <ul className="mt-2 space-y-2">
+                <ul className="mt-2 space-y-2 md:grid md:grid-cols-2 md:gap-2 md:space-y-0">
                   {zeigen.map((t) => <Eintrag key={t.schluessel} t={t} />)}
                 </ul>
                 {!offen.has(art) && alle.length > WENIGE && (

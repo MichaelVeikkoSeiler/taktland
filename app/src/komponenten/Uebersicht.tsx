@@ -203,7 +203,7 @@ export function Uebersicht({ art, stand, aendern }: {
             <Blaettern {...leiste} blaettern={(n) => blaettern(n)} name="Seiten" />
           </div>
 
-          <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
+          <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 md:grid md:grid-cols-2 md:gap-2 md:space-y-0 dark:border-sbb-iron">
             {sichtbar.map((e, i) => (
               <Zeile key={`${e.linie}-${e.km}-${e.name}-${i}`} e={e} stelle={stelle.get(e) ?? 0}
                      linie={daten.linien[String(e.linie)]} art={art} />

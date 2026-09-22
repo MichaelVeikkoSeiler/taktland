@@ -121,7 +121,8 @@ export default function App() {
 
   return (
     <div className="min-h-dvh bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
-      <div className="mx-auto max-w-2xl">
+      {/* auf dem Tablet breiter: 672 Pixel wirkten dort verloren (Michael, 2026-09-22) */}
+      <div className="mx-auto max-w-2xl md:max-w-3xl">
         {/* während der Entwicklung: Version und Knopf zum Aktualisieren */}
         <Aktualisieren />
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'} />

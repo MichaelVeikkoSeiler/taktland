@@ -82,7 +82,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
         <Blaettern {...leiste} blaettern={(n) => blaettern(n)} name="Seiten" />
       </div>
 
-      <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
+      <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 md:grid md:grid-cols-2 md:gap-2 md:space-y-0 dark:border-sbb-iron">
         {sichtbar.map((e) => <Eintrag key={e.uic} e={e} oeffnen={oeffnen} />)}
       </ul>
 
