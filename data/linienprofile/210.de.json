@@ -359,42 +359,54 @@
           "value": 2432,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[10].laenge_m"
+          "factRef": "tunnel.items[10].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 10
         },
         {
           "label": "Tunnel St-Aubin-Sauges (097)",
           "value": 2253,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[7].laenge_m"
+          "factRef": "tunnel.items[7].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 7
         },
         {
           "label": "Tunnel de la Raisse (098)",
           "value": 1256,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[6].laenge_m"
+          "factRef": "tunnel.items[6].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 6
         },
         {
           "label": "Tunnel de Concise",
           "value": 366,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[4].laenge_m"
+          "factRef": "tunnel.items[4].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 4
         },
         {
           "label": "Tunnel du Mormont sud 3",
           "value": 328,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Tunnel du Mormont sud 1",
           "value": 303,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -514,49 +526,63 @@
           "value": 6,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[105].baueinheiten"
+          "factRef": "bruecken.items[105].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 105
         },
         {
           "label": "PI voy Chavornay",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[6].baueinheiten"
+          "factRef": "bruecken.items[6].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 6
         },
         {
           "label": "PI Voy Grandson",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[30].baueinheiten"
+          "factRef": "bruecken.items[30].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 30
         },
         {
           "label": "PI voy Gorgier",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[48].baueinheiten"
+          "factRef": "bruecken.items[48].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 48
         },
         {
           "label": "PI voy de Colombier",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[57].baueinheiten"
+          "factRef": "bruecken.items[57].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 57
         },
         {
           "label": "PI voy de Neûchatel",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[72].baueinheiten"
+          "factRef": "bruecken.items[72].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 72
         },
         {
           "label": "PU Twann",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[106].baueinheiten"
+          "factRef": "bruecken.items[106].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 106
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

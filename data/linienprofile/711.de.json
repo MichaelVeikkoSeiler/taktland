@@ -255,7 +255,9 @@
           "value": 484,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -347,28 +349,36 @@
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "U alte Urdorfstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[10].baueinheiten"
+          "factRef": "bruecken.items[10].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 10
         },
         {
           "label": "PDu Dammgasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[25].baueinheiten"
+          "factRef": "bruecken.items[25].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 25
         },
         {
           "label": "PU Affoltern am Albis",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[26].baueinheiten"
+          "factRef": "bruecken.items[26].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 26
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

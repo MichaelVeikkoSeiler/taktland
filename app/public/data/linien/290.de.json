@@ -206,35 +206,45 @@
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[20].baueinheiten"
+          "factRef": "bruecken.items[20].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 20
         },
         {
           "label": "PU Gümligen",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[8].baueinheiten"
+          "factRef": "bruecken.items[8].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 8
         },
         {
           "label": "U Obere Zollgasse",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[5].baueinheiten"
+          "factRef": "bruecken.items[5].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 5
         },
         {
           "label": "PU Rubigen",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[14].baueinheiten"
+          "factRef": "bruecken.items[14].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 14
         },
         {
           "label": "PU Münsingen Nord",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[19].baueinheiten"
+          "factRef": "bruecken.items[19].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 19
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

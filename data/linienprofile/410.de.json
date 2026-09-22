@@ -367,49 +367,63 @@
           "value": 8,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[105].baueinheiten"
+          "factRef": "bruecken.items[105].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 105
         },
         {
           "label": "Dünnernbrücke (km 41.115)",
           "value": 6,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[6].baueinheiten"
+          "factRef": "bruecken.items[6].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 6
         },
         {
           "label": "PU Olten Süd",
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "Dünnernbrücke (km 45.971)",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[14].baueinheiten"
+          "factRef": "bruecken.items[14].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 14
         },
         {
           "label": "Unterführungsstrasse",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[17].baueinheiten"
+          "factRef": "bruecken.items[17].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 17
         },
         {
           "label": "PU Solothurn",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[62].baueinheiten"
+          "factRef": "bruecken.items[62].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 62
         },
         {
           "label": "PU Lengnau",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[91].baueinheiten"
+          "factRef": "bruecken.items[91].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 91
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -525,56 +539,72 @@
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[2].gleise"
+          "factRef": "bahnuebergaenge.items[2].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 2
         },
         {
           "label": "BUe Zuchwilstrasse",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[3].gleise"
+          "factRef": "bahnuebergaenge.items[3].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 3
         },
         {
           "label": "BUe Aareweg",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[6].gleise"
+          "factRef": "bahnuebergaenge.items[6].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 6
         },
         {
           "label": "PN 981",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[7].gleise"
+          "factRef": "bahnuebergaenge.items[7].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 7
         },
         {
           "label": "Zugang Stationsstr.",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         },
         {
           "label": "BUe Solothurnerstr.",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "BUe Luterbachstrasse",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[4].gleise"
+          "factRef": "bahnuebergaenge.items[4].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 4
         },
         {
           "label": "Industrie Bellach",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

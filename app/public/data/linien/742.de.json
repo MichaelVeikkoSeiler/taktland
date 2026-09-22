@@ -187,14 +187,18 @@
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "BUe Durntnerstrasse",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

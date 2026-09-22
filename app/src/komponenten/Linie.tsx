@@ -78,7 +78,7 @@ export function Linie({ nr, zurueck, zurueckText }: {
         {profil.chapters.map((k) => (
           <KapitelBlock key={k.id} kapitel={k} antworten={antworten} merken={merken}
                         verweis={(f) => (f.liste && profil.listen?.[f.liste]
-                          ? listenAdresse(nr, f.liste, f.filter) : undefined)} />
+                          ? listenAdresse(nr, f.liste, f.filter, f.eintrag) : undefined)} />
         ))}
         <Luecken luecken={profil.luecken} />
         <Quellen profil={profil} />

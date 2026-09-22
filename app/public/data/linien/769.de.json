@@ -199,7 +199,9 @@
           "value": 1801,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -267,14 +269,18 @@
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[9].baueinheiten"
+          "factRef": "bruecken.items[9].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 9
         },
         {
           "label": "PU Mitte Bülach",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[14].baueinheiten"
+          "factRef": "bruecken.items[14].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 14
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -337,35 +343,45 @@
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         },
         {
           "label": "BUe Niederfeldstrasse",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[2].gleise"
+          "factRef": "bahnuebergaenge.items[2].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 2
         },
         {
           "label": "BUe Wieshofstrasse",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "BUe Ziegelhutte",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[3].gleise"
+          "factRef": "bahnuebergaenge.items[3].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 3
         },
         {
           "label": "BUe Lochacker",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[4].gleise"
+          "factRef": "bahnuebergaenge.items[4].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 4
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

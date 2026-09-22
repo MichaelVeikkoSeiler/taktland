@@ -224,7 +224,9 @@
           "value": 760,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -328,14 +330,18 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[16].baueinheiten"
+          "factRef": "bruecken.items[16].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 16
         },
         {
           "label": "PDu Löwengässchen",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[21].baueinheiten"
+          "factRef": "bruecken.items[21].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 21
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -414,14 +420,18 @@
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "BUe Schlattingerstr.",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

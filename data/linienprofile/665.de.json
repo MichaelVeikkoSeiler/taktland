@@ -193,42 +193,54 @@
           "value": 585,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         },
         {
           "label": "Mühlefluhtunnel SZ",
           "value": 191,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[7].laenge_m"
+          "factRef": "tunnel.items[7].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 7
         },
         {
           "label": "Bühltunnel ZG",
           "value": 94,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[2].laenge_m"
+          "factRef": "tunnel.items[2].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 2
         },
         {
           "label": "Kalkofentunnel",
           "value": 69,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[6].laenge_m"
+          "factRef": "tunnel.items[6].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 6
         },
         {
           "label": "St. Adriantunnel",
           "value": 65,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[4].laenge_m"
+          "factRef": "tunnel.items[4].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 4
         },
         {
           "label": "Rossplattentunnel",
           "value": 48,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[3].laenge_m"
+          "factRef": "tunnel.items[3].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 3
         }
       ],
       "questions": [
@@ -336,21 +348,27 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[12].baueinheiten"
+          "factRef": "bruecken.items[12].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 12
         },
         {
           "label": "Br Sagenbach",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[35].baueinheiten"
+          "factRef": "bruecken.items[35].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 35
         },
         {
           "label": "PU Walchwil",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[38].baueinheiten"
+          "factRef": "bruecken.items[38].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 38
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

@@ -190,7 +190,9 @@
           "value": 263,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -258,21 +260,27 @@
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[8].baueinheiten"
+          "factRef": "bruecken.items[8].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 8
         },
         {
           "label": "U Steinackerweg",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[14].baueinheiten"
+          "factRef": "bruecken.items[14].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 14
         },
         {
           "label": "U Winterthurerstr.",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[15].baueinheiten"
+          "factRef": "bruecken.items[15].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 15
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

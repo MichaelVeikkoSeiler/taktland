@@ -254,42 +254,54 @@
           "value": 1618,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[7].laenge_m"
+          "factRef": "tunnel.items[7].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 7
         },
         {
           "label": "Tunnel de Taubenloch 2 ( 040 )",
           "value": 320,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[2].laenge_m"
+          "factRef": "tunnel.items[2].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 2
         },
         {
           "label": "Tunnel de Taubenloch 1 ( 039 )",
           "value": 239,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Tunnel de Combe (Creux, 076)",
           "value": 230,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[8].laenge_m"
+          "factRef": "tunnel.items[8].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 8
         },
         {
           "label": "Tunnel de Taubenloch 3 ( 041 )",
           "value": 220,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[3].laenge_m"
+          "factRef": "tunnel.items[3].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 3
         },
         {
           "label": "Tunnel de Taubenloch 5 ( 043 )",
           "value": 164,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[5].laenge_m"
+          "factRef": "tunnel.items[5].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 5
         }
       ],
       "questions": [
@@ -397,21 +409,27 @@
           "value": 9,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "PI de St Imier",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[25].baueinheiten"
+          "factRef": "bruecken.items[25].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 25
         },
         {
           "label": "PI du Pasquart",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[2].baueinheiten"
+          "factRef": "bruecken.items[2].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 2
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -515,21 +533,27 @@
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         },
         {
           "label": "PN St-Imier-Gare",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[18].gleise"
+          "factRef": "bahnuebergaenge.items[18].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 18
         },
         {
           "label": "PN de la Gare",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[23].gleise"
+          "factRef": "bahnuebergaenge.items[23].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 23
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

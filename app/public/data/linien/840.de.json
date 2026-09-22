@@ -310,56 +310,72 @@
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[5].baueinheiten"
+          "factRef": "bruecken.items[5].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 5
         },
         {
           "label": "Du Kellenbinzbach",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[17].baueinheiten"
+          "factRef": "bruecken.items[17].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 17
         },
         {
           "label": "Murgbrücke",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[21].baueinheiten"
+          "factRef": "bruecken.items[21].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 21
         },
         {
           "label": "Thurbrücke Müllheim",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[37].baueinheiten"
+          "factRef": "bruecken.items[37].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 37
         },
         {
           "label": "PU Weinfelden",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[49].baueinheiten"
+          "factRef": "bruecken.items[49].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 49
         },
         {
           "label": "SU KVA Weinfelden",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[51].baueinheiten"
+          "factRef": "bruecken.items[51].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 51
         },
         {
           "label": "BDu Neumüli",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[64].baueinheiten"
+          "factRef": "bruecken.items[64].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 64
         },
         {
           "label": "Aach-Brücke",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[69].baueinheiten"
+          "factRef": "bruecken.items[69].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 69
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

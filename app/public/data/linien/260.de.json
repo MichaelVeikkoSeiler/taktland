@@ -213,49 +213,63 @@
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[27].baueinheiten"
+          "factRef": "bruecken.items[27].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 27
         },
         {
           "label": "PU Lyss",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[18].baueinheiten"
+          "factRef": "bruecken.items[18].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 18
         },
         {
           "label": "PU Busswil",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[19].baueinheiten"
+          "factRef": "bruecken.items[19].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 19
         },
         {
           "label": "Aareviadukt Busswil",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[20].baueinheiten"
+          "factRef": "bruecken.items[20].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 20
         },
         {
           "label": "Jenskanal-Brücke",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[21].baueinheiten"
+          "factRef": "bruecken.items[21].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 21
         },
         {
           "label": "SU Studen",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[22].baueinheiten"
+          "factRef": "bruecken.items[22].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 22
         },
         {
           "label": "Aarebrücke Brügg",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[25].baueinheiten"
+          "factRef": "bruecken.items[25].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 25
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -333,49 +347,63 @@
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[4].gleise"
+          "factRef": "bahnuebergaenge.items[4].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 4
         },
         {
           "label": "BUe Moosgasse",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         },
         {
           "label": "BUe Moosrain",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "BUe Gsteig",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[2].gleise"
+          "factRef": "bahnuebergaenge.items[2].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 2
         },
         {
           "label": "BUe Kosthofen",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[3].gleise"
+          "factRef": "bahnuebergaenge.items[3].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 3
         },
         {
           "label": "BUe 250 Fulenmatt",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         },
         {
           "label": "PN 9826",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[8].gleise"
+          "factRef": "bahnuebergaenge.items[8].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 8
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

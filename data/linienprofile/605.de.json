@@ -98,14 +98,18 @@
           "value": 3375,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         },
         {
           "label": "Alte Gruonbachgalerie li. G100",
           "value": 100,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         }
       ],
       "questions": [

@@ -342,7 +342,9 @@
           "value": 424,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -446,49 +448,63 @@
           "value": 9,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[24].baueinheiten"
+          "factRef": "bruecken.items[24].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 24
         },
         {
           "label": "Viad de Villangeaux",
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[10].baueinheiten"
+          "factRef": "bruecken.items[10].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 10
         },
         {
           "label": "Brücke über Alte Aare",
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[44].baueinheiten"
+          "factRef": "bruecken.items[44].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 44
         },
         {
           "label": "Pt de Bressonnaz",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[11].baueinheiten"
+          "factRef": "bruecken.items[11].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 11
         },
         {
           "label": "Aq d'Henniez",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[21].baueinheiten"
+          "factRef": "bruecken.items[21].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 21
         },
         {
           "label": "PU Morat",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[36].baueinheiten"
+          "factRef": "bruecken.items[36].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 36
         },
         {
           "label": "U Bielstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[50].baueinheiten"
+          "factRef": "bruecken.items[50].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 50
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -617,49 +633,63 @@
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[28].gleise"
+          "factRef": "bahnuebergaenge.items[28].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 28
         },
         {
           "label": "BUe Zuckerfabrik 4",
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[56].gleise"
+          "factRef": "bahnuebergaenge.items[56].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 56
         },
         {
           "label": "BUe 955 Aarberg",
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[60].gleise"
+          "factRef": "bahnuebergaenge.items[60].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 60
         },
         {
           "label": "PN de Moudon",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[7].gleise"
+          "factRef": "bahnuebergaenge.items[7].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 7
         },
         {
           "label": "PN rue de Lausanne",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[19].gleise"
+          "factRef": "bahnuebergaenge.items[19].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 19
         },
         {
           "label": "BUe Murten",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[37].gleise"
+          "factRef": "bahnuebergaenge.items[37].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 37
         },
         {
           "label": "BUe Moosgasse (km 85.018)",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[46].gleise"
+          "factRef": "bahnuebergaenge.items[46].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 46
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

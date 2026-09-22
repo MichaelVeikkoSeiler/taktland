@@ -190,7 +190,9 @@
           "value": 488,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -258,35 +260,45 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "SU+PU Postzentrum",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[6].baueinheiten"
+          "factRef": "bruecken.items[6].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 6
         },
         {
           "label": "PU Hasliweg",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[1].baueinheiten"
+          "factRef": "bruecken.items[1].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 1
         },
         {
           "label": "U Grundstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[2].baueinheiten"
+          "factRef": "bruecken.items[2].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 2
         },
         {
           "label": "SU Gösgerstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[5].baueinheiten"
+          "factRef": "bruecken.items[5].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 5
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

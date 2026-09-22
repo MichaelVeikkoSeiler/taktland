@@ -199,56 +199,72 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[3].baueinheiten"
+          "factRef": "bruecken.items[3].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 3
         },
         {
           "label": "Br üb. Chessirüfi",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[17].baueinheiten"
+          "factRef": "bruecken.items[17].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 17
         },
         {
           "label": "Vilterserkanalbrücke",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "Saarkanal-Brücke",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[1].baueinheiten"
+          "factRef": "bruecken.items[1].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 1
         },
         {
           "label": "Landquart-Brücke",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[13].baueinheiten"
+          "factRef": "bruecken.items[13].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 13
         },
         {
           "label": "PU Landquart",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[14].baueinheiten"
+          "factRef": "bruecken.items[14].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 14
         },
         {
           "label": "U Schellenbergweg",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[25].baueinheiten"
+          "factRef": "bruecken.items[25].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 25
         },
         {
           "label": "Post-Tunnel",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[28].baueinheiten"
+          "factRef": "bruecken.items[28].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 28
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

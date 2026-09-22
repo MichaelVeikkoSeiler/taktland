@@ -270,7 +270,9 @@
           "value": 45,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -362,21 +364,27 @@
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[19].baueinheiten"
+          "factRef": "bruecken.items[19].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 19
         },
         {
           "label": "Du Glarnergiessen",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[5].baueinheiten"
+          "factRef": "bruecken.items[5].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 5
         },
         {
           "label": "WU Stadel",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[22].baueinheiten"
+          "factRef": "bruecken.items[22].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 22
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -480,42 +488,54 @@
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[8].gleise"
+          "factRef": "bahnuebergaenge.items[8].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 8
         },
         {
           "label": "BUe Im Amerika",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "BUe Schwarzistrasse",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[3].gleise"
+          "factRef": "bahnuebergaenge.items[3].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 3
         },
         {
           "label": "BUe Linthbrucke (km 61.315)",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[4].gleise"
+          "factRef": "bahnuebergaenge.items[4].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 4
         },
         {
           "label": "BUe Molliserstrasse (km 61.815)",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         },
         {
           "label": "BUe Ennetbuhlerstr",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[12].gleise"
+          "factRef": "bahnuebergaenge.items[12].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 12
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

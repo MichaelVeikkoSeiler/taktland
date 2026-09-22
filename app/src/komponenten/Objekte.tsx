@@ -25,10 +25,12 @@ export function genau(n: number) {
  * geordnet. Die Einträge stehen wie in den Fakten; was fehlt, heisst
  * «keine Angabe» und nicht 0.
  */
-export function Objekte({ nr, art, filter, zurueck }: {
+export function Objekte({ nr, art, filter, markiert, zurueck }: {
   nr: number
   art: ListenArt
   filter: Filter | null
+  /** Stelle eines Eintrags, der hervorgehoben wird: von einer Einzelkachel aus */
+  markiert: number | null
   zurueck: () => void
 }) {
   const [profil, setProfil] = useState<LinienProfil | null>(null)
@@ -45,6 +47,16 @@ export function Objekte({ nr, art, filter, zurueck }: {
   const t = TITEL[art]
   const alle = (profil?.listen?.[art] ?? []) as unknown as Array<Record<string, unknown>>
   const eintraege = filter ? alle.filter((e) => (e[filter.feld] ?? null) === filter.wert) : alle
+
+  // zum hervorgehobenen Eintrag rollen, sobald die Liste dasteht (nach dem
+  // Sprung an den Seitenanfang beim Seitenwechsel)
+  useEffect(() => {
+    if (!profil || markiert === null) return
+    const uhr = window.setTimeout(() => {
+      document.getElementById(`eintrag-${markiert}`)?.scrollIntoView({ block: 'center' })
+    }, 50)
+    return () => window.clearTimeout(uhr)
+  }, [profil, markiert])
 
   return (
     <div className="px-4 pb-16">
@@ -78,7 +90,10 @@ export function Objekte({ nr, art, filter, zurueck }: {
           <ol className="mt-4 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
                          dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
             {eintraege.map((e, i) => (
-              <li key={i} className="px-3 py-2">
+              <li key={i} id={filter ? undefined : `eintrag-${i}`}
+                  aria-current={!filter && i === markiert ? 'true' : undefined}
+                  className={`px-3 py-2 ${!filter && i === markiert
+                    ? 'border-l-4 border-l-sbb-red bg-sbb-milk dark:bg-sbb-charcoal' : ''}`}>
                 {art === 'tunnel' && <Tunnel t={e as unknown as TunnelEintrag} />}
                 {art === 'bruecken' && <Bruecke b={e as unknown as BrueckenEintrag} />}
                 {art === 'bahnuebergaenge' && <Uebergang u={e as unknown as UebergangEintrag} />}

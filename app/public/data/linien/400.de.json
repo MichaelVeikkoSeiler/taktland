@@ -88,42 +88,54 @@
           "value": 6286,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         },
         {
           "label": "Murgenthaltunnel",
           "value": 4744,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[10].laenge_m"
+          "factRef": "tunnel.items[10].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 10
         },
         {
           "label": "Oenzbergtunnel",
           "value": 3155,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[5].laenge_m"
+          "factRef": "tunnel.items[5].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 5
         },
         {
           "label": "Emmetunnel",
           "value": 1633,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[3].laenge_m"
+          "factRef": "tunnel.items[3].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 3
         },
         {
           "label": "Langenthaltunnel",
           "value": 1105,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[8].laenge_m"
+          "factRef": "tunnel.items[8].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 8
         },
         {
           "label": "Hersiwiltunnel",
           "value": 1000,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[4].laenge_m"
+          "factRef": "tunnel.items[4].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 4
         }
       ],
       "questions": [
@@ -243,21 +255,27 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[12].baueinheiten"
+          "factRef": "bruecken.items[12].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 12
         },
         {
           "label": "BDu Oenz",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[7].baueinheiten"
+          "factRef": "bruecken.items[7].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 7
         },
         {
           "label": "Du Werkkanal",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[13].baueinheiten"
+          "factRef": "bruecken.items[13].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 13
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

@@ -140,21 +140,27 @@
           "value": 3241,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[2].laenge_m"
+          "factRef": "tunnel.items[2].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 2
         },
         {
           "label": "Flughafentunnel",
           "value": 1510,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Opfikontunnel II",
           "value": 302,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [

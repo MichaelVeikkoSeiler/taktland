@@ -305,21 +305,27 @@
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[2].gleise"
+          "factRef": "bahnuebergaenge.items[2].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 2
         },
         {
           "label": "BUe Sagiweg",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         },
         {
           "label": "BUe Eschlikonerstr.",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[6].gleise"
+          "factRef": "bahnuebergaenge.items[6].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 6
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

@@ -311,8 +311,9 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
       setLaedt(false)
     }
   }
-  const t = tunnelIds.map((i) => tunnelNach.get(i)).filter((x) => x !== undefined)
-  const b = brueckenIds.map((i) => brueckenNach.get(i)).filter((x) => x !== undefined)
+  // mit Kennung, damit jede Zeile zu ihrem Eintrag in der Liste der Linie führt
+  const t = tunnelIds.flatMap((i) => { const x = tunnelNach.get(i); return x ? [{ ...x, id: i }] : [] })
+  const b = brueckenIds.flatMap((i) => { const x = brueckenNach.get(i); return x ? [{ ...x, id: i }] : [] })
 
   // Betriebspunkte des Wegs, die Bahnhöfe in Taktland sind
   const uicVon = useMemo(() => new Map(Object.entries(netz.bahnhoefe).map(([u, abk]) => [abk, Number(u)])),
@@ -442,8 +443,8 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
           <h2 className="text-lg font-bold">Tunnel in Wegrichtung</h2>
           <ol className="mt-3 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
                          dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
-            {t.map((x, i) => (
-              <Zeile key={tunnelIds[i]} name={x.name} linie={x.linie}
+            {t.map((x) => (
+              <Zeile key={x.id} name={x.name} linie={x.linie} liste="tunnel" stelle={x.id}
                      seite={tunnel.linien[String(x.linie)]?.seite ?? false} teile={[
                        x.laenge_m === null ? 'Länge: keine Angabe' : `${genau(x.laenge_m)} m`,
                        x.inbetriebnahme_jahr === null ? 'Jahr: keine Angabe'
@@ -459,8 +460,8 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
           <h2 className="text-lg font-bold">Brücken in Wegrichtung</h2>
           <ol className="mt-3 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
                          dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
-            {(alleBruecken ? b : b.slice(0, BRUECKEN_ZUERST)).map((x, i) => (
-              <Zeile key={brueckenIds[i]} name={x.name} linie={x.linie}
+            {(alleBruecken ? b : b.slice(0, BRUECKEN_ZUERST)).map((x) => (
+              <Zeile key={x.id} name={x.name} linie={x.linie} liste="bruecken" stelle={x.id}
                      seite={bruecken.linien[String(x.linie)]?.seite ?? false} teile={[
                        x.kanton ? `Kanton «${x.kanton}»` : 'Kanton: keine Angabe',
                        x.baueinheiten === null ? 'Baueinheiten: keine Angabe'
@@ -502,15 +503,23 @@ function Kachel({ zahl, text }: { zahl: number; text: string }) {
   )
 }
 
-function Zeile({ name, linie, seite, teile }: {
+function Zeile({ name, linie, seite, teile, liste, stelle }: {
   name: string
   linie: number
   seite: boolean
   teile: string[]
+  liste: 'tunnel' | 'bruecken'
+  /** «Linie:Stelle» */
+  stelle: string
 }) {
   return (
     <li className="px-3 py-2">
-      <p className="font-medium text-sbb-black dark:text-sbb-white">{name}</p>
+      <p className="font-medium text-sbb-black dark:text-sbb-white">
+        {seite
+          ? <a href={`#/linie/${linie}/${liste}?eintrag=${stelle.split(':')[1]}`}
+               className="underline-offset-2 hover:underline">{name}</a>
+          : name}
+      </p>
       <p className="text-sm text-sbb-metal dark:text-sbb-storm">
         {seite
           ? <a href={`#/linie/${linie}`} className="underline underline-offset-2 hover:text-sbb-black

@@ -201,7 +201,9 @@
           "value": 1222,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -269,14 +271,18 @@
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[49].baueinheiten"
+          "factRef": "bruecken.items[49].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 49
         },
         {
           "label": "PU Dietlikon Nord",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[29].baueinheiten"
+          "factRef": "bruecken.items[29].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 29
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

@@ -164,35 +164,45 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[62].baueinheiten"
+          "factRef": "bruecken.items[62].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 62
         },
         {
           "label": "Sot. sent. Riale Trodo",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[5].baueinheiten"
+          "factRef": "bruecken.items[5].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 5
         },
         {
           "label": "Sot. rus. km 166.927",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[27].baueinheiten"
+          "factRef": "bruecken.items[27].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 27
         },
         {
           "label": "Sot. pers. km 167.237",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[28].baueinheiten"
+          "factRef": "bruecken.items[28].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 28
         },
         {
           "label": "Sot Rusc km 167.346",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[29].baueinheiten"
+          "factRef": "bruecken.items[29].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 29
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

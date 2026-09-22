@@ -239,14 +239,18 @@
           "value": 303,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Täusitunnel",
           "value": 157,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -323,49 +327,63 @@
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "U Schönbodenstr.",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[1].baueinheiten"
+          "factRef": "bruecken.items[1].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 1
         },
         {
           "label": "PU Dübendorf",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[35].baueinheiten"
+          "factRef": "bruecken.items[35].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 35
         },
         {
           "label": "U + BDu Lattenhofweg",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[4].baueinheiten"
+          "factRef": "bruecken.items[4].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 4
         },
         {
           "label": "PU Brunnenstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[23].baueinheiten"
+          "factRef": "bruecken.items[23].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 23
         },
         {
           "label": "U Dammstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[27].baueinheiten"
+          "factRef": "bruecken.items[27].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 27
         },
         {
           "label": "Du Werrikerbach",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[28].baueinheiten"
+          "factRef": "bruecken.items[28].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 28
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -446,14 +464,18 @@
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[13].gleise"
+          "factRef": "bahnuebergaenge.items[13].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 13
         },
         {
           "label": "BUe Winterthurerstr.",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[14].gleise"
+          "factRef": "bahnuebergaenge.items[14].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 14
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

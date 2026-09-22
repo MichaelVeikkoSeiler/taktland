@@ -273,35 +273,45 @@
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[44].baueinheiten"
+          "factRef": "bruecken.items[44].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 44
         },
         {
           "label": "Du Holzbach",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[3].baueinheiten"
+          "factRef": "bruecken.items[3].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 3
         },
         {
           "label": "PDu Wohlen Süd",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[11].baueinheiten"
+          "factRef": "bruecken.items[11].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 11
         },
         {
           "label": "Du Katzbach",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[22].baueinheiten"
+          "factRef": "bruecken.items[22].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 22
         },
         {
           "label": "PU Eggstrasse",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[24].baueinheiten"
+          "factRef": "bruecken.items[24].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 24
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -394,49 +404,63 @@
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         },
         {
           "label": "BUe Hemmbrunnstrasse",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[4].gleise"
+          "factRef": "bahnuebergaenge.items[4].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 4
         },
         {
           "label": "BUe Ammerswilerstr.",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "BUe Dintikerstrasse",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[2].gleise"
+          "factRef": "bahnuebergaenge.items[2].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 2
         },
         {
           "label": "BUe Kirchweg",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[3].gleise"
+          "factRef": "bahnuebergaenge.items[3].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 3
         },
         {
           "label": "BUe Mitteldorf",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[6].gleise"
+          "factRef": "bahnuebergaenge.items[6].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 6
         },
         {
           "label": "BUe Gaswerkstr.(BD)",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

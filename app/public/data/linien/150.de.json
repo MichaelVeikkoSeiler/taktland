@@ -346,14 +346,18 @@
           "value": 821,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         },
         {
           "label": "Galerie ICC",
           "value": 327,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         }
       ],
       "questions": [
@@ -430,42 +434,54 @@
           "value": 8,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "PI à bagage ouest 2",
           "value": 7,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[4].baueinheiten"
+          "factRef": "bruecken.items[4].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 4
         },
         {
           "label": "PI Rue du Valais",
           "value": 7,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[107].baueinheiten"
+          "factRef": "bruecken.items[107].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 107
         },
         {
           "label": "PI de Montbrillant",
           "value": 6,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[114].baueinheiten"
+          "factRef": "bruecken.items[114].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 114
         },
         {
           "label": "PI de Rialto",
           "value": 6,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[115].baueinheiten"
+          "factRef": "bruecken.items[115].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 115
         },
         {
           "label": "PI des Grottes",
           "value": 6,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[116].baueinheiten"
+          "factRef": "bruecken.items[116].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 116
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

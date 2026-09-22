@@ -266,7 +266,8 @@ def tunnel(f):
                   "factRef": "tunnel.anzahl_erfasst", "liste": "tunnel"}]
         if t.get("laenge_m") is not None:
             facts.append({"label": t["name"], "value": t["laenge_m"], "unit": "m",
-                          "source": "tunnel", "factRef": "tunnel.items[0].laenge_m"})
+                          "source": "tunnel", "factRef": "tunnel.items[0].laenge_m",
+                          "liste": "tunnel", "eintrag": 0})
             frei, alle = vorschlaege(f"L{nr}", t["laenge_m"], 3, fb=fb)
             opts = [f"{ch(x)} m" for x in sorted({t["laenge_m"], *frei})]
             fr.append(auswahl_frage(f"{t['name']}: Wie lang ist dieser Tunnel laut den Daten?", opts,
@@ -298,8 +299,10 @@ def tunnel(f):
         gezeigt = nach_laenge[:TUNNEL_IN_LISTE]
         facts = [{"label": "Erfasste Tunnel", "value": k, "source": "tunnel",
                   "factRef": "tunnel.anzahl_erfasst", "liste": "tunnel"}]
+        # «eintrag»: die Kachel führt zu diesem Tunnel in der ganzen Liste
         facts += [{"label": items[i]["name"], "value": items[i]["laenge_m"], "unit": "m",
-                   "source": "tunnel", "factRef": f"tunnel.items[{i}].laenge_m"} for i in gezeigt]
+                   "source": "tunnel", "factRef": f"tunnel.items[{i}].laenge_m",
+                   "liste": "tunnel", "eintrag": i} for i in gezeigt]
         if k > len(gezeigt):
             body += " Die Liste zeigt die längsten davon."
         genannt = sorted(set(gezeigt) | set(lang) | (set(alt) if len(alt) <= 3 else set()))
@@ -427,7 +430,8 @@ def bruecken(f):
                   for j, k in enumerate(kantone)]
     gezeigt = gruppen_bis(items, BRUECKEN_IN_LISTE) if n > 1 and meiste and meiste > 1 else []
     facts += [{"label": nenne(i), "value": items[i]["baueinheiten"], "unit": "Baueinheiten",
-               "source": "brucken", "factRef": f"bruecken.items[{i}].baueinheiten"}
+               "source": "brucken", "factRef": f"bruecken.items[{i}].baueinheiten",
+               "liste": "bruecken", "eintrag": i}
               for i in gezeigt]
     if gezeigt and len(gezeigt) < n:
         body += " Die Liste zeigt die Brücken mit den meisten Baueinheiten."
@@ -544,7 +548,8 @@ def bahnuebergaenge(f):
         mit_zahl = [dict(it, baueinheiten=it["gleise"]) for it in items]   # gleiche Gruppierung wie bei den Brücken
         gezeigt = gruppen_bis(mit_zahl, BRUECKEN_IN_LISTE)
         facts += [{"label": nenne(i), "value": items[i]["gleise"], "unit": "Gleise",
-                   "source": "bahnubergang", "factRef": f"bahnuebergaenge.items[{i}].gleise"}
+                   "source": "bahnubergang", "factRef": f"bahnuebergaenge.items[{i}].gleise",
+                   "liste": "bahnuebergaenge", "eintrag": i}
                   for i in gezeigt]
         if gezeigt and len(gezeigt) < n:
             body += " Die Liste zeigt die Bahnübergänge mit den meisten gekreuzten Gleisen."

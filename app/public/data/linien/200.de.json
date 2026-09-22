@@ -231,28 +231,36 @@
           "value": 148,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         },
         {
           "label": "Tunnel de Nanchau (036)",
           "value": 132,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[3].laenge_m"
+          "factRef": "tunnel.items[3].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 3
         },
         {
           "label": "Tunnel de Combes (035)",
           "value": 100,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[2].laenge_m"
+          "factRef": "tunnel.items[2].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 2
         },
         {
           "label": "Tunnel du Moulin Bornu (034)",
           "value": 72,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         }
       ],
       "questions": [
@@ -336,42 +344,54 @@
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "PI voy de Cossonay 2",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[14].baueinheiten"
+          "factRef": "bruecken.items[14].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 14
         },
         {
           "label": "PI voy de Cossonay",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[15].baueinheiten"
+          "factRef": "bruecken.items[15].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 15
         },
         {
           "label": "PI voy La Sarraz",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[23].baueinheiten"
+          "factRef": "bruecken.items[23].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 23
         },
         {
           "label": "PI voy d'Arnex",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[29].baueinheiten"
+          "factRef": "bruecken.items[29].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 29
         },
         {
           "label": "PI voy du Day (km 43.168)",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[38].baueinheiten"
+          "factRef": "bruecken.items[38].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 38
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -449,14 +469,18 @@
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         },
         {
           "label": "PN du Grand Bois",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

@@ -178,21 +178,27 @@
           "value": 118,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Tunnel du Carroz (079)",
           "value": 83,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[2].laenge_m"
+          "factRef": "tunnel.items[2].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 2
         },
         {
           "label": "Tunnel de Salanche (077)",
           "value": 20,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -271,56 +277,72 @@
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[4].baueinheiten"
+          "factRef": "bruecken.items[4].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 4
         },
         {
           "label": "PI de Burignon",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[1].baueinheiten"
+          "factRef": "bruecken.items[1].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 1
         },
         {
           "label": "PI de la Bergère",
           "value": 1,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "Pt de la Salance",
           "value": 1,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[2].baueinheiten"
+          "factRef": "bruecken.items[2].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 2
         },
         {
           "label": "Pt de Chardonne",
           "value": 1,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[3].baueinheiten"
+          "factRef": "bruecken.items[3].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 3
         },
         {
           "label": "Pt du Forestay 1",
           "value": 1,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[5].baueinheiten"
+          "factRef": "bruecken.items[5].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 5
         },
         {
           "label": "Pt du Forestay 2",
           "value": 1,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[6].baueinheiten"
+          "factRef": "bruecken.items[6].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 6
         },
         {
           "label": "Pt du Forestay 3",
           "value": 1,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[7].baueinheiten"
+          "factRef": "bruecken.items[7].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 7
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

@@ -302,42 +302,54 @@
           "value": 1134,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[7].laenge_m"
+          "factRef": "tunnel.items[7].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 7
         },
         {
           "label": "Wilzigentunnel",
           "value": 250,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Wolhusentunnel",
           "value": 150,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[5].laenge_m"
+          "factRef": "tunnel.items[5].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 5
         },
         {
           "label": "Unterer Schächlitunnel",
           "value": 95,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[4].laenge_m"
+          "factRef": "tunnel.items[4].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 4
         },
         {
           "label": "Entlenstaldentunnel",
           "value": 58,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[2].laenge_m"
+          "factRef": "tunnel.items[2].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 2
         },
         {
           "label": "Oberer Schächlitunnel",
           "value": 45,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[3].laenge_m"
+          "factRef": "tunnel.items[3].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 3
         }
       ],
       "questions": [
@@ -445,21 +457,27 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[33].baueinheiten"
+          "factRef": "bruecken.items[33].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 33
         },
         {
           "label": "PU Langnau",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[35].baueinheiten"
+          "factRef": "bruecken.items[35].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 35
         },
         {
           "label": "Vi Russachergraben",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[91].baueinheiten"
+          "factRef": "bruecken.items[91].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 91
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -561,42 +579,54 @@
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         },
         {
           "label": "BUe Station (km 48.171)",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[25].gleise"
+          "factRef": "bahnuebergaenge.items[25].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 25
         },
         {
           "label": "BUe Ebnetstrasse",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[29].gleise"
+          "factRef": "bahnuebergaenge.items[29].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 29
         },
         {
           "label": "BUe ECO",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[40].gleise"
+          "factRef": "bahnuebergaenge.items[40].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 40
         },
         {
           "label": "BUe Walzmuhle",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[43].gleise"
+          "factRef": "bahnuebergaenge.items[43].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 43
         },
         {
           "label": "BUe Cheerstrasse",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[55].gleise"
+          "factRef": "bahnuebergaenge.items[55].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 55
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

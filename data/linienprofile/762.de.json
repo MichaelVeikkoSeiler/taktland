@@ -222,14 +222,18 @@
           "value": 153,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Schloss Laufentunnel",
           "value": 66,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -306,21 +310,27 @@
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[2].baueinheiten"
+          "factRef": "bruecken.items[2].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 2
         },
         {
           "label": "BDu mit Gehsteg",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[14].baueinheiten"
+          "factRef": "bruecken.items[14].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 14
         },
         {
           "label": "SU Fleudenbühl",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[17].baueinheiten"
+          "factRef": "bruecken.items[17].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 17
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -398,21 +408,27 @@
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[12].gleise"
+          "factRef": "bahnuebergaenge.items[12].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 12
         },
         {
           "label": "BUe Stationsstrass (km 46.257)",
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[20].gleise"
+          "factRef": "bahnuebergaenge.items[20].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 20
         },
         {
           "label": "BUe Sackstrass",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[22].gleise"
+          "factRef": "bahnuebergaenge.items[22].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 22
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

@@ -270,49 +270,63 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[28].baueinheiten"
+          "factRef": "bruecken.items[28].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 28
         },
         {
           "label": "Sisselnbachbrücke",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[48].baueinheiten"
+          "factRef": "bruecken.items[48].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 48
         },
         {
           "label": "U Dachsbergstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         },
         {
           "label": "Du Tägerbach",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[12].baueinheiten"
+          "factRef": "bruecken.items[12].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 12
         },
         {
           "label": "Du Chrüzlibach",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[15].baueinheiten"
+          "factRef": "bruecken.items[15].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 15
         },
         {
           "label": "U Landstrasse R Burg",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[17].baueinheiten"
+          "factRef": "bruecken.items[17].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 17
         },
         {
           "label": "U Landstrasse E1",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[34].baueinheiten"
+          "factRef": "bruecken.items[34].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 34
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -390,21 +404,27 @@
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[8].gleise"
+          "factRef": "bahnuebergaenge.items[8].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 8
         },
         {
           "label": "BUe Eikerwald",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[9].gleise"
+          "factRef": "bahnuebergaenge.items[9].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 9
         },
         {
           "label": "BUe Rutti",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[10].gleise"
+          "factRef": "bahnuebergaenge.items[10].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 10
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

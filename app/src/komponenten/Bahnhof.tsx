@@ -176,7 +176,8 @@ export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang, verwe
             const liste = verweis?.(f)
             const href = liste ?? (f.bahnhof ? `#/bahnhof/${f.bahnhof}` : undefined)
             return <FaktZeile key={f.factRef + f.label} fakt={f} href={href}
-                              zielText={liste ? 'Alle anzeigen' : 'Zur Bahnhofsseite'} />
+                              zielText={f.eintrag !== undefined ? 'In der Liste zeigen'
+                                : liste ? 'Alle anzeigen' : 'Zur Bahnhofsseite'} />
           })}
         </dl>
       )}

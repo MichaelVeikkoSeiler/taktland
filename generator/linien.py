@@ -106,6 +106,18 @@ def pruefe_linie(profil, fakten):
             if eintraege is None:
                 b.fehlt(wo, f"verweist auf die Liste {x['liste']}, die fehlt")
                 continue
+            # Eine Einzelkachel («Viadukt in Brunnen, 8 Baueinheiten») führt zu
+            # ihrem Eintrag: Die Stelle muss die sein, auf die der factRef zeigt,
+            # und der Eintrag muss so heissen wie die Kachel
+            if "eintrag" in x:
+                i = x["eintrag"]
+                if not (isinstance(i, int) and 0 <= i < len(eintraege)):
+                    b.fehlt(wo, f"Eintrag {i} gibt es in der Liste {x['liste']} nicht")
+                elif not x.get("factRef", "").startswith(f"{x['liste']}.items[{i}]."):
+                    b.fehlt(wo, f"Eintrag {i}, aber factRef {x.get('factRef')}")
+                elif not str(x.get("label", "")).startswith(str(eintraege[i].get("name"))):
+                    b.fehlt(wo, f"«{x.get('label')}» führt zu «{eintraege[i].get('name')}»")
+                continue
             if x.get("filter"):
                 feld, wert = x["filter"]["feld"], x["filter"]["wert"]
                 eintraege = [e for e in eintraege if e.get(feld) == wert]

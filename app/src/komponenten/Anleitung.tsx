@@ -144,7 +144,9 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
           <li>
             Kacheln mit Pfeil führen zur ganzen Liste: «Erfasste Tunnel», «Erfasste Brücken»
             und «Erfasste Bahnübergänge» zu allen Einträgen der Linie, eine Kachel wie
-            «Ticino, 325 Brücken» zu genau diesen 325.
+            «Ticino, 325 Brücken» zu genau diesen 325. Eine Kachel zu einem einzelnen Tunnel,
+            einer Brücke oder einem Bahnübergang zeigt diesen Eintrag in der Liste, rot
+            markiert.
           </li>
           <li>
             Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Länge, Baujahr und
@@ -191,8 +193,8 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             blättern geht wie bei den Bahnhöfen.
           </li>
           <li>
-            Ein Tipp auf einen Eintrag führt zur Seite seiner Linie. Brücken auf Linien ohne
-            eigene Seite stehen trotzdem in der Liste, nur ohne Verweis.
+            Ein Tipp auf einen Eintrag zeigt ihn in der Liste seiner Linie, rot markiert. Brücken
+            auf Linien ohne eigene Seite stehen trotzdem in der Liste, nur ohne Verweis.
           </li>
           <li>
             Fragen dazu stehen auf den Linienseiten. Die Tunnel treten zudem im Duell

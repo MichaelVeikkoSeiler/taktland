@@ -241,7 +241,9 @@
           "value": 905,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -333,49 +335,63 @@
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[34].baueinheiten"
+          "factRef": "bruecken.items[34].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 34
         },
         {
           "label": "Querkanal K2",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[12].baueinheiten"
+          "factRef": "bruecken.items[12].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 12
         },
         {
           "label": "Querkanal K5",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[15].baueinheiten"
+          "factRef": "bruecken.items[15].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 15
         },
         {
           "label": "PU Mitte Hardbrücke",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[19].baueinheiten"
+          "factRef": "bruecken.items[19].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 19
         },
         {
           "label": "Lehnenviadukt Killwangen",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[41].baueinheiten"
+          "factRef": "bruecken.items[41].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 41
         },
         {
           "label": "Untere Limmatbrücke",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[51].baueinheiten"
+          "factRef": "bruecken.items[51].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 51
         },
         {
           "label": "U Zürcherstrasse",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[63].baueinheiten"
+          "factRef": "bruecken.items[63].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 63
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

@@ -216,14 +216,18 @@
           "value": 143,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Fischerhölzlitunnel",
           "value": 112,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -312,49 +316,63 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[4].baueinheiten"
+          "factRef": "bruecken.items[4].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 4
         },
         {
           "label": "WU Obere Bauelhaustr.",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[8].baueinheiten"
+          "factRef": "bruecken.items[8].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 8
         },
         {
           "label": "U Gaswerkstr. Br 1",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[35].baueinheiten"
+          "factRef": "bruecken.items[35].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 35
         },
         {
           "label": "U Eglisauerstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[6].baueinheiten"
+          "factRef": "bruecken.items[6].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 6
         },
         {
           "label": "WU im Gentner",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[7].baueinheiten"
+          "factRef": "bruecken.items[7].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 7
         },
         {
           "label": "U Rüdlingerstrasse",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[12].baueinheiten"
+          "factRef": "bruecken.items[12].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 12
         },
         {
           "label": "WU Bitzibrunnengraben",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[19].baueinheiten"
+          "factRef": "bruecken.items[19].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 19
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

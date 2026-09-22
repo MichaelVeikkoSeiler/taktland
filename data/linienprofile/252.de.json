@@ -217,7 +217,9 @@
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[14].baueinheiten"
+          "factRef": "bruecken.items[14].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 14
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -295,35 +297,45 @@
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[6].gleise"
+          "factRef": "bahnuebergaenge.items[6].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 6
         },
         {
           "label": "PN de Cheyres",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[7].gleise"
+          "factRef": "bahnuebergaenge.items[7].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 7
         },
         {
           "label": "PN d'Estavayer",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[9].gleise"
+          "factRef": "bahnuebergaenge.items[9].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 9
         },
         {
           "label": "PN Cugy ouest",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[12].gleise"
+          "factRef": "bahnuebergaenge.items[12].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 12
         },
         {
           "label": "PN Cugy est",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[13].gleise"
+          "factRef": "bahnuebergaenge.items[13].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 13
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

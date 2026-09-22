@@ -136,3 +136,19 @@ def test_anfang_und_ende_fuehren_zum_bahnhof():
     # eine Abzweigung bleibt ohne Link
     anfang = next(k for k in L.bauen("600")["chapters"] if k["id"] == "strecke")["facts"][0]
     assert "bahnhof" not in anfang
+
+
+def test_einzelkachel_fuehrt_zu_ihrem_eintrag():
+    # «Viadukt in Brunnen, 8 Baueinheiten» führt zu genau dieser Brücke
+    d = L.bauen("600")
+    f = lb.fakten("600")
+    kacheln = [x for k in d["chapters"] for x in k.get("facts", []) if "eintrag" in x]
+    assert kacheln
+    for x in kacheln:
+        assert d["listen"][x["liste"]][x["eintrag"]]["name"] in x["label"]
+    assert L.pruefe_linie(d, f).ok
+    falsch = json.loads(json.dumps(d))
+    x = next(x for k in falsch["chapters"] for x in k.get("facts", []) if "eintrag" in x)
+    x["eintrag"] += 1
+    assert not L.pruefe_linie(falsch, f).ok
+

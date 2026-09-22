@@ -401,42 +401,54 @@
           "value": 15000,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[30].laenge_m"
+          "factRef": "tunnel.items[30].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 30
         },
         {
           "label": "Oelbergtunnel",
           "value": 1987,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[4].laenge_m"
+          "factRef": "tunnel.items[4].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 4
         },
         {
           "label": "Galleria Monte Ceneri I sinistra",
           "value": 1675,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[51].laenge_m"
+          "factRef": "tunnel.items[51].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 51
         },
         {
           "label": "Naxbergtunnel",
           "value": 1570,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[29].laenge_m"
+          "factRef": "tunnel.items[29].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 29
         },
         {
           "label": "Galleria Freggio",
           "value": 1568,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[34].laenge_m"
+          "factRef": "tunnel.items[34].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 34
         },
         {
           "label": "Galleria Prato",
           "value": 1567,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[37].laenge_m"
+          "factRef": "tunnel.items[37].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 37
         }
       ],
       "questions": [
@@ -556,42 +568,54 @@
           "value": 8,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[66].baueinheiten"
+          "factRef": "bruecken.items[66].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 66
         },
         {
           "label": "Du Dorfbach Flüelen",
           "value": 6,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[84].baueinheiten"
+          "factRef": "bruecken.items[84].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 84
         },
         {
           "label": "Rus. sot. Riale Scaretta",
           "value": 6,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[253].baueinheiten"
+          "factRef": "bruecken.items[253].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 253
         },
         {
           "label": "PU Arth-Goldau Süd",
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[41].baueinheiten"
+          "factRef": "bruecken.items[41].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 41
         },
         {
           "label": "Ponte Boggera",
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[321].baueinheiten"
+          "factRef": "bruecken.items[321].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 321
         },
         {
           "label": "Sot P Lugano",
           "value": 5,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[446].baueinheiten"
+          "factRef": "bruecken.items[446].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 446
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -708,49 +732,63 @@
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         },
         {
           "label": "BUe 52.690",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[3].gleise"
+          "factRef": "bahnuebergaenge.items[3].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 3
         },
         {
           "label": "BUe 368 Ruag 1",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "BUe 368 Ruag 2",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[2].gleise"
+          "factRef": "bahnuebergaenge.items[2].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 2
         },
         {
           "label": "Passaggio pedonale",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[4].gleise"
+          "factRef": "bahnuebergaenge.items[4].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 4
         },
         {
           "label": "PL St. L. Favre",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         },
         {
           "label": "PL P+R",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[6].gleise"
+          "factRef": "bahnuebergaenge.items[6].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 6
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

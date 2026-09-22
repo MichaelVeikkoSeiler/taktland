@@ -288,28 +288,36 @@
           "value": 1355,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         },
         {
           "label": "Lattenbergtunnel",
           "value": 93,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[3].laenge_m"
+          "factRef": "tunnel.items[3].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 3
         },
         {
           "label": "Erlenbachtunnel",
           "value": 72,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Hitzbergtunnel",
           "value": 71,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[2].laenge_m"
+          "factRef": "tunnel.items[2].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 2
         }
       ],
       "questions": [
@@ -412,21 +420,27 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[28].baueinheiten"
+          "factRef": "bruecken.items[28].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 28
         },
         {
           "label": "PDu 1 Burgstrasse",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[43].baueinheiten"
+          "factRef": "bruecken.items[43].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 43
         },
         {
           "label": "Vi Langacker Teil 1",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[58].baueinheiten"
+          "factRef": "bruecken.items[58].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 58
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",

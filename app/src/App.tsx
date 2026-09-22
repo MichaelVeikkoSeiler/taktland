@@ -8,7 +8,7 @@ import { type Bereich, Kopf } from './komponenten/Kopf'
 import { Linie } from './komponenten/Linie'
 import { Linien } from './komponenten/Linien'
 import { Objekte } from './komponenten/Objekte'
-import { type Filter, filterAusAdresse } from './listen'
+import { eintragAusAdresse, type Filter, filterAusAdresse } from './listen'
 import type { ListenArt } from './typen'
 import { Strecke, type StreckenWahl, wahlAusAdresse } from './komponenten/Strecke'
 import { Suche, type ListenStand } from './komponenten/Suche'
@@ -26,7 +26,7 @@ type Seite =
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
-  | { art: 'objekte'; nr: number; liste: ListenArt; filter: Filter | null }
+  | { art: 'objekte'; nr: number; liste: ListenArt; filter: Filter | null; eintrag: number | null }
 
 function seiteAusAdresse(): Seite {
   const h = window.location.hash
@@ -36,7 +36,7 @@ function seiteAusAdresse(): Seite {
   const objekte = /^#\/linie\/(\d+)\/(tunnel|bruecken|bahnuebergaenge)(?:\?(.*))?$/.exec(h)
   if (objekte) {
     return { art: 'objekte', nr: Number(objekte[1]), liste: objekte[2] as ListenArt,
-             filter: filterAusAdresse(objekte[3]) }
+             filter: filterAusAdresse(objekte[3]), eintrag: eintragAusAdresse(objekte[3]) }
   }
   const linie = /^#\/linie\/(\d+)$/.exec(h)
   if (linie) return { art: 'linie', nr: Number(linie[1]) }
@@ -137,7 +137,7 @@ export default function App() {
                  zurueck={() => { window.location.hash = zurueckZu.adresse }} />
         )}
         {seite.art === 'objekte' && (
-          <Objekte nr={seite.nr} art={seite.liste} filter={seite.filter}
+          <Objekte nr={seite.nr} art={seite.liste} filter={seite.filter} markiert={seite.eintrag}
                    zurueck={() => { window.location.hash = `#/linie/${seite.nr}` }} />
         )}
         {seite.art === 'liste' && index

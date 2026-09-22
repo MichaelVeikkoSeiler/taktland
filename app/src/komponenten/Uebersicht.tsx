@@ -117,6 +117,18 @@ export function Uebersicht({ art, stand, aendern }: {
   }, [art])
 
   const alle = useMemo(() => (daten?.eintraege ?? []) as Eintrag[], [daten])
+  // Stelle jedes Eintrags in der Liste seiner Linie: Die Übersicht führt sie je
+  // Linie in der Reihenfolge der Linienfakten
+  const stelle = useMemo(() => {
+    const m = new Map<Eintrag, number>()
+    const zaehler = new Map<number, number>()
+    for (const e of alle) {
+      const i = zaehler.get(e.linie) ?? 0
+      zaehler.set(e.linie, i + 1)
+      m.set(e, i)
+    }
+    return m
+  }, [alle])
   const treffer = useMemo(() => {
     const b = vereinfachen(stand.begriff.trim())
     const liste = b
@@ -144,7 +156,7 @@ export function Uebersicht({ art, stand, aendern }: {
         </p>
       )}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        Ein Tipp auf einen Eintrag führt zu seiner Linie.
+        Ein Tipp auf einen Eintrag zeigt ihn in der Liste seiner Linie.
         {daten?.ohne_seite ? <> {daten.ohne_seite} Brücken liegen auf Linien ohne eigene
           Seite in Taktland: Sie haben weniger als zwei Bahnhöfe in Taktland und keinen
           Tunnel. Diese Brücken stehen trotzdem hier, nur ohne Verweis.</> : null}
@@ -192,7 +204,7 @@ export function Uebersicht({ art, stand, aendern }: {
 
           <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
             {sichtbar.map((e, i) => (
-              <Zeile key={`${e.linie}-${e.km}-${e.name}-${i}`} e={e}
+              <Zeile key={`${e.linie}-${e.km}-${e.name}-${i}`} e={e} stelle={stelle.get(e) ?? 0}
                      linie={daten.linien[String(e.linie)]} art={art} />
             ))}
           </ul>
@@ -219,10 +231,11 @@ function zahl(n: number) {
   return n.toLocaleString('de-CH')
 }
 
-function Zeile({ e, linie, art }: {
+function Zeile({ e, linie, art, stelle }: {
   e: Eintrag
   linie: { name: string | null; seite: boolean } | undefined
   art: UebersichtArt
+  stelle: number
 }) {
   const t = e as Tunnel
   const b = e as Bruecke
@@ -258,7 +271,7 @@ function Zeile({ e, linie, art }: {
   return (
     <li>
       {linie?.seite ? (
-        <a href={`#/linie/${e.linie}`}
+        <a href={`#/linie/${e.linie}/${art}?eintrag=${stelle}`}
            className={`${rahmen} hover:border-sbb-black dark:hover:border-sbb-white`}>
           {inhalt}
           <span className="shrink-0 text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>

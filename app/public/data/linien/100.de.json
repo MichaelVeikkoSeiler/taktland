@@ -458,42 +458,54 @@
           "value": 19820,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[8].laenge_m"
+          "factRef": "tunnel.items[8].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 8
         },
         {
           "label": "Tunnel de Varen (102)",
           "value": 2799,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[6].laenge_m"
+          "factRef": "tunnel.items[6].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 6
         },
         {
           "label": "Tunnel de Leuk (103)",
           "value": 1376,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[7].laenge_m"
+          "factRef": "tunnel.items[7].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 7
         },
         {
           "label": "Tunnel de St-Maurice (003)",
           "value": 490,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[3].laenge_m"
+          "factRef": "tunnel.items[3].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 3
         },
         {
           "label": "Tunnel de Sierre (Gobet)",
           "value": 370,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[4].laenge_m"
+          "factRef": "tunnel.items[4].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 4
         },
         {
           "label": "Tunnel des Crêtes (025)",
           "value": 302,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[2].laenge_m"
+          "factRef": "tunnel.items[2].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 2
         }
       ],
       "questions": [
@@ -601,42 +613,54 @@
           "value": 9,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[152].baueinheiten"
+          "factRef": "bruecken.items[152].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 152
         },
         {
           "label": "PU Brig",
           "value": 9,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[200].baueinheiten"
+          "factRef": "bruecken.items[200].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 200
         },
         {
           "label": "PI voy Lausanne est",
           "value": 8,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[2].baueinheiten"
+          "factRef": "bruecken.items[2].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 2
         },
         {
           "label": "PI av. d'Ouchy",
           "value": 7,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[4].baueinheiten"
+          "factRef": "bruecken.items[4].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 4
         },
         {
           "label": "Pt sur la Veveyse",
           "value": 7,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[36].baueinheiten"
+          "factRef": "bruecken.items[36].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 36
         },
         {
           "label": "Canal de fuite UE Vernayaz",
           "value": 6,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[112].baueinheiten"
+          "factRef": "bruecken.items[112].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 112
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -726,42 +750,54 @@
           "value": 5,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[3].gleise"
+          "factRef": "bahnuebergaenge.items[3].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 3
         },
         {
           "label": "PN route de l'industrie",
           "value": 5,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[4].gleise"
+          "factRef": "bahnuebergaenge.items[4].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 4
         },
         {
           "label": "PN Butticaz",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[0].gleise"
+          "factRef": "bahnuebergaenge.items[0].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 0
         },
         {
           "label": "PN Grand",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[1].gleise"
+          "factRef": "bahnuebergaenge.items[1].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 1
         },
         {
           "label": "PN du Duzillet",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[2].gleise"
+          "factRef": "bahnuebergaenge.items[2].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 2
         },
         {
           "label": "PN de la raffinerie",
           "value": 1,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise"
+          "factRef": "bahnuebergaenge.items[5].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 5
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

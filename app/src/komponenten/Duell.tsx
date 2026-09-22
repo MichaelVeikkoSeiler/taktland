@@ -224,7 +224,9 @@ export function Duell() {
       return (daten.tunnel ?? []).map((t) => ({
         schluessel: t.id, name: t.name, unterzeile: `Linie ${t.linie}`,
         kantone: t.kantone ?? [], bemerkung: t.bemerkung, werte: t.werte,
-        link: `#/linie/${t.linie}`, linkText: `${t.name} (Linie ${t.linie})`,
+        // id «Linie:Stelle»: der Tunnel in der Liste seiner Linie, hervorgehoben
+        link: `#/linie/${t.linie}/tunnel?eintrag=${t.id.split(':')[1]}`,
+        linkText: `${t.name} (Linie ${t.linie})`,
       }))
     }
     if (bereich === 'linien') {

@@ -199,42 +199,54 @@
           "value": 546,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[8].laenge_m"
+          "factRef": "tunnel.items[8].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 8
         },
         {
           "label": "Tunnel de Brot (021)",
           "value": 455,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[7].laenge_m"
+          "factRef": "tunnel.items[7].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 7
         },
         {
           "label": "Tunnel des Moyats (019)",
           "value": 338,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[5].laenge_m"
+          "factRef": "tunnel.items[5].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 5
         },
         {
           "label": "Tunnel du Haut de la Tour (24)",
           "value": 334,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[10].laenge_m"
+          "factRef": "tunnel.items[10].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 10
         },
         {
           "label": "Tunnel de St-Sulpice (023)",
           "value": 277,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[9].laenge_m"
+          "factRef": "tunnel.items[9].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 9
         },
         {
           "label": "Tunnel du Bois-de-Ban (018)",
           "value": 161,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[4].laenge_m"
+          "factRef": "tunnel.items[4].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 4
         }
       ],
       "questions": [
@@ -318,14 +330,18 @@
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[9].baueinheiten"
+          "factRef": "bruecken.items[9].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 9
         },
         {
           "label": "PI du Ceylard",
           "value": 2,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[0].baueinheiten"
+          "factRef": "bruecken.items[0].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 0
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -425,14 +441,18 @@
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[8].gleise"
+          "factRef": "bahnuebergaenge.items[8].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 8
         },
         {
           "label": "PN Les Cernets",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[17].gleise"
+          "factRef": "bahnuebergaenge.items[17].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 17
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

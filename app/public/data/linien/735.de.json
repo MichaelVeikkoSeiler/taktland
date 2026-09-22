@@ -241,28 +241,36 @@
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[9].gleise"
+          "factRef": "bahnuebergaenge.items[9].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 9
         },
         {
           "label": "BUe Bad",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[13].gleise"
+          "factRef": "bahnuebergaenge.items[13].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 13
         },
         {
           "label": "BUe Campingplatz",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[15].gleise"
+          "factRef": "bahnuebergaenge.items[15].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 15
         },
         {
           "label": "BUe Station",
           "value": 2,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[16].gleise"
+          "factRef": "bahnuebergaenge.items[16].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 16
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",

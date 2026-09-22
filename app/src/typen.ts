@@ -20,6 +20,8 @@ export interface Fakt {
   /** Linienseite: Die Kachel führt zur ganzen Liste, auf Wunsch gefiltert */
   liste?: ListenArt
   filter?: { feld: string; wert: string | null }
+  /** Stelle des Eintrags in der Liste, bei einer Kachel zu einem einzelnen Objekt */
+  eintrag?: number
 }
 
 export type ListenArt = 'tunnel' | 'bruecken' | 'bahnuebergaenge'

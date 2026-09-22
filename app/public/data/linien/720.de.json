@@ -327,14 +327,18 @@
           "value": 903,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[1].laenge_m"
+          "factRef": "tunnel.items[1].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 1
         },
         {
           "label": "Ulmbergtunnel",
           "value": 848,
           "unit": "m",
           "source": "tunnel",
-          "factRef": "tunnel.items[0].laenge_m"
+          "factRef": "tunnel.items[0].laenge_m",
+          "liste": "tunnel",
+          "eintrag": 0
         }
       ],
       "questions": [
@@ -435,56 +439,72 @@
           "value": 4,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[24].baueinheiten"
+          "factRef": "bruecken.items[24].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 24
         },
         {
           "label": "PU Nord ZH Enge",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[1].baueinheiten"
+          "factRef": "bruecken.items[1].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 1
         },
         {
           "label": "PU Süd ZH Enge",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[2].baueinheiten"
+          "factRef": "bruecken.items[2].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 2
         },
         {
           "label": "U+PDu Bindernstrasse",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[28].baueinheiten"
+          "factRef": "bruecken.items[28].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 28
         },
         {
           "label": "PU Au",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[38].baueinheiten"
+          "factRef": "bruecken.items[38].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 38
         },
         {
           "label": "PU Wädenswil",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[40].baueinheiten"
+          "factRef": "bruecken.items[40].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 40
         },
         {
           "label": "BDu Rufibach",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[97].baueinheiten"
+          "factRef": "bruecken.items[97].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 97
         },
         {
           "label": "Du Ziegelbach",
           "value": 3,
           "unit": "Baueinheiten",
           "source": "brucken",
-          "factRef": "bruecken.items[102].baueinheiten"
+          "factRef": "bruecken.items[102].baueinheiten",
+          "liste": "bruecken",
+          "eintrag": 102
         }
       ],
       "erlaeuterung": "Eine Brücke ist ein Bauwerk, das über eine Strasse oder über ein Hindernis führt. Eine kleine Brücke bis zwei Meter wird als Durchlass bezeichnet. Die Daten bilden eine Brücke als Ganzes ab, bestehend aus einzelnen Baueinheiten.",
@@ -562,28 +582,36 @@
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[7].gleise"
+          "factRef": "bahnuebergaenge.items[7].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 7
         },
         {
           "label": "BUe Hannegg",
           "value": 4,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[14].gleise"
+          "factRef": "bahnuebergaenge.items[14].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 14
         },
         {
           "label": "BUe Leumen",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[12].gleise"
+          "factRef": "bahnuebergaenge.items[12].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 12
         },
         {
           "label": "BUe Laender",
           "value": 3,
           "unit": "Gleise",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[13].gleise"
+          "factRef": "bahnuebergaenge.items[13].gleise",
+          "liste": "bahnuebergaenge",
+          "eintrag": 13
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
