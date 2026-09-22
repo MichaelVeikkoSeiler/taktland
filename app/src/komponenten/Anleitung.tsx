@@ -222,6 +222,12 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             auf Linien ohne eigene Seite stehen trotzdem in der Liste, nur ohne Verweis.
           </li>
           <li>
+            In der Liste einer Linie lässt sich jeder Tunnel und jede Brücke antippen, ebenso
+            jeder rote Punkt auf der Karte: Der Eintrag steht dann oben im Kasten «Ausgewählt»
+            und ist auf der Karte markiert. Auf der Karte einer Linienseite führt ein Tipp auf
+            einen Bahnhof zu seiner Seite.
+          </li>
+          <li>
             Fragen dazu stehen auf den Linienseiten. Die Tunnel treten zudem im Duell
             gegeneinander an.
           </li>

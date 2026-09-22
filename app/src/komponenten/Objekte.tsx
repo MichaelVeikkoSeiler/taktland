@@ -48,7 +48,15 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
 
   const t = TITEL[art]
   const alle = (profil?.listen?.[art] ?? []) as unknown as Array<Record<string, unknown>>
-  const eintraege = filter ? alle.filter((e) => (e[filter.feld] ?? null) === filter.wert) : alle
+  // mit ihrer Stelle in der ganzen Liste, auch wenn ein Filter gilt
+  const eintraege = alle.map((e, stelle) => ({ e, stelle }))
+    .filter(({ e }) => !filter || (e[filter.feld] ?? null) === filter.wert)
+
+  /** Ein Tipp wählt den Eintrag: oben im Kasten und auf der Karte markiert.
+   *  replace: Die Auswahl füllt den Verlauf nicht, «Zurück» führt zur Linie. */
+  function waehlen(stelle: number) {
+    window.location.replace(listenAdresse(nr, art, null, stelle))
+  }
 
   // Der gewählte Eintrag steht oben in einem eigenen Kasten. Vorher rollte die
   // Seite zu ihm in die Liste, und Bild und Titel waren weg (Simplontunnel:
@@ -92,7 +100,8 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
       {profil && (art === 'tunnel' || art === 'bruecken') && (
         <ObjektKarte art={art} linie={nr} markiert={gewaehlt ? `${nr}:${markiert}` : null}
                      objekte={alle.map((e, i) => ({ kennung: `${nr}:${i}`, name: String(e.name),
-                                                    km: typeof e.km === 'number' ? e.km : null }))} />
+                                                    km: typeof e.km === 'number' ? e.km : null }))}
+                     waehlen={(kennung) => waehlen(Number(kennung.split(':')[1]))} />
       )}
 
       {profil && (
@@ -116,12 +125,17 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
 
           <ol className="mt-4 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
                          dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
-            {eintraege.map((e, i) => (
-              <li key={i} id={filter ? undefined : `eintrag-${i}`}
-                  aria-current={!filter && i === markiert ? 'true' : undefined}
-                  className={`px-3 py-2 ${!filter && i === markiert
-                    ? 'border-l-4 border-l-sbb-red bg-sbb-milk dark:bg-sbb-charcoal' : ''}`}>
-                {zeile(e)}
+            {eintraege.map(({ e, stelle }) => (
+              <li key={stelle} id={filter ? undefined : `eintrag-${stelle}`}
+                  aria-current={!filter && stelle === markiert ? 'true' : undefined}>
+                <button
+                  type="button" onClick={() => waehlen(stelle)}
+                  className={`block w-full px-3 py-2 text-left transition-colors ${!filter && stelle === markiert
+                    ? 'border-l-4 border-l-sbb-red bg-sbb-milk dark:bg-sbb-charcoal'
+                    : 'hover:bg-sbb-milk dark:hover:bg-sbb-charcoal'}`}
+                >
+                  {zeile(e)}
+                </button>
               </li>
             ))}
           </ol>
@@ -143,12 +157,13 @@ function Zeile({ name, teile, bemerkung }: {
 }) {
   return (
     <>
-      <p className="font-medium text-sbb-black dark:text-sbb-white">{name ?? 'ohne Namen'}</p>
-      <p className="text-sm text-sbb-metal dark:text-sbb-storm">{teile.join(' · ')}</p>
+      {/* span statt p: die Zeile steht auch in einer Schaltfläche */}
+      <span className="block font-medium text-sbb-black dark:text-sbb-white">{name ?? 'ohne Namen'}</span>
+      <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{teile.join(' · ')}</span>
       {bemerkung && (
-        <p className="mt-0.5 text-sm text-sbb-black dark:text-sbb-white">
+        <span className="mt-0.5 block text-sm text-sbb-black dark:text-sbb-white">
           Bemerkung der Quelle: «{bemerkung}»
-        </p>
+        </span>
       )}
     </>
   )

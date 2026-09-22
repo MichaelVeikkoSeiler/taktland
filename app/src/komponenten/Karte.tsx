@@ -77,13 +77,17 @@ export interface KartenObjekt {
  * fremden Dienstes. Ein Tunnel liegt über seinem Bereich (karte.json), wo die
  * Richtung der Länge erfasst ist; eine Brücke hat keine Länge und ist ein Punkt.
  */
-export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [] }: {
+export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], waehlen, bahnhofOeffnen }: {
   art: 'tunnel' | 'bruecken'
   linie: number
   objekte: KartenObjekt[]
   markiert: string | null
   /** Auf der Linienseite: die Bahnhöfe aus Taktland mit ihrem Kilometer */
-  bahnhoefe?: Array<{ name: string; km: number }>
+  bahnhoefe?: Array<{ name: string; km: number; uic?: number }>
+  /** Ein Tipp auf einen Tunnel oder eine Brücke wählt ihn aus */
+  waehlen?: (kennung: string) => void
+  /** Ein Tipp auf einen Bahnhof öffnet seine Seite */
+  bahnhofOeffnen?: (uic: number) => void
 }) {
   const [daten, setDaten] = useState<KartenDaten | null>(null)
   const [fehler, setFehler] = useState(false)
@@ -190,6 +194,23 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [] }: {
                   vectorEffect="non-scaling-stroke"
                   className="fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white" />
         ))}
+        {/* Tippflächen: unsichtbar und grösser als die Punkte, damit man sie auf
+            dem Handy trifft; beim Darüberfahren steht der Name da */}
+        {waehlen && bereiche.map((t) => {
+          const p = punktBei(eigene, t.bereich[0])
+          return p && (
+            <circle key={`w${t.kennung}`} cx={p[0]} cy={p[1]} r={8 * px} fill="transparent"
+                    className="cursor-pointer" onClick={() => waehlen(t.kennung)}>
+              <title>{t.name}</title>
+            </circle>
+          )
+        })}
+        {bahnhofOeffnen && stationen.map((b) => b.uic !== undefined && (
+          <circle key={`o${b.uic}`} cx={b.x} cy={b.y} r={8 * px} fill="transparent"
+                  className="cursor-pointer" onClick={() => bahnhofOeffnen(b.uic as number)}>
+            <title>{b.name}</title>
+          </circle>
+        ))}
         {beschriftet.map((b) => (
           <text key={`t${b.name}`} x={b.x + (b.x > cx ? -5 : 5) * px} y={b.y + (b.y < cy ? 13 : -6) * px}
                 fontSize={10.5 * px} fontWeight="bold" textAnchor={b.x > cx ? 'end' : 'start'}
@@ -220,6 +241,8 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [] }: {
         {art === 'bruecken'
           && 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge ist '
             + 'nicht erfasst.'}
+        {(waehlen || bahnhofOeffnen) && ` Ein Tipp auf einen Punkt ${bahnhofOeffnen
+          ? 'öffnet den Tunnel oder den Bahnhof.' : 'wählt ihn aus.'}`}
       </figcaption>
     </figure>
   )

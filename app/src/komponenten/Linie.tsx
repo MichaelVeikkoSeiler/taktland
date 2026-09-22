@@ -102,7 +102,11 @@ export function Linie({ nr, zurueck, zurueckText }: {
                        kennung: `${nr}:${i}`, name: t.name, km: t.km }))}
                      bahnhoefe={profil.chapters.flatMap((k) => k.facts ?? [])
                        .filter((f) => f.uic && typeof f.value === 'number')
-                       .map((f) => ({ name: f.label, km: f.value as number }))} />
+                       .map((f) => ({ name: f.label, km: f.value as number, uic: f.uic }))}
+                     waehlen={(kennung) => {
+                       window.location.hash = listenAdresse(nr, 'tunnel', null, Number(kennung.split(':')[1]))
+                     }}
+                     bahnhofOeffnen={(uic) => { window.location.hash = `#/bahnhof/${uic}` }} />
       </div>
 
       <div className="px-4">
