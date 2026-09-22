@@ -25,9 +25,9 @@ const merker: { aktiv: boolean; stand: Standpunkt | null } = { aktiv: false, sta
 
 const ABSCHNITTE: Array<{ art: UmgebungsArt; titel: string }> = [
   { art: 'bahnhoefe', titel: 'Bahnhöfe' },
-  { art: 'linien', titel: 'Linien' },
-  { art: 'tunnel', titel: 'Tunnel' },
+  { art: 'linien', titel: 'Strecken' },
   { art: 'bruecken', titel: 'Brücken' },
+  { art: 'tunnel', titel: 'Tunnel' },
   { art: 'bahnuebergaenge', titel: 'Bahnübergänge' },
 ]
 
@@ -110,7 +110,7 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
     <main className="px-4 py-6">
       <h2 className="text-2xl font-bold">Standort</h2>
       <p className="mt-2 text-sbb-metal dark:text-sbb-storm">
-        Welche Bahnhöfe, Linien, Tunnel, Brücken und Bahnübergänge liegen in deiner Nähe? Der
+        Welche Bahnhöfe, Strecken, Brücken, Tunnel und Bahnübergänge liegen in deiner Nähe? Der
         Standort bleibt auf diesem Gerät; Taktland schickt ihn nirgends hin.
       </p>
 

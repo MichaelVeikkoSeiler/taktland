@@ -46,7 +46,8 @@ function seiteAusAdresse(): Seite {
   if (h === '#/duell') return { art: 'duell' }
   if (h === '#/standort') return { art: 'standort' }
   if (h === '#/anleitung') return { art: 'anleitung' }
-  if (h === '#/linien') return { art: 'linien' }
+  // #/linien: die frühere Adresse, damit alte Lesezeichen weiter gehen
+  if (h === '#/strecken' || h === '#/linien') return { art: 'linien' }
   const strecke = /^#\/strecke(?:\?(.*))?$/.exec(h)
   if (strecke) return { art: 'strecke', wahl: wahlAusAdresse(strecke[1]) }
   if (h === '#/tunnel') return { art: 'uebersicht', liste: 'tunnel' }
@@ -59,7 +60,7 @@ function seiteAusAdresse(): Seite {
 type Herkunft = 'linien' | UebersichtArt
 
 const ZURUECK_ZU: Record<Herkunft, { text: string; adresse: string }> = {
-  linien: { text: 'Alle Linien', adresse: '#/linien' },
+  linien: { text: 'Alle Strecken', adresse: '#/strecken' },
   tunnel: { text: 'Alle Tunnel', adresse: '#/tunnel' },
   bruecken: { text: 'Alle Brücken', adresse: '#/bruecken' },
 }

@@ -344,7 +344,7 @@ export function Duell() {
           >
             <option value="bahnhoefe">Bahnhöfe ({daten.bahnhoefe.length})</option>
             {(daten.linien?.length ?? 0) > 0 && (
-              <option value="linien">Linien ({daten.linien?.length})</option>
+              <option value="linien">Strecken ({daten.linien?.length})</option>
             )}
             {(daten.tunnel?.length ?? 0) > 0 && (
               <option value="tunnel">Tunnel ({daten.tunnel?.length})</option>

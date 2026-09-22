@@ -17,9 +17,10 @@ export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' |
 /** Die Reiter oben auf jeder Seite, in dieser Reihenfolge */
 const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   { bereich: 'bahnhoefe', text: 'Bahnhöfe', adresse: '#/' },
-  { bereich: 'linien', text: 'Linien', adresse: '#/linien' },
-  { bereich: 'tunnel', text: 'Tunnel', adresse: '#/tunnel' },
+  // Michael, 2026-09-22: «Bereich Linien soll neu Strecken heissen», Brücken vor Tunnel
+  { bereich: 'linien', text: 'Strecken', adresse: '#/strecken' },
   { bereich: 'bruecken', text: 'Brücken', adresse: '#/bruecken' },
+  { bereich: 'tunnel', text: 'Tunnel', adresse: '#/tunnel' },
   { bereich: 'duell', text: 'Duell', adresse: '#/duell' },
   { bereich: 'standort', text: 'Standort', adresse: '#/standort' },
 ]
@@ -86,9 +87,9 @@ export function Kopf({ aktiv, startseite, anleitung = false }: {
           und etwas kleiner geschrieben, je schmaler das Gerät, desto kleiner;
           sonst fiel «Standort» aus der Zeile */}
       <nav aria-label="Bereiche"
-           className="-mb-px mt-4 flex justify-between gap-x-2 overflow-x-auto text-[15px]
-                      [scrollbar-width:none] max-[379px]:text-sm max-[359px]:gap-x-1 max-[359px]:text-[13px]
-                      sm:justify-start sm:gap-x-6 sm:text-base">
+           className="-mb-px mt-4 flex justify-between gap-x-1.5 overflow-x-auto text-sm
+                      [scrollbar-width:none] max-[369px]:gap-x-1 max-[369px]:text-[13px]
+                      max-[339px]:text-xs sm:justify-start sm:gap-x-6 sm:text-base">
         {REITER.map((r) => {
           const hier = r.bereich === aktiv
           return (

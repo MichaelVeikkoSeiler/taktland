@@ -5,7 +5,7 @@ import { BahnKuerzel } from './Suche'
 import { StreckeKarte } from './StreckeKarte'
 import { Ladefehler } from './Ladefehler'
 
-/** Übersicht der Linien mit eigener Seite, nach Nummer geordnet. */
+/** Der Bereich «Strecken»: die Linien mit eigener Seite, nach Nummer geordnet. */
 export function Linien() {
   const [daten, setDaten] = useState<LinienVerzeichnis | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
@@ -25,10 +25,10 @@ export function Linien() {
 
   return (
     <div className="px-4 pb-16">
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Linien</h1>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">Strecken</h1>
       <p className="mt-2 leading-relaxed">
-        Strecken der Infrastruktur mit ihrer Nummer, etwa Linie 600. Das sind keine Zuglinien
-        wie eine S-Bahn: Der Fahrplan ist nicht Teil der Daten.
+        Die Strecken der Infrastruktur, jede unter ihrer Liniennummer, etwa Linie 600. Das sind
+        keine Zuglinien wie eine S-Bahn: Der Fahrplan ist nicht Teil der Daten.
       </p>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Aufgenommen sind Linien mit mindestens zwei Bahnhöfen in Taktland oder mit einem

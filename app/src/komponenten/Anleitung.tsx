@@ -27,8 +27,8 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
         Bundesamts für Verkehr.
       </p>
       <p className="mt-2 leading-relaxed">
-        Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnhöfe, Linien, Tunnel,
-        Brücken, Duell und Standort.
+        Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnhöfe, Strecken, Brücken,
+        Tunnel, Duell und Standort.
       </p>
 
       <Abschnitt titel="Einen Bahnhof lernen">
@@ -130,11 +130,11 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Linien">
+      <Abschnitt titel="Strecken">
         <Punkte>
           <li>
-            Unter «Linien» stehen Strecken der Infrastruktur mit ihrer Nummer, etwa Linie 600.
-            Das sind keine Zuglinien wie eine S-Bahn.
+            Unter «Strecken» stehen die Strecken der Infrastruktur, jede unter ihrer
+            Liniennummer, etwa Linie 600. Das sind keine Zuglinien wie eine S-Bahn.
           </li>
           <li>
             Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach ihrem Kilometer geordnet,
@@ -172,7 +172,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
       <Abschnitt titel="Strecke">
         <Punkte>
           <li>
-            Unter «Strecke» (bei den Linien, Tunneln und Brücken) Start und Ziel wählen.
+            Unter «Strecke» (bei den Strecken, Brücken und Tunneln) Start und Ziel wählen.
             Taktland sucht einen Weg durch das Netz und zeigt die erfassten Tunnel und Brücken
             entlang dieses Wegs, in Wegrichtung.
           </li>
@@ -204,7 +204,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Tunnel und Brücken">
+      <Abschnitt titel="Brücken und Tunnel">
         <Punkte>
           <li>
             Unter «Tunnel» stehen alle erfassten Tunnel, unter «Brücken» alle erfassten
@@ -232,7 +232,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
         <Punkte>
           <li>
             Unter «Standort» auf «Standort bestimmen» tippen. Taktland zeigt die nächsten
-            Bahnhöfe, Linien, Tunnel, Brücken und Bahnübergänge, jeweils mit der Luftlinie
+            Bahnhöfe, Strecken, Brücken, Tunnel und Bahnübergänge, jeweils mit der Luftlinie
             dorthin, dazu eine kleine Karte der Umgebung. Die Liste folgt dir, bis du «Anhalten»
             tippst oder die Seite verlässt.
           </li>
