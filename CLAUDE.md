@@ -93,8 +93,9 @@ data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierun
              platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte
              bei Tunneln, Brücken und auf den Linienseiten (pipeline/build_karte.py),
-             selbst gezeichnet, ohne
-             Kartendienst
+             selbst gezeichnet, ohne Kartendienst
+data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
+             Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
 
 ## Befehle

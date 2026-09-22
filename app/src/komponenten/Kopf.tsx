@@ -10,7 +10,7 @@ import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort'
 
 /** Die Reiter oben auf jeder Seite, in dieser Reihenfolge */
 const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -19,6 +19,7 @@ const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   { bereich: 'tunnel', text: 'Tunnel', adresse: '#/tunnel' },
   { bereich: 'bruecken', text: 'Brücken', adresse: '#/bruecken' },
   { bereich: 'duell', text: 'Duell', adresse: '#/duell' },
+  { bereich: 'standort', text: 'Standort', adresse: '#/standort' },
 ]
 
 /** Auftaktbilder je Bereich. Ein Bereich ohne Eintrag erscheint ohne Bild. */
@@ -72,11 +73,13 @@ export function Kopf({ aktiv, startseite }: {
           So funktioniert’s
         </a>
       </div>
-      {/* Unter 360 Pixeln Breite (ältere kleine Handys) wird die Schrift kleiner,
-          sonst passt «Duell» nicht mehr in die Zeile */}
+      {/* Sechs Reiter in einer Zeile: auf dem Handy über die ganze Breite verteilt
+          und etwas kleiner geschrieben, je schmaler das Gerät, desto kleiner;
+          sonst fiel «Standort» aus der Zeile */}
       <nav aria-label="Bereiche"
-           className="-mb-px mt-4 flex gap-x-4 overflow-x-auto [scrollbar-width:none]
-                      max-[359px]:gap-x-3 max-[359px]:text-sm sm:gap-x-6">
+           className="-mb-px mt-4 flex justify-between gap-x-2 overflow-x-auto text-[15px]
+                      [scrollbar-width:none] max-[379px]:text-sm max-[359px]:gap-x-1 max-[359px]:text-[13px]
+                      sm:justify-start sm:gap-x-6 sm:text-base">
         {REITER.map((r) => {
           const hier = r.bereich === aktiv
           return (

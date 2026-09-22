@@ -7,6 +7,7 @@
 - linien/     : die fertigen Linienprofile
 - tunnel.json, bruecken.json : alle erfassten Tunnel und Brücken mit ihrer Linie
 - strecken.json : das Netz für die Seite «Strecke»
+- standort.json : die Lage der Tunnel, Brücken und Bahnübergänge für die Seite «Standort»
 
 Der Index fuehrt auch Bahnhoefe ohne Profil auf. Die App soll zeigen, was es
 noch nicht gibt, statt so zu tun, als gaebe es nur die vier fertigen.
@@ -78,7 +79,7 @@ def main():
     linien()
     uebersichten()
     # das Streckennetz unverändert, geprüft mit generator/strecken.py
-    for name in ("strecken.json", "strecken_geometrie.json", "karte.json"):
+    for name in ("strecken.json", "strecken_geometrie.json", "karte.json", "standort.json"):
         quelle = ROOT / "data" / name
         if quelle.exists():
             shutil.copy(quelle, ZIEL / name)

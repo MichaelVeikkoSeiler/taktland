@@ -189,3 +189,28 @@ in Taktland, gesetzt an ihrem Kilometer aus der Linienseite (`bahnhoefe.items[].
 Beschriftet sind nur der erste und der letzte. Der Kilometer ist der Standort auf der
 Linie, keine Entfernung; der Punkt liegt darum dort, wo die Kilometrierung diesen Wert
 hat.
+
+## Seite «Standort»
+
+`tunnel` und `brucken` führen je Eintrag `geopos`, `bahnubergang` führt `geoposition`:
+Breite und Länge, bei allen 289 Tunneln, 4057 Brücken und 1064 Bahnübergängen gefüllt
+(Abruf 2026-09-21). `pipeline/build_linien.py` schreibt sie, auf sechs Stellen gerundet
+wie die Lage der Bahnhöfe, nach `data/standort.json`: je Eintrag Linie, Stelle in der
+Liste seiner Linie, Name, Breite, Länge. Die Bahnübergänge auf Linien ohne eigene Seite
+stehen dafür neu in `data/linien_uebersicht.json` (`bahnuebergaenge_ohne_seite_liste`).
+`generator/tests/test_standort.py` prüft, dass jede Zeile zu ihrem Eintrag gehört und
+keiner fehlt.
+
+Was der Punkt eines Tunnels ist, beschreibt die Quelle nicht. Stichprobe 2026-09-22:
+Bei 282 von 289 Tunneln liegt er höchstens 150 m neben der Linie. Beim Simplontunnel
+liegt er beim Kilometer 148.4 der Linie 100, erfasst ist der Tunnel bei km 165.714. Bei
+den Kehrtunneln am Gotthard (Pfaffensprung, Wattingen, Leggistein, Freggio, Prato,
+Pianotondo, Travi) liegt er 200 bis 290 m neben der gezeichneten Linie. Die App zeigt
+den Punkt, wie er in der Quelle steht, und sagt, dass ein Tunnel dabei ein einzelner
+Punkt ist.
+
+Die App rechnet auf dem Gerät nur den Abstand: Luftlinie vom Standort zum Punkt, bei den
+Linien zur vereinfachten Linienführung aus `data/karte.json` (auf 30 m vereinfacht). Die
+Linien sind alle der Kilometrierung, auch Linien anderer Bahnen, soweit sie dort stehen
+(Linie 610 Brig - Andermatt - Disentis), und Projektlinien (Linie 9780 Bruttenertunnel
+West); ihr Name stammt aus `linie`.

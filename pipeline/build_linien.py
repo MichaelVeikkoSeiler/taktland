@@ -43,6 +43,8 @@ ZIEL = ROOT / "data" / "linien"
 #: Zahlen über alle Linien. Liegt ausserhalb von data/linien, dort ist jede
 #: Datei eine Linie.
 UEBERSICHT = ROOT / "data" / "linien_uebersicht.json"
+# Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs für die Seite «Standort»
+STANDORT = ROOT / "data" / "standort.json"
 
 #: So viele Bahnhöfe aus Taktland braucht eine Linie ohne Tunnel für eine
 #: eigene Seite, und jede Linie für ein Kapitel Bahnhöfe. Mit einem allein
@@ -134,6 +136,33 @@ def bruecken_items(df):
             "kanton": txt(r.kanton),
         })
     return items
+
+
+def lagen(df, sortfeld, geofeld, nr, items):
+    """Die Lage jedes Eintrags wie in der Quelle, in der Reihenfolge der
+    Einträge: [Linie, Stelle, Name, Breite, Länge]. Die Stelle führt zum
+    Eintrag in der Liste der Linie. Gerundet auf sechs Stellen wie die Lage
+    der Bahnhöfe (build_facts.py), etwa 10 cm. Fehlt die Lage, bleibt sie null."""
+    raus = []
+    for i, (_, r) in enumerate(df.sort_values(sortfeld).iterrows()):
+        assert txt(r["name"]) == items[i]["name"], (nr, i, r["name"])
+        try:
+            la, lo = (round(float(x), 6) for x in str(r[geofeld]).split(",", 1))
+        except ValueError:
+            la = lo = None
+        raus.append([int(nr), i, txt(r["name"]), la, lo])
+    return raus
+
+
+def standort_schreiben(standort):
+    """Eine Zeile je Eintrag, damit Änderungen in Git lesbar bleiben"""
+    kopf = {k: v for k, v in standort.items() if not isinstance(v, list)}
+    teile = [json.dumps(k, ensure_ascii=False) + ": " + json.dumps(v, ensure_ascii=False)
+             for k, v in kopf.items()]
+    for art in ("tunnel", "bruecken", "bahnuebergaenge"):
+        zeilen = ",\n".join(" " + json.dumps(z, ensure_ascii=False) for z in standort[art])
+        teile.append(f'"{art}": [\n{zeilen}\n]')
+    STANDORT.write_text("{\n" + ",\n".join(teile) + "\n}\n", encoding="utf-8")
 
 
 def nach_kanton(items):
@@ -289,6 +318,7 @@ def main():
         alt.unlink()
 
     geschrieben = []
+    standort = {"tunnel": [], "bruecken": [], "bahnuebergaenge": []}
     for nr, gruppe in bp.groupby("linie"):
         eigene = gruppe[gruppe.uic.isin(namen)].sort_values("km")
         tu = tunnel[tunnel.linie == nr]
@@ -322,6 +352,7 @@ def main():
         }
         if not tu.empty:
             items = tunnel_items(tu)
+            standort["tunnel"] += lagen(tu, "km_go", "geopos", nr, items)
             laengste = einzige_oder_alle(items, "laenge_m", max)
             aelteste = einzige_oder_alle(items, "inbetriebnahme_jahr", min)
             f["tunnel"] = {
@@ -340,6 +371,7 @@ def main():
         br = bruecken[bruecken.linie == nr]
         if not br.empty:
             items = bruecken_items(br)
+            standort["bruecken"] += lagen(br, "km", "geopos", nr, items)
             meiste = einzige_oder_alle(items, "baueinheiten", max)
             f["bruecken"] = {
                 "source": "brucken",
@@ -355,6 +387,7 @@ def main():
         ue = uebergaenge[uebergaenge.linie == nr]
         if not ue.empty:
             items = uebergang_items(ue)
+            standort["bahnuebergaenge"] += lagen(ue, "km", "geoposition", nr, items)
             meiste = einzige_oder_alle(items, "gleise", max)
             f["bahnuebergaenge"] = {
                 "source": "bahnubergang",
@@ -392,6 +425,34 @@ def main():
          "items": bruecken_items(gruppe)}
         for nr, gruppe in ohne.groupby("linie")
     ]
+    # ebenso die Bahnübergänge darauf: Die Seite «Standort» nennt sie
+    uebergaenge_ohne_seite = [
+        {"linie": int(nr),
+         "name": txt(linie.loc[nr].linienname) if nr in linie.index else None,
+         "items": uebergang_items(gruppe)}
+        for nr, gruppe in ohne_ue.groupby("linie")
+    ]
+    for liste, df, art, sortfeld, geofeld in (
+            (bruecken_ohne_seite, ohne, "bruecken", "km", "geopos"),
+            (uebergaenge_ohne_seite, ohne_ue, "bahnuebergaenge", "km", "geoposition")):
+        for x in liste:
+            standort[art] += lagen(df[df.linie == x["linie"]], sortfeld, geofeld,
+                                   x["linie"], x["items"])
+    # Name jeder Linie aus «linie» und ob sie eine eigene Seite hat
+    standort = {
+        "datenstand": {q: abgerufen(q) for q in ("linie", "tunnel", "brucken", "bahnubergang")},
+        "hinweis": "Lage wie in der Quelle (tunnel und brucken: geopos, bahnubergang: "
+                   "geoposition), gerundet auf sechs Stellen. Eine Zeile: Linie, Stelle, Name, "
+                   "Breite, Länge. Die Stelle ist der Platz des Eintrags in der Liste seiner "
+                   "Linie in data/linien/, auf Linien ohne eigene Seite in "
+                   "data/linien_uebersicht.json.",
+        "linien": {str(int(nr)): [txt(r.linienname), int(nr) in geschrieben]
+                   for nr, r in sorted(linie.iterrows(), key=lambda x: int(x[0]))},
+        **standort,
+    }
+    standort_schreiben(standort)
+    print(f"standort.json: {len(standort['tunnel'])} Tunnel, {len(standort['bruecken'])} "
+          f"Brücken, {len(standort['bahnuebergaenge'])} Bahnübergänge")
     uebersicht = {
         "datenstand": stand,
         # je Datensatz der Tag des Abrufs: Die Übersichten «Tunnel» und «Brücken»
@@ -407,6 +468,7 @@ def main():
         "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen":
             int(len(set(ohne.linie) | set(ohne_ue.linie))),
         "bruecken_ohne_seite_liste": bruecken_ohne_seite,
+        "bahnuebergaenge_ohne_seite_liste": uebergaenge_ohne_seite,
     }
     UEBERSICHT.write_text(json.dumps(uebersicht, ensure_ascii=False, indent=1) + "\n",
                           encoding="utf-8")

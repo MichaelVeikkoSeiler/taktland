@@ -3,15 +3,15 @@ import { karteLaden } from '../daten'
 import type { KartenDaten } from '../typen'
 
 /** Verhältnis Meter je Grad Länge zu Breite in der Schweiz: x = Länge mal das */
-const LAENGE_ZU_BREITE = 73_000 / 111_200
+export const LAENGE_ZU_BREITE = 73_000 / 111_200
 /** Die Karte ist so viel breiter als hoch */
 const SEITENVERHAELTNIS = 1.6
 /** Ein Linienausschnitt zeigt mindestens so viele Grad Breite (etwa 10 km) */
 const MIN_SPANNE = 0.09
 
-interface Stueck { km: number[]; x: number[]; y: number[] }
+export interface Stueck { km: number[]; x: number[]; y: number[] }
 
-function lesen(k: KartenDaten) {
+export function lesen(k: KartenDaten) {
   const linien = new Map<number, Stueck[]>()
   for (const [nr, stuecke] of Object.entries(k.linien)) {
     linien.set(Number(nr), stuecke.map(({ start, d }) => {
@@ -28,7 +28,7 @@ function lesen(k: KartenDaten) {
 }
 
 /** Punkt bei km auf der Linie; ausserhalb ihrer Stücke der nächste Endpunkt */
-function punktBei(stuecke: Stueck[], km: number): [number, number] | null {
+export function punktBei(stuecke: Stueck[], km: number): [number, number] | null {
   let bester: [number, number] | null = null
   let abstand = Infinity
   for (const s of stuecke) {
@@ -47,7 +47,7 @@ function punktBei(stuecke: Stueck[], km: number): [number, number] | null {
 }
 
 /** Die Punkte der Linie zwischen zwei Kilometern */
-function zwischen(stuecke: Stueck[], von: number, bis: number) {
+export function zwischen(stuecke: Stueck[], von: number, bis: number) {
   const raus: Array<[number, number]> = []
   const anfang = punktBei(stuecke, von)
   if (anfang) raus.push(anfang)
@@ -59,7 +59,7 @@ function zwischen(stuecke: Stueck[], von: number, bis: number) {
   return raus
 }
 
-const pfad = (pts: Array<[number, number]>) =>
+export const pfad = (pts: Array<[number, number]>) =>
   pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(5)} ${y.toFixed(5)}`).join('')
 
 export interface KartenObjekt {
@@ -212,7 +212,7 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [] }: {
       <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), ohne Strassen, Orte und
         Grenzen.{' '}
-        {stationen.length > 0 && 'Weisse Punkte: die Bahnhöfe dieser Linie in Taktland an ihrem '
+        {stationen.length > 0 && 'Ringe: die Bahnhöfe dieser Linie in Taktland an ihrem '
           + 'Kilometer, beschriftet der erste und der letzte. '}
         {art === 'tunnel' && objekte.length > 0
           && 'Rot die Tunnel dieser Linie: als Strecke, wo die Daten die Richtung der Länge '

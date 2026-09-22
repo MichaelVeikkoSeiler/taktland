@@ -321,3 +321,18 @@ export interface KartenDaten {
   tunnel: Record<string, [number, number]>
   orte: Array<{ name: string; lage: [number, number] }>
 }
+
+/** Lage aus den Quellen für die Seite «Standort» (data/standort.json):
+ *  Linie, Stelle in der Liste der Linie, Name, Breite, Länge */
+export type StandortZeile = [number, number, string | null, number | null, number | null]
+
+export interface StandortDaten {
+  /** Tag des Abrufs je Quelle */
+  datenstand: Record<string, string>
+  hinweis: string
+  /** Nummer → [Name aus «linie» oder null, hat eine eigene Seite] */
+  linien: Record<string, [string | null, boolean]>
+  tunnel: StandortZeile[]
+  bruecken: StandortZeile[]
+  bahnuebergaenge: StandortZeile[]
+}

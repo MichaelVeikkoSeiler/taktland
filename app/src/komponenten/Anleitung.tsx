@@ -204,8 +204,28 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             gegeneinander an.
           </li>
           <li>
-            Auch jede Linienseite zeigt die kleine Karte: die Linie, ihre Tunnel und als weisse
-            Punkte ihre Bahnhöfe in Taktland, beschriftet der erste und der letzte.
+            Auch jede Linienseite zeigt die kleine Karte: die Linie, ihre Tunnel und als Ringe
+            ihre Bahnhöfe in Taktland, beschriftet der erste und der letzte.
+          </li>
+        </Punkte>
+      </Abschnitt>
+
+      <Abschnitt titel="Standort">
+        <Punkte>
+          <li>
+            Unter «Standort» auf «Standort bestimmen» tippen. Taktland zeigt die nächsten
+            Bahnhöfe, Linien, Tunnel, Brücken und Bahnübergänge, jeweils mit der Luftlinie
+            dorthin, dazu eine kleine Karte der Umgebung. Die Liste folgt dir, bis du «Anhalten»
+            tippst oder die Seite verlässt.
+          </li>
+          <li>
+            Die Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs ist der Punkt, den die
+            SBB in ihren Daten nennt. Ein Tunnel ist dabei ein einzelner Punkt, nicht die ganze
+            Röhre. Der Abstand ist auf dem Gerät gerechnet, eine Luftlinie und kein Weg.
+          </li>
+          <li>
+            Ein Tipp auf einen Eintrag öffnet den Bahnhof, die Linie oder die Liste der Linie mit
+            dem Eintrag oben. Einträge ohne Pfeil haben in Taktland keine eigene Seite.
           </li>
         </Punkte>
       </Abschnitt>
@@ -308,9 +328,9 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             oder Programme von fremden Diensten.
           </li>
           <li>
-            Den Standort fragt Taktland nur im Fahrtmodus ab, und nur nach deiner Freigabe. Er
-            wird auf dem Gerät verrechnet, weder gespeichert noch gesendet, und nach «Beenden»
-            nicht mehr abgefragt.
+            Den Standort fragt Taktland nur im Fahrtmodus und auf der Seite «Standort» ab, und
+            nur nach deiner Freigabe. Er wird auf dem Gerät verrechnet, weder gespeichert noch
+            gesendet, und nach «Beenden» oder «Anhalten» nicht mehr abgefragt.
           </li>
           <li>
             Ausgeliefert wird die Seite von GitHub Pages. GitHub speichert dabei laut eigenen

@@ -1310,5 +1310,499 @@
     }
    ]
   }
+ ],
+ "bahnuebergaenge_ohne_seite_liste": [
+  {
+   "linie": 107,
+   "name": "Brig-Lotschberg (Abzw) Brig Tunnel",
+   "items": [
+    {
+     "name": "Bu Cargo",
+     "km": 146.205,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 129,
+   "name": "Aigle - Ollon - Monthey-Ville",
+   "items": [
+    {
+     "name": "PN de Margencel",
+     "km": 0.135,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 149,
+   "name": "Gland Ballastiere",
+   "items": [
+    {
+     "name": "PN1 Route de Nyon",
+     "km": 34.271,
+     "sicherungsart": "VRA",
+     "gleise": 1
+    },
+    {
+     "name": "PN2 de la Ballastiere",
+     "km": 34.38,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 159,
+   "name": "Nyon - Eysins",
+   "items": [
+    {
+     "name": "PN de Clementy",
+     "km": 0.608,
+     "sicherungsart": "VRA",
+     "gleise": 1
+    },
+    {
+     "name": "PN Rayon de soleil",
+     "km": 0.821,
+     "sicherungsart": "Blinklichtanlage",
+     "gleise": 1
+    },
+    {
+     "name": "PN de la Barillette",
+     "km": 0.952,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    },
+    {
+     "name": "PN du Stand",
+     "km": 1.087,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    },
+    {
+     "name": "PN Hammerli",
+     "km": 1.435,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    },
+    {
+     "name": "PN de Champ Colin",
+     "km": 1.676,
+     "sicherungsart": "Blinklichtanlage",
+     "gleise": 1
+    },
+    {
+     "name": "PN de Terre Bonne",
+     "km": 1.862,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    },
+    {
+     "name": "PN d'Ucar",
+     "km": 2.167,
+     "sicherungsart": "Blinklichtanlage",
+     "gleise": 1
+    },
+    {
+     "name": "PN du Nipy",
+     "km": 2.264,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    },
+    {
+     "name": "PN d'Aiselet",
+     "km": 2.43,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 160,
+   "name": "Renens VD Ouest - Lausanne-Triage sect.",
+   "items": [
+    {
+     "name": "PN Tevenaz-Leduc",
+     "km": 6.54,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 169,
+   "name": "Lausanne-Triage sect. - Bussigny",
+   "items": [
+    {
+     "name": "PN Lausanne Triage",
+     "km": 11.546,
+     "sicherungsart": "Blinklichtanlage",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 170,
+   "name": "Lausanne-Triage (Est - Sud)",
+   "items": [
+    {
+     "name": "PN bout de voie",
+     "km": 8.775,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 171,
+   "name": "Lausanne-Triage F - Lausanne-Triage Sud",
+   "items": [
+    {
+     "name": "PN des Ateliers",
+     "km": 11.077,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 266,
+   "name": "Madretsch - Biel/Bienne RB West",
+   "items": [
+    {
+     "name": "BUe 326",
+     "km": 32.631,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 268,
+   "name": "Biel Depot Ost - Biel Aebistrasse",
+   "items": [
+    {
+     "name": "PN 9831",
+     "km": 98.314,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 418,
+   "name": "Anschlussgleis Herzogenbuchsee Nord",
+   "items": [
+    {
+     "name": "BUe Byfangweg",
+     "km": 65.778,
+     "sicherungsart": "Blinklichtanlage",
+     "gleise": 3
+    }
+   ]
+  },
+  {
+   "linie": 452,
+   "name": "Rothrist - Zofingen (Kriegsschlaufe)",
+   "items": [
+    {
+     "name": "BUe Am Tych",
+     "km": 0.436,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 511,
+   "name": "Basel SBB - Basel GB - Basel RB",
+   "items": [
+    {
+     "name": "BUe W184",
+     "km": 4.076,
+     "sicherungsart": null,
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 513,
+   "name": "Basel SBB GB Verbindungslinie",
+   "items": [
+    {
+     "name": "BUe Lokdepot",
+     "km": 121.304,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 1
+    },
+    {
+     "name": "BUe Zufahrt Stw4",
+     "km": 121.499,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 552,
+   "name": "Luzern Verbindung Seeverlad",
+   "items": [
+    {
+     "name": "BUe Burgenstrasse",
+     "km": 94.837,
+     "sicherungsart": "VRA",
+     "gleise": 1
+    },
+    {
+     "name": "BUe Werftestrasse",
+     "km": 94.906,
+     "sicherungsart": "VRA",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 634,
+   "name": "Mendrisio Sud - Stabio",
+   "items": [
+    {
+     "name": "PL Via Mulino",
+     "km": 4.107,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 2
+    },
+    {
+     "name": "PL Zerbone",
+     "km": 4.804,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    },
+    {
+     "name": "PL St. Margherita",
+     "km": 4.978,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 691,
+   "name": "RBL Kopf Zurich - Killwangen West",
+   "items": [
+    {
+     "name": "BUe RBL 1",
+     "km": 12.524,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 2
+    },
+    {
+     "name": "BUe RBL 2",
+     "km": 13.744,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 2
+    },
+    {
+     "name": "BUe RBL 3",
+     "km": 13.834,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 692,
+   "name": "RBL Nord",
+   "items": [
+    {
+     "name": "BUe RBL 6",
+     "km": 13.461,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 693,
+   "name": "RBL Mitte",
+   "items": [
+    {
+     "name": "BUe RBL 5",
+     "km": 13.848,
+     "sicherungsart": "Bedarfsschrankenanl",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 695,
+   "name": "RBL R-Gruppe",
+   "items": [
+    {
+     "name": "BUe Depot West",
+     "km": 12.68,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    },
+    {
+     "name": "BUe RBL 7",
+     "km": 12.69,
+     "sicherungsart": "Bedarfsschrankenanl",
+     "gleise": 5
+    },
+    {
+     "name": "BUe RBL 4",
+     "km": 13.785,
+     "sicherungsart": "Bedarfsschrankenanl",
+     "gleise": 2
+    },
+    {
+     "name": "BUe RBL 4.1",
+     "km": 13.828,
+     "sicherungsart": null,
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 696,
+   "name": "Ein-/Ausfahrt RBL Feld A",
+   "items": [
+    {
+     "name": "BUe RBL 8",
+     "km": 13.068,
+     "sicherungsart": "Bedarfsschrankenanl",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 706,
+   "name": "Zurich Seebach - Glattbrugg Sud",
+   "items": [
+    {
+     "name": "BUe Eisenhof",
+     "km": 5.559,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 709,
+   "name": "Zue Vorbahnhof Nord - Zurich Altstetten",
+   "items": [
+    {
+     "name": "Vi Hardturm Teil F-H",
+     "km": 2.54,
+     "sicherungsart": "Blinklichtanlage",
+     "gleise": 3
+    },
+    {
+     "name": "BUe 345",
+     "km": 3.456,
+     "sicherungsart": "Bedarfsschrankenanl",
+     "gleise": 5
+    }
+   ]
+  },
+  {
+   "linie": 716,
+   "name": "Zurich Hardbrucke - Zurich Herdern",
+   "items": [
+    {
+     "name": "BUe Maag-Areal",
+     "km": 2.141,
+     "sicherungsart": "VRA",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 718,
+   "name": "ZH Aussersihl - ZH Altstetten Sud",
+   "items": [
+    {
+     "name": "BUe Dutti",
+     "km": 2.526,
+     "sicherungsart": "Bedarfsschrankenanl",
+     "gleise": 15
+    },
+    {
+     "name": "BUe WK70",
+     "km": 2.665,
+     "sicherungsart": null,
+     "gleise": 2
+    },
+    {
+     "name": "BUe WH70 2",
+     "km": 2.675,
+     "sicherungsart": null,
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 768,
+   "name": "Niederglatt - Tanklager Oberhasli West",
+   "items": [
+    {
+     "name": "BUe Muhlesteig",
+     "km": 23.153,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 1
+    },
+    {
+     "name": "BUe Ebeni",
+     "km": 24.439,
+     "sicherungsart": "Blinklichtanlage",
+     "gleise": 1
+    },
+    {
+     "name": "BUe Watterstrasse",
+     "km": 25.061,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 848,
+   "name": "Romanshorn West - Romanshorn Sud (VL)",
+   "items": [
+    {
+     "name": "BUe Egnacherweg",
+     "km": 81.355,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 1
+    }
+   ]
+  },
+  {
+   "linie": 883,
+   "name": "St. Margrethen Ost - Lauterach Nord",
+   "items": [
+    {
+     "name": "BUe Grasbaustrasse I",
+     "km": 0.723,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 2
+    }
+   ]
+  },
+  {
+   "linie": 7705,
+   "name": "Tanklager O'fingen - O'fingen(abgebr.)",
+   "items": [
+    {
+     "name": "BUe Tanklager",
+     "km": 33.26,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    }
+   ]
+  }
  ]
 }

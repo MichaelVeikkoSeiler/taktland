@@ -10,6 +10,7 @@ import { Linien } from './komponenten/Linien'
 import { Objekte } from './komponenten/Objekte'
 import { eintragAusAdresse, type Filter, filterAusAdresse } from './listen'
 import type { ListenArt } from './typen'
+import { Standort } from './komponenten/Standort'
 import { Strecke, type StreckenWahl, wahlAusAdresse } from './komponenten/Strecke'
 import { Suche, type ListenStand } from './komponenten/Suche'
 import {
@@ -24,6 +25,7 @@ import { Ladefehler } from './komponenten/Ladefehler'
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'standort' }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
@@ -42,6 +44,7 @@ function seiteAusAdresse(): Seite {
   const linie = /^#\/linie\/(\d+)$/.exec(h)
   if (linie) return { art: 'linie', nr: Number(linie[1]) }
   if (h === '#/duell') return { art: 'duell' }
+  if (h === '#/standort') return { art: 'standort' }
   if (h === '#/anleitung') return { art: 'anleitung' }
   if (h === '#/linien') return { art: 'linien' }
   const strecke = /^#\/strecke(?:\?(.*))?$/.exec(h)
@@ -68,6 +71,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'linie': case 'objekte': return herkunft
     case 'uebersicht': return seite.liste
     case 'duell': return 'duell'
+    case 'standort': return 'standort'
     case 'anleitung': return null
   }
 }
@@ -125,6 +129,7 @@ export default function App() {
 
         {seite.art === 'anleitung' && <Anleitung index={index} zurueck={zurueck} />}
         {seite.art === 'duell' && <Duell />}
+        {seite.art === 'standort' && <Standort index={index} />}
         {seite.art === 'linien' && <Linien />}
         {seite.art === 'uebersicht' && (
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}
