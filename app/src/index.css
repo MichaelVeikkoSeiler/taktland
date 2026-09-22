@@ -39,7 +39,19 @@
   --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
 }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Platz für die Bildlaufleiste bleibt immer frei. Sonst rückte der mittige
+     Inhalt beim Wechsel zwischen einer kurzen und einer langen Seite um die
+     Breite der Leiste zur Seite (Michael, 2026-09-22: «horizontaler Sprung»).
+     Auf dem Handy liegt die Leiste über dem Inhalt, dort ändert sich nichts. */
+  scrollbar-gutter: stable;
+}
+
+/* ältere Browser ohne scrollbar-gutter: die Leiste immer zeigen */
+@supports not (scrollbar-gutter: stable) {
+  html { overflow-y: scroll; }
+}
 
 body {
   overscroll-behavior-y: none;
