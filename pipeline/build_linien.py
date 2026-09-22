@@ -76,6 +76,22 @@ def datenstand():
     return max(abruf[q] for q in QUELLEN)
 
 
+def endpunkt_uic(gruppe, name, km, namen):
+    """Der Bahnhof am Anfang oder Ende der Linie, falls es einer aus Taktland ist.
+
+    linie.csv nennt nur den Namen. Die Nummer steht in der Liste der
+    Betriebspunkte derselben Linie. Steht der Name dort zweimal (Biel/Bienne
+    auf Linie 210), entscheidet der Kilometer. Ohne eindeutigen Treffer kein
+    Link: meist ist der Endpunkt eine Abzweigung."""
+    treffer = gruppe[gruppe.bezeichnung_bps == name]
+    if len(treffer) > 1:
+        treffer = treffer[(treffer.km - km).abs() < 0.01]
+    if len(treffer) != 1 or pd.isna(treffer.iloc[0].uic):
+        return None
+    uic = int(treffer.iloc[0].uic)
+    return uic if uic in namen else None
+
+
 def bahnhoefe_aus_facts():
     namen = {}
     for p in FACTS.glob("*.json"):
@@ -281,6 +297,9 @@ def main():
                 "ende": txt(li.bpk_ende),
                 "km_anfang": num(li.km_anfang),
                 "km_ende": num(li.km_ende),
+                # Bahnhof aus Taktland am Anfang oder Ende, sonst null
+                "anfang_uic": endpunkt_uic(gruppe, li.bpk_anfang, li.km_anfang, namen),
+                "ende_uic": endpunkt_uic(gruppe, li.bpk_ende, li.km_ende, namen),
             },
             "bahnhoefe": {
                 "source": "linie-mit-betriebspunkten",
