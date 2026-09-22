@@ -90,6 +90,9 @@ data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzüg
              Abschnitt die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py)
 data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierung,
              platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen
+data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte
+             bei den Tunneln (pipeline/build_karte.py), selbst gezeichnet, ohne
+             Kartendienst
 ```
 
 ## Befehle
@@ -111,6 +114,7 @@ python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne 
 .venv/bin/python pipeline/build_strecken.py      # Netz für die Seite «Strecke»
 python3 generator/strecken.py --validieren       # Tunnel und Brücken je Abschnitt prüfen
 python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
+.venv/bin/python pipeline/build_karte.py         # Netz für die kleine Tunnelkarte
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

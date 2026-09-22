@@ -1,6 +1,6 @@
 import type {
-  BahnhofIndex, LinienProfil, LinienVerzeichnis, Profil, StreckenGeometrie, StreckenNetz, Uebersicht,
-  Vergleichsdaten,
+  BahnhofIndex, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StreckenGeometrie, StreckenNetz,
+  Uebersicht, Vergleichsdaten,
 } from './typen'
 
 const BASIS = import.meta.env.BASE_URL
@@ -68,4 +68,9 @@ export async function streckenLaden(): Promise<StreckenNetz> {
 /** Lage der Linien, erst geladen, wenn der Fahrtmodus startet */
 export async function geometrieLaden(): Promise<StreckenGeometrie> {
   return holen<StreckenGeometrie>('data/strecken_geometrie.json')
+}
+
+/** Das Streckennetz für die kleine Karte zu den Tunneln */
+export async function karteLaden(): Promise<KartenDaten> {
+  return holen<KartenDaten>('data/karte.json')
 }

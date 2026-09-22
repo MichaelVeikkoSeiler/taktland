@@ -309,3 +309,14 @@ export interface StreckenGeometrie {
   quelle: string
   linien: Record<string, { start: [number, number, number]; d: number[] }>
 }
+
+/** Die kleine Karte zu den Tunneln (pipeline/build_karte.py): das Streckennetz,
+ *  je Linie in Stücken, kodiert wie StreckenGeometrie */
+export interface KartenDaten {
+  datenstand: string
+  quellen: string[]
+  linien: Record<string, Array<{ start: [number, number, number]; d: number[] }>>
+  /** Tunnel «Linie:Stelle» → [km von, km bis]; gleich bei unbekannter Richtung */
+  tunnel: Record<string, [number, number]>
+  orte: Array<{ name: string; lage: [number, number] }>
+}

@@ -4,6 +4,7 @@ import type {
   BrueckenEintrag, ListenArt, LinienProfil, TunnelEintrag, UebergangEintrag,
 } from '../typen'
 import { type Filter, listenAdresse } from '../listen'
+import { TunnelKarte } from './Karte'
 import { Zurueck } from './Zurueck'
 
 /** einzahl mit Adjektiv: «1 erfasster Tunnel», «1 erfasste Brücke» */
@@ -85,6 +86,11 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
             In der Liste zeigen
           </button>
         </div>
+      )}
+
+      {profil && art === 'tunnel' && (
+        <TunnelKarte linie={nr} markiert={gewaehlt ? `${nr}:${markiert}` : null}
+                     tunnel={alle.map((e, i) => ({ kennung: `${nr}:${i}`, name: String(e.name) }))} />
       )}
 
       {profil && (

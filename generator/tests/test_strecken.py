@@ -98,3 +98,18 @@ def test_weg_folgt_den_fernzuegen():
     # durch den Zimmerberg-Basistunnel, nicht dem See entlang
     w, _, _ = objekte("Zürich HB", "Chur")
     assert "Kilchberg ZH" not in {NETZ["punkte"][e[x]] for e in w for x in ("von", "nach")}
+
+
+def test_karte_kennt_jeden_tunnel_wie_die_strecke():
+    # Die kleine Karte zeigt jeden Tunnel der Linienfakten an seinem Kilometer,
+    # mit demselben Bereich wie die Seite Strecke, auf einer Linie mit Geometrie
+    karte = json.loads((S.ROOT / "data" / "karte.json").read_text(encoding="utf-8"))
+    obj = S.fakten_objekte()
+    alle = {f"{nr}:{i}" for (art, nr), items in obj.items() if art == "tunnel" for i in range(len(items))}
+    assert set(karte["tunnel"]) == alle
+    for i, bereich in NETZ["tunnel_bereiche"].items():
+        assert karte["tunnel"][i] == bereich
+    assert {i.split(":")[0] for i in alle} <= set(karte["linien"])
+    for i, (von, bis) in karte["tunnel"].items():
+        km = obj[("tunnel", int(i.split(":")[0]))][int(i.split(":")[1])]["km"]
+        assert von <= km <= bis
