@@ -108,15 +108,13 @@ export default function App() {
   function zurueck() { window.location.hash = '' }
   const zurueckZu = ZURUECK_ZU[herkunft]
   const bereich = bereichVon(seite, herkunft)
-  // Das Auftaktbild steht auf der Übersicht eines Bereichs, nicht auf den Seiten darunter
-  const uebersichtsseite = ['liste', 'linien', 'uebersicht', 'duell'].includes(seite.art)
 
   return (
     <div className="min-h-dvh bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <div className="mx-auto max-w-2xl">
         {/* während der Entwicklung: Version und Knopf zum Aktualisieren */}
         <Aktualisieren />
-        <Kopf aktiv={bereich} mitBild={uebersichtsseite} startseite={seite.art === 'liste'} />
+        <Kopf aktiv={bereich} startseite={seite.art === 'liste'} />
 
         {fehler && (
           <p className="px-4 py-8">Die Bahnhofsliste konnte nicht geladen werden. {fehler}</p>

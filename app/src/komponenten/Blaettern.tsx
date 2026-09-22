@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 
-/** So viele Einträge stehen auf einer Seite. Vorher wuchs die Bahnhofliste mit
- *  «Weitere anzeigen» um je 60 Einträge, bis alle untereinander standen. */
-export const PRO_SEITE = 20
+/** So viele Einträge stehen auf einer Seite (Michael, 2026-09-22: lieber 100).
+ *  Ganz am Anfang wuchs die Bahnhofliste mit «Weitere anzeigen» um je 60
+ *  Einträge, bis alle untereinander standen; dann waren es 20 je Seite. */
+export const PRO_SEITE = 100
 
 /** Umlaute und Akzente ignorieren, damit «Zurich» auch «Zürich» findet. */
 export function vereinfachen(text: string) {

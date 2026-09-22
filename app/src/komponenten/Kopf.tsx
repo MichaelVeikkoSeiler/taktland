@@ -46,20 +46,21 @@ const BILDER: Partial<Record<Bereich, AuftaktBild>> = {
 }
 
 /**
- * Kopf jeder Seite: Name, Anleitung und die Reiter der Bereiche. Auf der
- * Übersicht eines Bereichs steht darüber sein Auftaktbild; Bahnhofs- und
- * Linienseiten kommen ohne Bild aus, dort zählt der Inhalt.
+ * Kopf jeder Seite: Name, Anleitung und die Reiter der Bereiche, darüber das
+ * Auftaktbild des Bereichs. Es steht auch auf den Seiten darunter, etwa auf
+ * einer Bahnhofs- oder Linienseite (Michael, 2026-09-22: «Ich finde es
+ * schöner, wenn die Auftaktbilder bleiben»). Die Anleitung gehört zu keinem
+ * Bereich und zeigt das Bahnhofbild.
  */
-export function Kopf({ aktiv, mitBild, startseite }: {
+export function Kopf({ aktiv, startseite }: {
   aktiv: Bereich | null
-  mitBild: boolean
   startseite: boolean
 }) {
-  const bild = mitBild && aktiv ? BILDER[aktiv] : undefined
+  const bild = BILDER[aktiv ?? 'bahnhoefe']
   const titel = 'text-3xl font-bold tracking-tight'
   return (
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
-      {bild && <Auftakt key={aktiv} bild={bild} />}
+      {bild && <Auftakt key={aktiv ?? 'bahnhoefe'} bild={bild} />}
       <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />
       <div className="mt-3 flex items-baseline justify-between gap-4">
         {startseite

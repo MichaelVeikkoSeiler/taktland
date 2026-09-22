@@ -131,7 +131,7 @@ const BEISPIELE: Array<[string, string]> = [
 ]
 
 /** So viele Brücken stehen zuerst da, der Rest auf Knopfdruck */
-const BRUECKEN_ZUERST = 20
+const BRUECKEN_ZUERST = 100
 
 export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: StreckenWahl }) {
   const [netz, setNetz] = useState<StreckenNetz | null>(null)
