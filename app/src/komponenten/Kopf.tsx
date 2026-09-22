@@ -8,6 +8,8 @@ import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
 import duellHell from '../assets/auftakt-duell-hell.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
+import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
+import standortHell from '../assets/auftakt-standort-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { Auftakt, type AuftaktBild } from './Auftakt'
@@ -47,6 +49,10 @@ const BILDER: Partial<Record<Bereich | 'anleitung', AuftaktBild>> = {
   bruecken: {
     hell: brueckenHell, dunkel: brueckenDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Eine Bahnbrücke mit Fahrleitung führt über einen Fluss, dahinter eine Stadt und Berge.',
+  },
+  standort: {
+    hell: standortHell, dunkel: standortDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Ein Mann schaut neben dem Gleis auf eine Karte in seinem Handy, vor ihm ein Tunnelportal mit Signal, links ein See.',
   },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
