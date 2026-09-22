@@ -2,6 +2,8 @@ import auftaktDunkel from '../assets/auftakt-dunkel.webp'
 import auftaktHell from '../assets/auftakt-hell.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
+import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
+import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 
 export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell'
@@ -22,8 +24,12 @@ const BILDER: Partial<Record<Bereich, AuftaktBild>> = {
     alt: 'Illustration: Am Perron steigen Menschen aus einem Zug aus, andere warten aufs Einsteigen.',
   },
   linien: {
-    hell: linienHell, dunkel: linienDunkel, breite: 1344, hoehe: 665,
+    hell: linienHell, dunkel: linienDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Gleis mit Fahrleitung, dahinter eine Stadt, eine Brücke über einen Fluss und Berge.',
+  },
+  tunnel: {
+    hell: tunnelHell, dunkel: tunnelDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Ein Gleis führt in ein Tunnelportal im Fels, links Wasser mit einer Brücke, eine Stadt und Berge.',
   },
 }
 
