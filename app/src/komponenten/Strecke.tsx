@@ -429,7 +429,8 @@ function Ergebnis({ netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof
         <p className="mt-1 text-sm text-sbb-black dark:text-sbb-white">
           Taktland sucht den kürzesten Weg über die Abschnitte, auf denen laut den Zugzahlen
           {' '}{netz.zugzahlen_jahr} Personenzüge fahren. Abschnitte mit wenigen Zügen zählen dabei
-          als länger, damit der Weg den stark befahrenen Strecken folgt. Als Brücke gilt jedes
+          als länger, und jeder Betriebspunkt unterwegs kostet etwas, damit der Weg den stark
+          befahrenen, durchgehenden Strecken folgt. Als Brücke gilt jedes
           Bauwerk im Brückenverzeichnis, auch ein kleines: Eine Brücke bis zwei Meter heisst
           Durchlass. Ein Tunnel zählt, sobald der Weg ihn berührt, auch einer, in dem der
           Start- oder Zielbahnhof liegt (in Zürich HB etwa der Tunnel Bahnhof Museumstrasse).

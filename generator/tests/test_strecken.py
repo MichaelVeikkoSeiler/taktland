@@ -84,3 +84,17 @@ def test_gotthard_basistunnel_mit_bekannter_ausfahrt():
 def test_geometrie_deckt_jede_linie_des_netzes():
     geo = S.geometrie_bereiche()
     assert {t["linie"] for e in NETZ["abschnitte"] for t in e.get("teile", [])} <= set(geo)
+
+
+def test_weg_folgt_den_fernzuegen():
+    # Strecken mit bekanntem Weg der Fernzüge (pipeline/build_strecken.py, STRAFE)
+    faelle = [("Basel SBB", "Zürich HB", "Brugg AG"), ("Zürich HB", "Chur", "Thalwil"),
+              ("Bern", "Brig", "Spiez"), ("Zürich HB", "Bern", "Olten"),
+              ("Lausanne", "Bern", "Fribourg/Freiburg")]
+    for von, nach, ueber in faelle:
+        w, _, _ = objekte(von, nach)
+        punkte = {NETZ["punkte"][e[x]] for e in w for x in ("von", "nach")}
+        assert ueber in punkte, f"{von} → {nach} führt nicht über {ueber}"
+    # durch den Zimmerberg-Basistunnel, nicht dem See entlang
+    w, _, _ = objekte("Zürich HB", "Chur")
+    assert "Kilchberg ZH" not in {NETZ["punkte"][e[x]] for e in w for x in ("von", "nach")}

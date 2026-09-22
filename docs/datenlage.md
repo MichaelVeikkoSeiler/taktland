@@ -148,8 +148,12 @@ Die Seite «Strecke» zählt Tunnel und Brücken entlang eines Wegs
   die Länge nur in eine Richtung auf die Linie (Gotthard-Basistunnel), gilt der Bereich,
   sonst der Punkt. Die zwei Röhren des Gotthard-Basistunnels sind zwei Linien (594, 595),
   der Tunnel ist nur auf 594 erfasst.
-- **Grenzen:** kein Fahrplan, der Weg ist berechnet (kürzeste Luftlinie, Abschnitte mit
-  wenig Personenzügen teurer). 261 Abschnitte gehören anderen Bahnen (BLS, SOB, TPF …),
+- **Weg:** kürzeste Luftlinie, Abschnitte mit wenig Personenzügen teurer (beide
+  Richtungen zusammen) und ein Zuschlag je Abschnitt, weil Fernzüge Strecken ohne Halt
+  bevorzugen. Geprüft an 27 Strecken mit bekanntem Weg der Fernzüge: 26 stimmen (vorher
+  20), etwa Basel – Zürich über Brugg und Zürich – Thalwil durch den Zimmerberg-
+  Basistunnel. Winterthur – Chur führt weiter über Rapperswil; «Über» legt den Weg fest.
+- **Grenzen:** kein Fahrplan, der Weg ist berechnet. 261 Abschnitte gehören anderen Bahnen (BLS, SOB, TPF …),
   dort gibt es keine Tunnel- und Brückendaten (Lötschberg). Fünf Bahnhöfe liegen nicht im
   Netz: Bure-Casernes, Grandgourt, Jestetten, Lottstetten, Mols.
 

@@ -55,9 +55,20 @@ QUELLEN = ["zugzahlen", "linienkilometrierung", "linie-mit-betriebspunkten", "li
 NAH_KM = 0.15
 UEBERGANG_KM = 0.6
 
-#: Wie stark wenig befahrene Abschnitte bestraft werden: Luftlinie mal
-#: (1 + STRAFE / Personenzüge pro Tag). Bei 200 Zügen kaum, bei 30 deutlich.
-STRAFE = 25
+#: Das Gewicht eines Abschnitts: Luftlinie mal (1 + STRAFE / Personenzüge pro
+#: Tag, beide Richtungen zusammen), dazu ZUSCHLAG_KM je Abschnitt. Der Zuschlag
+#: bildet ab, dass ein Fernzug Strecken ohne Halt bevorzugt: Zürich - Thalwil
+#: durch den Zimmerberg-Basistunnel ist kaum kürzer als dem See entlang über
+#: fünf Bahnhöfe, aber schneller.
+#: Gewählt an 27 Strecken mit bekanntem Weg der Fernzüge (Basel - Zürich über
+#: Brugg, Zürich - Lugano durch den Zimmerberg-Basistunnel, Bern - Brig über
+#: Spiez, Lausanne - Bern über Fribourg ...): 26 stimmen, für jeden Zuschlag
+#: von 0.25 bis 1 und jede Strafe von 0 bis 15 gleich viele. Vorher (Strafe 25
+#: je Richtung, kein Zuschlag) waren es 20. Winterthur - Chur bleibt über
+#: Rapperswil: ohne Fahrplan lässt sich eine S-Bahn nicht von einem Fernzug
+#: unterscheiden; «Über Zürich HB» legt den Weg fest.
+STRAFE = 10
+ZUSCHLAG_KM = 0.5
 
 #: km pro Grad in der Schweiz, für Abstände in der Ebene
 KM_LON, KM_LAT = 73.0, 111.2
@@ -91,12 +102,12 @@ def abschnitte():
             punkte[abk] = {"name": name, "uic": int(uic) if pd.notna(uic) else None,
                            "lage": ebene(*p), "wgs": (round(p[1], 5), round(p[0], 5))}
         km = sum(math.dist(ebene(*p), ebene(*q)) for p, q in zip(pts, pts[1:]))
+        # je Richtung eine Zeile: die Züge beider Richtungen zusammen
         schluessel = tuple(sorted((a, b)))
         alt = kanten.get(schluessel)
         zuege = r.anzahl_zuege / 365
-        if not alt or zuege > alt["zuege"]:
-            kanten[schluessel] = {"km": km, "zuege": max(zuege, alt["zuege"] if alt else 0),
-                                  "isb": r.isb}
+        kanten[schluessel] = {"km": alt["km"] if alt else km, "isb": alt["isb"] if alt else r.isb,
+                              "zuege": (alt["zuege"] if alt else 0) + zuege}
     return jahr, kanten, punkte
 
 
@@ -292,7 +303,7 @@ def main():
     liste, ohne_zuordnung, bereiche = [], [], {}
     for (a, b), k in sorted(kanten.items()):
         eintrag = {"von": a, "nach": b,
-                   "gewicht": round(k["km"] * (1 + STRAFE / max(k["zuege"], 1)), 3),
+                   "gewicht": round(k["km"] * (1 + STRAFE / max(k["zuege"], 1)) + ZUSCHLAG_KM, 3),
                    "isb": k["isb"]}
         teile = None
         if k["isb"] == "SBB":
