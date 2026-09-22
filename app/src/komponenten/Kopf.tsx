@@ -79,15 +79,12 @@ export function Kopf({ aktiv, startseite, anleitung = false }: {
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {bild && <Auftakt key={schluessel} bild={bild} />}
       <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />
-      <div className="mt-3 flex items-baseline justify-between gap-4">
+      <div className="mt-3 flex items-center justify-between gap-4">
         {startseite
           ? <h1 className={titel}>Taktland</h1>
           : <a href="#/" className={titel}>Taktland</a>}
-        <a href="#/anleitung"
-           className="shrink-0 text-sm text-sbb-metal underline underline-offset-2
-                      hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white">
-          So funktioniert’s
-        </a>
+        {/* auf dem Handy neben dem Namen, ab 640 Pixeln am Ende der Reiter */}
+        <InfoKnopf hier={anleitung} className="flex sm:hidden" groesse="size-7" />
       </div>
       {/* Sechs Reiter in einer Zeile: auf dem Handy über die ganze Breite verteilt
           und etwas kleiner geschrieben, je schmaler das Gerät, desto kleiner;
@@ -107,7 +104,33 @@ export function Kopf({ aktiv, startseite, anleitung = false }: {
             </a>
           )
         })}
+        <InfoKnopf hier={anleitung} groesse="size-6"
+                   className={`ml-auto hidden border-b-2 pb-2 pt-1 sm:flex ${anleitung
+                     ? 'border-sbb-black dark:border-sbb-white' : 'border-transparent'}`} />
       </nav>
     </header>
+  )
+}
+
+/**
+ * Der Weg zur Anleitung «So funktioniert’s»: ein «i» im Kreis statt eines
+ * Textlinks (Michael, 2026-09-22). Auf der Anleitung selbst gefüllt.
+ */
+function InfoKnopf({ hier, className, groesse }: { hier: boolean; className: string; groesse: string }) {
+  return (
+    <a href="#/anleitung" aria-label="So funktioniert’s" title="So funktioniert’s"
+       aria-current={hier ? 'page' : undefined}
+       className={`${className} shrink-0 items-center justify-center transition-colors ${hier
+         ? 'text-sbb-black dark:text-sbb-white'
+         : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
+      <svg viewBox="0 0 24 24" className={groesse} aria-hidden="true">
+        <circle cx="12" cy="12" r="10.4" stroke="currentColor" strokeWidth="1.8"
+                fill={hier ? 'currentColor' : 'none'} />
+        <g className={hier ? 'fill-white dark:fill-sbb-midnight' : 'fill-current'}>
+          <circle cx="12" cy="7.4" r="1.4" />
+          <rect x="10.9" y="10.2" width="2.2" height="7.6" rx="1.1" />
+        </g>
+      </svg>
+    </a>
   )
 }
