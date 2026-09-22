@@ -265,7 +265,7 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             setzt ein Programm aus den offenen Daten zusammen, und vor jeder Veröffentlichung
             gleicht ein Prüfprogramm sie mit den Daten ab.
           </li>
-          <li>Das Auftaktbild ist mit ChatGPT entstanden.</li>
+          <li>Die Auftaktbilder sind mit ChatGPT entstanden.</li>
         </Punkte>
       </Abschnitt>
     </div>
