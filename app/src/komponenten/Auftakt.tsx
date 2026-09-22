@@ -18,6 +18,31 @@ function useDunkel() {
   )
 }
 
+/** Von 7 bis 21 Uhr Schweizer Zeit (MEZ, im Sommer MESZ) steht immer das
+ *  Tagbild (Michael, 2026-09-22). Handys schalten die dunkle Darstellung oft
+ *  schon bei Sonnenuntergang ein, im Winter gegen 17 Uhr. */
+const TAG_VON = 7
+const TAG_BIS = 21
+
+/** Die Stunde in der Schweiz, 0 bis 23. Nur der Teil «hour»: format() gibt
+ *  auf Deutsch «07 Uhr» zurück, und das ist keine Zahl. */
+export function schweizerStunde(jetzt = new Date()) {
+  const teil = new Intl.DateTimeFormat('de-CH', {
+    hour: 'numeric', hourCycle: 'h23', timeZone: 'Europe/Zurich',
+  }).formatToParts(jetzt).find((t) => t.type === 'hour')
+  return Number(teil?.value ?? 12)
+}
+
+/** Tag zwischen TAG_VON und TAG_BIS, jede Minute neu geprüft */
+function useTag() {
+  const [stunde, setStunde] = useState(schweizerStunde)
+  useEffect(() => {
+    const uhr = window.setInterval(() => setStunde(schweizerStunde()), 60_000)
+    return () => window.clearInterval(uhr)
+  }, [])
+  return stunde >= TAG_VON && stunde < TAG_BIS
+}
+
 /** Ein Auftaktbild, am Tag und wenn vorhanden in der Nacht */
 export interface AuftaktBild {
   hell: string
@@ -28,14 +53,17 @@ export interface AuftaktBild {
 }
 
 /**
- * Auftaktbild eines Bereichs, am Tag und in der Nacht. Welches erscheint, folgt
- * der Geräteeinstellung. Ein kleiner Knopf zeigt für fünf Sekunden das andere
+ * Auftaktbild eines Bereichs, am Tag und in der Nacht. Von 7 bis 21 Uhr
+ * Schweizer Zeit erscheint das Tagbild, sonst folgt es der Geräteeinstellung. Ein kleiner Knopf zeigt für fünf Sekunden das andere
  * Bild, dann blendet es zurück. Das andere Bild wird erst geladen, wenn jemand
  * den Knopf berührt: Wer ihn nie nutzt, lädt es nicht. Ohne Nachtbild gibt es
  * nur das eine Bild und keinen Knopf.
  */
 export function Auftakt({ bild }: { bild: AuftaktBild }) {
-  const dunkel = useDunkel() && bild.dunkel !== undefined
+  // beide Hooks immer aufrufen, auch am Tag (Reihenfolge der Hooks)
+  const tag = useTag()
+  const geraetDunkel = useDunkel()
+  const dunkel = !tag && geraetDunkel && bild.dunkel !== undefined
   const [angefragt, setAngefragt] = useState(false)
   const [geladen, setGeladen] = useState(false)
   const [zeigen, setZeigen] = useState(false)
@@ -53,13 +81,10 @@ export function Auftakt({ bild }: { bild: AuftaktBild }) {
 
   return (
     <div className="relative -mx-4 -mt-8 mb-6">
-      <picture>
-        {bild.dunkel && <source srcSet={bild.dunkel} media={DUNKEL} />}
-        <img
-          src={bild.hell} width={bild.breite} height={bild.hoehe} alt={bild.alt}
-          className="block h-auto w-full"
-        />
-      </picture>
+      <img
+        src={dunkel ? bild.dunkel : bild.hell} width={bild.breite} height={bild.hoehe} alt={bild.alt}
+        className="block h-auto w-full"
+      />
 
       {anderes && angefragt && (
         <img
