@@ -137,6 +137,10 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Liniennummer, etwa Linie 600. Das sind keine Zuglinien wie eine S-Bahn.
           </li>
           <li>
+            Die Suche findet eine Linie über ihre Nummer, ihren Namen oder einen Bahnhof: Wer
+            «Olten» eintippt, sieht alle Linien, auf denen Olten liegt.
+          </li>
+          <li>
             Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach ihrem Kilometer geordnet,
             die erfassten Tunnel mit Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem,
             die erfassten Brücken mit Kanton und Zahl der Baueinheiten und die erfassten

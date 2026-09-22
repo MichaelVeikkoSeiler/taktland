@@ -131,7 +131,7 @@ export default function App() {
         {seite.art === 'anleitung' && <Anleitung index={index} zurueck={zurueck} />}
         {seite.art === 'duell' && <Duell />}
         {seite.art === 'standort' && <Standort index={index} />}
-        {seite.art === 'linien' && <Linien />}
+        {seite.art === 'linien' && <Linien index={index} />}
         {seite.art === 'uebersicht' && (
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}
                       aendern={(neu) => setUebersichten((u) => ({ ...u, [seite.liste]: neu }))} />

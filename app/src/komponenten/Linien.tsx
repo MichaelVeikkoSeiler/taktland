@@ -1,12 +1,20 @@
 import { useEffect, useMemo, useState } from 'react'
 import { linienLaden } from '../daten'
-import type { LinienEintrag, LinienVerzeichnis } from '../typen'
+import type { BahnhofIndex, LinienEintrag, LinienVerzeichnis } from '../typen'
+import { vereinfachen } from './Blaettern'
 import { BahnKuerzel } from './Suche'
 import { StreckeKarte } from './StreckeKarte'
 import { Ladefehler } from './Ladefehler'
 
-/** Der Bereich «Strecken»: die Linien mit eigener Seite, nach Nummer geordnet. */
-export function Linien() {
+/** Höchstens so viele Bahnhofsnamen stehen bei einer Linie, dann «und N weitere» */
+const NAMEN_JE_LINIE = 3
+
+/**
+ * Der Bereich «Strecken»: die Linien mit eigener Seite, nach Nummer geordnet.
+ * Die Suche findet Nummer und Name der Linie und, über die Bahnhöfe, jede
+ * Linie, auf der ein passender Bahnhof liegt (Müntschemier: Linie 220).
+ */
+export function Linien({ index }: { index: BahnhofIndex | null }) {
   const [daten, setDaten] = useState<LinienVerzeichnis | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [begriff, setBegriff] = useState('')
@@ -15,13 +23,22 @@ export function Linien() {
     linienLaden().then(setDaten).catch((e: Error) => setFehler(e.message))
   }, [])
 
-  const treffer = useMemo(() => {
+  const treffer = useMemo((): Array<{ l: LinienEintrag; durch: string[] }> => {
     if (!daten) return []
-    const b = begriff.trim().toLowerCase()
-    return b
-      ? daten.linien.filter((l) => String(l.linie).startsWith(b) || l.name.toLowerCase().includes(b))
-      : daten.linien
-  }, [daten, begriff])
+    const b = vereinfachen(begriff.trim())
+    if (!b) return daten.linien.map((l) => ({ l, durch: [] }))
+    // Bahnhöfe, deren Name passt, und die Linien, auf denen sie liegen
+    const durch = new Map<number, string[]>()
+    for (const e of index?.bahnhoefe ?? []) {
+      if (!vereinfachen(e.name).includes(b)) continue
+      for (const nr of daten.nach_bahnhof[String(e.uic)] ?? []) {
+        durch.set(nr, [...(durch.get(nr) ?? []), e.name])
+      }
+    }
+    return daten.linien
+      .filter((l) => String(l.linie).startsWith(b) || vereinfachen(l.name).includes(b) || durch.has(l.linie))
+      .map((l) => ({ l, durch: (durch.get(l.linie) ?? []).sort((x, y) => x.localeCompare(y, 'de-CH')) }))
+  }, [daten, begriff, index])
 
   return (
     <div className="px-4 pb-16">
@@ -48,7 +65,7 @@ export function Linien() {
             <span className="sr-only">Linie suchen</span>
             <input
               type="search" value={begriff} onChange={(e) => setBegriff(e.target.value)}
-              placeholder="Nummer oder Name"
+              placeholder="Nummer, Name oder Bahnhof"
               className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg text-sbb-black
                          placeholder:text-sbb-metal focus:border-sbb-black focus:outline-none
                          dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white
@@ -59,7 +76,7 @@ export function Linien() {
             {begriff ? `${treffer.length} von ${daten.linien.length} Linien` : `${daten.linien.length} Linien`}
           </p>
           <ul className="mt-3 space-y-2">
-            {treffer.map((l) => <Eintrag key={l.linie} l={l} />)}
+            {treffer.map(({ l, durch }) => <Eintrag key={l.linie} l={l} durch={durch} />)}
           </ul>
         </>
       )}
@@ -87,7 +104,7 @@ function NichtAufgefuehrt({ n }: { n: NonNullable<LinienVerzeichnis['nicht_aufge
   )
 }
 
-function Eintrag({ l }: { l: LinienEintrag }) {
+function Eintrag({ l, durch }: { l: LinienEintrag; durch: string[] }) {
   const teile = [
     l.bahnhoefe === 0 ? 'kein Bahnhof in Taktland'
       : l.bahnhoefe === 1 ? '1 Bahnhof' : `${l.bahnhoefe} Bahnhöfe`,
@@ -110,6 +127,12 @@ function Eintrag({ l }: { l: LinienEintrag }) {
           </span>
           <span className="block truncate text-sm text-sbb-black dark:text-sbb-white">{l.name}</span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{teile.join(' · ')}</span>
+          {durch.length > 0 && (
+            <span className="block text-sm text-sbb-black dark:text-sbb-white">
+              durch {durch.slice(0, NAMEN_JE_LINIE).join(', ')}
+              {durch.length > NAMEN_JE_LINIE && ` und ${durch.length - NAMEN_JE_LINIE} weitere`}
+            </span>
+          )}
         </span>
         <span className="shrink-0 text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>
       </a>
