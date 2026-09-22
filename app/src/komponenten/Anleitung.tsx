@@ -203,6 +203,10 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Fragen dazu stehen auf den Linienseiten. Die Tunnel treten zudem im Duell
             gegeneinander an.
           </li>
+          <li>
+            Auch jede Linienseite zeigt die kleine Karte: die Linie, ihre Tunnel und als weisse
+            Punkte ihre Bahnhöfe in Taktland, beschriftet der erste und der letzte.
+          </li>
         </Punkte>
       </Abschnitt>
 

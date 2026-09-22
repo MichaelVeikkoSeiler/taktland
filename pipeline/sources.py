@@ -76,8 +76,11 @@ DATASETS = {
     "linie-mit-betriebspunkten": dict(
         join="bpuic", tier="core",
         beschreibung="Betriebspunkte pro Linie; Bruecke Kuerzel <-> bpuic"),
+    # tier «linien»: Die Bahnhofseiten lesen «linie» nicht. Als «extra» hätte ein
+    # Neuladen den Datenstand aller Bahnhöfe verschoben (2026-09-22: dazu kam nur
+    # das Anschlussgleis 135 St-Triphon Raffinerie)
     "linie": dict(
-        join=None, tier="extra", beschreibung="Streckennetz mit Anfang und Ende"),
+        join=None, tier="linien", beschreibung="Streckennetz mit Anfang und Ende"),
     "linienkilometrierung": dict(
         join=None, tier="linien",
         beschreibung="Kilometerpunkte der Linien mit Koordinaten, meist alle 100 m. "

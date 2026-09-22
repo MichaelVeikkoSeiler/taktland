@@ -126,27 +126,27 @@ def uebersicht_daten():
     den Fakten seiner Linie, dazu die Nummer der Linie. Die Brücken auf Linien
     ohne eigene Seite kommen aus data/linien_uebersicht.json, damit sie nicht
     verloren gehen. generator/tests/test_uebersichten.py prüft beides."""
-    linien, staende = {}, []
+    linien = {}
     tunnel, bruecken = [], []
     for p in sorted(LINIEN.glob("*.json"), key=lambda x: int(x.stem)):
         f = json.loads(p.read_text(encoding="utf-8"))
         nr = f["linie"]
-        staende.append(f["datenstand"])
         linien[str(nr)] = {"name": f["name"], "seite": (LINIENPROFILE / f"{nr}.de.json").exists()}
         tunnel += [{"linie": nr, **it} for it in (f.get("tunnel") or {}).get("items", [])]
         bruecken += [{"linie": nr, **it} for it in (f.get("bruecken") or {}).get("items", [])]
     u = json.loads((ROOT / "data" / "linien_uebersicht.json").read_text(encoding="utf-8"))
-    staende.append(u["datenstand"])
     for x in u["bruecken_ohne_seite_liste"]:
         linien[str(x["linie"])] = {"name": x["name"], "seite": False}
         bruecken += [{"linie": x["linie"], **it} for it in x["items"]]
-    stand = max(staende)
+    # der Tag, an dem die eigene Quelle geladen wurde, nicht der neueste aller
+    # Quellen der Linien (sonst rückte ein Neuladen von «linie» den Stand vor)
+    stand = u["abgerufen"]
     mit_bruecken = {str(b["linie"]) for b in bruecken}
     mit_tunnel = {str(t["linie"]) for t in tunnel}
     return {
-        "tunnel": {"stand": stand, "quelle": "tunnel", "eintraege": tunnel,
+        "tunnel": {"stand": stand["tunnel"], "quelle": "tunnel", "eintraege": tunnel,
                    "linien": {k: v for k, v in linien.items() if k in mit_tunnel}},
-        "bruecken": {"stand": stand, "quelle": "brucken", "eintraege": bruecken,
+        "bruecken": {"stand": stand["brucken"], "quelle": "brucken", "eintraege": bruecken,
                      "ohne_seite": u["bruecken_ohne_seite"],
                      "linien": {k: v for k, v in linien.items() if k in mit_bruecken}},
     }

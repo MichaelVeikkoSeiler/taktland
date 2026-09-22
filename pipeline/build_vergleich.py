@@ -253,6 +253,13 @@ def linien_eintraege():
     return raus
 
 
+def abgerufen(quelle):
+    """Der Tag, an dem dieser Datensatz geladen wurde, wie build_linien.py ihn
+    festhält."""
+    u = json.loads((ROOT / "data" / "linien_uebersicht.json").read_text(encoding="utf-8"))
+    return u["abgerufen"][quelle]
+
+
 def tunnel_eintraege():
     """Jeder Tunnel mit Linie, Stelle in der Faktendatei, Bemerkung und den
     Kantonen, die sein Eintrag nennt."""
@@ -304,9 +311,10 @@ def main():
         "tunnel_kategorien": [{k: v for k, v in kat.items() if k != "pfad"}
                               for kat in TUNNEL_KATEGORIEN],
         "tunnel": tunnel_eintraege(),
-        # die Tunnel kommen aus einem eigenen Abruf, mit eigenem Stand;
-        # derselbe gilt für die Linien
-        "tunnel_datenstand": max((json.loads(p.read_text(encoding="utf-8"))["datenstand"]
+        # die Tunnel kommen aus einem eigenen Abruf, mit eigenem Stand; die
+        # Linien aus mehreren, ihr Stand ist der neueste davon
+        "tunnel_datenstand": abgerufen("tunnel"),
+        "linien_datenstand": max((json.loads(p.read_text(encoding="utf-8"))["datenstand"]
                                   for p in LINIEN.glob("*.json")), default=None),
         "linien_kategorien": [{k: v for k, v in kat.items() if k != "pfad"}
                               for kat in LINIEN_KATEGORIEN],

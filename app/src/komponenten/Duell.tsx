@@ -486,8 +486,9 @@ export function Duell() {
 
       <p className="mt-8 text-xs text-sbb-metal dark:text-sbb-storm">
         {fussnote(bereich, gebiet, feld.length)}{' '}
-        Datenstand: {bereich === 'bahnhoefe'
-          ? daten.datenstand : daten.tunnel_datenstand ?? daten.datenstand}.
+        Datenstand: {bereich === 'bahnhoefe' ? daten.datenstand
+          : bereich === 'tunnel' ? daten.tunnel_datenstand ?? daten.datenstand
+          : daten.linien_datenstand ?? daten.tunnel_datenstand ?? daten.datenstand}.
         {bereich !== 'linien' && kantone.length < 26
           && ` Kantone mit zu wenigen ${BEREICHE[bereich].mehrzahlDativ} für faire Paare fehlen `
              + 'in der Auswahl.'}

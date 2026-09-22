@@ -92,9 +92,15 @@ Ebenso vorsichtig zu behandeln:
 
 Im Katalog von data.sbb.ch (60 Datensätze, geprüft 2026-09-21) steht zu Strecken:
 
-- `linie` – 432 Linien mit Name, Anfangs- und Endpunkt und Kilometrierung von–bis.
+- `linie` – 433 Linien mit Name, Anfangs- und Endpunkt und Kilometrierung von–bis.
   Die Differenz ist **nicht** als Länge belegt: Linie 210 beginnt bei km 19.115,
-  Linie 220 bei km -0.4.
+  Linie 220 bei km -0.4. Neu geladen 2026-09-22: dazu kam nur Linie 135 (St-Triphon
+  Raffinerie), sonst kein Wert geändert. `linie` gehört zur Stufe `linien` von
+  `pipeline/sources.py`, nicht zu den Bahnhöfen: Die Bahnhofseiten lesen sie nicht, ein
+  Neuladen verschiebt ihren Datenstand darum nicht. Der Datenstand einer Linienseite ist
+  der neueste ihrer Quellen; die Übersichten «Tunnel» und «Brücken» und das Tunnel-Duell
+  nennen den Tag, an dem ihre eigene Quelle geladen wurde (`abgerufen` in
+  `data/linien_uebersicht.json`).
 - `linie-mit-betriebspunkten` – welcher Betriebspunkt bei welchem Kilometer auf welcher Linie liegt.
 - `tunnel` – 289 Tunnel, vollständig mit Länge, Jahr der ersten Inbetriebnahme,
   Tunnelsystem (Röhren und Spuren), Linie und Kilometer. Neun haben eine Bemerkung zur
@@ -167,7 +173,7 @@ nur, wo die Richtung der Länge eindeutig ist (`tunnel_bereiche`). Die Zeit bis 
 ist Weg durch Tempo, eine Schätzung. Getestet mit vorgespieltem Standort (Einfahrt
 Gotthard-Basistunnel, Standort 80 km neben der Strecke, Tunnel ohne GPS), nicht im Zug.
 
-## Kleine Karte bei Tunneln und Brücken
+## Kleine Karte bei Tunneln, Brücken und Linien
 
 `pipeline/build_karte.py` vereinfacht die Kilometrierung aller 338 Linien auf 30 m
 (Douglas-Peucker, 8407 Punkte, 125 KB) und schreibt für jeden Tunnel den Bereich auf der
@@ -177,3 +183,9 @@ Kilometer eines Portals, nicht die Richtung der Länge: Sie erscheinen als Punkt
 Orientierung stehen zwölf grosse Bahnhöfe mit ihrer Lage aus den Fakten darin. Brücken
 sind immer Punkte bei ihrem Kilometer, eine Länge ist nicht erfasst. Keine
 Kartenbilder eines fremden Dienstes; die Zusage im Datenschutz bleibt gültig.
+
+Auf jeder Linienseite steht dieselbe Karte, dazu weisse Punkte für die Bahnhöfe der Linie
+in Taktland, gesetzt an ihrem Kilometer aus der Linienseite (`bahnhoefe.items[].km`).
+Beschriftet sind nur der erste und der letzte. Der Kilometer ist der Standort auf der
+Linie, keine Entfernung; der Punkt liegt darum dort, wo die Kilometrierung diesen Wert
+hat.

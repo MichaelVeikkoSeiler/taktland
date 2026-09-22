@@ -4,6 +4,7 @@ import { linienAntwortSpeichern, linienAntwortenLesen, linieZuruecksetzen } from
 import { listenAdresse } from '../listen'
 import type { LinienProfil } from '../typen'
 import { KapitelBlock, Quellen, Rahmen } from './Bahnhof'
+import { ObjektKarte } from './Karte'
 import { Luecken } from './Luecken'
 import { Ladefehler } from './Ladefehler'
 
@@ -73,6 +74,16 @@ export function Linie({ nr, zurueck, zurueckText }: {
           </p>
         )}
       </header>
+
+      {/* die Linie im Netz, mit ihren Bahnhöfen und Tunneln */}
+      <div className="px-4">
+        <ObjektKarte art="tunnel" linie={nr} markiert={null}
+                     objekte={(profil.listen?.tunnel ?? []).map((t, i) => ({
+                       kennung: `${nr}:${i}`, name: t.name, km: t.km }))}
+                     bahnhoefe={profil.chapters.flatMap((k) => k.facts ?? [])
+                       .filter((f) => f.uic && typeof f.value === 'number')
+                       .map((f) => ({ name: f.label, km: f.value as number }))} />
+      </div>
 
       <div className="px-4">
         {profil.chapters.map((k) => (

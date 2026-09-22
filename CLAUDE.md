@@ -85,13 +85,15 @@ data/bauplan.json  was pro Bahnhof von Hand entschieden ist
 data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand geändert
 data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_linien.py
 data/linienprofile/ Linienseiten, gebaut mit generator/linien.py, nie von Hand geändert
-data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brücken darauf
+data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brücken darauf,
+             und der Tag, an dem jede Quelle der Linien geladen wurde
 data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzügen, je
              Abschnitt die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py)
 data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierung,
              platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte
-             bei den Tunneln (pipeline/build_karte.py), selbst gezeichnet, ohne
+             bei Tunneln, Brücken und auf den Linienseiten (pipeline/build_karte.py),
+             selbst gezeichnet, ohne
              Kartendienst
 ```
 

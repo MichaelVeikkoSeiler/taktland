@@ -77,11 +77,13 @@ export interface KartenObjekt {
  * fremden Dienstes. Ein Tunnel liegt über seinem Bereich (karte.json), wo die
  * Richtung der Länge erfasst ist; eine Brücke hat keine Länge und ist ein Punkt.
  */
-export function ObjektKarte({ art, linie, objekte, markiert }: {
+export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [] }: {
   art: 'tunnel' | 'bruecken'
   linie: number
   objekte: KartenObjekt[]
   markiert: string | null
+  /** Auf der Linienseite: die Bahnhöfe aus Taktland mit ihrem Kilometer */
+  bahnhoefe?: Array<{ name: string; km: number }>
 }) {
   const [daten, setDaten] = useState<KartenDaten | null>(null)
   const [fehler, setFehler] = useState(false)
@@ -126,8 +128,16 @@ export function ObjektKarte({ art, linie, objekte, markiert }: {
   const gewaehlt = bereiche.find((t) => t.kennung === markiert)
   const gewaehltPunkt = gewaehlt ? punktBei(eigene, gewaehlt.bereich[0]) : null
   const halbeBreite = gewaehlt ? gewaehlt.name.length * 3.4 * px : 0
+  // Bahnhöfe der Linie an ihrem Kilometer; die Orte zur Orientierung nur, wo
+  // nicht schon ein Bahnhof der Linie mit demselben Namen steht
+  const stationen = bahnhoefe.flatMap((b) => {
+    const p = punktBei(eigene, b.km)
+    return p ? [{ ...b, x: p[0], y: p[1] }] : []
+  })
+  const beschriftet = stationen.length > 1 ? [stationen[0], stationen[stationen.length - 1]] : stationen
   const orte = daten.orte.map((o) => ({ ...o, x: o.lage[1] * LAENGE_ZU_BREITE, y: -o.lage[0] }))
     .filter((o) => o.x > box[0] && o.x < box[0] + w && o.y > box[1] && o.y < box[1] + h)
+    .filter((o) => !beschriftet.some((b) => b.name === o.name))
 
   return (
     <figure className="mt-4">
@@ -175,6 +185,16 @@ export function ObjektKarte({ art, linie, objekte, markiert }: {
           const r = t.kennung === markiert ? 4 : art === 'bruecken' ? 1.8 : 2.5
           return p && <circle key={t.kennung} cx={p[0]} cy={p[1]} r={r * px} className="fill-sbb-red" />
         })}
+        {stationen.map((b) => (
+          <circle key={`b${b.name}${b.km}`} cx={b.x} cy={b.y} r={2.4 * px} strokeWidth={1.2}
+                  vectorEffect="non-scaling-stroke"
+                  className="fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white" />
+        ))}
+        {beschriftet.map((b) => (
+          <text key={`t${b.name}`} x={b.x + (b.x > cx ? -5 : 5) * px} y={b.y + (b.y < cy ? 13 : -6) * px}
+                fontSize={10.5 * px} fontWeight="bold" textAnchor={b.x > cx ? 'end' : 'start'}
+                className="fill-sbb-black dark:fill-sbb-white">{b.name}</text>
+        ))}
         {gewaehlt && gewaehltPunkt && (
           <g>
             <circle cx={gewaehltPunkt[0]} cy={gewaehltPunkt[1]} r={7 * px} fill="none"
@@ -192,10 +212,13 @@ export function ObjektKarte({ art, linie, objekte, markiert }: {
       <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), ohne Strassen, Orte und
         Grenzen.{' '}
-        {art === 'tunnel'
-          ? 'Rot die Tunnel dieser Linie: als Strecke, wo die Daten die Richtung der Länge '
-            + 'hergeben, sonst als Punkt beim erfassten Kilometer, dem Portal.'
-          : 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge ist '
+        {stationen.length > 0 && 'Weisse Punkte: die Bahnhöfe dieser Linie in Taktland an ihrem '
+          + 'Kilometer, beschriftet der erste und der letzte. '}
+        {art === 'tunnel' && objekte.length > 0
+          && 'Rot die Tunnel dieser Linie: als Strecke, wo die Daten die Richtung der Länge '
+            + 'hergeben, sonst als Punkt beim erfassten Kilometer, dem Portal.'}
+        {art === 'bruecken'
+          && 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge ist '
             + 'nicht erfasst.'}
       </figcaption>
     </figure>

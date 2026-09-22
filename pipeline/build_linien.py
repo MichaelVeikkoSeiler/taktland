@@ -76,6 +76,13 @@ def datenstand():
     return max(abruf[q] for q in QUELLEN)
 
 
+def abgerufen(quelle):
+    """Wann dieser eine Datensatz geladen wurde. Der datenstand der Linie ist
+    das neueste Datum aller Quellen; im Satz zu den Bahnübergängen stand darum
+    der Tag, an dem «linie» neu geladen wurde, nicht der der Bahnübergänge."""
+    return json.loads((RAW / "_abruf.json").read_text(encoding="utf-8"))[quelle]
+
+
 def endpunkt_uic(gruppe, name, km, namen):
     """Der Bahnhof am Anfang oder Ende der Linie, falls es einer aus Taktland ist.
 
@@ -245,7 +252,7 @@ def luecken(f):
                    "bahnubergang")
         lueckt("Stand der Bahnübergänge",
                "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und "
-               f"vervollständigt. Taktland zeigt den Stand vom {f['datenstand']}.",
+               f"vervollständigt. Taktland zeigt den Stand vom {abgerufen('bahnubergang')}.",
                "bahnubergang")
     else:
         lueckt("Bahnübergänge",
@@ -387,6 +394,10 @@ def main():
     ]
     uebersicht = {
         "datenstand": stand,
+        # je Datensatz der Tag des Abrufs: Die Übersichten «Tunnel» und «Brücken»
+        # und das Tunnel-Duell nennen den Stand ihrer eigenen Quelle, nicht den
+        # neuesten aller Quellen
+        "abgerufen": {q: abgerufen(q) for q in QUELLEN},
         "hinweis": "Brücken und Bahnübergänge auf Linien ohne eigene Seite: weniger als zwei "
                    "Bahnhöfe in Taktland und kein Tunnel.",
         "bruecken_ohne_seite": int(len(ohne)),

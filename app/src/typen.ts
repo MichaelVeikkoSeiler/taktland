@@ -246,6 +246,7 @@ export interface Vergleichsdaten {
   tunnel_kategorien?: Kategorie[]
   tunnel?: VergleichsTunnel[]
   tunnel_datenstand?: string | null
+  linien_datenstand?: string | null
   linien_kategorien?: Kategorie[]
   linien?: VergleichsLinie[]
 }
