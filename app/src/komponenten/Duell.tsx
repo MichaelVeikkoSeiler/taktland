@@ -5,6 +5,7 @@ import {
 import { vergleichLaden } from '../daten'
 import type { Kategorie, Vergleichsdaten } from '../typen'
 import { kantonText } from '../kanton'
+import { Ladefehler } from './Ladefehler'
 
 /**
  * Bahnhöfe, Linien oder Tunnel gegeneinander. Die Fragen entstehen hier aus
@@ -309,7 +310,7 @@ export function Duell() {
     [stand],
   )
 
-  if (fehler) return <p className="px-4 py-8">Der Vergleich konnte nicht geladen werden. {fehler}</p>
+  if (fehler) return <Ladefehler className="px-4 py-8" was="Der Vergleich konnte nicht geladen werden." fehler={fehler} />
   if (!daten) return <p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>
 
   const k = runde?.kategorie

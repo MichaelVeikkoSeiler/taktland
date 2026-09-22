@@ -6,6 +6,7 @@ import type {
 import { type Filter, listenAdresse } from '../listen'
 import { ObjektKarte } from './Karte'
 import { Zurueck } from './Zurueck'
+import { Ladefehler } from './Ladefehler'
 
 /** einzahl mit Adjektiv: «1 erfasster Tunnel», «1 erfasste Brücke» */
 const TITEL: Record<ListenArt, { mehrzahl: string; einzahl: string; quelle: string }> = {
@@ -68,7 +69,7 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{t.mehrzahl} der Linie {nr}</h1>
       {profil && <p className="mt-1 text-sbb-black dark:text-sbb-white">{profil.name}</p>}
 
-      {fehler && <p className="mt-6">Die Liste konnte nicht geladen werden. {fehler}</p>}
+      {fehler && <Ladefehler className="mt-6" was="Die Liste konnte nicht geladen werden." fehler={fehler} />}
       {!profil && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}
 
       {profil && gewaehlt && (

@@ -8,6 +8,7 @@ import { streckenAdresse } from './Strecke'
 import { BahnKuerzel } from './Suche'
 import { Zurueck } from './Zurueck'
 import { kantonText } from '../kanton'
+import { Ladefehler } from './Ladefehler'
 
 const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
@@ -52,9 +53,8 @@ export function Bahnhof({ uic, zurueck, eintrag }: {
   if (fehler) {
     return (
       <Rahmen zurueck={zurueck}>
-        <p className="px-4 text-sbb-black dark:text-sbb-white">
-          Dieses Profil konnte nicht geladen werden. {fehler}
-        </p>
+        <Ladefehler className="px-4 text-sbb-black dark:text-sbb-white"
+                    was="Dieses Profil konnte nicht geladen werden." fehler={fehler} />
       </Rahmen>
     )
   }

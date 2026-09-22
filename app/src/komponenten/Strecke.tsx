@@ -10,6 +10,7 @@ import { vereinfachen } from './Blaettern'
 import { Fahrtmodus, type ObjektText } from './Fahrtmodus'
 import { Luecken } from './Luecken'
 import { genau } from './Objekte'
+import { Ladefehler } from './Ladefehler'
 
 /** Start, Ziel und wahlweise ein Bahnhof dazwischen, als UIC */
 export interface StreckenWahl {
@@ -218,7 +219,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
         )}
       </div>
 
-      {fehler && <p className="mt-6">Das Netz konnte nicht geladen werden. {fehler}</p>}
+      {fehler && <Ladefehler className="mt-6" was="Das Netz konnte nicht geladen werden." fehler={fehler} />}
       {!netz && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}
 
       {netz && !ergebnis && !wahl.von && !wahl.nach && (

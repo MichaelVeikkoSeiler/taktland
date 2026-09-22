@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { linienLaden } from '../daten'
 import type { LinienEintrag, LinienVerzeichnis } from '../typen'
 import { StreckeKarte } from './StreckeKarte'
+import { Ladefehler } from './Ladefehler'
 
 /** Übersicht der Linien mit eigener Seite, nach Nummer geordnet. */
 export function Linien() {
@@ -35,7 +36,7 @@ export function Linien() {
       </p>
       <StreckeKarte />
 
-      {fehler && <p className="mt-6">Die Linien konnten nicht geladen werden. {fehler}</p>}
+      {fehler && <Ladefehler className="mt-6" was="Die Linien konnten nicht geladen werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}
 
       {daten && (

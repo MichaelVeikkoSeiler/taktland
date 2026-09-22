@@ -4,6 +4,7 @@ import type { BrueckenEintrag, TunnelEintrag, Uebersicht as Daten } from '../typ
 import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
 import { genau } from './Objekte'
 import { StreckeKarte } from './StreckeKarte'
+import { Ladefehler } from './Ladefehler'
 
 export type UebersichtArt = 'tunnel' | 'bruecken'
 
@@ -163,7 +164,7 @@ export function Uebersicht({ art, stand, aendern }: {
       </p>
       <StreckeKarte />
 
-      {fehler && <p className="mt-6">Die Liste konnte nicht geladen werden. {fehler}</p>}
+      {fehler && <Ladefehler className="mt-6" was="Die Liste konnte nicht geladen werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}
 
       {daten && (

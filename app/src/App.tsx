@@ -18,6 +18,7 @@ import {
 import { indexLaden } from './daten'
 import { HERAUSGEBER, KONTAKT } from './kontakt'
 import type { BahnhofIndex } from './typen'
+import { Ladefehler } from './komponenten/Ladefehler'
 
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
@@ -117,7 +118,7 @@ export default function App() {
         <Kopf aktiv={bereich} startseite={seite.art === 'liste'} />
 
         {fehler && (
-          <p className="px-4 py-8">Die Bahnhofsliste konnte nicht geladen werden. {fehler}</p>
+          <Ladefehler className="px-4 py-8" was="Die Bahnhofsliste konnte nicht geladen werden." fehler={fehler} />
         )}
 
         {!index && !fehler && <p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>}

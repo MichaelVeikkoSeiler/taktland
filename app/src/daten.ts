@@ -18,10 +18,25 @@ const eingebettet = (window as unknown as { __TAKTLAND__?: EingebetteteDaten }).
 /** Einmal geladene Daten im Speicher halten, damit Offline-Aufrufe schnell sind. */
 const zwischenspeicher = new Map<string, unknown>()
 
+/** Bricht die Verbindung ab (schwacher Empfang, GitHub spielt gerade eine neue
+ *  Version ein), wird nach einer Sekunde ein zweites Mal geladen. */
+async function abrufen(url: string) {
+  try {
+    return await fetch(url)
+  } catch {
+    await new Promise((r) => setTimeout(r, 1000))
+    try {
+      return await fetch(url)
+    } catch {
+      throw new Error('Die Verbindung zum Server kam nicht zustande.')
+    }
+  }
+}
+
 async function holen<T>(pfad: string): Promise<T> {
   const treffer = zwischenspeicher.get(pfad)
   if (treffer) return treffer as T
-  const antwort = await fetch(`${BASIS}${pfad}`)
+  const antwort = await abrufen(`${BASIS}${pfad}`)
   if (!antwort.ok) throw new Error(`${pfad} nicht gefunden (${antwort.status})`)
   const daten = (await antwort.json()) as T
   zwischenspeicher.set(pfad, daten)

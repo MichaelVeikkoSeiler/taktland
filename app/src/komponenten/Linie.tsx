@@ -5,6 +5,7 @@ import { listenAdresse } from '../listen'
 import type { LinienProfil } from '../typen'
 import { KapitelBlock, Quellen, Rahmen } from './Bahnhof'
 import { Luecken } from './Luecken'
+import { Ladefehler } from './Ladefehler'
 
 /** Eine Linienseite. Aufbau wie beim Bahnhof: Kapitel, Fragen, Lücken, Quellen. */
 export function Linie({ nr, zurueck, zurueckText }: {
@@ -29,9 +30,8 @@ export function Linie({ nr, zurueck, zurueckText }: {
   if (fehler) {
     return (
       <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
-        <p className="px-4 text-sbb-black dark:text-sbb-white">
-          Diese Linie konnte nicht geladen werden. {fehler}
-        </p>
+        <Ladefehler className="px-4 text-sbb-black dark:text-sbb-white"
+                    was="Diese Linie konnte nicht geladen werden." fehler={fehler} />
       </Rahmen>
     )
   }
